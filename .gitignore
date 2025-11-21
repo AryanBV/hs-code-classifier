@@ -137,3 +137,87 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# ========================================
+# Backend-specific ignores
+# ========================================
+
+# Prisma
+backend/prisma/migrations/*_migration.sql
+backend/.env
+backend/.env.local
+backend/.env.production
+
+# Build output
+backend/dist/
+backend/build/
+
+# TypeScript
+backend/*.tsbuildinfo
+
+# Testing
+backend/coverage/
+backend/.nyc_output/
+
+# ========================================
+# Data files (Phase 0)
+# ========================================
+
+# Scraped data (sensitive)
+data/hs_codes_raw.json
+data/hs_codes_seed.json
+data/*.csv
+!data/test_dataset.csv
+data/*.xlsx
+data/*.xls
+
+# Python cache
+data/__pycache__/
+data/*.pyc
+data/.pytest_cache/
+data/.venv/
+data/venv/
+
+# ========================================
+# IDE & OS
+# ========================================
+
+# VSCode
+.vscode/
+!.vscode/settings.json.example
+!.vscode/extensions.json
+
+# JetBrains IDEs
+.idea/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ========================================
+# Frontend-specific ignores
+# ========================================
+
+# Next.js
+frontend/.next/
+frontend/out/
+frontend/dist/
+frontend/build/
+
+# Environment
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+
+# Testing
+frontend/coverage/
+frontend/.nyc_output/
+
+# Misc
+frontend/*.tsbuildinfo

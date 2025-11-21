@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ========================================
+// Table 1: HS Codes Master Data
+// ========================================
+model HsCode {
+  id               Int      @id @default(autoincrement())
+  code             String   @db.VarChar(20)
+  chapter          String   @db.VarChar(2)
+  heading          String   @db.VarChar(4)
+  subheading       String   @db.VarChar(6)
+  countryCode      String   @map("country_code") @db.VarChar(2)
+  description      String   @db.Text
+  keywords         String[] // PostgreSQL text array
+  commonProducts   String[] @map("common_products") // PostgreSQL text array
+  parentCode       String?  @map("parent_code") @db.VarChar(20)
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  countryMappings CountryMapping[]
+
+  // Indexes
+  @@index([code], name: "idx_code")
+  @@index([countryCode], name: "idx_country_code")
+  @@index([chapter], name: "idx_chapter")
+  @@index([heading], name: "idx_heading")
+  // Note: GIN index for keywords array needs to be added via raw SQL migration
+  @@map("hs_codes")
+}
+
+// ========================================
+// Table 2: Decision Trees
+// ========================================
+model DecisionTree {
+  id            Int      @id @default(autoincrement())
+  categoryName  String   @unique @map("category_name") @db.VarChar(100)
+  decisionFlow  Json     @map("decision_flow") // JSONB in PostgreSQL
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@map("decision_trees")
+}
+
+// ========================================
+// Table 3: User Classifications
+// ========================================
+model UserClassification {
+  id                     Int       @id @default(autoincrement())
+  sessionId              String?   @map("session_id") @db.VarChar(100)
+  productDescription     String    @map("product_description") @db.Text
+  categoryDetected       String?   @map("category_detected") @db.VarChar(100)
+  questionnaireAnswers   Json?     @map("questionnaire_answers") // JSONB in PostgreSQL
+  suggestedHsCode        String?   @map("suggested_hs_code") @db.VarChar(20)
+  confidenceScore        Int?      @map("confidence_score") // 0-100
+  countryCode            String?   @map("country_code") @db.VarChar(2)
+  userFeedback           String?   @map("user_feedback") @db.VarChar(20) // "correct", "incorrect", "unsure"
+  correctedCode          String?   @map("corrected_code") @db.VarChar(20)
+  createdAt              DateTime  @default(now()) @map("created_at")
+
+  // Indexes
+  @@index([sessionId], name: "idx_session")
+  @@index([suggestedHsCode], name: "idx_suggested_code")
+  @@index([categoryDetected], name: "idx_category")
+  @@index([createdAt], name: "idx_created_at")
+  @@map("user_classifications")
+}
+
+// ========================================
+// Table 4: Country Mappings
+// ========================================
+model CountryMapping {
+  id                   Int      @id @default(autoincrement())
+  indiaCode            String   @map("india_code") @db.VarChar(20)
+  country              String   @db.VarChar(50)
+  localCode            String   @map("local_code") @db.VarChar(20)
+  importDutyRate       String?  @map("import_duty_rate") @db.VarChar(50)
+  specialRequirements  String?  @map("special_requirements") @db.Text
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  hsCode HsCode? @relation(fields: [indiaCode], references: [code])
+
+  // Indexes
+  @@index([indiaCode], name: "idx_india_code")
+  @@index([country], name: "idx_country")
+  @@unique([indiaCode, country], name: "unique_india_code_country")
+  @@map("country_mappings")
+}
