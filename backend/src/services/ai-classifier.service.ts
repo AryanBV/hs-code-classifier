@@ -1,10 +1,12 @@
 /**
  * AI Classification Service
  *
- * Uses OpenAI GPT-4o for edge case classification and reasoning generation
+ * Uses OpenAI GPT-4o-mini (November 2024) for edge case classification
+ * Model: gpt-4o-mini
+ * Pricing: $0.15/M input tokens, $0.60/M output tokens (98.5% cheaper than GPT-4 Turbo)
  *
  * Weight: 30% of final confidence score
- * Usage: Limited to 20% of queries to control costs
+ * Usage: Limited to control costs with rate limiting
  */
 
 import OpenAI from 'openai';
@@ -28,15 +30,7 @@ const openai = new OpenAI({
  * @param questionnaireAnswers - User's questionnaire answers
  * @param keywordMatches - Results from keyword matching (for context)
  * @param decisionTreeResults - Results from decision tree (for context)
- * @returns Formatted prompt for GPT-4o
- *
- * TODO: Implement prompt engineering
- * - Include product description
- * - Include questionnaire answers
- * - Include context from keyword matching and decision tree
- * - Specify desired output format (JSON)
- * - Include examples for few-shot learning
- * - Add constraints (return valid HS codes only)
+ * @returns Formatted prompt for GPT-4o-mini
  */
 function buildClassificationPrompt(
   productDescription: string,
@@ -44,37 +38,42 @@ function buildClassificationPrompt(
   keywordMatches: KeywordMatchResult[],
   decisionTreeResults: DecisionTreeResult[]
 ): string {
-  // TODO: Implement comprehensive prompt
-  // Example structure:
-  /*
-  You are an expert in HS code classification for Indian exports.
+  const keywordSuggestions = keywordMatches.slice(0, 3).map(m => m.hsCode).join(', ') || 'None';
+  const treeSuggestions = decisionTreeResults.slice(0, 3).map(r => r.hsCode).join(', ') || 'None';
 
-  Product Description: ${productDescription}
+  return `You are an expert in HS code classification for Indian exports following the Harmonized System of Nomenclature.
 
-  Questionnaire Answers:
-  ${JSON.stringify(questionnaireAnswers, null, 2)}
+Product Description: ${productDescription}
 
-  Context from other methods:
-  - Keyword matching suggests: ${keywordMatches.map(m => m.hsCode).join(', ')}
-  - Decision tree suggests: ${decisionTreeResults.map(r => r.hsCode).join(', ')}
+Product Characteristics:
+- Material: ${questionnaireAnswers.materialComposition || 'Not specified'}
+- Primary Function: ${questionnaireAnswers.primaryFunction || 'Not specified'}
+- Product Type: ${questionnaireAnswers.productType || 'Not specified'}
+- End Use: ${questionnaireAnswers.endUse || 'Not specified'}
 
-  Task: Classify this product and provide:
-  1. Most likely HS code (6-10 digits, Indian format)
-  2. Confidence score (0-100)
-  3. Clear reasoning for your classification
-  4. Alternative codes if applicable
+Context from other classification methods:
+- Keyword matching suggests: ${keywordSuggestions}
+- Decision tree suggests: ${treeSuggestions}
 
-  Return response as JSON:
-  {
-    "hsCode": "8708.30.10",
-    "confidence": 85,
-    "reasoning": "This product is...",
-    "alternativeCodes": ["8708.30.90"]
-  }
-  */
+Task: Classify this product according to Indian HS Code (ITC-HS) format and provide:
+1. Most likely HS code (6-10 digits, use dots for formatting like 8708.30.10)
+2. Confidence score (0-100, be conservative)
+3. Clear reasoning explaining why this code is correct
+4. Up to 2 alternative codes if applicable
 
-  // Placeholder prompt
-  return `Classify this product: ${productDescription}`;
+Rules:
+- Prefer longer codes (8+ digits) when material/function is clearly specified
+- Consider the General Rules for Interpretation (GRI)
+- Prioritize function over material when both are valid
+- Return ONLY valid Indian HS codes
+
+Return response as valid JSON (no markdown):
+{
+  "hsCode": "8708.30.10",
+  "confidence": 85,
+  "reasoning": "This product is classified under Chapter 87 (vehicles and parts) because...",
+  "alternativeCodes": ["8708.30.90"]
+}`;
 }
 
 /**
@@ -83,48 +82,51 @@ function buildClassificationPrompt(
  * @param prompt - Formatted classification prompt
  * @returns Parsed AI classification result
  *
- * TODO: Implement OpenAI API call
- * - Use GPT-4o model
- * - Set appropriate temperature (0.3-0.5 for consistency)
- * - Parse JSON response
- * - Handle API errors gracefully
- * - Add retry logic for transient failures
- * - Log token usage for cost tracking
+ * Uses GPT-4o-mini (November 2024) for cost efficiency
+ * Temperature: 0.3 for consistent, focused responses
+ * Logs token usage for cost tracking
  */
 async function callOpenAI(prompt: string): Promise<AIClassificationResult> {
-  logger.debug('Calling OpenAI API for classification');
+  logger.debug('Calling OpenAI API (gpt-4o-mini) for classification');
 
   try {
-    // TODO: Implement API call
-    // const response = await openai.chat.completions.create({
-    //   model: 'gpt-4o',
-    //   messages: [
-    //     {
-    //       role: 'system',
-    //       content: 'You are an expert HS code classifier for Indian exports.'
-    //     },
-    //     {
-    //       role: 'user',
-    //       content: prompt
-    //     }
-    //   ],
-    //   temperature: 0.3,
-    //   response_format: { type: 'json_object' }
-    // });
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are an expert HS code classifier for Indian exports. Always respond with valid JSON only.'
+        },
+        {
+          role: 'user',
+          content: prompt
+        }
+      ],
+      temperature: 0.3,
+      response_format: { type: 'json_object' },
+      max_tokens: 500  // Limit output tokens for cost control
+    });
 
-    // TODO: Parse response
-    // const result = JSON.parse(response.choices[0].message.content);
+    // Parse response
+    const content = response.choices[0].message.content;
+    if (!content) {
+      throw new Error('Empty response from OpenAI');
+    }
 
-    // TODO: Log token usage
-    // logger.info(`OpenAI tokens used: ${response.usage?.total_tokens}`);
+    const result = JSON.parse(content) as AIClassificationResult;
 
-    // Placeholder return
-    return {
-      hsCode: '0000.00.00',
-      confidence: 0,
-      reasoning: 'AI classification not yet implemented',
-      alternativeCodes: []
-    };
+    // Log token usage for cost tracking
+    const usage = response.usage;
+    if (usage) {
+      const inputCost = (usage.prompt_tokens / 1_000_000) * 0.15;  // $0.15/M tokens
+      const outputCost = (usage.completion_tokens / 1_000_000) * 0.60;  // $0.60/M tokens
+      const totalCost = inputCost + outputCost;
+
+      logger.info(`OpenAI tokens: ${usage.total_tokens} (input: ${usage.prompt_tokens}, output: ${usage.completion_tokens})`);
+      logger.info(`Estimated cost: $${totalCost.toFixed(6)}`);
+    }
+
+    return result;
 
   } catch (error) {
     logger.error('Error calling OpenAI API');
@@ -139,23 +141,48 @@ async function callOpenAI(prompt: string): Promise<AIClassificationResult> {
  * @param result - AI classification result
  * @returns true if result is valid
  *
- * TODO: Implement validation
- * - Check HS code format (should be 4-10 digits with optional dots)
- * - Verify confidence is between 0-100
- * - Ensure reasoning is present and meaningful
- * - Validate alternative codes if provided
+ * Validates:
+ * - HS code format (4-10 digits with optional dots)
+ * - Confidence range (0-100)
+ * - Reasoning presence and length
+ * - Alternative codes format if provided
  */
 function validateAIResult(result: AIClassificationResult): boolean {
-  // TODO: Implement validation logic
+  // Check required fields
   if (!result.hsCode || !result.reasoning) {
+    logger.warn('AI result missing required fields');
     return false;
   }
 
+  // Validate confidence range
   if (result.confidence < 0 || result.confidence > 100) {
+    logger.warn(`Invalid confidence score: ${result.confidence}`);
     return false;
   }
 
-  // Placeholder validation
+  // Validate HS code format (digits and dots only, 4-12 characters)
+  const hsCodePattern = /^[\d.]{4,12}$/;
+  if (!hsCodePattern.test(result.hsCode)) {
+    logger.warn(`Invalid HS code format: ${result.hsCode}`);
+    return false;
+  }
+
+  // Check reasoning has meaningful content
+  if (result.reasoning.length < 20) {
+    logger.warn('Reasoning too short');
+    return false;
+  }
+
+  // Validate alternative codes if present
+  if (result.alternativeCodes && result.alternativeCodes.length > 0) {
+    for (const code of result.alternativeCodes) {
+      if (!hsCodePattern.test(code)) {
+        logger.warn(`Invalid alternative code format: ${code}`);
+        return false;
+      }
+    }
+  }
+
   return true;
 }
 
@@ -233,9 +260,8 @@ export async function classifyWithAI(
  * @param productDescription - Product description
  * @returns Human-readable reasoning
  *
- * TODO: Implement reasoning generation
- * - Use GPT-4o to explain why a specific HS code is correct
- * - Can be used to generate reasoning even if classification came from other methods
+ * Uses GPT-4o-mini to explain why a specific HS code is correct
+ * Can be used to generate reasoning even if classification came from other methods
  */
 export async function generateReasoning(
   hsCode: string,
@@ -243,8 +269,42 @@ export async function generateReasoning(
 ): Promise<string> {
   logger.debug(`Generating reasoning for HS code ${hsCode}`);
 
-  // TODO: Implement reasoning generation
-  // Call OpenAI with prompt asking to explain why this code is correct
+  try {
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are an expert HS code classifier. Explain classifications clearly and concisely.'
+        },
+        {
+          role: 'user',
+          content: `Explain why HS code "${hsCode}" is the correct classification for this product: "${productDescription}".
 
-  return `Classification reasoning will be generated in Phase 1 implementation.`;
+Include:
+1. Which chapter/heading this belongs to and why
+2. Key characteristics that led to this classification
+3. What makes this code more appropriate than similar alternatives
+
+Keep the explanation under 200 words.`
+        }
+      ],
+      temperature: 0.4,
+      max_tokens: 300
+    });
+
+    const reasoning = response.choices[0].message.content || 'Unable to generate reasoning';
+
+    // Log token usage
+    if (response.usage) {
+      logger.info(`Reasoning generation tokens: ${response.usage.total_tokens}`);
+    }
+
+    return reasoning;
+
+  } catch (error) {
+    logger.error('Error generating reasoning');
+    logger.error(error instanceof Error ? error.message : String(error));
+    return `Classification to HS code ${hsCode} based on product characteristics.`;
+  }
 }

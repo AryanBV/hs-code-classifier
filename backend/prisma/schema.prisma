@@ -27,9 +27,6 @@ model HsCode {
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
 
-  // Relations
-  countryMappings CountryMapping[]
-
   // Indexes
   @@index([code], name: "idx_code")
   @@index([countryCode], name: "idx_country_code")
@@ -88,9 +85,6 @@ model CountryMapping {
   specialRequirements  String?  @map("special_requirements") @db.Text
   createdAt            DateTime @default(now()) @map("created_at")
   updatedAt            DateTime @updatedAt @map("updated_at")
-
-  // Relations
-  hsCode HsCode? @relation(fields: [indiaCode], references: [code])
 
   // Indexes
   @@index([indiaCode], name: "idx_india_code")
