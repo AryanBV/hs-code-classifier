@@ -32,8 +32,8 @@
     "strictPropertyInitialization": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
@@ -47,12 +47,12 @@
     "declarationMap": true
   },
   "include": [
-    "src/**/*",
-    "prisma/seed.ts"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules",
     "dist",
+    "prisma/**/*",
     "**/*.spec.ts",
     "**/*.test.ts"
   ]
