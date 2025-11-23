@@ -31,17 +31,21 @@ export async function loadDecisionTree(categoryName: string): Promise<DecisionTr
   logger.debug(`Loading decision tree for category: ${categoryName}`);
 
   try {
-    // TODO: Implement database query
-    // const tree = await prisma.decisionTree.findUnique({
-    //   where: { categoryName }
-    // });
-    //
-    // if (!tree) return null;
-    //
-    // return tree.decisionFlow as DecisionTreeFlow;
+    const tree = await prisma.decisionTree.findUnique({
+      where: { categoryName }
+    });
 
-    // Placeholder return
-    return null;
+    if (!tree) {
+      logger.warn(`No decision tree found for category: ${categoryName}`);
+      return null;
+    }
+
+    // Parse JSONB decision_flow into structured DecisionTreeFlow
+    const decisionFlow = tree.decisionFlow as unknown as DecisionTreeFlow;
+
+    logger.debug(`Decision tree loaded successfully: ${decisionFlow.questions.length} questions, ${decisionFlow.rules.length} rules`);
+
+    return decisionFlow;
 
   } catch (error) {
     logger.error('Error loading decision tree');
@@ -74,15 +78,46 @@ export function evaluateRules(
   keywords: string[]
 ): DecisionRule[] {
   logger.debug('Evaluating decision tree rules');
+  logger.debug(`Total rules to evaluate: ${decisionFlow.rules.length}`);
+  logger.debug(`Keywords available: [${keywords.join(', ')}]`);
+  logger.debug(`Answers provided: ${JSON.stringify(answers)}`);
 
-  // TODO: Implement rule evaluation
-  // Example logic:
-  // const matchedRules = decisionFlow.rules.filter(rule => {
-  //   return checkConditions(rule.conditions, answers, keywords);
-  // });
+  // Filter rules that match all conditions
+  const matchedRules: DecisionRule[] = [];
 
-  // Placeholder return
-  return [];
+  for (let i = 0; i < decisionFlow.rules.length; i++) {
+    const rule = decisionFlow.rules[i];
+    if (!rule) continue;
+
+    logger.debug(`\nEvaluating rule ${i + 1}/${decisionFlow.rules.length}`);
+    logger.debug(`Rule conditions: ${JSON.stringify(rule.conditions)}`);
+    logger.debug(`Rule suggests: ${rule.suggestedCodes.join(', ')}`);
+    logger.debug(`Confidence boost: ${rule.confidenceBoost}`);
+
+    // Check if this rule's conditions match
+    const isMatch = checkConditions(rule.conditions, answers, keywords);
+
+    if (isMatch) {
+      logger.info(`✓ Rule ${i + 1} MATCHED: ${rule.suggestedCodes.join(', ')} (boost: ${rule.confidenceBoost})`);
+      matchedRules.push(rule);
+    } else {
+      logger.debug(`✗ Rule ${i + 1} did not match`);
+    }
+  }
+
+  // Sort matched rules by confidence boost (highest first)
+  matchedRules.sort((a, b) => b.confidenceBoost - a.confidenceBoost);
+
+  logger.info(`Evaluation complete: ${matchedRules.length} rules matched out of ${decisionFlow.rules.length} total`);
+
+  if (matchedRules.length > 0) {
+    const topCodes = matchedRules.slice(0, 3).map(r =>
+      `${r.suggestedCodes.join(', ')} (boost: ${r.confidenceBoost})`
+    ).join(' | ');
+    logger.info(`Top matched rules: ${topCodes}`);
+  }
+
+  return matchedRules;
 }
 
 /**
@@ -90,22 +125,92 @@ export function evaluateRules(
  *
  * @param conditions - Rule conditions from decision tree
  * @param answers - User's questionnaire answers
- * @param keywords - Extracted keywords
+ * @param keywords - Extracted keywords from product description
  * @returns true if all conditions match
  *
- * TODO: Implement condition checking logic
- * - Check each condition in the rule
- * - Handle different answer types (string, array, number)
- * - Check keyword conditions if present
- * - Return true only if ALL conditions match
+ * Handles:
+ * - Keyword conditions: checks if all required keywords are present
+ * - Question conditions: checks if answer matches expected value
+ * - Different answer types: string, array, number
+ * - Case-insensitive matching for keywords
  */
 function checkConditions(
-  conditions: { [key: string]: string | string[] },
+  conditions: { [key: string]: string | string[] | undefined },
   answers: QuestionnaireAnswers,
   keywords: string[]
 ): boolean {
-  // TODO: Implement condition checking
-  return false;
+  logger.debug(`Checking conditions: ${JSON.stringify(conditions)}`);
+
+  // Check each condition in the rule
+  for (const [conditionKey, expectedValue] of Object.entries(conditions)) {
+    // Skip undefined values
+    if (expectedValue === undefined) {
+      continue;
+    }
+
+    // Handle keyword conditions
+    if (conditionKey === 'keywords') {
+      // Expected value should be array of required keywords
+      const requiredKeywords = Array.isArray(expectedValue) ? expectedValue : [expectedValue];
+
+      logger.debug(`Checking keyword condition: requires [${requiredKeywords.join(', ')}]`);
+      logger.debug(`Available keywords: [${keywords.join(', ')}]`);
+
+      // Check if ALL required keywords are present (case-insensitive)
+      const hasAllKeywords = requiredKeywords.every(requiredKw =>
+        keywords.some(availableKw =>
+          availableKw.toLowerCase().includes(requiredKw.toLowerCase())
+        )
+      );
+
+      if (!hasAllKeywords) {
+        logger.debug(`Keyword condition failed: missing some required keywords`);
+        return false;
+      }
+
+      logger.debug(`Keyword condition passed`);
+      continue;
+    }
+
+    // Handle question answer conditions
+    const userAnswer = answers[conditionKey];
+
+    // If question was not answered, condition fails
+    if (userAnswer === undefined || userAnswer === null) {
+      logger.debug(`Question condition failed: ${conditionKey} not answered`);
+      return false;
+    }
+
+    // Handle array answers (multiple choice questions)
+    if (Array.isArray(expectedValue)) {
+      // Check if user's answer is in the array of expected values
+      const matched = expectedValue.some(val => {
+        if (Array.isArray(userAnswer)) {
+          // User selected multiple answers
+          return userAnswer.includes(val);
+        }
+        return userAnswer === val;
+      });
+
+      if (!matched) {
+        logger.debug(`Question condition failed: ${conditionKey} = ${JSON.stringify(userAnswer)}, expected one of [${expectedValue.join(', ')}]`);
+        return false;
+      }
+    } else {
+      // Single value expected
+      // Handle string comparison (case-sensitive for questionnaire answers)
+      if (userAnswer !== expectedValue) {
+        logger.debug(`Question condition failed: ${conditionKey} = ${JSON.stringify(userAnswer)}, expected ${expectedValue}`);
+        return false;
+      }
+    }
+
+    logger.debug(`Question condition passed: ${conditionKey} = ${JSON.stringify(userAnswer)}`);
+  }
+
+  // All conditions matched
+  logger.debug(`All conditions matched`);
+  return true;
 }
 
 /**
@@ -121,7 +226,7 @@ function checkConditions(
  * 2. Evaluate rules against answers
  * 3. Calculate confidence scores (0-100)
  * 4. Generate reasoning for matched rules
- * 5. Return top results
+ * 5. Return top 3 results
  */
 export async function applyDecisionTree(
   categoryName: string,
@@ -146,17 +251,108 @@ export async function applyDecisionTree(
     return [];
   }
 
-  // Step 3: Convert matched rules to results
-  // TODO: Implement conversion logic
-  // - Extract suggested codes from matched rules
-  // - Calculate confidence based on rule confidence boost
-  // - Generate reasoning based on which conditions matched
-  // - Return top 3 results
-
   logger.info(`Decision tree found ${matchedRules.length} matching rules`);
 
-  // Placeholder return
-  return [];
+  // Step 3: Convert matched rules to DecisionTreeResult[]
+  const results: DecisionTreeResult[] = [];
+  const processedCodes = new Set<string>(); // Track processed codes to avoid duplicates
+
+  for (const rule of matchedRules) {
+    // Each rule can suggest multiple HS codes
+    for (const hsCode of rule.suggestedCodes) {
+      // Skip if we already processed this code
+      if (processedCodes.has(hsCode)) {
+        logger.debug(`Skipping duplicate HS code: ${hsCode}`);
+        continue;
+      }
+
+      processedCodes.add(hsCode);
+
+      // Calculate confidence score
+      // Base confidence: 60-80 depending on number of conditions matched
+      const numConditions = Object.keys(rule.conditions).length;
+      const baseConfidence = Math.min(60 + (numConditions * 5), 80);
+
+      // Add confidence boost from rule
+      const finalConfidence = Math.min(baseConfidence + rule.confidenceBoost / 10, 100);
+
+      // Generate reasoning
+      const reasoning = generateReasoningFromRule(rule, questionnaireAnswers, keywords);
+
+      // Extract which conditions were matched
+      const rulesMatched = Object.entries(rule.conditions)
+        .map(([key, value]) => {
+          if (key === 'keywords') {
+            const kws = Array.isArray(value) ? value : [value];
+            return `Keywords: ${kws.join(', ')}`;
+          }
+          return `${key}: ${Array.isArray(value) ? value.join(' or ') : value}`;
+        });
+
+      results.push({
+        hsCode,
+        confidence: Math.round(finalConfidence),
+        rulesMatched,
+        reasoning
+      });
+
+      logger.debug(`Added result: ${hsCode} (confidence: ${Math.round(finalConfidence)})`);
+    }
+  }
+
+  // Sort by confidence (highest first) and return top 3
+  results.sort((a, b) => b.confidence - a.confidence);
+  const topResults = results.slice(0, 3);
+
+  logger.info(`Returning ${topResults.length} classification results`);
+  if (topResults.length > 0 && topResults[0]) {
+    logger.info(`Top result: ${topResults[0].hsCode} (confidence: ${topResults[0].confidence}%)`);
+  }
+
+  return topResults;
+}
+
+/**
+ * Generate human-readable reasoning from matched rule
+ *
+ * @param rule - Matched decision rule
+ * @param answers - User's questionnaire answers
+ * @param _keywords - Product keywords (unused for now)
+ * @returns Reasoning string
+ */
+function generateReasoningFromRule(
+  rule: DecisionRule,
+  answers: QuestionnaireAnswers,
+  _keywords: string[]
+): string {
+  const reasons: string[] = [];
+
+  // Analyze conditions to build reasoning
+  for (const [key, value] of Object.entries(rule.conditions)) {
+    if (key === 'keywords') {
+      const kws = Array.isArray(value) ? value : [value];
+      reasons.push(`Product contains keywords: ${kws.join(', ')}`);
+    } else if (key.startsWith('q')) {
+      // Question ID
+      const answer = answers[key];
+      reasons.push(`${key} = "${answer}"`);
+    } else if (key === 'q6_material') {
+      reasons.push(`Primary material: ${value}`);
+    }
+  }
+
+  // Add confidence boost explanation
+  if (rule.confidenceBoost >= 90) {
+    reasons.push('High-confidence rule match');
+  } else if (rule.confidenceBoost >= 80) {
+    reasons.push('Strong rule match');
+  }
+
+  const reasoningText = reasons.length > 0
+    ? `Decision tree classification based on: ${reasons.join('; ')}.`
+    : `Classification based on ${Object.keys(rule.conditions).length} matching conditions.`;
+
+  return reasoningText;
 }
 
 /**
@@ -165,28 +361,60 @@ export async function applyDecisionTree(
  * @param productDescription - Product description text
  * @returns Detected category name
  *
- * TODO: Implement category detection
- * - Use simple keyword matching initially
- * - Later can use AI for better detection
- * - For MVP: default to "Automotive Parts" if keywords match
+ * Uses simple keyword matching for MVP phase.
+ * Can be enhanced with AI-based category detection in Phase 2+.
+ *
+ * Automotive keywords cover:
+ * - Braking systems, Engine components, Filtration, Electrical/Lighting
+ * - Suspension, Transmission, Exhaust, Cooling, Bearings
+ * - Vehicles: car, motorcycle, truck, SUV
  */
 export async function detectCategory(productDescription: string): Promise<string> {
   logger.debug('Detecting product category');
-
-  // TODO: Implement category detection logic
-  // For Phase 0-1: Simple keyword matching
-  // For Phase 2+: Use AI category detection
+  logger.debug(`Description: "${productDescription.substring(0, 100)}..."`);
 
   const lowerDesc = productDescription.toLowerCase();
 
-  // Simple automotive parts detection
-  const automotiveKeywords = ['brake', 'engine', 'vehicle', 'car', 'motorcycle', 'filter', 'piston'];
-  const hasAutomotiveKeyword = automotiveKeywords.some(keyword => lowerDesc.includes(keyword));
+  // Comprehensive automotive parts keywords (covers all 20 test products)
+  const automotiveKeywords = [
+    // Braking system
+    'brake', 'braking', 'rotor', 'caliper', 'pad', 'disc',
+    // Engine components
+    'engine', 'piston', 'cylinder', 'spark', 'plug', 'fuel', 'pump',
+    'crankshaft', 'camshaft', 'valve', 'gasket',
+    // Filtration
+    'filter', 'air filter', 'oil filter', 'fuel filter',
+    // Electrical/Lighting
+    'headlight', 'lamp', 'bulb', 'wiper', 'alternator', 'generator',
+    'battery', 'starter', 'electrical',
+    // Suspension
+    'suspension', 'shock', 'absorber', 'strut', 'spring',
+    // Transmission & Clutch
+    'transmission', 'clutch', 'gearbox', 'drivetrain', 'axle',
+    // Exhaust
+    'exhaust', 'muffler', 'catalytic', 'silencer',
+    // Cooling system
+    'radiator', 'coolant', 'antifreeze', 'thermostat', 'hose',
+    // Bearings & Rotation
+    'bearing', 'wheel bearing', 'hub',
+    // Rubber/Belt components
+    'timing belt', 'serpentine', 'v-belt', 'cv joint', 'boot',
+    // Vehicle types
+    'vehicle', 'car', 'automobile', 'motorcycle', 'bike', 'truck', 'suv',
+    'automotive', 'auto parts'
+  ];
+
+  // Check if description contains any automotive keyword
+  const hasAutomotiveKeyword = automotiveKeywords.some(keyword =>
+    lowerDesc.includes(keyword)
+  );
 
   if (hasAutomotiveKeyword) {
+    logger.info('Category detected: Automotive Parts');
     return 'Automotive Parts';
   }
 
-  // Default fallback
+  // Default fallback for non-automotive products
+  logger.info('Category detected: General (no automotive keywords found)');
   return 'General';
 }

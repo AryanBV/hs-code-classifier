@@ -12,24 +12,14 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
 
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
-
-    // TODO: Forward request to backend
-    // const response = await fetch(`${backendUrl}/api/classify`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(body),
-    // })
-
-    // const data = await response.json()
-    // return NextResponse.json(data, { status: response.status })
+    // NOTE: This API route is not used in production
+    // Frontend uses api-client.ts to call backend directly
+    // Keeping this file for potential future proxy needs
 
     // Placeholder response
     return NextResponse.json({
       success: true,
-      message: 'API proxy will be implemented in Phase 2',
+      message: 'API proxy not implemented - frontend uses direct API calls',
       data: body
     })
 

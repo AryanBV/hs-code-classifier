@@ -163,8 +163,7 @@ export interface Question {
  */
 export interface DecisionRule {
   conditions: {
-    [questionId: string]: string | string[];
-    keywords?: string[];
+    [questionId: string]: string | string[] | undefined;
   };
   suggestedCodes: string[];
   confidenceBoost: number; // 0-100

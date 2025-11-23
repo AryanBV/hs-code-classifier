@@ -11,7 +11,7 @@
  */
 
 import { logger } from '../utils/logger';
-import { prisma } from '../utils/prisma';
+// import { prisma } from '../utils/prisma';  // TODO: Uncomment when database is ready
 import {
   ClassifyRequest,
   ClassifyResponse,
@@ -69,37 +69,192 @@ function calculateConfidence(
  *
  * @param keywordResults - Results from keyword matching
  * @param decisionTreeResults - Results from decision tree
- * @param aiResult - Result from AI classification
+ * @param aiResult - Result from AI classification (may be null if skipped)
  * @returns Deduplicated and scored results
  *
- * TODO: Implement result merging logic
- * - Group results by HS code
- * - If same code suggested by multiple methods, boost confidence
- * - Calculate final confidence using weighted formula
- * - Sort by confidence score
- * - Return top results
+ * Logic:
+ * 1. Group results by HS code
+ * 2. If same code suggested by multiple methods, boost confidence
+ * 3. Calculate final confidence using weighted formula
+ * 4. Combine reasoning from all methods
+ * 5. Sort by confidence score (highest first)
+ * 6. Return top results
  */
 function mergeResults(
   keywordResults: any[],
   decisionTreeResults: any[],
   aiResult: any
 ): ClassificationResult[] {
-  logger.debug('Merging results from all classification methods');
+  logger.info('Merging classification results');
+  logger.info(`  Keyword results: ${keywordResults.length}`);
+  logger.info(`  Decision tree results: ${decisionTreeResults.length}`);
+  logger.info(`  AI result: ${aiResult ? aiResult.hsCode : 'none (skipped)'}`);
 
-  // TODO: Implement comprehensive merging logic
-  // Example structure:
-  // const resultMap = new Map<string, ClassificationResult>();
-  //
+  // Map: HS code → { keyword?, tree?, ai?, sources[] }
+  interface CodeData {
+    hsCode: string;
+    keywordScore: number;
+    treeScore: number;
+    aiScore: number;
+    sources: string[];  // Which methods suggested this code
+    keywordReasoning?: string;
+    treeReasoning?: string;
+    aiReasoning?: string;
+    alternativeCodes?: string[];
+    description?: string;
+  }
+
+  const codeMap = new Map<string, CodeData>();
+
   // Process keyword results
-  // Process decision tree results
-  // Process AI result
-  //
-  // Combine scores for duplicate codes
-  // Sort by final confidence
-  // Return top N results
+  for (const kwResult of keywordResults) {
+    if (!kwResult || !kwResult.hsCode) continue;
 
-  // Placeholder return
-  return [];
+    if (!codeMap.has(kwResult.hsCode)) {
+      codeMap.set(kwResult.hsCode, {
+        hsCode: kwResult.hsCode,
+        keywordScore: kwResult.matchScore || 0,
+        treeScore: 0,
+        aiScore: 0,
+        sources: ['keyword'],
+        keywordReasoning: kwResult.description || 'Keyword match',
+        description: kwResult.description
+      });
+    }
+  }
+
+  // Process decision tree results
+  for (const treeResult of decisionTreeResults) {
+    if (!treeResult || !treeResult.hsCode) continue;
+
+    const existing = codeMap.get(treeResult.hsCode);
+
+    if (existing) {
+      // Code already suggested by keyword matcher - boost confidence
+      existing.treeScore = treeResult.confidence || 0;
+      existing.sources.push('tree');
+      existing.treeReasoning = treeResult.reasoning;
+      logger.debug(`Code ${treeResult.hsCode} suggested by both keyword and tree - boosting confidence`);
+    } else {
+      // New code from decision tree
+      codeMap.set(treeResult.hsCode, {
+        hsCode: treeResult.hsCode,
+        keywordScore: 0,
+        treeScore: treeResult.confidence || 0,
+        aiScore: 0,
+        sources: ['tree'],
+        treeReasoning: treeResult.reasoning,
+        description: `Decision tree classification: ${treeResult.hsCode}`
+      });
+    }
+  }
+
+  // Process AI result (if available)
+  if (aiResult && aiResult.hsCode) {
+    const existing = codeMap.get(aiResult.hsCode);
+
+    if (existing) {
+      // Code already suggested by other methods - high confidence!
+      existing.aiScore = aiResult.confidence || 0;
+      existing.sources.push('ai');
+      existing.aiReasoning = aiResult.reasoning;
+      existing.alternativeCodes = aiResult.alternativeCodes;
+      logger.info(`Code ${aiResult.hsCode} suggested by multiple methods: ${existing.sources.join(', ')} - HIGH CONFIDENCE`);
+    } else {
+      // New code from AI only
+      codeMap.set(aiResult.hsCode, {
+        hsCode: aiResult.hsCode,
+        keywordScore: 0,
+        treeScore: 0,
+        aiScore: aiResult.confidence || 0,
+        sources: ['ai'],
+        aiReasoning: aiResult.reasoning,
+        alternativeCodes: aiResult.alternativeCodes,
+        description: `AI classification: ${aiResult.hsCode}`
+      });
+    }
+
+    // Also add AI's alternative codes with lower scores
+    if (aiResult.alternativeCodes && aiResult.alternativeCodes.length > 0) {
+      for (const altCode of aiResult.alternativeCodes) {
+        if (!codeMap.has(altCode)) {
+          codeMap.set(altCode, {
+            hsCode: altCode,
+            keywordScore: 0,
+            treeScore: 0,
+            aiScore: Math.round((aiResult.confidence || 0) * 0.7), // 70% of AI confidence for alternatives
+            sources: ['ai-alternative'],
+            aiReasoning: `Alternative suggestion from AI: ${aiResult.reasoning}`,
+            description: `AI alternative classification: ${altCode}`
+          });
+        }
+      }
+    }
+  }
+
+  // Convert map to array with final confidence scores
+  const results: ClassificationResult[] = [];
+
+  for (const entry of Array.from(codeMap.entries())) {
+    const [hsCode, data] = entry;
+    // Calculate weighted confidence
+    const confidence = calculateConfidence(
+      data.keywordScore,
+      data.treeScore,
+      data.aiScore
+    );
+
+    // Apply consensus boost if multiple methods agree
+    let finalConfidence = confidence.finalScore;
+    if (data.sources.length >= 2) {
+      // Boost by 5% for each additional source (max +10% for 3 sources)
+      const consensusBoost = Math.min((data.sources.length - 1) * 5, 10);
+      finalConfidence = Math.min(finalConfidence + consensusBoost, 100);
+      logger.debug(`Consensus boost for ${hsCode}: +${consensusBoost}% (${data.sources.length} sources)`);
+    }
+
+    // Combine reasoning from all sources
+    const reasoningParts: string[] = [];
+
+    if (data.keywordReasoning) {
+      reasoningParts.push(`Keyword: ${data.keywordReasoning}`);
+    }
+
+    if (data.treeReasoning) {
+      reasoningParts.push(`Tree: ${data.treeReasoning}`);
+    }
+
+    if (data.aiReasoning) {
+      reasoningParts.push(`AI: ${data.aiReasoning}`);
+    }
+
+    const combinedReasoning = reasoningParts.length > 0
+      ? reasoningParts.join(' | ')
+      : 'No detailed reasoning available';
+
+    // Create classification result
+    results.push({
+      hsCode,
+      description: data.description || `HS Code ${hsCode}`,
+      confidence: finalConfidence,
+      reasoning: combinedReasoning
+    });
+
+    logger.debug(`Result for ${hsCode}: ${finalConfidence}% confidence (sources: ${data.sources.join(', ')})`);
+  }
+
+  // Sort by confidence (highest first)
+  results.sort((a, b) => b.confidence - a.confidence);
+
+  // Return top 3 results
+  const topResults = results.slice(0, 3);
+
+  logger.info(`Merged results: ${results.length} total, returning top ${topResults.length}`);
+  if (topResults.length > 0 && topResults[0]) {
+    logger.info(`Top result: ${topResults[0].hsCode} (${topResults[0].confidence}% confidence)`);
+  }
+
+  return topResults;
 }
 
 /**
@@ -115,7 +270,7 @@ function mergeResults(
  * - Return null if no mapping found
  */
 async function getCountryMapping(
-  indiaCode: string,
+  _indiaCode: string,
   destinationCountry?: string
 ) {
   if (!destinationCountry) {
@@ -126,7 +281,7 @@ async function getCountryMapping(
     // TODO: Implement database query
     // const mapping = await prisma.countryMapping.findFirst({
     //   where: {
-    //     indiaCode,
+    //     indiaCode: _indiaCode,
     //     country: destinationCountry
     //   }
     // });
@@ -154,21 +309,21 @@ async function getCountryMapping(
  * - Store for analytics and learning
  */
 async function storeClassification(
-  request: ClassifyRequest,
-  results: ClassificationResult[],
-  categoryDetected: string
+  _request: ClassifyRequest,
+  _results: ClassificationResult[],
+  _categoryDetected: string
 ): Promise<string> {
   try {
     // TODO: Implement database insert
     // const classification = await prisma.userClassification.create({
     //   data: {
     //     sessionId: generateSessionId(),
-    //     productDescription: request.productDescription,
-    //     categoryDetected,
-    //     questionnaireAnswers: request.questionnaireAnswers,
-    //     suggestedHsCode: results[0]?.hsCode,
-    //     confidenceScore: results[0]?.confidence,
-    //     countryCode: request.destinationCountry
+    //     productDescription: _request.productDescription,
+    //     categoryDetected: _categoryDetected,
+    //     questionnaireAnswers: _request.questionnaireAnswers,
+    //     suggestedHsCode: _results[0]?.hsCode,
+    //     confidenceScore: _results[0]?.confidence,
+    //     countryCode: _request.destinationCountry
     //   }
     // });
 
@@ -208,54 +363,83 @@ export async function classifyProduct(request: ClassifyRequest): Promise<Classif
   try {
     // Step 1: Extract keywords
     const keywords = extractKeywords(request.productDescription);
-    logger.debug(`Keywords extracted: ${keywords.primary.join(', ')}`);
+    logger.debug(`Keywords extracted: ${keywords.filtered.join(', ')}`);
 
     // Step 2: Detect category
     const category = await detectCategory(request.productDescription);
     logger.info(`Category detected: ${category}`);
 
-    // Step 3: Run all 3 methods (can be parallelized)
-    logger.info('Running classification methods...');
+    // Step 3: Run keyword and tree methods first
+    logger.info('Running keyword matcher and decision tree...');
 
-    // TODO: Implement parallel execution
-    const [keywordResults, decisionTreeResults, aiResult] = await Promise.allSettled([
-      keywordMatch(request.productDescription, request.destinationCountry),
-      applyDecisionTree(
-        category,
-        request.questionnaireAnswers || {},
-        keywords.primary
-      ),
-      classifyWithAI(
-        request.productDescription,
-        request.questionnaireAnswers || {},
-        [], // keywordResults - pass after they're ready
-        []  // decisionTreeResults - pass after they're ready
-      )
+    const keywordPromise = keywordMatch(request.productDescription, request.destinationCountry);
+    const treePromise = applyDecisionTree(
+      category,
+      request.questionnaireAnswers || {},
+      keywords.filtered
+    );
+
+    // Wait for keyword and tree results
+    const [keywordResults, treeResults] = await Promise.allSettled([
+      keywordPromise,
+      treePromise
     ]);
 
-    // TODO: Extract results from Promise.allSettled
-    // Handle fulfilled and rejected promises
-    // const keywordMatches = keywordResults.status === 'fulfilled' ? keywordResults.value : [];
+    // Extract results from Promise.allSettled
+    const keywordMatches = keywordResults.status === 'fulfilled' ? keywordResults.value : [];
+    const treeMatches = treeResults.status === 'fulfilled' ? treeResults.value : [];
 
-    // Step 4: Merge results and calculate confidence
-    // TODO: Implement result merging
-    const mergedResults: ClassificationResult[] = [];
+    logger.info(`Keyword matches: ${keywordMatches.length}`);
+    logger.info(`Decision tree matches: ${treeMatches.length}`);
 
-    // Step 5: Add country mappings
-    // TODO: Implement country mapping lookup for each result
+    // Step 4: Run AI with context from keyword and tree
+    logger.info('Running AI classifier with context...');
 
-    // Step 6: Filter by confidence threshold
+    const aiPromise = classifyWithAI(
+      request.productDescription,
+      request.questionnaireAnswers || {},
+      keywordMatches,
+      treeMatches,
+      false // Let decision logic determine if AI is needed
+    );
+
+    const aiResult = await aiPromise;
+
+    if (aiResult) {
+      logger.info(`AI classification: ${aiResult.hsCode} (${aiResult.confidence}% confidence)`);
+    } else {
+      logger.info('AI classification skipped (high confidence from other methods or rate limit)');
+    }
+
+    // Step 5: Merge results and calculate final confidence
+    logger.info('Merging results from all methods...');
+
+    const mergedResults = mergeResults(keywordMatches, treeMatches, aiResult);
+
+    logger.info(`Merged results: ${mergedResults.length} unique HS codes`);
+
+    // Step 6: Add country mappings if destination country specified
+    if (request.destinationCountry) {
+      logger.debug(`Looking up country mappings for ${request.destinationCountry}...`);
+      for (const result of mergedResults) {
+        result.countryMapping = await getCountryMapping(result.hsCode, request.destinationCountry);
+      }
+    }
+
+    // Step 7: Filter by confidence threshold
     const filteredResults = mergedResults.filter(
       r => r.confidence >= MIN_CONFIDENCE_THRESHOLD
     );
 
-    // Step 7: Limit to top results
+    logger.info(`Filtered results: ${filteredResults.length} above ${MIN_CONFIDENCE_THRESHOLD}% threshold`);
+
+    // Step 8: Limit to top results
     const topResults = filteredResults.slice(0, MAX_ALTERNATIVE_CODES);
 
-    // Step 8: Store classification
+    // Step 9: Store classification in database
     const classificationId = await storeClassification(request, topResults, category);
 
-    // Step 9: Build response
+    // Step 10: Build response
     const response: ClassifyResponse = {
       success: true,
       results: topResults.length > 0 ? topResults : [{
@@ -271,13 +455,18 @@ export async function classifyProduct(request: ClassifyRequest): Promise<Classif
     const duration = Date.now() - startTime;
     logger.info(`===== Classification Complete (${duration}ms) =====`);
     logger.info(`Results: ${response.results.length} codes found`);
-    logger.info(`Top result: ${response.results[0]?.hsCode} (${response.results[0]?.confidence}% confidence)`);
+    if (response.results.length > 0 && response.results[0]) {
+      logger.info(`Top result: ${response.results[0].hsCode} (${response.results[0].confidence}% confidence)`);
+    }
 
     return response;
 
   } catch (error) {
     logger.error('===== Classification Failed =====');
     logger.error(error instanceof Error ? error.message : String(error));
+
+    const duration = Date.now() - startTime;
+    logger.error(`Failed after ${duration}ms`);
 
     // Return error response
     return {

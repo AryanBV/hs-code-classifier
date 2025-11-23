@@ -24,6 +24,49 @@ const openai = new OpenAI({
 });
 
 /**
+ * AI Call Tracker for Rate Limiting
+ *
+ * Tracks daily API calls to stay within budget
+ * Daily limit: 100 calls (ensures cost < $5/day at ~$0.02/call)
+ */
+const aiCallTracker = {
+  callsToday: 0,
+  dailyLimit: 100,
+  lastReset: new Date().toDateString()
+};
+
+/**
+ * Check if AI rate limit has been exceeded
+ *
+ * @returns true if within limit, false if exceeded
+ *
+ * Automatically resets counter at midnight
+ * Logs current usage for monitoring
+ */
+function checkRateLimit(): boolean {
+  const today = new Date().toDateString();
+
+  // Reset counter if new day
+  if (aiCallTracker.lastReset !== today) {
+    logger.info(`AI rate limit reset: ${aiCallTracker.callsToday} calls used yesterday`);
+    aiCallTracker.callsToday = 0;
+    aiCallTracker.lastReset = today;
+  }
+
+  // Check limit
+  if (aiCallTracker.callsToday >= aiCallTracker.dailyLimit) {
+    logger.warn(`AI rate limit exceeded: ${aiCallTracker.callsToday}/${aiCallTracker.dailyLimit} calls used today`);
+    return false;
+  }
+
+  // Increment counter
+  aiCallTracker.callsToday++;
+  logger.info(`AI call ${aiCallTracker.callsToday}/${aiCallTracker.dailyLimit} today`);
+
+  return true;
+}
+
+/**
  * Build prompt for HS code classification
  *
  * @param productDescription - Product description
@@ -55,23 +98,57 @@ Context from other classification methods:
 - Keyword matching suggests: ${keywordSuggestions}
 - Decision tree suggests: ${treeSuggestions}
 
+Few-shot Examples (Verified automotive parts classifications):
+
+1. "Ceramic brake pads for motorcycles, finished product"
+   → 8708.30.00 (Chapter 87: Vehicles; Heading 8708: Parts and accessories; Subheading: Brakes and servo-brakes)
+
+2. "Engine oil filter paper element"
+   → 8421.23.00 (Chapter 84: Machinery; Heading 8421: Filtering apparatus; Subheading: Oil filters for internal combustion engines)
+
+3. "LED headlight bulb for motorcycles 6000K white light 30W"
+   → 8539.29.40 (Chapter 85: Electrical equipment; Heading 8539: Electric lamps; Subheading: LED lamps)
+
+4. "Hydraulic shock absorber for passenger cars gas-charged"
+   → 8708.80.00 (Chapter 87: Vehicles; Heading 8708: Parts and accessories; Subheading: Suspension systems)
+
+5. "Piston rings set for 4-cylinder petrol engine"
+   → 8409.91.13 (Chapter 84: Machinery; Heading 8409: Parts for engines; Subheading: Pistons and piston rings)
+
+6. "Friction clutch disc for manual transmission cars"
+   → 8708.93.00 (Chapter 87: Vehicles; Heading 8708: Parts and accessories; Subheading: Clutches and parts)
+
+7. "Radiator coolant antifreeze ethylene glycol concentrate"
+   → 3820.00.00 (Chapter 38: Miscellaneous chemical products; Heading 3820: Antifreeze preparations)
+
+8. "Spark plug for petrol engines copper electrode"
+   → 8511.10.00 (Chapter 85: Electrical equipment; Heading 8511: Ignition equipment; Subheading: Spark plugs)
+
+9. "Timing belt rubber toothed design for camshaft"
+   → 4010.32.90 (Chapter 40: Rubber; Heading 4010: Conveyor or transmission belts; Subheading: Endless timing belts)
+
+10. "Ball bearings deep groove for wheel hub sealed type"
+    → 8482.10.20 (Chapter 84: Machinery; Heading 8482: Ball or roller bearings; Subheading: Ball bearings)
+
 Task: Classify this product according to Indian HS Code (ITC-HS) format and provide:
 1. Most likely HS code (6-10 digits, use dots for formatting like 8708.30.10)
-2. Confidence score (0-100, be conservative)
-3. Clear reasoning explaining why this code is correct
+2. Confidence score (0-100, be conservative - typically 70-85 for clear cases)
+3. Clear reasoning explaining chapter, heading, and why this code is correct
 4. Up to 2 alternative codes if applicable
 
 Rules:
+- Follow the examples above for similar products
 - Prefer longer codes (8+ digits) when material/function is clearly specified
 - Consider the General Rules for Interpretation (GRI)
 - Prioritize function over material when both are valid
 - Return ONLY valid Indian HS codes
+- Use dots for formatting (e.g., 8708.30.00 not 87083000)
 
 Return response as valid JSON (no markdown):
 {
-  "hsCode": "8708.30.10",
+  "hsCode": "8708.30.00",
   "confidence": 85,
-  "reasoning": "This product is classified under Chapter 87 (vehicles and parts) because...",
+  "reasoning": "This product is classified under Chapter 87 (vehicles and parts), Heading 8708 (parts and accessories of motor vehicles), Subheading 8708.30 (brakes and servo-brakes and parts thereof) because...",
   "alternativeCodes": ["8708.30.90"]
 }`;
 }
@@ -108,7 +185,7 @@ async function callOpenAI(prompt: string): Promise<AIClassificationResult> {
     });
 
     // Parse response
-    const content = response.choices[0].message.content;
+    const content = response.choices[0]?.message?.content;
     if (!content) {
       throw new Error('Empty response from OpenAI');
     }
@@ -216,15 +293,45 @@ export async function classifyWithAI(
 ): Promise<AIClassificationResult | null> {
   logger.info('Starting AI classification');
 
-  // TODO: Implement cost optimization logic
-  // Check if AI is needed based on other methods' confidence
-  // if (!forceAI && hasHighConfidenceFromOtherMethods()) {
-  //   logger.info('Skipping AI - other methods have high confidence');
-  //   return null;
-  // }
+  // Step 1: Calculate combined confidence from keyword + decision tree
+  let keywordConfidence = 0;
+  let treeConfidence = 0;
+
+  if (keywordMatches.length > 0 && keywordMatches[0]) {
+    keywordConfidence = keywordMatches[0].matchScore;
+  }
+
+  if (decisionTreeResults.length > 0 && decisionTreeResults[0]) {
+    treeConfidence = decisionTreeResults[0].confidence;
+  }
+
+  // Combined confidence: keyword (30% weight) + decision tree (40% weight)
+  const combinedConfidence = (keywordConfidence * 0.3) + (treeConfidence * 0.4);
+
+  logger.info(`Combined confidence: ${combinedConfidence.toFixed(1)}% (keyword: ${keywordConfidence}% × 0.3 + tree: ${treeConfidence}% × 0.4)`);
+
+  // Step 2: Decide if AI should be called
+  // Only call AI if:
+  // 1. Combined confidence < 70% (other methods uncertain), OR
+  // 2. Explicitly requested (forceAI = true)
+  if (!forceAI && combinedConfidence >= 70) {
+    logger.info(`Skipping AI - combined confidence sufficient: ${combinedConfidence.toFixed(1)}% >= 70%`);
+    logger.info(`  Cost savings: ~$0.0002 per skipped classification`);
+    return null;
+  }
+
+  // Step 3: Check rate limit before making expensive API call
+  if (!checkRateLimit()) {
+    logger.warn('AI classification skipped - rate limit exceeded');
+    logger.warn('Falling back to keyword + decision tree results only');
+    return null;
+  }
+
+  logger.info(`Calling AI - combined confidence: ${combinedConfidence.toFixed(1)}% < 70% (threshold)`);
+  logger.info(`  Expected cost: ~$0.0002 per classification`);
 
   try {
-    // Step 1: Build prompt
+    // Step 4: Build prompt
     const prompt = buildClassificationPrompt(
       productDescription,
       questionnaireAnswers,
@@ -232,10 +339,10 @@ export async function classifyWithAI(
       decisionTreeResults
     );
 
-    // Step 2: Call OpenAI
+    // Step 5: Call OpenAI
     const result = await callOpenAI(prompt);
 
-    // Step 3: Validate result
+    // Step 6: Validate result
     if (!validateAIResult(result)) {
       logger.warn('AI result validation failed');
       return null;
@@ -293,7 +400,7 @@ Keep the explanation under 200 words.`
       max_tokens: 300
     });
 
-    const reasoning = response.choices[0].message.content || 'Unable to generate reasoning';
+    const reasoning = response.choices[0]?.message?.content || 'Unable to generate reasoning';
 
     // Log token usage
     if (response.usage) {

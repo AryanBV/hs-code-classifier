@@ -67,6 +67,39 @@ export class ApiError extends Error {
 }
 
 /**
+ * Fetch with timeout using AbortController
+ * @param url - Request URL
+ * @param options - Fetch options
+ * @param timeout - Timeout in milliseconds (default: 30000ms = 30s)
+ */
+async function fetchWithTimeout(
+  url: string,
+  options: RequestInit = {},
+  timeout: number = 30000
+): Promise<Response> {
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), timeout)
+
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal,
+    })
+    clearTimeout(timeoutId)
+    return response
+  } catch (error) {
+    clearTimeout(timeoutId)
+
+    // Check if request was aborted (timeout)
+    if (error instanceof Error && error.name === 'AbortError') {
+      throw new ApiError('Request timeout - server took too long to respond', 408)
+    }
+
+    throw error
+  }
+}
+
+/**
  * Generic fetch wrapper with error handling
  */
 async function fetchAPI<T>(
@@ -76,7 +109,7 @@ async function fetchAPI<T>(
   const url = `${API_BASE_URL}${endpoint}`
 
   try {
-    const response = await fetch(url, {
+    const response = await fetchWithTimeout(url, {
       ...options,
       headers: {
         'Content-Type': 'application/json',
@@ -84,11 +117,21 @@ async function fetchAPI<T>(
       },
     })
 
-    const data = await response.json()
+    // Try to parse JSON response
+    let data: any
+    try {
+      data = await response.json()
+    } catch (jsonError) {
+      // JSON parse error - server returned non-JSON response
+      throw new ApiError(
+        'Invalid server response - expected JSON',
+        response.status
+      )
+    }
 
     if (!response.ok) {
       throw new ApiError(
-        data.message || 'API request failed',
+        data.message || data.error || 'API request failed',
         response.status,
         data
       )
@@ -100,9 +143,17 @@ async function fetchAPI<T>(
       throw error
     }
 
-    // Network error or JSON parse error
+    // Network error (offline, CORS, etc.)
+    if (error instanceof TypeError) {
+      throw new ApiError(
+        'Network error - please check your internet connection',
+        0
+      )
+    }
+
+    // Unknown error
     throw new ApiError(
-      error instanceof Error ? error.message : 'Network error',
+      error instanceof Error ? error.message : 'Unknown error occurred',
       0
     )
   }
@@ -156,17 +207,6 @@ export async function getClassificationHistory(
   limit: number = 10
 ): Promise<{ history: any[]; count: number }> {
   return fetchAPI(`/api/history?sessionId=${sessionId}&limit=${limit}`)
-}
-
-/**
- * Get available product categories
- *
- * @returns List of available categories
- *
- * TODO: Implement in Phase 2
- */
-export async function getCategories(): Promise<{ categories: any[] }> {
-  return fetchAPI('/api/categories')
 }
 
 /**

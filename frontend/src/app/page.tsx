@@ -3,44 +3,55 @@
 import { useState } from "react"
 import { ClassificationForm } from "@/components/ClassificationForm"
 import { ResultsDisplay } from "@/components/ResultsDisplay"
+import { classifyProduct, ApiError } from "@/lib/api-client"
+import { AlertCircle } from "lucide-react"
 
 /**
  * Home page - Main classification interface
  *
+ * Mobile-first responsive design with:
+ * - Responsive typography (3xl mobile → 5xl desktop)
+ * - Responsive spacing (py-6 mobile → py-12 desktop)
+ * - Single column mobile → 3 column grid on tablet+
+ * - Connected to backend API for real classifications
+ *
  * Flow:
  * 1. User fills out classification form
- * 2. Form submits to backend API
- * 3. Results displayed with confidence scores
+ * 2. Form submits to backend API (localhost:3001)
+ * 3. Results displayed with confidence scores and reasoning
  */
 export default function HomePage() {
   const [classificationResult, setClassificationResult] = useState<any>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   /**
-   * Handle form submission
-   * TODO: Implement in Phase 2
+   * Handle form submission - Uses API client with error handling
    */
   const handleClassify = async (formData: any) => {
     setIsLoading(true)
+    setError(null)
 
     try {
-      // TODO: Call API client to classify product
-      // const result = await classifyProduct(formData)
-      // setClassificationResult(result)
-
-      console.log('Classification requested:', formData)
-
-      // Placeholder result
-      setClassificationResult({
-        success: true,
-        results: [],
-        message: 'Classification will be implemented in Phase 2'
+      const result = await classifyProduct({
+        productDescription: formData.productDescription,
+        destinationCountry: formData.destinationCountry || 'IN',
       })
-    } catch (error) {
-      console.error('Classification error:', error)
+
+      setClassificationResult(result)
+    } catch (err) {
+      console.error('Classification error:', err)
+
+      if (err instanceof ApiError) {
+        setError(err.message)
+      } else {
+        setError('An unexpected error occurred. Please try again.')
+      }
+
+      // Show error in results display
       setClassificationResult({
         success: false,
-        error: 'Classification failed'
+        error: err instanceof ApiError ? err.message : 'Classification failed',
       })
     } finally {
       setIsLoading(false)
@@ -52,16 +63,37 @@ export default function HomePage() {
    */
   const handleReset = () => {
     setClassificationResult(null)
+    setError(null)
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 md:py-12">
-      {/* Hero Section */}
-      <div className="max-w-4xl mx-auto text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
+    <div className="container mx-auto px-4 py-6 md:py-12">
+      {/* Error Banner - Mobile Optimized */}
+      {error && !classificationResult && (
+        <div className="max-w-4xl mx-auto mb-6">
+          <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4 flex items-start gap-3">
+            <AlertCircle className="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <p className="text-sm font-medium text-destructive">
+                {error}
+              </p>
+            </div>
+            <button
+              onClick={() => setError(null)}
+              className="text-destructive hover:text-destructive/80"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Hero Section - Mobile Optimized */}
+      <div className="max-w-4xl mx-auto text-center mb-8 md:mb-12">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-3 md:mb-4">
           AI-Powered HS Code Classification
         </h1>
-        <p className="text-xl text-muted-foreground mb-2">
+        <p className="text-lg sm:text-xl text-muted-foreground mb-2">
           Reduce classification time from 30 minutes to 2 minutes
         </p>
         <p className="text-sm text-muted-foreground">
@@ -84,28 +116,28 @@ export default function HomePage() {
         )}
       </div>
 
-      {/* Features Section */}
+      {/* Features Section - Mobile Grid */}
       {!classificationResult && (
-        <div className="max-w-5xl mx-auto mt-16 grid md:grid-cols-3 gap-8">
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">30%</div>
+        <div className="max-w-5xl mx-auto mt-12 md:mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8">
+          <div className="text-center p-4 rounded-lg bg-muted/30">
+            <div className="text-2xl md:text-3xl font-bold text-primary mb-2">30%</div>
             <div className="text-sm font-medium mb-1">Keyword Matching</div>
             <div className="text-xs text-muted-foreground">
               PostgreSQL full-text search
             </div>
           </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">40%</div>
+          <div className="text-center p-4 rounded-lg bg-muted/30">
+            <div className="text-2xl md:text-3xl font-bold text-primary mb-2">40%</div>
             <div className="text-sm font-medium mb-1">Decision Trees</div>
             <div className="text-xs text-muted-foreground">
               Rule-based classification
             </div>
           </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">30%</div>
+          <div className="text-center p-4 rounded-lg bg-muted/30">
+            <div className="text-2xl md:text-3xl font-bold text-primary mb-2">30%</div>
             <div className="text-sm font-medium mb-1">AI Reasoning</div>
             <div className="text-xs text-muted-foreground">
-              OpenAI GPT-4o powered
+              OpenAI GPT-4o-mini powered
             </div>
           </div>
         </div>
