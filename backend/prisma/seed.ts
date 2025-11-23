@@ -5,7 +5,25 @@ import * as path from 'path';
 const prisma = new PrismaClient();
 
 async function main() {
-  const dataPath = path.join(__dirname, '../../data/hs_codes_seed.json');
+  // Try multiple possible paths for the HS codes JSON file
+  const possiblePaths = [
+    path.join(__dirname, 'hs-codes.json'),              // Railway: backend/prisma/hs-codes.json
+    path.join(__dirname, '../../data/hs_codes_seed.json'), // Local: data/hs_codes_seed.json
+  ];
+
+  let dataPath = '';
+  for (const p of possiblePaths) {
+    if (fs.existsSync(p)) {
+      dataPath = p;
+      break;
+    }
+  }
+
+  if (!dataPath) {
+    throw new Error('HS codes JSON file not found. Checked: ' + possiblePaths.join(', '));
+  }
+
+  console.log(`Loading HS codes from: ${dataPath}`);
   const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
 
   console.log(`Seeding ${data.length} HS codes...`);
