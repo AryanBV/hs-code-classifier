@@ -95,184 +95,204 @@ const automotivePartsDecisionTree = {
   ],
   rules: [
     // ========================================
-    // Braking System Rules
+    // Braking System Rules (Keyword-based)
     // ========================================
     {
       conditions: {
-        q1: 'Braking system',
-        q2_brake: 'Brake pads/shoes'
+        keywords: ['brake', 'pad']
       },
       suggestedCodes: ['8708.30.00'],
       confidenceBoost: 90
     },
     {
       conditions: {
-        q1: 'Braking system',
-        q2_brake: 'Brake disc/rotor'
+        keywords: ['brake', 'disc']
       },
       suggestedCodes: ['8708.30.00'],
       confidenceBoost: 90
     },
     {
       conditions: {
-        q1: 'Braking system',
-        q2_brake: 'Brake fluid'
+        keywords: ['brake', 'rotor']
+      },
+      suggestedCodes: ['8708.30.00'],
+      confidenceBoost: 90
+    },
+    {
+      conditions: {
+        keywords: ['brake', 'fluid']
       },
       suggestedCodes: ['3819.00.10'],
       confidenceBoost: 95
     },
     {
       conditions: {
-        q1: 'Braking system',
-        q2_brake: 'Brake assembly/parts'
+        keywords: ['brake']
       },
       suggestedCodes: ['8708.30.00'],
-      confidenceBoost: 85
+      confidenceBoost: 80
     },
 
     // ========================================
-    // Engine Component Rules
+    // Engine Component Rules (Keyword-based)
     // ========================================
     {
       conditions: {
-        q1: 'Engine component',
-        q3_engine: 'Piston/piston rings'
+        keywords: ['piston']
       },
       suggestedCodes: ['8409.91.13'],
       confidenceBoost: 90
     },
     {
       conditions: {
-        q1: 'Engine component',
-        q3_engine: 'Spark plug'
+        keywords: ['spark', 'plug']
       },
       suggestedCodes: ['8511.10.00'],
       confidenceBoost: 95
     },
     {
       conditions: {
-        q1: 'Engine component',
-        q3_engine: 'Fuel pump'
+        keywords: ['fuel', 'pump']
       },
       suggestedCodes: ['8413.30.20'],
       confidenceBoost: 90
     },
 
     // ========================================
-    // Filtration System Rules
+    // Filtration System Rules (Keyword-based)
     // ========================================
     {
       conditions: {
-        q1: 'Filtration system',
-        q4_filter: 'Oil filter'
+        keywords: ['oil', 'filter']
       },
       suggestedCodes: ['8421.23.00'],
       confidenceBoost: 95
     },
     {
       conditions: {
-        q1: 'Filtration system',
-        q4_filter: 'Air filter'
+        keywords: ['air', 'filter']
       },
       suggestedCodes: ['8421.31.00'],
       confidenceBoost: 95
     },
 
     // ========================================
-    // Electrical/Lighting Rules
+    // Electrical/Lighting Rules (Keyword-based)
     // ========================================
     {
       conditions: {
-        q1: 'Electrical/Lighting',
-        q5_electrical: 'Headlight/lamp assembly'
+        keywords: ['headlight']
       },
       suggestedCodes: ['8512.20.10'],
       confidenceBoost: 90
     },
     {
       conditions: {
-        q1: 'Electrical/Lighting',
-        q5_electrical: 'Light bulb'
+        keywords: ['bulb', 'light']
       },
       suggestedCodes: ['8539.29.40'],
       confidenceBoost: 85
     },
     {
       conditions: {
-        q1: 'Electrical/Lighting',
-        q5_electrical: 'Wiper blade'
+        keywords: ['wiper']
       },
       suggestedCodes: ['8512.40.00'],
       confidenceBoost: 95
     },
     {
       conditions: {
-        q1: 'Electrical/Lighting',
-        q5_electrical: 'Alternator/generator'
+        keywords: ['alternator']
       },
       suggestedCodes: ['8511.50.00'],
       confidenceBoost: 90
     },
 
     // ========================================
-    // Suspension System Rules
+    // Suspension System Rules (Keyword-based)
     // ========================================
     {
       conditions: {
-        q1: 'Suspension system'
+        keywords: ['suspension']
       },
       suggestedCodes: ['8708.80.00'],
       confidenceBoost: 85
     },
+    {
+      conditions: {
+        keywords: ['shock', 'absorber']
+      },
+      suggestedCodes: ['8708.80.00'],
+      confidenceBoost: 90
+    },
 
     // ========================================
-    // Transmission Component Rules
+    // Transmission Component Rules (Keyword-based)
     // ========================================
     {
       conditions: {
-        q1: 'Transmission component'
+        keywords: ['transmission']
       },
       suggestedCodes: ['8708.93.00'],
       confidenceBoost: 80
     },
-
-    // ========================================
-    // Exhaust System Rules
-    // ========================================
     {
       conditions: {
-        q1: 'Exhaust system'
+        keywords: ['clutch']
       },
-      suggestedCodes: ['8708.92.00'],
+      suggestedCodes: ['8708.93.00'],
       confidenceBoost: 85
     },
 
     // ========================================
-    // Cooling System Rules
+    // Exhaust System Rules (Keyword-based)
     // ========================================
     {
       conditions: {
-        q1: 'Cooling system',
-        keywords: ['coolant', 'antifreeze']
+        keywords: ['exhaust']
+      },
+      suggestedCodes: ['8708.92.00'],
+      confidenceBoost: 85
+    },
+    {
+      conditions: {
+        keywords: ['muffler']
+      },
+      suggestedCodes: ['8708.92.00'],
+      confidenceBoost: 90
+    },
+
+    // ========================================
+    // Cooling System Rules (Keyword-based)
+    // ========================================
+    {
+      conditions: {
+        keywords: ['coolant']
       },
       suggestedCodes: ['3820.00.00'],
       confidenceBoost: 95
     },
     {
       conditions: {
-        q1: 'Cooling system',
-        q6_material: 'Rubber'
+        keywords: ['antifreeze']
+      },
+      suggestedCodes: ['3820.00.00'],
+      confidenceBoost: 95
+    },
+    {
+      conditions: {
+        keywords: ['radiator', 'hose']
       },
       suggestedCodes: ['4009.31.00'],
       confidenceBoost: 85
     },
 
     // ========================================
-    // Bearing/Rotation Rules
+    // Bearing/Rotation Rules (Keyword-based)
     // ========================================
     {
       conditions: {
-        q1: 'Bearing/Rotation'
+        keywords: ['bearing']
       },
       suggestedCodes: ['8482.10.20'],
       confidenceBoost: 85
