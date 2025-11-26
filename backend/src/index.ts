@@ -2,7 +2,9 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import classifyRoutes from './routes/classify.routes';
+import vectorSearchRoutes from './routes/vector-search.routes';
 import { logger } from './utils/logger';
+import { rateLimiter, startRateLimitCleanup } from './middleware/rateLimiter';
 
 // Load environment variables
 dotenv.config();
@@ -13,6 +15,14 @@ const PORT = process.env.PORT || 3001;
 // ========================================
 // Middleware
 // ========================================
+
+// Start rate limit cleanup
+startRateLimitCleanup();
+
+// Rate limiter middleware
+const windowMs = parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000');
+const maxRequests = parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100');
+app.use(rateLimiter(windowMs, maxRequests));
 
 // CORS configuration - Support multiple origins
 const allowedOrigins = process.env.FRONTEND_URL
@@ -59,6 +69,7 @@ app.get('/health', (req: Request, res: Response) => {
 
 // API routes
 app.use('/api', classifyRoutes);
+app.use('/api/vector-search', vectorSearchRoutes);
 
 // 404 handler
 app.use((req: Request, res: Response) => {

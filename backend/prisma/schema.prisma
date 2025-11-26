@@ -8,6 +8,8 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  // directUrl is optional for migrations from pooler connection
+  // directUrl = env("DIRECT_URL")
 }
 
 // ========================================
@@ -15,29 +17,59 @@ datasource db {
 // ========================================
 model HsCode {
   id               Int      @id @default(autoincrement())
-  code             String   @db.VarChar(20)
-  chapter          String   @db.VarChar(2)
-  heading          String   @db.VarChar(4)
-  subheading       String   @db.VarChar(6)
-  countryCode      String   @map("country_code") @db.VarChar(2)
-  description      String   @db.Text
-  keywords         String[] // PostgreSQL text array
-  commonProducts   String[] @map("common_products") // PostgreSQL text array
-  parentCode       String?  @map("parent_code") @db.VarChar(20)
+  code             String   @unique @db.VarChar(20) // "0101.21.00"
+  description      String   @db.Text // Official description
+  descriptionClean String?  @map("description_clean") @db.Text // Cleaned description
+  chapter          String   @db.VarChar(50) // "01"
+  heading          String   @db.VarChar(50) // "0101.21"
+  subheading       String?  @db.VarChar(50) // "0101.21.00"
+  countryCode      String   @default("IN") @map("country_code") @db.VarChar(2)
+  dutyRate         String?  @map("duty_rate") @db.VarChar(50) // "10%"
+  keywords         String[] // ["brake", "pad", "ceramic"]
+  commonProducts   String[] @map("common_products") // ["Ceramic brake pads", ...]
+  synonyms         String[] // ["brake pads", "brake linings"]
+  embedding        Unsupported("vector(1536)")? // pgvector for semantic search
+
+  // Hierarchy helpers
+  isOther          Boolean  @default(false) @map("is_other") // True if description contains "Other"
+  parentHeading    String?  @map("parent_heading") @db.VarChar(50) // Link to parent for hierarchy
+
+  // Metadata
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
 
-  // Indexes
+  // Indexes for fast lookup
   @@index([code], name: "idx_code")
-  @@index([countryCode], name: "idx_country_code")
   @@index([chapter], name: "idx_chapter")
   @@index([heading], name: "idx_heading")
-  // Note: GIN index for keywords array needs to be added via raw SQL migration
+  @@index([countryCode], name: "idx_country_code")
+  // Vector index - requires pgvector extension
+  // Note: This syntax may need adjustment based on Prisma version
+  // Alternative: Add via raw SQL migration if not supported
   @@map("hs_codes")
 }
 
 // ========================================
-// Table 2: Decision Trees
+// Table 2: Product Synonyms
+// ========================================
+model ProductSynonym {
+  id            Int      @id @default(autoincrement())
+  canonicalTerm String   @map("canonical_term") @db.VarChar(200) // "antifreeze"
+  synonyms      String[] // ["coolant", "engine coolant", ...]
+  hsCode        String   @map("hs_code") @db.VarChar(20) // "3820.00.00"
+  category      String   @db.VarChar(100) // "Automotive Fluids"
+  confidence    Float    @default(1.0) // 0.0-1.0
+
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@index([canonicalTerm], name: "idx_canonical_term")
+  @@index([hsCode], name: "idx_synonym_hs_code")
+  @@map("product_synonyms")
+}
+
+// ========================================
+// Table 3: Decision Trees
 // ========================================
 model DecisionTree {
   id            Int      @id @default(autoincrement())
@@ -50,7 +82,7 @@ model DecisionTree {
 }
 
 // ========================================
-// Table 3: User Classifications
+// Table 4: User Classifications
 // ========================================
 model UserClassification {
   id                     Int       @id @default(autoincrement())
@@ -74,7 +106,7 @@ model UserClassification {
 }
 
 // ========================================
-// Table 4: Country Mappings
+// Table 5: Country Mappings
 // ========================================
 model CountryMapping {
   id                   Int      @id @default(autoincrement())
@@ -91,4 +123,25 @@ model CountryMapping {
   @@index([country], name: "idx_country")
   @@unique([indiaCode, country], name: "unique_india_code_country")
   @@map("country_mappings")
+}
+
+// ========================================
+// Table 6: Classification Feedback
+// ========================================
+model ClassificationFeedback {
+  id                   Int      @id @default(autoincrement())
+  sessionId            String?  @map("session_id") @db.VarChar(100)
+  productDescription   String   @map("product_description") @db.Text
+  suggestedCode        String   @map("suggested_code") @db.VarChar(20)
+  confidence           Float    // AI confidence score 0.0-1.0
+  userFeedback         String   @map("user_feedback") @db.VarChar(20) // "correct", "incorrect", "unsure"
+  correctedCode        String?  @map("corrected_code") @db.VarChar(20)
+  feedbackNotes        String?  @map("feedback_notes") @db.Text
+  
+  createdAt            DateTime @default(now()) @map("created_at")
+
+  @@index([suggestedCode], name: "idx_feedback_suggested_code")
+  @@index([userFeedback], name: "idx_user_feedback")
+  @@index([createdAt], name: "idx_feedback_created")
+  @@map("classification_feedback")
 }
