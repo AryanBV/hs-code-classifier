@@ -210,6 +210,68 @@ export async function getClassificationHistory(
 }
 
 /**
+ * Semantic search for HS codes
+ *
+ * @param query - Natural language search query
+ * @param limit - Number of results to return (default: 10)
+ * @returns Array of matching HS codes with similarity scores
+ */
+export async function searchCodes(
+  query: string,
+  limit: number = 10
+): Promise<{ results: any[]; total: number }> {
+  return fetchAPI('/api/vector-search/search', {
+    method: 'POST',
+    body: JSON.stringify({ query, limit }),
+  })
+}
+
+/**
+ * Hybrid search combining keyword and semantic search
+ *
+ * @param query - Search query
+ * @param limit - Number of results to return (default: 10)
+ * @returns Array of matching HS codes ranked by relevance
+ */
+export async function hybridSearch(
+  query: string,
+  limit: number = 10
+): Promise<{ results: any[]; total: number }> {
+  return fetchAPI('/api/vector-search/hybrid-search', {
+    method: 'POST',
+    body: JSON.stringify({ query, limit }),
+  })
+}
+
+/**
+ * Find similar HS codes to a given code
+ *
+ * @param hsCode - HS code to find similar codes for
+ * @param limit - Number of results to return (default: 10)
+ * @returns Array of similar HS codes
+ */
+export async function findSimilarCodes(
+  hsCode: string,
+  limit: number = 10
+): Promise<{ results: any[]; total: number }> {
+  return fetchAPI(`/api/vector-search/similar/${hsCode}?limit=${limit}`)
+}
+
+/**
+ * Get system statistics
+ *
+ * @returns Database and system statistics
+ */
+export async function getSystemStats(): Promise<{
+  totalCodes: number
+  codesWithEmbeddings: number
+  embeddingDimension: number
+  lastUpdated: string
+}> {
+  return fetchAPI('/api/vector-search/stats')
+}
+
+/**
  * Health check
  *
  * @returns Server health status

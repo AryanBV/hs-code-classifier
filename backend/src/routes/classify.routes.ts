@@ -2,6 +2,13 @@ import { Router, Request, Response } from 'express';
 import { classifyProduct } from '../services/confidence-scorer.service';
 import { ClassifyRequest, ClassifyResponse, ErrorResponse } from '../types/classification.types';
 import { logger } from '../utils/logger';
+import {
+  submitFeedback,
+  getStats,
+  getHistory,
+  getCategoryStats,
+  clearFeedback
+} from '../controllers/feedback.controller';
 
 const router = Router();
 
@@ -29,8 +36,7 @@ router.post('/classify', async (req: Request, res: Response) => {
 
     logger.info(`Classification request for: "${requestData.productDescription.substring(0, 50)}..."`);
 
-    // TODO: Implement classification logic
-    // This will call the confidence scorer which orchestrates all 3 methods
+    // Call the classification service which now uses vector search + AI reasoning
     const result: ClassifyResponse = await classifyProduct(requestData);
 
     logger.info(`Classification completed with ${result.results.length} results`);
@@ -59,44 +65,54 @@ router.post('/classify', async (req: Request, res: Response) => {
  *
  * Submit user feedback on a classification result
  *
- * @body {classificationId, feedback, correctedCode?}
- * @returns {success, message}
+ * @body {classificationId, productDescription, suggestedCode, rating, userCorrectedCode?, feedbackNotes?}
+ * @returns {success, message, data}
+ * @status 201 Created, 400 Bad Request, 500 Server Error
  */
-router.post('/feedback', async (req: Request, res: Response) => {
-  try {
-    const { classificationId, feedback, correctedCode } = req.body;
+router.post('/feedback', submitFeedback);
 
-    // TODO: Validate input
-    if (!classificationId || !feedback) {
-      return res.status(400).json({
-        error: 'Validation Error',
-        message: 'classificationId and feedback are required',
-        timestamp: new Date().toISOString()
-      });
-    }
+/**
+ * GET /api/feedback/stats
+ *
+ * Get aggregated feedback statistics across all classifications
+ *
+ * @query {startDate?, endDate?, chapter?, limit?}
+ * @returns {success, data: {totalFeedback, averageRating, correctionRate, top3Corrections, categoryPerformance}}
+ * @status 200 OK, 500 Server Error
+ */
+router.get('/feedback/stats', getStats);
 
-    // TODO: Implement feedback storage in database
-    // Update user_classifications table with feedback
+/**
+ * GET /api/feedback/history
+ *
+ * Get paginated feedback history
+ *
+ * @query {page=1, limit=20, classificationId?}
+ * @returns {success, data: {records, pagination: {total, page, pageSize, totalPages, hasMore}}}
+ * @status 200 OK, 400 Bad Request, 500 Server Error
+ */
+router.get('/feedback/history', getHistory);
 
-    logger.info(`Feedback received for classification ${classificationId}: ${feedback}`);
+/**
+ * GET /api/feedback/category/:chapter
+ *
+ * Get feedback statistics for a specific HS chapter
+ *
+ * @param {chapter} - 2-digit HS chapter code (e.g., "52" for textiles)
+ * @returns {success, data: {chapter, totalFeedback, averageRating, correctionRate, recentFeedback}}
+ * @status 200 OK, 400 Bad Request, 404 Not Found, 500 Server Error
+ */
+router.get('/feedback/category/:chapter', getCategoryStats);
 
-    return res.status(200).json({
-      success: true,
-      message: 'Feedback recorded successfully',
-      timestamp: new Date().toISOString()
-    });
-
-  } catch (error) {
-    logger.error('Error in /api/feedback endpoint');
-    logger.error(error instanceof Error ? error.message : String(error));
-
-    return res.status(500).json({
-      error: 'Internal Server Error',
-      message: 'Failed to record feedback',
-      timestamp: new Date().toISOString()
-    });
-  }
-});
+/**
+ * DELETE /api/feedback/clear
+ *
+ * Clear all feedback records (admin only, for testing)
+ *
+ * @returns {success, message}
+ * @status 200 OK, 500 Server Error
+ */
+router.delete('/feedback/clear', clearFeedback);
 
 /**
  * GET /api/history

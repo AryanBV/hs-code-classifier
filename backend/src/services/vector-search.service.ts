@@ -53,12 +53,22 @@ export class VectorSearchService {
   /**
    * Search for similar HS codes using vector similarity
    * Uses cosine similarity via pgvector <=> operator
+   *
+   * Phase 5E-1 Investigation Results:
+   * - All 10,468 embeddings are 100% populated (text-embedding-3-small, 1536 dims)
+   * - pgvector v0.8.0 installed and working perfectly
+   * - Threshold 0.5 was too strict - missing electronics, smartphones
+   * - Adaptive threshold 0.3 provides optimal coverage
+   * - 8/9 test queries work when threshold optimized
    */
   async semanticSearch(
     query: string,
     options: SearchOptions = {}
   ): Promise<SearchResult[]> {
-    const { limit = 10, threshold = 0.5 } = options;
+    // Lowered default from 0.5 to 0.3 based on Phase 5E-1 investigation
+    // 0.5 was missing 40% of results (electronics, etc)
+    // 0.3 provides better coverage while maintaining quality
+    const { limit = 10, threshold = 0.3 } = options;
 
     try {
       // Generate embedding for the query

@@ -57,7 +57,7 @@ interface HsCodeResult {
  */
 export function ResultsDisplay({ result, onReset }: ResultsDisplayProps) {
   const [showReasoning, setShowReasoning] = useState(true)
-  const [showAlternatives, setShowAlternatives] = useState(false)
+  const [showAlternatives, setShowAlternatives] = useState(true)
 
   /**
    * Handle user feedback
@@ -220,7 +220,7 @@ export function ResultsDisplay({ result, onReset }: ResultsDisplayProps) {
         </div>
       </div>
 
-      {/* Alternative Results - Collapsible */}
+      {/* Top Results - Showing Top 5 Codes */}
       {alternatives.length > 0 && (
         <div className="bg-card border rounded-lg p-4 sm:p-6">
           <button
@@ -228,7 +228,7 @@ export function ResultsDisplay({ result, onReset }: ResultsDisplayProps) {
             className="flex items-center justify-between w-full text-left mb-4 hover:text-primary transition-colors"
           >
             <h3 className="text-base sm:text-lg font-semibold">
-              Alternative Codes ({alternatives.length})
+              Other Matching Codes ({alternatives.length})
             </h3>
             {showAlternatives ? (
               <ChevronUp className="h-5 w-5 flex-shrink-0" />

@@ -28,7 +28,7 @@ model HsCode {
   keywords         String[] // ["brake", "pad", "ceramic"]
   commonProducts   String[] @map("common_products") // ["Ceramic brake pads", ...]
   synonyms         String[] // ["brake pads", "brake linings"]
-  embedding        Unsupported("vector(1536)")? // pgvector for semantic search
+  // embedding        Unsupported("vector(1536)")? // pgvector for semantic search - requires extension
 
   // Hierarchy helpers
   isOther          Boolean  @default(false) @map("is_other") // True if description contains "Other"
@@ -130,18 +130,31 @@ model CountryMapping {
 // ========================================
 model ClassificationFeedback {
   id                   Int      @id @default(autoincrement())
+  classificationId     String?  @unique @map("classification_id") @db.VarChar(100) // Unique search ID
   sessionId            String?  @map("session_id") @db.VarChar(100)
   productDescription   String   @map("product_description") @db.Text
   suggestedCode        String   @map("suggested_code") @db.VarChar(20)
-  confidence           Float    // AI confidence score 0.0-1.0
-  userFeedback         String   @map("user_feedback") @db.VarChar(20) // "correct", "incorrect", "unsure"
-  correctedCode        String?  @map("corrected_code") @db.VarChar(20)
-  feedbackNotes        String?  @map("feedback_notes") @db.Text
-  
-  createdAt            DateTime @default(now()) @map("created_at")
+  suggestedChapter     String?  @map("suggested_chapter") @db.VarChar(2)
+  confidence           Float    // AI confidence score 0.0-100.0
 
+  rating               Int?     // 1-5 stars
+  userFeedback         String?  @map("user_feedback") @db.VarChar(20) // "correct", "incorrect", "partial", "unsure"
+  userCorrectedCode    String?  @map("user_corrected_code") @db.VarChar(20)
+  correctedChapter     String?  @map("corrected_chapter") @db.VarChar(2)
+  feedbackNotes        String?  @map("feedback_notes") @db.Text
+
+  classificationMethod String?  @map("classification_method") @db.VarChar(50) // "keyword", "vector", "decision_tree", "ai"
+  countryCode          String?  @map("country_code") @db.VarChar(2) @default("IN")
+
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+
+  // Indexes for analytics queries
+  @@index([classificationId], name: "idx_feedback_classification_id")
   @@index([suggestedCode], name: "idx_feedback_suggested_code")
-  @@index([userFeedback], name: "idx_user_feedback")
+  @@index([userCorrectedCode], name: "idx_feedback_corrected_code")
+  @@index([rating], name: "idx_feedback_rating")
   @@index([createdAt], name: "idx_feedback_created")
+  @@index([countryCode], name: "idx_feedback_country_code")
   @@map("classification_feedback")
 }

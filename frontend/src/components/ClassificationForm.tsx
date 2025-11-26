@@ -181,26 +181,6 @@ export function ClassificationForm({ onSubmit, isLoading }: ClassificationFormPr
           </div>
         </form>
       </div>
-
-      {/* Helper Information */}
-      <div className="mt-4 md:mt-6 px-4 py-3 bg-muted/50 border border-border rounded-lg">
-        <div className="flex items-start gap-3">
-          <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
-            <span className="text-xs font-bold text-primary">i</span>
-          </div>
-          <div className="space-y-1">
-            <p className="text-sm font-medium">How it works</p>
-            <p className="text-xs text-muted-foreground">
-              Our AI analyzes your product description using keyword matching (30%),
-              decision trees (40%), and GPT-4o-mini reasoning (30%) to provide
-              accurate HS code recommendations with confidence scores.
-            </p>
-            <p className="text-xs text-muted-foreground mt-2">
-              ⏱️ Typical classification time: 10-30 seconds
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
   )
 }

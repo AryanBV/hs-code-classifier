@@ -12,7 +12,6 @@ CREATE TABLE "hs_codes" (
     "keywords" TEXT[],
     "common_products" TEXT[],
     "synonyms" TEXT[],
-    "embedding" vector(1536),
     "is_other" BOOLEAN NOT NULL DEFAULT false,
     "parent_heading" VARCHAR(4),
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
