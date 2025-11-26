@@ -282,7 +282,7 @@ export async function getFeedbackRecordCount(): Promise<number> {
 export async function getFeedbackByClassificationId(classificationId: string): Promise<any | null> {
   try {
     try {
-      return await prisma.classificationFeedback.findUnique({
+      return await prisma.classificationFeedback.findFirst({
         where: { classificationId }
       });
     } catch (dbError) {
