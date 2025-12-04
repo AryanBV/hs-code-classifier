@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import classifyRoutes from './routes/classify.routes';
+import classifyLLMRoutes from './routes/classify-llm.routes';
 import vectorSearchRoutes from './routes/vector-search.routes';
 import { logger } from './utils/logger';
 import { rateLimiter, startRateLimitCleanup } from './middleware/rateLimiter';
@@ -69,6 +70,7 @@ app.get('/health', (req: Request, res: Response) => {
 
 // API routes
 app.use('/api', classifyRoutes);
+app.use('/api', classifyLLMRoutes);
 app.use('/api/vector-search', vectorSearchRoutes);
 
 // 404 handler

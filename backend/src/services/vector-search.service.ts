@@ -5,7 +5,6 @@ interface SearchResult {
   id: number;
   code: string;
   description: string;
-  descriptionClean: string;
   chapter: string;
   heading: string;
   subheading: string;
@@ -85,7 +84,6 @@ export class VectorSearchService {
           id,
           code,
           description,
-          description_clean as "descriptionClean",
           chapter,
           heading,
           subheading,
@@ -119,7 +117,7 @@ export class VectorSearchService {
       // Optional keyword filtering
       if (keywords.length > 0) {
         results = results.filter((result) => {
-          const searchText = `${result.description} ${result.descriptionClean}`.toLowerCase();
+          const searchText = result.description.toLowerCase();
           return keywords.some((keyword) => searchText.includes(keyword.toLowerCase()));
         });
       }
@@ -158,7 +156,6 @@ export class VectorSearchService {
           id,
           code,
           description,
-          description_clean as "descriptionClean",
           chapter,
           heading,
           subheading,

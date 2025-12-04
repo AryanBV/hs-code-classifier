@@ -18,7 +18,6 @@ const openai = OPENAI_API_KEY ? new OpenAI({ apiKey: OPENAI_API_KEY }) : null;
 interface HSCodeData {
   hs_code: string;
   description: string;
-  description_clean?: string;
   chapter: string;
   heading: string;
   subheading: string;
@@ -26,6 +25,7 @@ interface HSCodeData {
   keywords?: string[];
   common_products?: string[];
   synonyms?: string[];
+  export_policy?: string;
   embedding?: number[];
 }
 
@@ -81,17 +81,16 @@ async function insertHsCodeWithEmbedding(
       where: { code: code.hs_code },
       update: {
         description: code.description,
-        descriptionClean: code.description_clean || code.description,
         keywords: code.keywords || [],
         commonProducts: code.common_products || [],
         synonyms: code.synonyms || [],
+        exportPolicy: code.export_policy || 'Free',
         isOther,
         updatedAt: new Date(),
       },
       create: {
         code: code.hs_code,
         description: code.description,
-        descriptionClean: code.description_clean || code.description,
         chapter: code.chapter,
         heading: code.heading,
         subheading: code.subheading || code.heading,
@@ -100,6 +99,7 @@ async function insertHsCodeWithEmbedding(
         keywords: code.keywords || [],
         commonProducts: code.common_products || [],
         synonyms: code.synonyms || [],
+        exportPolicy: code.export_policy || 'Free',
         isOther,
         parentHeading,
       },
@@ -181,7 +181,7 @@ async function seedHsCodes(): Promise<void> {
       try {
         // Generate embeddings for batch
         const texts = batch.map(
-          (code) => `${code.hs_code} ${code.description_clean || code.description}`
+          (code) => `${code.hs_code} ${code.description}`
         );
         const embeddings = await generateEmbeddings(texts);
 

@@ -6,10 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  // directUrl is optional for migrations from pooler connection
-  // directUrl = env("DIRECT_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // ========================================
@@ -18,8 +17,7 @@ datasource db {
 model HsCode {
   id               Int      @id @default(autoincrement())
   code             String   @unique @db.VarChar(20) // "0101.21.00"
-  description      String   @db.Text // Official description
-  descriptionClean String?  @map("description_clean") @db.Text // Cleaned description
+  description      String   @db.Text // Official description (no duplicate field)
   chapter          String   @db.VarChar(50) // "01"
   heading          String   @db.VarChar(50) // "0101.21"
   subheading       String?  @db.VarChar(50) // "0101.21.00"
@@ -28,6 +26,8 @@ model HsCode {
   keywords         String[] // ["brake", "pad", "ceramic"]
   commonProducts   String[] @map("common_products") // ["Ceramic brake pads", ...]
   synonyms         String[] // ["brake pads", "brake linings"]
+  exportPolicy     String?  @map("export_policy") @db.VarChar(50) // "Free", "Restricted", "Prohibited"
+  notes            Json?    // JSONB field for all extracted PDF notes
   embedding        Unsupported("vector(1536)")? // pgvector for semantic search - requires extension
 
   // Hierarchy helpers
@@ -42,6 +42,7 @@ model HsCode {
   @@index([code], name: "idx_code")
   @@index([chapter], name: "idx_chapter")
   @@index([heading], name: "idx_heading")
+  @@index([exportPolicy], name: "idx_export_policy")
   @@index([countryCode], name: "idx_country_code")
   // Vector index - requires pgvector extension
   // Note: This syntax may need adjustment based on Prisma version

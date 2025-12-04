@@ -146,7 +146,6 @@ export async function keywordSearch(
       select: {
         code: true,
         description: true,
-        descriptionClean: true,
         keywords: true,
         commonProducts: true,
         synonyms: true
@@ -173,7 +172,7 @@ export async function keywordSearch(
 
         return {
           code: code.code,
-          description: code.descriptionClean || code.description || '',
+          description: code.description || '',
           keywordScore: score,
           matchedKeywords: matched,
           reason
