@@ -160,20 +160,45 @@ async function fetchAPI<T>(
 }
 
 /**
- * Classify a product
+ * Classify a product using LLM-enhanced classification (Phase 8)
  *
  * @param request - Classification request data
  * @returns Classification results
- *
- * TODO: Implement in Phase 2
  */
 export async function classifyProduct(
   request: ClassifyRequest
 ): Promise<ClassifyResponse> {
-  return fetchAPI<ClassifyResponse>('/api/classify', {
+  // Use the new LLM classification endpoint (Phase 8 - 56.7% accuracy)
+  const llmResponse = await fetchAPI<any>('/api/classify-llm', {
     method: 'POST',
-    body: JSON.stringify(request),
+    body: JSON.stringify({
+      productDescription: request.productDescription,
+      candidateLimit: 10
+    }),
   })
+
+  // Transform LLM response to match ClassifyResponse format
+  if (llmResponse.success && llmResponse.result) {
+    return {
+      success: true,
+      results: [{
+        hsCode: llmResponse.result.hsCode,
+        description: llmResponse.result.alternatives?.[0]?.description || '',
+        confidence: llmResponse.result.confidence,
+        reasoning: llmResponse.result.reasoning
+      }],
+      classificationId: `cls_${Date.now()}_${Math.random().toString(36).substring(7)}`,
+      timestamp: llmResponse.timestamp
+    }
+  }
+
+  // Fallback if LLM fails
+  return {
+    success: false,
+    results: [],
+    classificationId: `cls_error_${Date.now()}`,
+    timestamp: new Date().toISOString()
+  }
 }
 
 /**
