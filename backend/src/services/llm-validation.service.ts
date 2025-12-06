@@ -13,6 +13,7 @@ const prisma = new PrismaClient();
 
 export interface ClassificationResult {
   code: string;
+  description: string;
   confidence: number;
   reasoning: string;
   alternatives: Array<{
@@ -184,6 +185,7 @@ export async function classifyWithLLM(
   if (candidates.length === 0) {
     return {
       code: '',
+      description: '',
       confidence: 0,
       reasoning: 'No matching HS codes found',
       alternatives: [],
@@ -211,6 +213,7 @@ export async function classifyWithLLM(
 
   return {
     code: validation.selectedCode,
+    description: selectedDetails?.description || '',
     confidence: validation.confidence,
     reasoning: validation.reasoning,
     alternatives: alternativeDetails.map(alt => ({

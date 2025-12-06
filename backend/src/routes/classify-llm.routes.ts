@@ -39,6 +39,7 @@ router.post('/classify-llm', async (req: Request, res: Response) => {
       success: true,
       result: {
         hsCode: result.code,
+        description: result.description,
         confidence: result.confidence,
         reasoning: result.reasoning,
         alternatives: result.alternatives,

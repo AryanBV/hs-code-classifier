@@ -183,7 +183,7 @@ export async function classifyProduct(
       success: true,
       results: [{
         hsCode: llmResponse.result.hsCode,
-        description: llmResponse.result.alternatives?.[0]?.description || '',
+        description: llmResponse.result.description || '',
         confidence: llmResponse.result.confidence,
         reasoning: llmResponse.result.reasoning
       }],
