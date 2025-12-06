@@ -64,7 +64,13 @@ app.get('/health', (req: Request, res: Response) => {
   res.status(200).json({
     status: 'ok',
     message: 'HS Code Classifier API is running',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    environment: {
+      nodeEnv: process.env.NODE_ENV,
+      hasDatabase: !!process.env.DATABASE_URL,
+      hasOpenAI: !!process.env.OPENAI_API_KEY,
+      port: process.env.PORT || 3001
+    }
   });
 });
 
