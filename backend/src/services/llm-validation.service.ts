@@ -1,7 +1,7 @@
 import OpenAI from 'openai';
 import * as dotenv from 'dotenv';
 import { Candidate, getTopCandidates } from './multi-candidate-search.service';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../utils/prisma';
 
 dotenv.config();
 
@@ -9,7 +9,6 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
-const prisma = new PrismaClient();
 
 export interface ClassificationResult {
   code: string;
@@ -57,34 +56,91 @@ function formatCandidatesForPrompt(candidates: Candidate[], fullDetails: any[]):
  * Create the LLM validation prompt
  */
 function createValidationPrompt(query: string, candidatesText: string): string {
-  return `You are an expert in Harmonized System (HS) codes for international trade classification. Your task is to select the BEST matching HS code from the provided candidates for a given product query.
+  return `You are a senior customs classification specialist with 15+ years of experience in Harmonized System (HS) tariff classification. Your expertise is critical for international trade compliance.
 
-User Query: "${query}"
+**PRODUCT TO CLASSIFY:** "${query}"
 
-Top Candidate HS Codes (sorted by relevance):
+**CANDIDATE HS CODES:**
 
 ${candidatesText}
 
-Instructions:
-1. Carefully analyze the user's query and each candidate HS code
-2. Consider the description, keywords, common products, and synonyms for each code
-3. Select the SINGLE BEST matching HS code that most accurately classifies the product
-4. Provide a confidence score (0-100) for your selection
-5. Explain your reasoning in 1-2 sentences
+**YOUR TASK:**
+Analyze the product and rank the TOP 3 most accurate HS codes from the candidates above. Lives and businesses depend on getting this right - incorrect classification leads to fines, shipment delays, and legal issues.
 
-IMPORTANT:
-- If the query is ambiguous or could match multiple codes, choose the most general/common one
-- Consider both exact matches and semantic similarity
-- Higher match scores indicate better keyword/fuzzy matching
-- Trust your expertise in HS code classification
+**CRITICAL CLASSIFICATION PRINCIPLES:**
 
-Return your response in this EXACT JSON format:
+**1. SPECIFICITY IS MANDATORY (Most Important Rule)**
+   - ALWAYS choose the MOST SPECIFIC code available (8-10 digits: 8708.30.00, 6109.10.00)
+   - NEVER choose headings (4-6 digits: 87, 8708, 6109) if specific subheadings exist
+   - Example: If you see both "8708" and "8708.30.00", ALWAYS choose "8708.30.00"
+   - Customs requires maximum specificity - general headings are NOT acceptable
+
+**2. FUNCTION OVER MATERIAL (Essential Rule)**
+   - Classify by PRIMARY USE/FUNCTION, not material composition
+   - "ceramic brake pads for cars" = Chapter 87 (automotive parts by function)
+   - "ceramic tiles" = Chapter 69 (ceramic products by material)
+   - **Brake pads are classified as vehicle parts** (Ch.87), NOT friction materials (Ch.68)
+
+**3. FINISHED vs RAW PRODUCTS**
+   - Finished products → classified by end use (e.g., leather shoes = Ch.64 footwear)
+   - Raw materials → classified by material (e.g., leather hides = Ch.41 raw leather)
+   - Semi-finished → classified by current state and most common use
+
+**4. CHAPTER-SPECIFIC GUIDANCE**
+   - Ch.61-62: Textiles - distinguish by fabric type (knitted vs woven) and garment type
+   - Ch.84-85: Machinery/Electronics - very specific, many similar codes
+   - Ch.87: Vehicles & Parts - parts classified here even if made of other materials
+   - Ch.39: Plastics - distinguish by form (bottles, sheets, etc.)
+   - Ch.73: Steel products - distinguish by specific product type
+
+**5. KEYWORD ANALYSIS**
+   - Match ALL key terms in the query, not just one
+   - "cotton t-shirt" needs BOTH cotton AND t-shirt characteristics
+   - Don't match "steel nuts" to "steel bolts" - nuts and bolts are different codes
+
+**6. COMMON CLASSIFICATION ERRORS TO AVOID**
+   - ❌ Choosing parent heading when specific code exists
+   - ❌ Classifying automotive parts by material instead of function
+   - ❌ Ignoring product's end use or context
+   - ❌ Matching partial keywords instead of full product description
+   - ❌ Confusing similar products (e.g., wrist watch vs pocket watch)
+
+**CONFIDENCE GUIDELINES:**
+   - 90-100%: Exact match, all characteristics align, specific code
+   - 75-89%: Strong match, correct category, minor uncertainty on subheading
+   - 60-74%: Reasonable match, correct chapter but some ambiguity
+   - <60%: Questionable - significant uncertainty, may need expert review
+
+**QUALITY CHECKLIST (Verify before responding):**
+   ✓ Selected the MOST SPECIFIC code available?
+   ✓ Classified by FUNCTION/USE, not just material?
+   ✓ Matched ALL keywords in the query, not partial?
+   ✓ Correct chapter for product type?
+   ✓ Checked for similar-sounding but different codes?
+
+**RESPONSE FORMAT (STRICT JSON):**
 {
-  "selectedCode": "the HS code you selected",
-  "confidence": 85,
-  "reasoning": "Brief explanation of why this code is the best match",
-  "alternativeCodes": ["alternative1", "alternative2"]
-}`;
+  "rankedOptions": [
+    {
+      "code": "most specific and accurate HS code",
+      "confidence": 92,
+      "rank": 1
+    },
+    {
+      "code": "second best alternative",
+      "confidence": 78,
+      "rank": 2
+    },
+    {
+      "code": "third alternative",
+      "confidence": 65,
+      "rank": 3
+    }
+  ],
+  "reasoning": "Explain your top choice: Why this chapter? Why this specific code? What makes it better than alternatives?"
+}
+
+**Remember:** You're protecting businesses from customs violations. Be thorough, be specific, be accurate.`;
 }
 
 /**
@@ -142,14 +198,19 @@ async function validateWithLLM(
       throw new Error('No response from LLM');
     }
 
-    // Parse JSON response
+    // Parse JSON response with ranked options
     const result = JSON.parse(content);
+    const rankedOptions = result.rankedOptions || [];
+
+    // Extract top choice and alternatives from ranked list
+    const topChoice = rankedOptions[0] || null;
+    const alternativeCodes = rankedOptions.slice(1, 3).map((opt: any) => opt.code);
 
     return {
-      selectedCode: result.selectedCode || candidates[0]?.code || '',
-      confidence: result.confidence || 0,
+      selectedCode: topChoice?.code || candidates[0]?.code || '',
+      confidence: topChoice?.confidence || 0,
       reasoning: result.reasoning || 'No reasoning provided',
-      alternatives: result.alternativeCodes || []
+      alternatives: alternativeCodes
     };
 
   } catch (error) {
@@ -168,12 +229,12 @@ async function validateWithLLM(
 /**
  * Main classification function with LLM validation
  * @param query - User's product query
- * @param candidateLimit - Number of candidates to retrieve (default: 10)
+ * @param candidateLimit - Number of candidates to retrieve (default: 50)
  * @returns Classification result with selected code and reasoning
  */
 export async function classifyWithLLM(
   query: string,
-  candidateLimit: number = 10
+  candidateLimit: number = 50
 ): Promise<ClassificationResult> {
   const startTime = Date.now();
 
@@ -229,12 +290,12 @@ export async function classifyWithLLM(
 /**
  * Batch classification for multiple queries
  * @param queries - Array of product queries
- * @param candidateLimit - Number of candidates per query
+ * @param candidateLimit - Number of candidates per query (default: 50)
  * @returns Array of classification results
  */
 export async function batchClassifyWithLLM(
   queries: string[],
-  candidateLimit: number = 10
+  candidateLimit: number = 50
 ): Promise<ClassificationResult[]> {
   const results: ClassificationResult[] = [];
 

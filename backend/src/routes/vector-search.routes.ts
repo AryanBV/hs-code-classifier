@@ -1,12 +1,11 @@
 import { Router, Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../utils/prisma';
 import OpenAI from 'openai';
 import { VectorSearchService } from '../services/vector-search.service';
 
 const router = Router();
 
 // Initialize services (in production, these would be injected)
-const prisma = new PrismaClient();
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const vectorSearch = new VectorSearchService(prisma, openai);
 

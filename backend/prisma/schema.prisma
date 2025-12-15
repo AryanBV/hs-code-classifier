@@ -51,7 +51,27 @@ model HsCode {
 }
 
 // ========================================
-// Table 2: Product Synonyms
+// Table 2: HS Code Hierarchy
+// ========================================
+model HsCodeHierarchy {
+  code          String   @id @db.VarChar(20) // HS code (e.g., "8408", "8408.20", "8408.20.10")
+  parentCode    String?  @map("parent_code") @db.VarChar(20) // Parent code (e.g., "8408.20" -> parent is "8408")
+  level         Int      // Hierarchy level: 2=chapter, 4=heading, 6=subheading, 8/10=tariff
+  childrenCodes String[] @map("children_codes") // Array of direct child codes
+  allChildren   String[] @map("all_children") // Array of ALL descendant codes (recursive)
+
+  // Metadata
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  // Indexes for fast hierarchy traversal
+  @@index([parentCode], name: "idx_parent_code")
+  @@index([level], name: "idx_hierarchy_level")
+  @@map("hs_code_hierarchy")
+}
+
+// ========================================
+// Table 3: Product Synonyms
 // ========================================
 model ProductSynonym {
   id            Int      @id @default(autoincrement())
@@ -67,19 +87,6 @@ model ProductSynonym {
   @@index([canonicalTerm], name: "idx_canonical_term")
   @@index([hsCode], name: "idx_synonym_hs_code")
   @@map("product_synonyms")
-}
-
-// ========================================
-// Table 3: Decision Trees
-// ========================================
-model DecisionTree {
-  id            Int      @id @default(autoincrement())
-  categoryName  String   @unique @map("category_name") @db.VarChar(100)
-  decisionFlow  Json     @map("decision_flow") // JSONB in PostgreSQL
-  createdAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @updatedAt @map("updated_at")
-
-  @@map("decision_trees")
 }
 
 // ========================================
@@ -158,4 +165,90 @@ model ClassificationFeedback {
   @@index([createdAt], name: "idx_feedback_created")
   @@index([countryCode], name: "idx_feedback_country_code")
   @@map("classification_feedback")
+}
+
+// ========================================
+// Table 7: Classification Conversations
+// ========================================
+// Stores multi-turn conversations for clarifying questions
+model ClassificationConversation {
+  id                 String   @id @default(cuid())
+  sessionId          String   @map("session_id") @db.VarChar(100)
+  productDescription String   @map("product_description") @db.Text
+
+  // Conversation status: active, completed, abandoned
+  status             String   @default("active") @db.VarChar(20)
+
+  // Final classification result (populated when completed)
+  finalHsCode        String?  @map("final_hs_code") @db.VarChar(20)
+  finalConfidence    Float?   @map("final_confidence")
+  finalReasoning     String?  @map("final_reasoning") @db.Text
+  finalDescription   String?  @map("final_description") @db.Text
+
+  // Tracking metrics
+  totalQuestions     Int      @default(0) @map("total_questions")
+  totalRounds        Int      @default(0) @map("total_rounds")
+
+  // Enhanced query built from original + all answers
+  enhancedQuery      String?  @map("enhanced_query") @db.Text
+
+  // Timestamps
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+  completedAt        DateTime? @map("completed_at")
+
+  // Relations
+  turns              ConversationTurn[]
+
+  // Indexes
+  @@index([sessionId], name: "idx_conv_session")
+  @@index([status], name: "idx_conv_status")
+  @@index([createdAt], name: "idx_conv_created")
+  @@index([finalHsCode], name: "idx_conv_final_code")
+  @@map("classification_conversations")
+}
+
+// ========================================
+// Table 8: Conversation Turns (Q&A pairs)
+// ========================================
+// Each turn is either questions from LLM or final classification
+model ConversationTurn {
+  id                String   @id @default(cuid())
+  conversationId    String   @map("conversation_id")
+  turnNumber        Int      @map("turn_number") // 1, 2, 3...
+
+  // Type: "question" or "classification"
+  responseType      String   @map("response_type") @db.VarChar(20)
+
+  // If responseType = "question"
+  questionContext   String?  @map("question_context") @db.Text // Why asking
+  questions         Json?    // [{id, text, options[], allowOther, priority}]
+
+  // If responseType = "classification"
+  hsCode            String?  @map("hs_code") @db.VarChar(20)
+  hsDescription     String?  @map("hs_description") @db.Text
+  confidence        Float?
+  reasoning         String?  @db.Text
+  alternatives      Json?    // [{code, description, confidence}]
+
+  // User's answers (populated after user responds)
+  userAnswers       Json?    @map("user_answers") // {questionId: selectedOption}
+
+  // Performance tracking
+  llmModel          String?  @map("llm_model") @db.VarChar(50)
+  responseTimeMs    Int?     @map("response_time_ms")
+  candidatesFound   Int?     @map("candidates_found")
+
+  // Timestamps
+  createdAt         DateTime @default(now()) @map("created_at")
+  answeredAt        DateTime? @map("answered_at")
+
+  // Relations
+  conversation      ClassificationConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  // Indexes
+  @@index([conversationId], name: "idx_turn_conversation")
+  @@index([turnNumber], name: "idx_turn_number")
+  @@index([responseType], name: "idx_turn_type")
+  @@map("conversation_turns")
 }

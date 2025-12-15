@@ -1,16 +1,35 @@
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
-import { Header } from "@/components/Header"
+import type { Metadata, Viewport } from 'next'
+import { Inter, JetBrains_Mono } from 'next/font/google'
+import { ThemeProvider } from '@/components/theme-provider'
+import './globals.css'
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
-  title: "HS Code Classifier - AI-Powered Export Documentation",
-  description: "Reduce HS code classification from 30 minutes to 2 minutes using hybrid AI. Built for Indian exporters.",
-  keywords: ["HS code", "export", "classification", "customs", "India", "AI"],
-  authors: [{ name: "Aryan" }],
-  viewport: "width=device-width, initial-scale=1",
+  title: 'TradeCode - AI-Powered HS Code Classification',
+  description: 'Classify your export products in seconds with AI-powered HS code classification. Accurate, fast, and transparent.',
+  keywords: ['HS code', 'export', 'classification', 'AI', 'trade', 'customs', 'tariff'],
+  authors: [{ name: 'TradeCode' }],
+  openGraph: {
+    title: 'TradeCode - AI-Powered HS Code Classification',
+    description: 'Classify your export products in seconds with AI-powered HS code classification.',
+    type: 'website',
+  },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 }
 
 export default function RootLayout({
@@ -20,23 +39,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <div className="min-h-screen flex flex-col">
-          <Header />
-          <main className="flex-1">
-            {children}
-          </main>
-          <footer className="border-t py-6 md:py-8">
-            <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-              <p>
-                Building towards DPIIT Recognition & SISFS Seed Funding
-              </p>
-              <p className="mt-2">
-                © 2024 HS Code Classifier. MIT License.
-              </p>
-            </div>
-          </footer>
-        </div>
+      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )

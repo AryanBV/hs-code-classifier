@@ -260,7 +260,19 @@ export async function getCategoryStats(req: Request, res: Response): Promise<voi
  */
 export async function clearFeedback(req: Request, res: Response): Promise<void> {
   try {
-    // In production, add auth check here
+    // Simple API key auth for admin operations
+    const adminSecret = req.headers['x-admin-secret'] as string;
+    const expectedSecret = process.env.ADMIN_SECRET;
+
+    if (!expectedSecret || adminSecret !== expectedSecret) {
+      logger.warn('Unauthorized attempt to clear feedback records');
+      res.status(401).json({
+        success: false,
+        message: 'Unauthorized - valid admin secret required'
+      });
+      return;
+    }
+
     logger.warn('Clearing all feedback records - admin action');
 
     await clearFeedbackStore();

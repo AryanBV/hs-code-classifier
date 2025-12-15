@@ -48,9 +48,103 @@ export interface ClassificationResult {
  */
 export interface FeedbackRequest {
   classificationId: string
+  productDescription: string
+  suggestedCode: string
+  rating: number
   feedback: 'correct' | 'incorrect' | 'unsure'
   correctedCode?: string
 }
+
+// ========================================
+// Conversational Classification Types
+// ========================================
+
+/**
+ * Request for conversational classification
+ */
+export interface ConversationalClassifyRequest {
+  productDescription: string
+  conversationId?: string
+  sessionId: string
+  answers?: Record<string, string>
+}
+
+/**
+ * Response from conversational classification
+ */
+export interface ConversationalClassifyResponse {
+  success: boolean
+  conversationId: string
+  responseType: 'questions' | 'classification'
+
+  // If questions
+  questions?: ClarifyingQuestion[]
+  questionContext?: string
+  roundNumber?: number
+  totalQuestionsAsked?: number
+
+  // If classification
+  result?: ConversationalResult
+  conversationSummary?: ConversationSummary
+
+  timestamp: string
+  error?: string
+}
+
+/**
+ * A clarifying question from the LLM
+ */
+export interface ClarifyingQuestion {
+  id: string
+  text: string
+  options: string[]
+  allowOther: boolean
+  priority: 'required' | 'optional'
+}
+
+/**
+ * Classification result from conversational flow
+ */
+export interface ConversationalResult {
+  hsCode: string
+  description: string
+  confidence: number
+  reasoning: string
+  alternatives: AlternativeCode[]
+  clarificationImpact?: string
+}
+
+/**
+ * Alternative HS code suggestion
+ */
+export interface AlternativeCode {
+  code: string
+  description: string
+  confidence?: number
+}
+
+/**
+ * Summary of the conversation
+ */
+export interface ConversationSummary {
+  totalRounds: number
+  questionsAsked: number
+  answersProvided: number
+  durationMs: number
+  history: ConversationHistoryItem[]
+}
+
+/**
+ * Single item in conversation history
+ */
+export interface ConversationHistoryItem {
+  turn: number
+  type: 'question' | 'answer' | 'classification'
+  content: string
+  selectedOption?: string
+  timestamp: string
+}
+
 
 /**
  * API Error
@@ -322,4 +416,66 @@ export function getSessionId(): string {
   }
 
   return sessionId
+}
+
+// ========================================
+// Conversational Classification API
+// ========================================
+
+/**
+ * Start or continue a conversational classification
+ *
+ * @param request - Conversational classification request
+ * @returns Either questions to answer or final classification
+ */
+export async function classifyConversational(
+  request: ConversationalClassifyRequest
+): Promise<ConversationalClassifyResponse> {
+  return fetchAPI<ConversationalClassifyResponse>('/api/classify-conversational', {
+    method: 'POST',
+    body: JSON.stringify(request),
+  })
+}
+
+/**
+ * Get details of a conversation (for debugging/audit)
+ *
+ * @param conversationId - Conversation ID
+ * @returns Conversation details
+ */
+export async function getConversation(
+  conversationId: string
+): Promise<{ success: boolean; conversation: any }> {
+  return fetchAPI(`/api/classify-conversational/${conversationId}`)
+}
+
+/**
+ * Abandon a conversation and start fresh
+ *
+ * @param conversationId - Conversation ID to abandon
+ * @returns Success status
+ */
+export async function abandonConversation(
+  conversationId: string
+): Promise<{ success: boolean; message: string }> {
+  return fetchAPI(`/api/classify-conversational/${conversationId}`, {
+    method: 'DELETE',
+  })
+}
+
+/**
+ * Skip remaining questions and get best guess classification
+ *
+ * @param conversationId - Conversation ID
+ * @param sessionId - Session ID
+ * @returns Classification result
+ */
+export async function skipToClassification(
+  conversationId: string,
+  sessionId: string
+): Promise<ConversationalClassifyResponse> {
+  return fetchAPI<ConversationalClassifyResponse>('/api/classify-conversational/skip', {
+    method: 'POST',
+    body: JSON.stringify({ conversationId, sessionId }),
+  })
 }

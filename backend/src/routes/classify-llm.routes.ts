@@ -17,7 +17,7 @@ const router = Router();
  */
 router.post('/classify-llm', async (req: Request, res: Response) => {
   try {
-    const { productDescription, candidateLimit = 10 } = req.body;
+    const { productDescription, candidateLimit = 50 } = req.body;
 
     // Validation
     if (!productDescription || typeof productDescription !== 'string' || productDescription.trim().length === 0) {
@@ -77,7 +77,7 @@ router.post('/classify-llm', async (req: Request, res: Response) => {
  */
 router.post('/classify-llm/batch', async (req: Request, res: Response) => {
   try {
-    const { products, candidateLimit = 10 } = req.body;
+    const { products, candidateLimit = 50 } = req.body;
 
     // Validation
     if (!Array.isArray(products) || products.length === 0) {

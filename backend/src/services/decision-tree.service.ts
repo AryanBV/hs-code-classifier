@@ -7,7 +7,6 @@
  * Weight: 40% of final confidence score
  */
 
-import { prisma } from '../utils/prisma';
 import { logger } from '../utils/logger';
 import {
   DecisionTreeResult,
@@ -30,28 +29,11 @@ import {
 export async function loadDecisionTree(categoryName: string): Promise<DecisionTreeFlow | null> {
   logger.debug(`Loading decision tree for category: ${categoryName}`);
 
-  try {
-    const tree = await prisma.decisionTree.findUnique({
-      where: { categoryName }
-    });
-
-    if (!tree) {
-      logger.warn(`No decision tree found for category: ${categoryName}`);
-      return null;
-    }
-
-    // Parse JSONB decision_flow into structured DecisionTreeFlow
-    const decisionFlow = tree.decisionFlow as unknown as DecisionTreeFlow;
-
-    logger.debug(`Decision tree loaded successfully: ${decisionFlow.questions.length} questions, ${decisionFlow.rules.length} rules`);
-
-    return decisionFlow;
-
-  } catch (error) {
-    logger.error('Error loading decision tree');
-    logger.error(error instanceof Error ? error.message : String(error));
-    throw error;
-  }
+  // TODO: DecisionTree model not yet implemented in Prisma schema
+  // This is a planned feature for rule-based classification enhancement
+  // For now, return null to skip decision tree processing
+  logger.debug(`Decision tree feature not yet implemented - skipping for category: ${categoryName}`);
+  return null;
 }
 
 /**

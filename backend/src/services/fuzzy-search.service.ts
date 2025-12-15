@@ -1,7 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../utils/prisma';
 import { distance as levenshtein } from 'fastest-levenshtein';
 
-const prisma = new PrismaClient();
 
 /**
  * Calculate similarity score between two strings (0-1)

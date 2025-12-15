@@ -4,8 +4,10 @@ import dotenv from 'dotenv';
 import classifyRoutes from './routes/classify.routes';
 import classifyLLMRoutes from './routes/classify-llm.routes';
 import vectorSearchRoutes from './routes/vector-search.routes';
+import classifyConversationalRoutes from './routes/classify-conversational.routes';
 import { logger } from './utils/logger';
 import { rateLimiter, startRateLimitCleanup } from './middleware/rateLimiter';
+import { connectDatabase, disconnectDatabase } from './utils/prisma';
 
 // Load environment variables
 dotenv.config();
@@ -78,6 +80,7 @@ app.get('/health', (req: Request, res: Response) => {
 app.use('/api', classifyRoutes);
 app.use('/api', classifyLLMRoutes);
 app.use('/api/vector-search', vectorSearchRoutes);
+app.use('/api/classify-conversational', classifyConversationalRoutes);
 
 // 404 handler
 app.use((req: Request, res: Response) => {
@@ -107,19 +110,35 @@ app.use((err: Error, req: Request, res: Response, next: any) => {
 // Start Server
 // ========================================
 
-app.listen(PORT, () => {
-  logger.info(`🚀 Server running on http://localhost:${PORT}`);
-  logger.info(`📊 Health check: http://localhost:${PORT}/health`);
-  logger.info(`🔧 Environment: ${process.env.NODE_ENV || 'development'}`);
-});
+// Initialize database and start server
+async function startServer() {
+  try {
+    // Verify database connection before starting server
+    await connectDatabase();
+
+    app.listen(PORT, () => {
+      logger.info(`🚀 Server running on http://localhost:${PORT}`);
+      logger.info(`📊 Health check: http://localhost:${PORT}/health`);
+      logger.info(`🔧 Environment: ${process.env.NODE_ENV || 'development'}`);
+    });
+  } catch (error) {
+    logger.error('Failed to start server');
+    logger.error(error instanceof Error ? error.message : String(error));
+    process.exit(1);
+  }
+}
+
+startServer();
 
 // Graceful shutdown
-process.on('SIGTERM', () => {
+process.on('SIGTERM', async () => {
   logger.info('SIGTERM signal received: closing HTTP server');
+  await disconnectDatabase();
   process.exit(0);
 });
 
-process.on('SIGINT', () => {
+process.on('SIGINT', async () => {
   logger.info('SIGINT signal received: closing HTTP server');
+  await disconnectDatabase();
   process.exit(0);
 });
