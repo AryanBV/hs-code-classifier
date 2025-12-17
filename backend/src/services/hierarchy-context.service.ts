@@ -144,46 +144,74 @@ async function getDirectChildren(parentCode: string): Promise<ChildCodeInfo[]> {
     return childLevel === targetLevel;
   });
 
-  // Check which are leaf nodes
+  // Check which are leaf nodes using batch query (avoids N+1 problem)
   const childCodes = directChildren.map(c => c.code);
-  const hasGrandchildren = await Promise.all(
-    childCodes.map(code => checkHasChildren(code))
-  );
+  const hasGrandchildrenMap = await checkHasChildrenBatch(childCodes);
 
-  return directChildren.map((child, idx) => ({
+  return directChildren.map((child) => ({
     code: child.code,
     description: child.description,
     level: getCodeLevel(child.code),
-    isLeaf: !hasGrandchildren[idx],
+    isLeaf: !hasGrandchildrenMap.get(child.code),
     keywords: child.keywords || []
   }));
 }
 
 /**
- * Check if any of the codes have children
+ * Check if any of the codes have children (uses batch query)
  */
 async function checkDeepHierarchy(codes: string[]): Promise<boolean> {
-  for (const code of codes) {
-    const hasChildren = await checkHasChildren(code);
-    if (hasChildren) return true;
-  }
-  return false;
+  if (codes.length === 0) return false;
+  const hasChildrenMap = await checkHasChildrenBatch(codes);
+  return Array.from(hasChildrenMap.values()).some(v => v);
 }
 
 /**
- * Check if a code has any children
+ * Batch check if multiple codes have children (single query instead of N queries)
+ * This fixes the N+1 query problem that was exhausting the connection pool
+ */
+async function checkHasChildrenBatch(codes: string[]): Promise<Map<string, boolean>> {
+  const result = new Map<string, boolean>();
+
+  // Initialize all codes as having no children
+  codes.forEach(code => result.set(code, false));
+
+  if (codes.length === 0) return result;
+
+  // Single query: find any codes that start with any of our parent codes
+  // We use a raw query for efficiency with multiple prefixes
+  const allDescendants = await prisma.hsCode.findMany({
+    where: {
+      OR: codes.map(code => ({
+        code: {
+          startsWith: code,
+          not: code
+        }
+      }))
+    },
+    select: { code: true },
+    take: 100 // Limit to avoid huge result sets
+  });
+
+  // Mark which parent codes have children
+  for (const descendant of allDescendants) {
+    for (const parentCode of codes) {
+      if (descendant.code.startsWith(parentCode) && descendant.code !== parentCode) {
+        result.set(parentCode, true);
+        break; // Found a child, move to next descendant
+      }
+    }
+  }
+
+  return result;
+}
+
+/**
+ * Check if a single code has any children (kept for backward compatibility)
  */
 async function checkHasChildren(code: string): Promise<boolean> {
-  const childCount = await prisma.hsCode.count({
-    where: {
-      code: {
-        startsWith: code,
-        not: code
-      }
-    },
-    take: 1
-  });
-  return childCount > 0;
+  const map = await checkHasChildrenBatch([code]);
+  return map.get(code) || false;
 }
 
 /**

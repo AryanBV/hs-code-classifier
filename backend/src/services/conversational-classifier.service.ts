@@ -324,7 +324,9 @@ async function getLLMDecision(
         }
       }
 
-      for (const parent of uniqueParents) {
+      // Limit to top 5 parents to reduce database queries (connection pool optimization)
+      const parentsToCheck = Array.from(uniqueParents).slice(0, 5);
+      for (const parent of parentsToCheck) {
         try {
           const exclusion = await analyzeExclusionContext(parent);
           if (exclusion?.hasOtherCode) {
@@ -335,7 +337,7 @@ async function getLLMDecision(
           // Ignore errors for individual parents
         }
       }
-      logger.debug(`Found ${exclusionContexts.length} exclusion contexts from ${uniqueParents.size} parents`);
+      logger.debug(`Found ${exclusionContexts.length} exclusion contexts from ${parentsToCheck.length} parents (limited from ${uniqueParents.size})`);
 
       // Get chapter notes for the top candidate
       noteContext = await getNotesForCode(topCode);
