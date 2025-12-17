@@ -86,7 +86,26 @@ export async function getHierarchyContext(parentCode: string): Promise<Hierarchy
     const hasDeepHierarchy = await checkDeepHierarchy(children.map(c => c.code));
 
     // Extract dimensions from child descriptions
-    const dimensions = extractDimensionsFromChildren(children);
+    let dimensions = extractDimensionsFromChildren(children);
+
+    // CRITICAL: If we have deep hierarchy, also extract dimensions from GRANDCHILDREN
+    // This captures dimensions like "Species" (Arabica/Robusta) that only appear at deeper levels
+    // Example: 0901 → 0901.11 → 0901.11.1X (Arabica)
+    if (hasDeepHierarchy && children.length > 0) {
+      const grandchildren = await getGrandchildren(children.map(c => c.code));
+      if (grandchildren.length > 0) {
+        const deepDimensions = extractDimensionsFromChildren(grandchildren);
+        // Merge deep dimensions with existing, avoiding duplicates
+        for (const deepDim of deepDimensions) {
+          if (!dimensions.some(d => d.name === deepDim.name)) {
+            dimensions.push(deepDim);
+          }
+        }
+        // Re-sort by importance after merging
+        dimensions = sortDimensionsByImportance(dimensions);
+        logger.debug(`Added ${deepDimensions.length} dimensions from grandchildren (${grandchildren.length} codes)`);
+      }
+    }
 
     // Generate questions from dimensions
     const suggestedQuestions = generateQuestionsFromDimensions(dimensions, parentCode);
@@ -155,6 +174,61 @@ async function getDirectChildren(parentCode: string): Promise<ChildCodeInfo[]> {
     isLeaf: !hasGrandchildrenMap.get(child.code),
     keywords: child.keywords || []
   }));
+}
+
+/**
+ * Get grandchildren (children's children) to extract deeper-level dimensions
+ * This is important for cases like coffee where Species (Arabica/Robusta)
+ * only appears at the 8-digit level, not at the 6-digit level
+ */
+async function getGrandchildren(parentCodes: string[]): Promise<ChildCodeInfo[]> {
+  if (parentCodes.length === 0) return [];
+
+  // Get all descendants two levels deep
+  // For parent 0901.11, get 0901.11.XX codes
+  const grandchildren = await prisma.hsCode.findMany({
+    where: {
+      OR: parentCodes.map(code => ({
+        code: {
+          startsWith: code,
+          not: code
+        }
+      }))
+    },
+    select: {
+      code: true,
+      description: true,
+      keywords: true
+    },
+    orderBy: { code: 'asc' },
+    take: 50 // Limit to avoid huge result sets
+  });
+
+  // Filter to only include codes that are direct children of the parent codes
+  // (not grandchildren of grandchildren)
+  const result: ChildCodeInfo[] = [];
+
+  for (const gc of grandchildren) {
+    // Find which parent this is a direct child of
+    for (const parentCode of parentCodes) {
+      const parentLevel = getCodeLevel(parentCode);
+      const gcLevel = getCodeLevel(gc.code);
+
+      // Only include if exactly one level deeper than parent
+      if (gc.code.startsWith(parentCode) && gcLevel === parentLevel + 2) {
+        result.push({
+          code: gc.code,
+          description: gc.description,
+          level: gcLevel,
+          isLeaf: true, // Assume leaf for now
+          keywords: gc.keywords || []
+        });
+        break;
+      }
+    }
+  }
+
+  return result;
 }
 
 /**
@@ -227,6 +301,60 @@ function getCodeLevel(code: string): number {
 // ========================================
 
 /**
+ * DIMENSION IMPORTANCE RANKING
+ *
+ * This determines the ORDER in which questions are asked.
+ * Lower number = higher priority = asked first.
+ *
+ * Rationale:
+ * - Species/Variety: Determines major HS code branch (e.g., Arabica vs Robusta = different codes)
+ * - Processing/State: Determines sub-branch within species
+ * - Grade/Quality: Fine distinction, usually the LAST level of HS code hierarchy
+ * - Form/Size/Packaging: Supplementary details
+ */
+const DIMENSION_IMPORTANCE: Record<string, number> = {
+  // Priority 1: Species/Type - These determine the MAJOR branch in HS codes
+  'Species': 1,
+  'Coffee Species': 1,
+  'Tea Type': 1,
+  'Variety': 1,           // For rice (Basmati vs non-Basmati), cotton types, etc.
+  'Material': 1,          // For textiles - determines chapter/heading
+
+  // Priority 2: Processing/State - These determine sub-branches
+  'Processing': 2,
+  'Processing Method': 2,
+  'State': 2,             // Raw vs cooked, roasted vs unroasted
+  'Roasting': 2,
+  'Caffeine': 2,          // Decaffeinated or not
+  'Form': 2,              // Fresh vs frozen vs dried
+
+  // Priority 3: Quality/Grade - Usually the LAST level of HS code distinction
+  'Grade': 3,
+  'Quality': 3,
+
+  // Priority 4: Supplementary details
+  'Size': 4,
+  'Packaging': 4,
+  'Content': 4,
+  'Purpose': 5,
+  'Target': 5,
+  'Target User': 5,
+  'Type': 6,              // Generic fallback dimension name
+};
+
+/**
+ * Sort dimensions by business importance
+ * Lower importance number = higher priority = asked first
+ */
+function sortDimensionsByImportance(dimensions: HierarchyDimension[]): HierarchyDimension[] {
+  return [...dimensions].sort((a, b) => {
+    const importanceA = DIMENSION_IMPORTANCE[a.name] ?? 99;
+    const importanceB = DIMENSION_IMPORTANCE[b.name] ?? 99;
+    return importanceA - importanceB;
+  });
+}
+
+/**
  * Extract distinguishing dimensions from child code descriptions
  */
 function extractDimensionsFromChildren(children: ChildCodeInfo[]): HierarchyDimension[] {
@@ -234,22 +362,25 @@ function extractDimensionsFromChildren(children: ChildCodeInfo[]): HierarchyDime
   const descriptions = children.map(c => c.description);
 
   // Common dimension patterns to look for
+  // NOTE: Order here doesn't matter anymore - we sort by DIMENSION_IMPORTANCE after extraction
   const patterns = [
-    // Species/Variety patterns
+    // Species/Variety patterns (Priority 1)
     { name: 'Species', regex: /\b(Arabica|Robusta|Liberica)\b/i },
     { name: 'Tea Type', regex: /\b(Green tea|Black tea|Oolong|White tea)\b/i },
     { name: 'Variety', regex: /\b(Basmati|Non-basmati|Jasmine|Long grain|Short grain)\b/i },
 
-    // Processing/Form patterns
+    // Processing/Form patterns (Priority 2)
     { name: 'Processing', regex: /\b(plantation|cherry|parchment|washed|unwashed|hulled)\b/i },
     { name: 'Form', regex: /\b(fresh|frozen|dried|preserved|processed|prepared|powdered|ground|whole|cut)\b/i },
     { name: 'State', regex: /\b(raw|cooked|roasted|unroasted|fermented|not fermented)\b/i },
+    { name: 'Roasting', regex: /\b(roasted|unroasted|not roasted)\b/i },
+    { name: 'Caffeine', regex: /\b(decaffeinated|not decaffeinated|caffeinated)\b/i },
 
-    // Quality/Grade patterns
+    // Quality/Grade patterns (Priority 3)
     { name: 'Grade', regex: /\b([A-C] Grade|Grade [A-C]|AB Grade|PB Grade|BB Grade|Premium|Standard)\b/i },
     { name: 'Quality', regex: /\b(first quality|second quality|reject|special|extra)\b/i },
 
-    // Size/Packaging patterns
+    // Size/Packaging patterns (Priority 4)
     { name: 'Size', regex: /\b(not exceeding \d+|exceeding \d+|small|medium|large|≤?\s*\d+\s*(g|kg|mm|cm))\b/i },
     { name: 'Packaging', regex: /\b(bulk|retail|immediate packings|packets|bags)\b/i },
 
@@ -257,7 +388,7 @@ function extractDimensionsFromChildren(children: ChildCodeInfo[]): HierarchyDime
     { name: 'Content', regex: /\b(containing|with|without|added|pure|mixed|blended)\b/i },
     { name: 'Material', regex: /\b(cotton|silk|wool|polyester|synthetic|natural)\b/i },
 
-    // Use/Purpose patterns
+    // Use/Purpose patterns (Priority 5)
     { name: 'Purpose', regex: /\b(for sowing|breeding|consumption|industrial|medicinal)\b/i },
     { name: 'Target', regex: /\b(men|women|children|infant|adult)\b/i },
   ];
@@ -287,7 +418,9 @@ function extractDimensionsFromChildren(children: ChildCodeInfo[]): HierarchyDime
   const structuralDimensions = extractStructuralDimensions(descriptions);
   dimensions.push(...structuralDimensions);
 
-  return dimensions;
+  // CRITICAL: Sort by business importance before returning
+  // This ensures Species questions come before Grade questions
+  return sortDimensionsByImportance(dimensions);
 }
 
 /**
@@ -400,7 +533,15 @@ function inferDimensionName(values: string[]): string {
 // ========================================
 
 /**
+ * Maximum number of questions to generate per round
+ * Increased from 2 to 3 to ensure key dimensions aren't skipped
+ * (e.g., for coffee: Species, Processing, Grade - all 3 matter)
+ */
+const MAX_QUESTIONS_PER_ROUND = 3;
+
+/**
  * Generate questions from extracted dimensions
+ * Dimensions should already be sorted by importance before calling this
  */
 function generateQuestionsFromDimensions(
   dimensions: HierarchyDimension[],
@@ -408,7 +549,8 @@ function generateQuestionsFromDimensions(
 ): SuggestedQuestion[] {
   const questions: SuggestedQuestion[] = [];
 
-  for (let i = 0; i < dimensions.length && i < 2; i++) {
+  // Take top N dimensions by importance (dimensions are pre-sorted)
+  for (let i = 0; i < dimensions.length && i < MAX_QUESTIONS_PER_ROUND; i++) {
     const dim = dimensions[i]!;
     const question = createQuestionForDimension(dim, parentCode, i);
     questions.push(question);
@@ -476,12 +618,18 @@ function createQuestionForDimension(
       questionText = `What ${dimension.name.toLowerCase()} is it?`;
   }
 
+  // Determine priority based on dimension importance, not array position
+  // Priority 1-2 dimensions (Species, Processing) are 'required'
+  // Priority 3+ dimensions (Grade, Size) are 'optional'
+  const importance = DIMENSION_IMPORTANCE[dimension.name] ?? 99;
+  const priority: 'required' | 'optional' = importance <= 2 ? 'required' : 'optional';
+
   return {
     id: `q_${parentCode.replace(/\./g, '')}_${dimension.name.toLowerCase().replace(/\s+/g, '_')}_${index}`,
     dimension: dimension.name,
     text: questionText,
     options: dimension.values.slice(0, 5), // Limit to 5 options
-    priority: index === 0 ? 'required' : 'optional'
+    priority
   };
 }
 

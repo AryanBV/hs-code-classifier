@@ -397,6 +397,12 @@ Always respond with valid JSON only. Be precise and helpful.`
 /**
  * Find the best parent code to explore for hierarchy context
  * This identifies which code's children we should analyze for question generation
+ *
+ * STRATEGY: Prefer broader (4-digit) parents over narrow (6-digit) when:
+ * - Candidates span multiple 6-digit subheadings (indicates uncertainty about species/type)
+ * - This ensures we ask about high-level distinctions (Species, Type) first
+ *
+ * Only use 6-digit parent when candidates are highly concentrated there
  */
 async function findBestParentToExplore(candidates: Candidate[]): Promise<string | null> {
   if (candidates.length === 0) return null;
@@ -437,6 +443,9 @@ async function findBestParentToExplore(candidates: Candidate[]): Promise<string 
     subheadingGroups.get(subheading)!.push(candidate);
   }
 
+  // Count how many different 6-digit subheadings we have
+  const uniqueSubheadings = subheadingGroups.size;
+
   // Find the subheading with most candidates
   let bestSubheading = '';
   maxCount = 0;
@@ -447,23 +456,41 @@ async function findBestParentToExplore(candidates: Candidate[]): Promise<string 
     }
   }
 
-  // If multiple candidates share a 6-digit parent, explore that parent's children
-  if (bestSubheading && maxCount > 1) {
-    // Verify this code exists
+  // DECISION LOGIC:
+  // If candidates span MULTIPLE 6-digit subheadings, prefer the broader 4-digit heading
+  // This ensures we ask about the high-level distinction (e.g., Arabica vs Robusta)
+  // Only go narrow (6-digit) if candidates are highly concentrated in one subheading
+
+  // Threshold: Only use 6-digit parent if >70% of candidates are in that subheading
+  const concentrationRatio = maxCount / headingCandidates.length;
+  const shouldUseNarrowParent = concentrationRatio > 0.7 && uniqueSubheadings <= 2;
+
+  logger.debug(`Parent selection: ${headingCandidates.length} candidates, ${uniqueSubheadings} subheadings, concentration: ${(concentrationRatio * 100).toFixed(0)}%`);
+
+  if (shouldUseNarrowParent && bestSubheading) {
+    // High concentration in one subheading - use narrow parent
     const exists = await prisma.hsCode.findFirst({
       where: { code: bestSubheading },
       select: { code: true }
     });
-    if (exists) return bestSubheading;
+    if (exists) {
+      logger.debug(`Using narrow parent: ${bestSubheading}`);
+      return bestSubheading;
+    }
   }
 
-  // Otherwise, explore the 4-digit heading
+  // Otherwise, explore the broader 4-digit heading to capture all variations
   const headingExists = await prisma.hsCode.findFirst({
     where: { code: bestHeading },
     select: { code: true }
   });
 
-  return headingExists ? bestHeading : null;
+  if (headingExists) {
+    logger.debug(`Using broad parent: ${bestHeading}`);
+    return bestHeading;
+  }
+
+  return null;
 }
 
 /**
