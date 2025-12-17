@@ -308,7 +308,10 @@ async function getLLMDecision(
     if (candidates.length > 0) {
       const topCode = candidates[0]!.code;
       // Find the most likely parent code to explore
-      const parentCode = await findBestParentToExplore(candidates);
+      // Pass currentRound to adjust parent selection strategy:
+      // - Round 1: prefer broader parents for high-level questions
+      // - Round 2+: prefer narrower parents for fine-detail questions (bulk, grade, etc.)
+      const parentCode = await findBestParentToExplore(candidates, context.currentRound);
       if (parentCode) {
         // Get hierarchy context (child codes and dimensions)
         hierarchyContext = await getHierarchyContext(parentCode);
@@ -398,13 +401,15 @@ Always respond with valid JSON only. Be precise and helpful.`
  * Find the best parent code to explore for hierarchy context
  * This identifies which code's children we should analyze for question generation
  *
- * STRATEGY: Prefer broader (4-digit) parents over narrow (6-digit) when:
- * - Candidates span multiple 6-digit subheadings (indicates uncertainty about species/type)
- * - This ensures we ask about high-level distinctions (Species, Type) first
+ * STRATEGY:
+ * - Round 1: Prefer broader (4-digit) parents to ask about high-level distinctions first
+ * - Round 2+: Prefer narrower (6-digit) parents since user has already answered high-level questions
+ *             This allows us to ask about fine distinctions like bulk/packaging
  *
- * Only use 6-digit parent when candidates are highly concentrated there
+ * @param candidates - List of candidate codes
+ * @param currentRound - Current conversation round (1, 2, 3, etc.)
  */
-async function findBestParentToExplore(candidates: Candidate[]): Promise<string | null> {
+async function findBestParentToExplore(candidates: Candidate[], currentRound: number = 1): Promise<string | null> {
   if (candidates.length === 0) return null;
 
   // Group candidates by their 4-digit heading
@@ -457,15 +462,20 @@ async function findBestParentToExplore(candidates: Candidate[]): Promise<string 
   }
 
   // DECISION LOGIC:
-  // If candidates span MULTIPLE 6-digit subheadings, prefer the broader 4-digit heading
-  // This ensures we ask about the high-level distinction (e.g., Arabica vs Robusta)
-  // Only go narrow (6-digit) if candidates are highly concentrated in one subheading
+  // Round 1: Prefer broad parent (4-digit) to ask about major distinctions (Species, Type)
+  // Round 2+: Prefer narrow parent (6-digit) to ask about fine distinctions (Bulk, Grade)
+  // This ensures the right questions are asked at the right time
 
-  // Threshold: Only use 6-digit parent if >70% of candidates are in that subheading
   const concentrationRatio = maxCount / headingCandidates.length;
-  const shouldUseNarrowParent = concentrationRatio > 0.7 && uniqueSubheadings <= 2;
 
-  logger.debug(`Parent selection: ${headingCandidates.length} candidates, ${uniqueSubheadings} subheadings, concentration: ${(concentrationRatio * 100).toFixed(0)}%`);
+  // Threshold depends on round:
+  // - Round 1: Need >70% concentration to go narrow (default, prefer broad)
+  // - Round 2+: Need only >40% concentration to go narrow (prefer narrow to ask fine details)
+  const concentrationThreshold = currentRound === 1 ? 0.7 : 0.4;
+  const maxSubheadingsForNarrow = currentRound === 1 ? 2 : 3;
+  const shouldUseNarrowParent = concentrationRatio > concentrationThreshold && uniqueSubheadings <= maxSubheadingsForNarrow;
+
+  logger.debug(`Parent selection (round ${currentRound}): ${headingCandidates.length} candidates, ${uniqueSubheadings} subheadings, concentration: ${(concentrationRatio * 100).toFixed(0)}%, threshold: ${(concentrationThreshold * 100).toFixed(0)}%`);
 
   if (shouldUseNarrowParent && bestSubheading) {
     // High concentration in one subheading - use narrow parent
@@ -647,13 +657,18 @@ These hierarchy-derived questions are MORE IMPORTANT than generic questions!
 
 **WHEN TO CLASSIFY DIRECTLY:**
 - Description is specific (e.g., "100% cotton men's t-shirt size M")
-- Only one clear candidate exists
-- Candidates are all in the same subheading
-- Previous answers have resolved ambiguity
+- Only one clear 8-digit candidate exists
+- Previous answers have FULLY resolved all ambiguities
+
+**WHEN TO ASK MORE QUESTIONS (IMPORTANT!):**
+- Multiple 8-digit codes exist under the same 6-digit parent (e.g., 0901.21.10 vs 0901.21.90)
+- The difference is bulk/retail packaging → Ask "Is it in bulk packaging?"
+- The difference is size/weight → Ask about quantity
+- DO NOT classify as "Other" (XX.90) without first asking about specific distinctions!
 
 **QUESTION GUIDELINES (if asking):**
-- Ask 1-2 questions maximum per round
-- Questions must help distinguish between HS codes
+- Ask 1-3 questions per round as needed to distinguish codes
+- Questions must help distinguish between 8-digit HS codes
 - Options should cover 3-5 most likely answers
 - Always include allowOther: true for edge cases
 - Make questions clear and simple
@@ -662,6 +677,7 @@ These hierarchy-derived questions are MORE IMPORTANT than generic questions!
 India uses 8-digit ITC-HS codes (e.g., 0902.10.10, not 0902.10).
 - ALWAYS return 8-digit codes in format XXXX.XX.XX
 - 6-digit codes (XXXX.XX) are parent categories - drill down to 8-digit
+- If you see ".90" (Other) as an option, FIRST ask if any specific code applies
 - If you see candidates like "0902.10", look for children like "0902.10.10", "0902.10.20"
 - If the exact 8-digit is uncertain, ask a clarifying question about pack size/form/type
 
