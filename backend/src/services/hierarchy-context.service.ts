@@ -418,9 +418,44 @@ function extractDimensionsFromChildren(children: ChildCodeInfo[]): HierarchyDime
   const structuralDimensions = extractStructuralDimensions(descriptions);
   dimensions.push(...structuralDimensions);
 
+  // SPECIAL CASE: Handle "Bulk" vs "Other" patterns
+  // When one sibling says "In bulk packing" and another says "Other",
+  // we need to replace the Packaging dimension with proper bulk vs retail distinction
+  const bulkVsOtherDimension = extractBulkVsOtherDimension(descriptions);
+  if (bulkVsOtherDimension) {
+    // Remove any existing Packaging dimension (which just has [Bulk, bulk])
+    // and replace with the proper bulk vs other distinction
+    const packagingIndex = dimensions.findIndex(d => d.name === 'Packaging');
+    if (packagingIndex >= 0) {
+      dimensions[packagingIndex] = bulkVsOtherDimension;
+    } else {
+      dimensions.push(bulkVsOtherDimension);
+    }
+  }
+
   // CRITICAL: Sort by business importance before returning
   // This ensures Species questions come before Grade questions
   return sortDimensionsByImportance(dimensions);
+}
+
+/**
+ * Extract Packaging dimension when pattern is "In bulk packing" vs "Other"
+ * This handles the common HS code pattern where:
+ * - XX.XX.10 = "In bulk packing"
+ * - XX.XX.90 = "Other" (meaning NOT bulk, i.e., retail packaging)
+ */
+function extractBulkVsOtherDimension(descriptions: string[]): HierarchyDimension | null {
+  const hasBulk = descriptions.some(d => /\b(bulk|bulk packing|in bulk)\b/i.test(d));
+  const hasOther = descriptions.some(d => /^other$/i.test(d.trim()));
+
+  if (hasBulk && hasOther) {
+    return {
+      name: 'Packaging',
+      values: ['In bulk packing', 'Other (retail/small packaging)'],
+      pattern: 'bulk vs other'
+    };
+  }
+  return null;
 }
 
 /**

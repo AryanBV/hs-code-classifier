@@ -68,18 +68,19 @@ export async function classifyConversational(
 
   try {
     // Validate input
-    if (!request.productDescription?.trim()) {
-      return createErrorResponse('Product description is required');
-    }
-
     if (!request.sessionId?.trim()) {
       return createErrorResponse('Session ID is required');
     }
 
     // New conversation or continuing?
     if (request.conversationId && request.answers) {
+      // Continuing existing conversation - no productDescription needed
       return await continueConversation(request, startTime);
     } else {
+      // New conversation - productDescription is required
+      if (!request.productDescription?.trim()) {
+        return createErrorResponse('Product description is required');
+      }
       return await startNewConversation(request, startTime);
     }
   } catch (error) {
@@ -315,7 +316,10 @@ async function getLLMDecision(
       if (parentCode) {
         // Get hierarchy context (child codes and dimensions)
         hierarchyContext = await getHierarchyContext(parentCode);
-        logger.debug(`Hierarchy context for ${parentCode}: ${hierarchyContext?.childCodes.length || 0} children, ${hierarchyContext?.dimensions.length || 0} dimensions`);
+        logger.info(`Hierarchy context for ${parentCode} (Round ${context.currentRound}): ${hierarchyContext?.childCodes.length || 0} children, ${hierarchyContext?.dimensions.length || 0} dimensions`);
+        if (hierarchyContext?.dimensions && hierarchyContext.dimensions.length > 0) {
+          logger.info(`Dimensions found: ${hierarchyContext.dimensions.map(d => `${d.name}: [${d.values.join(', ')}]`).join('; ')}`);
+        }
       }
 
       // Get exclusion context for ALL unique 7-character parents in candidates
@@ -403,18 +407,25 @@ Always respond with valid JSON only. Be precise and helpful.`
  *
  * STRATEGY:
  * - Round 1: Prefer broader (4-digit) parents to ask about high-level distinctions first
- * - Round 2+: Prefer narrower (6-digit) parents since user has already answered high-level questions
- *             This allows us to ask about fine distinctions like bulk/packaging
+ * - Round 2+: Use SCORE-WEIGHTED selection to pick the parent that best matches user's answers
+ *             This allows us to ask about fine distinctions like bulk/packaging for the RIGHT parent
  *
- * @param candidates - List of candidate codes
+ * KEY INSIGHT: In Round 2+, the semantic search scores reflect how well candidates match
+ * the enhanced query (which includes user's answers). We should pick the parent whose
+ * candidates have the HIGHEST SCORES, not just the most candidates.
+ *
+ * @param candidates - List of candidate codes with scores
  * @param currentRound - Current conversation round (1, 2, 3, etc.)
  */
 async function findBestParentToExplore(candidates: Candidate[], currentRound: number = 1): Promise<string | null> {
   if (candidates.length === 0) return null;
 
+  // Take top candidates (already sorted by score from search)
+  const topCandidates = candidates.slice(0, 20);
+
   // Group candidates by their 4-digit heading
   const headingGroups = new Map<string, Candidate[]>();
-  for (const candidate of candidates.slice(0, 20)) {
+  for (const candidate of topCandidates) {
     const heading = candidate.code.substring(0, 4);
     if (!headingGroups.has(heading)) {
       headingGroups.set(heading, []);
@@ -422,12 +433,13 @@ async function findBestParentToExplore(candidates: Candidate[], currentRound: nu
     headingGroups.get(heading)!.push(candidate);
   }
 
-  // Find the heading with most candidates (likely the correct chapter)
+  // Find the best heading - use highest total score, not just count
   let bestHeading = '';
-  let maxCount = 0;
+  let maxHeadingScore = 0;
   for (const [heading, group] of headingGroups) {
-    if (group.length > maxCount) {
-      maxCount = group.length;
+    const totalScore = group.reduce((sum, c) => sum + c.score, 0);
+    if (totalScore > maxHeadingScore) {
+      maxHeadingScore = totalScore;
       bestHeading = heading;
     }
   }
@@ -437,10 +449,9 @@ async function findBestParentToExplore(candidates: Candidate[], currentRound: nu
   // Now find the best 6-digit parent within this heading
   const headingCandidates = headingGroups.get(bestHeading) || [];
 
-  // Group by 6-digit subheading
+  // Group by 6-digit subheading (XXXX.XX)
   const subheadingGroups = new Map<string, Candidate[]>();
   for (const candidate of headingCandidates) {
-    // Extract 6-digit: XXXX.XX
     const subheading = candidate.code.substring(0, 7);
     if (!subheadingGroups.has(subheading)) {
       subheadingGroups.set(subheading, []);
@@ -448,56 +459,98 @@ async function findBestParentToExplore(candidates: Candidate[], currentRound: nu
     subheadingGroups.get(subheading)!.push(candidate);
   }
 
-  // Count how many different 6-digit subheadings we have
   const uniqueSubheadings = subheadingGroups.size;
 
-  // Find the subheading with most candidates
-  let bestSubheading = '';
-  maxCount = 0;
-  for (const [subheading, group] of subheadingGroups) {
-    if (group.length > maxCount) {
-      maxCount = group.length;
-      bestSubheading = subheading;
+  // ROUND 1 STRATEGY: Pick based on count (explore broadly)
+  // ROUND 2+ STRATEGY: Pick based on SCORE (follow the user's answers)
+
+  if (currentRound === 1) {
+    // Round 1: Use count-based selection for broad exploration
+    let bestSubheading = '';
+    let maxCount = 0;
+    for (const [subheading, group] of subheadingGroups) {
+      if (group.length > maxCount) {
+        maxCount = group.length;
+        bestSubheading = subheading;
+      }
     }
-  }
 
-  // DECISION LOGIC:
-  // Round 1: Prefer broad parent (4-digit) to ask about major distinctions (Species, Type)
-  // Round 2+: Prefer narrow parent (6-digit) to ask about fine distinctions (Bulk, Grade)
-  // This ensures the right questions are asked at the right time
+    const concentrationRatio = maxCount / headingCandidates.length;
 
-  const concentrationRatio = maxCount / headingCandidates.length;
+    // Only use narrow parent if highly concentrated (>70% in one subheading)
+    if (concentrationRatio > 0.7 && uniqueSubheadings <= 2 && bestSubheading) {
+      const exists = await prisma.hsCode.findFirst({
+        where: { code: bestSubheading },
+        select: { code: true }
+      });
+      if (exists) {
+        logger.debug(`Round 1: Using narrow parent ${bestSubheading} (${(concentrationRatio * 100).toFixed(0)}% concentration)`);
+        return bestSubheading;
+      }
+    }
 
-  // Threshold depends on round:
-  // - Round 1: Need >70% concentration to go narrow (default, prefer broad)
-  // - Round 2+: Need only >40% concentration to go narrow (prefer narrow to ask fine details)
-  const concentrationThreshold = currentRound === 1 ? 0.7 : 0.4;
-  const maxSubheadingsForNarrow = currentRound === 1 ? 2 : 3;
-  const shouldUseNarrowParent = concentrationRatio > concentrationThreshold && uniqueSubheadings <= maxSubheadingsForNarrow;
-
-  logger.debug(`Parent selection (round ${currentRound}): ${headingCandidates.length} candidates, ${uniqueSubheadings} subheadings, concentration: ${(concentrationRatio * 100).toFixed(0)}%, threshold: ${(concentrationThreshold * 100).toFixed(0)}%`);
-
-  if (shouldUseNarrowParent && bestSubheading) {
-    // High concentration in one subheading - use narrow parent
-    const exists = await prisma.hsCode.findFirst({
-      where: { code: bestSubheading },
+    // Default Round 1: Use broad 4-digit heading
+    const headingExists = await prisma.hsCode.findFirst({
+      where: { code: bestHeading },
       select: { code: true }
     });
-    if (exists) {
-      logger.debug(`Using narrow parent: ${bestSubheading}`);
-      return bestSubheading;
+    if (headingExists) {
+      logger.debug(`Round 1: Using broad parent ${bestHeading}`);
+      return bestHeading;
     }
-  }
+  } else {
+    // Round 2+: Use SCORE-WEIGHTED selection
+    // The semantic search has already ranked candidates by how well they match the enhanced query
+    // (which includes user's answers like "roasted", "not decaffeinated")
+    // We should pick the subheading with the HIGHEST AVERAGE SCORE
 
-  // Otherwise, explore the broader 4-digit heading to capture all variations
-  const headingExists = await prisma.hsCode.findFirst({
-    where: { code: bestHeading },
-    select: { code: true }
-  });
+    // Build a ranked list of subheadings by score
+    const rankedSubheadings: Array<{ subheading: string; score: number; hasTopCandidate: boolean }> = [];
 
-  if (headingExists) {
-    logger.debug(`Using broad parent: ${bestHeading}`);
-    return bestHeading;
+    for (const [subheading, group] of subheadingGroups) {
+      // Calculate average score for this subheading's candidates
+      const avgScore = group.reduce((sum, c) => sum + c.score, 0) / group.length;
+
+      // Bonus: If this subheading has the TOP candidate, strongly prefer it
+      const hasTopCandidate = group.some(c => c.code === topCandidates[0]?.code);
+      const adjustedScore = hasTopCandidate ? avgScore * 1.5 : avgScore;
+
+      rankedSubheadings.push({ subheading, score: adjustedScore, hasTopCandidate });
+    }
+
+    // Sort by score descending
+    rankedSubheadings.sort((a, b) => b.score - a.score);
+
+    logger.debug(`Round ${currentRound} subheading scores: ${rankedSubheadings.map(r =>
+      `${r.subheading}=${r.score.toFixed(1)}${r.hasTopCandidate ? '*' : ''}`).join(', ')}`);
+
+    // Try each subheading in order until we find one that exists as a parent code
+    for (const ranked of rankedSubheadings) {
+      // Skip 4-digit codes (headings) - we only want 6-digit subheadings
+      if (ranked.subheading.length < 6) continue;
+
+      const exists = await prisma.hsCode.findFirst({
+        where: { code: ranked.subheading },
+        select: { code: true }
+      });
+
+      if (exists) {
+        logger.debug(`Round ${currentRound}: Using score-weighted narrow parent ${ranked.subheading} (avgScore: ${ranked.score.toFixed(1)})`);
+        return ranked.subheading;
+      } else {
+        logger.debug(`Round ${currentRound}: Subheading ${ranked.subheading} not found in DB, trying next`);
+      }
+    }
+
+    // Fallback to broad heading
+    const headingExists = await prisma.hsCode.findFirst({
+      where: { code: bestHeading },
+      select: { code: true }
+    });
+    if (headingExists) {
+      logger.debug(`Round ${currentRound}: Fallback to broad parent ${bestHeading}`);
+      return bestHeading;
+    }
   }
 
   return null;
@@ -617,7 +670,31 @@ ${formattedNotes}
     }
   }
 
-  return `**PRODUCT TO CLASSIFY:**
+  // CRITICAL: Detect bulk packaging patterns (.10 vs .90) in exclusion contexts
+  // and add an explicit alert for the LLM
+  let bulkPackagingAlert = '';
+  for (const exclusionContext of exclusionContexts) {
+    const hasBulkCode = exclusionContext.specificCodes.some(
+      c => c.code.endsWith('.10') && c.description.toLowerCase().includes('bulk')
+    );
+    const otherCode = exclusionContext.otherCode;
+    const hasOtherCode = otherCode?.code.endsWith('.90');
+
+    if (hasBulkCode && hasOtherCode && otherCode) {
+      bulkPackagingAlert = `
+⚠️⚠️⚠️ BULK PACKAGING QUESTION REQUIRED ⚠️⚠️⚠️
+DETECTED: ${exclusionContext.parentCode} has codes ending in .10 (bulk) and .90 (other)
+  - ${exclusionContext.parentCode}.10 = In bulk packing (large commercial quantities)
+  - ${otherCode.code} = Other (retail/small packaging)
+
+YOU MUST ASK: "Is the product in bulk packaging (large commercial quantities, typically >2kg bags) or retail packaging (small consumer packages)?"
+DO NOT classify as ${otherCode.code} without asking this question first!
+`;
+      break; // Only need one alert
+    }
+  }
+
+  return `${bulkPackagingAlert}**PRODUCT TO CLASSIFY:**
 "${context.enhancedQuery}"
 
 **ORIGINAL INPUT:**
@@ -658,13 +735,20 @@ These hierarchy-derived questions are MORE IMPORTANT than generic questions!
 **WHEN TO CLASSIFY DIRECTLY:**
 - Description is specific (e.g., "100% cotton men's t-shirt size M")
 - Only one clear 8-digit candidate exists
-- Previous answers have FULLY resolved all ambiguities
+- Previous answers have FULLY resolved ALL ambiguities including packaging
 
-**WHEN TO ASK MORE QUESTIONS (IMPORTANT!):**
-- Multiple 8-digit codes exist under the same 6-digit parent (e.g., 0901.21.10 vs 0901.21.90)
-- The difference is bulk/retail packaging → Ask "Is it in bulk packaging?"
+**⚠️ CRITICAL: WHEN YOU MUST ASK MORE QUESTIONS (DO NOT SKIP!):**
+Look at the candidates above. If ANY candidate ends in .10 (e.g., 0901.21.10) and another in .90 (e.g., 0901.21.90):
+- The .10 code is likely "In bulk packing" or "large packaging"
+- The .90 code is "Other" (retail/small packaging)
+- You MUST ask: "Is the product in bulk packaging (large commercial quantities) or retail packaging (small consumer packages)?"
+- This applies to ALL products, not just coffee! Check every pair of XX.10 vs XX.90 codes.
+
+More situations requiring questions:
+- Multiple 8-digit codes exist under the same 6-digit parent
 - The difference is size/weight → Ask about quantity
-- DO NOT classify as "Other" (XX.90) without first asking about specific distinctions!
+- Previous answers covered species/processing but NOT packaging → Ask about packaging
+- DO NOT classify as "Other" (XX.90) without first confirming it's NOT in bulk!
 
 **QUESTION GUIDELINES (if asking):**
 - Ask 1-3 questions per round as needed to distinguish codes
