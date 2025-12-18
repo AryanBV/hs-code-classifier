@@ -1,6 +1,6 @@
 'use client'
 
-import { Badge } from '@/components/ui/badge'
+import { cn } from '@/lib/cn'
 import type { HistoryItem as HistoryItemType } from '@/lib/hooks/use-history'
 
 interface HistoryItemProps {
@@ -8,6 +8,7 @@ interface HistoryItemProps {
   formatTimestamp: (timestamp: number) => string
   onClick: () => void
   isActive?: boolean
+  compact?: boolean
 }
 
 export function HistoryItem({
@@ -15,39 +16,55 @@ export function HistoryItem({
   formatTimestamp,
   onClick,
   isActive,
+  compact = false,
 }: HistoryItemProps) {
-  const getConfidenceBadge = (confidence: number) => {
-    if (confidence >= 80) return 'success'
-    if (confidence >= 60) return 'warning'
-    return 'destructive'
+  const getConfidenceColor = (confidence: number) => {
+    if (confidence >= 80) return 'bg-emerald-500'
+    if (confidence >= 60) return 'bg-amber-500'
+    return 'bg-red-500'
   }
 
   return (
     <button
       onClick={onClick}
-      className={`w-full text-left p-3 rounded-xl border transition-all duration-200 ${
+      className={cn(
+        "w-full text-left rounded-lg border transition-all duration-200",
+        compact ? "p-2.5" : "p-3",
         isActive
           ? 'bg-primary/10 border-primary/30'
-          : 'bg-card border-border hover:bg-accent hover:border-primary/20'
-      }`}
+          : 'bg-card/30 border-border hover:bg-card/50 hover:border-primary/20'
+      )}
     >
       {/* Product description (truncated) */}
-      <p className="text-sm font-medium line-clamp-2 mb-2">
+      <p className={cn(
+        "font-medium line-clamp-1 text-foreground mb-1.5",
+        compact ? "text-xs" : "text-sm"
+      )}>
         {item.productDescription}
       </p>
 
-      {/* HS Code and timestamp */}
+      {/* HS Code and confidence */}
       <div className="flex items-center justify-between gap-2">
-        <span className="font-mono text-sm text-primary font-semibold">
+        <span className={cn(
+          "font-mono text-primary font-semibold",
+          compact ? "text-xs" : "text-sm"
+        )}>
           {item.hsCode}
         </span>
-        <Badge variant={getConfidenceBadge(item.confidence)} className="text-xs">
+        <span className={cn(
+          "px-1.5 py-0.5 rounded text-white font-medium",
+          compact ? "text-[10px]" : "text-xs",
+          getConfidenceColor(item.confidence)
+        )}>
           {item.confidence}%
-        </Badge>
+        </span>
       </div>
 
       {/* Timestamp */}
-      <p className="text-xs text-muted-foreground mt-1">
+      <p className={cn(
+        "text-muted-foreground mt-1",
+        compact ? "text-[10px]" : "text-xs"
+      )}>
         {formatTimestamp(item.timestamp)}
       </p>
     </button>

@@ -164,12 +164,12 @@ export class ApiError extends Error {
  * Fetch with timeout using AbortController
  * @param url - Request URL
  * @param options - Fetch options
- * @param timeout - Timeout in milliseconds (default: 30000ms = 30s)
+ * @param timeout - Timeout in milliseconds (default: 90000ms = 90s for LLM calls)
  */
 async function fetchWithTimeout(
   url: string,
   options: RequestInit = {},
-  timeout: number = 30000
+  timeout: number = 90000
 ): Promise<Response> {
   const controller = new AbortController()
   const timeoutId = setTimeout(() => controller.abort(), timeout)

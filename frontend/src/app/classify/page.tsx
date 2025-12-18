@@ -1,19 +1,18 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Navbar } from '@/components/layout/navbar'
-import { Footer } from '@/components/layout/footer'
-import { Button } from '@/components/ui/button'
-import { ProductInput } from '@/components/classify/product-input'
-import { LoadingState } from '@/components/classify/loading-state'
+import { ChatContainer, WelcomeMessage, ConversationDivider } from '@/components/classify/chat-container'
+import { ChatMessage, QuestionOptions } from '@/components/classify/chat-message'
+import { ChatInput } from '@/components/classify/chat-input'
 import { ResultCard } from '@/components/classify/result-card'
-import { PerformanceStats } from '@/components/classify/performance-stats'
-import { ClarifyingQuestions } from '@/components/classify/clarifying-questions'
-import { ConversationHistory, ConversationSummaryInline } from '@/components/classify/conversation-history'
+import { LoadingState } from '@/components/classify/loading-state'
 import { HistorySidebar } from '@/components/history/history-sidebar'
 import { HistorySheet } from '@/components/history/history-sheet'
 import { useHistory, HistoryItem } from '@/lib/hooks/use-history'
 import { useConversation } from '@/lib/hooks/use-conversation'
+import { Button } from '@/components/ui/button'
 import { RotateCcw, Sparkles } from 'lucide-react'
 
 interface ClassificationResult {
@@ -21,6 +20,17 @@ interface ClassificationResult {
   description: string
   confidence: number
   reasoning: string
+  alternatives?: Array<{ code: string; description: string; confidence?: number }>
+  clarificationImpact?: string
+}
+
+interface ChatMessageItem {
+  id: string
+  type: 'ai' | 'user' | 'system'
+  content: string | React.ReactNode
+  timestamp: Date
+  questionId?: string
+  options?: string[]
 }
 
 export default function ClassifyPage() {
@@ -28,6 +38,9 @@ export default function ClassifyPage() {
   const [activeHistoryId, setActiveHistoryId] = useState<string | undefined>()
   const [historySheetOpen, setHistorySheetOpen] = useState(false)
   const [processingStartTime, setProcessingStartTime] = useState<number | undefined>()
+  const [chatMessages, setChatMessages] = useState<ChatMessageItem[]>([])
+  const [pendingAnswers, setPendingAnswers] = useState<Record<string, string>>({})
+  const [viewingHistoryResult, setViewingHistoryResult] = useState<HistoryItem | null>(null)
 
   // History hook for sidebar
   const {
@@ -42,45 +55,141 @@ export default function ClassifyPage() {
 
   // Handle starting a new classification
   const handleClassify = useCallback(async () => {
-    if (!productDescription.trim() || productDescription.length < 10) return
+    if (!productDescription.trim() || productDescription.trim().length < 3) return
 
+    // Clear any history view
+    setViewingHistoryResult(null)
     setActiveHistoryId(undefined)
     setProcessingStartTime(Date.now())
+    setPendingAnswers({})
+
+    // Add user message to chat
+    setChatMessages([{
+      id: `user-${Date.now()}`,
+      type: 'user',
+      content: productDescription.trim(),
+      timestamp: new Date()
+    }])
 
     await conversation.startClassification(productDescription.trim())
   }, [productDescription, conversation])
 
-  // Handle submitting answers to clarifying questions
-  const handleSubmitAnswers = useCallback(async (answers: Record<string, string>) => {
-    await conversation.submitAnswers(answers)
-  }, [conversation])
+  // Handle answer selection
+  const handleSelectAnswer = useCallback((questionId: string, answer: string) => {
+    setPendingAnswers(prev => ({
+      ...prev,
+      [questionId]: answer
+    }))
+  }, [])
+
+  // Handle submitting answers
+  const handleSubmitAnswers = useCallback(async () => {
+    if (Object.keys(pendingAnswers).length === 0) return
+
+    // Add user answers to chat
+    Object.entries(pendingAnswers).forEach(([, answer]) => {
+      setChatMessages(prev => [
+        ...prev,
+        {
+          id: `user-answer-${Date.now()}-${Math.random()}`,
+          type: 'user',
+          content: answer,
+          timestamp: new Date()
+        }
+      ])
+    })
+
+    await conversation.submitAnswers(pendingAnswers)
+    setPendingAnswers({})
+  }, [pendingAnswers, conversation])
 
   // Handle skipping questions
   const handleSkip = useCallback(async () => {
+    setChatMessages(prev => [
+      ...prev,
+      {
+        id: `system-skip-${Date.now()}`,
+        type: 'system',
+        content: 'Skipped to best guess',
+        timestamp: new Date()
+      }
+    ])
     await conversation.skip()
   }, [conversation])
 
-  // Handle selecting a history item
+  // Handle selecting a history item - show the result directly
   const handleSelectHistoryItem = useCallback((item: HistoryItem) => {
     // Reset conversation state
     conversation.reset()
+    setChatMessages([])
+    setPendingAnswers({})
+    setProductDescription('')
+    setProcessingStartTime(undefined)
 
-    // Show the historical result
-    setProductDescription(item.productDescription)
+    // Set the history item to view
+    setViewingHistoryResult(item)
     setActiveHistoryId(item.id)
+    setHistorySheetOpen(false)
   }, [conversation])
 
   // Handle starting a new classification
   const handleNewClassification = useCallback(() => {
     conversation.reset()
+    setChatMessages([])
+    setPendingAnswers({})
     setProductDescription('')
     setActiveHistoryId(undefined)
     setProcessingStartTime(undefined)
+    setViewingHistoryResult(null)
   }, [conversation])
 
+  // Add AI questions to chat when they arrive
+  useEffect(() => {
+    if (conversation.isAskingQuestions && conversation.currentQuestions) {
+      const questionContext = conversation.questionContext || 'To classify your product accurately, I need to know:'
+
+      // Add AI question message
+      setChatMessages(prev => {
+        // Check if we already added this round's questions
+        const existingQuestion = prev.find(m =>
+          m.id.startsWith(`ai-questions-round${conversation.roundNumber}`)
+        )
+        if (existingQuestion) return prev
+
+        return [
+          ...prev,
+          {
+            id: `ai-questions-round${conversation.roundNumber}-${Date.now()}`,
+            type: 'ai',
+            content: (
+              <div className="space-y-4">
+                <p className="text-muted-foreground">{questionContext}</p>
+                {conversation.currentQuestions?.map((q, idx) => (
+                  <div key={q.id} className="space-y-2">
+                    <p className="font-medium text-foreground">
+                      {idx + 1}. {q.text}
+                      {q.priority === 'required' && <span className="text-primary ml-1">*</span>}
+                    </p>
+                    <QuestionOptions
+                      options={q.options}
+                      selectedOption={pendingAnswers[q.id]}
+                      onSelect={(answer) => handleSelectAnswer(q.id, answer)}
+                      disabled={conversation.isLoading}
+                    />
+                  </div>
+                ))}
+              </div>
+            ),
+            timestamp: new Date()
+          }
+        ]
+      })
+    }
+  }, [conversation.isAskingQuestions, conversation.currentQuestions, conversation.roundNumber, conversation.questionContext, conversation.isLoading, pendingAnswers, handleSelectAnswer])
+
   // When classification completes, add to history
-  const handleClassificationComplete = useCallback(() => {
-    if (conversation.result) {
+  useEffect(() => {
+    if (conversation.isCompleted && conversation.result && !activeHistoryId && !viewingHistoryResult) {
       const historyItem = addToHistory({
         productDescription: conversation.productDescription,
         hsCode: conversation.result.hsCode,
@@ -90,190 +199,262 @@ export default function ClassifyPage() {
       })
       setActiveHistoryId(historyItem.id)
     }
-  }, [conversation.result, conversation.productDescription, addToHistory])
-
-  // Add to history when result is available
-  if (conversation.isCompleted && conversation.result && !activeHistoryId) {
-    handleClassificationComplete()
-  }
+  }, [conversation.isCompleted, conversation.result, conversation.productDescription, activeHistoryId, viewingHistoryResult, addToHistory])
 
   // Calculate processing time
   const processingTime = conversation.isCompleted && processingStartTime
     ? Date.now() - processingStartTime
     : undefined
 
-  // Convert conversation history to display format
-  const displayHistory = conversation.history
-
-  // Get historical result if viewing from history
-  const historicalResult = activeHistoryId
-    ? history.find(h => h.id === activeHistoryId)
-    : null
-
   // Determine what to show
-  const showLoading = conversation.isLoading
+  const showLoading = conversation.isLoading && !conversation.isAskingQuestions
   const showQuestions = conversation.isAskingQuestions && conversation.currentQuestions
-  const showResult = conversation.isCompleted || historicalResult
+  const showResult = conversation.isCompleted || viewingHistoryResult
+  const hasStarted = chatMessages.length > 0 || conversation.isLoading || viewingHistoryResult
 
-  // Build result object
+  // Build result object - either from conversation or from history
   const resultToShow: ClassificationResult | null = conversation.result
     ? {
         hsCode: conversation.result.hsCode,
         description: conversation.result.description,
         confidence: conversation.result.confidence,
         reasoning: conversation.result.reasoning,
+        alternatives: conversation.result.alternatives,
+        clarificationImpact: conversation.result.clarificationImpact,
       }
-    : historicalResult
+    : viewingHistoryResult
     ? {
-        hsCode: historicalResult.hsCode,
-        description: historicalResult.description,
-        confidence: historicalResult.confidence,
-        reasoning: historicalResult.reasoning,
+        hsCode: viewingHistoryResult.hsCode,
+        description: viewingHistoryResult.description,
+        confidence: viewingHistoryResult.confidence,
+        reasoning: viewingHistoryResult.reasoning,
       }
     : null
 
+  // Check if we have pending answers to submit
+  const hasPendingAnswers = Object.keys(pendingAnswers).length > 0
+
+  // Should show input bar - only before classification starts
+  const showInputBar = !hasStarted
+
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="h-screen flex flex-col bg-background overflow-hidden">
       <Navbar />
 
-      <main className="flex-1">
-        <div className="container py-6 md:py-8">
-          <div className="flex gap-6 lg:gap-8">
-            {/* Main content area */}
-            <div className="flex-1 min-w-0">
-              {/* Page header */}
-              <div className="flex items-center justify-between mb-6 md:mb-8">
-                <div>
-                  <h1 className="text-2xl md:text-3xl font-bold mb-1">
-                    Classify Your Product
-                  </h1>
-                  <p className="text-muted-foreground">
-                    {showQuestions
-                      ? 'Answer a few questions for accurate classification'
-                      : 'Describe your product to get the HS code'}
-                  </p>
-                </div>
+      {/* Main layout - fills remaining height */}
+      <div className="flex-1 flex min-h-0">
+        {/* Chat area - flex column with proper height constraints */}
+        <div className="flex-1 flex flex-col min-w-0 min-h-0">
+          {/* Mobile header - fixed height */}
+          <div className="flex items-center justify-between px-4 py-3 border-b border-border md:hidden shrink-0">
+            <h1 className="text-lg font-semibold text-foreground">Classify</h1>
+            <div className="flex items-center gap-2">
+              <HistorySheet
+                history={history}
+                formatTimestamp={formatTimestamp}
+                onSelectItem={handleSelectHistoryItem}
+                onClearHistory={clearHistory}
+                activeItemId={activeHistoryId}
+                open={historySheetOpen}
+                onOpenChange={setHistorySheetOpen}
+              />
+            </div>
+          </div>
 
-                {/* Mobile history button */}
-                <div className="relative md:hidden">
-                  <HistorySheet
-                    history={history}
-                    formatTimestamp={formatTimestamp}
-                    onSelectItem={handleSelectHistoryItem}
-                    onClearHistory={clearHistory}
-                    activeItemId={activeHistoryId}
-                    open={historySheetOpen}
-                    onOpenChange={setHistorySheetOpen}
-                  />
-                </div>
-              </div>
+          {/* Error message - fixed height when shown */}
+          <AnimatePresence>
+            {conversation.hasError && conversation.error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="mx-4 mt-4 p-4 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-sm flex items-center justify-between shrink-0"
+              >
+                <span>{conversation.error}</span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleNewClassification}
+                  className="text-destructive hover:text-destructive/80"
+                >
+                  <RotateCcw className="w-4 h-4 mr-1" />
+                  Try Again
+                </Button>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-              {/* Error message */}
-              {conversation.hasError && conversation.error && (
-                <div className="mb-6 p-4 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-sm flex items-center justify-between">
-                  <span>{conversation.error}</span>
+          {/* Chat container - takes remaining space, scrolls internally */}
+          <ChatContainer
+            className="flex-1 min-h-0 px-4 md:px-8 lg:px-12"
+            centerContent={!hasStarted}
+          >
+            {!hasStarted ? (
+              <WelcomeMessage />
+            ) : viewingHistoryResult ? (
+              // Show history result directly
+              <>
+                {/* Show what was classified */}
+                <ChatMessage type="user" timestamp={new Date(viewingHistoryResult.timestamp)}>
+                  {viewingHistoryResult.productDescription}
+                </ChatMessage>
+
+                <ConversationDivider text="Classification Result" />
+
+                <ResultCard
+                  result={{
+                    hsCode: viewingHistoryResult.hsCode,
+                    description: viewingHistoryResult.description,
+                    confidence: viewingHistoryResult.confidence,
+                    reasoning: viewingHistoryResult.reasoning,
+                  }}
+                  classificationId={viewingHistoryResult.id}
+                  productDescription={viewingHistoryResult.productDescription}
+                />
+
+                {/* New classification button */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                  className="flex justify-center py-6"
+                >
                   <Button
-                    variant="ghost"
-                    size="sm"
                     onClick={handleNewClassification}
-                    className="text-destructive hover:text-destructive"
+                    variant="outline"
+                    className="border-border hover:border-primary/50 hover:bg-muted/50"
                   >
-                    <RotateCcw className="w-4 h-4 mr-1" />
-                    Try Again
+                    <RotateCcw className="w-4 h-4 mr-2" />
+                    New Classification
                   </Button>
-                </div>
-              )}
+                </motion.div>
+              </>
+            ) : (
+              <>
+                {/* Chat messages */}
+                {chatMessages.map((message) => (
+                  <ChatMessage
+                    key={message.id}
+                    type={message.type}
+                    timestamp={message.timestamp}
+                  >
+                    {message.content}
+                  </ChatMessage>
+                ))}
 
-              {/* Main content */}
-              <div className="space-y-6">
-                {/* Show conversation history when asking questions */}
-                {showQuestions && displayHistory.length > 0 && (
-                  <ConversationHistory items={displayHistory} />
+                {/* Loading state */}
+                {showLoading && (
+                  <div className="py-8">
+                    <LoadingState />
+                  </div>
                 )}
 
-                {showLoading ? (
-                  <LoadingState />
-                ) : showQuestions && conversation.currentQuestions ? (
-                  <ClarifyingQuestions
-                    questions={conversation.currentQuestions}
-                    context={conversation.questionContext || ''}
-                    roundNumber={conversation.roundNumber}
-                    totalQuestionsAsked={conversation.totalQuestionsAsked}
-                    onSubmit={handleSubmitAnswers}
-                    onSkip={handleSkip}
-                    isLoading={conversation.isLoading}
-                  />
-                ) : showResult && resultToShow ? (
+                {/* Submit answers button */}
+                {showQuestions && hasPendingAnswers && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex justify-center gap-3 py-4"
+                  >
+                    <Button
+                      onClick={handleSubmitAnswers}
+                      disabled={conversation.isLoading}
+                      className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:shadow-glow text-white"
+                    >
+                      Continue
+                      <Sparkles className="w-4 h-4 ml-2" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      onClick={handleSkip}
+                      disabled={conversation.isLoading}
+                      className="text-muted-foreground hover:text-foreground"
+                    >
+                      Skip & Get Best Guess
+                    </Button>
+                  </motion.div>
+                )}
+
+                {/* Result */}
+                {showResult && resultToShow && !viewingHistoryResult && (
                   <>
-                    {/* Show clarification summary if it was a conversational flow */}
-                    {conversation.summary && (
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                        <Sparkles className="w-4 h-4 text-primary" />
-                        <span>Enhanced by clarifying questions</span>
-                        <span className="text-muted-foreground/60">|</span>
-                        <ConversationSummaryInline
-                          questionsAsked={conversation.summary.questionsAsked}
-                          answersProvided={conversation.summary.answersProvided}
-                          totalRounds={conversation.summary.totalRounds}
-                          durationMs={conversation.summary.durationMs}
-                        />
-                      </div>
-                    )}
+                    <ConversationDivider text="Classification Complete" />
 
                     {/* Clarification impact message */}
-                    {conversation.result?.clarificationImpact && (
-                      <div className="p-3 rounded-lg bg-success/10 border border-success/20 text-success text-sm mb-4">
-                        {conversation.result.clarificationImpact}
-                      </div>
+                    {resultToShow.clarificationImpact && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex items-start gap-3 px-4 py-3 mb-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20"
+                      >
+                        <Sparkles className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                        <p className="text-sm text-emerald-300">{resultToShow.clarificationImpact}</p>
+                      </motion.div>
                     )}
 
                     <ResultCard
                       result={resultToShow}
                       classificationId={conversation.conversationId || activeHistoryId || ''}
                       productDescription={conversation.productDescription || productDescription}
+                      processingTime={processingTime}
                     />
 
-                    {processingTime && (
-                      <PerformanceStats processingTime={processingTime} />
-                    )}
-
-                    <Button
-                      onClick={handleNewClassification}
-                      variant="outline"
-                      size="lg"
-                      className="w-full"
+                    {/* New classification button */}
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.5 }}
+                      className="flex justify-center py-6"
                     >
-                      New Classification
-                    </Button>
+                      <Button
+                        onClick={handleNewClassification}
+                        variant="outline"
+                        className="border-border hover:border-primary/50 hover:bg-muted/50"
+                      >
+                        <RotateCcw className="w-4 h-4 mr-2" />
+                        New Classification
+                      </Button>
+                    </motion.div>
                   </>
-                ) : (
-                  <ProductInput
-                    value={productDescription}
-                    onChange={setProductDescription}
-                    onSubmit={handleClassify}
-                    isLoading={conversation.isLoading}
-                  />
                 )}
-              </div>
-            </div>
+              </>
+            )}
+          </ChatContainer>
 
-            {/* Desktop sidebar */}
-            <div className="hidden md:block w-72 lg:w-80 flex-shrink-0">
-              <div className="sticky top-20 bg-card border border-border rounded-2xl p-4 max-h-[calc(100vh-6rem)] overflow-hidden">
-                <HistorySidebar
-                  history={history}
-                  formatTimestamp={formatTimestamp}
-                  onSelectItem={handleSelectHistoryItem}
-                  onClearHistory={clearHistory}
-                  activeItemId={activeHistoryId}
+          {/* Input area - fixed at bottom, only show before classification starts */}
+          {showInputBar && (
+            <div className="border-t border-border bg-background/80 backdrop-blur-xl p-4 md:px-8 lg:px-12 shrink-0">
+              <div className="max-w-3xl mx-auto">
+                <ChatInput
+                  value={productDescription}
+                  onChange={setProductDescription}
+                  onSubmit={handleClassify}
+                  isLoading={conversation.isLoading}
+                  disabled={false}
+                  showExamples={true}
                 />
               </div>
             </div>
-          </div>
+          )}
         </div>
-      </main>
 
-      <Footer />
+        {/* Right sidebar - fixed width, independent scroll */}
+        <aside className="hidden lg:flex lg:flex-col w-72 xl:w-80 border-l border-border bg-card/30 shrink-0">
+          <div className="flex-1 overflow-y-auto p-4">
+            <div className="bg-card/50 backdrop-blur-sm border border-border rounded-xl p-3">
+              <HistorySidebar
+                history={history}
+                formatTimestamp={formatTimestamp}
+                onSelectItem={handleSelectHistoryItem}
+                onClearHistory={clearHistory}
+                activeItemId={activeHistoryId}
+                compact
+                initialVisibleCount={10}
+              />
+            </div>
+          </div>
+        </aside>
+      </div>
     </div>
   )
 }
