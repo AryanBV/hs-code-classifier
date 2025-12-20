@@ -286,10 +286,10 @@ export type TurnResponseType = 'question' | 'classification';
 // ========================================
 
 /** Maximum questions allowed per conversation */
-export const MAX_QUESTIONS = 5;
+export const MAX_QUESTIONS = 6;
 
 /** Maximum rounds allowed per conversation */
 export const MAX_ROUNDS = 3;
 
-/** Maximum questions per round */
-export const MAX_QUESTIONS_PER_ROUND = 2;
+/** Maximum questions per round (increased to ensure critical dimensions are covered) */
+export const MAX_QUESTIONS_PER_ROUND = 3;

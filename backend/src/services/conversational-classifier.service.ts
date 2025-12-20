@@ -47,6 +47,18 @@ import {
   MAX_ROUNDS,
   MAX_QUESTIONS_PER_ROUND
 } from '../types/conversation.types';
+import {
+  QuestionCoverage
+} from '../types/critical-dimensions.types';
+import {
+  initializeCoverage,
+  updateCoverageFromAnswers,
+  updateCoverageFromHierarchy,
+  validateCoverage,
+  generateFallbackQuestions,
+  mergeQuestions,
+  logCoverageState
+} from './question-tracker.service';
 
 dotenv.config();
 
@@ -116,6 +128,15 @@ async function startNewConversation(
   // Get candidates
   const candidates = await getTopCandidates(request.productDescription, 50);
 
+  // CRITICAL: Initialize question coverage tracking
+  // This ensures mandatory questions are NEVER skipped
+  const coverage = initializeCoverage(
+    conversation.id,
+    request.productDescription,
+    candidates.map(c => c.code)
+  );
+  logCoverageState(coverage, '[NEW] ');
+
   if (candidates.length === 0) {
     await markConversationCompleted(conversation.id, {
       hsCode: '',
@@ -151,19 +172,20 @@ async function startNewConversation(
     previousTurns: []
   };
 
-  // Get LLM decision
+  // Get LLM decision with coverage context
   const llmStartTime = Date.now();
-  const decision = await getLLMDecision(context, candidates);
+  const decision = await getLLMDecision(context, candidates, coverage);
   const llmTime = Date.now() - llmStartTime;
 
-  // Process decision
+  // Process decision with coverage enforcement
   return await processLLMDecision(
     conversation.id,
     context,
     decision,
     candidates,
     llmTime,
-    startTime
+    startTime,
+    coverage
   );
 }
 
@@ -232,6 +254,14 @@ async function continueConversation(
   // Get new candidates with enhanced query
   const candidates = await getTopCandidates(enhancedQuery, 50);
 
+  // CRITICAL: Initialize and update coverage tracking
+  // Start with fresh coverage based on original description
+  let coverage = initializeCoverage(
+    conversation.id,
+    conversation.productDescription,
+    candidates.map(c => c.code)
+  );
+
   // Build context
   const previousTurns = conversation.turns
     .filter(t => t.responseType === 'question')
@@ -245,6 +275,14 @@ async function continueConversation(
   if (previousTurns.length > 0 && previousTurns[previousTurns.length - 1]) {
     previousTurns[previousTurns.length - 1]!.answers = request.answers;
   }
+
+  // Update coverage with ALL previous answers
+  for (const turn of previousTurns) {
+    if (turn.answers && turn.questions) {
+      coverage = updateCoverageFromAnswers(coverage, turn.answers, turn.questions);
+    }
+  }
+  logCoverageState(coverage, '[CONTINUE] ');
 
   const totalQuestionsAsked = previousTurns.reduce((sum, t) => {
     return sum + (t.questions?.length || 0);
@@ -260,19 +298,20 @@ async function continueConversation(
     previousTurns
   };
 
-  // Get LLM decision
+  // Get LLM decision with coverage context
   const llmStartTime = Date.now();
-  const decision = await getLLMDecision(context, candidates);
+  const decision = await getLLMDecision(context, candidates, coverage);
   const llmTime = Date.now() - llmStartTime;
 
-  // Process decision
+  // Process decision with coverage enforcement
   return await processLLMDecision(
     conversation.id,
     context,
     decision,
     candidates,
     llmTime,
-    startTime
+    startTime,
+    coverage
   );
 }
 
@@ -282,10 +321,12 @@ async function continueConversation(
 
 /**
  * Ask LLM to decide: ask questions or classify
+ * Now includes coverage tracking to ensure mandatory questions are asked
  */
 async function getLLMDecision(
   context: ConversationContext,
-  candidates: Candidate[]
+  candidates: Candidate[],
+  coverage?: QuestionCoverage
 ): Promise<LLMDecision> {
   try {
     // Get full details for candidates
@@ -351,10 +392,10 @@ async function getLLMDecision(
       logger.debug(`Chapter notes: ${noteContext?.chapterNotes.length || 0} notes, ${noteContext?.relevantDefinitions.length || 0} definitions`);
     }
 
-    const prompt = createClarificationPrompt(context, candidates, fullDetails, hierarchyContext, exclusionContexts, noteContext);
+    const prompt = createClarificationPrompt(context, candidates, fullDetails, hierarchyContext, exclusionContexts, noteContext, coverage);
 
     const response = await openai.chat.completions.create({
-      model: 'gpt-4o',  // Using full GPT-4o for better question generation
+      model: 'gpt-4o-mini',  // Using GPT-4o-mini for cost efficiency
       messages: [
         {
           role: 'system',
@@ -557,7 +598,35 @@ async function findBestParentToExplore(candidates: Candidate[], currentRound: nu
 }
 
 /**
+ * Format coverage information for the LLM prompt
+ * Shows which mandatory dimensions are still uncovered
+ */
+function formatCoverageSection(coverage?: QuestionCoverage): string {
+  if (!coverage) return '';
+
+  const uncovered = coverage.dimensions.filter(
+    d => d.isMandatory && d.status === 'uncovered'
+  );
+
+  if (uncovered.length === 0) return '';
+
+  const uncoveredList = uncovered
+    .map(d => `  - ${d.dimension.replace(/_/g, ' ').toUpperCase()}`)
+    .join('\n');
+
+  return `
+**⚠️ MANDATORY DIMENSIONS NOT YET COVERED:**
+The following critical dimensions have NOT been addressed yet.
+You MUST ask about these before classifying:
+${uncoveredList}
+
+DO NOT classify until these dimensions are covered by questions or answers!
+`;
+}
+
+/**
  * Create the prompt for LLM clarification decision
+ * Now includes coverage info to guide the LLM on mandatory dimensions
  */
 function createClarificationPrompt(
   context: ConversationContext,
@@ -565,7 +634,8 @@ function createClarificationPrompt(
   fullDetails: any[],
   hierarchyContext: HierarchyContext | null,
   exclusionContexts: ExclusionAnalysis[],
-  noteContext: NoteContext | null
+  noteContext: NoteContext | null,
+  coverage?: QuestionCoverage
 ): string {
   // Format candidates
   const candidatesText = candidates.slice(0, 15).map((c, idx) => {
@@ -672,10 +742,24 @@ ${formattedNotes}
 
   // CRITICAL: Detect bulk packaging patterns (.10 vs .90) in exclusion contexts
   // and add an explicit alert for the LLM
+  // NOTE: Only apply this for agricultural/food products (chapters 01-24) where bulk packaging is relevant
+  // For industrial products (chapter 85+), .10 codes often mean specific types, not bulk packaging
   let bulkPackagingAlert = '';
   for (const exclusionContext of exclusionContexts) {
+    // Get chapter number from parent code
+    const chapterNum = parseInt(exclusionContext.parentCode.substring(0, 2), 10);
+
+    // Only apply bulk packaging logic for chapters where it's relevant (agricultural/food products)
+    // Chapters 01-24 are typically agricultural products where bulk vs retail matters
+    // Chapters 84+ are industrial products where .10/.90 usually means something else
+    const isBulkRelevantChapter = chapterNum >= 1 && chapterNum <= 24;
+
+    if (!isBulkRelevantChapter) continue;
+
     const hasBulkCode = exclusionContext.specificCodes.some(
-      c => c.code.endsWith('.10') && c.description.toLowerCase().includes('bulk')
+      c => c.code.endsWith('.10') &&
+           (c.description.toLowerCase().includes('bulk') ||
+            c.description.toLowerCase().includes('in bulk packing'))
     );
     const otherCode = exclusionContext.otherCode;
     const hasOtherCode = otherCode?.code.endsWith('.90');
@@ -705,7 +789,7 @@ ${historyText}
 
 **TOP CANDIDATE HS CODES:**
 ${candidatesText}
-${hierarchySection}${exclusionSection}${notesSection}
+${hierarchySection}${exclusionSection}${notesSection}${formatCoverageSection(coverage)}
 **CURRENT STATUS:**
 - Round: ${context.currentRound} of ${context.maxRounds}
 - Questions asked: ${context.totalQuestionsAsked} of ${context.maxQuestions}
@@ -738,17 +822,21 @@ These hierarchy-derived questions are MORE IMPORTANT than generic questions!
 - Previous answers have FULLY resolved ALL ambiguities including packaging
 
 **⚠️ CRITICAL: WHEN YOU MUST ASK MORE QUESTIONS (DO NOT SKIP!):**
-Look at the candidates above. If ANY candidate ends in .10 (e.g., 0901.21.10) and another in .90 (e.g., 0901.21.90):
-- The .10 code is likely "In bulk packing" or "large packaging"
-- The .90 code is "Other" (retail/small packaging)
-- You MUST ask: "Is the product in bulk packaging (large commercial quantities) or retail packaging (small consumer packages)?"
-- This applies to ALL products, not just coffee! Check every pair of XX.10 vs XX.90 codes.
-
 More situations requiring questions:
 - Multiple 8-digit codes exist under the same 6-digit parent
-- The difference is size/weight → Ask about quantity
-- Previous answers covered species/processing but NOT packaging → Ask about packaging
-- DO NOT classify as "Other" (XX.90) without first confirming it's NOT in bulk!
+- The difference is unclear from the product description
+- Material, grade, or specific type is ambiguous
+
+**FOR AGRICULTURAL/FOOD PRODUCTS (Chapters 01-24 ONLY):**
+If you see .10 (bulk) vs .90 (other) codes for food/agricultural products:
+- .10 often means "In bulk packing" (large commercial quantities)
+- .90 often means "Other" (retail packaging)
+- Ask about packaging ONLY for food/agricultural products
+
+**FOR INDUSTRIAL/MANUFACTURED PRODUCTS (Chapters 25+):**
+- Do NOT assume .10/.90 means bulk vs retail
+- The .10/.90 distinction often means different types, prices, or specifications
+- Read the actual descriptions to determine what distinguishes the codes
 
 **QUESTION GUIDELINES (if asking):**
 - Ask 1-3 questions per round as needed to distinguish codes
@@ -801,6 +889,7 @@ If classifying (MUST use 8-digit codes):
 
 /**
  * Process LLM decision and return appropriate response
+ * Now includes coverage enforcement to prevent skipping mandatory questions
  */
 async function processLLMDecision(
   conversationId: string,
@@ -808,13 +897,56 @@ async function processLLMDecision(
   decision: LLMDecision,
   candidates: Candidate[],
   llmTime: number,
-  startTime: number
+  startTime: number,
+  coverage?: QuestionCoverage
 ): Promise<ConversationalClassifyResponse> {
   // Get current turn count
   const existingTurns = await prisma.conversationTurn.count({
     where: { conversationId }
   });
   const turnNumber = existingTurns + 1;
+
+  // ========================================
+  // CRITICAL: Coverage Enforcement Logic
+  // ========================================
+  // If LLM decides to classify but mandatory dimensions are missing,
+  // OVERRIDE the decision and force question asking
+
+  const forceClassify = context.currentRound > context.maxRounds ||
+    context.totalQuestionsAsked >= context.maxQuestions;
+
+  if (coverage && decision.decision === 'classify' && !forceClassify) {
+    const validation = validateCoverage(coverage, false);
+
+    if (!validation.isValid && validation.missingMandatory.length > 0) {
+      // LLM tried to classify but mandatory dimensions are missing!
+      // OVERRIDE: Force question asking
+      logger.warn(
+        `OVERRIDE: LLM tried to classify but missing mandatory dimensions: ${validation.missingMandatory.join(', ')}. Forcing questions.`
+      );
+
+      // Generate fallback questions for missing dimensions
+      const fallbackQuestions = generateFallbackQuestions(coverage, 3);
+
+      if (fallbackQuestions.length > 0) {
+        // Override the decision to ask questions instead
+        decision.decision = 'ask_questions';
+        decision.questions = fallbackQuestions;
+        decision.context = `We need more information to accurately classify this product. Missing: ${validation.missingMandatory.join(', ')}`;
+
+        logger.info(`Generated ${fallbackQuestions.length} fallback questions for mandatory dimensions`);
+      }
+    }
+  }
+
+  // If asking questions, merge hierarchy questions with fallback for uncovered dimensions
+  if (decision.decision === 'ask_questions' && decision.questions && coverage) {
+    const mergedQuestions = mergeQuestions(decision.questions, coverage, 3);
+    if (mergedQuestions.length > decision.questions.length) {
+      logger.info(`Merged questions: ${decision.questions.length} -> ${mergedQuestions.length} (added fallback for uncovered dimensions)`);
+      decision.questions = mergedQuestions;
+    }
+  }
 
   if (decision.decision === 'ask_questions' && decision.questions && decision.questions.length > 0) {
     // Store question turn
@@ -825,7 +957,7 @@ async function processLLMDecision(
         responseType: 'question',
         questionContext: decision.context,
         questions: decision.questions as unknown as any,
-        llmModel: 'gpt-4o',
+        llmModel: 'gpt-4o-mini',
         responseTimeMs: llmTime,
         candidatesFound: candidates.length
       }
@@ -907,7 +1039,7 @@ async function processLLMDecision(
         confidence: result.confidence,
         reasoning: result.reasoning,
         alternatives: result.alternatives as unknown as any,
-        llmModel: 'gpt-4o',
+        llmModel: 'gpt-4o-mini',
         responseTimeMs: llmTime,
         candidatesFound: candidates.length
       }

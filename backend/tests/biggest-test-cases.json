@@ -1,0 +1,93 @@
+[
+  {
+    "id": 1,
+    "name": "Longest Description Test",
+    "type": "longest_description",
+    "query": "Premium quality organic cotton t-shirt manufactured in India, featuring a crew neck design, short sleeves, 100% pre-shrunk cotton fabric with a weight of 180 GSM, available in multiple colors including navy blue, white, black, and gray, with screen-printed logo on the front, ribbed collar and cuffs, side-seamed construction for durability, tagless label for comfort, preshrunk to prevent shrinkage, machine washable, suitable for casual wear, packaged individually in poly bags, size range from small to extra-large, made from sustainably sourced organic cotton certified by GOTS (Global Organic Textile Standard), dyed with eco-friendly dyes, finished with soft-touch treatment, hemmed bottom with double-needle stitching, reinforced shoulder seams, colorfast and fade-resistant, breathable fabric for all-season wear, suitable for both men and women, exported in bulk quantities of 1000 pieces per carton, each carton weighing approximately 15 kilograms, dimensions 60cm x 40cm x 30cm, ready for retail distribution, includes care instructions label, meets international quality standards, suitable for screen printing or embroidery customization, wholesale pricing available for bulk orders, minimum order quantity 500 pieces, lead time 30-45 days, FOB pricing, payment terms negotiable, suitable for promotional merchandise, corporate branding, or retail sales, complies with international textile regulations, OEKO-TEX certified for safety, suitable for all age groups, versatile styling options, contemporary fit design, premium quality construction, excellent value for money, ideal for export markets in Europe, North America, and Asia-Pacific regions, can be customized with various printing techniques including screen printing, heat transfer, or embroidery, available in both regular and slim fit options, suitable for casual, athletic, or professional wear depending on styling, made with attention to detail and quality craftsmanship, ensuring customer satisfaction and repeat orders, backed by manufacturer warranty for quality assurance, ready for immediate shipment upon order confirmation, suitable for various distribution channels including retail stores, online marketplaces, and wholesale distributors, can be branded with company logos or custom designs, excellent for promotional campaigns, corporate events, team uniforms, or general retail sales, manufactured in state-of-the-art facilities with modern machinery, quality control processes in place at every stage of production, ensuring consistent quality across all units, suitable for both domestic and international markets, meets or exceeds international quality standards, ready for export documentation and customs clearance procedures",
+    "expectedCode": "6109",
+    "category": "Textiles",
+    "chapter": "61",
+    "difficulty": "hard",
+    "notes": "Extremely long product description (200+ words) to stress-test parsing and keyword extraction. Should still correctly identify as cotton t-shirt in Chapter 61."
+  },
+  {
+    "id": 2,
+    "name": "Most Complex Product",
+    "type": "most_complex",
+    "query": "Smartphone with premium leather protective case, tempered glass screen protector pre-installed, wireless charging stand with aluminum base and rubber padding, USB-C fast charging cable with braided nylon exterior, silicone phone grip attachment, car mount with magnetic base, screen cleaning cloth made of microfiber, all packaged in eco-friendly cardboard box with foam inserts, including user manual printed on recycled paper, warranty card, quick start guide in multiple languages, SIM card ejector tool, and bonus screen protector replacement kit",
+    "expectedCode": "8517",
+    "category": "Electronics",
+    "chapter": "85",
+    "difficulty": "hard",
+    "notes": "Multi-material, multi-function product. The smartphone is the principal item, so it should be classified under Chapter 85 (telecommunications equipment), not under leather goods, glass, or other materials. This tests the system's ability to identify the principal function vs. accessories."
+  },
+  {
+    "id": 3,
+    "name": "Most Ambiguous Product",
+    "type": "most_ambiguous",
+    "query": "ceramic brake pads for motorcycles with high-friction composite material and heat-resistant ceramic coating designed for high-performance racing applications",
+    "expectedCode": "8708",
+    "category": "Automotive Parts",
+    "chapter": "87",
+    "difficulty": "hard",
+    "notes": "Highly ambiguous - could legitimately be classified in Chapter 68 (ceramic/friction materials) or Chapter 87 (automotive parts). The correct classification is Chapter 87 because these are parts of motor vehicles, even though they contain ceramic material. This tests the system's ability to prioritize function over material."
+  },
+  {
+    "id": 4,
+    "name": "Real-World Complex Export",
+    "type": "real_world_complex",
+    "query": "Pre-assembled flat-pack wooden dining table kit with four matching chairs, including all necessary hardware (screws, bolts, washers, and Allen keys), assembly instructions in multiple languages, protective corner guards, felt pads for chair legs, wood polish sample, touch-up paint pen, warranty documentation, and spare parts kit, all packaged in corrugated cardboard boxes with foam padding and shrink wrap protection",
+    "expectedCode": "9403",
+    "category": "Furniture",
+    "chapter": "94",
+    "difficulty": "hard",
+    "notes": "Complex real-world export scenario with multiple components. The furniture (table and chairs) is the principal item, so classification should be under Chapter 94 (furniture), not under wood, hardware, or packaging materials. This tests classification of composite shipments."
+  },
+  {
+    "id": 5,
+    "name": "Multi-Material Functional Product",
+    "type": "multi_material",
+    "query": "Stainless steel water bottle with double-wall vacuum insulation, BPA-free plastic lid with silicone seal, aluminum outer shell with powder coating, rubber base pad, carrying strap made of nylon webbing, and integrated temperature display with LED screen",
+    "expectedCode": "7323",
+    "category": "Steel Articles",
+    "chapter": "73",
+    "difficulty": "hard",
+    "notes": "Product made of multiple materials (steel, plastic, aluminum, rubber, nylon, electronics). The stainless steel body is the principal material, so classification should be under Chapter 73 (articles of iron or steel), specifically 7323 (table, kitchen or other household articles of iron or steel)."
+  },
+  {
+    "id": 6,
+    "name": "Functional Override Test",
+    "type": "functional_override",
+    "query": "Plastic toy car with metal wheels, rubber tires, LED headlights, sound effects, remote control with batteries, and decorative stickers",
+    "expectedCode": "9503",
+    "category": "Toys",
+    "chapter": "95",
+    "difficulty": "hard",
+    "notes": "Tests functional override - even though the product contains plastic, metal, rubber, and electronics, it should be classified as a toy (Chapter 95) because its principal function is play/entertainment, not as a vehicle, plastic article, or electronic device."
+  },
+  {
+    "id": 7,
+    "name": "Extreme Length with Technical Details",
+    "type": "extreme_length",
+    "query": "Industrial-grade three-phase electric motor, 50 horsepower, 415 volts, 50 hertz, IP65 protection rating, cast iron frame, copper windings, Class F insulation, ball bearings, fan-cooled design, foot-mounted configuration, suitable for pumps, compressors, and conveyor systems, includes mounting bolts, terminal box with cable gland, nameplate with technical specifications, operating manual, maintenance guide, spare parts list, lubrication instructions, wiring diagram, safety warnings, CE marking, ISO 9001 certified, warranty certificate, export documentation, commercial invoice, packing list, certificate of origin, quality inspection report, test certificate, shipping marks, handling instructions, storage requirements, installation guidelines, troubleshooting guide, technical support contact information, and recommended spare parts inventory list for long-term operation",
+    "expectedCode": "8501",
+    "category": "Electric Motors",
+    "chapter": "85",
+    "difficulty": "hard",
+    "notes": "Extremely detailed technical product description with extensive documentation and accessories. Should correctly identify as electric motor in Chapter 85, ignoring all the documentation and accessories."
+  },
+  {
+    "id": 8,
+    "name": "Ambiguous Material vs Function",
+    "type": "ambiguous_material_function",
+    "query": "Glass table with metal legs and wooden base, designed for dining room use",
+    "expectedCode": "9403",
+    "category": "Furniture",
+    "chapter": "94",
+    "difficulty": "hard",
+    "notes": "Product made of glass, metal, and wood, but its function is furniture. Should be classified under Chapter 94 (furniture) based on function, not under Chapter 70 (glass), Chapter 73 (steel), or Chapter 44 (wood)."
+  }
+]
+
+
+

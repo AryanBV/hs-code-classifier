@@ -18,7 +18,7 @@ const stats = [
   },
   {
     icon: Brain,
-    value: 'GPT-4o',
+    value: 'GPT-4o-mini',
     label: 'AI Powered',
     description: 'Advanced reasoning',
   },

@@ -163,40 +163,6 @@ export function WelcomeMessage() {
         ))}
       </motion.div>
 
-      {/* Quick examples */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.9 }}
-        className="mt-10"
-      >
-        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-3 font-medium">
-          Try an example
-        </p>
-        <div className="flex flex-wrap justify-center gap-2">
-          {[
-            'Cotton t-shirts for men',
-            'LED light bulbs',
-            'Stainless steel cookware',
-            'Organic green tea'
-          ].map((example, index) => (
-            <motion.button
-              key={example}
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1 + index * 0.05 }}
-              className="px-3 py-1.5 text-sm text-muted-foreground bg-muted/30 border border-border rounded-lg hover:border-primary/50 hover:text-primary hover:bg-muted/50 transition-all duration-300"
-              onClick={() => {
-                // This will be connected to the input in the parent component
-                const event = new CustomEvent('selectExample', { detail: example })
-                window.dispatchEvent(event)
-              }}
-            >
-              {example}
-            </motion.button>
-          ))}
-        </div>
-      </motion.div>
     </motion.div>
   )
 }
