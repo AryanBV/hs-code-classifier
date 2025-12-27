@@ -191,11 +191,12 @@ async function buildCodePath(code: string): Promise<{ code: string; description:
 // ========================================
 
 /**
- * Get all chapters (root level options)
- * Optimized: Assumes all chapters have children (which is true for HS codes)
+ * Get all root level options (4-digit heading codes)
+ * Database stores 4-digit headings (0901, 0902) not 2-digit chapters
+ * Optimized: Assumes all headings have children (which is true for HS codes)
  */
 async function getAllChapters(): Promise<HierarchyOption[]> {
-  const chapters = await prisma.hsCode.findMany({
+  const headings = await prisma.hsCode.findMany({
     where: {
       code: {
         not: {
@@ -211,12 +212,12 @@ async function getAllChapters(): Promise<HierarchyOption[]> {
     orderBy: { code: 'asc' }
   });
 
-  // All chapters have children in HS code structure
-  return chapters.map(ch => ({
-    code: ch.code,
-    description: ch.description,
-    isOther: ch.isOther,
-    hasChildren: true // Chapters always have headings underneath
+  // All headings have children in HS code structure
+  return headings.map(h => ({
+    code: h.code,
+    description: h.description,
+    isOther: h.isOther,
+    hasChildren: true // Headings always have subheadings underneath
   }));
 }
 
@@ -431,7 +432,96 @@ Based on the product description, do ONE of the following:
 ## When to Select "Other"
 ONLY select an [OTHER/CATCH-ALL] code if:
 1. The user explicitly says their product doesn't match any listed category, OR
-2. You've already asked clarifying questions and the answers confirm it doesn't fit specific codes`;
+2. You've already asked clarifying questions and the answers confirm it doesn't fit specific codes
+
+## CRITICAL: Cross-Chapter Awareness (WHEN AT ROOT LEVEL)
+Some products can belong to DIFFERENT chapters depending on their form or processing level.
+When classifying these products FROM THE ROOT LEVEL (before selecting a heading), you MUST ASK about form/processing.
+
+**IMPORTANT: Only include the EXACT heading codes listed below - do NOT add any other codes!**
+
+| Product Term | ONLY These Headings (4-digit codes) |
+|--------------|-------------------------------------|
+| coffee       | 0901 (raw/roasted beans) OR 2101 (instant coffee, extracts) |
+| tea          | 0902 (tea leaves) OR 2101 (tea extracts, instant tea) |
+| cocoa        | 1801-1805 (cocoa products) OR 1905-1906 (chocolate products) |
+| milk         | 0401-0402 (liquid milk) OR 1901 (milk-based preparations) |
+| fruit        | 0801-0814 (fresh fruit) OR 2001-2009 (preserved fruit) |
+| vegetables   | 0701-0714 (fresh vegetables) OR 2001-2005 (preserved vegetables) |
+| meat         | 0201-0210 (fresh meat) OR 1601-1602 (prepared meat) |
+| fish         | 0301-0307 (fresh fish) OR 1604-1605 (prepared fish) |
+
+**Rules:**
+1. Check if the user's description already clarifies the form (e.g., "instant coffee" = 2101, "green coffee beans" = 0901)
+2. If NOT clarified, you MUST ASK about the form/processing level BEFORE selecting a heading
+3. **ONLY include options from the headings listed above - NEVER add other unrelated headings!**
+
+Example for "coffee" at root level (EXACTLY 2 options, no more):
+ACTION: ASK
+QUESTION: What form is your coffee product in?
+OPTIONS:
+0901|Raw or roasted coffee beans
+2101|Instant coffee, coffee extract, or coffee essence
+REASON: Coffee products can be classified in different chapters depending on their processing level`;
+}
+
+// ========================================
+// Cross-Chapter Product Filtering
+// ========================================
+
+/**
+ * Known cross-chapter products and their valid chapter codes
+ * This filters out LLM hallucinations that add irrelevant chapters
+ */
+const CROSS_CHAPTER_PRODUCTS: Record<string, string[]> = {
+  'coffee': ['09', '21'],
+  'tea': ['09', '21'],
+  'cocoa': ['18', '19'],
+  'chocolate': ['17', '18', '19'],
+  'milk': ['04', '19'],
+  'fruit': ['08', '20'],
+  'vegetable': ['07', '20'],
+  'vegetables': ['07', '20'],
+  'meat': ['02', '16'],
+  'fish': ['03', '16'],
+  'seafood': ['03', '16'],
+};
+
+/**
+ * Filter options to only include valid chapters for cross-chapter products
+ * This prevents the LLM from hallucinating irrelevant chapters
+ * Works with both 2-digit chapter codes (09) and 4-digit heading codes (0901)
+ */
+function filterCrossChapterOptions(
+  userInput: string,
+  options: Array<{code: string; label: string; description: string}>,
+  currentCode: string | null
+): Array<{code: string; label: string; description: string}> {
+  // Only apply at root level (no current code)
+  if (currentCode !== null) {
+    return options;
+  }
+
+  // Check if user input matches any cross-chapter product
+  const inputLower = userInput.toLowerCase();
+  for (const [product, validChapters] of Object.entries(CROSS_CHAPTER_PRODUCTS)) {
+    if (inputLower.includes(product)) {
+      // Filter options to only include valid chapters
+      // Handle both 2-digit (09) and 4-digit (0901) codes
+      const filtered = options.filter(opt => {
+        // Extract chapter from code: "09" -> "09", "0901" -> "09", "0901.11" -> "09"
+        const chapterCode = opt.code.replace(/\./g, '').substring(0, 2);
+        return validChapters.includes(chapterCode);
+      });
+
+      // Only return filtered if we found matching options
+      if (filtered.length > 0) {
+        return filtered;
+      }
+    }
+  }
+
+  return options;
 }
 
 // ========================================
@@ -444,7 +534,8 @@ ONLY select an [OTHER/CATCH-ALL] code if:
 function parseNavigationResponse(
   response: string,
   options: HierarchyOption[],
-  currentCode: string | null
+  currentCode: string | null,
+  userInput: string = ''
 ): NavigationResult {
   const lines = response.split('\n').map(l => l.trim()).filter(l => l);
 
@@ -580,32 +671,44 @@ function parseNavigationResponse(
       }
     }
 
-    // Always include "Other" option with a meaningful label
-    const otherOption = options.find(o => o.isOther);
-    if (otherOption && !finalOptions.some(o => o.code === otherOption.code)) {
-      // Generate a user-friendly label for "Other" options
-      // Use the description if it's meaningful, otherwise create a descriptive label
-      let otherLabel = otherOption.description || 'Other';
+    // Filter out irrelevant chapters for cross-chapter products FIRST
+    // This must happen before adding "Other" options
+    let filteredOptions = filterCrossChapterOptions(userInput, finalOptions, currentCode);
 
-      // Clean up the description if it's just "Other"
-      if (otherLabel.toLowerCase() === 'other') {
-        // Create a more descriptive label based on context
-        const siblingLabels = finalOptions.map(o => o.label).join(', ');
-        otherLabel = `Other (not ${siblingLabels.substring(0, 30)}${siblingLabels.length > 30 ? '...' : ''})`;
-      } else {
-        // Use the description, cleaned up
-        otherLabel = otherLabel.split(':')[0] || otherLabel;
-        if (otherLabel.length > 50) {
-          otherLabel = otherLabel.substring(0, 47) + '...';
+    // Check if this is a cross-chapter question at root level
+    // We need to check BOTH if filtering occurred AND if the product matches cross-chapter products
+    const inputLower = userInput.toLowerCase();
+    const isCrossChapterProduct = Object.keys(CROSS_CHAPTER_PRODUCTS).some(product =>
+      inputLower.includes(product)
+    );
+    const isCrossChapterQuestion = currentCode === null && isCrossChapterProduct;
+
+    // Only add "Other" option if NOT at root level cross-chapter question
+    // Cross-chapter questions are specifically about form/processing, not "other"
+    if (!isCrossChapterQuestion) {
+      const otherOption = options.find(o => o.isOther);
+      if (otherOption && !filteredOptions.some(o => o.code === otherOption.code)) {
+        // Generate a user-friendly label for "Other" options
+        let otherLabel = otherOption.description || 'Other';
+
+        // Clean up the description if it's just "Other"
+        if (otherLabel.toLowerCase() === 'other') {
+          const siblingLabels = filteredOptions.map(o => o.label).join(', ');
+          otherLabel = `Other (not ${siblingLabels.substring(0, 30)}${siblingLabels.length > 30 ? '...' : ''})`;
+        } else {
+          otherLabel = otherLabel.split(':')[0] || otherLabel;
+          if (otherLabel.length > 50) {
+            otherLabel = otherLabel.substring(0, 47) + '...';
+          }
+          otherLabel = otherLabel.charAt(0).toUpperCase() + otherLabel.slice(1).toLowerCase();
         }
-        otherLabel = otherLabel.charAt(0).toUpperCase() + otherLabel.slice(1).toLowerCase();
-      }
 
-      finalOptions.push({
-        code: otherOption.code,
-        label: otherLabel,
-        description: otherOption.description
-      });
+        filteredOptions.push({
+          code: otherOption.code,
+          label: otherLabel,
+          description: otherOption.description
+        });
+      }
     }
 
     return {
@@ -613,7 +716,7 @@ function parseNavigationResponse(
       question: {
         id: `nav_${currentCode || 'root'}_${Date.now()}`,
         text: question,
-        options: finalOptions,
+        options: filteredOptions,
         parentCode: currentCode || '',
         reasoning: reason
       }
@@ -739,7 +842,7 @@ export async function navigateHierarchy(
     logger.debug(`[LLM-NAV] LLM response: ${content.substring(0, 200)}...`);
 
     // Parse response
-    const result = parseNavigationResponse(content, options, currentCode);
+    const result = parseNavigationResponse(content, options, currentCode, userInput);
 
     const elapsed = Date.now() - startTime;
     logger.info(`[LLM-NAV] Result: ${result.type} in ${elapsed}ms`);
