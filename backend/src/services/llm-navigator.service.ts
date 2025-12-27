@@ -353,13 +353,14 @@ function buildNavigationPrompt(
   options: HierarchyOption[],
   history: NavigationHistory[]
 ): string {
+  const hierarchyLevel = history.length + 1;
   const currentPosition = currentCode
-    ? `Currently at: ${currentCode}`
-    : 'Starting from root (all chapters)';
+    ? `Currently at: ${currentCode} (Level ${hierarchyLevel} - drilling down into subcategories)`
+    : 'Starting from root (Level 1 - choosing main category)';
 
   const historyText = history.length > 0
-    ? history.map(h => `  - ${h.code}: ${h.description}`).join('\n')
-    : '  None yet';
+    ? history.map((h, i) => `  Level ${i + 1}: ${h.code} - ${h.description}`).join('\n')
+    : '  None yet (this is the first question)';
 
   return `You are an expert HS code classifier navigating the Harmonized System hierarchy.
 
@@ -391,11 +392,14 @@ Based on the product description, do ONE of the following:
    OPTIONS: [List each option on a new line with format: CODE|FRIENDLY_LABEL]
    REASON: [Why you need this information]
 
-   Example OPTIONS format:
-   OPTIONS:
-   0901|Raw coffee beans (green or roasted)
-   2101|Instant coffee or coffee extracts
-   0106|Live animals (not food products)
+   **CRITICAL: Option labels MUST accurately reflect the HS code description!**
+   - Look at the "Available Options" section above to see what each code means
+   - Create a user-friendly label that matches the ACTUAL description
+   - NEVER make up labels that don't match the code's real meaning
+
+   Example: If option is "2101.30.10: Roasted chicory [LEAF]"
+   - GOOD: 2101.30.10|Roasted chicory
+   - BAD: 2101.30.10|Instant coffee ← WRONG! This doesn't match the description!
 
 ## Important Rules
 - Choose the MOST SPECIFIC code possible (8-10 digits preferred over 4-6 digits)
@@ -412,6 +416,26 @@ Based on the product description, do ONE of the following:
   - GOOD: "0811.90.90|Without added sugar"
   - BAD: "0901.90|Other coffee"
   - GOOD: "0901.90|Coffee husks or skins"
+
+## CRITICAL: Generate UNIQUE Questions for Each Level
+**NEVER repeat the same question text at different hierarchy levels!**
+Each question MUST be specific to the current options being presented.
+Look at the "Current Position" to see what level you're at - use this to craft appropriate questions.
+
+**Question patterns by level:**
+- Level 1 (root): Ask about FORM or CATEGORY - "What form is your [product] in?"
+- Level 2: Ask about TYPE or VARIETY - "What type of [specific category] is this?"
+- Level 3: Ask about SPECIFIC CHARACTERISTICS - "Is this [characteristic A] or [characteristic B]?"
+- Level 4+: Ask about FINAL DETAILS - "Does this contain [ingredient]?" or "Is this [specific variant]?"
+
+BAD (same question repeated):
+- Level 1: "What form is your coffee product in?"
+- Level 2: "What form is your coffee product in?" ← WRONG! Question should change!
+
+GOOD (contextually appropriate questions):
+- Level 1: "What form is your coffee product in?" (raw vs processed)
+- Level 2: "Is this actual coffee extract or a coffee substitute?" (type within category)
+- Level 3: "Is this roasted chicory or another coffee substitute?" (specific variant)
 
 ## Examples of Good Questions with User-Friendly Options
 - Question: "What form is your coffee in?"
