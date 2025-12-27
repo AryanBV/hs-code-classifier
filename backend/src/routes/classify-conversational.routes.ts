@@ -8,40 +8,39 @@
 import { Router, Request, Response } from 'express';
 import { logger } from '../utils/logger';
 import {
-  classifyConversational,
+  classifyWithLLMNavigator,
   getConversation,
   abandonConversation,
-  getConversationStats
-} from '../services/conversational-classifier.service';
+  getConversationStats,
+  skipToClassification
+} from '../services/llm-conversational-classifier.service';
 import { ConversationalClassifyRequest } from '../types/conversation.types';
 
 const router = Router();
+
+// ========================================
+// LLM Navigator Classifier Route
+// ========================================
+// Uses pure LLM navigation with NO hardcoded product lists.
+// The LLM navigates the HS code hierarchy and asks relevant questions.
 
 /**
  * POST /api/classify-conversational
  *
  * Start a new classification conversation or continue an existing one.
+ * Uses LLM to navigate HS code hierarchy dynamically.
  *
  * Request Body:
  * - productDescription: string (required for new conversation)
  * - sessionId: string (required)
  * - conversationId?: string (to continue existing conversation)
  * - answers?: Record<string, string> (user's answers to questions)
- *
- * Response:
- * - If questions needed: { responseType: 'questions', questions: [...], ... }
- * - If classification ready: { responseType: 'classification', result: {...}, ... }
  */
 router.post('/', async (req: Request, res: Response): Promise<void> => {
   const startTime = Date.now();
 
   try {
-    const {
-      productDescription,
-      sessionId,
-      conversationId,
-      answers
-    } = req.body as ConversationalClassifyRequest;
+    const { productDescription, sessionId, conversationId, answers } = req.body;
 
     // Validation
     if (!sessionId) {
@@ -53,7 +52,6 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // For new conversations, productDescription is required
     if (!conversationId && !productDescription?.trim()) {
       res.status(400).json({
         success: false,
@@ -63,20 +61,10 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // For continued conversations, answers are required
-    if (conversationId && (!answers || Object.keys(answers).length === 0)) {
-      res.status(400).json({
-        success: false,
-        error: 'Answers are required when continuing a conversation',
-        timestamp: new Date().toISOString()
-      });
-      return;
-    }
+    logger.info(`[CLASSIFY] ${conversationId ? 'Continuing' : 'New'} conversation`);
 
-    logger.info(`Conversational classify request - ${conversationId ? 'continuing' : 'new'}`);
-
-    // Call service
-    const result = await classifyConversational({
+    // Call the LLM navigator classifier
+    const result = await classifyWithLLMNavigator({
       productDescription: productDescription || '',
       sessionId,
       conversationId,
@@ -85,9 +73,8 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
 
     // Log performance
     const responseTime = Date.now() - startTime;
-    logger.info(`Conversational response in ${responseTime}ms - type: ${result.responseType}`);
+    logger.info(`[CLASSIFY] Response in ${responseTime}ms - type: ${result.responseType}`);
 
-    // Return appropriate status code
     if (result.success) {
       res.status(200).json(result);
     } else {
@@ -95,12 +82,66 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
     }
 
   } catch (error) {
-    logger.error('Conversational classification error');
-    logger.error(error instanceof Error ? error.message : String(error));
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    logger.error(`[CLASSIFY] Error: ${errorMsg}`);
 
     res.status(500).json({
       success: false,
       error: 'Internal server error during classification',
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
+// Legacy /llm endpoint - redirects to main endpoint for backward compatibility
+router.post('/llm', async (req: Request, res: Response): Promise<void> => {
+  // Just forward to main handler
+  const startTime = Date.now();
+
+  try {
+    const { productDescription, sessionId, conversationId, answers } = req.body;
+
+    if (!sessionId) {
+      res.status(400).json({
+        success: false,
+        error: 'Session ID is required',
+        timestamp: new Date().toISOString()
+      });
+      return;
+    }
+
+    if (!conversationId && !productDescription?.trim()) {
+      res.status(400).json({
+        success: false,
+        error: 'Product description is required for new conversations',
+        timestamp: new Date().toISOString()
+      });
+      return;
+    }
+
+    const result = await classifyWithLLMNavigator({
+      productDescription: productDescription || '',
+      sessionId,
+      conversationId,
+      answers
+    });
+
+    const responseTime = Date.now() - startTime;
+    logger.info(`[LLM ROUTE] Response in ${responseTime}ms - type: ${result.responseType}`);
+
+    if (result.success) {
+      res.status(200).json(result);
+    } else {
+      res.status(400).json(result);
+    }
+
+  } catch (error) {
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    logger.error(`[LLM ROUTE] Error: ${errorMsg}`);
+
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error during LLM classification',
       timestamp: new Date().toISOString()
     });
   }
@@ -223,7 +264,7 @@ router.get('/stats/overview', async (_req: Request, res: Response): Promise<void
  * POST /api/classify-conversational/skip
  *
  * Skip remaining questions and get best guess classification.
- * Used when user doesn't want to answer more questions.
+ * Uses forceClassification to navigate to a final code without asking more questions.
  */
 router.post('/skip', async (req: Request, res: Response): Promise<void> => {
   try {
@@ -256,14 +297,10 @@ router.post('/skip', async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // Force classification by passing empty answers
-    // The service will detect max rounds exceeded and classify
-    const result = await classifyConversational({
-      productDescription: conversation.productDescription,
-      sessionId,
-      conversationId,
-      answers: {} // Empty answers signal "skip"
-    });
+    logger.info(`[SKIP] Forcing classification for conversation: ${conversationId}`);
+
+    // Use the new skipToClassification function which forces LLM to pick without asking
+    const result = await skipToClassification(conversationId);
 
     res.status(200).json(result);
 

@@ -2,6 +2,12 @@
 
 import { useState, useEffect, useCallback } from 'react'
 
+export interface AlternativeCode {
+  code: string
+  description: string
+  confidence?: number
+}
+
 export interface HistoryItem {
   id: string
   productDescription: string
@@ -10,6 +16,12 @@ export interface HistoryItem {
   confidence: number
   reasoning: string
   timestamp: number
+  // Enhanced fields for full classification context
+  alternatives?: AlternativeCode[]
+  clarificationImpact?: string
+  processingTimeMs?: number
+  totalRounds?: number
+  questionsAsked?: number
 }
 
 const STORAGE_KEY = 'tradecode_history'

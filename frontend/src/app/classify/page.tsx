@@ -10,10 +10,27 @@ import { ResultCard } from '@/components/classify/result-card'
 import { LoadingState } from '@/components/classify/loading-state'
 import { HistorySidebar } from '@/components/history/history-sidebar'
 import { HistorySheet } from '@/components/history/history-sheet'
+import { HistoryDetailView } from '@/components/history/history-detail-view'
 import { useHistory, HistoryItem } from '@/lib/hooks/use-history'
 import { useConversation } from '@/lib/hooks/use-conversation'
 import { Button } from '@/components/ui/button'
 import { RotateCcw, Sparkles } from 'lucide-react'
+
+/**
+ * Parse answer string to extract friendly label
+ * Format: "CODE::FRIENDLY_LABEL" or plain text
+ */
+function parseAnswerLabel(answer: string): string {
+  if (answer.includes('::')) {
+    const [, label] = answer.split('::')
+    return label?.trim() || answer
+  }
+  if (answer.includes(':')) {
+    const colonIndex = answer.indexOf(':')
+    return answer.substring(colonIndex + 1).trim()
+  }
+  return answer
+}
 
 interface ClassificationResult {
   hsCode: string
@@ -24,13 +41,26 @@ interface ClassificationResult {
   clarificationImpact?: string
 }
 
+interface QuestionData {
+  id: string
+  text: string
+  options: string[]
+  priority?: string
+}
+
 interface ChatMessageItem {
   id: string
-  type: 'ai' | 'user' | 'system'
+  type: 'ai' | 'user' | 'system' | 'questions'
   content: string | React.ReactNode
   timestamp: Date
   questionId?: string
   options?: string[]
+  // For question messages - store data, not JSX
+  questionData?: {
+    context: string
+    questions: QuestionData[]
+    roundNumber: number
+  }
 }
 
 export default function ClassifyPage() {
@@ -144,11 +174,12 @@ export default function ClassifyPage() {
   }, [conversation])
 
   // Add AI questions to chat when they arrive
+  // Store question DATA, not JSX, so selection state updates properly
   useEffect(() => {
     if (conversation.isAskingQuestions && conversation.currentQuestions) {
       const questionContext = conversation.questionContext || 'To classify your product accurately, I need to know:'
 
-      // Add AI question message
+      // Add AI question message with DATA (not JSX)
       setChatMessages(prev => {
         // Check if we already added this round's questions
         const existingQuestion = prev.find(m =>
@@ -160,34 +191,26 @@ export default function ClassifyPage() {
           ...prev,
           {
             id: `ai-questions-round${conversation.roundNumber}-${Date.now()}`,
-            type: 'ai',
-            content: (
-              <div className="space-y-4">
-                <p className="text-muted-foreground">{questionContext}</p>
-                {conversation.currentQuestions?.map((q, idx) => (
-                  <div key={q.id} className="space-y-2">
-                    <p className="font-medium text-foreground">
-                      {idx + 1}. {q.text}
-                      {q.priority === 'required' && <span className="text-primary ml-1">*</span>}
-                    </p>
-                    <QuestionOptions
-                      options={q.options}
-                      selectedOption={pendingAnswers[q.id]}
-                      onSelect={(answer) => handleSelectAnswer(q.id, answer)}
-                      disabled={conversation.isLoading}
-                    />
-                  </div>
-                ))}
-              </div>
-            ),
-            timestamp: new Date()
+            type: 'questions', // Special type for question messages
+            content: '', // Not used - we render from questionData
+            timestamp: new Date(),
+            questionData: {
+              context: questionContext,
+              questions: (conversation.currentQuestions || []).map(q => ({
+                id: q.id,
+                text: q.text,
+                options: q.options,
+                priority: q.priority
+              })),
+              roundNumber: conversation.roundNumber
+            }
           }
         ]
       })
     }
-  }, [conversation.isAskingQuestions, conversation.currentQuestions, conversation.roundNumber, conversation.questionContext, conversation.isLoading, pendingAnswers, handleSelectAnswer])
+  }, [conversation.isAskingQuestions, conversation.currentQuestions, conversation.roundNumber, conversation.questionContext])
 
-  // When classification completes, add to history
+  // When classification completes, add to history with full context
   useEffect(() => {
     if (conversation.isCompleted && conversation.result && !activeHistoryId && !viewingHistoryResult) {
       const historyItem = addToHistory({
@@ -196,10 +219,16 @@ export default function ClassifyPage() {
         description: conversation.result.description,
         confidence: conversation.result.confidence,
         reasoning: conversation.result.reasoning,
+        // Enhanced fields for full classification context
+        alternatives: conversation.result.alternatives,
+        clarificationImpact: conversation.result.clarificationImpact,
+        processingTimeMs: processingStartTime ? Date.now() - processingStartTime : undefined,
+        totalRounds: conversation.roundNumber,
+        questionsAsked: conversation.roundNumber > 1 ? conversation.roundNumber - 1 : 0,
       })
       setActiveHistoryId(historyItem.id)
     }
-  }, [conversation.isCompleted, conversation.result, conversation.productDescription, activeHistoryId, viewingHistoryResult, addToHistory])
+  }, [conversation.isCompleted, conversation.result, conversation.productDescription, activeHistoryId, viewingHistoryResult, addToHistory, processingStartTime, conversation.roundNumber])
 
   // Calculate processing time
   const processingTime = conversation.isCompleted && processingStartTime
@@ -292,31 +321,32 @@ export default function ClassifyPage() {
             {!hasStarted ? (
               <WelcomeMessage />
             ) : viewingHistoryResult ? (
-              // Show history result directly
+              // Show history result with full classification details
               <>
-                {/* Show what was classified */}
-                <ChatMessage type="user" timestamp={new Date(viewingHistoryResult.timestamp)}>
-                  {viewingHistoryResult.productDescription}
-                </ChatMessage>
+                <ConversationDivider text="Classification History" />
 
-                <ConversationDivider text="Classification Result" />
-
-                <ResultCard
-                  result={{
+                <HistoryDetailView
+                  item={{
+                    id: viewingHistoryResult.id,
+                    productDescription: viewingHistoryResult.productDescription,
                     hsCode: viewingHistoryResult.hsCode,
                     description: viewingHistoryResult.description,
                     confidence: viewingHistoryResult.confidence,
                     reasoning: viewingHistoryResult.reasoning,
+                    timestamp: viewingHistoryResult.timestamp,
+                    alternatives: viewingHistoryResult.alternatives,
+                    clarificationImpact: viewingHistoryResult.clarificationImpact,
+                    processingTimeMs: viewingHistoryResult.processingTimeMs,
+                    totalRounds: viewingHistoryResult.totalRounds,
+                    questionsAsked: viewingHistoryResult.questionsAsked,
                   }}
-                  classificationId={viewingHistoryResult.id}
-                  productDescription={viewingHistoryResult.productDescription}
                 />
 
                 {/* New classification button */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
+                  transition={{ delay: 0.5 }}
                   className="flex justify-center py-6"
                 >
                   <Button
@@ -332,15 +362,51 @@ export default function ClassifyPage() {
             ) : (
               <>
                 {/* Chat messages */}
-                {chatMessages.map((message) => (
-                  <ChatMessage
-                    key={message.id}
-                    type={message.type}
-                    timestamp={message.timestamp}
-                  >
-                    {message.content}
-                  </ChatMessage>
-                ))}
+                {chatMessages.map((message) => {
+                  // Special handling for question messages - render with live pendingAnswers state
+                  if (message.type === 'questions' && message.questionData) {
+                    const { context, questions } = message.questionData
+                    return (
+                      <ChatMessage
+                        key={message.id}
+                        type="ai"
+                        timestamp={message.timestamp}
+                      >
+                        <div className="space-y-4">
+                          <p className="text-muted-foreground">{context}</p>
+                          {questions.map((q, idx) => (
+                            <div key={q.id} className="space-y-2">
+                              <p className="font-medium text-foreground">
+                                {idx + 1}. {q.text}
+                                {q.priority === 'required' && <span className="text-primary ml-1">*</span>}
+                              </p>
+                              <QuestionOptions
+                                options={q.options}
+                                selectedOption={pendingAnswers[q.id]}
+                                onSelect={(answer) => handleSelectAnswer(q.id, answer)}
+                                disabled={conversation.isLoading}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </ChatMessage>
+                    )
+                  }
+
+                  // Regular messages
+                  return (
+                    <ChatMessage
+                      key={message.id}
+                      type={message.type as 'ai' | 'user' | 'system'}
+                      timestamp={message.timestamp}
+                    >
+                      {/* Parse user answer to show friendly label instead of CODE::LABEL */}
+                      {message.type === 'user' && typeof message.content === 'string'
+                        ? parseAnswerLabel(message.content)
+                        : message.content}
+                    </ChatMessage>
+                  )
+                })}
 
                 {/* Loading state */}
                 {showLoading && (

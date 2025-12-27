@@ -4,7 +4,10 @@ import OpenAI from 'openai';
 import * as dotenv from 'dotenv';
 import { calculateEnhancedScore, extractMeaningfulTerms } from './candidate-scoring.service';
 import { parseQuery, calculateContextBoost } from './query-parser.service';
-import { predictChapters, calculateChapterBoost } from './chapter-predictor.service';
+
+// Stub functions to replace deleted chapter-predictor.service
+function predictChapters(_query: string): string[] { return []; }
+function calculateChapterBoost(_code: string, _chapters: string[], _query: string): number { return 0; }
 
 dotenv.config();
 

@@ -6,13 +6,20 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ConfidenceMeter } from './confidence-meter'
 import { FeedbackWidget } from './feedback-widget'
-import { CheckCircle2, Sparkles, ChevronDown, ChevronUp, Lightbulb, Clock, Database, Copy, Zap } from 'lucide-react'
+import { CheckCircle2, Sparkles, ChevronDown, ChevronUp, Lightbulb, Clock, Database, Copy, Zap, ChevronRight, MessageSquare } from 'lucide-react'
 import { cn } from '@/lib/cn'
 
 interface AlternativeCode {
   code: string
   description: string
   confidence?: number
+}
+
+interface ClassificationPath {
+  chapter: { code: string; name: string }
+  heading: { code: string; name: string }
+  finalCode: { code: string; description: string }
+  userAnswers: Array<{ question: string; answer: string }>
 }
 
 interface ClassificationResult {
@@ -22,6 +29,21 @@ interface ClassificationResult {
   reasoning: string
   alternatives?: AlternativeCode[]
   clarificationImpact?: string
+}
+
+/**
+ * Parse reasoning - may be JSON (new format) or plain text (legacy)
+ */
+function parseReasoning(reasoning: string): ClassificationPath | null {
+  try {
+    const parsed = JSON.parse(reasoning)
+    if (parsed.chapter && parsed.finalCode) {
+      return parsed as ClassificationPath
+    }
+    return null
+  } catch {
+    return null
+  }
 }
 
 interface ResultCardProps {
@@ -219,10 +241,76 @@ export function ResultCard({ result, classificationId, productDescription, proce
                   transition={{ duration: 0.3 }}
                   className="overflow-hidden"
                 >
-                  <div className="p-4 mt-2 rounded-xl bg-muted/30 border border-border">
-                    <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">
-                      {result.reasoning}
-                    </p>
+                  <div className="p-4 mt-2 rounded-xl bg-muted/30 border border-border space-y-4">
+                    {(() => {
+                      const classificationPath = parseReasoning(result.reasoning)
+
+                      if (classificationPath) {
+                        return (
+                          <>
+                            {/* Classification Path */}
+                            <div>
+                              <h4 className="text-sm font-medium text-muted-foreground mb-3">Classification Path</h4>
+                              <div className="flex items-center flex-wrap gap-2">
+                                <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10 border border-primary/20">
+                                  <span className="text-xs text-primary font-medium">Ch. {classificationPath.chapter.code}</span>
+                                  <span className="text-xs text-muted-foreground">{classificationPath.chapter.name}</span>
+                                </div>
+                                <ChevronRight className="w-4 h-4 text-muted-foreground/50" />
+                                <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/50 border border-border">
+                                  <span className="text-xs font-medium text-foreground">{classificationPath.heading.code}</span>
+                                </div>
+                                <ChevronRight className="w-4 h-4 text-muted-foreground/50" />
+                                <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                                  <span className="text-xs font-bold text-emerald-400">{classificationPath.finalCode.code}</span>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* User Answers - only show if there are any */}
+                            {classificationPath.userAnswers.length > 0 && (
+                              <div>
+                                <h4 className="text-sm font-medium text-muted-foreground mb-3 flex items-center gap-2">
+                                  <MessageSquare className="w-4 h-4" />
+                                  Your Selections
+                                </h4>
+                                <div className="space-y-2">
+                                  {classificationPath.userAnswers.map((qa, idx) => (
+                                    <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-muted/20">
+                                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-xs font-medium text-primary">
+                                        {idx + 1}
+                                      </span>
+                                      <div className="min-w-0 flex-1">
+                                        <p className="text-sm text-muted-foreground mb-1">{qa.question}</p>
+                                        <p className="text-sm font-medium text-foreground">{qa.answer}</p>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Final Classification */}
+                            <div className="pt-2 border-t border-border">
+                              <div className="flex items-center gap-2 text-sm">
+                                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                                <span className="text-muted-foreground">Final Code:</span>
+                                <span className="font-mono font-semibold text-foreground">{classificationPath.finalCode.code}</span>
+                                <span className="text-muted-foreground/70">—</span>
+                                <span className="text-muted-foreground">{classificationPath.finalCode.description}</span>
+                              </div>
+                            </div>
+                          </>
+                        )
+                      }
+
+                      // Fallback to plain text for legacy reasoning
+                      return (
+                        <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">
+                          {result.reasoning}
+                        </p>
+                      )
+                    })()}
                   </div>
                 </motion.div>
               )}

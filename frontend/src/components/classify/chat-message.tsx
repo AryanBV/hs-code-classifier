@@ -6,6 +6,41 @@ import { cn } from '@/lib/cn'
 import { AIAvatar, TypingIndicator } from './ai-avatar'
 import { User } from 'lucide-react'
 
+/**
+ * Parse option string to extract code and display label
+ * Format: "CODE::FRIENDLY_LABEL" or legacy "CODE: Description"
+ */
+function parseOption(option: string): { code: string; label: string; fullValue: string } {
+  // New format: CODE::LABEL
+  if (option.includes('::')) {
+    const [code, label] = option.split('::')
+    return {
+      code: code?.trim() || option,
+      label: label?.trim() || option,
+      fullValue: option
+    }
+  }
+  // Legacy format: CODE: Description (only first colon)
+  if (option.includes(':')) {
+    const colonIndex = option.indexOf(':')
+    const code = option.substring(0, colonIndex).trim()
+    const label = option.substring(colonIndex + 1).trim()
+    // Truncate long labels
+    const cleanLabel = label.length > 60 ? label.substring(0, 57) + '...' : label
+    return {
+      code,
+      label: cleanLabel,
+      fullValue: option
+    }
+  }
+  // No separator, use as-is
+  return {
+    code: option,
+    label: option,
+    fullValue: option
+  }
+}
+
 interface ChatMessageProps {
   type: 'ai' | 'user' | 'system'
   children: ReactNode
@@ -166,36 +201,53 @@ export function QuestionOptions({
       className="flex flex-wrap gap-2 mt-3"
     >
       {options
-        .filter(opt => opt.toLowerCase() !== 'other')
-        .map((option, index) => (
-          <motion.button
-            key={option}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3 + index * 0.05 }}
-            onClick={() => !disabled && onSelect(option)}
-            disabled={disabled}
-            className={cn(
-              'px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300',
-              'border backdrop-blur-sm',
-              'hover:scale-[1.02] active:scale-[0.98]',
-              'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100',
-              selectedOption === option
-                ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white border-transparent shadow-lg shadow-cyan-500/25'
-                : 'bg-muted/50 text-muted-foreground border-border hover:border-primary/50 hover:bg-muted'
-            )}
-            whileHover={!disabled ? { y: -2 } : {}}
-            whileTap={!disabled ? { scale: 0.95 } : {}}
-          >
-            {/* Keyboard shortcut hint */}
-            <span className="inline-flex items-center gap-2">
-              <span className="w-5 h-5 rounded bg-muted text-[10px] flex items-center justify-center text-muted-foreground font-mono">
-                {index + 1}
+        .filter(opt => {
+          const parsed = parseOption(opt)
+          const labelLower = parsed.label.toLowerCase()
+
+          // Always filter out generic "none of the above" (no HS code prefix)
+          if (labelLower === 'none of the above' && parsed.code === parsed.label) return false
+
+          // Only filter out exact "Other" if it's a GENERIC option (no HS code prefix)
+          // Keep "Other" or "Other (not...)" if it has an HS code (e.g., "0902.20.90::Other" is a valid HS code)
+          if (labelLower === 'other' && parsed.code === parsed.label) {
+            return false
+          }
+
+          return true
+        })
+        .map((option, index) => {
+          const parsed = parseOption(option)
+          return (
+            <motion.button
+              key={option}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3 + index * 0.05 }}
+              onClick={() => !disabled && onSelect(option)}
+              disabled={disabled}
+              className={cn(
+                'px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300',
+                'border backdrop-blur-sm',
+                'hover:scale-[1.02] active:scale-[0.98]',
+                'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100',
+                selectedOption === option
+                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white border-transparent shadow-lg shadow-cyan-500/25'
+                  : 'bg-muted/50 text-muted-foreground border-border hover:border-primary/50 hover:bg-muted'
+              )}
+              whileHover={!disabled ? { y: -2 } : {}}
+              whileTap={!disabled ? { scale: 0.95 } : {}}
+            >
+              {/* Keyboard shortcut hint + friendly label */}
+              <span className="inline-flex items-center gap-2">
+                <span className="w-5 h-5 rounded bg-muted text-[10px] flex items-center justify-center text-muted-foreground font-mono">
+                  {index + 1}
+                </span>
+                {parsed.label}
               </span>
-              {option}
-            </span>
-          </motion.button>
-        ))}
+            </motion.button>
+          )
+        })}
     </motion.div>
   )
 }

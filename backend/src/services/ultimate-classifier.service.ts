@@ -16,7 +16,11 @@ import OpenAI from 'openai';
 import { semanticSearchMulti } from './multi-candidate-search.service';
 import { expandCandidatesWithChildren } from './hierarchy-expansion.service';
 import { parseQuery } from './query-parser.service';
-import { predictChapters, hasFunctionalOverride, getFunctionalOverrideChapter } from './chapter-predictor.service';
+
+// Stub functions to replace deleted chapter-predictor.service
+function predictChapters(_query: string): string[] { return []; }
+function hasFunctionalOverride(_query: string): boolean { return false; }
+function getFunctionalOverrideChapter(_query: string): string | null { return null; }
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
