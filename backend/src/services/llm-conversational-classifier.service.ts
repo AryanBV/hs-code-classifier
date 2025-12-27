@@ -267,10 +267,10 @@ async function continueConversation(
       // Parse the code from the answer (remove label if present)
       let selectedCode = selectedAnswer;
       if (selectedAnswer.includes('::')) {
-        selectedCode = selectedAnswer.split('::')[0].trim();
+        selectedCode = selectedAnswer.split('::')[0]?.trim() ?? selectedAnswer;
       } else if (selectedAnswer.includes(':')) {
         // Legacy format "CODE: label"
-        selectedCode = selectedAnswer.split(':')[0].trim();
+        selectedCode = selectedAnswer.split(':')[0]?.trim() ?? selectedAnswer;
       }
 
       logger.info(`[LLM-CLASSIFIER] User selected: ${selectedAnswer} -> code: ${selectedCode}`);
@@ -288,7 +288,7 @@ async function continueConversation(
         // Record user's decision for better reasoning
         if (state.pendingQuestionText && state.pendingQuestionOptions) {
           const selectedLabel = selectedAnswer.includes('::')
-            ? selectedAnswer.split('::')[1].trim()
+            ? (selectedAnswer.split('::')[1]?.trim() ?? codeDetails.description)
             : codeDetails.description;
 
           const alternatives = state.pendingQuestionOptions
@@ -625,10 +625,12 @@ async function buildSmartAlternatives(
       // No parent - return last question's alternatives only
       if (userDecisions.length > 0) {
         const lastDecision = userDecisions[userDecisions.length - 1];
-        return lastDecision.alternatives.map(alt => ({
-          code: alt.code,
-          description: alt.label
-        }));
+        if (lastDecision) {
+          return lastDecision.alternatives.map(alt => ({
+            code: alt.code,
+            description: alt.label
+          }));
+        }
       }
       return [];
     }
@@ -661,10 +663,12 @@ async function buildSmartAlternatives(
     // Fallback to last question's alternatives
     if (userDecisions.length > 0) {
       const lastDecision = userDecisions[userDecisions.length - 1];
-      return lastDecision.alternatives.map(alt => ({
-        code: alt.code,
-        description: alt.label
-      }));
+      if (lastDecision) {
+        return lastDecision.alternatives.map(alt => ({
+          code: alt.code,
+          description: alt.label
+        }));
+      }
     }
     return [];
   }
@@ -799,9 +803,9 @@ export async function skipToClassification(
               // Parse code from "CODE::LABEL" format if needed
               let code = selectedCode;
               if (selectedCode.includes('::')) {
-                code = selectedCode.split('::')[0].trim();
+                code = selectedCode.split('::')[0]?.trim() ?? selectedCode;
               } else if (selectedCode.includes(':')) {
-                code = selectedCode.split(':')[0].trim();
+                code = selectedCode.split(':')[0]?.trim() ?? selectedCode;
               }
 
               const codeDetails = await validateCode(code);

@@ -90,7 +90,7 @@ async function buildUserFriendlyReasoning(
     );
 
     if (meaningfulParts.length >= 2) {
-      const mainCategory = meaningfulParts[0].description;
+      const mainCategory = meaningfulParts[0]!.description;
       const subParts = meaningfulParts.slice(1).map(p => p.description);
 
       let reasoning = `"${productName}" is classified under ${mainCategory}`;
@@ -102,7 +102,7 @@ async function buildUserFriendlyReasoning(
       }
       return reasoning;
     } else if (meaningfulParts.length === 1) {
-      let reasoning = `"${productName}" falls under ${meaningfulParts[0].description}`;
+      let reasoning = `"${productName}" falls under ${meaningfulParts[0]!.description}`;
       if (context) {
         reasoning += `. ${context}`;
       }
@@ -512,6 +512,38 @@ const CROSS_CHAPTER_PRODUCTS: Record<string, string[]> = {
 };
 
 /**
+ * PRE-FILTER root options BEFORE sending to LLM to reduce token usage
+ * For known cross-chapter products, only send relevant chapter headings
+ * This reduces prompts from 1125 options (~20K tokens) to 2-10 options (~500 tokens)
+ */
+function preFilterRootOptions(
+  userInput: string,
+  options: HierarchyOption[]
+): HierarchyOption[] {
+  const inputLower = userInput.toLowerCase();
+
+  // Check for cross-chapter products
+  for (const [product, validChapters] of Object.entries(CROSS_CHAPTER_PRODUCTS)) {
+    if (inputLower.includes(product)) {
+      // Filter to only include headings from valid chapters
+      const filtered = options.filter(opt => {
+        const chapterCode = opt.code.substring(0, 2);
+        return validChapters.includes(chapterCode);
+      });
+
+      if (filtered.length > 0) {
+        logger.info(`[LLM-NAV] Cross-chapter product "${product}" - filtered to chapters: ${validChapters.join(', ')}`);
+        return filtered;
+      }
+    }
+  }
+
+  // If no cross-chapter match, return original (will use full list)
+  // TODO: Add keyword-based filtering for other products to further reduce tokens
+  return options;
+}
+
+/**
  * Filter options to only include valid chapters for cross-chapter products
  * This prevents the LLM from hallucinating irrelevant chapters
  * Works with both 2-digit chapter codes (09) and 4-digit heading codes (0901)
@@ -572,6 +604,7 @@ function parseNavigationResponse(
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
+    if (!line) continue;
 
     if (line.startsWith('ACTION:')) {
       action = line.replace('ACTION:', '').trim().toUpperCase();
@@ -658,12 +691,14 @@ function parseNavigationResponse(
       // New format: CODE|FRIENDLY_LABEL
       for (const optLine of optionCodes) {
         if (optLine.includes('|')) {
-          const [code, label] = optLine.split('|').map(s => s.trim());
-          const matchingOption = options.find(o => o.code === code || o.code.includes(code) || code.includes(o.code));
+          const parts = optLine.split('|').map(s => s.trim());
+          const optCode = parts[0] ?? '';
+          const label = parts[1] ?? '';
+          const matchingOption = options.find(o => o.code === optCode || o.code.includes(optCode) || optCode.includes(o.code));
           if (matchingOption) {
             finalOptions.push({
               code: matchingOption.code,
-              label: label || matchingOption.description.split(':')[0].trim(),
+              label: label || (matchingOption.description.split(':')[0]?.trim() ?? ''),
               description: matchingOption.description
             });
           }
@@ -776,9 +811,19 @@ export async function navigateHierarchy(
 
   try {
     // Get available options at current level
-    const options = currentCode
+    let options = currentCode
       ? await getChildrenForCode(currentCode)
       : await getAllChapters();
+
+    // PRE-FILTER at root level to reduce token usage
+    // For cross-chapter products, only send relevant chapters to LLM
+    if (currentCode === null) {
+      const filteredOptions = preFilterRootOptions(userInput, options);
+      if (filteredOptions.length > 0 && filteredOptions.length < options.length) {
+        logger.info(`[LLM-NAV] Pre-filtered from ${options.length} to ${filteredOptions.length} options`);
+        options = filteredOptions;
+      }
+    }
 
     logger.info(`[LLM-NAV] At ${currentCode || 'root'}, found ${options.length} options`);
 
@@ -1001,8 +1046,8 @@ export async function forceClassification(
     }
 
     // If only one option and it's not "Other", auto-select
-    if (options.length === 1 && !options[0].isOther) {
-      const singleOption = options[0];
+    const singleOption = options.length === 1 ? options[0] : undefined;
+    if (singleOption && !singleOption.isOther) {
       if (!singleOption.hasChildren) {
         return {
           type: 'classification',
@@ -1057,18 +1102,18 @@ export async function forceClassification(
     // Parse the code from response
     const codeMatch = content.match(/CODE:\s*([0-9.]+)/i);
     if (!codeMatch) {
-      // Fallback: pick the first non-Other option
-      const fallbackOption = options.find(o => !o.isOther) || options[0];
+      // Fallback: pick the first non-Other option (options is guaranteed non-empty at this point)
+      const fallbackOption = options.find(o => !o.isOther) ?? options[0]!;
       code = fallbackOption.code;
       logger.warn(`[LLM-NAV] Force mode: couldn't parse code, falling back to ${code}`);
     } else {
-      const selectedCode = codeMatch[1].trim();
+      const selectedCode = codeMatch[1]?.trim() ?? '';
       const matchedOption = options.find(o => o.code === selectedCode);
       if (matchedOption) {
         code = matchedOption.code;
       } else {
-        // Fallback
-        const fallbackOption = options.find(o => !o.isOther) || options[0];
+        // Fallback (options is guaranteed non-empty at this point)
+        const fallbackOption = options.find(o => !o.isOther) ?? options[0]!;
         code = fallbackOption.code;
       }
     }
