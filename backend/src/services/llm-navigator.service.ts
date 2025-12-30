@@ -60,6 +60,304 @@ export interface NavigationResult {
 }
 
 // ========================================
+// Keyword Extraction (GENERIC - no hardcoded product lists)
+// ========================================
+
+/**
+ * Common words to ignore when extracting keywords
+ * These don't help narrow down classification
+ */
+const STOP_WORDS = new Set([
+  'a', 'an', 'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for',
+  'of', 'with', 'by', 'from', 'is', 'are', 'was', 'were', 'be', 'been',
+  'being', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would',
+  'could', 'should', 'may', 'might', 'must', 'shall', 'can', 'need',
+  'product', 'products', 'item', 'items', 'type', 'types', 'kind', 'kinds',
+  'made', 'used', 'using', 'like', 'such', 'etc', 'i', 'want', 'looking',
+  'need', 'classify', 'classification', 'code', 'hs', 'export', 'import'
+]);
+
+/**
+ * Extract significant keywords from user input
+ * GENERIC approach - extracts ALL meaningful words
+ * The LLM will use these keywords to intelligently filter options
+ */
+function extractKeywords(userInput: string): string[] {
+  const inputLower = userInput.toLowerCase();
+
+  // Split into words, remove punctuation
+  const words = inputLower
+    .replace(/[^\w\s]/g, ' ')
+    .split(/\s+/)
+    .filter(w => w.length >= 2)  // Min 2 chars
+    .filter(w => !STOP_WORDS.has(w));
+
+  const keywords = [...new Set(words)];
+  logger.info(`[KEYWORDS] Extracted from "${userInput}": [${keywords.join(', ')}]`);
+  return keywords;
+}
+
+/**
+ * Simple keyword-based option filtering (code-level, not LLM)
+ * This ensures options match user's keywords when possible
+ * More reliable than LLM-only filtering
+ *
+ * Matching strategies (in order):
+ * 1. WHOLE WORD match - "tea" matches "Tea" but NOT "teats"
+ * 2. PLURAL match - "mango" matches "mangoes" (short suffix only)
+ * 3. ABBREVIATION match - "robusta" matches "Rob" (for long keywords only)
+ */
+function filterOptionsByKeywordsSimple(
+  options: HierarchyOption[],
+  userKeywords: string[]
+): HierarchyOption[] {
+  if (userKeywords.length === 0 || options.length <= 1) {
+    return options;
+  }
+
+  // Find options where user keywords appear in description
+  const matchingOptions = options.filter(opt => {
+    const descLower = opt.description.toLowerCase();
+
+    // Check if ANY significant keyword (3+ chars) matches description
+    return userKeywords.some(kw => {
+      if (kw.length < 3) return false;
+      const kwLower = kw.toLowerCase();
+
+      // Method 1: WHOLE WORD match
+      // \btea\b matches "tea" but NOT "teats" or "steam"
+      const kwRegex = new RegExp(`\\b${kwLower.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+      if (kwRegex.test(descLower)) return true;
+
+      // Extract words from description for suffix/abbreviation matching
+      const descWords = descLower.split(/[\s:,\-.()\/]+/).filter(w => w.length >= 3);
+
+      for (const descWord of descWords) {
+        // Method 2: PLURAL/SUFFIX match (description word = keyword + suffix)
+        // "mango" matches "mangoes" but NOT "mangolds"
+        if (descWord.startsWith(kwLower)) {
+          const suffixLen = descWord.length - kwLower.length;
+          // Strict suffix length: 2 chars for long keywords, 1 for short
+          const maxSuffix = kwLower.length >= 5 ? 2 : 1;
+          if (suffixLen > 0 && suffixLen <= maxSuffix) {
+            return true;
+          }
+        }
+
+        // Method 3: ABBREVIATION match (keyword = description word + extra)
+        // "robusta" matches "Rob" because "Rob" is abbreviation of Robusta
+        // Only for LONG keywords (7+ chars) to avoid "mango" matching "man"
+        if (kwLower.startsWith(descWord) && kwLower.length >= 7) {
+          const extraLen = kwLower.length - descWord.length;
+          // Allow extra chars up to 60% of keyword length
+          const maxExtra = Math.ceil(kwLower.length * 0.6);
+          if (extraLen > 0 && extraLen <= maxExtra) {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    });
+  });
+
+  // If we found matching options, use them
+  if (matchingOptions.length > 0 && matchingOptions.length < options.length) {
+    // Only add "Other" option if it's from the SAME chapter/parent as matched options
+    // This prevents irrelevant "Other" codes (like "Other live animals") appearing
+    // when searching for products in completely different chapters
+    const matchedChapters = new Set(matchingOptions.map(o => o.code.substring(0, 2)));
+
+    // Only add "Other" if all matched options are from the same chapter
+    // AND there's an "Other" option from that same chapter
+    if (matchedChapters.size === 1) {
+      const chapter = [...matchedChapters][0];
+      const relevantOther = options.find(o =>
+        o.isOther &&
+        o.code.substring(0, 2) === chapter &&
+        !matchingOptions.includes(o)
+      );
+      if (relevantOther) {
+        matchingOptions.push(relevantOther);
+      }
+    }
+
+    logger.info(`[FILTER] Keyword filter: ${options.length} -> ${matchingOptions.length} options`);
+    return matchingOptions;
+  }
+
+  return options;
+}
+
+/**
+ * Detect if options fall into distinct groups that warrant a question
+ * This handles cases like:
+ * - Coffee at root: Chapter 09 (raw) vs Chapter 21 (instant)
+ * - Coffee types: Arabica vs Robusta
+ * - Processing types: Parchment vs Cherry
+ *
+ * Returns group info if distinct groups found, null otherwise
+ */
+function detectDistinctGroups(
+  options: HierarchyOption[],
+  userKeywords: string[]
+): { groups: Array<{ name: string; options: HierarchyOption[] }>; questionText: string } | null {
+  logger.debug(`[DISTINCT-GROUPS] Called with ${options.length} options, keywords: [${userKeywords.join(', ')}]`);
+
+  // ========================================
+  // FULLY GENERIC, DATABASE-DRIVEN APPROACH
+  // No hardcoded product patterns - works for ANY HS code
+  // ========================================
+
+  // RULE 1: Cross-chapter distinction
+  // When options span multiple chapters (e.g., 09xx and 21xx), ask which chapter
+  const chapters = new Map<string, HierarchyOption[]>();
+  for (const opt of options) {
+    const chapter = opt.code.substring(0, 2);
+    if (!chapters.has(chapter)) {
+      chapters.set(chapter, []);
+    }
+    chapters.get(chapter)!.push(opt);
+  }
+
+  if (chapters.size > 1) {
+    // Check if user keywords clearly match one chapter's options
+    const chapterMatchScores = Array.from(chapters.entries()).map(([chapter, opts]) => {
+      const matchScore = opts.reduce((score, opt) => {
+        const desc = opt.description.toLowerCase();
+        return score + userKeywords.filter(kw => kw.length >= 3 && desc.includes(kw.toLowerCase())).length;
+      }, 0);
+      return { chapter, opts, matchScore };
+    });
+
+    const maxScore = Math.max(...chapterMatchScores.map(c => c.matchScore));
+    const bestChapters = chapterMatchScores.filter(c => c.matchScore === maxScore);
+
+    // If user keywords don't clearly point to one chapter, ask
+    if (bestChapters.length > 1 || maxScore === 0) {
+      logger.info(`[DISTINCT-GROUPS] Cross-chapter options detected: chapters ${[...chapters.keys()].join(', ')}`);
+
+      const groups = Array.from(chapters.entries()).slice(0, 4).map(([chapter, opts]) => {
+        const firstOpt = opts[0];
+        const label = firstOpt ? cleanDescriptionForLabel(firstOpt.description) : `Chapter ${chapter}`;
+        return { name: `${label} (Ch. ${chapter})`, options: opts };
+      });
+
+      return {
+        groups,
+        questionText: 'Which category best describes your product?'
+      };
+    }
+  }
+
+  // RULE 2: Multiple non-other options with children at same level
+  // This is the CORE generic logic - works for ANY product
+  const nonOtherOptions = options.filter(o => !o.isOther);
+  const optionsWithChildren = nonOtherOptions.filter(o => o.hasChildren);
+
+  logger.debug(`[DISTINCT-GROUPS] Non-other: ${nonOtherOptions.length}, with children: ${optionsWithChildren.length}`);
+
+  if (optionsWithChildren.length >= 2) {
+    // Check if user keywords clearly match ONE option
+    const matchScores = optionsWithChildren.map(o => {
+      const desc = o.description.toLowerCase();
+      const matchCount = userKeywords.filter(kw => {
+        if (kw.length < 3) return false;
+        // Word boundary matching for better precision
+        const pattern = new RegExp(`\\b${kw.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i');
+        return pattern.test(desc);
+      }).length;
+      return { option: o, matchCount };
+    });
+
+    const maxMatches = Math.max(...matchScores.map(m => m.matchCount));
+    const topMatches = matchScores.filter(m => m.matchCount === maxMatches && m.matchCount > 0);
+
+    // Only skip question if ONE option is clearly the best match
+    if (topMatches.length === 1 && maxMatches >= 1) {
+      logger.debug(`[DISTINCT-GROUPS] Keywords clearly match "${topMatches[0]!.option.description.substring(0, 50)}", skipping question`);
+      return null;
+    }
+
+    logger.info(`[DISTINCT-GROUPS] ${optionsWithChildren.length} branch options at this level - generating question`);
+
+    // Generate question based on description patterns
+    const questionText = generateQuestionFromDescriptions(optionsWithChildren);
+
+    // Create groups with cleaned labels
+    const groups = optionsWithChildren.slice(0, 6).map(o => ({
+      name: cleanDescriptionForLabel(o.description),
+      options: [o]
+    }));
+
+    return {
+      groups,
+      questionText
+    };
+  }
+
+  return null;
+}
+
+/**
+ * Generate a question based on what differentiates the options
+ * Analyzes description patterns to create meaningful questions
+ */
+function generateQuestionFromDescriptions(options: HierarchyOption[]): string {
+  const descriptions = options.map(o => o.description.toLowerCase());
+
+  // Check for common patterns in HS code descriptions
+  if (descriptions.some(d => d.includes('roasted')) &&
+      descriptions.some(d => d.includes('not roasted'))) {
+    return 'What is the roasting status?';
+  }
+
+  if (descriptions.some(d => d.includes('crushed') || d.includes('ground')) &&
+      descriptions.some(d => d.includes('neither crushed'))) {
+    return 'What form is your product?';
+  }
+
+  if (descriptions.some(d => d.includes('green')) &&
+      descriptions.some(d => d.includes('black'))) {
+    return 'What type is your product?';
+  }
+
+  if (descriptions.some(d => d.includes('fresh')) &&
+      descriptions.some(d => d.includes('dried') || d.includes('frozen'))) {
+    return 'What is the preservation state?';
+  }
+
+  if (descriptions.some(d => d.includes('decaffeinated')) &&
+      descriptions.some(d => d.includes('not decaffeinated'))) {
+    return 'Is the product decaffeinated?';
+  }
+
+  // Default generic question
+  return 'Please select the category that best matches your product:';
+}
+
+/**
+ * Clean up HS code description for use as a user-friendly label
+ */
+function cleanDescriptionForLabel(description: string): string {
+  // Remove leading dashes and colons
+  let label = description.replace(/^[-:\s]+/, '').trim();
+
+  // Take the first meaningful part (before : or --)
+  const firstPart = label.split(/\s*:\s*|--/)[0];
+  if (firstPart && firstPart.length > 5) {
+    label = firstPart.trim();
+  }
+
+  // Truncate if too long
+  if (label.length > 50) {
+    label = label.substring(0, 47) + '...';
+  }
+
+  return label;
+}
+
+// ========================================
 // Helper Functions
 // ========================================
 
@@ -322,6 +620,102 @@ async function validateCode(code: string): Promise<{ code: string; description: 
 }
 
 /**
+ * Get just the description for a code (used for generating context-appropriate questions)
+ */
+async function getCodeDescription(code: string): Promise<string | null> {
+  const result = await prisma.hsCode.findUnique({
+    where: { code },
+    select: { description: true }
+  });
+  // Return just the first part of description (before colon) for cleaner text
+  if (result?.description) {
+    const firstPart = result.description.split(':')[0];
+    return firstPart?.trim() ?? result.description;
+  }
+  return null;
+}
+
+/**
+ * Generate a unique label from description
+ * Handles HS code descriptions like "Arabica plantation: ---- A Grade"
+ * Combines type (before colon) with grade/detail (after dashes)
+ */
+function generateUniqueLabel(code: string, description: string, existingLabels: Set<string>): string {
+  // Clean up the description - remove leading dashes and extra spaces
+  let cleanDesc = description.replace(/^[-:\s]+/, '').trim();
+
+  // Split by colon
+  const parts = cleanDesc.split(':').map(p => p.trim().replace(/^[-\s]+/, '').trim()).filter(p => p);
+
+  let baseLabel: string;
+
+  if (parts.length >= 2) {
+    // Format: "Type: ---- Grade" -> combine as "Type - Grade"
+    const typePart = parts[0] || '';
+    const gradePart = parts[parts.length - 1] || '';
+
+    // Clean up grade part (remove leading dashes)
+    const cleanGrade = gradePart.replace(/^[-\s]+/, '').trim();
+
+    if (cleanGrade && cleanGrade.toLowerCase() !== 'other') {
+      // Combine type and grade: "Arabica plantation - A Grade"
+      baseLabel = `${typePart} - ${cleanGrade}`;
+    } else if (cleanGrade.toLowerCase() === 'other') {
+      baseLabel = `${typePart} - Other`;
+    } else {
+      baseLabel = typePart;
+    }
+  } else {
+    baseLabel = cleanDesc;
+  }
+
+  // Truncate if too long (but keep it longer to preserve grade info)
+  if (baseLabel.length > 60) {
+    baseLabel = baseLabel.substring(0, 57) + '...';
+  }
+
+  // Clean up any remaining artifacts
+  baseLabel = baseLabel.replace(/\s+/g, ' ').trim();
+
+  // If label already exists, append the HS code suffix to differentiate
+  if (existingLabels.has(baseLabel)) {
+    // Get the last segment of the code (e.g., "11" from "0901.11.11")
+    const codeParts = code.split('.');
+    const suffix = codeParts[codeParts.length - 1] || code;
+    baseLabel = `${baseLabel} (${suffix})`;
+  }
+
+  existingLabels.add(baseLabel);
+  return baseLabel;
+}
+
+/**
+ * Limit and deduplicate options, ensuring unique labels
+ * Max 8 options to avoid overwhelming users
+ */
+function processOptionsForDisplay(
+  options: Array<{code: string; description: string; isOther?: boolean}>,
+  maxOptions: number = 8
+): Array<{code: string; label: string; description: string}> {
+  const result: Array<{code: string; label: string; description: string}> = [];
+  const existingLabels = new Set<string>();
+
+  // Take up to maxOptions non-Other options
+  const nonOtherOptions = options.filter(o => !o.isOther).slice(0, maxOptions);
+
+  for (const opt of nonOtherOptions) {
+    const label = generateUniqueLabel(opt.code, opt.description || '', existingLabels);
+    result.push({
+      code: opt.code,
+      label,
+      description: opt.description || ''
+    });
+  }
+
+  return result;
+}
+
+/**
  * Check if code is a leaf (no children)
  */
 async function isLeafCode(code: string): Promise<boolean> {
@@ -346,12 +740,16 @@ function formatOptionsForPrompt(options: HierarchyOption[]): string {
 
 /**
  * Build navigation prompt for LLM
+ *
+ * Key design: The LLM handles ALL intelligent filtering based on user keywords.
+ * No hardcoded product mappings - the LLM understands semantic relationships.
  */
 function buildNavigationPrompt(
   userInput: string,
   currentCode: string | null,
   options: HierarchyOption[],
-  history: NavigationHistory[]
+  history: NavigationHistory[],
+  userKeywords: string[] = []
 ): string {
   const hierarchyLevel = history.length + 1;
   const currentPosition = currentCode
@@ -362,11 +760,45 @@ function buildNavigationPrompt(
     ? history.map((h, i) => `  Level ${i + 1}: ${h.code} - ${h.description}`).join('\n')
     : '  None yet (this is the first question)';
 
+  // Build keywords section for semantic filtering
+  const keywordsSection = userKeywords.length > 0
+    ? `\n## User's Specified Keywords (CRITICAL FOR FILTERING!)
+The user's input contains these significant keywords: [${userKeywords.join(', ')}]
+
+**MANDATORY FILTERING RULE:**
+Before presenting options or making selections, you MUST filter based on these keywords:
+
+1. **Keyword Matching**: If a keyword appears in SOME option descriptions but NOT others,
+   ONLY include/select options that MATCH the keyword.
+
+2. **Variant Exclusion**: Many products have mutually exclusive variants. If the user
+   specified one variant, EXCLUDE options for competing variants:
+   - Coffee: "arabica" vs "robusta" vs "rob" (rob = robusta shorthand)
+   - Tea: "green" vs "black" vs "oolong"
+   - Form: "fresh" vs "dried" vs "frozen" vs "instant"
+   - Processing: "roasted" vs "raw" vs "ground"
+
+3. **Examples**:
+   - User says "rob coffee" → Keywords: [rob, coffee]
+     → "rob" matches "robusta" → ONLY show Robusta options, EXCLUDE Arabica
+   - User says "arabica coffee" → Keywords: [arabica, coffee]
+     → ONLY show Arabica options, EXCLUDE Robusta
+   - User says "green tea" → Keywords: [green, tea]
+     → ONLY show green tea options, EXCLUDE black/oolong tea
+   - User says "instant coffee" → Keywords: [instant, coffee]
+     → ONLY show instant/extract coffee options, EXCLUDE raw beans
+
+4. **Apply at EVERY level**: This filtering applies throughout the hierarchy,
+   not just at the root level. At every step, check if the user's keywords
+   help narrow down the options.
+`
+    : '';
+
   return `You are an expert HS code classifier navigating the Harmonized System hierarchy.
 
 ## Product to Classify
 "${userInput}"
-
+${keywordsSection}
 ## Current Position
 ${currentPosition}
 
@@ -376,8 +808,23 @@ ${historyText}
 ## Available Options at This Level
 ${formatOptionsForPrompt(options)}
 
+## CRITICAL: Use User Keywords to Filter Options!
+Before doing ANYTHING else:
+1. Look at the user's product description
+2. Check if any word in their description matches some options but excludes others
+3. ONLY consider matching options - ignore the rest
+
+**Example**: If options include both "Arabica plantation" and "Robusta parchment" codes,
+and user said "arabica coffee":
+- ✅ Include: Arabica plantation, Arabica cherry, etc.
+- ❌ Exclude: Robusta parchment, Rob cherry, etc.
+
+**Example**: If user said "rob coffee" (rob = robusta):
+- ✅ Include: Robusta parchment, Rob cherry, etc.
+- ❌ Exclude: Arabica plantation, Arabica cherry, etc.
+
 ## Your Task
-Based on the product description, do ONE of the following:
+Based on the product description AND the keyword filtering above, do ONE of the following:
 
 1. **SELECT** - If you're confident which option fits the product
    Format your response as:
@@ -385,200 +832,64 @@ Based on the product description, do ONE of the following:
    CODE: [the HS code]
    REASON: [1-2 sentence explanation]
 
-2. **ASK** - If you need more information to decide between options
+2. **ASK** - If you need more information to decide between FILTERED options
    Format your response as:
    ACTION: ASK
    QUESTION: [A clear, simple question for the user - avoid technical jargon]
    OPTIONS: [List each option on a new line with format: CODE|FRIENDLY_LABEL]
    REASON: [Why you need this information]
 
-   **CRITICAL: Option labels MUST accurately reflect the HS code description!**
+   **CRITICAL: Only include options that MATCH the user's keywords!**
+   If user said "arabica", your OPTIONS must ONLY include Arabica-related codes.
+   NEVER mix Arabica and Robusta options together!
+
+   **Option labels MUST accurately reflect the HS code description!**
    - Look at the "Available Options" section above to see what each code means
    - Create a user-friendly label that matches the ACTUAL description
    - NEVER make up labels that don't match the code's real meaning
 
-   Example: If option is "2101.30.10: Roasted chicory [LEAF]"
-   - GOOD: 2101.30.10|Roasted chicory
-   - BAD: 2101.30.10|Instant coffee ← WRONG! This doesn't match the description!
-
 ## Important Rules
+- **FILTER FIRST**: Always filter options based on user's keywords before presenting
 - Choose the MOST SPECIFIC code possible (8-10 digits preferred over 4-6 digits)
 - [LEAF] codes have no children - selecting them is final classification
-- **CRITICAL: NEVER select [OTHER/CATCH-ALL] codes unless the user has EXPLICITLY confirmed their product doesn't match any specific category**
-- If the user's input is vague or doesn't specify details (like grade, variety, type), you MUST ASK a clarifying question
-- "Other" means the user's product genuinely doesn't fit ANY specific category - NOT that they didn't mention details
-- When in doubt, ASK. It's better to ask one question than to wrongly classify as "Other"
-- Consider the ENTIRE product description, including form, material, and purpose
-- When asking questions, use **simple, user-friendly language** - NOT technical HS code descriptions
-- Option labels should be short (2-6 words) and immediately understandable to a non-expert
-- **NEVER use "Other" or "None of the above" as an option label** - instead describe what the "Other" category actually means
-  - BAD: "0811.90.90|Other"
-  - GOOD: "0811.90.90|Without added sugar"
-  - BAD: "0901.90|Other coffee"
-  - GOOD: "0901.90|Coffee husks or skins"
+- **NEVER select [OTHER/CATCH-ALL] codes** unless user explicitly confirms their product doesn't match specific categories
+- When asking questions, use **simple, user-friendly language**
+- Option labels should be short (2-6 words) and immediately understandable
 
-## CRITICAL: Generate UNIQUE Questions for Each Level
-**NEVER repeat the same question text at different hierarchy levels!**
-Each question MUST be specific to the current options being presented.
-Look at the "Current Position" to see what level you're at - use this to craft appropriate questions.
+## CRITICAL: Navigate First, Then Ask About Final Details!
+**Follow this order:**
+1. First, SELECT the correct chapter/heading based on user's product type
+2. Then navigate deeper into the hierarchy
+3. At the FINAL level (when you see [LEAF] codes with grades/variants), ASK about specific details
 
-**Question patterns by level:**
-- Level 1 (root): Ask about FORM or CATEGORY - "What form is your [product] in?"
-- Level 2: Ask about TYPE or VARIETY - "What type of [specific category] is this?"
-- Level 3: Ask about SPECIFIC CHARACTERISTICS - "Is this [characteristic A] or [characteristic B]?"
-- Level 4+: Ask about FINAL DETAILS - "Does this contain [ingredient]?" or "Is this [specific variant]?"
+**At ROOT level:** Don't ask about grades yet - first SELECT the right chapter!
+- "rob coffee" at root → SELECT 0901 (coffee beans), NOT ask about grade
+- "instant tea" at root → SELECT 2101 (extracts)
 
-BAD (same question repeated):
-- Level 1: "What form is your coffee product in?"
-- Level 2: "What form is your coffee product in?" ← WRONG! Question should change!
+**At DEEP levels (when you see grade options like A Grade, B Grade, AB Grade):**
+- If user DIDN'T specify grade → MUST ASK about grade
+- If user specified grade (e.g., "grade A arabica") → SELECT that grade
 
-GOOD (contextually appropriate questions):
-- Level 1: "What form is your coffee product in?" (raw vs processed)
-- Level 2: "Is this actual coffee extract or a coffee substitute?" (type within category)
-- Level 3: "Is this roasted chicory or another coffee substitute?" (specific variant)
+Example navigation for "rob coffee":
+1. Root level → SELECT 0901 (because "rob" = robusta = raw coffee beans)
+2. 0901 level → SELECT 0901.11 (not roasted, not decaf - typical for export)
+3. 0901.11 level → ASK "Is this Parchment or Cherry processed?" (filtered to Rob options only)
+4. After user answers → ASK "What grade?" (AB, PB, C, etc.)
 
-## Examples of Good Questions with User-Friendly Options
-- Question: "What form is your coffee in?"
-  OPTIONS:
-  0901|Raw or roasted coffee beans
-  2101|Instant coffee or coffee extract
+## Avoiding Redundant Questions
+Only skip questions when the user EXPLICITLY provided the specific detail:
+- "grade A arabica coffee" → Skip grade question, select A Grade
+- "rob parchment AB grade" → Skip both processing and grade questions
 
-- Question: "What type of wheat is this?"
-  OPTIONS:
-  1001.11|Durum wheat (for pasta)
-  1001.91|Common wheat (for bread)
+## Cross-Chapter Products (Root Level Only)
+Some products can belong to different chapters based on processing:
+- Coffee: 0901 (beans) vs 2101 (instant/extract)
+- Tea: 0902 (leaves) vs 2101 (instant/extract)
+- Fruit: 08xx (fresh) vs 20xx (processed)
 
-- Question: "Is this for planting or consumption?"
-  OPTIONS:
-  1001.11|Seeds for planting
-  1001.19|For eating/processing
-
-## When to Select "Other"
-ONLY select an [OTHER/CATCH-ALL] code if:
-1. The user explicitly says their product doesn't match any listed category, OR
-2. You've already asked clarifying questions and the answers confirm it doesn't fit specific codes
-
-## CRITICAL: Cross-Chapter Awareness (WHEN AT ROOT LEVEL)
-Some products can belong to DIFFERENT chapters depending on their form or processing level.
-When classifying these products FROM THE ROOT LEVEL (before selecting a heading), you MUST ASK about form/processing.
-
-**IMPORTANT: Only include the EXACT heading codes listed below - do NOT add any other codes!**
-
-| Product Term | ONLY These Headings (4-digit codes) |
-|--------------|-------------------------------------|
-| coffee       | 0901 (raw/roasted beans) OR 2101 (instant coffee, extracts) |
-| tea          | 0902 (tea leaves) OR 2101 (tea extracts, instant tea) |
-| cocoa        | 1801-1805 (cocoa products) OR 1905-1906 (chocolate products) |
-| milk         | 0401-0402 (liquid milk) OR 1901 (milk-based preparations) |
-| fruit        | 0801-0814 (fresh fruit) OR 2001-2009 (preserved fruit) |
-| vegetables   | 0701-0714 (fresh vegetables) OR 2001-2005 (preserved vegetables) |
-| meat         | 0201-0210 (fresh meat) OR 1601-1602 (prepared meat) |
-| fish         | 0301-0307 (fresh fish) OR 1604-1605 (prepared fish) |
-
-**Rules:**
-1. Check if the user's description already clarifies the form (e.g., "instant coffee" = 2101, "green coffee beans" = 0901)
-2. If NOT clarified, you MUST ASK about the form/processing level BEFORE selecting a heading
-3. **ONLY include options from the headings listed above - NEVER add other unrelated headings!**
-
-Example for "coffee" at root level (EXACTLY 2 options, no more):
-ACTION: ASK
-QUESTION: What form is your coffee product in?
-OPTIONS:
-0901|Raw or roasted coffee beans
-2101|Instant coffee, coffee extract, or coffee essence
-REASON: Coffee products can be classified in different chapters depending on their processing level`;
+Check user's keywords to determine which chapter applies. If "instant" → 2101. If "beans" or variety name → 0901.`;
 }
 
-// ========================================
-// Cross-Chapter Product Filtering
-// ========================================
-
-/**
- * Known cross-chapter products and their valid chapter codes
- * This filters out LLM hallucinations that add irrelevant chapters
- */
-const CROSS_CHAPTER_PRODUCTS: Record<string, string[]> = {
-  'coffee': ['09', '21'],
-  'tea': ['09', '21'],
-  'cocoa': ['18', '19'],
-  'chocolate': ['17', '18', '19'],
-  'milk': ['04', '19'],
-  'fruit': ['08', '20'],
-  'vegetable': ['07', '20'],
-  'vegetables': ['07', '20'],
-  'meat': ['02', '16'],
-  'fish': ['03', '16'],
-  'seafood': ['03', '16'],
-};
-
-/**
- * PRE-FILTER root options BEFORE sending to LLM to reduce token usage
- * For known cross-chapter products, only send relevant chapter headings
- * This reduces prompts from 1125 options (~20K tokens) to 2-10 options (~500 tokens)
- */
-function preFilterRootOptions(
-  userInput: string,
-  options: HierarchyOption[]
-): HierarchyOption[] {
-  const inputLower = userInput.toLowerCase();
-
-  // Check for cross-chapter products
-  for (const [product, validChapters] of Object.entries(CROSS_CHAPTER_PRODUCTS)) {
-    if (inputLower.includes(product)) {
-      // Filter to only include headings from valid chapters
-      const filtered = options.filter(opt => {
-        const chapterCode = opt.code.substring(0, 2);
-        return validChapters.includes(chapterCode);
-      });
-
-      if (filtered.length > 0) {
-        logger.info(`[LLM-NAV] Cross-chapter product "${product}" - filtered to chapters: ${validChapters.join(', ')}`);
-        return filtered;
-      }
-    }
-  }
-
-  // If no cross-chapter match, return original (will use full list)
-  // TODO: Add keyword-based filtering for other products to further reduce tokens
-  return options;
-}
-
-/**
- * Filter options to only include valid chapters for cross-chapter products
- * This prevents the LLM from hallucinating irrelevant chapters
- * Works with both 2-digit chapter codes (09) and 4-digit heading codes (0901)
- */
-function filterCrossChapterOptions(
-  userInput: string,
-  options: Array<{code: string; label: string; description: string}>,
-  currentCode: string | null
-): Array<{code: string; label: string; description: string}> {
-  // Only apply at root level (no current code)
-  if (currentCode !== null) {
-    return options;
-  }
-
-  // Check if user input matches any cross-chapter product
-  const inputLower = userInput.toLowerCase();
-  for (const [product, validChapters] of Object.entries(CROSS_CHAPTER_PRODUCTS)) {
-    if (inputLower.includes(product)) {
-      // Filter options to only include valid chapters
-      // Handle both 2-digit (09) and 4-digit (0901) codes
-      const filtered = options.filter(opt => {
-        // Extract chapter from code: "09" -> "09", "0901" -> "09", "0901.11" -> "09"
-        const chapterCode = opt.code.replace(/\./g, '').substring(0, 2);
-        return validChapters.includes(chapterCode);
-      });
-
-      // Only return filtered if we found matching options
-      if (filtered.length > 0) {
-        return filtered;
-      }
-    }
-  }
-
-  return options;
-}
 
 // ========================================
 // LLM Response Parsing
@@ -694,57 +1005,84 @@ function parseNavigationResponse(
           const parts = optLine.split('|').map(s => s.trim());
           const optCode = parts[0] ?? '';
           const label = parts[1] ?? '';
-          const matchingOption = options.find(o => o.code === optCode || o.code.includes(optCode) || optCode.includes(o.code));
+          // Use strict matching: ONLY exact match
+          // If LLM returns "0901" but available options are "0901.11", "0901.12", etc.,
+          // this is an LLM error - it's returning a parent-level code we already passed
+          // We should NOT match parent codes to child options
+          const matchingOption = options.find(o => o.code === optCode);
           if (matchingOption) {
             finalOptions.push({
               code: matchingOption.code,
               label: label || (matchingOption.description.split(':')[0]?.trim() ?? ''),
               description: matchingOption.description
             });
+          } else {
+            // If no exact match, log for debugging but don't add invalid options
+            logger.debug(`[LLM-NAV] Option code "${optCode}" not found in available options`);
           }
         }
       }
     } else {
       // Fallback: old format - just code list
+      // Use strict exact matching only
       const questionOptions = optionCodes.length > 0
-        ? options.filter(o => optionCodes.some(oc => o.code.includes(oc) || oc.includes(o.code)))
+        ? options.filter(o => optionCodes.some(oc => o.code === oc))
         : options.filter(o => !o.isOther);
 
-      for (const opt of questionOptions) {
-        // Generate user-friendly label from description
-        const desc = opt.description || '';
-        // Take first part before colon, or first few words
-        let label = desc.split(':')[0] || desc;
-        // Truncate long labels and clean up
-        if (label.length > 50) {
-          label = label.substring(0, 47) + '...';
-        }
-        // Convert to sentence case
-        label = label.charAt(0).toUpperCase() + label.slice(1).toLowerCase();
-
-        finalOptions.push({
-          code: opt.code,
-          label: label.trim(),
-          description: desc
-        });
-      }
+      // Use the new helper function for unique labels and limiting options
+      const processedOptions = processOptionsForDisplay(questionOptions);
+      finalOptions.push(...processedOptions);
     }
 
-    // Filter out irrelevant chapters for cross-chapter products FIRST
-    // This must happen before adding "Other" options
-    let filteredOptions = filterCrossChapterOptions(userInput, finalOptions, currentCode);
+    // LLM handles filtering - we just use the options it returned
+    let filteredOptions = [...finalOptions];
 
-    // Check if this is a cross-chapter question at root level
-    // We need to check BOTH if filtering occurred AND if the product matches cross-chapter products
-    const inputLower = userInput.toLowerCase();
-    const isCrossChapterProduct = Object.keys(CROSS_CHAPTER_PRODUCTS).some(product =>
-      inputLower.includes(product)
-    );
-    const isCrossChapterQuestion = currentCode === null && isCrossChapterProduct;
+    // CRITICAL: Detect REDUNDANT QUESTIONS
+    // If LLM returned no valid options AND we're NOT at root level, this is likely
+    // the LLM asking about parent-level codes we've already passed (e.g., asking 0901 vs 2101 when at 0901)
+    // In this case, we should NOT repeat the same question - instead, generate a meaningful question
+    // about the ACTUAL children at this level
+    if (filteredOptions.length === 0 && options.length > 0 && currentCode !== null) {
+      // Check if LLM returned codes that are parents/ancestors or the current code itself
+      const returnedCodes = optionCodes
+        .filter(oc => oc.includes('|'))
+        .map(oc => oc.split('|')[0]?.trim() ?? '');
 
-    // Only add "Other" option if NOT at root level cross-chapter question
-    // Cross-chapter questions are specifically about form/processing, not "other"
-    if (!isCrossChapterQuestion) {
+      const isRedundantQuestion = returnedCodes.some(rc =>
+        rc === currentCode ||  // LLM is asking about the code we're already at
+        currentCode.startsWith(rc) ||  // LLM is asking about a parent (e.g., "09" when at "0901")
+        rc.length < currentCode.length  // LLM is asking about a higher-level code
+      );
+
+      if (isRedundantQuestion) {
+        logger.warn(`[LLM-NAV] Redundant question detected - LLM asked about parent codes ${returnedCodes.join(', ')} when at ${currentCode}`);
+
+        // Generate options with unique labels, limited to 8 options
+        const processedOptions = processOptionsForDisplay(options.filter(o => !o.isOther));
+        filteredOptions.push(...processedOptions);
+
+        // Generate a context-appropriate question
+        const firstOptDesc = options.find(o => !o.isOther)?.description?.split(':')[0]?.toLowerCase() || 'product';
+        question = `Please select the specific category for your ${firstOptDesc}:`;
+        reason = `Navigating to more specific classification under ${currentCode}`;
+
+        logger.info(`[LLM-NAV] Generated new question with ${filteredOptions.length} actual children options`);
+      } else {
+        // Not a redundant question, just fallback to all options (limited to 8)
+        logger.warn(`[LLM-NAV] LLM returned invalid option codes, falling back to ${Math.min(options.length, 8)} available options`);
+        const processedOptions = processOptionsForDisplay(options.filter(o => !o.isOther));
+        filteredOptions.push(...processedOptions);
+      }
+    } else if (filteredOptions.length === 0 && options.length > 0) {
+      // At root level, just fallback to all options (limited to 8)
+      logger.warn(`[LLM-NAV] LLM returned invalid option codes at root, falling back to ${Math.min(options.length, 8)} available options`);
+      const processedOptions = processOptionsForDisplay(options.filter(o => !o.isOther));
+      filteredOptions.push(...processedOptions);
+    }
+
+    // Only add "Other" option if NOT at root level
+    // At root level, "Other" options would be irrelevant chapter codes like "Other live animals"
+    if (currentCode !== null) {
       const otherOption = options.find(o => o.isOther);
       if (otherOption && !filteredOptions.some(o => o.code === otherOption.code)) {
         // Generate a user-friendly label for "Other" options
@@ -810,22 +1148,23 @@ export async function navigateHierarchy(
   const startTime = Date.now();
 
   try {
+    // Extract keywords from user input
+    const userKeywords = extractKeywords(userInput);
+
     // Get available options at current level
     let options = currentCode
       ? await getChildrenForCode(currentCode)
       : await getAllChapters();
 
-    // PRE-FILTER at root level to reduce token usage
-    // For cross-chapter products, only send relevant chapters to LLM
-    if (currentCode === null) {
-      const filteredOptions = preFilterRootOptions(userInput, options);
-      if (filteredOptions.length > 0 && filteredOptions.length < options.length) {
-        logger.info(`[LLM-NAV] Pre-filtered from ${options.length} to ${filteredOptions.length} options`);
-        options = filteredOptions;
-      }
-    }
-
     logger.info(`[LLM-NAV] At ${currentCode || 'root'}, found ${options.length} options`);
+
+    // Apply simple keyword filtering at code level (more reliable than LLM-only)
+    // This ensures "rob coffee" only sees Rob options, not Arabica
+    const beforeFilter = options.length;
+    options = filterOptionsByKeywordsSimple(options, userKeywords);
+    if (options.length < beforeFilter) {
+      logger.info(`[LLM-NAV] Filtered by keywords: ${beforeFilter} -> ${options.length} options`);
+    }
 
     // If no options, we're at a leaf - return classification
     if (options.length === 0) {
@@ -882,8 +1221,78 @@ export async function navigateHierarchy(
       };
     }
 
-    // Build prompt and call LLM
-    const prompt = buildNavigationPrompt(userInput, currentCode, options, history);
+    // CRITICAL: Check for DISTINCT GROUPS that need user decision
+    // This handles: Chapter selection (09 vs 21), Variety (Arabica vs Robusta), Processing (Parchment vs Cherry)
+    const distinctGroups = detectDistinctGroups(options, userKeywords);
+    if (distinctGroups) {
+      logger.info(`[LLM-NAV] Distinct groups detected: ${distinctGroups.groups.map(g => g.name).join(' vs ')}`);
+
+      // Build question options from groups
+      const existingLabels = new Set<string>();
+      const questionOptions: Array<{code: string; label: string; description: string}> = [];
+
+      for (const group of distinctGroups.groups) {
+        // For each group, pick a representative option (first one)
+        const representative = group.options[0];
+        if (representative) {
+          questionOptions.push({
+            code: representative.code,
+            label: group.name,
+            description: representative.description
+          });
+        }
+      }
+
+      return {
+        type: 'question',
+        question: {
+          id: `nav_${currentCode || 'root'}_${Date.now()}`,
+          text: distinctGroups.questionText,
+          options: questionOptions,
+          parentCode: currentCode || '',
+          reasoning: `User needs to choose between: ${distinctGroups.groups.map(g => g.name).join(', ')}`
+        }
+      };
+    }
+
+    // CRITICAL: If we have multiple LEAF options (all are final codes), FORCE a question
+    // This ensures we ask about grades/variants instead of auto-selecting
+    const nonOtherOptions = options.filter(o => !o.isOther);
+    const leafOptions = nonOtherOptions.filter(o => !o.hasChildren);
+    if (leafOptions.length > 1) {
+      logger.info(`[LLM-NAV] Multiple leaf options detected (${leafOptions.length}), forcing question`);
+
+      // Generate question about the specific variants
+      const existingLabels = new Set<string>();
+      const questionOptions = leafOptions.slice(0, 8).map(opt => ({
+        code: opt.code,
+        label: generateUniqueLabel(opt.code, opt.description, existingLabels),
+        description: opt.description
+      }));
+
+      // Determine question text based on descriptions
+      const firstDesc = leafOptions[0]?.description?.toLowerCase() || '';
+      let questionText = 'Please select the specific type:';
+      if (firstDesc.includes('grade')) {
+        questionText = 'What grade is your product?';
+      } else if (firstDesc.includes('parchment') || firstDesc.includes('cherry')) {
+        questionText = 'What processing type is your coffee?';
+      }
+
+      return {
+        type: 'question',
+        question: {
+          id: `nav_${currentCode || 'root'}_${Date.now()}`,
+          text: questionText,
+          options: questionOptions,
+          parentCode: currentCode || '',
+          reasoning: 'Multiple specific variants available - need user selection'
+        }
+      };
+    }
+
+    // Build prompt and call LLM - pass userKeywords for LLM-based filtering
+    const prompt = buildNavigationPrompt(userInput, currentCode, options, history, userKeywords);
 
     logger.debug(`[LLM-NAV] Calling LLM with ${options.length} options`);
 

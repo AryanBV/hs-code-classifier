@@ -14,6 +14,7 @@ interface ChatInputProps {
   disabled?: boolean
   placeholder?: string
   showExamples?: boolean
+  autoFocus?: boolean
 }
 
 const EXAMPLES = [
@@ -30,10 +31,22 @@ export function ChatInput({
   isLoading,
   disabled = false,
   placeholder = 'Describe your product...',
-  showExamples = true
+  showExamples = true,
+  autoFocus = false
 }: ChatInputProps) {
   const [isFocused, setIsFocused] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  // Auto-focus on mount when autoFocus is true
+  useEffect(() => {
+    if (autoFocus && textareaRef.current && !disabled) {
+      // Small delay to ensure DOM is ready
+      const timer = setTimeout(() => {
+        textareaRef.current?.focus()
+      }, 100)
+      return () => clearTimeout(timer)
+    }
+  }, [autoFocus, disabled])
 
   const minChars = 3  // Reduced from 10 to 3 for better UX
   const maxChars = 1000

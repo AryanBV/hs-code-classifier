@@ -498,6 +498,7 @@ export default function ClassifyPage() {
                   isLoading={conversation.isLoading}
                   disabled={false}
                   showExamples={true}
+                  autoFocus={true}
                 />
               </div>
             </div>
