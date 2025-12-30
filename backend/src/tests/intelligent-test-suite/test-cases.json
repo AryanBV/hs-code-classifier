@@ -1,0 +1,416 @@
+{
+  "critical_regression": {
+    "description": "Core fixes from Phases 1-3. Any failure = regression.",
+    "tests": [
+      {
+        "id": "REG_001",
+        "query": "instant coffee",
+        "mustMatch": { "chapter": "21", "heading": "2101" },
+        "mustNotMatch": ["0901", "0902"],
+        "maxQuestions": 2,
+        "phase": "Phase 1 - Coffee routing"
+      },
+      {
+        "id": "REG_002",
+        "query": "brake pads for cars",
+        "mustMatch": { "chapter": "87", "heading": "8708" },
+        "mustNotMatch": ["6813", "6903", "9616", "9619", "8701"],
+        "phase": "Phase 2 - Function over material"
+      },
+      {
+        "id": "REG_003",
+        "query": "ceramic brake pads",
+        "mustMatch": { "chapter": "87" },
+        "mustNotMatch": ["69"],
+        "phase": "Phase 2 - Function over material"
+      },
+      {
+        "id": "REG_004",
+        "query": "Arabica coffee beans",
+        "mustMatch": { "chapter": "09" },
+        "mustNotIncludeInDescription": ["robusta"],
+        "phase": "Phase 3 - Variety elimination"
+      },
+      {
+        "id": "REG_005",
+        "query": "Robusta coffee",
+        "mustMatch": { "chapter": "09" },
+        "mustNotIncludeInDescription": ["arabica"],
+        "phase": "Phase 3 - Variety elimination"
+      },
+      {
+        "id": "REG_006",
+        "query": "instant coffee unflavored",
+        "mustMatch": { "chapter": "21", "code": "2101.11.20" },
+        "phase": "Phase 1 - Specific code"
+      },
+      {
+        "id": "REG_007",
+        "query": "roasted coffee beans",
+        "mustMatch": { "chapter": "09", "heading": "0901" },
+        "mustNotMatch": ["2101"],
+        "phase": "Phase 1 - Roasted beans routing"
+      }
+    ]
+  },
+
+  "real_world_exporter": {
+    "description": "Actual queries Indian exporters might type. Realistic messiness.",
+    "tests": [
+      {
+        "id": "REAL_001",
+        "query": "monsooned malabar coffee beans AA grade",
+        "context": "Famous Indian coffee variety",
+        "expectedChapter": "09",
+        "notes": "Should recognize Indian coffee terminology"
+      },
+      {
+        "id": "REAL_002",
+        "query": "basmati rice 1121 sella",
+        "context": "Common Indian rice export - 1121 is variety, sella means parboiled",
+        "expectedChapter": "10",
+        "notes": "Should handle rice varieties"
+      },
+      {
+        "id": "REAL_003",
+        "query": "RO spare parts for water purifier",
+        "context": "Reverse osmosis parts - common query",
+        "expectedChapter": "84",
+        "notes": "Should understand RO = machine parts"
+      },
+      {
+        "id": "REAL_004",
+        "query": "toor dal",
+        "context": "Indian name for pigeon peas/lentils",
+        "expectedChapter": "07",
+        "notes": "Must understand Indian food names"
+      },
+      {
+        "id": "REAL_005",
+        "query": "brass handicrafts statues",
+        "context": "Common Indian export",
+        "expectedChapter": "74",
+        "notes": "Brass articles"
+      },
+      {
+        "id": "REAL_006",
+        "query": "cotton grey fabric 40s count",
+        "context": "Textile export with technical specs",
+        "expectedChapter": "52",
+        "notes": "Should handle textile terminology"
+      },
+      {
+        "id": "REAL_007",
+        "query": "auto rickshaw parts engine",
+        "context": "Three-wheeler parts - India specific",
+        "expectedChapter": "87",
+        "notes": "Should recognize regional vehicle terms"
+      },
+      {
+        "id": "REAL_008",
+        "query": "alphonso mango pulp canned",
+        "context": "Premium Indian mango product",
+        "expectedChapter": "20",
+        "notes": "Processed fruit - not fresh (Ch.08)"
+      },
+      {
+        "id": "REAL_009",
+        "query": "cumin seeds jeera whole",
+        "context": "Spice with Hindi name",
+        "expectedChapter": "09",
+        "notes": "Should understand Hindi spice names"
+      },
+      {
+        "id": "REAL_010",
+        "query": "human hair extensions for wigs",
+        "context": "Major Indian export",
+        "expectedChapter": "67",
+        "notes": "Human hair articles"
+      },
+      {
+        "id": "REAL_011",
+        "query": "cashew nuts W320 grade",
+        "context": "Cashew grading system",
+        "expectedChapter": "08",
+        "notes": "W320 is pieces per pound grade"
+      },
+      {
+        "id": "REAL_012",
+        "query": "granite slabs polished",
+        "context": "Stone export",
+        "expectedChapter": "68",
+        "notes": "Worked stone"
+      }
+    ]
+  },
+
+  "adversarial": {
+    "description": "Intentionally confusing queries to stress-test the system.",
+    "tests": [
+      {
+        "id": "ADV_001",
+        "query": "coffee table",
+        "trap": "NOT coffee (Ch.09) - it's furniture (Ch.94)",
+        "expectedChapter": "94",
+        "mustNotMatch": ["09", "21"]
+      },
+      {
+        "id": "ADV_002",
+        "query": "tea shirt",
+        "trap": "Likely typo for t-shirt, NOT tea",
+        "expectedChapter": "61",
+        "mustNotMatch": ["09"],
+        "notes": "Should ask for clarification or detect typo"
+      },
+      {
+        "id": "ADV_003",
+        "query": "brake fluid",
+        "trap": "Fluid not pad - different code entirely",
+        "expectedChapter": "38",
+        "mustNotMatch": ["8708"],
+        "notes": "Hydraulic brake fluids are in Ch.38"
+      },
+      {
+        "id": "ADV_004",
+        "query": "toy car battery operated",
+        "trap": "Toy (Ch.95) not vehicle (Ch.87)",
+        "expectedChapter": "95",
+        "mustNotMatch": ["87"]
+      },
+      {
+        "id": "ADV_005",
+        "query": "car toy for children",
+        "trap": "Same as above, different word order",
+        "expectedChapter": "95",
+        "mustNotMatch": ["87"]
+      },
+      {
+        "id": "ADV_006",
+        "query": "rubber band elastic",
+        "trap": "Rubber articles (Ch.40)",
+        "expectedChapter": "40"
+      },
+      {
+        "id": "ADV_007",
+        "query": "glass bottle for medicine empty",
+        "trap": "Glass container (Ch.70) not pharma",
+        "expectedChapter": "70",
+        "mustNotMatch": ["30"]
+      },
+      {
+        "id": "ADV_008",
+        "query": "coffee beans for planting seeds",
+        "trap": "Seeds for sowing (Ch.12) not consumption (Ch.09)",
+        "expectedChapter": "12",
+        "mustNotMatch": ["09"],
+        "notes": "Context 'for planting' changes classification"
+      },
+      {
+        "id": "ADV_009",
+        "query": "bicycle brake pads rubber",
+        "trap": "Bicycle parts (8714) not motor vehicle (8708)",
+        "expectedChapter": "87",
+        "expectedHeading": "8714",
+        "mustNotMatch": ["8708"]
+      },
+      {
+        "id": "ADV_010",
+        "query": "stainless steel water bottle normal not vacuum",
+        "trap": "Steel bottle (Ch.73) NOT vacuum flask (Ch.96)",
+        "expectedChapter": "73",
+        "mustNotMatch": ["96"]
+      },
+      {
+        "id": "ADV_011",
+        "query": "paper coffee cup disposable",
+        "trap": "Paper articles (Ch.48) not coffee",
+        "expectedChapter": "48",
+        "mustNotMatch": ["09", "21"]
+      },
+      {
+        "id": "ADV_012",
+        "query": "tea bag empty without tea",
+        "trap": "Empty bags are textile/paper, not tea",
+        "mustNotMatch": ["09"],
+        "notes": "Packaging material, not the product"
+      }
+    ]
+  },
+
+  "composite_products": {
+    "description": "Products made of multiple materials - tests classification rules.",
+    "tests": [
+      {
+        "id": "COMP_001",
+        "query": "leather handbag with metal buckle and zip",
+        "expectedChapter": "42",
+        "notes": "Classified by main material (leather)"
+      },
+      {
+        "id": "COMP_002",
+        "query": "wooden jewelry box with brass hinges",
+        "expectedChapter": "44",
+        "notes": "Wood article with metal fittings"
+      },
+      {
+        "id": "COMP_003",
+        "query": "plastic chair with steel legs office",
+        "expectedChapter": "94",
+        "notes": "Furniture regardless of materials"
+      },
+      {
+        "id": "COMP_004",
+        "query": "cotton polyester blend fabric 60 40",
+        "expectedChapter": "52",
+        "notes": "60% cotton = classified as cotton"
+      },
+      {
+        "id": "COMP_005",
+        "query": "solar panel with aluminum frame complete",
+        "expectedChapter": "85",
+        "notes": "Classified by function (photovoltaic)"
+      },
+      {
+        "id": "COMP_006",
+        "query": "leather wallet with RFID blocking",
+        "expectedChapter": "42",
+        "notes": "Still leather goods despite tech feature"
+      }
+    ]
+  },
+
+  "typos_and_misspellings": {
+    "description": "Real users make typos. Test fuzzy matching.",
+    "tests": [
+      {
+        "id": "TYPO_001",
+        "query": "cofee beans roasted",
+        "shouldUnderstand": "coffee beans roasted",
+        "expectedChapter": "09"
+      },
+      {
+        "id": "TYPO_002",
+        "query": "brakepads car",
+        "shouldUnderstand": "brake pads car",
+        "expectedChapter": "87"
+      },
+      {
+        "id": "TYPO_003",
+        "query": "arabika coffee",
+        "shouldUnderstand": "arabica coffee",
+        "expectedChapter": "09"
+      },
+      {
+        "id": "TYPO_004",
+        "query": "vaccum flask steel",
+        "shouldUnderstand": "vacuum flask",
+        "expectedChapter": "96"
+      },
+      {
+        "id": "TYPO_005",
+        "query": "furnitures wooden table",
+        "shouldUnderstand": "wooden furniture table",
+        "expectedChapter": "94"
+      },
+      {
+        "id": "TYPO_006",
+        "query": "eletronics mobile phone",
+        "shouldUnderstand": "electronics mobile phone",
+        "expectedChapter": "85"
+      },
+      {
+        "id": "TYPO_007",
+        "query": "stationary office supplies",
+        "shouldUnderstand": "stationery",
+        "notes": "Common confusion: stationary vs stationery"
+      }
+    ]
+  },
+
+  "conversation_flow": {
+    "description": "Multi-turn conversations and user corrections.",
+    "tests": [
+      {
+        "id": "CONV_001",
+        "description": "Basic coffee disambiguation",
+        "turns": [
+          { "user": "coffee", "expectQuestion": true, "questionAbout": "beans vs instant" },
+          { "user": "instant", "expectChapter": "21" }
+        ]
+      },
+      {
+        "id": "CONV_002",
+        "description": "Vehicle context refinement",
+        "turns": [
+          { "user": "brake parts", "expectQuestion": true },
+          { "user": "for trucks heavy duty", "expectHeading": "8708" }
+        ]
+      },
+      {
+        "id": "CONV_003",
+        "description": "Progressive coffee refinement",
+        "turns": [
+          { "user": "Arabica coffee", "expectQuestion": true },
+          { "user": "roasted whole beans", "expectChapter": "09" },
+          { "user": "decaffeinated", "expectNarrowing": true }
+        ]
+      },
+      {
+        "id": "CONV_004",
+        "description": "User correction mid-flow",
+        "turns": [
+          { "user": "coffee", "expectQuestion": true },
+          { "user": "actually I meant coffee table furniture", "expectChapter": "94" }
+        ]
+      }
+    ]
+  },
+
+  "edge_cases": {
+    "description": "Boundary conditions and unusual but valid queries.",
+    "tests": [
+      {
+        "id": "EDGE_001",
+        "query": "",
+        "expectedBehavior": "Should ask for product description",
+        "notes": "Empty query handling"
+      },
+      {
+        "id": "EDGE_002",
+        "query": "asdfghjkl",
+        "expectedBehavior": "Should say cannot understand or ask for clarification",
+        "notes": "Gibberish handling"
+      },
+      {
+        "id": "EDGE_003",
+        "query": "the",
+        "expectedBehavior": "Should ask for more details",
+        "notes": "Too vague query"
+      },
+      {
+        "id": "EDGE_004",
+        "query": "I want to export something from India to USA",
+        "expectedBehavior": "Should ask what product",
+        "notes": "No product mentioned"
+      },
+      {
+        "id": "EDGE_005",
+        "query": "product code 8708.30.00",
+        "expectedBehavior": "Should confirm this is brake parts or show details",
+        "notes": "User provides code directly"
+      },
+      {
+        "id": "EDGE_006",
+        "query": "INSTANT COFFEE POWDER",
+        "expectedChapter": "21",
+        "notes": "All caps handling"
+      },
+      {
+        "id": "EDGE_007",
+        "query": "   coffee   beans   ",
+        "expectedChapter": "09",
+        "notes": "Extra whitespace handling"
+      }
+    ]
+  }
+}

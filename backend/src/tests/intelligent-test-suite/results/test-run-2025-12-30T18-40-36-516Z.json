@@ -1,0 +1,3217 @@
+{
+  "timestamp": "2025-12-30T18:40:36.516Z",
+  "summary": {
+    "totalPassed": 46,
+    "totalFailed": 5,
+    "passRate": 90,
+    "totalTests": 51
+  },
+  "categoryResults": [
+    {
+      "name": "critical_regression",
+      "description": "Core fixes from Phases 1-3. Any failure = regression.",
+      "passed": 5,
+      "failed": 2,
+      "passRate": 71
+    },
+    {
+      "name": "real_world_exporter",
+      "description": "Actual queries Indian exporters might type. Realistic messiness.",
+      "passed": 11,
+      "failed": 1,
+      "passRate": 92
+    },
+    {
+      "name": "adversarial",
+      "description": "Intentionally confusing queries to stress-test the system.",
+      "passed": 12,
+      "failed": 0,
+      "passRate": 100
+    },
+    {
+      "name": "composite_products",
+      "description": "Products made of multiple materials - tests classification rules.",
+      "passed": 6,
+      "failed": 0,
+      "passRate": 100
+    },
+    {
+      "name": "typos_and_misspellings",
+      "description": "Real users make typos. Test fuzzy matching.",
+      "passed": 7,
+      "failed": 0,
+      "passRate": 100
+    },
+    {
+      "name": "edge_cases",
+      "description": "Boundary conditions and unusual but valid queries.",
+      "passed": 5,
+      "failed": 2,
+      "passRate": 71
+    }
+  ],
+  "failures": [
+    {
+      "id": "REG_001",
+      "category": "critical_regression",
+      "query": "instant coffee",
+      "actualCodes": [],
+      "errorType": "api_error",
+      "errorAnalysis": "Error: HTTP 400: Bad Request"
+    },
+    {
+      "id": "REG_006",
+      "category": "critical_regression",
+      "query": "instant coffee unflavored",
+      "actualCodes": [],
+      "errorType": "api_error",
+      "errorAnalysis": "Error: HTTP 400: Bad Request"
+    },
+    {
+      "id": "REAL_012",
+      "category": "real_world_exporter",
+      "query": "granite slabs polished",
+      "expectedChapter": "68",
+      "actualChapter": "25",
+      "actualCodes": [
+        "2516.12.00"
+      ],
+      "errorType": "wrong_chapter",
+      "errorAnalysis": "Expected Ch.68, Got Ch.25",
+      "notes": "Worked stone"
+    },
+    {
+      "id": "EDGE_001",
+      "category": "edge_cases",
+      "query": "",
+      "actualCodes": [],
+      "errorType": "api_error",
+      "errorAnalysis": "Error: HTTP 400: Bad Request",
+      "notes": "Empty query handling"
+    },
+    {
+      "id": "EDGE_006",
+      "category": "edge_cases",
+      "query": "INSTANT COFFEE POWDER",
+      "actualCodes": [],
+      "errorType": "api_error",
+      "errorAnalysis": "Error: HTTP 400: Bad Request",
+      "notes": "All caps handling"
+    }
+  ],
+  "allResults": [
+    {
+      "id": "REG_001",
+      "category": "critical_regression",
+      "query": "instant coffee",
+      "passed": false,
+      "actualCodes": [],
+      "responseTime": 4871,
+      "questionsAsked": 0,
+      "isQuestionResponse": false,
+      "fullResponse": null,
+      "errorType": "api_error",
+      "errorAnalysis": "Error: HTTP 400: Bad Request"
+    },
+    {
+      "id": "REG_002",
+      "category": "critical_regression",
+      "query": "brake pads for cars",
+      "passed": true,
+      "expectedChapter": "87",
+      "actualChapter": "87",
+      "actualCodes": [
+        "8708.30.00"
+      ],
+      "responseTime": 11993,
+      "questionsAsked": 0,
+      "isQuestionResponse": false,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxge830001b56wasozyolb",
+        "responseType": "classification",
+        "result": {
+          "hsCode": "8708.30.00",
+          "description": "Brakes and servo-brakes; parts thereof",
+          "confidence": 90,
+          "reasoning": "{\"chapter\":{\"code\":\"87\",\"name\":\"Vehicles\"},\"heading\":{\"code\":\"8708\",\"name\":\"Heading 8708\"},\"finalCode\":{\"code\":\"8708.30.00\",\"description\":\"Brakes and servo-brakes; parts thereof\"},\"userAnswers\":[]}",
+          "alternatives": [],
+          "clarificationImpact": "Direct classification - no clarifying questions needed."
+        },
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 0,
+          "answersProvided": 0,
+          "durationMs": 10598,
+          "history": [
+            {
+              "turn": 1,
+              "type": "classification",
+              "content": "8708.30.00 - Brakes and servo-brakes; parts thereof",
+              "timestamp": "2025-12-30T18:35:27.826Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:35:31.669Z"
+      }
+    },
+    {
+      "id": "REG_003",
+      "category": "critical_regression",
+      "query": "ceramic brake pads",
+      "passed": true,
+      "expectedChapter": "87",
+      "actualChapter": "87",
+      "actualCodes": [
+        "8708.30.00"
+      ],
+      "responseTime": 13531,
+      "questionsAsked": 0,
+      "isQuestionResponse": false,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxgnpb0004b56wblqenle6",
+        "responseType": "classification",
+        "result": {
+          "hsCode": "8708.30.00",
+          "description": "Brakes and servo-brakes; parts thereof",
+          "confidence": 90,
+          "reasoning": "{\"chapter\":{\"code\":\"87\",\"name\":\"Vehicles\"},\"heading\":{\"code\":\"8708\",\"name\":\"Heading 8708\"},\"finalCode\":{\"code\":\"8708.30.00\",\"description\":\"Brakes and servo-brakes; parts thereof\"},\"userAnswers\":[]}",
+          "alternatives": [],
+          "clarificationImpact": "Direct classification - no clarifying questions needed."
+        },
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 0,
+          "answersProvided": 0,
+          "durationMs": 12107,
+          "history": [
+            {
+              "turn": 1,
+              "type": "classification",
+              "content": "8708.30.00 - Brakes and servo-brakes; parts thereof",
+              "timestamp": "2025-12-30T18:35:41.514Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:35:45.362Z"
+      }
+    },
+    {
+      "id": "REG_004",
+      "category": "critical_regression",
+      "query": "Arabica coffee beans",
+      "passed": true,
+      "expectedChapter": "09",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 5123,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxgy5q0007b56wa7g74i1v",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767119748337",
+            "text": "Which category best describes your product?",
+            "options": [
+              "0901::Coffee, whether or not roasted or decaffeinated... (Ch. 09)",
+              "1201::Soya beans, whether or not broken. (Ch. 12)"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Coffee, whether or not roasted or decaffeinated... (Ch. 09), Soya beans, whether or not broken. (Ch. 12)",
+        "_questionData": [
+          {
+            "code": "0901",
+            "label": "Coffee, whether or not roasted or decaffeinated... (Ch. 09)",
+            "description": "Coffee, whether or not roasted or decaffeinated; coffee husks and skins; coffee substitutes containing coffee in any proportion."
+          },
+          {
+            "code": "1201",
+            "label": "Soya beans, whether or not broken. (Ch. 12)",
+            "description": "Soya beans, whether or not broken."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 5119,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Which category best describes your product?",
+              "timestamp": "2025-12-30T18:35:48.340Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:35:50.636Z"
+      }
+    },
+    {
+      "id": "REG_005",
+      "category": "critical_regression",
+      "query": "Robusta coffee",
+      "passed": true,
+      "expectedChapter": "09",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 5064,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxh28j000ab56wzirel37p",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767119753594",
+            "text": "Which category best describes your product?",
+            "options": [
+              "0901::Coffee, whether or not roasted or decaffeinated... (Ch. 09)",
+              "2101::EXTRACTS, ESSENCES AND CONCENTRATES, OF COFFEE,... (Ch. 21)"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Coffee, whether or not roasted or decaffeinated... (Ch. 09), EXTRACTS, ESSENCES AND CONCENTRATES, OF COFFEE,... (Ch. 21)",
+        "_questionData": [
+          {
+            "code": "0901",
+            "label": "Coffee, whether or not roasted or decaffeinated... (Ch. 09)",
+            "description": "Coffee, whether or not roasted or decaffeinated; coffee husks and skins; coffee substitutes containing coffee in any proportion."
+          },
+          {
+            "code": "2101",
+            "label": "EXTRACTS, ESSENCES AND CONCENTRATES, OF COFFEE,... (Ch. 21)",
+            "description": "EXTRACTS, ESSENCES AND CONCENTRATES, OF COFFEE, TEA OR MATE AND PREPARATIONS WITH A BASIS OF THESE PRODUCTS OR WITH A BASIS OF COFFEE, TEA OR MATE; ROASTED CHICORY AND OTHER ROASTED COFFEE SUBSTITUTES, AND EXTRACTS, ESSENCES AND CONCENTRATES THEREOF"
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 5060,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Which category best describes your product?",
+              "timestamp": "2025-12-30T18:35:53.596Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:35:55.862Z"
+      }
+    },
+    {
+      "id": "REG_006",
+      "category": "critical_regression",
+      "query": "instant coffee unflavored",
+      "passed": false,
+      "actualCodes": [],
+      "responseTime": 2242,
+      "questionsAsked": 0,
+      "isQuestionResponse": false,
+      "fullResponse": null,
+      "errorType": "api_error",
+      "errorAnalysis": "Error: HTTP 400: Bad Request"
+    },
+    {
+      "id": "REG_007",
+      "category": "critical_regression",
+      "query": "roasted coffee beans",
+      "passed": true,
+      "expectedChapter": "09",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 5737,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxh849000eb56w4nh1fti4",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_0901_1767119761746",
+            "text": "What is the roasting status?",
+            "options": [
+              "0901.11::Coffee, not roasted",
+              "0901.21::Coffee roasted",
+              "0901.22::Coffee roasted"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Coffee, not roasted, Coffee roasted, Coffee roasted",
+        "_questionData": [
+          {
+            "code": "0901.11",
+            "label": "Coffee, not roasted",
+            "description": "Coffee, not roasted : --Not decaffeinated"
+          },
+          {
+            "code": "0901.21",
+            "label": "Coffee roasted",
+            "description": "Coffee roasted : --Not decaffeinated"
+          },
+          {
+            "code": "0901.22",
+            "label": "Coffee roasted",
+            "description": "Coffee roasted : --Decaffeinated"
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 5733,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "What is the roasting status?",
+              "timestamp": "2025-12-30T18:36:01.748Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:36:04.157Z"
+      }
+    },
+    {
+      "id": "REAL_001",
+      "category": "real_world_exporter",
+      "query": "monsooned malabar coffee beans AA grade",
+      "passed": true,
+      "expectedChapter": "09",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 4931,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxhcs2000hb56w78v20bhu",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767119766798",
+            "text": "What is the roasting status?",
+            "options": [
+              "0901::Coffee, whether or not roasted or decaffeinated...",
+              "1201::Soya beans, whether or not broken.",
+              "7101::Pearls, natural or cultured, whether or not wor...",
+              "7104::Synthetic or reconstructed precious or semi-pre...",
+              "8429::Self-propelled bulldozers, angledozers, graders..."
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Coffee, whether or not roasted or decaffeinated..., Soya beans, whether or not broken., Pearls, natural or cultured, whether or not wor..., Synthetic or reconstructed precious or semi-pre..., Self-propelled bulldozers, angledozers, graders...",
+        "_questionData": [
+          {
+            "code": "0901",
+            "label": "Coffee, whether or not roasted or decaffeinated...",
+            "description": "Coffee, whether or not roasted or decaffeinated; coffee husks and skins; coffee substitutes containing coffee in any proportion."
+          },
+          {
+            "code": "1201",
+            "label": "Soya beans, whether or not broken.",
+            "description": "Soya beans, whether or not broken."
+          },
+          {
+            "code": "7101",
+            "label": "Pearls, natural or cultured, whether or not wor...",
+            "description": "Pearls, natural or cultured, whether or not worked or graded but not strung, mounted or set; pearls, natural or cultured, temporarily strung for convenience of transport."
+          },
+          {
+            "code": "7104",
+            "label": "Synthetic or reconstructed precious or semi-pre...",
+            "description": "Synthetic or reconstructed precious or semi-precious stones, whether or not worked or graded but not strung, mounted or set; ungraded synthetic or reconstructed precious or semi-precious stones, temporarily strung for convenience of transport."
+          },
+          {
+            "code": "8429",
+            "label": "Self-propelled bulldozers, angledozers, graders...",
+            "description": "Self-propelled bulldozers, angledozers, graders, levellers, scrapers, mechanical shovels, excavators, shovel loaders, tamping machines and road rollers."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 4928,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "What is the roasting status?",
+              "timestamp": "2025-12-30T18:36:06.800Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:36:09.245Z"
+      },
+      "notes": "Should recognize Indian coffee terminology"
+    },
+    {
+      "id": "REAL_002",
+      "category": "real_world_exporter",
+      "query": "basmati rice 1121 sella",
+      "passed": true,
+      "expectedChapter": "10",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 4467,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxhglj000kb56w63akumz9",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767119771528",
+            "text": "Which category best describes your product?",
+            "options": [
+              "1006::Rice. (Ch. 10)",
+              "1104::Cereal grains otherwise worked (for example, hu... (Ch. 11)",
+              "1905::Bread, pastry, cakes, biscuits and other bakers... (Ch. 19)"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Rice. (Ch. 10), Cereal grains otherwise worked (for example, hu... (Ch. 11), Bread, pastry, cakes, biscuits and other bakers... (Ch. 19)",
+        "_questionData": [
+          {
+            "code": "1006",
+            "label": "Rice. (Ch. 10)",
+            "description": "Rice."
+          },
+          {
+            "code": "1104",
+            "label": "Cereal grains otherwise worked (for example, hu... (Ch. 11)",
+            "description": "Cereal grains otherwise worked (for example, hulled, rolled, flaked, pearled, sliced or kibbled), except rice of heading 10.06; germ of cereals, whole, rolled, flaked or ground."
+          },
+          {
+            "code": "1905",
+            "label": "Bread, pastry, cakes, biscuits and other bakers... (Ch. 19)",
+            "description": "Bread, pastry, cakes, biscuits and other bakers wares, whether or not containing cocoa; communion wafers, empty cachets of a kind suitable for pharmaceutical use, sealing wafers, rice paper and similar products."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 4461,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Which category best describes your product?",
+              "timestamp": "2025-12-30T18:36:11.530Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:36:13.875Z"
+      },
+      "notes": "Should handle rice varieties"
+    },
+    {
+      "id": "REAL_003",
+      "category": "real_world_exporter",
+      "query": "RO spare parts for water purifier",
+      "passed": true,
+      "expectedChapter": "84",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 4362,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxhk60000nb56wst2h78j5",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767119776179",
+            "text": "What is the preservation state?",
+            "options": [
+              "0306::CRUSTACEANS, WHETHER IN SHELL OR NOT, LIVE, FRE...",
+              "0710::Vegetables (uncooked or cooked by steaming or b...",
+              "1211::Plants and parts of plants (including seeds and...",
+              "2501::Salt (including table salt and denatured salt) ...",
+              "3303::Perfumes and toilet waters.",
+              "6212::Brassieres, girdles, corsets, braces, suspender..."
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: CRUSTACEANS, WHETHER IN SHELL OR NOT, LIVE, FRE..., Vegetables (uncooked or cooked by steaming or b..., Plants and parts of plants (including seeds and..., Salt (including table salt and denatured salt) ..., Perfumes and toilet waters., Brassieres, girdles, corsets, braces, suspender...",
+        "_questionData": [
+          {
+            "code": "0306",
+            "label": "CRUSTACEANS, WHETHER IN SHELL OR NOT, LIVE, FRE...",
+            "description": "CRUSTACEANS, WHETHER IN SHELL OR NOT, LIVE, FRESH, CHILLED, FROZEN, DRIED, SALTED OR IN BRINE; SMOKED CRUSTACEANS, WHETHER IN SHELL OR NOT, WHETHER OR NOT COOKED BEFORE OR DURING THE SMOKING PROCESS; CRUSTACEANS, IN SHELL, COOKED BY STEAMING OR BY BOILING IN WATER, WHETHER OR NOT CHILLED, FROZEN, DRIED, SALTED OR INBRINE"
+          },
+          {
+            "code": "0710",
+            "label": "Vegetables (uncooked or cooked by steaming or b...",
+            "description": "Vegetables (uncooked or cooked by steaming or boiling in water), frozen."
+          },
+          {
+            "code": "1211",
+            "label": "Plants and parts of plants (including seeds and...",
+            "description": "Plants and parts of plants (including seeds and fruits), of a kind used primarily in perfumery, in pharmacy or for insecticidal, fungicidal or similar purposes, fresh, chilled, frozen or dried, whether or not cut, crushed or powdered."
+          },
+          {
+            "code": "2501",
+            "label": "Salt (including table salt and denatured salt) ...",
+            "description": "Salt (including table salt and denatured salt) and pure sodium chloride, whether or not in aqueous solution or containing added anti-caking or free-flowing agents; sea water."
+          },
+          {
+            "code": "3303",
+            "label": "Perfumes and toilet waters.",
+            "description": "Perfumes and toilet waters."
+          },
+          {
+            "code": "6212",
+            "label": "Brassieres, girdles, corsets, braces, suspender...",
+            "description": "Brassieres, girdles, corsets, braces, suspenders, garters and similar articles and parts thereof, whether or not knitted or crocheted."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 4359,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "What is the preservation state?",
+              "timestamp": "2025-12-30T18:36:16.180Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:36:18.398Z"
+      },
+      "notes": "Should understand RO = machine parts"
+    },
+    {
+      "id": "REAL_004",
+      "category": "real_world_exporter",
+      "query": "toor dal",
+      "passed": true,
+      "expectedChapter": "07",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 4452,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxhnni000qb56wc31je0i5",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767119780696",
+            "text": "What is the roasting status?",
+            "options": [
+              "0101::Live horses, asses, mules and hinnies.",
+              "0102::Live bovine animals.",
+              "0103::Live swine.",
+              "0104::Live sheep and goats.",
+              "0105::Live poultry, that is to say, fowls of the spec...",
+              "0201::Meat of bovine animals, fresh or chilled."
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Live horses, asses, mules and hinnies., Live bovine animals., Live swine., Live sheep and goats., Live poultry, that is to say, fowls of the spec..., Meat of bovine animals, fresh or chilled.",
+        "_questionData": [
+          {
+            "code": "0101",
+            "label": "Live horses, asses, mules and hinnies.",
+            "description": "Live horses, asses, mules and hinnies."
+          },
+          {
+            "code": "0102",
+            "label": "Live bovine animals.",
+            "description": "Live bovine animals."
+          },
+          {
+            "code": "0103",
+            "label": "Live swine.",
+            "description": "Live swine."
+          },
+          {
+            "code": "0104",
+            "label": "Live sheep and goats.",
+            "description": "Live sheep and goats."
+          },
+          {
+            "code": "0105",
+            "label": "Live poultry, that is to say, fowls of the spec...",
+            "description": "Live poultry, that is to say, fowls of the species Gallus domesticus, ducks, geese, turkeys and guinea fowls."
+          },
+          {
+            "code": "0201",
+            "label": "Meat of bovine animals, fresh or chilled.",
+            "description": "Meat of bovine animals, fresh or chilled."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 4448,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "What is the roasting status?",
+              "timestamp": "2025-12-30T18:36:20.697Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:36:23.006Z"
+      },
+      "notes": "Must understand Indian food names"
+    },
+    {
+      "id": "REAL_005",
+      "category": "real_world_exporter",
+      "query": "brass handicrafts statues",
+      "passed": true,
+      "expectedChapter": "74",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 4141,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxhr7q000tb56whl6faxqm",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767119785096",
+            "text": "Which category best describes your product?",
+            "options": [
+              "4802::Uncoated paper and paperboard, of a kind used f... (Ch. 48)",
+              "5702::Carpets and other textile floor coverings, wove... (Ch. 57)",
+              "5805::Hand-woven tapestries of the type Gobelins, Fla... (Ch. 58)",
+              "6804::Millstones, grindstones, grinding wheels and th... (Ch. 68)"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Uncoated paper and paperboard, of a kind used f... (Ch. 48), Carpets and other textile floor coverings, wove... (Ch. 57), Hand-woven tapestries of the type Gobelins, Fla... (Ch. 58), Millstones, grindstones, grinding wheels and th... (Ch. 68)",
+        "_questionData": [
+          {
+            "code": "4802",
+            "label": "Uncoated paper and paperboard, of a kind used f... (Ch. 48)",
+            "description": "Uncoated paper and paperboard, of a kind used for writing, printing or other graphic purposes, and non perforated punchcards and punch tape paper, in rolls or rectangular (including square) sheets, of any size, other than paper of heading 48.01 or 48.03; hand- made paper and paperboard."
+          },
+          {
+            "code": "5702",
+            "label": "Carpets and other textile floor coverings, wove... (Ch. 57)",
+            "description": "Carpets and other textile floor coverings, woven, not tufted or flocked, whether or not made up, including \"Kelem\", \"Schumacks\", \"Karamanie\" and similar hand-woven rugs."
+          },
+          {
+            "code": "5805",
+            "label": "Hand-woven tapestries of the type Gobelins, Fla... (Ch. 58)",
+            "description": "Hand-woven tapestries of the type Gobelins, Flanders, Aubusson, Beauvais and the like, and needle-worked tapestries (for example, petit point, cross stitch), whether or not made up."
+          },
+          {
+            "code": "6804",
+            "label": "Millstones, grindstones, grinding wheels and th... (Ch. 68)",
+            "description": "Millstones, grindstones, grinding wheels and the like, without frameworks, for grinding, sharpening, polishing, trueing or cutting, hand sharpening or polishing stones, and parts thereof, of natural stone, of agglomerated natural or artificial abrasives, or of ceramics, with or without parts of other materials."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 4138,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Which category best describes your product?",
+              "timestamp": "2025-12-30T18:36:25.098Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:36:27.311Z"
+      },
+      "notes": "Brass articles"
+    },
+    {
+      "id": "REAL_006",
+      "category": "real_world_exporter",
+      "query": "cotton grey fabric 40s count",
+      "passed": true,
+      "expectedChapter": "52",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 4355,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxhuj8000wb56we0qvh4i1",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767119789411",
+            "text": "Please select the category that best matches your product:",
+            "options": [
+              "1512::Sunflower-seed, safflower or cotton-seed oil an...",
+              "4907::Unused postage, revenue or similar stamps of cu...",
+              "5007::Woven fabrics of silk or of silk waste.",
+              "5111::Woven fabrics of carded wool or of carded fine ...",
+              "5112::Woven fabrics of combed wool or of combed fine ...",
+              "5113::Woven fabrics of coarse animal hair or of horse..."
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Sunflower-seed, safflower or cotton-seed oil an..., Unused postage, revenue or similar stamps of cu..., Woven fabrics of silk or of silk waste., Woven fabrics of carded wool or of carded fine ..., Woven fabrics of combed wool or of combed fine ..., Woven fabrics of coarse animal hair or of horse...",
+        "_questionData": [
+          {
+            "code": "1512",
+            "label": "Sunflower-seed, safflower or cotton-seed oil an...",
+            "description": "Sunflower-seed, safflower or cotton-seed oil and fractions thereof, whether or not refined, but not chemically modified."
+          },
+          {
+            "code": "4907",
+            "label": "Unused postage, revenue or similar stamps of cu...",
+            "description": "Unused postage, revenue or similar stamps of current or new issue in the country in which they have, or will have, a recognised face value; stamp-impressed paper; banknotes; cheque forms; stock, share or bond certificates and similar documents of title."
+          },
+          {
+            "code": "5007",
+            "label": "Woven fabrics of silk or of silk waste.",
+            "description": "Woven fabrics of silk or of silk waste."
+          },
+          {
+            "code": "5111",
+            "label": "Woven fabrics of carded wool or of carded fine ...",
+            "description": "Woven fabrics of carded wool or of carded fine animal hair."
+          },
+          {
+            "code": "5112",
+            "label": "Woven fabrics of combed wool or of combed fine ...",
+            "description": "Woven fabrics of combed wool or of combed fine animal hair."
+          },
+          {
+            "code": "5113",
+            "label": "Woven fabrics of coarse animal hair or of horse...",
+            "description": "Woven fabrics of coarse animal hair or of horsehair."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 4351,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Please select the category that best matches your product:",
+              "timestamp": "2025-12-30T18:36:29.412Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:36:31.826Z"
+      },
+      "notes": "Should handle textile terminology"
+    },
+    {
+      "id": "REAL_007",
+      "category": "real_world_exporter",
+      "query": "auto rickshaw parts engine",
+      "passed": true,
+      "expectedChapter": "87",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 4029,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxhy0n000zb56w6fis1tml",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767119793895",
+            "text": "What is the preservation state?",
+            "options": [
+              "1211::Plants and parts of plants (including seeds and...",
+              "6212::Brassieres, girdles, corsets, braces, suspender...",
+              "6603::Parts, trimmings and accessories of articles of...",
+              "6702::Artificial flowers, foliage and fruit and parts...",
+              "7011::GLASS ENVELOPES (INCLUDING BULBS AND TUBES), OP...",
+              "7113::Articles of jewellery and parts thereof, of pre..."
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Plants and parts of plants (including seeds and..., Brassieres, girdles, corsets, braces, suspender..., Parts, trimmings and accessories of articles of..., Artificial flowers, foliage and fruit and parts..., GLASS ENVELOPES (INCLUDING BULBS AND TUBES), OP..., Articles of jewellery and parts thereof, of pre...",
+        "_questionData": [
+          {
+            "code": "1211",
+            "label": "Plants and parts of plants (including seeds and...",
+            "description": "Plants and parts of plants (including seeds and fruits), of a kind used primarily in perfumery, in pharmacy or for insecticidal, fungicidal or similar purposes, fresh, chilled, frozen or dried, whether or not cut, crushed or powdered."
+          },
+          {
+            "code": "6212",
+            "label": "Brassieres, girdles, corsets, braces, suspender...",
+            "description": "Brassieres, girdles, corsets, braces, suspenders, garters and similar articles and parts thereof, whether or not knitted or crocheted."
+          },
+          {
+            "code": "6603",
+            "label": "Parts, trimmings and accessories of articles of...",
+            "description": "Parts, trimmings and accessories of articles of heading 66.01 or 66.02."
+          },
+          {
+            "code": "6702",
+            "label": "Artificial flowers, foliage and fruit and parts...",
+            "description": "Artificial flowers, foliage and fruit and parts thereof; articles made of artificial flowers, foliage or fruit."
+          },
+          {
+            "code": "7011",
+            "label": "GLASS ENVELOPES (INCLUDING BULBS AND TUBES), OP...",
+            "description": "GLASS ENVELOPES (INCLUDING BULBS AND TUBES), OPEN, AND GLASS PARTS THEREOF, WITHOUT FITTINGS, FOR ELECTRIC LAMPS AND LIGHT SOURCES, CATHODERAY TUBES OR THE LIKE"
+          },
+          {
+            "code": "7113",
+            "label": "Articles of jewellery and parts thereof, of pre...",
+            "description": "Articles of jewellery and parts thereof, of precious metal or of metal clad with precious metal."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 4027,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "What is the preservation state?",
+              "timestamp": "2025-12-30T18:36:33.896Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:36:36.017Z"
+      },
+      "notes": "Should recognize regional vehicle terms"
+    },
+    {
+      "id": "REAL_008",
+      "category": "real_world_exporter",
+      "query": "alphonso mango pulp canned",
+      "passed": true,
+      "expectedChapter": "20",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 4709,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxi1cl0012b56wrbcjkm6a",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767119798696",
+            "text": "Which category best describes your product?",
+            "options": [
+              "0804::Dates, figs, pineapples, avocados, guavas, mang... (Ch. 08)",
+              "2303::RESIDUES OF STARCH MANUFACTURE AND SIMILAR RESI... (Ch. 23)",
+              "3804::Residual lyes from the manufacture of wood pulp... (Ch. 38)",
+              "4703::Chemical wood pulp, soda or sulphate, other tha... (Ch. 47)"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Dates, figs, pineapples, avocados, guavas, mang... (Ch. 08), RESIDUES OF STARCH MANUFACTURE AND SIMILAR RESI... (Ch. 23), Residual lyes from the manufacture of wood pulp... (Ch. 38), Chemical wood pulp, soda or sulphate, other tha... (Ch. 47)",
+        "_questionData": [
+          {
+            "code": "0804",
+            "label": "Dates, figs, pineapples, avocados, guavas, mang... (Ch. 08)",
+            "description": "Dates, figs, pineapples, avocados, guavas, mangoes and mangosteens, fresh or dried."
+          },
+          {
+            "code": "2303",
+            "label": "RESIDUES OF STARCH MANUFACTURE AND SIMILAR RESI... (Ch. 23)",
+            "description": "RESIDUES OF STARCH MANUFACTURE AND SIMILAR RESIDUES, BEET-PULP, BAGASSE AND OTHER WASTE OF SUGAR MANUFACTURE, BREWING OR DISTILLING DREGS AND WASTE, WHETHER OR NOT IN THE FORM OF PELLETS"
+          },
+          {
+            "code": "3804",
+            "label": "Residual lyes from the manufacture of wood pulp... (Ch. 38)",
+            "description": "Residual lyes from the manufacture of wood pulp, whether or not concentrated, desugared or chemically treated, including lignin sulphonates, but excluding tall oil of heading 38.03."
+          },
+          {
+            "code": "4703",
+            "label": "Chemical wood pulp, soda or sulphate, other tha... (Ch. 47)",
+            "description": "Chemical wood pulp, soda or sulphate, other than dissolving grades."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 4706,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Which category best describes your product?",
+              "timestamp": "2025-12-30T18:36:38.697Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:36:40.886Z"
+      },
+      "notes": "Processed fruit - not fresh (Ch.08)"
+    },
+    {
+      "id": "REAL_009",
+      "category": "real_world_exporter",
+      "query": "cumin seeds jeera whole",
+      "passed": true,
+      "expectedChapter": "09",
+      "actualChapter": "09",
+      "actualCodes": [
+        "0909"
+      ],
+      "responseTime": 12351,
+      "questionsAsked": 0,
+      "isQuestionResponse": false,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxi5030015b56wlbnvmgwt",
+        "responseType": "classification",
+        "result": {
+          "hsCode": "0909",
+          "description": "Seeds of anise, badian, fennel, coriander, cumin or caraway; juniper berries.",
+          "confidence": 95,
+          "reasoning": "{\"chapter\":{\"code\":\"09\",\"name\":\"Coffee, Tea, Maté and Spices\"},\"heading\":{\"code\":\"0909\",\"name\":\"Heading 0909\"},\"finalCode\":{\"code\":\"0909\",\"description\":\"Seeds of anise, badian, fennel, coriander, cumin or caraway; juniper berries.\"},\"userAnswers\":[]}",
+          "alternatives": [],
+          "clarificationImpact": "Direct classification - no clarifying questions needed."
+        },
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 0,
+          "answersProvided": 0,
+          "durationMs": 10793,
+          "history": [
+            {
+              "turn": 1,
+              "type": "classification",
+              "content": "0909 - Seeds of anise, badian, fennel, coriander, cumin or caraway; juniper berries.",
+              "timestamp": "2025-12-30T18:36:49.677Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:36:53.391Z"
+      },
+      "notes": "Should understand Hindi spice names"
+    },
+    {
+      "id": "REAL_010",
+      "category": "real_world_exporter",
+      "query": "human hair extensions for wigs",
+      "passed": true,
+      "expectedChapter": "67",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 9330,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxiend0018b56wmqxa0lrp",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_6704.20_1767119820536",
+            "text": "Please select the specific type:",
+            "options": [
+              "6704.20.10::Wigs",
+              "6704.20.20::Hair nets"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Multiple specific variants available - need user selection",
+        "_questionData": [
+          {
+            "code": "6704.20.10",
+            "label": "Wigs",
+            "description": "Wigs"
+          },
+          {
+            "code": "6704.20.20",
+            "label": "Hair nets",
+            "description": "Hair nets"
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 9327,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Please select the specific type:",
+              "timestamp": "2025-12-30T18:37:00.537Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:37:02.871Z"
+      },
+      "notes": "Human hair articles"
+    },
+    {
+      "id": "REAL_011",
+      "category": "real_world_exporter",
+      "query": "cashew nuts W320 grade",
+      "passed": true,
+      "expectedChapter": "08",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 8832,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxilys001bb56w2srfm42x",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_0801_1767119829747",
+            "text": "Please select the specific type:",
+            "options": [
+              "0801.21.00::Brazil nuts - In shell",
+              "0801.22.00::Brazil nuts - Shelled",
+              "0801.31.00::Cashew nuts - In shell"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Multiple specific variants available - need user selection",
+        "_questionData": [
+          {
+            "code": "0801.21.00",
+            "label": "Brazil nuts - In shell",
+            "description": "Brazil nuts : -- In shell"
+          },
+          {
+            "code": "0801.22.00",
+            "label": "Brazil nuts - Shelled",
+            "description": "Brazil nuts : -- Shelled"
+          },
+          {
+            "code": "0801.31.00",
+            "label": "Cashew nuts - In shell",
+            "description": "Cashew nuts : -- In shell"
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 8829,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Please select the specific type:",
+              "timestamp": "2025-12-30T18:37:09.748Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:37:11.856Z"
+      },
+      "notes": "W320 is pieces per pound grade"
+    },
+    {
+      "id": "REAL_012",
+      "category": "real_world_exporter",
+      "query": "granite slabs polished",
+      "passed": false,
+      "expectedChapter": "68",
+      "actualChapter": "25",
+      "actualCodes": [
+        "2516.12.00"
+      ],
+      "responseTime": 12302,
+      "questionsAsked": 0,
+      "isQuestionResponse": false,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxiswh001eb56wnnjjee4n",
+        "responseType": "classification",
+        "result": {
+          "hsCode": "2516.12.00",
+          "description": "Granite : -- Merely cut, by sawing or otherwise, into blocks or slabs of a rectangular (including square) shape",
+          "confidence": 90,
+          "reasoning": "{\"chapter\":{\"code\":\"25\",\"name\":\"Chapter 25\"},\"heading\":{\"code\":\"2516\",\"name\":\"Heading 2516\"},\"finalCode\":{\"code\":\"2516.12.00\",\"description\":\"Granite : -- Merely cut, by sawing or otherwise, into blocks or slabs of a rectangular (including square) shape\"},\"userAnswers\":[]}",
+          "alternatives": [],
+          "clarificationImpact": "Direct classification - no clarifying questions needed."
+        },
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 0,
+          "answersProvided": 0,
+          "durationMs": 10651,
+          "history": [
+            {
+              "turn": 1,
+              "type": "classification",
+              "content": "2516.12.00 - Granite : -- Merely cut, by sawing or otherwise, into blocks or slabs of a rectangular (including square) shape",
+              "timestamp": "2025-12-30T18:37:20.528Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:37:24.317Z"
+      },
+      "errorType": "wrong_chapter",
+      "errorAnalysis": "Expected Ch.68, Got Ch.25",
+      "notes": "Worked stone"
+    },
+    {
+      "id": "ADV_001",
+      "category": "adversarial",
+      "query": "coffee table",
+      "passed": true,
+      "expectedChapter": "94",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 7723,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxj2mp001hb56wcik372kd",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_9403_1767119849866",
+            "text": "Please select the category that best matches your product:",
+            "options": [
+              "9403.10::Metal furniture of a kind used in offices",
+              "9403.30::Wooden furniture of a kind used in offices",
+              "9403.50::Wooden furniture of a kind used in the bedroom"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Metal furniture of a kind used in offices, Wooden furniture of a kind used in offices, Wooden furniture of a kind used in the bedroom",
+        "_questionData": [
+          {
+            "code": "9403.10",
+            "label": "Metal furniture of a kind used in offices",
+            "description": "Metal furniture of a kind used in offices"
+          },
+          {
+            "code": "9403.30",
+            "label": "Wooden furniture of a kind used in offices",
+            "description": "Wooden furniture of a kind used in offices"
+          },
+          {
+            "code": "9403.50",
+            "label": "Wooden furniture of a kind used in the bedroom",
+            "description": "Wooden furniture of a kind used in the bedroom"
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 7721,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Please select the category that best matches your product:",
+              "timestamp": "2025-12-30T18:37:29.866Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:37:32.196Z"
+      },
+      "notes": "NOT coffee (Ch.09) - it's furniture (Ch.94)"
+    },
+    {
+      "id": "ADV_002",
+      "category": "adversarial",
+      "query": "tea shirt",
+      "passed": true,
+      "expectedChapter": "61",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 3088,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxj8lm001kb56wi8al0g5p",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_disambiguation_1767119853269",
+            "text": "Is this tea in leaf form or processed form (instant/extract)?",
+            "options": [
+              "09::Tea leaves",
+              "21::Instant tea or tea extract"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Need to disambiguate \"tea\" between multiple chapters",
+        "_questionData": [
+          {
+            "code": "09",
+            "label": "Tea leaves",
+            "description": "Chapter 09"
+          },
+          {
+            "code": "21",
+            "label": "Instant tea or tea extract",
+            "description": "Chapter 21"
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 3085,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Is this tea in leaf form or processed form (instant/extract)?",
+              "timestamp": "2025-12-30T18:37:33.270Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:37:35.447Z"
+      },
+      "notes": "Should ask for clarification or detect typo"
+    },
+    {
+      "id": "ADV_003",
+      "category": "adversarial",
+      "query": "brake fluid",
+      "passed": true,
+      "expectedChapter": "38",
+      "actualChapter": "38",
+      "actualCodes": [
+        "3819.00.10"
+      ],
+      "responseTime": 12864,
+      "questionsAsked": 0,
+      "isQuestionResponse": false,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxjb3p001nb56way60f7z6",
+        "responseType": "classification",
+        "result": {
+          "hsCode": "3819.00.10",
+          "description": "Hydraulic brake fluids",
+          "confidence": 95,
+          "reasoning": "{\"chapter\":{\"code\":\"38\",\"name\":\"Chapter 38\"},\"heading\":{\"code\":\"3819\",\"name\":\"Heading 3819\"},\"finalCode\":{\"code\":\"3819.00.10\",\"description\":\"Hydraulic brake fluids\"},\"userAnswers\":[]}",
+          "alternatives": [],
+          "clarificationImpact": "Direct classification - no clarifying questions needed."
+        },
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 0,
+          "answersProvided": 0,
+          "durationMs": 11241,
+          "history": [
+            {
+              "turn": 1,
+              "type": "classification",
+              "content": "3819.00.10 - Hydraulic brake fluids",
+              "timestamp": "2025-12-30T18:37:44.458Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:37:48.466Z"
+      },
+      "notes": "Hydraulic brake fluids are in Ch.38"
+    },
+    {
+      "id": "ADV_004",
+      "category": "adversarial",
+      "query": "toy car battery operated",
+      "passed": true,
+      "expectedChapter": "95",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 11851,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxjl5h001qb56wyf2yovwg",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_9503.00_1767119878228",
+            "text": "Can you confirm if the toy car is a specific type, like a race car or a regular car?",
+            "options": [
+              "9503.00.91::Parts of electronic toys",
+              "9503.00.99::Other parts"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "I need to know if the toy car is electronic or not to classify it correctly.",
+        "_questionData": [
+          {
+            "code": "9503.00.91",
+            "label": "Parts of electronic toys",
+            "description": "Parts: ---- Of electronic toys"
+          },
+          {
+            "code": "9503.00.99",
+            "label": "Other parts",
+            "description": "Parts: ---- Other"
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 11848,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Can you confirm if the toy car is a specific type, like a race car or a regular car?",
+              "timestamp": "2025-12-30T18:37:58.229Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:38:00.476Z"
+      },
+      "notes": "Toy (Ch.95) not vehicle (Ch.87)"
+    },
+    {
+      "id": "ADV_005",
+      "category": "adversarial",
+      "query": "car toy for children",
+      "passed": true,
+      "expectedChapter": "95",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 11658,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxjuey001tb56wxkmx7a9z",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_9503.00_1767119889953",
+            "text": "Can you confirm if the car toy is electronic or not?",
+            "options": [
+              "9503.00.91::Parts of electronic toys",
+              "9503.00.99::Other toy parts"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "I need to know if the toy is electronic to select the correct classification.",
+        "_questionData": [
+          {
+            "code": "9503.00.91",
+            "label": "Parts of electronic toys",
+            "description": "Parts: ---- Of electronic toys"
+          },
+          {
+            "code": "9503.00.99",
+            "label": "Other toy parts",
+            "description": "Parts: ---- Other"
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 11655,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Can you confirm if the car toy is electronic or not?",
+              "timestamp": "2025-12-30T18:38:09.954Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:38:12.289Z"
+      },
+      "notes": "Same as above, different word order"
+    },
+    {
+      "id": "ADV_006",
+      "category": "adversarial",
+      "query": "rubber band elastic",
+      "passed": true,
+      "expectedChapter": "40",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 5315,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxk3j1001wb56wrbomgvyv",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767119895207",
+            "text": "Please select the category that best matches your product:",
+            "options": [
+              "3405::Polishes and creams, for footwear, furniture, f...",
+              "3808::Insecticides, rodenticides, fungicides, herbici...",
+              "3913::Natural polymers (for example, alginic acid) an...",
+              "4001::Natural rubber, balata, gutta-percha, guayule, ...",
+              "4002::Synthetic rubber and factice derived from oils,...",
+              "4005::Compounded rubber, unvulcanised, in primary for..."
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Polishes and creams, for footwear, furniture, f..., Insecticides, rodenticides, fungicides, herbici..., Natural polymers (for example, alginic acid) an..., Natural rubber, balata, gutta-percha, guayule, ..., Synthetic rubber and factice derived from oils,..., Compounded rubber, unvulcanised, in primary for...",
+        "_questionData": [
+          {
+            "code": "3405",
+            "label": "Polishes and creams, for footwear, furniture, f...",
+            "description": "Polishes and creams, for footwear, furniture, floors, coachwork, glass or metal, scouring pastes and powders and similar preparations (whether or not in the form of paper, wadding, felt, nonwovens, cellular plastics or cellular rubber, impregnated, coated or covered with such preparations), excluding waxes of heading 34.04."
+          },
+          {
+            "code": "3808",
+            "label": "Insecticides, rodenticides, fungicides, herbici...",
+            "description": "Insecticides, rodenticides, fungicides, herbicides, anti-sprouting products and plant-growth regulators, disinfectants and similar products, put up in forms or packings for retail sale or as preparations or articles (for example, sulphur-treated bands, wicks and candles, and fly-papers)."
+          },
+          {
+            "code": "3913",
+            "label": "Natural polymers (for example, alginic acid) an...",
+            "description": "Natural polymers (for example, alginic acid) and modified natural polymers (for example, hardened proteins, chemical derivatives of natural rubber), not elsewhere specified or included, in primary forms."
+          },
+          {
+            "code": "4001",
+            "label": "Natural rubber, balata, gutta-percha, guayule, ...",
+            "description": "Natural rubber, balata, gutta-percha, guayule, chicle and similar natural gums, in primary forms or in plates, sheets or strip."
+          },
+          {
+            "code": "4002",
+            "label": "Synthetic rubber and factice derived from oils,...",
+            "description": "Synthetic rubber and factice derived from oils, in primary forms or in plates, sheets or strip; mixtures of any product of heading 40.01 with any product of this heading, in primary forms or in plates, sheets or strip."
+          },
+          {
+            "code": "4005",
+            "label": "Compounded rubber, unvulcanised, in primary for...",
+            "description": "Compounded rubber, unvulcanised, in primary forms or in plates, sheets or strip."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 5312,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Please select the category that best matches your product:",
+              "timestamp": "2025-12-30T18:38:15.208Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:38:17.757Z"
+      },
+      "notes": "Rubber articles (Ch.40)"
+    },
+    {
+      "id": "ADV_007",
+      "category": "adversarial",
+      "query": "glass bottle for medicine empty",
+      "passed": true,
+      "expectedChapter": "70",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 4646,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxk7qy001zb56wsxbypje4",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767119900323",
+            "text": "Please select the category that best matches your product:",
+            "options": [
+              "3213::Artists, students or signboard painters colours...",
+              "3405::Polishes and creams, for footwear, furniture, f...",
+              "4202::Trunks, suit-cases, vanity-cases, executive-cas...",
+              "7007::Safety glass, consisting of toughened (tempered...",
+              "7008::Multiple-walled insulating units of glass.",
+              "7009::Glass mirrors, whether or not framed, including..."
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Artists, students or signboard painters colours..., Polishes and creams, for footwear, furniture, f..., Trunks, suit-cases, vanity-cases, executive-cas..., Safety glass, consisting of toughened (tempered..., Multiple-walled insulating units of glass., Glass mirrors, whether or not framed, including...",
+        "_questionData": [
+          {
+            "code": "3213",
+            "label": "Artists, students or signboard painters colours...",
+            "description": "Artists, students or signboard painters colours, modifying tints, amusement colours and the like, in tablets, tubes, jars, bottles, pans or in similar forms or packings."
+          },
+          {
+            "code": "3405",
+            "label": "Polishes and creams, for footwear, furniture, f...",
+            "description": "Polishes and creams, for footwear, furniture, floors, coachwork, glass or metal, scouring pastes and powders and similar preparations (whether or not in the form of paper, wadding, felt, nonwovens, cellular plastics or cellular rubber, impregnated, coated or covered with such preparations), excluding waxes of heading 34.04."
+          },
+          {
+            "code": "4202",
+            "label": "Trunks, suit-cases, vanity-cases, executive-cas...",
+            "description": "Trunks, suit-cases, vanity-cases, executive-cases, brief- cases, school satchels, spectacle cases, binocular cases, camera cases, musical instrument cases, gun cases, holsters and similar containers; travelling- bags, insulated food or beverages bags, toilet bags, rucksacks, handbags, shopping- bags, wallets, purses, map-cases, cigarette- cases, tobacco- pouches, tool bags, sports bags, bottle- cases, jewellery boxes, powder-boxes, cutlery cases and similar containers, of leather or of composition leather, of sheeting of plastics, of textile materials, of vulcanised fibre or of paperboard, or wholly or mainly covered with such materials or with paper."
+          },
+          {
+            "code": "7007",
+            "label": "Safety glass, consisting of toughened (tempered...",
+            "description": "Safety glass, consisting of toughened (tempered) or laminated glass."
+          },
+          {
+            "code": "7008",
+            "label": "Multiple-walled insulating units of glass.",
+            "description": "Multiple-walled insulating units of glass."
+          },
+          {
+            "code": "7009",
+            "label": "Glass mirrors, whether or not framed, including...",
+            "description": "Glass mirrors, whether or not framed, including rear-view mirrors."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 4644,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Please select the category that best matches your product:",
+              "timestamp": "2025-12-30T18:38:20.324Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:38:22.557Z"
+      },
+      "notes": "Glass container (Ch.70) not pharma"
+    },
+    {
+      "id": "ADV_008",
+      "category": "adversarial",
+      "query": "coffee beans for planting seeds",
+      "passed": true,
+      "expectedChapter": "12",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 6257,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxkbg70022b56wuwwduzc8",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767119906802",
+            "text": "What is the roasting status?",
+            "options": [
+              "0901::Coffee, whether or not roasted or decaffeinated...",
+              "0909::Seeds of anise, badian, fennel, coriander, cumi...",
+              "1201::Soya beans, whether or not broken.",
+              "1205::Rape or colza seeds, whether or not broken.",
+              "1206::Sunflower seeds, whether or not broken.",
+              "1209::Seeds, fruit and spores, of a kind used for sow..."
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Coffee, whether or not roasted or decaffeinated..., Seeds of anise, badian, fennel, coriander, cumi..., Soya beans, whether or not broken., Rape or colza seeds, whether or not broken., Sunflower seeds, whether or not broken., Seeds, fruit and spores, of a kind used for sow...",
+        "_questionData": [
+          {
+            "code": "0901",
+            "label": "Coffee, whether or not roasted or decaffeinated...",
+            "description": "Coffee, whether or not roasted or decaffeinated; coffee husks and skins; coffee substitutes containing coffee in any proportion."
+          },
+          {
+            "code": "0909",
+            "label": "Seeds of anise, badian, fennel, coriander, cumi...",
+            "description": "Seeds of anise, badian, fennel, coriander, cumin or caraway; juniper berries."
+          },
+          {
+            "code": "1201",
+            "label": "Soya beans, whether or not broken.",
+            "description": "Soya beans, whether or not broken."
+          },
+          {
+            "code": "1205",
+            "label": "Rape or colza seeds, whether or not broken.",
+            "description": "Rape or colza seeds, whether or not broken."
+          },
+          {
+            "code": "1206",
+            "label": "Sunflower seeds, whether or not broken.",
+            "description": "Sunflower seeds, whether or not broken."
+          },
+          {
+            "code": "1209",
+            "label": "Seeds, fruit and spores, of a kind used for sow...",
+            "description": "Seeds, fruit and spores, of a kind used for sowing."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 6255,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "What is the roasting status?",
+              "timestamp": "2025-12-30T18:38:26.804Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:38:28.964Z"
+      },
+      "notes": "Context 'for planting' changes classification"
+    },
+    {
+      "id": "ADV_009",
+      "category": "adversarial",
+      "query": "bicycle brake pads rubber",
+      "passed": true,
+      "expectedChapter": "87",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 10705,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxkgeg0025b56w9vtqx11f",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_8714_1767119917690",
+            "text": "Can you confirm if the bicycle brake pads are specifically for a certain type of bicycle, such as mountain bikes or road bikes?",
+            "options": [
+              "8714.94.00::Brakes and parts (including coaster braking hubs)",
+              "8714.93::Other "
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "I need to ensure that the classification matches the specific type of brake pads you are referring to, as there may be different types for different bicycles.",
+        "_questionData": [
+          {
+            "code": "8714.94.00",
+            "label": "Brakes and parts (including coaster braking hubs)",
+            "description": "Other : -- Brakes, including coaster braking hubs and hub brakes, and parts thereof"
+          },
+          {
+            "code": "8714.93",
+            "label": "Other ",
+            "description": "Other : -- Hubs, other than coaster braking hubs and hub brakes, and free-wheel sprocket-wheels"
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 10702,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Can you confirm if the bicycle brake pads are specifically for a certain type of bicycle, such as mountain bikes or road bikes?",
+              "timestamp": "2025-12-30T18:38:37.692Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:38:39.829Z"
+      },
+      "notes": "Bicycle parts (8714) not motor vehicle (8708)"
+    },
+    {
+      "id": "ADV_010",
+      "category": "adversarial",
+      "query": "stainless steel water bottle normal not vacuum",
+      "passed": true,
+      "expectedChapter": "73",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 2843,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxkos50028b56w0nu6m2t2",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_disambiguation_1767119920678",
+            "text": "What type of bottle is this?",
+            "options": [
+              "70::Glass bottle (non-insulated)",
+              "73::Steel/metal bottle (non-insulated)",
+              "39::Plastic bottle",
+              "96::Vacuum flask/thermos (insulated)"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Need to disambiguate \"bottle\" between multiple chapters",
+        "_questionData": [
+          {
+            "code": "70",
+            "label": "Glass bottle (non-insulated)",
+            "description": "Chapter 70"
+          },
+          {
+            "code": "73",
+            "label": "Steel/metal bottle (non-insulated)",
+            "description": "Chapter 73"
+          },
+          {
+            "code": "39",
+            "label": "Plastic bottle",
+            "description": "Chapter 39"
+          },
+          {
+            "code": "96",
+            "label": "Vacuum flask/thermos (insulated)",
+            "description": "Chapter 96"
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 2841,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "What type of bottle is this?",
+              "timestamp": "2025-12-30T18:38:40.680Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:38:42.829Z"
+      },
+      "notes": "Steel bottle (Ch.73) NOT vacuum flask (Ch.96)"
+    },
+    {
+      "id": "ADV_011",
+      "category": "adversarial",
+      "query": "paper coffee cup disposable",
+      "passed": true,
+      "expectedChapter": "48",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 3244,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxkr3n002bb56wy8b4njm1",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_disambiguation_1767119923837",
+            "text": "Is this coffee in bean/leaf form (raw or roasted) or processed form (instant/extract)?",
+            "options": [
+              "09::Coffee beans (raw or roasted)",
+              "21::Instant coffee or coffee extract"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Need to disambiguate \"coffee\" between multiple chapters",
+        "_questionData": [
+          {
+            "code": "09",
+            "label": "Coffee beans (raw or roasted)",
+            "description": "Chapter 09"
+          },
+          {
+            "code": "21",
+            "label": "Instant coffee or coffee extract",
+            "description": "Chapter 21"
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 3242,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Is this coffee in bean/leaf form (raw or roasted) or processed form (instant/extract)?",
+              "timestamp": "2025-12-30T18:38:43.838Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:38:46.236Z"
+      },
+      "notes": "Paper articles (Ch.48) not coffee"
+    },
+    {
+      "id": "ADV_012",
+      "category": "adversarial",
+      "query": "tea bag empty without tea",
+      "passed": true,
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 3594,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxktu6002eb56wml77chlt",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_disambiguation_1767119927697",
+            "text": "Is this tea in leaf form or processed form (instant/extract)?",
+            "options": [
+              "09::Tea leaves",
+              "21::Instant tea or tea extract"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Need to disambiguate \"tea\" between multiple chapters",
+        "_questionData": [
+          {
+            "code": "09",
+            "label": "Tea leaves",
+            "description": "Chapter 09"
+          },
+          {
+            "code": "21",
+            "label": "Instant tea or tea extract",
+            "description": "Chapter 21"
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 3592,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Is this tea in leaf form or processed form (instant/extract)?",
+              "timestamp": "2025-12-30T18:38:47.699Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:38:49.991Z"
+      },
+      "notes": "Packaging material, not the product"
+    },
+    {
+      "id": "COMP_001",
+      "category": "composite_products",
+      "query": "leather handbag with metal buckle and zip",
+      "passed": true,
+      "expectedChapter": "42",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 6151,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxkwml002hb56wve7uk7bk",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767119933822",
+            "text": "Please select the category that best matches your product:",
+            "options": [
+              "2616::Precious metal ores and concentrates.",
+              "2805::ALKALI OR ALKALINE-EARTH METALS; RARE-EARTH MET...",
+              "2812::Halides and halide oxides of non-metals.",
+              "2813::Sulphides of non-metals; commercial phosphorus ...",
+              "2839::Silicates; commercial alkali metal silicates.",
+              "2843::Colloidal precious metals; inorganic or organic..."
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Precious metal ores and concentrates., ALKALI OR ALKALINE-EARTH METALS; RARE-EARTH MET..., Halides and halide oxides of non-metals., Sulphides of non-metals; commercial phosphorus ..., Silicates; commercial alkali metal silicates., Colloidal precious metals; inorganic or organic...",
+        "_questionData": [
+          {
+            "code": "2616",
+            "label": "Precious metal ores and concentrates.",
+            "description": "Precious metal ores and concentrates."
+          },
+          {
+            "code": "2805",
+            "label": "ALKALI OR ALKALINE-EARTH METALS; RARE-EARTH MET...",
+            "description": "ALKALI OR ALKALINE-EARTH METALS; RARE-EARTH METALS,SCANDIUM AND YTTRIUM, WHETHER OR NOT INTERMIXED OR INTERALLOYED; MERCURY"
+          },
+          {
+            "code": "2812",
+            "label": "Halides and halide oxides of non-metals.",
+            "description": "Halides and halide oxides of non-metals."
+          },
+          {
+            "code": "2813",
+            "label": "Sulphides of non-metals; commercial phosphorus ...",
+            "description": "Sulphides of non-metals; commercial phosphorus trisulphide."
+          },
+          {
+            "code": "2839",
+            "label": "Silicates; commercial alkali metal silicates.",
+            "description": "Silicates; commercial alkali metal silicates."
+          },
+          {
+            "code": "2843",
+            "label": "Colloidal precious metals; inorganic or organic...",
+            "description": "Colloidal precious metals; inorganic or organic compounds of precious metals, whether or not chemically defined; amalgams of precious metals."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 6148,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Please select the category that best matches your product:",
+              "timestamp": "2025-12-30T18:38:53.824Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:38:56.304Z"
+      },
+      "notes": "Classified by main material (leather)"
+    },
+    {
+      "id": "COMP_002",
+      "category": "composite_products",
+      "query": "wooden jewelry box with brass hinges",
+      "passed": true,
+      "expectedChapter": "44",
+      "actualChapter": "44",
+      "actualCodes": [
+        "4420.00.00"
+      ],
+      "responseTime": 12280,
+      "questionsAsked": 0,
+      "isQuestionResponse": false,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxl1i0002kb56w7lh06wqk",
+        "responseType": "classification",
+        "result": {
+          "hsCode": "4420.00.00",
+          "description": "Wood marequetry and inlaid wood; caskets and cases for jewellery or cutlery, and similar articles, of wood; statuettes and other ornaments, of wood; wooden articles of furniture not falling in chapter 94",
+          "confidence": 90,
+          "reasoning": "{\"chapter\":{\"code\":\"44\",\"name\":\"Chapter 44\"},\"heading\":{\"code\":\"4420\",\"name\":\"Heading 4420\"},\"finalCode\":{\"code\":\"4420.00.00\",\"description\":\"Wood marequetry and inlaid wood; caskets and cases for jewellery or cutlery, and similar articles, of wood; statuettes and other ornaments, of wood; wooden articles of furniture not falling in chapter 94\"},\"userAnswers\":[]}",
+          "alternatives": [],
+          "clarificationImpact": "Direct classification - no clarifying questions needed."
+        },
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 0,
+          "answersProvided": 0,
+          "durationMs": 10714,
+          "history": [
+            {
+              "turn": 1,
+              "type": "classification",
+              "content": "4420.00.00 - Wood marequetry and inlaid wood; caskets and cases for jewellery or cutlery, and similar articles, of wood; statuettes and other ornaments, of wood; wooden articles of furniture not falling in chapter 94",
+              "timestamp": "2025-12-30T18:39:04.896Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:39:08.748Z"
+      },
+      "notes": "Wood article with metal fittings"
+    },
+    {
+      "id": "COMP_003",
+      "category": "composite_products",
+      "query": "plastic chair with steel legs office",
+      "passed": true,
+      "expectedChapter": "94",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 7535,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxlb3l002nb56w05ydie51",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_9403_1767119954046",
+            "text": "Please select the category that best matches your product:",
+            "options": [
+              "9403.10::Metal furniture of a kind used in offices",
+              "9403.30::Wooden furniture of a kind used in offices"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Metal furniture of a kind used in offices, Wooden furniture of a kind used in offices",
+        "_questionData": [
+          {
+            "code": "9403.10",
+            "label": "Metal furniture of a kind used in offices",
+            "description": "Metal furniture of a kind used in offices"
+          },
+          {
+            "code": "9403.30",
+            "label": "Wooden furniture of a kind used in offices",
+            "description": "Wooden furniture of a kind used in offices"
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 7532,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Please select the category that best matches your product:",
+              "timestamp": "2025-12-30T18:39:14.048Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:39:16.444Z"
+      },
+      "notes": "Furniture regardless of materials"
+    },
+    {
+      "id": "COMP_004",
+      "category": "composite_products",
+      "query": "cotton polyester blend fabric 60 40",
+      "passed": true,
+      "expectedChapter": "52",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 4977,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxlh1f002qb56wyzhepwu2",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767119959125",
+            "text": "Please select the category that best matches your product:",
+            "options": [
+              "1512::Sunflower-seed, safflower or cotton-seed oil an...",
+              "5007::Woven fabrics of silk or of silk waste.",
+              "5111::Woven fabrics of carded wool or of carded fine ...",
+              "5112::Woven fabrics of combed wool or of combed fine ...",
+              "5113::Woven fabrics of coarse animal hair or of horse...",
+              "5201::Cotton, not carded or combed."
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Sunflower-seed, safflower or cotton-seed oil an..., Woven fabrics of silk or of silk waste., Woven fabrics of carded wool or of carded fine ..., Woven fabrics of combed wool or of combed fine ..., Woven fabrics of coarse animal hair or of horse..., Cotton, not carded or combed.",
+        "_questionData": [
+          {
+            "code": "1512",
+            "label": "Sunflower-seed, safflower or cotton-seed oil an...",
+            "description": "Sunflower-seed, safflower or cotton-seed oil and fractions thereof, whether or not refined, but not chemically modified."
+          },
+          {
+            "code": "5007",
+            "label": "Woven fabrics of silk or of silk waste.",
+            "description": "Woven fabrics of silk or of silk waste."
+          },
+          {
+            "code": "5111",
+            "label": "Woven fabrics of carded wool or of carded fine ...",
+            "description": "Woven fabrics of carded wool or of carded fine animal hair."
+          },
+          {
+            "code": "5112",
+            "label": "Woven fabrics of combed wool or of combed fine ...",
+            "description": "Woven fabrics of combed wool or of combed fine animal hair."
+          },
+          {
+            "code": "5113",
+            "label": "Woven fabrics of coarse animal hair or of horse...",
+            "description": "Woven fabrics of coarse animal hair or of horsehair."
+          },
+          {
+            "code": "5201",
+            "label": "Cotton, not carded or combed.",
+            "description": "Cotton, not carded or combed."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 4974,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Please select the category that best matches your product:",
+              "timestamp": "2025-12-30T18:39:19.126Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:39:21.585Z"
+      },
+      "notes": "60% cotton = classified as cotton"
+    },
+    {
+      "id": "COMP_005",
+      "category": "composite_products",
+      "query": "solar panel with aluminum frame complete",
+      "passed": true,
+      "expectedChapter": "85",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 4325,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxll0a002tb56wgdmt2k7r",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767119963872",
+            "text": "Please select the category that best matches your product:",
+            "options": [
+              "4412::Plywood, veneered panels and similar laminated ...",
+              "4414::Wooden frames for paintings, photographs, mirro...",
+              "7009::Glass mirrors, whether or not framed, including...",
+              "7308::Structures (excluding prefabricated buildings o...",
+              "7610::Aluminium structures (excluding prefabricated b...",
+              "8301::Padlocks and locks (key, combination or electri..."
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Plywood, veneered panels and similar laminated ..., Wooden frames for paintings, photographs, mirro..., Glass mirrors, whether or not framed, including..., Structures (excluding prefabricated buildings o..., Aluminium structures (excluding prefabricated b..., Padlocks and locks (key, combination or electri...",
+        "_questionData": [
+          {
+            "code": "4412",
+            "label": "Plywood, veneered panels and similar laminated ...",
+            "description": "Plywood, veneered panels and similar laminated wood."
+          },
+          {
+            "code": "4414",
+            "label": "Wooden frames for paintings, photographs, mirro...",
+            "description": "Wooden frames for paintings, photographs, mirrors or similar objects."
+          },
+          {
+            "code": "7009",
+            "label": "Glass mirrors, whether or not framed, including...",
+            "description": "Glass mirrors, whether or not framed, including rear-view mirrors."
+          },
+          {
+            "code": "7308",
+            "label": "Structures (excluding prefabricated buildings o...",
+            "description": "Structures (excluding prefabricated buildings of heading 94.06) and parts of structures (for example, bridges and bridge-sections, lock-gates, towers, lattice masts, roofs, roofing frame-works, doors and windows and their frames and thresholds for doors, shutters, balustrades, pillars and columns), of iron or steel; plates, rods, angles, shapes, sections, tubes and the like, prepared for use in structures, of iron or steel."
+          },
+          {
+            "code": "7610",
+            "label": "Aluminium structures (excluding prefabricated b...",
+            "description": "Aluminium structures (excluding prefabricated buildings of heading 94.06) and parts of structures (for example, bridges and bridge-sections, towers, lattice masts, roofs, roofing frameworks, doors and windows and their frames and thresholds for doors, balustrades, pillars and columns); aluminium plates, rods, profiles, tubes and the like, prepared for use in structures."
+          },
+          {
+            "code": "8301",
+            "label": "Padlocks and locks (key, combination or electri...",
+            "description": "Padlocks and locks (key, combination or electrically operated), of base metal; clasps and frames with clasps, incorporating locks, of base metal; keys for any of the foregoing articles, of base metal."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 4323,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Please select the category that best matches your product:",
+              "timestamp": "2025-12-30T18:39:23.873Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:39:26.076Z"
+      },
+      "notes": "Classified by function (photovoltaic)"
+    },
+    {
+      "id": "COMP_006",
+      "category": "composite_products",
+      "query": "leather wallet with RFID blocking",
+      "passed": true,
+      "expectedChapter": "42",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 4622,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxlogm002wb56wgtw7bdv2",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767119968455",
+            "text": "Which category best describes your product?",
+            "options": [
+              "3210::Other paints and varnishes (including enamels, ... (Ch. 32)",
+              "3403::Lubricating preparations (including cutting-oil... (Ch. 34)",
+              "3809::Finishing agents, dye carriers to accelerate th... (Ch. 38)",
+              "4107::Leather further prepared after tanning or crust... (Ch. 41)"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Other paints and varnishes (including enamels, ... (Ch. 32), Lubricating preparations (including cutting-oil... (Ch. 34), Finishing agents, dye carriers to accelerate th... (Ch. 38), Leather further prepared after tanning or crust... (Ch. 41)",
+        "_questionData": [
+          {
+            "code": "3210",
+            "label": "Other paints and varnishes (including enamels, ... (Ch. 32)",
+            "description": "Other paints and varnishes (including enamels, lacquers and distempers); prepared water pigments of a kind used for finishing leather."
+          },
+          {
+            "code": "3403",
+            "label": "Lubricating preparations (including cutting-oil... (Ch. 34)",
+            "description": "Lubricating preparations (including cutting-oil preparations, bolt or nut release preparations, anti- rust or anti-corrosion preparations and mould release preparations, based on lubricants) and preparations of a kind used for the oil or grease treatment of textile materials, leather, furskins or other materials, but excluding preparations containing, as basic constituents, 70 percent or more by weight of petroleum oils or of oils obtained from bituminous minerals."
+          },
+          {
+            "code": "3809",
+            "label": "Finishing agents, dye carriers to accelerate th... (Ch. 38)",
+            "description": "Finishing agents, dye carriers to accelerate the dyeing or fixing of dyestuffs and other products and preparations (for example, dressings and mordants), of a kind used in the textile, paper, leather or like industries, not elsewhere specified or included."
+          },
+          {
+            "code": "4107",
+            "label": "Leather further prepared after tanning or crust... (Ch. 41)",
+            "description": "Leather further prepared after tanning or crusting, including parchment-dressed leather, of bovine (including buffalo) or equine animals, without hair on, whether or not split, other than leather of heading 41.14."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 4619,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Which category best describes your product?",
+              "timestamp": "2025-12-30T18:39:28.456Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:39:30.848Z"
+      },
+      "notes": "Still leather goods despite tech feature"
+    },
+    {
+      "id": "TYPO_001",
+      "category": "typos_and_misspellings",
+      "query": "cofee beans roasted",
+      "passed": true,
+      "expectedChapter": "09",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 5943,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxls5k002zb56wpbrppmxs",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_0901_1767119974370",
+            "text": "What is the roasting status?",
+            "options": [
+              "0901.11::Coffee, not roasted",
+              "0901.21::Coffee roasted",
+              "0901.22::Coffee roasted"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Coffee, not roasted, Coffee roasted, Coffee roasted",
+        "_questionData": [
+          {
+            "code": "0901.11",
+            "label": "Coffee, not roasted",
+            "description": "Coffee, not roasted : --Not decaffeinated"
+          },
+          {
+            "code": "0901.21",
+            "label": "Coffee roasted",
+            "description": "Coffee roasted : --Not decaffeinated"
+          },
+          {
+            "code": "0901.22",
+            "label": "Coffee roasted",
+            "description": "Coffee roasted : --Decaffeinated"
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 5941,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "What is the roasting status?",
+              "timestamp": "2025-12-30T18:39:34.371Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:39:36.956Z"
+      }
+    },
+    {
+      "id": "TYPO_002",
+      "category": "typos_and_misspellings",
+      "query": "brakepads car",
+      "passed": true,
+      "expectedChapter": "87",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 4484,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxlwuz0032b56wfymh78e2",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767119979380",
+            "text": "Which category best describes your product?",
+            "options": [
+              "3304::Beauty or make-up preparations and preparations... (Ch. 33)",
+              "3819::HYDRAULIC BRAKE FLUIDS AND OTHER PREPARED LIQUI... (Ch. 38)",
+              "6101::Mens or boys overcoats, car-coats, capes, cloak... (Ch. 61)",
+              "6201::MEN'S OR BOYS' OVERCOATS, CAR-COATS, CAPES, CLO... (Ch. 62)"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Beauty or make-up preparations and preparations... (Ch. 33), HYDRAULIC BRAKE FLUIDS AND OTHER PREPARED LIQUI... (Ch. 38), Mens or boys overcoats, car-coats, capes, cloak... (Ch. 61), MEN'S OR BOYS' OVERCOATS, CAR-COATS, CAPES, CLO... (Ch. 62)",
+        "_questionData": [
+          {
+            "code": "3304",
+            "label": "Beauty or make-up preparations and preparations... (Ch. 33)",
+            "description": "Beauty or make-up preparations and preparations for the care of the skin (other than medicaments), including sunscreen or sun tan preparations; manicure or pedicure preparations."
+          },
+          {
+            "code": "3819",
+            "label": "HYDRAULIC BRAKE FLUIDS AND OTHER PREPARED LIQUI... (Ch. 38)",
+            "description": "HYDRAULIC BRAKE FLUIDS AND OTHER PREPARED LIQUIDS FOR HYDRAULIC TRANSMISSION, NOT CONTAINING OR CONTAINING LESS THAN 70% BY WEIGHT OF PETROLEUM OILS OR OILS OBTAINED FROM BITUMINOUS MINERALS"
+          },
+          {
+            "code": "6101",
+            "label": "Mens or boys overcoats, car-coats, capes, cloak... (Ch. 61)",
+            "description": "Mens or boys overcoats, car-coats, capes, cloaks, anoraks (including ski-jackets), wind- cheaters, wind-jackets and similar articles, knitted or crocheted, other than those of heading 61.03."
+          },
+          {
+            "code": "6201",
+            "label": "MEN'S OR BOYS' OVERCOATS, CAR-COATS, CAPES, CLO... (Ch. 62)",
+            "description": "MEN'S OR BOYS' OVERCOATS, CAR-COATS, CAPES, CLOAKS, ANORAKS (INCLUDING SKI- JACKETS), WIND-CHEATERS, WIND-JACKETS AND SIMILAR ARTICLES, OTHER THAN THOSE OF HEADING 6203"
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 4482,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Which category best describes your product?",
+              "timestamp": "2025-12-30T18:39:39.381Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:39:41.596Z"
+      }
+    },
+    {
+      "id": "TYPO_003",
+      "category": "typos_and_misspellings",
+      "query": "arabika coffee",
+      "passed": true,
+      "expectedChapter": "09",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 3119,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxm0g40035b56ww9kh0od7",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_disambiguation_1767119982557",
+            "text": "Is this coffee in bean/leaf form (raw or roasted) or processed form (instant/extract)?",
+            "options": [
+              "09::Coffee beans (raw or roasted)",
+              "21::Instant coffee or coffee extract"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Need to disambiguate \"coffee\" between multiple chapters",
+        "_questionData": [
+          {
+            "code": "09",
+            "label": "Coffee beans (raw or roasted)",
+            "description": "Chapter 09"
+          },
+          {
+            "code": "21",
+            "label": "Instant coffee or coffee extract",
+            "description": "Chapter 21"
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 3116,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Is this coffee in bean/leaf form (raw or roasted) or processed form (instant/extract)?",
+              "timestamp": "2025-12-30T18:39:42.558Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:39:44.879Z"
+      }
+    },
+    {
+      "id": "TYPO_004",
+      "category": "typos_and_misspellings",
+      "query": "vaccum flask steel",
+      "passed": true,
+      "expectedChapter": "96",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 4388,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxm2z50038b56w5a8rijsx",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767119987196",
+            "text": "Please select the category that best matches your product:",
+            "options": [
+              "7204::Ferrous waste and scrap; remelting scrap ingots...",
+              "7205::Granules and powders, of pig iron, spiegeleisen...",
+              "7207::Semi-finished products of iron or non-alloy steel.",
+              "7208::Flat-rolled products of iron or non-alloy steel...",
+              "7209::Flat-rolled products of iron or non-alloy steel...",
+              "7210::Flat-rolled products of iron or non-alloy steel..."
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Ferrous waste and scrap; remelting scrap ingots..., Granules and powders, of pig iron, spiegeleisen..., Semi-finished products of iron or non-alloy steel., Flat-rolled products of iron or non-alloy steel..., Flat-rolled products of iron or non-alloy steel..., Flat-rolled products of iron or non-alloy steel...",
+        "_questionData": [
+          {
+            "code": "7204",
+            "label": "Ferrous waste and scrap; remelting scrap ingots...",
+            "description": "Ferrous waste and scrap; remelting scrap ingots of iron or steel."
+          },
+          {
+            "code": "7205",
+            "label": "Granules and powders, of pig iron, spiegeleisen...",
+            "description": "Granules and powders, of pig iron, spiegeleisen, iron or steel."
+          },
+          {
+            "code": "7207",
+            "label": "Semi-finished products of iron or non-alloy steel.",
+            "description": "Semi-finished products of iron or non-alloy steel."
+          },
+          {
+            "code": "7208",
+            "label": "Flat-rolled products of iron or non-alloy steel...",
+            "description": "Flat-rolled products of iron or non-alloy steel, of a width of 600 mm or more, hot-rolled, not clad, plated or coated."
+          },
+          {
+            "code": "7209",
+            "label": "Flat-rolled products of iron or non-alloy steel...",
+            "description": "Flat-rolled products of iron or non-alloy steel, of a width of 600 mm or more, cold-rolled (cold-reduced), not clad, plated or coated."
+          },
+          {
+            "code": "7210",
+            "label": "Flat-rolled products of iron or non-alloy steel...",
+            "description": "Flat-rolled products of iron or non-alloy steel, of a width of 600 mm or more, clad, plated or coated."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 4385,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Please select the category that best matches your product:",
+              "timestamp": "2025-12-30T18:39:47.198Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:39:49.425Z"
+      }
+    },
+    {
+      "id": "TYPO_005",
+      "category": "typos_and_misspellings",
+      "query": "furnitures wooden table",
+      "passed": true,
+      "expectedChapter": "94",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 7413,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxm6hb003bb56w0d8qnpj4",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_9403_1767119994835",
+            "text": "Please select the category that best matches your product:",
+            "options": [
+              "9403.10::Metal furniture of a kind used in offices",
+              "9403.30::Wooden furniture of a kind used in offices",
+              "9403.50::Wooden furniture of a kind used in the bedroom"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Metal furniture of a kind used in offices, Wooden furniture of a kind used in offices, Wooden furniture of a kind used in the bedroom",
+        "_questionData": [
+          {
+            "code": "9403.10",
+            "label": "Metal furniture of a kind used in offices",
+            "description": "Metal furniture of a kind used in offices"
+          },
+          {
+            "code": "9403.30",
+            "label": "Wooden furniture of a kind used in offices",
+            "description": "Wooden furniture of a kind used in offices"
+          },
+          {
+            "code": "9403.50",
+            "label": "Wooden furniture of a kind used in the bedroom",
+            "description": "Wooden furniture of a kind used in the bedroom"
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 7411,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Please select the category that best matches your product:",
+              "timestamp": "2025-12-30T18:39:54.836Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:39:56.993Z"
+      }
+    },
+    {
+      "id": "TYPO_006",
+      "category": "typos_and_misspellings",
+      "query": "eletronics mobile phone",
+      "passed": true,
+      "expectedChapter": "85",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 4275,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxmcbm003eb56wktdh7y9i",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767119999230",
+            "text": "Which category best describes your product?",
+            "options": [
+              "8426::Ships derricks; cranes, including cable cranes;... (Ch. 84)",
+              "8705::Special purpose motor vehicles, other than thos... (Ch. 87)"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Ships derricks; cranes, including cable cranes;... (Ch. 84), Special purpose motor vehicles, other than thos... (Ch. 87)",
+        "_questionData": [
+          {
+            "code": "8426",
+            "label": "Ships derricks; cranes, including cable cranes;... (Ch. 84)",
+            "description": "Ships derricks; cranes, including cable cranes; mobile lifting frames, straddle carriers and works trucks fitted with a crane."
+          },
+          {
+            "code": "8705",
+            "label": "Special purpose motor vehicles, other than thos... (Ch. 87)",
+            "description": "Special purpose motor vehicles, other than those principally designed for the transport of persons or goods (for example, breakdown lorries, crane lorries, fire fighting vehicles, concretemixer lorries, road sweeper lorries, spraying lorries, mobile workshops, mobile radiological units)."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 4272,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Which category best describes your product?",
+              "timestamp": "2025-12-30T18:39:59.231Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:40:01.425Z"
+      }
+    },
+    {
+      "id": "TYPO_007",
+      "category": "typos_and_misspellings",
+      "query": "stationary office supplies",
+      "passed": true,
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 4534,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxmfqq003hb56wau3qj46e",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767120003993",
+            "text": "Which category best describes your product?",
+            "options": [
+              "4819::Cartons, boxes, cases, bags and other packing c... (Ch. 48)",
+              "7013::Glassware of a kind used for table, kitchen, to... (Ch. 70)",
+              "8305::Fittings for loose-leaf binders or files, lette... (Ch. 83)",
+              "8457::Machining centres, unit construction machines (... (Ch. 84)"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Cartons, boxes, cases, bags and other packing c... (Ch. 48), Glassware of a kind used for table, kitchen, to... (Ch. 70), Fittings for loose-leaf binders or files, lette... (Ch. 83), Machining centres, unit construction machines (... (Ch. 84)",
+        "_questionData": [
+          {
+            "code": "4819",
+            "label": "Cartons, boxes, cases, bags and other packing c... (Ch. 48)",
+            "description": "Cartons, boxes, cases, bags and other packing containers, of paper, paperboard, cellulose wadding or webs of cellulose fibres; ox files, letter trays, and similar articles, of paper or paperboard of a kind used in offices, shops or the like."
+          },
+          {
+            "code": "7013",
+            "label": "Glassware of a kind used for table, kitchen, to... (Ch. 70)",
+            "description": "Glassware of a kind used for table, kitchen, toilet, office, indoor decoration or similar purposes (other than that of heading 70.10 or 70.18)."
+          },
+          {
+            "code": "8305",
+            "label": "Fittings for loose-leaf binders or files, lette... (Ch. 83)",
+            "description": "Fittings for loose-leaf binders or files, letter clips, letter corners, paper clips, indexing tags and similar office articles, of base metal; staples in strips (for example, for offices, upholstery, packaging), of base metal."
+          },
+          {
+            "code": "8457",
+            "label": "Machining centres, unit construction machines (... (Ch. 84)",
+            "description": "Machining centres, unit construction machines (single station) and multi-station transfer machines, for working metal."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 4532,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Which category best describes your product?",
+              "timestamp": "2025-12-30T18:40:03.995Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:40:06.117Z"
+      },
+      "notes": "Common confusion: stationary vs stationery"
+    },
+    {
+      "id": "EDGE_001",
+      "category": "edge_cases",
+      "query": "",
+      "passed": false,
+      "actualCodes": [],
+      "responseTime": 2,
+      "questionsAsked": 0,
+      "isQuestionResponse": false,
+      "fullResponse": null,
+      "errorType": "api_error",
+      "errorAnalysis": "Error: HTTP 400: Bad Request",
+      "notes": "Empty query handling"
+    },
+    {
+      "id": "EDGE_002",
+      "category": "edge_cases",
+      "query": "asdfghjkl",
+      "passed": true,
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 4932,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxmjh8003kb56wo9adl2d0",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767120008968",
+            "text": "Which category best describes your product?",
+            "options": [
+              "0101::Live horses, asses, mules and hinnies. (Ch. 01)",
+              "0201::Meat of bovine animals, fresh or chilled. (Ch. 02)",
+              "0301::Live fish. (Ch. 03)",
+              "0401::Milk and cream, not concentrated nor containing... (Ch. 04)"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Live horses, asses, mules and hinnies. (Ch. 01), Meat of bovine animals, fresh or chilled. (Ch. 02), Live fish. (Ch. 03), Milk and cream, not concentrated nor containing... (Ch. 04)",
+        "_questionData": [
+          {
+            "code": "0101",
+            "label": "Live horses, asses, mules and hinnies. (Ch. 01)",
+            "description": "Live horses, asses, mules and hinnies."
+          },
+          {
+            "code": "0201",
+            "label": "Meat of bovine animals, fresh or chilled. (Ch. 02)",
+            "description": "Meat of bovine animals, fresh or chilled."
+          },
+          {
+            "code": "0301",
+            "label": "Live fish. (Ch. 03)",
+            "description": "Live fish."
+          },
+          {
+            "code": "0401",
+            "label": "Milk and cream, not concentrated nor containing... (Ch. 04)",
+            "description": "Milk and cream, not concentrated nor containing added sugar or other sweetening matter."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 4930,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Which category best describes your product?",
+              "timestamp": "2025-12-30T18:40:08.969Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:40:11.357Z"
+      },
+      "notes": "Gibberish handling"
+    },
+    {
+      "id": "EDGE_003",
+      "category": "edge_cases",
+      "query": "the",
+      "passed": true,
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 4489,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxmnei003nb56wvfvsjqyv",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767120013598",
+            "text": "Which category best describes your product?",
+            "options": [
+              "0101::Live horses, asses, mules and hinnies. (Ch. 01)",
+              "0201::Meat of bovine animals, fresh or chilled. (Ch. 02)",
+              "0301::Live fish. (Ch. 03)",
+              "0401::Milk and cream, not concentrated nor containing... (Ch. 04)"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Live horses, asses, mules and hinnies. (Ch. 01), Meat of bovine animals, fresh or chilled. (Ch. 02), Live fish. (Ch. 03), Milk and cream, not concentrated nor containing... (Ch. 04)",
+        "_questionData": [
+          {
+            "code": "0101",
+            "label": "Live horses, asses, mules and hinnies. (Ch. 01)",
+            "description": "Live horses, asses, mules and hinnies."
+          },
+          {
+            "code": "0201",
+            "label": "Meat of bovine animals, fresh or chilled. (Ch. 02)",
+            "description": "Meat of bovine animals, fresh or chilled."
+          },
+          {
+            "code": "0301",
+            "label": "Live fish. (Ch. 03)",
+            "description": "Live fish."
+          },
+          {
+            "code": "0401",
+            "label": "Milk and cream, not concentrated nor containing... (Ch. 04)",
+            "description": "Milk and cream, not concentrated nor containing added sugar or other sweetening matter."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 4486,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Which category best describes your product?",
+              "timestamp": "2025-12-30T18:40:13.599Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:40:16.000Z"
+      },
+      "notes": "Too vague query"
+    },
+    {
+      "id": "EDGE_004",
+      "category": "edge_cases",
+      "query": "I want to export something from India to USA",
+      "passed": true,
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 6639,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxmrzs003qb56wxuz675we",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767120019846",
+            "text": "Which category best describes your product?",
+            "options": [
+              "0101::Live horses, asses, mules and hinnies. (Ch. 01)",
+              "0201::Meat of bovine animals, fresh or chilled. (Ch. 02)",
+              "0301::Live fish. (Ch. 03)",
+              "0401::Milk and cream, not concentrated nor containing... (Ch. 04)"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Live horses, asses, mules and hinnies. (Ch. 01), Meat of bovine animals, fresh or chilled. (Ch. 02), Live fish. (Ch. 03), Milk and cream, not concentrated nor containing... (Ch. 04)",
+        "_questionData": [
+          {
+            "code": "0101",
+            "label": "Live horses, asses, mules and hinnies. (Ch. 01)",
+            "description": "Live horses, asses, mules and hinnies."
+          },
+          {
+            "code": "0201",
+            "label": "Meat of bovine animals, fresh or chilled. (Ch. 02)",
+            "description": "Meat of bovine animals, fresh or chilled."
+          },
+          {
+            "code": "0301",
+            "label": "Live fish. (Ch. 03)",
+            "description": "Live fish."
+          },
+          {
+            "code": "0401",
+            "label": "Milk and cream, not concentrated nor containing... (Ch. 04)",
+            "description": "Milk and cream, not concentrated nor containing added sugar or other sweetening matter."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 6636,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Which category best describes your product?",
+              "timestamp": "2025-12-30T18:40:19.848Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:40:22.802Z"
+      },
+      "notes": "No product mentioned"
+    },
+    {
+      "id": "EDGE_005",
+      "category": "edge_cases",
+      "query": "product code 8708.30.00",
+      "passed": true,
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 5305,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxmw8c003tb56w78cvhh7t",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "nav_root_1767120025123",
+            "text": "Which category best describes your product?",
+            "options": [
+              "0101::Live horses, asses, mules and hinnies. (Ch. 01)",
+              "0201::Meat of bovine animals, fresh or chilled. (Ch. 02)",
+              "0301::Live fish. (Ch. 03)",
+              "0401::Milk and cream, not concentrated nor containing... (Ch. 04)"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "User needs to choose between: Live horses, asses, mules and hinnies. (Ch. 01), Meat of bovine animals, fresh or chilled. (Ch. 02), Live fish. (Ch. 03), Milk and cream, not concentrated nor containing... (Ch. 04)",
+        "_questionData": [
+          {
+            "code": "0101",
+            "label": "Live horses, asses, mules and hinnies. (Ch. 01)",
+            "description": "Live horses, asses, mules and hinnies."
+          },
+          {
+            "code": "0201",
+            "label": "Meat of bovine animals, fresh or chilled. (Ch. 02)",
+            "description": "Meat of bovine animals, fresh or chilled."
+          },
+          {
+            "code": "0301",
+            "label": "Live fish. (Ch. 03)",
+            "description": "Live fish."
+          },
+          {
+            "code": "0401",
+            "label": "Milk and cream, not concentrated nor containing... (Ch. 04)",
+            "description": "Milk and cream, not concentrated nor containing added sugar or other sweetening matter."
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 5302,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Which category best describes your product?",
+              "timestamp": "2025-12-30T18:40:25.125Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:40:28.258Z"
+      },
+      "notes": "User provides code directly"
+    },
+    {
+      "id": "EDGE_006",
+      "category": "edge_cases",
+      "query": "INSTANT COFFEE POWDER",
+      "passed": false,
+      "actualCodes": [],
+      "responseTime": 3705,
+      "questionsAsked": 0,
+      "isQuestionResponse": false,
+      "fullResponse": null,
+      "errorType": "api_error",
+      "errorAnalysis": "Error: HTTP 400: Bad Request",
+      "notes": "All caps handling"
+    },
+    {
+      "id": "EDGE_007",
+      "category": "edge_cases",
+      "query": "   coffee   beans   ",
+      "passed": true,
+      "expectedChapter": "09",
+      "actualChapter": "",
+      "actualCodes": [],
+      "responseTime": 4079,
+      "questionsAsked": 1,
+      "isQuestionResponse": true,
+      "fullResponse": {
+        "success": true,
+        "conversationId": "cmjsxn3fi003xb56wzf4kwdkc",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_disambiguation_1767120033202",
+            "text": "Is this coffee in bean/leaf form (raw or roasted) or processed form (instant/extract)?",
+            "options": [
+              "09::Coffee beans (raw or roasted)",
+              "21::Instant coffee or coffee extract"
+            ],
+            "allowOther": true,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Need to disambiguate \"coffee\" between multiple chapters",
+        "_questionData": [
+          {
+            "code": "09",
+            "label": "Coffee beans (raw or roasted)",
+            "description": "Chapter 09"
+          },
+          {
+            "code": "21",
+            "label": "Instant coffee or coffee extract",
+            "description": "Chapter 21"
+          }
+        ],
+        "conversationSummary": {
+          "totalRounds": 1,
+          "questionsAsked": 1,
+          "answersProvided": 0,
+          "durationMs": 4076,
+          "history": [
+            {
+              "turn": 1,
+              "type": "question",
+              "content": "Is this coffee in bean/leaf form (raw or roasted) or processed form (instant/extract)?",
+              "timestamp": "2025-12-30T18:40:33.203Z"
+            }
+          ]
+        },
+        "timestamp": "2025-12-30T18:40:36.361Z"
+      },
+      "notes": "Extra whitespace handling"
+    }
+  ]
+}

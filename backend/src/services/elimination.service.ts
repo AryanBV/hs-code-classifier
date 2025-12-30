@@ -303,6 +303,21 @@ function checkVarietyExclusion(
 
 /**
  * Check if a code should be eliminated based on processing state
+ *
+ * KEY INSIGHT (ROOT CAUSE FIX):
+ * If a rule specifies `mustBeInChapter` and the code IS in that chapter,
+ * we should KEEP the code - the chapter match takes precedence over
+ * description-based exclusions.
+ *
+ * The description exclusions are meant to filter out codes from WRONG chapters
+ * (e.g., filter Ch.09 raw coffee codes when user wants instant coffee).
+ * They should NOT eliminate correct-chapter codes due to incidental word matches
+ * (e.g., 2101 saying "ROASTED CHICORY" should not be excluded by "roasted").
+ *
+ * Logic flow:
+ * 1. If mustBeInChapter specified and code is NOT in that chapter → EXCLUDE
+ * 2. If mustBeInChapter specified and code IS in that chapter → KEEP (skip desc check)
+ * 3. If no mustBeInChapter → apply description exclusions
  */
 function checkProcessingStateExclusion(
   code: string,
@@ -319,15 +334,28 @@ function checkProcessingStateExclusion(
       // Check if user specified this processing state
       if (modifiers.includes(state.toLowerCase())) {
         // Check chapter constraint
-        if (rules.mustBeInChapter && codeChapter !== rules.mustBeInChapter) {
-          return {
-            shouldInclude: false,
-            reason: `Excluded: "${state}" must be in Ch.${rules.mustBeInChapter}, code is in Ch.${codeChapter}`,
-            matchedRule: `processingState:${product}:${state}:chapter`
-          };
+        if (rules.mustBeInChapter) {
+          if (codeChapter !== rules.mustBeInChapter) {
+            // Code is NOT in the required chapter - EXCLUDE
+            return {
+              shouldInclude: false,
+              reason: `Excluded: "${state}" must be in Ch.${rules.mustBeInChapter}, code is in Ch.${codeChapter}`,
+              matchedRule: `processingState:${product}:${state}:chapter`
+            };
+          } else {
+            // ROOT CAUSE FIX: Code IS in the correct chapter - KEEP IT
+            // Skip description-based exclusions because mustBeInChapter takes precedence
+            // This prevents false positives like excluding 2101 (Ch.21) for "instant coffee"
+            // just because the description mentions "roasted chicory"
+            logger.debug(`[ELIMINATION] KEEPING ${code} - in correct chapter ${rules.mustBeInChapter} for "${state}"`);
+            return {
+              shouldInclude: true,
+              reason: `Included: Code is in correct chapter ${rules.mustBeInChapter} for "${state}"`
+            };
+          }
         }
 
-        // Check description exclusions
+        // No mustBeInChapter specified - apply description exclusions
         for (const excluded of rules.exclude) {
           if (lowerDesc.includes(excluded.toLowerCase())) {
             return {
@@ -642,6 +670,48 @@ export function filterCandidatesByElimination(
   if (eliminatedCount > 0) {
     logger.info(`[ELIMINATION] Filtered: ${candidates.length} -> ${filteredCodes.length} candidates`);
     logger.info(`[ELIMINATION] Applied rules: ${appliedRules.join(', ')}`);
+  }
+
+  // SAFETY CHECK: If elimination removed ALL candidates, something may be wrong
+  // Fall back to original candidates or chapter-filtered candidates
+  if (filteredCodes.length === 0 && candidates.length > 0) {
+    logger.warn('[ELIMINATION] WARNING: All candidates eliminated! Applying fallback logic.');
+    logger.warn(`[ELIMINATION] Original candidates: ${candidates.map(c => c.code).join(', ')}`);
+    logger.warn(`[ELIMINATION] Modifiers applied: ${allModifiers.join(', ')}`);
+
+    // Try to determine if there's a "correct" chapter from the rules
+    // Look for mustBeInChapter rules that match our modifiers
+    let correctChapter: string | null = null;
+    for (const states of Object.values(eliminationRules!.processingStateExclusions)) {
+      for (const [state, rules] of Object.entries(states)) {
+        if (allModifiers.includes(state.toLowerCase()) && rules.mustBeInChapter) {
+          correctChapter = rules.mustBeInChapter;
+          break;
+        }
+      }
+      if (correctChapter) break;
+    }
+
+    if (correctChapter) {
+      // Return candidates from the correct chapter
+      const chapterCandidates = candidates.filter(c => c.code.startsWith(correctChapter!));
+      if (chapterCandidates.length > 0) {
+        logger.warn(`[ELIMINATION] Falling back to ${chapterCandidates.length} candidates from Ch.${correctChapter}`);
+        return {
+          filteredCodes: chapterCandidates,
+          eliminatedCount: candidates.length - chapterCandidates.length,
+          appliedRules: [`fallback:chapter:${correctChapter}`]
+        };
+      }
+    }
+
+    // Last resort: return original candidates
+    logger.warn('[ELIMINATION] Falling back to ALL original candidates');
+    return {
+      filteredCodes: candidates,
+      eliminatedCount: 0,
+      appliedRules: ['fallback:all']
+    };
   }
 
   return {
