@@ -17,6 +17,10 @@ import { logger } from '../utils/logger';
 import { getNotesForCode, formatNotesForPrompt } from './chapter-notes.service';
 // PHASE 1: Import query parser for product type modifiers
 import { parseQuery } from './query-parser.service';
+// PHASE 2: Import chapter predictor for functional overrides
+import { checkFunctionalOverrides, checkAmbiguousTerms } from './chapter-predictor.service';
+// ROOT CAUSE FIX: Import scoped semantic search for functional overrides
+import { getBestHeadingInChapter, getScopedSemanticCandidates } from './multi-candidate-search.service';
 
 dotenv.config();
 
@@ -1288,6 +1292,85 @@ export async function navigateHierarchy(
     const productTypeModifiers = queryAnalysis.productTypeModifiers;
     if (productTypeModifiers.length > 0) {
       logger.info(`[LLM-NAV] Product type modifiers detected: [${productTypeModifiers.join(', ')}]`);
+    }
+
+    // PHASE 2 + ROOT CAUSE FIX: Check for functional override at root level
+    // This ensures "brake pads for cars" jumps directly to the CORRECT heading in Chapter 87
+    // ROOT CAUSE FIX: Use semantic search to find the BEST heading, not just the first one!
+    if (currentCode === null) {
+      const functionalOverride = checkFunctionalOverrides(userInput);
+      if (functionalOverride) {
+        logger.info(`[ROOT FIX] Functional override detected: Ch.${functionalOverride.forceChapter}`);
+        logger.info(`[ROOT FIX] Reason: ${functionalOverride.reason}`);
+
+        // ROOT CAUSE FIX: Use semantic search to find the BEST heading in this chapter
+        // This solves "brake pads" → 8708 (brakes) instead of 8701 (tractors)
+        const bestHeading = await getBestHeadingInChapter(userInput, functionalOverride.forceChapter);
+
+        if (bestHeading) {
+          logger.info(`[ROOT FIX] Semantic search found best heading: ${bestHeading.code}`);
+          logger.info(`[ROOT FIX]   Description: ${bestHeading.description.substring(0, 80)}...`);
+          logger.info(`[ROOT FIX]   Score: ${bestHeading.score.toFixed(1)}`);
+
+          // Return a selection to start from the semantically best heading
+          return {
+            type: 'selection',
+            code: bestHeading.code,
+            description: bestHeading.description,
+            reasoning: `Functional override (${functionalOverride.reason}) → Semantic match: ${bestHeading.description.substring(0, 50)}...`
+          };
+        }
+
+        // Fallback: If semantic search fails, use first heading (original behavior)
+        logger.warn(`[ROOT FIX] Semantic search failed, falling back to first heading`);
+        const headingsInChapter = await prisma.hsCode.findMany({
+          where: {
+            code: {
+              startsWith: functionalOverride.forceChapter,
+              not: { contains: '.' }
+            }
+          },
+          select: { code: true, description: true },
+          orderBy: { code: 'asc' },
+          take: 1
+        });
+
+        if (headingsInChapter.length > 0) {
+          const firstHeading = headingsInChapter[0]!;
+          logger.info(`[ROOT FIX] Fallback to first heading: ${firstHeading.code}`);
+          return {
+            type: 'selection',
+            code: firstHeading.code,
+            description: firstHeading.description,
+            reasoning: `Functional override: ${functionalOverride.reason}`
+          };
+        }
+      }
+
+      // PHASE 2: Check for ambiguous terms at root level
+      const ambiguity = checkAmbiguousTerms(userInput);
+      if (ambiguity) {
+        logger.info(`[PHASE 2] Ambiguous term detected: "${ambiguity.term}"`);
+        logger.info(`[PHASE 2] Question: ${ambiguity.info.disambiguationQuestion}`);
+
+        // Return a question to disambiguate
+        const questionOptions = ambiguity.info.options.map(opt => ({
+          code: opt.chapter,
+          label: opt.label,
+          description: `Chapter ${opt.chapter}`
+        }));
+
+        return {
+          type: 'question',
+          question: {
+            id: `chapter_disambiguation_${Date.now()}`,
+            text: ambiguity.info.disambiguationQuestion,
+            options: questionOptions,
+            parentCode: '',
+            reasoning: `Need to disambiguate "${ambiguity.term}" between multiple chapters`
+          }
+        };
+      }
     }
 
     // Get available options at current level

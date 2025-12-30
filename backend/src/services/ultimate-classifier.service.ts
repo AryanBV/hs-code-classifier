@@ -16,11 +16,14 @@ import OpenAI from 'openai';
 import { semanticSearchMulti } from './multi-candidate-search.service';
 import { expandCandidatesWithChildren } from './hierarchy-expansion.service';
 import { parseQuery } from './query-parser.service';
-
-// Stub functions to replace deleted chapter-predictor.service
-function predictChapters(_query: string): string[] { return []; }
-function hasFunctionalOverride(_query: string): boolean { return false; }
-function getFunctionalOverrideChapter(_query: string): string | null { return null; }
+// PHASE 2: Import chapter predictor for functional overrides and chapter prediction
+import {
+  predictChapters,
+  getPredictedChaptersArray,
+  hasFunctionalOverride,
+  getFunctionalOverrideChapter,
+  explainChapterPredictions
+} from './chapter-predictor.service';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -81,11 +84,20 @@ export async function classifyProduct(
   // STEP 1: Advanced Query Analysis
   console.log('\n📋 Step 1: Query Analysis');
   const queryAnalysis = parseQuery(productDescription);
-  const predictedChapters = predictChapters(productDescription);
+  // PHASE 2: Use getPredictedChaptersArray for backward compatibility
+  const predictedChapters = getPredictedChaptersArray(productDescription);
+  // PHASE 2: Get full prediction result for detailed info
+  const chapterPrediction = predictChapters(productDescription);
 
   console.log(`   Primary Subject: "${queryAnalysis.primarySubject}"`);
   console.log(`   Context: ${queryAnalysis.context.join(', ') || 'None'}`);
   console.log(`   Predicted Chapters: ${predictedChapters.slice(0, 3).join(', ')}`);
+
+  // PHASE 2: Log functional override if active
+  if (chapterPrediction.functionalOverride) {
+    console.log(`   ⚡ FUNCTIONAL OVERRIDE: Ch.${chapterPrediction.functionalOverride.chapter}`);
+    console.log(`   Reason: ${chapterPrediction.functionalOverride.reason}`);
+  }
 
   // STEP 2: Enhanced Semantic Search
   console.log('\n🔎 Step 2: Semantic Search with Enhanced Scoring');

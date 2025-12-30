@@ -629,7 +629,17 @@
     "description": "Keywords that ALWAYS override material-based classification. Function > Material",
     "rules": [
       {
-        "keywords": ["brake pads", "brake disc", "brake rotor", "brake shoe", "brake parts", "for vehicles", "for cars", "for trucks", "automotive", "auto parts", "vehicle parts", "car parts"],
+        "keywords": [
+          "brake pads", "brake disc", "brake rotor", "brake shoe", "brake parts",
+          "shock absorber", "shock absorbers", "suspension", "steering wheel", "steering parts",
+          "side mirror", "rearview mirror", "car mirror", "wing mirror",
+          "bumper", "fender", "hood", "car door", "trunk lid",
+          "exhaust pipe", "muffler", "silencer", "catalytic converter",
+          "clutch", "gear box", "gearbox", "transmission",
+          "axle", "drive shaft", "differential",
+          "for vehicles", "for cars", "for trucks", "for motorcycles", "for automobiles",
+          "automotive", "auto parts", "vehicle parts", "car parts", "motor vehicle"
+        ],
         "forceChapter": "87",
         "reason": "Vehicle parts are classified by function (Ch.87), not by material (ceramic, metal, etc.)"
       },

@@ -4,10 +4,14 @@ import OpenAI from 'openai';
 import * as dotenv from 'dotenv';
 import { calculateEnhancedScore, extractMeaningfulTerms } from './candidate-scoring.service';
 import { parseQuery, calculateContextBoost } from './query-parser.service';
-
-// Stub functions to replace deleted chapter-predictor.service
-function predictChapters(_query: string): string[] { return []; }
-function calculateChapterBoost(_code: string, _chapters: string[], _query: string): number { return 0; }
+// PHASE 2: Import chapter predictor for functional overrides and chapter prediction
+import {
+  predictChapters,
+  checkFunctionalOverrides,
+  calculateChapterBoost,
+  getPredictedChaptersArray,
+  ChapterPrediction
+} from './chapter-predictor.service';
 
 dotenv.config();
 
@@ -158,12 +162,23 @@ export async function fuzzyKeywordSearchMulti(query: string, limit: number = 50)
  * Semantic search returning TOP N candidates using vector similarity
  * ENHANCED with keyword matching, query context, and chapter prediction
  * CRITICAL FIX: Two-pass search to ensure predicted chapter codes are included
+ * PHASE 2: Now checks for functional overrides FIRST to scope search
  * @param query - User search query
  * @param limit - Maximum number of candidates to return (default: 50)
  * @returns Array of candidates sorted by enhanced score
  */
 export async function semanticSearchMulti(query: string, limit: number = 50): Promise<Candidate[]> {
   try {
+    // PHASE 2: Check functional overrides FIRST
+    // This ensures "brake pads for cars" searches Chapter 87, not all chapters
+    const functionalOverride = checkFunctionalOverrides(query);
+    const forceChapter = functionalOverride?.forceChapter || null;
+
+    if (forceChapter) {
+      console.log(`[PHASE 2] Functional override active: Forcing search to Chapter ${forceChapter}`);
+      console.log(`[PHASE 2] Reason: ${functionalOverride?.reason}`);
+    }
+
     // Generate embedding for query
     const response = await openai.embeddings.create({
       model: 'text-embedding-3-small',
@@ -175,30 +190,60 @@ export async function semanticSearchMulti(query: string, limit: number = 50): Pr
 
     // Parse query for context-aware scoring
     const queryAnalysis = parseQuery(query);
-    const predictedChapters = predictChapters(query);
+    // PHASE 2: Get predicted chapters as array for backward compatibility
+    const predictedChapters = getPredictedChaptersArray(query);
+    // PHASE 2: Get full prediction result for chapter boost calculation
+    const chapterPrediction = predictChapters(query);
 
     // Set HNSW ef_search parameter for accurate search
     await prisma.$executeRaw`SET LOCAL hnsw.ef_search = 100`;
 
-    // PASS 1: Global semantic search (finds best matches across all chapters)
-    const globalResults: any[] = await prisma.$queryRaw`
-      SELECT
-        code,
-        description,
-        keywords,
-        common_products as "commonProducts",
-        synonyms,
-        1 - (embedding <=> ${JSON.stringify(queryEmbedding)}::vector) as similarity
-      FROM hs_codes
-      WHERE embedding IS NOT NULL
-      ORDER BY embedding <=> ${JSON.stringify(queryEmbedding)}::vector
-      LIMIT ${limit}
-    `;
+    // PHASE 2: PASS 1 - Semantic search (scoped to forced chapter if functional override active)
+    let globalResults: any[];
+
+    if (forceChapter) {
+      // PHASE 2: Search ONLY within the forced chapter
+      // This is CRITICAL for "brake pads for cars" - ensures we only get Ch.87 codes
+      const chapterPattern = `${forceChapter}%`;
+      console.log(`[PHASE 2] Searching only within Chapter ${forceChapter}`);
+
+      globalResults = await prisma.$queryRaw`
+        SELECT
+          code,
+          description,
+          keywords,
+          common_products as "commonProducts",
+          synonyms,
+          1 - (embedding <=> ${JSON.stringify(queryEmbedding)}::vector) as similarity
+        FROM hs_codes
+        WHERE embedding IS NOT NULL
+          AND code LIKE ${chapterPattern}
+        ORDER BY embedding <=> ${JSON.stringify(queryEmbedding)}::vector
+        LIMIT ${limit}
+      `;
+      console.log(`[PHASE 2] Found ${globalResults.length} codes from Chapter ${forceChapter}`);
+    } else {
+      // No functional override - search all chapters
+      globalResults = await prisma.$queryRaw`
+        SELECT
+          code,
+          description,
+          keywords,
+          common_products as "commonProducts",
+          synonyms,
+          1 - (embedding <=> ${JSON.stringify(queryEmbedding)}::vector) as similarity
+        FROM hs_codes
+        WHERE embedding IS NOT NULL
+        ORDER BY embedding <=> ${JSON.stringify(queryEmbedding)}::vector
+        LIMIT ${limit}
+      `;
+    }
 
     // PASS 2: Chapter-specific semantic search for predicted chapters (ENHANCED)
     // This ensures codes from the correct chapter are included even if semantic score is lower
+    // PHASE 2: Skip if functional override is active (we already searched that chapter exclusively)
     let chapterResults: any[] = [];
-    if (predictedChapters.length > 0) {
+    if (predictedChapters.length > 0 && !forceChapter) {
       // Search within top predicted chapter - get MORE results (limit instead of limit/2)
       const topChapter = predictedChapters[0];
       const chapterPattern = `${topChapter}%`;
@@ -244,10 +289,12 @@ export async function semanticSearchMulti(query: string, limit: number = 50): Pr
 
     // PASS 3: Keyword-based search within predicted chapters (NEW - ensures exact keyword matches)
     // This is critical for functional products where semantic search might miss exact matches
+    // PHASE 2: Use forceChapter if functional override is active
     let keywordResults: any[] = [];
-    if (predictedChapters.length > 0) {
+    const keywordSearchChapter = forceChapter || (predictedChapters.length > 0 ? predictedChapters[0] : null);
+    if (keywordSearchChapter) {
       const queryTerms = extractMeaningfulTerms(query);
-      const topChapter = predictedChapters[0];
+      const topChapter = keywordSearchChapter;
       const chapterPattern = `${topChapter}%`;
 
       if (queryTerms.length > 0) {
@@ -372,8 +419,8 @@ export async function semanticSearchMulti(query: string, limit: number = 50): Pr
         queryAnalysis
       );
 
-      // Apply chapter prediction boost (dynamic: -20 to +30 points when functional override active)
-      const chapterBoost = calculateChapterBoost(r.code, predictedChapters, query);
+      // PHASE 2: Apply chapter prediction boost (dynamic: -20 to +30 points when functional override active)
+      const chapterBoost = calculateChapterBoost(r.code, chapterPrediction.predictions, query);
 
       // Total enhanced score = semantic + keyword + context + chapter
       const totalScore = semanticScore + keywordBonus + contextBoost + chapterBoost;
@@ -585,4 +632,239 @@ export async function getCandidateDetails(codes: string[]): Promise<any[]> {
     console.error('Error fetching candidate details:', error);
     return [];
   }
+}
+
+/**
+ * ROOT CAUSE FIX: Scoped semantic search for functional overrides
+ *
+ * When a functional override forces a chapter (e.g., Ch.87 for "brake pads"),
+ * this function performs semantic search ONLY within that chapter to find
+ * the correct heading/subheading.
+ *
+ * This solves the problem where hierarchical navigation picks 8701 (Tractors)
+ * instead of 8708 (Brakes) - because semantic search understands "brake pads"
+ * matches 8708.30 (brakes and servo-brakes) much better than 8701.
+ *
+ * @param query - User's product description (e.g., "brake pads for cars")
+ * @param chapterPrefix - The chapter to search within (e.g., "87")
+ * @param limit - Maximum results to return (default: 10)
+ * @returns Array of candidates within the specified chapter, sorted by semantic relevance
+ */
+export async function getScopedSemanticCandidates(
+  query: string,
+  chapterPrefix: string,
+  limit: number = 10
+): Promise<Candidate[]> {
+  console.log(`[ROOT FIX] Running scoped semantic search in Ch.${chapterPrefix} for: "${query}"`);
+
+  try {
+    // Generate embedding for query
+    const response = await openai.embeddings.create({
+      model: 'text-embedding-3-small',
+      input: query
+    });
+
+    const queryEmbedding = response.data[0]?.embedding;
+    if (!queryEmbedding) {
+      console.warn('[ROOT FIX] Failed to generate embedding');
+      return [];
+    }
+
+    // Set HNSW ef_search parameter for accurate search
+    await prisma.$executeRaw`SET LOCAL hnsw.ef_search = 100`;
+
+    // Semantic search scoped to the specific chapter
+    const chapterPattern = `${chapterPrefix}%`;
+
+    const scopedResults: any[] = await prisma.$queryRaw`
+      SELECT
+        code,
+        description,
+        keywords,
+        common_products as "commonProducts",
+        synonyms,
+        1 - (embedding <=> ${JSON.stringify(queryEmbedding)}::vector) as similarity
+      FROM hs_codes
+      WHERE embedding IS NOT NULL
+        AND code LIKE ${chapterPattern}
+      ORDER BY embedding <=> ${JSON.stringify(queryEmbedding)}::vector
+      LIMIT ${limit * 3}
+    `;
+
+    console.log(`[ROOT FIX] Found ${scopedResults.length} codes from Ch.${chapterPrefix}`);
+
+    // Parse query for context-aware scoring
+    const queryAnalysis = parseQuery(query);
+
+    // Apply enhanced scoring
+    const enhancedResults = scopedResults.map(r => {
+      const semanticScore = Number(r.similarity) * 10;
+
+      // Apply keyword matching bonus
+      const keywordBonus = calculateEnhancedScore(
+        query,
+        {
+          code: r.code,
+          description: r.description,
+          keywords: r.keywords,
+          commonProducts: r.commonProducts,
+          synonyms: r.synonyms
+        },
+        0
+      );
+
+      // Apply query context boost
+      const contextBoost = calculateContextBoost(
+        {
+          code: r.code,
+          description: r.description,
+          keywords: r.keywords,
+          commonProducts: r.commonProducts
+        },
+        queryAnalysis
+      );
+
+      // Total score (no chapter boost needed since all are same chapter)
+      const totalScore = semanticScore + keywordBonus + contextBoost;
+
+      return {
+        code: r.code,
+        score: totalScore,
+        matchType: 'scoped-semantic',
+        description: r.description,
+        source: 'semantic' as const
+      };
+    });
+
+    // Sort by score and return top N
+    enhancedResults.sort((a, b) => b.score - a.score);
+    const topResults = enhancedResults.slice(0, limit);
+
+    // Log top 5 results for debugging
+    console.log(`[ROOT FIX] Top results from Ch.${chapterPrefix}:`);
+    topResults.slice(0, 5).forEach((r, i) => {
+      const shortDesc = r.description.substring(0, 60);
+      console.log(`[ROOT FIX]   ${i + 1}. ${r.code}: ${shortDesc}... (score: ${r.score.toFixed(1)})`);
+    });
+
+    return topResults;
+
+  } catch (error) {
+    console.error('[ROOT FIX] Scoped semantic search error:', error);
+    return [];
+  }
+}
+
+/**
+ * ROOT CAUSE FIX: Get the best 4-digit heading for a query within a chapter
+ *
+ * This is used by llm-navigator when functional override is active.
+ * Instead of picking the first heading (8701 for Ch.87), it finds the
+ * semantically best heading (8708 for "brake pads").
+ *
+ * @param query - User's product description
+ * @param chapterPrefix - The chapter to search (e.g., "87")
+ * @returns The best 4-digit heading code and description, or null if none found
+ */
+export async function getBestHeadingInChapter(
+  query: string,
+  chapterPrefix: string
+): Promise<{ code: string; description: string; score: number } | null> {
+  console.log(`[ROOT FIX] Finding best heading in Ch.${chapterPrefix} for: "${query}"`);
+
+  // Get semantic candidates
+  const candidates = await getScopedSemanticCandidates(query, chapterPrefix, 30);
+
+  if (candidates.length === 0) {
+    console.log(`[ROOT FIX] No candidates found in Ch.${chapterPrefix}`);
+    return null;
+  }
+
+  // ROOT FIX: Extract 4-digit heading from each candidate
+  // KEY INSIGHT: Use the HIGHEST single score for each heading, not average
+  // This ensures 8708.30.00 (score 18.0) beats 8703.xx (many but lower scores)
+  const headingScores = new Map<string, { maxScore: number; totalScore: number; description: string; count: number; bestCode: string }>();
+
+  for (const candidate of candidates) {
+    // Extract 4-digit heading from code (e.g., "8708.30.00" -> "8708")
+    const codeNoDotsLength = candidate.code.replace(/\./g, '').length;
+    let heading: string;
+
+    if (codeNoDotsLength === 4) {
+      // Already a 4-digit heading
+      heading = candidate.code;
+    } else if (candidate.code.includes('.')) {
+      // Has dots: take first 4 digits before first dot, or first segment
+      const parts = candidate.code.split('.');
+      heading = parts[0] || candidate.code.substring(0, 4);
+    } else {
+      // No dots: take first 4 chars
+      heading = candidate.code.substring(0, 4);
+    }
+
+    // Aggregate score for this heading, tracking MAXIMUM score
+    const existing = headingScores.get(heading);
+    if (existing) {
+      existing.totalScore += candidate.score;
+      existing.count += 1;
+      // Update max score and best code if this candidate has higher score
+      if (candidate.score > existing.maxScore) {
+        existing.maxScore = candidate.score;
+        existing.description = candidate.description || '';
+        existing.bestCode = candidate.code;
+      }
+    } else {
+      headingScores.set(heading, {
+        maxScore: candidate.score,
+        totalScore: candidate.score,
+        description: candidate.description || '',
+        count: 1,
+        bestCode: candidate.code
+      });
+    }
+  }
+
+  // Find the heading with highest MAXIMUM score (not average!)
+  // This ensures the heading with the single best match wins
+  let bestHeading: string | null = null;
+  let bestScore = 0;
+  let bestDescription = '';
+  let bestCode = '';
+
+  console.log(`[ROOT FIX] Heading scores:`);
+  headingScores.forEach((data, heading) => {
+    // Use MAX score as primary, with small bonus for count (up to 3 points)
+    // This prevents many low-scoring matches from outweighing a single high-scoring match
+    const countBonus = Math.min(data.count - 1, 3) * 0.5; // Max +1.5 points for multiple matches
+    const effectiveScore = data.maxScore + countBonus;
+
+    console.log(`[ROOT FIX]   ${heading}: maxScore=${data.maxScore.toFixed(1)}, count=${data.count}, effective=${effectiveScore.toFixed(1)}`);
+
+    if (effectiveScore > bestScore) {
+      bestScore = effectiveScore;
+      bestHeading = heading;
+      bestDescription = data.description;
+      bestCode = data.bestCode;
+    }
+  });
+
+  if (!bestHeading) {
+    console.log(`[ROOT FIX] Could not determine best heading`);
+    return null;
+  }
+
+  // Get the actual heading from database to get accurate description
+  const headingInfo = await prisma.hsCode.findFirst({
+    where: { code: bestHeading },
+    select: { code: true, description: true }
+  });
+
+  const result = {
+    code: headingInfo?.code || bestHeading,
+    description: headingInfo?.description || bestDescription,
+    score: bestScore
+  };
+
+  console.log(`[ROOT FIX] Best heading: ${result.code} - ${result.description.substring(0, 50)}...`);
+  return result;
 }
