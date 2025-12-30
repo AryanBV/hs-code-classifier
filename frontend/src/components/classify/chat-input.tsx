@@ -46,6 +46,7 @@ export function ChatInput({
       }, 100)
       return () => clearTimeout(timer)
     }
+    return undefined
   }, [autoFocus, disabled])
 
   const minChars = 3  // Reduced from 10 to 3 for better UX
