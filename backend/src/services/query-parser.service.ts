@@ -19,7 +19,8 @@
 export interface QueryAnalysis {
   primarySubject: string;  // Main product to classify
   context: string[];       // Application/usage context
-  modifiers: string[];     // Descriptive attributes
+  modifiers: string[];     // Descriptive attributes (materials)
+  productTypeModifiers: string[];  // PHASE 1: Processing state, form, variety modifiers
   rawQuery: string;        // Original query
 }
 
@@ -46,6 +47,38 @@ const MATERIAL_MODIFIERS = new Set([
   'leather', 'glass', 'ceramic', 'paper'
 ]);
 
+// PHASE 1: Product type modifiers that indicate processing state, form, or variety
+// These affect chapter selection (e.g., "instant" → Ch.21, "roasted" → Ch.09)
+const PRODUCT_TYPE_MODIFIERS = [
+  // Processing state - Coffee/Tea specific
+  'instant', 'soluble', 'extract', 'concentrate', 'essence',
+  'roasted', 'unroasted', 'raw', 'green', 'ground', 'whole',
+  'decaffeinated', 'decaf', 'caffeinated',
+
+  // Form indicators
+  'powder', 'powdered', 'granules', 'granulated', 'beans', 'leaves',
+  'liquid', 'frozen', 'dried', 'fresh', 'preserved', 'canned',
+  'flakes', 'chips', 'chunks', 'sliced', 'diced', 'minced',
+
+  // Grade/Quality indicators
+  'grade a', 'grade b', 'grade c', 'plantation', 'premium',
+  'organic', 'conventional', 'certified',
+
+  // Coffee varieties
+  'arabica', 'robusta', 'liberica', 'excelsa',
+
+  // Tea varieties
+  'black tea', 'green tea', 'white tea', 'oolong', 'pu-erh',
+
+  // Processing methods
+  'washed', 'unwashed', 'natural', 'honey processed',
+  'fermented', 'unfermented', 'pasteurized', 'homogenized',
+
+  // Function indicators (for material vs function disambiguation)
+  'for vehicles', 'for cars', 'for trucks', 'automotive',
+  'for industrial use', 'for household use', 'for cooking',
+];
+
 /**
  * Parse query into structured components
  *
@@ -54,6 +87,15 @@ const MATERIAL_MODIFIERS = new Set([
  */
 export function parseQuery(query: string): QueryAnalysis {
   const trimmedQuery = query.trim();
+  const lowerQuery = trimmedQuery.toLowerCase();
+
+  // PHASE 1: Extract product type modifiers
+  const productTypeModifiers: string[] = [];
+  for (const modifier of PRODUCT_TYPE_MODIFIERS) {
+    if (lowerQuery.includes(modifier.toLowerCase())) {
+      productTypeModifiers.push(modifier);
+    }
+  }
 
   // Try to match context patterns
   for (const pattern of CONTEXT_PATTERNS) {
@@ -70,6 +112,7 @@ export function parseQuery(query: string): QueryAnalysis {
         primarySubject,
         context: [context],
         modifiers,
+        productTypeModifiers,  // PHASE 1: Include product type modifiers
         rawQuery: trimmedQuery
       };
     }
@@ -82,6 +125,7 @@ export function parseQuery(query: string): QueryAnalysis {
     primarySubject: trimmedQuery,
     context: [],
     modifiers,
+    productTypeModifiers,  // PHASE 1: Include product type modifiers
     rawQuery: trimmedQuery
   };
 }

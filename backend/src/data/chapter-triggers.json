@@ -1,0 +1,706 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2024-12-30",
+    "description": "Keyword triggers for HS code chapter prediction. Used by chapter-predictor.service.ts"
+  },
+  "chapters": {
+    "01": {
+      "name": "Live Animals",
+      "include": ["live animal", "live cattle", "live horses", "live sheep", "live goats", "live poultry", "livestock", "breeding animal"],
+      "exclude": ["meat", "dead", "slaughtered", "frozen", "preserved"],
+      "priority": 5
+    },
+    "02": {
+      "name": "Meat and Edible Offal",
+      "include": ["meat", "beef", "pork", "lamb", "mutton", "chicken meat", "poultry meat", "offal", "frozen meat", "fresh meat", "chilled meat"],
+      "exclude": ["live", "prepared meat", "canned meat", "sausage", "meat preparation"],
+      "priority": 5
+    },
+    "03": {
+      "name": "Fish and Crustaceans",
+      "include": ["fish", "salmon", "tuna", "cod", "shrimp", "prawns", "crab", "lobster", "seafood", "crustacean", "mollusc", "fresh fish", "frozen fish"],
+      "exclude": ["fish oil", "fish meal", "prepared fish", "canned fish", "fish preparation"],
+      "priority": 5
+    },
+    "04": {
+      "name": "Dairy Products, Eggs, Honey",
+      "include": ["milk", "cheese", "butter", "yogurt", "yoghurt", "curd", "eggs", "honey", "dairy", "cream", "whey", "ghee"],
+      "exclude": ["ice cream", "milk preparation", "cheese preparation"],
+      "priority": 5
+    },
+    "05": {
+      "name": "Animal Products NES",
+      "include": ["bone", "horn", "ivory", "coral", "shell", "feather", "animal hair", "bristle"],
+      "exclude": [],
+      "priority": 3
+    },
+    "06": {
+      "name": "Live Trees and Plants",
+      "include": ["live plant", "live tree", "bulb", "cutting", "seedling", "flower plant", "ornamental plant", "nursery stock"],
+      "exclude": ["dried flower", "artificial plant"],
+      "priority": 4
+    },
+    "07": {
+      "name": "Edible Vegetables",
+      "include": ["vegetable", "potato", "tomato", "onion", "carrot", "cabbage", "lettuce", "spinach", "fresh vegetable", "frozen vegetable", "dried vegetable"],
+      "exclude": ["preserved vegetable", "canned vegetable", "vegetable oil", "vegetable preparation"],
+      "priority": 5
+    },
+    "08": {
+      "name": "Edible Fruits and Nuts",
+      "include": ["fruit", "apple", "orange", "banana", "mango", "grape", "nuts", "almonds", "cashew", "walnut", "peanut", "fresh fruit", "dried fruit"],
+      "exclude": ["fruit juice", "preserved fruit", "canned fruit", "fruit preparation", "jam"],
+      "priority": 5
+    },
+    "09": {
+      "name": "Coffee, Tea, Mate and Spices",
+      "include": [
+        "coffee beans", "roasted coffee", "green coffee", "raw coffee", "unroasted coffee",
+        "coffee husk", "coffee skin", "coffee cherry",
+        "tea leaves", "black tea", "green tea", "oolong tea", "white tea", "tea leaf",
+        "mate", "yerba mate",
+        "pepper", "black pepper", "white pepper",
+        "vanilla", "vanilla beans",
+        "cinnamon", "cloves", "nutmeg", "cardamom", "ginger",
+        "saffron", "turmeric", "bay leaves", "thyme", "oregano",
+        "spices", "curry leaves", "cumin", "coriander seeds",
+        "arabica", "robusta", "liberica"
+      ],
+      "exclude": [
+        "instant coffee", "soluble coffee", "coffee extract", "coffee essence", "coffee concentrate",
+        "instant tea", "tea extract", "tea essence",
+        "spice mix", "curry powder", "prepared spice", "spice preparation",
+        "3-in-1 coffee", "coffee mix"
+      ],
+      "priority": 8,
+      "notes": "Raw and roasted coffee/tea and whole spices. Extracts and instant preparations go to Ch.21"
+    },
+    "10": {
+      "name": "Cereals",
+      "include": ["wheat", "rice", "paddy rice", "barley", "oats", "maize", "corn", "cereals", "grain", "millet", "sorghum", "buckwheat"],
+      "exclude": ["flour", "bread", "pasta", "cereal preparation", "breakfast cereal"],
+      "priority": 5
+    },
+    "11": {
+      "name": "Milling Products",
+      "include": ["flour", "wheat flour", "rice flour", "starch", "malt", "gluten", "semolina"],
+      "exclude": ["bread", "pasta", "baked"],
+      "priority": 5
+    },
+    "12": {
+      "name": "Oil Seeds and Oleaginous Fruits",
+      "include": ["soybean", "groundnut", "sunflower seed", "sesame seed", "mustard seed", "cotton seed", "linseed", "oil seed"],
+      "exclude": ["oil", "vegetable oil"],
+      "priority": 4
+    },
+    "13": {
+      "name": "Lac, Gums, Resins",
+      "include": ["lac", "gum arabic", "resin", "natural gum", "shellac"],
+      "exclude": [],
+      "priority": 3
+    },
+    "14": {
+      "name": "Vegetable Plaiting Materials",
+      "include": ["bamboo", "rattan", "reed", "straw", "vegetable material for plaiting"],
+      "exclude": [],
+      "priority": 3
+    },
+    "15": {
+      "name": "Animal/Vegetable Fats and Oils",
+      "include": ["oil", "vegetable oil", "palm oil", "coconut oil", "olive oil", "sunflower oil", "soybean oil", "groundnut oil", "fat", "lard", "tallow", "margarine"],
+      "exclude": ["essential oil", "perfume oil", "lubricating oil", "mineral oil", "crude oil"],
+      "priority": 5
+    },
+    "16": {
+      "name": "Preparations of Meat/Fish",
+      "include": ["sausage", "canned meat", "prepared meat", "meat preparation", "canned fish", "prepared fish", "fish paste", "fish preparation", "caviar"],
+      "exclude": ["raw meat", "fresh fish", "frozen meat", "frozen fish"],
+      "priority": 6
+    },
+    "17": {
+      "name": "Sugars and Sugar Confectionery",
+      "include": ["sugar", "cane sugar", "beet sugar", "candy", "chocolate", "confectionery", "sweets", "caramel", "molasses", "glucose", "fructose"],
+      "exclude": ["sugar-free", "artificial sweetener"],
+      "priority": 5
+    },
+    "18": {
+      "name": "Cocoa and Cocoa Preparations",
+      "include": ["cocoa", "cocoa beans", "cocoa powder", "cocoa butter", "cocoa paste", "chocolate bar", "chocolate preparation"],
+      "exclude": [],
+      "priority": 5
+    },
+    "19": {
+      "name": "Preparations of Cereals",
+      "include": ["bread", "pasta", "noodles", "biscuits", "cookies", "cake", "pastry", "breakfast cereal", "wafer", "pizza base", "crispbread"],
+      "exclude": ["raw wheat", "raw rice", "flour"],
+      "priority": 6
+    },
+    "20": {
+      "name": "Preparations of Vegetables/Fruits",
+      "include": ["canned vegetable", "preserved fruit", "jam", "jelly", "marmalade", "pickle", "fruit juice", "vegetable juice", "tomato paste", "ketchup", "frozen vegetable preparation"],
+      "exclude": ["fresh fruit", "fresh vegetable", "raw vegetable"],
+      "priority": 6
+    },
+    "21": {
+      "name": "Miscellaneous Edible Preparations",
+      "include": [
+        "instant coffee", "soluble coffee", "coffee extract", "coffee essence", "coffee concentrate",
+        "instant tea", "tea extract", "tea essence",
+        "3-in-1 coffee", "coffee mix", "coffee preparation",
+        "sauce", "ketchup", "mayonnaise", "mustard", "soup", "broth", "stock cube",
+        "yeast", "baking powder", "baking soda",
+        "food preparation", "protein concentrate", "food supplement",
+        "ice cream", "edible ice"
+      ],
+      "exclude": ["coffee beans", "roasted coffee", "tea leaves", "raw coffee", "green coffee"],
+      "priority": 9,
+      "notes": "Instant coffee/tea and food preparations. Raw coffee/tea goes to Ch.09"
+    },
+    "22": {
+      "name": "Beverages, Spirits, Vinegar",
+      "include": ["beverage", "soft drink", "carbonated drink", "wine", "beer", "whisky", "whiskey", "vodka", "rum", "gin", "alcohol", "spirit", "vinegar", "mineral water", "aerated water"],
+      "exclude": ["fruit juice"],
+      "priority": 5
+    },
+    "23": {
+      "name": "Residues from Food Industries",
+      "include": ["animal feed", "cattle feed", "poultry feed", "bran", "oil cake", "residue", "brewing waste"],
+      "exclude": [],
+      "priority": 4
+    },
+    "24": {
+      "name": "Tobacco and Tobacco Products",
+      "include": ["tobacco", "cigarette", "cigar", "smoking tobacco", "tobacco leaf"],
+      "exclude": [],
+      "priority": 5
+    },
+    "25": {
+      "name": "Salt, Sulphur, Earth, Stone",
+      "include": ["salt", "sulphur", "earth", "sand", "gravel", "stone", "limestone", "gypsum", "chalk", "marble", "granite", "slate"],
+      "exclude": [],
+      "priority": 4
+    },
+    "26": {
+      "name": "Ores, Slag and Ash",
+      "include": ["ore", "iron ore", "copper ore", "zinc ore", "slag", "ash"],
+      "exclude": [],
+      "priority": 4
+    },
+    "27": {
+      "name": "Mineral Fuels and Oils",
+      "include": ["petroleum", "crude oil", "diesel", "petrol", "gasoline", "natural gas", "coal", "fuel oil", "kerosene", "bitumen", "tar", "coke"],
+      "exclude": ["vegetable oil", "essential oil"],
+      "priority": 6
+    },
+    "28": {
+      "name": "Inorganic Chemicals",
+      "include": ["inorganic chemical", "acid", "sulphuric acid", "hydrochloric acid", "oxide", "hydroxide", "chloride", "sodium chloride"],
+      "exclude": ["organic chemical", "pharmaceutical", "medicine"],
+      "priority": 4
+    },
+    "29": {
+      "name": "Organic Chemicals",
+      "include": ["organic chemical", "alcohol", "methanol", "ethanol", "phenol", "aldehyde", "ketone", "carboxylic acid", "ester", "amine"],
+      "exclude": ["pharmaceutical", "medicine", "drug"],
+      "priority": 4
+    },
+    "30": {
+      "name": "Pharmaceutical Products",
+      "include": ["medicine", "pharmaceutical", "drug", "tablet", "capsule", "vaccine", "antibiotic", "insulin", "medicament", "dosage form"],
+      "exclude": ["cosmetic", "supplement", "vitamin supplement"],
+      "priority": 7
+    },
+    "31": {
+      "name": "Fertilizers",
+      "include": ["fertilizer", "fertiliser", "urea", "ammonium nitrate", "phosphate", "potash", "npk"],
+      "exclude": [],
+      "priority": 5
+    },
+    "32": {
+      "name": "Tanning/Dyeing Extracts, Paints",
+      "include": ["dye", "pigment", "paint", "varnish", "ink", "tanning extract", "color", "colour"],
+      "exclude": [],
+      "priority": 4
+    },
+    "33": {
+      "name": "Essential Oils and Cosmetics",
+      "include": ["perfume", "cosmetic", "essential oil", "shampoo", "soap", "cream", "lotion", "makeup", "lipstick", "mascara", "deodorant", "toothpaste", "hair oil"],
+      "exclude": ["pharmaceutical", "medicine"],
+      "priority": 5
+    },
+    "34": {
+      "name": "Soap, Wax, Candles",
+      "include": ["soap", "detergent", "wax", "candle", "polish", "cleaning preparation"],
+      "exclude": ["cosmetic soap"],
+      "priority": 4
+    },
+    "35": {
+      "name": "Albuminoidal Substances, Glues",
+      "include": ["gelatin", "glue", "adhesive", "casein", "albumin", "enzyme"],
+      "exclude": [],
+      "priority": 3
+    },
+    "36": {
+      "name": "Explosives, Matches",
+      "include": ["explosive", "firework", "match", "pyrotechnic"],
+      "exclude": [],
+      "priority": 4
+    },
+    "37": {
+      "name": "Photographic Goods",
+      "include": ["photographic film", "photographic paper", "photographic chemical"],
+      "exclude": [],
+      "priority": 3
+    },
+    "38": {
+      "name": "Miscellaneous Chemical Products",
+      "include": ["insecticide", "pesticide", "herbicide", "fungicide", "disinfectant", "antifreeze", "solvent"],
+      "exclude": [],
+      "priority": 4
+    },
+    "39": {
+      "name": "Plastics and Articles Thereof",
+      "include": ["plastic", "polymer", "polyethylene", "polypropylene", "pvc", "polystyrene", "plastic sheet", "plastic film", "plastic container", "plastic bag"],
+      "exclude": ["plastic toys", "plastic furniture", "plastic footwear"],
+      "priority": 3,
+      "notes": "Only when plastic IS the main product. Plastic toys → Ch.95, Plastic furniture → Ch.94"
+    },
+    "40": {
+      "name": "Rubber and Articles Thereof",
+      "include": ["rubber", "natural rubber", "synthetic rubber", "tire", "tyre", "latex", "rubber sheet", "rubber hose", "rubber belt"],
+      "exclude": ["rubber toys", "rubber footwear"],
+      "priority": 4
+    },
+    "41": {
+      "name": "Raw Hides and Skins",
+      "include": ["hide", "skin", "leather raw", "raw leather", "pelt"],
+      "exclude": ["leather goods", "leather bag", "leather shoe"],
+      "priority": 4
+    },
+    "42": {
+      "name": "Leather Articles",
+      "include": ["leather bag", "leather wallet", "leather belt", "leather case", "handbag", "suitcase", "travel bag"],
+      "exclude": ["leather footwear", "leather apparel"],
+      "priority": 5
+    },
+    "43": {
+      "name": "Furskins and Artificial Fur",
+      "include": ["fur", "furskin", "artificial fur"],
+      "exclude": [],
+      "priority": 3
+    },
+    "44": {
+      "name": "Wood and Articles of Wood",
+      "include": ["wood", "timber", "lumber", "plywood", "particle board", "wooden article", "firewood", "charcoal"],
+      "exclude": ["wooden furniture", "wooden toys"],
+      "priority": 4
+    },
+    "45": {
+      "name": "Cork and Articles of Cork",
+      "include": ["cork", "cork article", "cork stopper"],
+      "exclude": [],
+      "priority": 3
+    },
+    "46": {
+      "name": "Straw/Plaiting Materials",
+      "include": ["basket", "wicker", "plaited article", "mat"],
+      "exclude": [],
+      "priority": 3
+    },
+    "47": {
+      "name": "Pulp of Wood",
+      "include": ["wood pulp", "paper pulp", "cellulose pulp"],
+      "exclude": [],
+      "priority": 3
+    },
+    "48": {
+      "name": "Paper and Paperboard",
+      "include": ["paper", "cardboard", "paperboard", "carton", "newsprint", "writing paper", "tissue paper", "toilet paper", "paper bag"],
+      "exclude": ["printed book", "newspaper"],
+      "priority": 5
+    },
+    "49": {
+      "name": "Printed Books and Newspapers",
+      "include": ["book", "newspaper", "magazine", "printed matter", "catalogue", "calendar", "poster", "map"],
+      "exclude": [],
+      "priority": 5
+    },
+    "50": {
+      "name": "Silk",
+      "include": ["silk", "silk yarn", "silk fabric", "silk thread"],
+      "exclude": ["silk apparel"],
+      "priority": 4
+    },
+    "51": {
+      "name": "Wool and Animal Hair",
+      "include": ["wool", "animal hair", "cashmere", "mohair", "wool yarn", "wool fabric"],
+      "exclude": ["wool apparel"],
+      "priority": 4
+    },
+    "52": {
+      "name": "Cotton",
+      "include": ["cotton", "cotton yarn", "cotton fabric", "cotton thread", "denim"],
+      "exclude": ["cotton apparel", "cotton garment"],
+      "priority": 4
+    },
+    "53": {
+      "name": "Other Vegetable Textile Fibres",
+      "include": ["jute", "hemp", "flax", "linen", "sisal", "coir"],
+      "exclude": [],
+      "priority": 3
+    },
+    "54": {
+      "name": "Man-Made Filaments",
+      "include": ["polyester yarn", "nylon yarn", "synthetic filament", "man-made fiber yarn", "rayon"],
+      "exclude": [],
+      "priority": 4
+    },
+    "55": {
+      "name": "Man-Made Staple Fibres",
+      "include": ["polyester fiber", "nylon fiber", "synthetic staple", "acrylic fiber"],
+      "exclude": [],
+      "priority": 4
+    },
+    "56": {
+      "name": "Wadding, Felt, Nonwovens",
+      "include": ["wadding", "felt", "nonwoven", "rope", "cordage", "twine"],
+      "exclude": [],
+      "priority": 3
+    },
+    "57": {
+      "name": "Carpets",
+      "include": ["carpet", "rug", "floor covering", "mat"],
+      "exclude": [],
+      "priority": 5
+    },
+    "58": {
+      "name": "Special Woven Fabrics",
+      "include": ["embroidery", "lace", "tapestry", "velvet"],
+      "exclude": [],
+      "priority": 3
+    },
+    "59": {
+      "name": "Impregnated Textile Fabrics",
+      "include": ["coated fabric", "laminated fabric", "textile hose", "conveyor belt textile"],
+      "exclude": [],
+      "priority": 3
+    },
+    "60": {
+      "name": "Knitted/Crocheted Fabrics",
+      "include": ["knitted fabric", "crocheted fabric", "jersey fabric"],
+      "exclude": ["knitted apparel"],
+      "priority": 4
+    },
+    "61": {
+      "name": "Knitted/Crocheted Apparel",
+      "include": ["t-shirt", "sweater", "jersey", "pullover", "cardigan", "knitted clothing", "hosiery", "socks", "stockings", "knitted dress", "knitted trousers"],
+      "exclude": [],
+      "priority": 5
+    },
+    "62": {
+      "name": "Non-Knitted Apparel",
+      "include": ["shirt", "blouse", "trousers", "pants", "dress", "suit", "jacket", "coat", "overcoat", "woven clothing", "jeans", "skirt"],
+      "exclude": ["knitted"],
+      "priority": 5
+    },
+    "63": {
+      "name": "Other Made-Up Textile Articles",
+      "include": ["blanket", "bed linen", "curtain", "tablecloth", "towel", "tent", "tarpaulin", "sleeping bag"],
+      "exclude": [],
+      "priority": 5
+    },
+    "64": {
+      "name": "Footwear",
+      "include": ["shoes", "boots", "sandals", "footwear", "sneakers", "slippers", "sports shoes", "leather shoes"],
+      "exclude": [],
+      "priority": 6
+    },
+    "65": {
+      "name": "Headgear",
+      "include": ["hat", "cap", "headgear", "helmet"],
+      "exclude": ["safety helmet"],
+      "priority": 4
+    },
+    "66": {
+      "name": "Umbrellas, Walking Sticks",
+      "include": ["umbrella", "parasol", "walking stick", "cane"],
+      "exclude": [],
+      "priority": 3
+    },
+    "67": {
+      "name": "Prepared Feathers, Artificial Flowers",
+      "include": ["artificial flower", "prepared feather", "wig", "false hair"],
+      "exclude": [],
+      "priority": 3
+    },
+    "68": {
+      "name": "Stone, Plaster, Cement",
+      "include": ["stone article", "cement", "concrete", "plaster", "asbestos", "mica"],
+      "exclude": [],
+      "priority": 4
+    },
+    "69": {
+      "name": "Ceramic Products",
+      "include": ["ceramic", "porcelain", "tile", "ceramic tile", "brick", "pottery", "ceramic article", "earthenware", "stoneware", "chinaware"],
+      "exclude": ["ceramic brake", "ceramic for vehicle", "ceramic component for machine"],
+      "priority": 3,
+      "notes": "Only when ceramic IS the product. Ceramic brake pads → Ch.87 (vehicle parts)"
+    },
+    "70": {
+      "name": "Glass and Glassware",
+      "include": ["glass", "glassware", "glass bottle", "glass container", "mirror", "glass sheet", "windshield", "glass fiber"],
+      "exclude": ["glass for vehicle"],
+      "priority": 4
+    },
+    "71": {
+      "name": "Precious Metals and Jewelry",
+      "include": ["gold", "silver", "platinum", "jewelry", "jewellery", "diamond", "precious stone", "semi-precious stone", "pearl", "gem"],
+      "exclude": [],
+      "priority": 5
+    },
+    "72": {
+      "name": "Iron and Steel",
+      "include": ["iron", "steel", "pig iron", "steel bar", "steel sheet", "steel rod", "steel coil", "stainless steel sheet", "iron bar"],
+      "exclude": ["steel article", "steel furniture", "steel tools", "steel utensil"],
+      "priority": 3
+    },
+    "73": {
+      "name": "Articles of Iron or Steel",
+      "include": ["steel article", "iron article", "steel container", "steel bottle", "stainless steel bottle", "steel utensil", "steel kitchenware", "steel pipe", "steel nail", "steel screw", "steel wire", "chain"],
+      "exclude": ["vacuum flask", "thermos", "insulated bottle", "steel furniture"],
+      "priority": 5,
+      "notes": "Steel household articles and components. Vacuum flasks go to Ch.96"
+    },
+    "74": {
+      "name": "Copper and Articles Thereof",
+      "include": ["copper", "copper wire", "copper pipe", "copper article", "brass", "bronze"],
+      "exclude": [],
+      "priority": 4
+    },
+    "75": {
+      "name": "Nickel and Articles Thereof",
+      "include": ["nickel", "nickel article"],
+      "exclude": [],
+      "priority": 3
+    },
+    "76": {
+      "name": "Aluminium and Articles Thereof",
+      "include": ["aluminium", "aluminum", "aluminium sheet", "aluminium foil", "aluminium article"],
+      "exclude": [],
+      "priority": 4
+    },
+    "78": {
+      "name": "Lead and Articles Thereof",
+      "include": ["lead", "lead article"],
+      "exclude": [],
+      "priority": 3
+    },
+    "79": {
+      "name": "Zinc and Articles Thereof",
+      "include": ["zinc", "zinc article"],
+      "exclude": [],
+      "priority": 3
+    },
+    "80": {
+      "name": "Tin and Articles Thereof",
+      "include": ["tin", "tin article"],
+      "exclude": [],
+      "priority": 3
+    },
+    "81": {
+      "name": "Other Base Metals",
+      "include": ["tungsten", "molybdenum", "tantalum", "magnesium", "cobalt", "titanium"],
+      "exclude": [],
+      "priority": 3
+    },
+    "82": {
+      "name": "Tools of Base Metal",
+      "include": ["tool", "hand tool", "spade", "shovel", "axe", "knife", "scissors", "blade", "saw", "file", "pliers"],
+      "exclude": ["machine tool"],
+      "priority": 5
+    },
+    "83": {
+      "name": "Miscellaneous Base Metal Articles",
+      "include": ["lock", "padlock", "key", "safe", "sign", "nameplate", "bell", "statuette", "frame"],
+      "exclude": [],
+      "priority": 4
+    },
+    "84": {
+      "name": "Machinery and Mechanical Appliances",
+      "include": ["machine", "machinery", "engine", "diesel engine", "pump", "compressor", "turbine", "mechanical appliance", "industrial machine", "refrigerator", "air conditioner", "washing machine", "computer", "laptop", "printer", "centrifuge", "crane", "excavator", "tractor"],
+      "exclude": ["electrical", "electronic", "vehicle engine"],
+      "priority": 5
+    },
+    "85": {
+      "name": "Electrical Machinery and Equipment",
+      "include": ["electrical", "electronic", "motor", "electric motor", "generator", "transformer", "battery", "cable", "electric cable", "wire", "tv", "television", "computer", "phone", "smartphone", "mobile phone", "led", "lamp", "heater", "microwave", "fan", "electric fan"],
+      "exclude": [],
+      "priority": 5
+    },
+    "86": {
+      "name": "Railway Locomotives",
+      "include": ["railway", "locomotive", "train", "railway coach", "railway wagon", "tramway"],
+      "exclude": [],
+      "priority": 5
+    },
+    "87": {
+      "name": "Vehicles Other Than Railway",
+      "include": [
+        "car", "automobile", "truck", "bus", "motorcycle", "motorbike", "vehicle", "motor vehicle",
+        "brake pads", "brake disc", "brake rotor", "brake parts", "brake shoe",
+        "vehicle parts", "car parts", "auto parts", "automotive parts", "automobile parts",
+        "for vehicles", "for cars", "for trucks", "for automobiles", "for motor vehicles",
+        "steering wheel", "steering column", "suspension", "shock absorber",
+        "transmission", "gearbox", "clutch", "axle", "wheel hub",
+        "bumper", "fender", "hood", "door panel", "car body",
+        "radiator", "exhaust", "muffler", "catalytic converter",
+        "windshield wiper", "headlight", "tail light", "car mirror"
+      ],
+      "exclude": [],
+      "priority": 9,
+      "notes": "Vehicles AND their parts. 'brake pads for cars' → Ch.87 regardless of material (ceramic, metal, etc.)"
+    },
+    "88": {
+      "name": "Aircraft and Parts",
+      "include": ["aircraft", "airplane", "aeroplane", "helicopter", "aircraft parts", "aviation", "drone", "uav", "parachute"],
+      "exclude": [],
+      "priority": 6
+    },
+    "89": {
+      "name": "Ships, Boats",
+      "include": ["ship", "boat", "vessel", "yacht", "cargo ship", "tanker", "ferry"],
+      "exclude": [],
+      "priority": 5
+    },
+    "90": {
+      "name": "Optical, Medical Instruments",
+      "include": ["optical", "lens", "spectacle", "glasses", "medical instrument", "surgical instrument", "measuring instrument", "camera", "microscope", "telescope", "binocular", "x-ray", "mri", "ultrasound"],
+      "exclude": [],
+      "priority": 5
+    },
+    "91": {
+      "name": "Clocks and Watches",
+      "include": ["clock", "watch", "wristwatch", "wall clock", "stopwatch"],
+      "exclude": [],
+      "priority": 5
+    },
+    "92": {
+      "name": "Musical Instruments",
+      "include": ["musical instrument", "piano", "guitar", "violin", "drum", "flute", "saxophone"],
+      "exclude": [],
+      "priority": 4
+    },
+    "93": {
+      "name": "Arms and Ammunition",
+      "include": ["gun", "rifle", "pistol", "ammunition", "weapon", "firearm"],
+      "exclude": [],
+      "priority": 4
+    },
+    "94": {
+      "name": "Furniture",
+      "include": ["furniture", "chair", "table", "desk", "bed", "sofa", "couch", "cabinet", "cupboard", "wardrobe", "shelf", "mattress", "office furniture", "bedroom furniture"],
+      "exclude": [],
+      "priority": 7,
+      "notes": "Furniture regardless of material. Plastic chair → Ch.94, not Ch.39"
+    },
+    "95": {
+      "name": "Toys, Games, Sports Equipment",
+      "include": ["toy", "toys", "game", "video game", "doll", "puzzle", "sports equipment", "playground", "golf", "tennis", "football", "cricket", "skating", "swimming", "gym equipment", "board game", "playing cards"],
+      "exclude": [],
+      "priority": 8,
+      "notes": "Toys and sports equipment regardless of material. Plastic toys → Ch.95, not Ch.39"
+    },
+    "96": {
+      "name": "Miscellaneous Manufactured Articles",
+      "include": ["vacuum flask", "thermos", "insulated bottle", "insulated container", "button", "zip", "zipper", "fastener", "pen", "pencil", "brush", "paintbrush", "toothbrush", "comb", "broom", "sieve", "lighter", "smoking pipe"],
+      "exclude": [],
+      "priority": 5,
+      "notes": "Includes vacuum flasks regardless of material"
+    },
+    "97": {
+      "name": "Works of Art",
+      "include": ["painting", "sculpture", "antique", "artwork", "original art", "collectable"],
+      "exclude": [],
+      "priority": 4
+    }
+  },
+  "functionalOverrides": {
+    "description": "Keywords that ALWAYS override material-based classification. Function > Material",
+    "rules": [
+      {
+        "keywords": ["brake pads", "brake disc", "brake rotor", "brake shoe", "brake parts", "for vehicles", "for cars", "for trucks", "automotive", "auto parts", "vehicle parts", "car parts"],
+        "forceChapter": "87",
+        "reason": "Vehicle parts are classified by function (Ch.87), not by material (ceramic, metal, etc.)"
+      },
+      {
+        "keywords": ["toys", "toy", "doll", "puzzle", "game", "plaything"],
+        "forceChapter": "95",
+        "reason": "Toys are classified by function (Ch.95), not by material (plastic, wood, metal)"
+      },
+      {
+        "keywords": ["furniture", "chair", "table", "desk", "sofa", "bed", "cabinet", "wardrobe", "shelf"],
+        "forceChapter": "94",
+        "reason": "Furniture is classified by function (Ch.94), not by material (wood, metal, plastic)"
+      },
+      {
+        "keywords": ["vacuum flask", "thermos", "insulated bottle", "insulated container", "thermal bottle"],
+        "forceChapter": "96",
+        "reason": "Vacuum flasks are always Ch.96 regardless of material (steel, plastic, glass)"
+      },
+      {
+        "keywords": ["footwear", "shoes", "boots", "sandals", "sneakers", "slippers"],
+        "forceChapter": "64",
+        "reason": "Footwear is always Ch.64 regardless of material"
+      }
+    ]
+  },
+  "ambiguousTerms": {
+    "description": "Terms that require user disambiguation when used alone",
+    "terms": {
+      "coffee": {
+        "possibleChapters": ["09", "21"],
+        "disambiguationQuestion": "Is this coffee in bean/leaf form (raw or roasted) or processed form (instant/extract)?",
+        "options": [
+          { "label": "Coffee beans (raw or roasted)", "chapter": "09" },
+          { "label": "Instant coffee or coffee extract", "chapter": "21" }
+        ]
+      },
+      "tea": {
+        "possibleChapters": ["09", "21"],
+        "disambiguationQuestion": "Is this tea in leaf form or processed form (instant/extract)?",
+        "options": [
+          { "label": "Tea leaves", "chapter": "09" },
+          { "label": "Instant tea or tea extract", "chapter": "21" }
+        ]
+      },
+      "coffee powder": {
+        "possibleChapters": ["09", "21"],
+        "disambiguationQuestion": "Is this ground roasted coffee or instant coffee powder?",
+        "options": [
+          { "label": "Ground roasted coffee beans", "chapter": "09" },
+          { "label": "Instant/soluble coffee powder", "chapter": "21" }
+        ]
+      },
+      "bottle": {
+        "possibleChapters": ["70", "73", "39", "96"],
+        "disambiguationQuestion": "What type of bottle is this?",
+        "options": [
+          { "label": "Glass bottle (non-insulated)", "chapter": "70" },
+          { "label": "Steel/metal bottle (non-insulated)", "chapter": "73" },
+          { "label": "Plastic bottle", "chapter": "39" },
+          { "label": "Vacuum flask/thermos (insulated)", "chapter": "96" }
+        ]
+      },
+      "oil": {
+        "possibleChapters": ["15", "27", "33"],
+        "disambiguationQuestion": "What type of oil is this?",
+        "options": [
+          { "label": "Vegetable/cooking oil (olive, sunflower, palm, etc.)", "chapter": "15" },
+          { "label": "Mineral/petroleum oil (diesel, petrol, lubricant)", "chapter": "27" },
+          { "label": "Essential/perfume oil", "chapter": "33" }
+        ]
+      }
+    }
+  }
+}

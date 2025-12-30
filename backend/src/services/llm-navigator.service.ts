@@ -13,6 +13,10 @@ import OpenAI from 'openai';
 import * as dotenv from 'dotenv';
 import { prisma } from '../utils/prisma';
 import { logger } from '../utils/logger';
+// PHASE 1: Import chapter notes for legal classification rules
+import { getNotesForCode, formatNotesForPrompt } from './chapter-notes.service';
+// PHASE 1: Import query parser for product type modifiers
+import { parseQuery } from './query-parser.service';
 
 dotenv.config();
 
@@ -97,6 +101,81 @@ function extractKeywords(userInput: string): string[] {
   return keywords;
 }
 
+// PHASE 1: Check if a code should be excluded based on product type modifiers
+/**
+ * Check if a code should be excluded based on product type modifiers
+ * This implements strict filtering for mutually exclusive product types
+ */
+function shouldExcludeByModifier(
+  codeDescription: string,
+  productTypeModifiers: string[]
+): boolean {
+  const lowerDesc = codeDescription.toLowerCase();
+
+  // Coffee-specific exclusion rules: instant/extract vs roasted/raw
+  if (productTypeModifiers.includes('instant') ||
+      productTypeModifiers.includes('soluble') ||
+      productTypeModifiers.includes('extract') ||
+      productTypeModifiers.includes('essence') ||
+      productTypeModifiers.includes('concentrate')) {
+    // If user wants instant/extract, exclude raw/roasted coffee bean codes
+    if ((lowerDesc.includes('not roasted') ||
+        lowerDesc.includes('roasted') ||
+        lowerDesc.includes('coffee beans') ||
+        lowerDesc.includes('raw')) &&
+        !lowerDesc.includes('extract') &&
+        !lowerDesc.includes('instant') &&
+        !lowerDesc.includes('essence')) {
+      return true;
+    }
+  }
+
+  if (productTypeModifiers.includes('roasted') ||
+      productTypeModifiers.includes('raw') ||
+      productTypeModifiers.includes('green') ||
+      productTypeModifiers.includes('beans') ||
+      productTypeModifiers.includes('unroasted')) {
+    // If user wants raw/roasted beans, exclude instant/extract codes
+    if (lowerDesc.includes('instant') ||
+        lowerDesc.includes('extract') ||
+        lowerDesc.includes('essence') ||
+        lowerDesc.includes('soluble')) {
+      return true;
+    }
+  }
+
+  // Variety-specific exclusion: Arabica vs Robusta
+  if (productTypeModifiers.includes('arabica')) {
+    // Exclude Robusta codes when user specified Arabica
+    if ((lowerDesc.includes('robusta') || lowerDesc.includes('rob ')) &&
+        !lowerDesc.includes('arabica')) {
+      return true;
+    }
+  }
+
+  if (productTypeModifiers.includes('robusta')) {
+    // Exclude Arabica codes when user specified Robusta
+    if (lowerDesc.includes('arabica') && !lowerDesc.includes('robusta')) {
+      return true;
+    }
+  }
+
+  // Tea variety exclusion
+  if (productTypeModifiers.includes('green tea') || productTypeModifiers.includes('green')) {
+    if (lowerDesc.includes('black tea') && !lowerDesc.includes('green')) {
+      return true;
+    }
+  }
+
+  if (productTypeModifiers.includes('black tea')) {
+    if (lowerDesc.includes('green tea') && !lowerDesc.includes('black')) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 /**
  * Simple keyword-based option filtering (code-level, not LLM)
  * This ensures options match user's keywords when possible
@@ -106,17 +185,32 @@ function extractKeywords(userInput: string): string[] {
  * 1. WHOLE WORD match - "tea" matches "Tea" but NOT "teats"
  * 2. PLURAL match - "mango" matches "mangoes" (short suffix only)
  * 3. ABBREVIATION match - "robusta" matches "Rob" (for long keywords only)
+ *
+ * PHASE 1: Now also applies product type modifier exclusions
  */
 function filterOptionsByKeywordsSimple(
   options: HierarchyOption[],
-  userKeywords: string[]
+  userKeywords: string[],
+  productTypeModifiers: string[] = []
 ): HierarchyOption[] {
-  if (userKeywords.length === 0 || options.length <= 1) {
-    return options;
+  // PHASE 1: First apply product type modifier exclusions
+  let filteredOptions = options;
+  if (productTypeModifiers.length > 0) {
+    const beforeModifierFilter = filteredOptions.length;
+    filteredOptions = filteredOptions.filter(opt =>
+      !shouldExcludeByModifier(opt.description, productTypeModifiers)
+    );
+    if (filteredOptions.length < beforeModifierFilter) {
+      logger.info(`[FILTER] Modifier filter: ${beforeModifierFilter} -> ${filteredOptions.length} options`);
+    }
+  }
+
+  if (userKeywords.length === 0 || filteredOptions.length <= 1) {
+    return filteredOptions;
   }
 
   // Find options where user keywords appear in description
-  const matchingOptions = options.filter(opt => {
+  const matchingOptions = filteredOptions.filter(opt => {
     const descLower = opt.description.toLowerCase();
 
     // Check if ANY significant keyword (3+ chars) matches description
@@ -162,7 +256,7 @@ function filterOptionsByKeywordsSimple(
   });
 
   // If we found matching options, use them
-  if (matchingOptions.length > 0 && matchingOptions.length < options.length) {
+  if (matchingOptions.length > 0 && matchingOptions.length < filteredOptions.length) {
     // Only add "Other" option if it's from the SAME chapter/parent as matched options
     // This prevents irrelevant "Other" codes (like "Other live animals") appearing
     // when searching for products in completely different chapters
@@ -172,7 +266,7 @@ function filterOptionsByKeywordsSimple(
     // AND there's an "Other" option from that same chapter
     if (matchedChapters.size === 1) {
       const chapter = [...matchedChapters][0];
-      const relevantOther = options.find(o =>
+      const relevantOther = filteredOptions.find(o =>
         o.isOther &&
         o.code.substring(0, 2) === chapter &&
         !matchingOptions.includes(o)
@@ -182,11 +276,11 @@ function filterOptionsByKeywordsSimple(
       }
     }
 
-    logger.info(`[FILTER] Keyword filter: ${options.length} -> ${matchingOptions.length} options`);
+    logger.info(`[FILTER] Keyword filter: ${filteredOptions.length} -> ${matchingOptions.length} options`);
     return matchingOptions;
   }
 
-  return options;
+  return filteredOptions;
 }
 
 /**
@@ -887,7 +981,45 @@ Some products can belong to different chapters based on processing:
 - Tea: 0902 (leaves) vs 2101 (instant/extract)
 - Fruit: 08xx (fresh) vs 20xx (processed)
 
-Check user's keywords to determine which chapter applies. If "instant" → 2101. If "beans" or variety name → 0901.`;
+Check user's keywords to determine which chapter applies. If "instant" → 2101. If "beans" or variety name → 0901.
+
+## PHASE 1: CRITICAL EDGE CASES - MUST FOLLOW!
+
+### COFFEE CLASSIFICATION (Ch.09 vs Ch.21):
+- "instant coffee", "soluble coffee", "coffee extract", "coffee essence", "coffee concentrate" → ALWAYS Ch.21 (2101.11.xx)
+- "coffee beans", "roasted coffee", "green coffee", "raw coffee", "unroasted coffee" → ALWAYS Ch.09 (0901.xx)
+- "coffee powder" is AMBIGUOUS: ground roasted = Ch.09, instant = Ch.21 → ASK USER
+- "3-in-1 coffee", "coffee mix with sugar/creamer" → Ch.21 (2101.12.xx)
+- "coffee husk", "coffee skins" → Ch.09 (0901.90.xx)
+
+### TEA CLASSIFICATION (Ch.09 vs Ch.21):
+- "instant tea", "tea extract", "tea essence" → Ch.21
+- "tea leaves", "black tea", "green tea", "oolong" → Ch.09
+
+### FUNCTION OVER MATERIAL (CRITICAL):
+- "ceramic brake pads" → Ch.87 (vehicle parts), NOT Ch.69 (ceramics)
+- "plastic toys" → Ch.95 (toys), NOT Ch.39 (plastics)
+- "steel furniture" → Ch.94 (furniture), NOT Ch.73 (steel articles)
+- "glass bottles for beverages" → Ch.70 (glass), BUT "vacuum flasks" → Ch.96
+- "stainless steel water bottle" (non-vacuum) → Ch.73 (steel articles)
+- "insulated vacuum flask" → Ch.96 (miscellaneous)
+
+### VARIETY HANDLING:
+- If user specifies "Arabica" → ONLY show Arabica codes, NEVER suggest Robusta
+- If user specifies "Robusta" → ONLY show Robusta codes, NEVER suggest Arabica
+- If variety not specified → Ask which variety
+
+### GRADE HANDLING:
+- If user specifies grade (A, B, C, AB, PB) → Filter to that grade only
+- If grade not specified but variety is → Ask about grade
+- Grade codes: typically last 2 digits (e.g., .11 = Grade A, .12 = Grade B)
+
+### "OTHER" CATEGORY RULES:
+- NEVER select "Other" codes (is_other: true) unless:
+  1. User explicitly says "none of these apply"
+  2. Product genuinely doesn't fit ANY specific code
+  3. All specific alternatives have been presented and rejected
+- Always exhaust specific codes FIRST before suggesting "Other"`;
 }
 
 
@@ -1151,6 +1283,13 @@ export async function navigateHierarchy(
     // Extract keywords from user input
     const userKeywords = extractKeywords(userInput);
 
+    // PHASE 1: Parse query to get product type modifiers
+    const queryAnalysis = parseQuery(userInput);
+    const productTypeModifiers = queryAnalysis.productTypeModifiers;
+    if (productTypeModifiers.length > 0) {
+      logger.info(`[LLM-NAV] Product type modifiers detected: [${productTypeModifiers.join(', ')}]`);
+    }
+
     // Get available options at current level
     let options = currentCode
       ? await getChildrenForCode(currentCode)
@@ -1158,12 +1297,12 @@ export async function navigateHierarchy(
 
     logger.info(`[LLM-NAV] At ${currentCode || 'root'}, found ${options.length} options`);
 
-    // Apply simple keyword filtering at code level (more reliable than LLM-only)
-    // This ensures "rob coffee" only sees Rob options, not Arabica
+    // PHASE 1: Apply keyword filtering with product type modifier exclusions
+    // This ensures "instant coffee" only sees Ch.21 options, "rob coffee" only sees Robusta
     const beforeFilter = options.length;
-    options = filterOptionsByKeywordsSimple(options, userKeywords);
+    options = filterOptionsByKeywordsSimple(options, userKeywords, productTypeModifiers);
     if (options.length < beforeFilter) {
-      logger.info(`[LLM-NAV] Filtered by keywords: ${beforeFilter} -> ${options.length} options`);
+      logger.info(`[LLM-NAV] Filtered by keywords/modifiers: ${beforeFilter} -> ${options.length} options`);
     }
 
     // If no options, we're at a leaf - return classification

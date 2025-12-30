@@ -1,0 +1,229 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "description": "Rules for eliminating irrelevant HS codes based on user input. Used by elimination.service.ts"
+  },
+  "varietyExclusions": {
+    "coffee": {
+      "arabica": {
+        "include": ["arabica"],
+        "exclude": ["robusta", "liberica", "excelsa"],
+        "description": "When user says Arabica, exclude other coffee varieties"
+      },
+      "robusta": {
+        "include": ["robusta"],
+        "exclude": ["arabica", "liberica", "excelsa"],
+        "description": "When user says Robusta, exclude other coffee varieties"
+      },
+      "liberica": {
+        "include": ["liberica"],
+        "exclude": ["arabica", "robusta", "excelsa"],
+        "description": "When user says Liberica, exclude other coffee varieties"
+      }
+    },
+    "tea": {
+      "black tea": {
+        "include": ["black tea", "black"],
+        "exclude": ["green tea", "white tea", "oolong", "pu-erh"],
+        "description": "When user says black tea, exclude other tea types"
+      },
+      "green tea": {
+        "include": ["green tea", "green"],
+        "exclude": ["black tea", "white tea", "oolong", "pu-erh"],
+        "description": "When user says green tea, exclude other tea types"
+      },
+      "white tea": {
+        "include": ["white tea", "white"],
+        "exclude": ["black tea", "green tea", "oolong", "pu-erh"],
+        "description": "When user says white tea, exclude other tea types"
+      },
+      "oolong": {
+        "include": ["oolong"],
+        "exclude": ["black tea", "green tea", "white tea", "pu-erh"],
+        "description": "When user says oolong, exclude other tea types"
+      }
+    },
+    "rice": {
+      "basmati": {
+        "include": ["basmati"],
+        "exclude": ["jasmine", "arborio", "sushi rice", "parboiled"],
+        "description": "When user says basmati, exclude other rice varieties"
+      },
+      "jasmine": {
+        "include": ["jasmine"],
+        "exclude": ["basmati", "arborio", "sushi rice", "parboiled"],
+        "description": "When user says jasmine, exclude other rice varieties"
+      }
+    },
+    "pepper": {
+      "black pepper": {
+        "include": ["black pepper", "black"],
+        "exclude": ["white pepper", "green pepper"],
+        "description": "When user says black pepper, exclude other pepper types"
+      },
+      "white pepper": {
+        "include": ["white pepper", "white"],
+        "exclude": ["black pepper", "green pepper"],
+        "description": "When user says white pepper, exclude other pepper types"
+      }
+    }
+  },
+  "processingStateExclusions": {
+    "coffee": {
+      "instant": {
+        "mustBeInChapter": "21",
+        "exclude": ["roasted", "not roasted", "green", "raw", "beans", "unroasted"],
+        "description": "Instant coffee must be in Ch.21, exclude raw/roasted coffee codes"
+      },
+      "soluble": {
+        "mustBeInChapter": "21",
+        "exclude": ["roasted", "not roasted", "green", "raw", "beans", "unroasted"],
+        "description": "Soluble coffee must be in Ch.21, exclude raw/roasted coffee codes"
+      },
+      "extract": {
+        "mustBeInChapter": "21",
+        "exclude": ["roasted", "not roasted", "green", "raw", "beans", "unroasted"],
+        "description": "Coffee extract must be in Ch.21, exclude raw/roasted coffee codes"
+      },
+      "roasted": {
+        "mustBeInChapter": "09",
+        "exclude": ["instant", "soluble", "extract", "essence", "concentrate"],
+        "description": "Roasted coffee must be in Ch.09, exclude processed forms"
+      },
+      "raw": {
+        "mustBeInChapter": "09",
+        "exclude": ["instant", "soluble", "extract", "essence", "concentrate", "roasted"],
+        "description": "Raw coffee must be in Ch.09, exclude processed forms"
+      },
+      "green": {
+        "mustBeInChapter": "09",
+        "exclude": ["instant", "soluble", "extract", "essence", "concentrate", "roasted"],
+        "description": "Green (unroasted) coffee must be in Ch.09, exclude processed forms"
+      },
+      "unroasted": {
+        "mustBeInChapter": "09",
+        "exclude": ["instant", "soluble", "extract", "essence", "concentrate", "roasted"],
+        "description": "Unroasted coffee must be in Ch.09, exclude processed forms"
+      }
+    },
+    "tea": {
+      "instant": {
+        "mustBeInChapter": "21",
+        "exclude": ["leaves", "leaf", "green tea", "black tea", "oolong"],
+        "description": "Instant tea must be in Ch.21"
+      },
+      "leaves": {
+        "mustBeInChapter": "09",
+        "exclude": ["instant", "extract", "essence"],
+        "description": "Tea leaves must be in Ch.09"
+      }
+    }
+  },
+  "gradeExclusions": {
+    "coffee": {
+      "grade a": {
+        "include": ["grade a", "a grade", "grade-a", "plantation a"],
+        "exclude": ["grade b", "b grade", "grade c", "c grade", "plantation b", "plantation c"],
+        "description": "When user specifies Grade A, exclude other grades"
+      },
+      "grade b": {
+        "include": ["grade b", "b grade", "grade-b", "plantation b"],
+        "exclude": ["grade a", "a grade", "grade c", "c grade", "plantation a", "plantation c"],
+        "description": "When user specifies Grade B, exclude other grades"
+      },
+      "grade c": {
+        "include": ["grade c", "c grade", "grade-c", "plantation c"],
+        "exclude": ["grade a", "a grade", "grade b", "b grade", "plantation a", "plantation b"],
+        "description": "When user specifies Grade C, exclude other grades"
+      },
+      "plantation": {
+        "include": ["plantation"],
+        "exclude": ["cherry", "parchment"],
+        "description": "When user specifies plantation grade, exclude other grades"
+      }
+    }
+  },
+  "materialExclusions": {
+    "for vehicles": {
+      "forceChapter": "87",
+      "excludeChapters": ["39", "69", "73", "40", "70"],
+      "description": "Parts for vehicles go to Ch.87, not material chapters"
+    },
+    "for cars": {
+      "forceChapter": "87",
+      "excludeChapters": ["39", "69", "73", "40", "70"],
+      "description": "Parts for cars go to Ch.87, not material chapters"
+    },
+    "for trucks": {
+      "forceChapter": "87",
+      "excludeChapters": ["39", "69", "73", "40", "70"],
+      "description": "Parts for trucks go to Ch.87, not material chapters"
+    },
+    "automotive": {
+      "forceChapter": "87",
+      "excludeChapters": ["39", "69", "73", "40", "70"],
+      "description": "Automotive parts go to Ch.87, not material chapters"
+    },
+    "brake pads": {
+      "forceChapter": "87",
+      "excludeChapters": ["69", "39", "73"],
+      "description": "Brake pads are vehicle parts (Ch.87) regardless of material (ceramic, metal)"
+    },
+    "brake disc": {
+      "forceChapter": "87",
+      "excludeChapters": ["69", "72", "73"],
+      "description": "Brake discs are vehicle parts (Ch.87) regardless of material"
+    }
+  },
+  "formExclusions": {
+    "beans": {
+      "include": ["beans", "whole bean", "whole beans"],
+      "exclude": ["powder", "powdered", "ground", "instant", "extract", "soluble"],
+      "description": "Bean form excludes powder/ground/instant forms"
+    },
+    "powder": {
+      "include": ["powder", "powdered"],
+      "exclude": ["beans", "whole bean", "leaves", "whole leaf", "whole"],
+      "description": "Powder form excludes whole/bean/leaf forms"
+    },
+    "ground": {
+      "include": ["ground"],
+      "exclude": ["beans", "whole bean", "instant", "soluble", "whole"],
+      "description": "Ground form excludes whole beans and instant"
+    },
+    "whole": {
+      "include": ["whole", "whole bean", "whole leaf"],
+      "exclude": ["powder", "ground", "crushed", "instant", "extract"],
+      "description": "Whole form excludes processed forms"
+    },
+    "leaves": {
+      "include": ["leaves", "leaf", "whole leaf"],
+      "exclude": ["powder", "powdered", "instant", "extract", "ground"],
+      "description": "Leaf form excludes processed forms"
+    }
+  },
+  "decaffeinationExclusions": {
+    "decaffeinated": {
+      "include": ["decaffeinated", "decaf", "caffeine-free", "caffeine free"],
+      "exclude": ["not decaffeinated", "caffeinated", "with caffeine"],
+      "description": "When user specifies decaffeinated, exclude caffeinated codes"
+    },
+    "not decaffeinated": {
+      "include": ["not decaffeinated", "caffeinated", "with caffeine", "regular"],
+      "exclude": ["decaffeinated", "decaf", "caffeine-free"],
+      "description": "When user specifies caffeinated, exclude decaf codes"
+    }
+  },
+  "flavoringExclusions": {
+    "flavored": {
+      "include": ["flavored", "flavoured", "with flavor", "with flavour"],
+      "exclude": ["unflavored", "unflavoured", "not flavored", "not flavoured", "plain"],
+      "description": "When user specifies flavored, exclude unflavored codes"
+    },
+    "unflavored": {
+      "include": ["unflavored", "unflavoured", "not flavored", "not flavoured", "plain", "without flavor"],
+      "exclude": ["flavored", "flavoured", "with flavor", "with flavour"],
+      "description": "When user specifies unflavored, exclude flavored codes"
+    }
+  }
+}
