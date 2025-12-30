@@ -20,6 +20,8 @@ import {
   NavigationHistory,
   validateCode
 } from './llm-navigator.service';
+// PHASE 3: Import elimination service for extracting modifiers from answers
+import { extractModifiersFromAnswer, extractModifiersFromText } from './elimination.service';
 
 // ========================================
 // Types
@@ -98,6 +100,8 @@ const navigationStateCache = new Map<string, {
   pendingQuestionOptions?: Array<{ code: string; label: string; description: string }>;
   pendingQuestionText?: string;
   userDecisions: UserDecision[];
+  // PHASE 3: Track accumulated modifiers from original query and user answers
+  accumulatedModifiers: string[];
 }>();
 
 // ========================================
@@ -154,13 +158,19 @@ async function startNewConversation(
     }
   });
 
+  // PHASE 3: Extract initial modifiers from the product description
+  const initialModifiers = extractModifiersFromText(request.productDescription!);
+  logger.info(`[LLM-CLASSIFIER] Initial modifiers: [${initialModifiers.join(', ')}]`);
+
   // Initialize navigation state
   navigationStateCache.set(conversation.id, {
     productDescription: request.productDescription!,
     currentCode: null,
     history: [],
     pendingQuestionId: null,
-    userDecisions: []
+    userDecisions: [],
+    // PHASE 3: Start with modifiers extracted from the original query
+    accumulatedModifiers: initialModifiers
   });
 
   // Start navigation from root
@@ -236,12 +246,17 @@ async function continueConversation(
       }
     }
 
+    // PHASE 3: Extract modifiers from the original product description
+    const reconstructedModifiers = extractModifiersFromText(conversation.productDescription);
+
     state = {
       productDescription: conversation.productDescription,
       currentCode,
       history,
       pendingQuestionId: null,
-      userDecisions: []
+      userDecisions: [],
+      // PHASE 3: Reconstruct accumulated modifiers from product description
+      accumulatedModifiers: reconstructedModifiers
     };
     navigationStateCache.set(conversationId!, state);
   }
@@ -284,6 +299,20 @@ async function continueConversation(
         });
         state.currentCode = selectedCode;
         logger.info(`[LLM-CLASSIFIER] Updated current position to: ${selectedCode}`);
+
+        // PHASE 3: Extract modifiers from the selected answer and add to accumulated modifiers
+        const answerModifiers = extractModifiersFromAnswer({
+          code: selectedCode,
+          description: codeDetails.description
+        });
+        if (answerModifiers.length > 0) {
+          const newModifiers = answerModifiers.filter(m => !state.accumulatedModifiers.includes(m));
+          if (newModifiers.length > 0) {
+            state.accumulatedModifiers.push(...newModifiers);
+            logger.info(`[PHASE 3] Added modifiers from answer: [${newModifiers.join(', ')}]`);
+            logger.info(`[PHASE 3] Total accumulated modifiers: [${state.accumulatedModifiers.join(', ')}]`);
+          }
+        }
 
         // Record user's decision for better reasoning
         if (state.pendingQuestionText && state.pendingQuestionOptions) {
@@ -822,12 +851,17 @@ export async function skipToClassification(
         }
       }
 
+      // PHASE 3: Extract modifiers from the original product description
+      const skipModifiers = extractModifiersFromText(conversation.productDescription);
+
       state = {
         productDescription: conversation.productDescription,
         currentCode,
         history,
         pendingQuestionId: null,
-        userDecisions: []
+        userDecisions: [],
+        // PHASE 3: Include accumulated modifiers
+        accumulatedModifiers: skipModifiers
       };
     }
 

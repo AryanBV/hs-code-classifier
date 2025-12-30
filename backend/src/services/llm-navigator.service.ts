@@ -21,6 +21,13 @@ import { parseQuery } from './query-parser.service';
 import { checkFunctionalOverrides, checkAmbiguousTerms } from './chapter-predictor.service';
 // ROOT CAUSE FIX: Import scoped semantic search for functional overrides
 import { getBestHeadingInChapter, getScopedSemanticCandidates } from './multi-candidate-search.service';
+// PHASE 3: Import elimination service for modifier-based filtering
+import {
+  filterHierarchyChildren,
+  filterQuestionOptions,
+  isQuestionStillRelevant,
+  extractModifiersFromText
+} from './elimination.service';
 
 dotenv.config();
 
@@ -1386,6 +1393,52 @@ export async function navigateHierarchy(
     options = filterOptionsByKeywordsSimple(options, userKeywords, productTypeModifiers);
     if (options.length < beforeFilter) {
       logger.info(`[LLM-NAV] Filtered by keywords/modifiers: ${beforeFilter} -> ${options.length} options`);
+    }
+
+    // PHASE 3: Apply elimination filtering based on user-specified modifiers
+    // This ensures "Arabica coffee" only sees Arabica codes, not Robusta
+    const eliminationResult = filterHierarchyChildren(
+      options,
+      {
+        productTypeModifiers: queryAnalysis.productTypeModifiers,
+        modifiers: queryAnalysis.modifiers,
+        originalQuery: userInput
+      }
+    );
+
+    if (eliminationResult.eliminatedCount > 0) {
+      logger.info(`[PHASE 3] Elimination filter: ${options.length} -> ${eliminationResult.filteredChildren.length} options`);
+      logger.info(`[PHASE 3] Applied rules: ${eliminationResult.appliedRules.join(', ')}`);
+      options = eliminationResult.filteredChildren;
+
+      // PHASE 3: Auto-select if only one option remains after elimination
+      if (eliminationResult.autoSelectCode && options.length === 1) {
+        const autoSelected = options[0]!;
+        logger.info(`[PHASE 3] Auto-selecting ${autoSelected.code} after elimination`);
+
+        if (!autoSelected.hasChildren) {
+          return {
+            type: 'classification',
+            code: autoSelected.code,
+            description: autoSelected.description,
+            confidence: 90,
+            reasoning: await buildUserFriendlyReasoning(
+              userInput,
+              history,
+              autoSelected.code,
+              autoSelected.description,
+              'Auto-selected based on your specific product details'
+            )
+          };
+        }
+
+        return {
+          type: 'selection',
+          code: autoSelected.code,
+          description: autoSelected.description,
+          reasoning: 'Auto-selected based on elimination of irrelevant options'
+        };
+      }
     }
 
     // If no options, we're at a leaf - return classification

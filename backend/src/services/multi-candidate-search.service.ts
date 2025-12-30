@@ -12,6 +12,8 @@ import {
   getPredictedChaptersArray,
   ChapterPrediction
 } from './chapter-predictor.service';
+// PHASE 3: Import elimination service for filtering candidates
+import { filterCandidatesByElimination, extractModifiersFromText } from './elimination.service';
 
 dotenv.config();
 
@@ -577,6 +579,7 @@ export function combineCandidates(
 
 /**
  * Main function: Get top N candidates from all search methods combined
+ * PHASE 3: Now applies elimination filtering based on user-specified modifiers
  * @param query - User search query
  * @param limit - Maximum number of candidates to return (default: 50)
  * @returns Combined and deduplicated candidates
@@ -586,24 +589,46 @@ export async function getTopCandidates(query: string, limit: number = 50): Promi
   // Fuzzy search creates too much noise for specific product queries like "ceramic brake pads for motorcycles"
   const queryWords = query.trim().split(/\s+/);
 
+  let candidates: Candidate[];
+
   if (queryWords.length >= 3) {
     // Multi-word query: Use semantic search ONLY
     // Semantic search with HNSW index understands context and finds the right codes
     // This ensures 8708.30.00 appears at position 2 instead of being drowned out by noise
-    const semanticCandidates = await semanticSearchMulti(query, limit);
-    return semanticCandidates;
+    candidates = await semanticSearchMulti(query, limit);
+  } else {
+    // For short queries (1-2 words), use combined approach
+    const [fuzzyCandidates, semanticCandidates] = await Promise.all([
+      fuzzyKeywordSearchMulti(query, limit),
+      semanticSearchMulti(query, limit)
+    ]);
+
+    // Combine and deduplicate
+    candidates = combineCandidates(fuzzyCandidates, semanticCandidates, limit);
   }
 
-  // For short queries (1-2 words), use combined approach
-  const [fuzzyCandidates, semanticCandidates] = await Promise.all([
-    fuzzyKeywordSearchMulti(query, limit),
-    semanticSearchMulti(query, limit)
-  ]);
+  // PHASE 3: Apply elimination filtering based on user-specified modifiers
+  // This ensures "Arabica coffee" only returns Arabica codes, not Robusta
+  const queryAnalysis = parseQuery(query);
+  const eliminationResult = filterCandidatesByElimination(
+    candidates.map(c => ({ code: c.code, description: c.description || '', score: c.score, matchType: c.matchType, source: c.source })),
+    {
+      productTypeModifiers: queryAnalysis.productTypeModifiers,
+      modifiers: queryAnalysis.modifiers,
+      originalQuery: query
+    }
+  );
 
-  // Combine and deduplicate
-  const finalCandidates = combineCandidates(fuzzyCandidates, semanticCandidates, limit);
+  if (eliminationResult.eliminatedCount > 0) {
+    console.log(`[PHASE 3] Elimination filter in search: ${candidates.length} -> ${eliminationResult.filteredCodes.length} candidates`);
+    console.log(`[PHASE 3] Applied rules: ${eliminationResult.appliedRules.join(', ')}`);
 
-  return finalCandidates;
+    // Return filtered candidates with their original properties
+    const filteredCodes = new Set(eliminationResult.filteredCodes.map(c => c.code));
+    return candidates.filter(c => filteredCodes.has(c.code));
+  }
+
+  return candidates;
 }
 
 /**
