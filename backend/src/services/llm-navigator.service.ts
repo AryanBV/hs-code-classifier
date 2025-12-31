@@ -831,9 +831,23 @@ function generateUniqueLabel(
     baseLabel = cleanDesc;
   }
 
-  // Step 3: Try base label first (but NOT if it's a generic "Other" - those need qualifiers)
+  // Step 3: Check if we have a meaningful qualifier that should ALWAYS be shown
+  // Grade indicators should always be displayed (A Grade, B Grade, AB Grade, PB Grade, etc.)
+  const gradePatterns = /\b([A-C]|AB|PB|B\/B\/B|AAA|AA)\s*(Grade)?\b/i;
+  const hasGradeQualifier = qualifier && gradePatterns.test(qualifier);
+
+  // If there's a grade qualifier, always include it (don't just return base label)
+  if (hasGradeQualifier) {
+    const labelWithGrade = `${baseLabel} - ${qualifier}`;
+    if (!existingLabels.has(labelWithGrade)) {
+      existingLabels.add(labelWithGrade);
+      return labelWithGrade;
+    }
+  }
+
+  // For non-grade qualifiers, try base label first (only if unique)
   const isGenericBase = baseLabel.toLowerCase() === 'other';
-  if (!isGenericBase && !existingLabels.has(baseLabel) && baseLabel.length > 0) {
+  if (!isGenericBase && !existingLabels.has(baseLabel) && baseLabel.length > 0 && !hasGradeQualifier) {
     existingLabels.add(baseLabel);
     return baseLabel;
   }
