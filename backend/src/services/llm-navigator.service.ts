@@ -355,16 +355,30 @@ function detectDistinctGroups(
     }
   }
 
-  // RULE 2: Multiple non-other options with children at same level
-  // This is the CORE generic logic - works for ANY product
-  const nonOtherOptions = options.filter(o => !o.isOther);
-  const optionsWithChildren = nonOtherOptions.filter(o => o.hasChildren);
+  // RULE 2: Multiple options at same level - INCLUDES "Other" codes
+  // ROOT CAUSE FIX: Keep ALL options including "Other" - it's a valid HS classification
+  // Sort so "Other" appears last (as a fallback option)
+  const sortedOptions = [...options].sort((a, b) => {
+    if (a.isOther && !b.isOther) return 1;  // "Other" goes last
+    if (!a.isOther && b.isOther) return -1;
+    return 0;
+  });
 
-  logger.debug(`[DISTINCT-GROUPS] Non-other: ${nonOtherOptions.length}, with children: ${optionsWithChildren.length}`);
+  // Separate branch codes (can drill down) from leaf codes (final classification)
+  // IMPORTANT: Exclude "Other" from branches/leaves to avoid duplicates
+  const branchOptions = sortedOptions.filter(o => o.hasChildren && !o.isOther);
+  const leafOptions = sortedOptions.filter(o => !o.hasChildren && !o.isOther);
+  const otherOptions = sortedOptions.filter(o => o.isOther);
 
-  if (optionsWithChildren.length >= 2) {
+  // Combine: branches first, then leaves, then "Other" last (no duplicates)
+  const relevantOptions = [...branchOptions, ...leafOptions, ...otherOptions];
+
+  logger.debug(`[DISTINCT-GROUPS] Total: ${sortedOptions.length}, branches: ${branchOptions.length}, leaves: ${leafOptions.length}, other: ${otherOptions.length}`);
+
+  // ROOT CAUSE FIX: Use relevantOptions (includes branches, leaves, AND "Other")
+  if (relevantOptions.length >= 2) {
     // Check if user keywords clearly match ONE option
-    const matchScores = optionsWithChildren.map(o => {
+    const matchScores = relevantOptions.map(o => {
       const desc = o.description.toLowerCase();
       const matchCount = userKeywords.filter(kw => {
         if (kw.length < 3) return false;
@@ -384,16 +398,20 @@ function detectDistinctGroups(
       return null;
     }
 
-    logger.info(`[DISTINCT-GROUPS] ${optionsWithChildren.length} branch options at this level - generating question`);
+    logger.info(`[DISTINCT-GROUPS] ${relevantOptions.length} options at this level - generating question`);
 
-    // Generate question based on description patterns
-    const questionText = generateQuestionFromDescriptions(optionsWithChildren);
+    // ROOT CAUSE FIX: Generate smart question based on ACTUAL differences between options
+    const questionText = generateSmartQuestion(relevantOptions);
 
-    // Create groups with cleaned labels
-    const groups = optionsWithChildren.slice(0, 6).map(o => ({
-      name: cleanDescriptionForLabel(o.description),
-      options: [o]
-    }));
+    // ROOT CAUSE FIX: Use generateUniqueLabel which handles duplicates properly
+    const existingLabels = new Set<string>();
+    const groups = relevantOptions.slice(0, 6).map(o => {
+      const uniqueLabel = generateUniqueLabel(o.code, o.description, existingLabels);
+      return {
+        name: uniqueLabel,
+        options: [o]
+      };
+    });
 
     return {
       groups,
@@ -405,40 +423,57 @@ function detectDistinctGroups(
 }
 
 /**
- * Generate a question based on what differentiates the options
- * Analyzes description patterns to create meaningful questions
+ * ROOT CAUSE FIX: Generate SMART questions based on ACTUAL differences between options
+ * This analyzes what's different between options and generates contextually relevant questions
  */
-function generateQuestionFromDescriptions(options: HierarchyOption[]): string {
+function generateSmartQuestion(options: HierarchyOption[]): string {
+  if (options.length === 0) return "Which option best describes your product?";
+
+  // Extract descriptions and find common/different parts
   const descriptions = options.map(o => o.description.toLowerCase());
 
-  // Check for common patterns in HS code descriptions
-  if (descriptions.some(d => d.includes('roasted')) &&
-      descriptions.some(d => d.includes('not roasted'))) {
-    return 'What is the roasting status?';
+  // Check for common distinguishing patterns - ordered by specificity
+  const patterns = [
+    // Most specific patterns first
+    { keywords: ['decaffeinated', 'not decaffeinated'], question: "Is the product decaffeinated?" },
+    { keywords: ['roasted', 'not roasted'], question: "Is the product roasted?" },
+    { keywords: ['crushed', 'ground', 'whole', 'neither crushed nor ground'], question: "What is the processing state?" },
+    { keywords: ['fresh', 'dried', 'frozen', 'chilled'], question: "What is the preservation state?" },
+    { keywords: ['raw', 'processed', 'prepared'], question: "Is this raw or processed?" },
+    { keywords: ['bulk', 'retail', 'packing', 'packings', 'immediate packing'], question: "What is the packaging type?" },
+    { keywords: ['seed', 'seeds', 'powder', 'extract', 'oil'], question: "What form is the product in?" },
+    { keywords: ['breeding', 'pure-bred', 'livestock'], question: "What is the purpose/type?" },
+    { keywords: ['arabica', 'robusta'], question: "What variety of coffee is this?" },
+    { keywords: ['green tea', 'black tea', 'oolong'], question: "What type of tea is this?" },
+    { keywords: ['parchment', 'cherry'], question: "What is the processing method?" },
+    { keywords: ['grade a', 'grade b', 'grade c', 'a grade', 'b grade', 'c grade', 'ab grade', 'pb grade'], question: "What grade is your product?" },
+    { keywords: ['husk', 'skin', 'shell'], question: "Is this a byproduct (husks/skins/shells)?" },
+    { keywords: ['instant', 'soluble', 'extract', 'essence'], question: "Is this an instant/processed product?" },
+    { keywords: ['other'], question: "Does your product fit a specific category, or is it 'Other'?" },
+  ];
+
+  // Find which pattern matches the differences between options
+  for (const pattern of patterns) {
+    const matchCount = pattern.keywords.filter(kw =>
+      descriptions.some(d => d.includes(kw))
+    ).length;
+
+    // Need at least 2 matches to confirm this is the distinguishing factor
+    if (matchCount >= 2) {
+      return pattern.question;
+    }
   }
 
-  if (descriptions.some(d => d.includes('crushed') || d.includes('ground')) &&
-      descriptions.some(d => d.includes('neither crushed'))) {
-    return 'What form is your product?';
-  }
+  // Default fallback
+  return "Which category best matches your product?";
+}
 
-  if (descriptions.some(d => d.includes('green')) &&
-      descriptions.some(d => d.includes('black'))) {
-    return 'What type is your product?';
-  }
-
-  if (descriptions.some(d => d.includes('fresh')) &&
-      descriptions.some(d => d.includes('dried') || d.includes('frozen'))) {
-    return 'What is the preservation state?';
-  }
-
-  if (descriptions.some(d => d.includes('decaffeinated')) &&
-      descriptions.some(d => d.includes('not decaffeinated'))) {
-    return 'Is the product decaffeinated?';
-  }
-
-  // Default generic question
-  return 'Please select the category that best matches your product:';
+/**
+ * LEGACY: Generate a question based on what differentiates the options
+ * Kept for backward compatibility - use generateSmartQuestion instead
+ */
+function generateQuestionFromDescriptions(options: HierarchyOption[]): string {
+  return generateSmartQuestion(options);
 }
 
 /**
@@ -741,62 +776,93 @@ async function getCodeDescription(code: string): Promise<string | null> {
 }
 
 /**
- * Generate a unique label from description
- * Handles HS code descriptions like "Arabica plantation: ---- A Grade"
- * Combines type (before colon) with grade/detail (after dashes)
+ * ROOT CAUSE FIX: Generate UNIQUE labels that distinguish between similar codes
+ *
+ * Problem it solves:
+ *   "Coffee, not roasted : --Not decaffeinated" → "Coffee, not roasted"
+ *   "Coffee, not roasted : --Decaffeinated"     → "Coffee, not roasted"  // DUPLICATE!
+ *
+ * Fixed behavior:
+ *   Step 1: Try base label (before first colon)
+ *   Step 2: If duplicate, add distinguishing part (after colon, before ----)
+ *   Step 3: If still duplicate, add code suffix
  */
 function generateUniqueLabel(code: string, description: string, existingLabels: Set<string>): string {
   // Clean up the description - remove leading dashes and extra spaces
-  let cleanDesc = description.replace(/^[-:\s]+/, '').trim();
+  const cleanDesc = description.replace(/^[-:\s]+/, '').trim();
 
-  // Split by colon
-  const parts = cleanDesc.split(':').map(p => p.trim().replace(/^[-\s]+/, '').trim()).filter(p => p);
+  // Split by colon to separate main part from qualifier
+  const colonParts = cleanDesc.split(/\s*:\s*/);
+  const mainPart = (colonParts[0] || '').trim();
 
-  let baseLabel: string;
+  // Step 1: Try base label (just the part before colon)
+  let label = mainPart;
 
-  if (parts.length >= 2) {
-    // Format: "Type: ---- Grade" -> combine as "Type - Grade"
-    const typePart = parts[0] || '';
-    const gradePart = parts[parts.length - 1] || '';
+  // Truncate if too long
+  if (label.length > 50) {
+    label = label.substring(0, 47) + '...';
+  }
 
-    // Clean up grade part (remove leading dashes)
-    const cleanGrade = gradePart.replace(/^[-\s]+/, '').trim();
+  if (!existingLabels.has(label)) {
+    existingLabels.add(label);
+    return label;
+  }
 
-    if (cleanGrade && cleanGrade.toLowerCase() !== 'other') {
-      // Combine type and grade: "Arabica plantation - A Grade"
-      baseLabel = `${typePart} - ${cleanGrade}`;
-    } else if (cleanGrade.toLowerCase() === 'other') {
-      baseLabel = `${typePart} - Other`;
-    } else {
-      baseLabel = typePart;
+  // Step 2: Add the distinguishing part (after colon, before ----)
+  // This handles: "Coffee, not roasted : --Not decaffeinated" → extracts "Not decaffeinated"
+  if (colonParts.length > 1) {
+    // Get qualifier from the part after colon
+    let qualifierPart = colonParts.slice(1).join(' : '); // Rejoin in case multiple colons
+
+    // Remove leading dashes (e.g., "--Not decaffeinated" → "Not decaffeinated")
+    let qualifier = qualifierPart.replace(/^[-\s]+/, '').trim();
+
+    // If there's a "----" separator, take the part before it
+    if (qualifier.includes('----')) {
+      qualifier = qualifier.split('----')[0]?.trim() || qualifier;
     }
-  } else {
-    baseLabel = cleanDesc;
+
+    // Also handle "--" separator (common in HS descriptions)
+    if (qualifier.includes('--')) {
+      qualifier = qualifier.split('--')[0]?.trim() || qualifier;
+    }
+
+    // Clean up the qualifier
+    qualifier = qualifier.replace(/^[-\s]+/, '').trim();
+
+    if (qualifier && qualifier.toLowerCase() !== 'other') {
+      label = `${mainPart} - ${qualifier}`;
+
+      // Truncate if too long
+      if (label.length > 60) {
+        label = label.substring(0, 57) + '...';
+      }
+
+      if (!existingLabels.has(label)) {
+        existingLabels.add(label);
+        return label;
+      }
+    }
   }
 
-  // Truncate if too long (but keep it longer to preserve grade info)
-  if (baseLabel.length > 60) {
-    baseLabel = baseLabel.substring(0, 57) + '...';
+  // Step 3: Add code suffix as last resort
+  const codeParts = code.split('.');
+  const codeEnd = codeParts[codeParts.length - 1] || code;
+  label = `${mainPart} (${codeEnd})`;
+
+  // Final truncation check
+  if (label.length > 60) {
+    label = label.substring(0, 57) + '...';
   }
 
-  // Clean up any remaining artifacts
-  baseLabel = baseLabel.replace(/\s+/g, ' ').trim();
-
-  // If label already exists, append the HS code suffix to differentiate
-  if (existingLabels.has(baseLabel)) {
-    // Get the last segment of the code (e.g., "11" from "0901.11.11")
-    const codeParts = code.split('.');
-    const suffix = codeParts[codeParts.length - 1] || code;
-    baseLabel = `${baseLabel} (${suffix})`;
-  }
-
-  existingLabels.add(baseLabel);
-  return baseLabel;
+  existingLabels.add(label);
+  return label;
 }
 
 /**
- * Limit and deduplicate options, ensuring unique labels
+ * ROOT CAUSE FIX: Limit and deduplicate options, ensuring unique labels
  * Max 8 options to avoid overwhelming users
+ * NOW INCLUDES "Other" options at the end as valid classifications
  */
 function processOptionsForDisplay(
   options: Array<{code: string; description: string; isOther?: boolean}>,
@@ -805,11 +871,31 @@ function processOptionsForDisplay(
   const result: Array<{code: string; label: string; description: string}> = [];
   const existingLabels = new Set<string>();
 
-  // Take up to maxOptions non-Other options
-  const nonOtherOptions = options.filter(o => !o.isOther).slice(0, maxOptions);
+  // Sort: non-Other first, then Other at the end
+  const sortedOptions = [...options].sort((a, b) => {
+    if (a.isOther && !b.isOther) return 1;
+    if (!a.isOther && b.isOther) return -1;
+    return 0;
+  });
 
-  for (const opt of nonOtherOptions) {
-    const label = generateUniqueLabel(opt.code, opt.description || '', existingLabels);
+  // Take up to maxOptions, including "Other" options
+  const selectedOptions = sortedOptions.slice(0, maxOptions);
+
+  for (const opt of selectedOptions) {
+    let label: string;
+    if (opt.isOther) {
+      // For "Other" codes, create a clear label
+      label = 'Other';
+      if (existingLabels.has(label)) {
+        const codeParts = opt.code.split('.');
+        const suffix = codeParts[codeParts.length - 1] || opt.code;
+        label = `Other (${suffix})`;
+      }
+      existingLabels.add(label);
+    } else {
+      label = generateUniqueLabel(opt.code, opt.description || '', existingLabels);
+    }
+
     result.push({
       code: opt.code,
       label,
