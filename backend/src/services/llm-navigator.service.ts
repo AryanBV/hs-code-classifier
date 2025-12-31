@@ -404,8 +404,10 @@ function detectDistinctGroups(
     const questionText = generateSmartQuestion(relevantOptions);
 
     // ROOT CAUSE FIX: Use generateUniqueLabel which handles duplicates properly
+    // Show ALL options - don't arbitrarily cut off valid HS codes
+    // Users need to see all choices to make accurate classification
     const existingLabels = new Set<string>();
-    const groups = relevantOptions.slice(0, 6).map(o => {
+    const groups = relevantOptions.map(o => {
       const uniqueLabel = generateUniqueLabel(o.code, o.description, existingLabels);
       return {
         name: uniqueLabel,
@@ -650,12 +652,17 @@ async function getAllChapters(): Promise<HierarchyOption[]> {
     orderBy: { code: 'asc' }
   });
 
-  // All headings have children in HS code structure
-  return headings.map(h => ({
+  // CRITICAL FIX: Only return 4-digit headings, not 2-digit chapters
+  // This prevents mixing hierarchy levels in the first question
+  // Database has both "09" (2-digit chapter) and "0901" (4-digit heading) - we want only 4-digit
+  const fourDigitHeadings = headings.filter(h => h.code.length === 4);
+
+  // All 4-digit headings have children in HS code structure
+  return fourDigitHeadings.map(h => ({
     code: h.code,
     description: h.description,
     isOther: h.isOther,
-    hasChildren: true // Headings always have subheadings underneath
+    hasChildren: true // 4-digit headings always have subheadings underneath
   }));
 }
 
@@ -866,7 +873,7 @@ function generateUniqueLabel(code: string, description: string, existingLabels: 
  */
 function processOptionsForDisplay(
   options: Array<{code: string; description: string; isOther?: boolean}>,
-  maxOptions: number = 8
+  maxOptions: number = 25  // Allow more options for complex hierarchies like coffee grades
 ): Array<{code: string; label: string; description: string}> {
   const result: Array<{code: string; label: string; description: string}> = [];
   const existingLabels = new Set<string>();
@@ -1624,8 +1631,9 @@ export async function navigateHierarchy(
       logger.info(`[LLM-NAV] Multiple leaf options detected (${leafOptions.length}), forcing question`);
 
       // Generate question about the specific variants
+      // Don't cut off valid leaf options - show all grades/variants
       const existingLabels = new Set<string>();
-      const questionOptions = leafOptions.slice(0, 8).map(opt => ({
+      const questionOptions = leafOptions.slice(0, 25).map(opt => ({
         code: opt.code,
         label: generateUniqueLabel(opt.code, opt.description, existingLabels),
         description: opt.description
