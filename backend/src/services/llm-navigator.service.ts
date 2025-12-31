@@ -274,17 +274,16 @@ function filterOptionsByKeywordsSimple(
     const matchedChapters = new Set(matchingOptions.map(o => o.code.substring(0, 2)));
 
     // Only add "Other" if all matched options are from the same chapter
-    // AND there's an "Other" option from that same chapter
+    // AND there are "Other" options from that same chapter
     if (matchedChapters.size === 1) {
       const chapter = [...matchedChapters][0];
-      const relevantOther = filteredOptions.find(o =>
+      const relevantOthers = filteredOptions.filter(o =>
         o.isOther &&
         o.code.substring(0, 2) === chapter &&
         !matchingOptions.includes(o)
       );
-      if (relevantOther) {
-        matchingOptions.push(relevantOther);
-      }
+      // Add ALL relevant "Other" options (e.g., "Other - Seed" and "Other - Other" for wheat)
+      matchingOptions.push(...relevantOthers);
     }
 
     logger.info(`[FILTER] Keyword filter: ${filteredOptions.length} -> ${matchingOptions.length} options`);
@@ -437,6 +436,7 @@ function generateSmartQuestion(options: HierarchyOption[]): string {
   // Check for common distinguishing patterns - ordered by specificity
   const patterns = [
     // Most specific patterns first
+    { keywords: ['seed', 'sowing', 'for seed'], question: "Is this for sowing (seed) or other purposes?" },
     { keywords: ['decaffeinated', 'not decaffeinated'], question: "Is the product decaffeinated?" },
     { keywords: ['roasted', 'not roasted'], question: "Is the product roasted?" },
     { keywords: ['crushed', 'ground', 'whole', 'neither crushed nor ground'], question: "What is the processing state?" },
@@ -786,84 +786,111 @@ async function getCodeDescription(code: string): Promise<string | null> {
  * ROOT CAUSE FIX: Generate UNIQUE labels that distinguish between similar codes
  *
  * Problem it solves:
- *   "Coffee, not roasted : --Not decaffeinated" → "Coffee, not roasted"
- *   "Coffee, not roasted : --Decaffeinated"     → "Coffee, not roasted"  // DUPLICATE!
+ *   "Durum wheat : -- Seed" → Should extract "Seed"
+ *   "Durum wheat : -- Other" → Should extract "Other"
+ *   "Other : -- Seed" → Should extract "Seed"
  *
  * Fixed behavior:
- *   Step 1: Try base label (before first colon)
- *   Step 2: If duplicate, add distinguishing part (after colon, before ----)
- *   Step 3: If still duplicate, add code suffix
+ *   Step 1: Clean the description (remove DGFT dates)
+ *   Step 2: Parse the description format (": --" or ":--" or ": ----")
+ *   Step 3: Try base label first
+ *   Step 4: Add qualifier if we have one and it's meaningful
+ *   Step 5: Handle "Other" or empty qualifiers with seed/other distinction
+ *   Step 6: Last resort - add meaningful code part
  */
-function generateUniqueLabel(code: string, description: string, existingLabels: Set<string>): string {
-  // Clean up the description - remove leading dashes and extra spaces
-  const cleanDesc = description.replace(/^[-:\s]+/, '').trim();
+function generateUniqueLabel(
+  code: string,
+  description: string,
+  existingLabels: Set<string>
+): string {
+  // Step 1: Clean the description
+  let cleanDesc = description
+    .replace(/\s*\d{2}\/\d{4}-\d{2,4}\s+\d{2}\.\d{2}\.\d{4}\s*/g, '') // Remove DGFT dates
+    .trim();
 
-  // Split by colon to separate main part from qualifier
-  const colonParts = cleanDesc.split(/\s*:\s*/);
-  const mainPart = (colonParts[0] || '').trim();
+  // Step 2: Parse the description format
+  // Common formats:
+  // "Category : -- Qualifier" (e.g., "Durum wheat : -- Seed")
+  // "Category :-- Qualifier" (e.g., "Durum wheat :-- Seed")
+  // "Category: ---- Detail" (e.g., "Coffee, not roasted: ----Not decaffeinated")
 
-  // Step 1: Try base label (just the part before colon)
-  let label = mainPart;
+  let baseLabel = '';
+  let qualifier = '';
 
-  // Truncate if too long
-  if (label.length > 50) {
-    label = label.substring(0, 47) + '...';
+  // Try to split by ": --" or ":--" or ": ----"
+  const colonDashMatch = cleanDesc.match(/^(.+?)\s*:\s*-{1,4}\s*(.+)$/);
+  if (colonDashMatch) {
+    baseLabel = colonDashMatch[1]!.trim();
+    qualifier = colonDashMatch[2]!.trim();
+  } else if (cleanDesc.includes(':')) {
+    // Simple colon split
+    const parts = cleanDesc.split(':');
+    baseLabel = parts[0]!.trim();
+    qualifier = parts.slice(1).join(':').replace(/^[\s-]+/, '').trim();
+  } else {
+    baseLabel = cleanDesc;
   }
 
-  if (!existingLabels.has(label)) {
-    existingLabels.add(label);
-    return label;
+  // Step 3: Try base label first (but NOT if it's a generic "Other" - those need qualifiers)
+  const isGenericBase = baseLabel.toLowerCase() === 'other';
+  if (!isGenericBase && !existingLabels.has(baseLabel) && baseLabel.length > 0) {
+    existingLabels.add(baseLabel);
+    return baseLabel;
   }
 
-  // Step 2: Add the distinguishing part (after colon, before ----)
-  // This handles: "Coffee, not roasted : --Not decaffeinated" → extracts "Not decaffeinated"
-  if (colonParts.length > 1) {
-    // Get qualifier from the part after colon
-    let qualifierPart = colonParts.slice(1).join(' : '); // Rejoin in case multiple colons
-
-    // Remove leading dashes (e.g., "--Not decaffeinated" → "Not decaffeinated")
-    let qualifier = qualifierPart.replace(/^[-\s]+/, '').trim();
-
-    // If there's a "----" separator, take the part before it
-    if (qualifier.includes('----')) {
-      qualifier = qualifier.split('----')[0]?.trim() || qualifier;
+  // Step 4: Add qualifier if we have one and it's meaningful
+  if (qualifier && qualifier.length > 0 && qualifier.toLowerCase() !== 'other') {
+    const labelWithQualifier = `${baseLabel} - ${qualifier}`;
+    if (!existingLabels.has(labelWithQualifier)) {
+      existingLabels.add(labelWithQualifier);
+      return labelWithQualifier;
     }
+  }
 
-    // Also handle "--" separator (common in HS descriptions)
-    if (qualifier.includes('--')) {
-      qualifier = qualifier.split('--')[0]?.trim() || qualifier;
-    }
-
-    // Clean up the qualifier
-    qualifier = qualifier.replace(/^[-\s]+/, '').trim();
-
-    if (qualifier && qualifier.toLowerCase() !== 'other') {
-      label = `${mainPart} - ${qualifier}`;
-
-      // Truncate if too long
-      if (label.length > 60) {
-        label = label.substring(0, 57) + '...';
+  // Step 5: If qualifier is "Other" or empty, try more specific label
+  if (qualifier.toLowerCase() === 'other' || !qualifier) {
+    // Check if this is a seed vs non-seed distinction
+    if (cleanDesc.toLowerCase().includes('seed')) {
+      const seedLabel = `${baseLabel} - Seed`;
+      if (!existingLabels.has(seedLabel)) {
+        existingLabels.add(seedLabel);
+        return seedLabel;
       }
-
-      if (!existingLabels.has(label)) {
-        existingLabels.add(label);
-        return label;
+    } else {
+      const otherLabel = `${baseLabel} - Other`;
+      if (!existingLabels.has(otherLabel)) {
+        existingLabels.add(otherLabel);
+        return otherLabel;
       }
     }
   }
 
-  // Step 3: Add code suffix as last resort
-  const codeParts = code.split('.');
-  const codeEnd = codeParts[codeParts.length - 1] || code;
-  label = `${mainPart} (${codeEnd})`;
+  // Step 6: Last resort - add meaningful code part
+  // Extract the last meaningful segment (e.g., "11" from "1001.11")
+  const codeParts = code.replace(/\.00$/, '').split('.');
+  const lastPart = codeParts[codeParts.length - 1]!;
 
-  // Final truncation check
-  if (label.length > 60) {
-    label = label.substring(0, 57) + '...';
+  // Try to make it meaningful
+  let suffix = '';
+  if (lastPart === '11' || lastPart === '91') {
+    suffix = 'Seed';
+  } else if (lastPart === '19' || lastPart === '99') {
+    suffix = 'Other';
+  } else if (lastPart === '00') {
+    suffix = 'General';
+  } else {
+    suffix = lastPart;
   }
 
-  existingLabels.add(label);
-  return label;
+  const finalLabel = `${baseLabel} - ${suffix}`;
+  if (!existingLabels.has(finalLabel)) {
+    existingLabels.add(finalLabel);
+    return finalLabel;
+  }
+
+  // Absolute last resort - add full code
+  existingLabels.add(`${baseLabel} (${code})`);
+  return `${baseLabel} (${code})`;
 }
 
 /**

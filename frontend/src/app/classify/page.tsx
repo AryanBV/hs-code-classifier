@@ -182,9 +182,19 @@ export default function ClassifyPage() {
       // Add AI question message with DATA (not JSX)
       setChatMessages(prev => {
         // Check if we already added this round's questions
-        const existingQuestion = prev.find(m =>
-          m.id.startsWith(`ai-questions-round${conversation.roundNumber}`)
-        )
+        const searchId = `ai-questions-round${conversation.roundNumber}`
+        const existingQuestion = prev.find(m => m.id.startsWith(searchId))
+
+        // Debug logging for conversation continuation
+        if (process.env.NODE_ENV === 'development') {
+          console.log('[Dedup Check]', {
+            roundNumber: conversation.roundNumber,
+            searchingFor: searchId,
+            found: !!existingQuestion,
+            existingIds: prev.filter(m => m.id.startsWith('ai-questions')).map(m => m.id)
+          })
+        }
+
         if (existingQuestion) return prev
 
         return [

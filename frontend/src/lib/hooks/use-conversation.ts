@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import {
   classifyConversational,
   skipToClassification,
@@ -56,6 +56,14 @@ const initialState: ConversationState = {
 export function useConversation() {
   const [state, setState] = useState<ConversationState>(initialState)
 
+  // Use ref to prevent stale closure issues with conversationId
+  const conversationIdRef = useRef<string | null>(null)
+
+  // Keep the ref in sync with state
+  useEffect(() => {
+    conversationIdRef.current = state.conversationId
+  }, [state.conversationId])
+
   /**
    * Start a new classification conversation
    */
@@ -89,7 +97,7 @@ export function useConversation() {
           conversationId: response.conversationId,
           currentQuestions: response.questions || null,
           questionContext: response.questionContext || null,
-          roundNumber: response.roundNumber || 1,
+          roundNumber: response.roundNumber ?? 1,
           totalQuestionsAsked: response.totalQuestionsAsked || 0
         }))
       } else if (response.responseType === 'classification' && response.result) {
@@ -115,7 +123,9 @@ export function useConversation() {
    * Submit answers to current questions
    */
   const submitAnswers = useCallback(async (answers: Record<string, string>) => {
-    if (!state.conversationId || !state.currentQuestions) return
+    // Use ref for conversationId to prevent stale closure issues
+    const currentConversationId = conversationIdRef.current
+    if (!currentConversationId || !state.currentQuestions) return
 
     // Add Q&A to history
     const newHistoryItems: ConversationHistoryItem[] = []
@@ -144,9 +154,10 @@ export function useConversation() {
 
     try {
       const sessionId = getSessionId()
+      // Use ref value for conversationId to avoid stale closure
       const response = await classifyConversational({
         productDescription: state.productDescription,
-        conversationId: state.conversationId,
+        conversationId: currentConversationId,
         sessionId,
         answers
       })
@@ -166,7 +177,7 @@ export function useConversation() {
           status: 'asking',
           currentQuestions: response.questions || null,
           questionContext: response.questionContext || null,
-          roundNumber: response.roundNumber || prev.roundNumber + 1,
+          roundNumber: response.roundNumber ?? (prev.roundNumber + 1),
           totalQuestionsAsked: response.totalQuestionsAsked || prev.totalQuestionsAsked
         }))
       } else if (response.responseType === 'classification' && response.result) {
@@ -185,19 +196,21 @@ export function useConversation() {
         error: error instanceof Error ? error.message : 'Unknown error occurred'
       }))
     }
-  }, [state.conversationId, state.currentQuestions, state.productDescription])
+  }, [state.currentQuestions, state.productDescription]) // Removed conversationId - using ref instead
 
   /**
    * Skip remaining questions and get best guess
    */
   const skip = useCallback(async () => {
-    if (!state.conversationId) return
+    // Use ref for conversationId to prevent stale closure issues
+    const currentConversationId = conversationIdRef.current
+    if (!currentConversationId) return
 
     setState(prev => ({ ...prev, status: 'loading' }))
 
     try {
       const sessionId = getSessionId()
-      const response = await skipToClassification(state.conversationId, sessionId)
+      const response = await skipToClassification(currentConversationId, sessionId)
 
       if (!response.success) {
         setState(prev => ({
@@ -224,7 +237,7 @@ export function useConversation() {
         error: error instanceof Error ? error.message : 'Unknown error occurred'
       }))
     }
-  }, [state.conversationId])
+  }, []) // Removed conversationId - using ref instead
 
   /**
    * Reset and start over

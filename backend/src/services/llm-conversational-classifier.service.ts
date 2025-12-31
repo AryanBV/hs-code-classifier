@@ -39,6 +39,9 @@ export interface LLMClassifyResponse {
   conversationId: string;
   responseType: 'questions' | 'classification' | 'error';
 
+  // Explicit round number for frontend deduplication
+  roundNumber?: number;
+
   // If responseType === 'questions' (matches frontend format)
   questions?: Array<{
     id: string;
@@ -436,6 +439,7 @@ async function processNavigationResult(
       success: true,
       conversationId,
       responseType: 'questions',  // Frontend expects plural
+      roundNumber: turnNumber,  // Explicit round number for frontend deduplication
       questions: [{
         id: result.question!.id,
         text: result.question!.text,
