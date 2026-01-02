@@ -7,8 +7,10 @@
 
 import { Router, Request, Response } from 'express';
 import { logger } from '../utils/logger';
+// PHASE 7.1: Use Semantic Search as PRIMARY classifier
+import { classifyWithSemanticSearch } from '../services/semantic-classifier.service';
+// Keep legacy imports for backwards compatibility on other endpoints
 import {
-  classifyWithLLMNavigator,
   getConversation,
   abandonConversation,
   getConversationStats,
@@ -42,29 +44,21 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
   try {
     const { productDescription, sessionId, conversationId, answers } = req.body;
 
-    // Validation
-    if (!sessionId) {
-      res.status(400).json({
-        success: false,
-        error: 'Session ID is required',
-        timestamp: new Date().toISOString()
-      });
-      return;
-    }
-
+    // Validation - sessionId optional for semantic classifier
     if (!conversationId && !productDescription?.trim()) {
       res.status(400).json({
         success: false,
+        responseType: 'error',
         error: 'Product description is required for new conversations',
         timestamp: new Date().toISOString()
       });
       return;
     }
 
-    logger.info(`[CLASSIFY] ${conversationId ? 'Continuing' : 'New'} conversation`);
+    logger.info(`[CLASSIFY-SEMANTIC] ${conversationId ? 'Continuing' : 'New'} - "${productDescription?.substring(0, 50)}..."`);
 
-    // Call the LLM navigator classifier
-    const result = await classifyWithLLMNavigator({
+    // PHASE 7.1: Use Semantic Search as PRIMARY classifier
+    const result = await classifyWithSemanticSearch({
       productDescription: productDescription || '',
       sessionId,
       conversationId,
@@ -73,7 +67,7 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
 
     // Log performance
     const responseTime = Date.now() - startTime;
-    logger.info(`[CLASSIFY] Response in ${responseTime}ms - type: ${result.responseType}`);
+    logger.info(`[CLASSIFY-SEMANTIC] Response in ${responseTime}ms - type: ${result.responseType}`);
 
     if (result.success) {
       res.status(200).json(result);
@@ -83,43 +77,36 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
 
   } catch (error) {
     const errorMsg = error instanceof Error ? error.message : String(error);
-    logger.error(`[CLASSIFY] Error: ${errorMsg}`);
+    logger.error(`[CLASSIFY-SEMANTIC] Error: ${errorMsg}`);
 
     res.status(500).json({
       success: false,
+      responseType: 'error',
       error: 'Internal server error during classification',
       timestamp: new Date().toISOString()
     });
   }
 });
 
-// Legacy /llm endpoint - redirects to main endpoint for backward compatibility
+// Legacy /llm endpoint - now also uses semantic classifier
 router.post('/llm', async (req: Request, res: Response): Promise<void> => {
-  // Just forward to main handler
   const startTime = Date.now();
 
   try {
     const { productDescription, sessionId, conversationId, answers } = req.body;
 
-    if (!sessionId) {
-      res.status(400).json({
-        success: false,
-        error: 'Session ID is required',
-        timestamp: new Date().toISOString()
-      });
-      return;
-    }
-
     if (!conversationId && !productDescription?.trim()) {
       res.status(400).json({
         success: false,
+        responseType: 'error',
         error: 'Product description is required for new conversations',
         timestamp: new Date().toISOString()
       });
       return;
     }
 
-    const result = await classifyWithLLMNavigator({
+    // PHASE 7.1: Use Semantic Search for /llm endpoint too
+    const result = await classifyWithSemanticSearch({
       productDescription: productDescription || '',
       sessionId,
       conversationId,
@@ -141,6 +128,7 @@ router.post('/llm', async (req: Request, res: Response): Promise<void> => {
 
     res.status(500).json({
       success: false,
+      responseType: 'error',
       error: 'Internal server error during LLM classification',
       timestamp: new Date().toISOString()
     });

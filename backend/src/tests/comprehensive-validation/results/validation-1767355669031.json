@@ -1,0 +1,3011 @@
+{
+  "timestamp": "2026-01-02T12:07:49.030Z",
+  "summary": {
+    "total": 64,
+    "passed": 43,
+    "failed": 21,
+    "questions": 51,
+    "errors": 0,
+    "chapterAccuracy": 67,
+    "headingAccuracy": 46,
+    "avgResponseTime": 1460
+  },
+  "byCategory": {
+    "Textiles": {
+      "total": 6,
+      "passed": 4,
+      "chapterAccuracy": 67
+    },
+    "Food": {
+      "total": 10,
+      "passed": 6,
+      "chapterAccuracy": 60
+    },
+    "Electronics": {
+      "total": 8,
+      "passed": 8,
+      "chapterAccuracy": 100
+    },
+    "Chemicals": {
+      "total": 5,
+      "passed": 0,
+      "chapterAccuracy": 0
+    },
+    "Metals": {
+      "total": 5,
+      "passed": 5,
+      "chapterAccuracy": 100
+    },
+    "Automotive": {
+      "total": 5,
+      "passed": 3,
+      "chapterAccuracy": 60
+    },
+    "Furniture": {
+      "total": 5,
+      "passed": 5,
+      "chapterAccuracy": 100
+    },
+    "Vague": {
+      "total": 5,
+      "passed": 3,
+      "chapterAccuracy": 60
+    },
+    "Colloquial": {
+      "total": 5,
+      "passed": 1,
+      "chapterAccuracy": 20
+    },
+    "Typos": {
+      "total": 5,
+      "passed": 5,
+      "chapterAccuracy": 100
+    },
+    "Composite": {
+      "total": 5,
+      "passed": 3,
+      "chapterAccuracy": 60
+    }
+  },
+  "byDifficulty": {
+    "easy": {
+      "total": 30,
+      "passed": 25,
+      "chapterAccuracy": 83
+    },
+    "medium": {
+      "total": 26,
+      "passed": 13,
+      "chapterAccuracy": 50
+    },
+    "hard": {
+      "total": 8,
+      "passed": 5,
+      "chapterAccuracy": 63
+    }
+  },
+  "failurePatterns": [
+    {
+      "pattern": "Returned question instead of direct classification",
+      "count": 20,
+      "examples": [
+        "polyester sarees embroidered (expected Ch.62)",
+        "jute bags shopping (expected Ch.63)",
+        "instant coffee powder nescafe type (expected Ch.21)"
+      ]
+    },
+    {
+      "pattern": "Chemicals category failures",
+      "count": 5,
+      "examples": [
+        "paracetamol tablets 500mg",
+        "ayurvedic herbal medicine capsules",
+        "sodium hydroxide industrial grade"
+      ]
+    },
+    {
+      "pattern": "Food category failures",
+      "count": 4,
+      "examples": [
+        "instant coffee powder nescafe type",
+        "turmeric powder organic",
+        "dried mango slices"
+      ]
+    },
+    {
+      "pattern": "Colloquial category failures",
+      "count": 4,
+      "examples": [
+        "veggies fresh",
+        "AC spare parts",
+        "phone covers silicone"
+      ]
+    },
+    {
+      "pattern": "Textiles category failures",
+      "count": 2,
+      "examples": [
+        "polyester sarees embroidered",
+        "jute bags shopping"
+      ]
+    },
+    {
+      "pattern": "Automotive category failures",
+      "count": 2,
+      "examples": [
+        "motorcycle spare parts engine",
+        "bicycle complete assembled"
+      ]
+    },
+    {
+      "pattern": "Vague category failures",
+      "count": 2,
+      "examples": [
+        "rice",
+        "food items"
+      ]
+    },
+    {
+      "pattern": "Composite category failures",
+      "count": 2,
+      "examples": [
+        "leather handbag with metal clasp",
+        "cotton shirt with polyester blend"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.62 but got Ch.54",
+      "count": 1,
+      "examples": [
+        "polyester sarees embroidered"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.63 but got Ch.59",
+      "count": 1,
+      "examples": [
+        "jute bags shopping"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.21 but got Ch.9",
+      "count": 1,
+      "examples": [
+        "instant coffee powder nescafe type"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.09 but got Ch.71",
+      "count": 1,
+      "examples": [
+        "turmeric powder organic"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.08 but got Ch.21",
+      "count": 1,
+      "examples": [
+        "dried mango slices"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.09 but got Ch.32",
+      "count": 1,
+      "examples": [
+        "black pepper whole"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.30 but got Ch.34",
+      "count": 1,
+      "examples": [
+        "paracetamol tablets 500mg"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.30 but got Ch.96",
+      "count": 1,
+      "examples": [
+        "ayurvedic herbal medicine capsules"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.28 but got Ch.71",
+      "count": 1,
+      "examples": [
+        "sodium hydroxide industrial grade"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.38 but got Ch.29",
+      "count": 1,
+      "examples": [
+        "hand sanitizer gel"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.31 but got Ch.34",
+      "count": 1,
+      "examples": [
+        "organic fertilizer npk"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.87 but got Ch.85",
+      "count": 1,
+      "examples": [
+        "motorcycle spare parts engine"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.87 but got Ch.90",
+      "count": 1,
+      "examples": [
+        "bicycle complete assembled"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.10 but got Ch.11",
+      "count": 1,
+      "examples": [
+        "rice"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.21 but got Ch.82",
+      "count": 1,
+      "examples": [
+        "food items"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.07 but got Ch.8",
+      "count": 1,
+      "examples": [
+        "veggies fresh"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.84 but got Ch.85",
+      "count": 1,
+      "examples": [
+        "AC spare parts"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.39 but got Ch.85",
+      "count": 1,
+      "examples": [
+        "phone covers silicone"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.95 but got Ch.84",
+      "count": 1,
+      "examples": [
+        "gym equipment weights"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.42 but got Ch.41",
+      "count": 1,
+      "examples": [
+        "leather handbag with metal clasp"
+      ]
+    },
+    {
+      "pattern": "Expected Ch.62 but got Ch.55",
+      "count": 1,
+      "examples": [
+        "cotton shirt with polyester blend"
+      ]
+    }
+  ],
+  "allResults": [
+    {
+      "testCase": {
+        "id": "TEX001",
+        "category": "Textiles",
+        "input": "men's cotton t-shirts",
+        "expectedChapter": "61",
+        "expectedHeading": "6109",
+        "expectedCode": "6109.10.00",
+        "difficulty": "easy",
+        "notes": "CRITICAL TEST - must classify by function (apparel) not material (cotton)"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355562250_j3umx1pdx",
+        "responseType": "classification",
+        "result": {
+          "hsCode": "6109.10.00",
+          "description": "Of cotton",
+          "confidence": 88,
+          "reasoning": "\"men's cotton t-shirts\" → Of cotton",
+          "alternatives": [
+            {
+              "code": "5208.33.10",
+              "description": "Shirting fabrics",
+              "reason": "Similarity: 43%"
+            },
+            {
+              "code": "5208.11.30",
+              "description": "Shirting fabrics",
+              "reason": "Similarity: 43%"
+            }
+          ]
+        },
+        "conversationSummary": {
+          "totalQuestions": 0,
+          "productDescription": "men's cotton t-shirts",
+          "keyDecisions": []
+        },
+        "timestamp": "2026-01-02T12:06:05.761Z"
+      },
+      "timing": 3511,
+      "chapterCorrect": true,
+      "headingCorrect": true,
+      "codeCorrect": true,
+      "responseType": "classification",
+      "returnedCode": "6109.10.00",
+      "returnedChapter": "61"
+    },
+    {
+      "testCase": {
+        "id": "TEX002",
+        "category": "Textiles",
+        "input": "cotton bedsheets king size",
+        "expectedChapter": "63",
+        "expectedHeading": "6302",
+        "difficulty": "easy",
+        "notes": "Bed linen, not fabric"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355565970_cbrzcy1lz",
+        "responseType": "classification",
+        "result": {
+          "hsCode": "6304.19.10",
+          "description": "Bedsheets and bed covers, of cotton",
+          "confidence": 78,
+          "reasoning": "\"cotton bedsheets king size\" → Bedsheets and bed covers, of cotton",
+          "alternatives": [
+            {
+              "code": "6302.31.00",
+              "description": "Other bed linen : -- Of cotton",
+              "reason": "Similarity: 77%"
+            },
+            {
+              "code": "6304.19.40",
+              "description": "Bedsheets and Bed Covers of cotton, Handloom",
+              "reason": "Similarity: 76%"
+            },
+            {
+              "code": "6302.21",
+              "description": "Other bed linen, printed :--Of cotton",
+              "reason": "Similarity: 73%"
+            }
+          ]
+        },
+        "conversationSummary": {
+          "totalQuestions": 0,
+          "productDescription": "cotton bedsheets king size",
+          "keyDecisions": []
+        },
+        "timestamp": "2026-01-02T12:06:07.319Z"
+      },
+      "timing": 1349,
+      "chapterCorrect": true,
+      "headingCorrect": false,
+      "codeCorrect": null,
+      "responseType": "classification",
+      "returnedCode": "6304.19.10",
+      "returnedChapter": "63"
+    },
+    {
+      "testCase": {
+        "id": "TEX003",
+        "category": "Textiles",
+        "input": "raw silk fabric unprocessed",
+        "expectedChapter": "50",
+        "expectedHeading": "5002",
+        "difficulty": "medium",
+        "notes": "Raw silk, not finished products"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355567527_evmcvld2h",
+        "responseType": "classification",
+        "result": {
+          "hsCode": "5005.00.11",
+          "description": "Containing 85percent or more by weight of silk waste: ---- Other than noil silk",
+          "confidence": 60,
+          "reasoning": "\"raw silk fabric unprocessed\" → Containing 85percent or more by weight of silk waste: ---- Other than noil silk",
+          "alternatives": [
+            {
+              "code": "5002",
+              "description": "Raw silk (not thrown).",
+              "reason": "Similarity: 63%"
+            },
+            {
+              "code": "5005.00.11",
+              "description": "Containing 85percent or more by weight of silk waste: ---- Other than noil silk",
+              "reason": "Similarity: 60%"
+            },
+            {
+              "code": "5002.00.10",
+              "description": "Mulberry raw silk",
+              "reason": "Similarity: 58%"
+            }
+          ]
+        },
+        "conversationSummary": {
+          "totalQuestions": 0,
+          "productDescription": "raw silk fabric unprocessed",
+          "keyDecisions": []
+        },
+        "timestamp": "2026-01-02T12:06:09.095Z"
+      },
+      "timing": 1568,
+      "chapterCorrect": true,
+      "headingCorrect": false,
+      "codeCorrect": null,
+      "responseType": "classification",
+      "returnedCode": "5005.00.11",
+      "returnedChapter": "50"
+    },
+    {
+      "testCase": {
+        "id": "TEX004",
+        "category": "Textiles",
+        "input": "woolen sweaters hand knitted",
+        "expectedChapter": "61",
+        "expectedHeading": "6110",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355569302_bpjl2gb94",
+        "responseType": "classification",
+        "result": {
+          "hsCode": "6117.10.20",
+          "description": "Of wool",
+          "confidence": 66,
+          "reasoning": "\"woolen sweaters hand knitted\" → Of wool",
+          "alternatives": [
+            {
+              "code": "6109.90.40",
+              "description": "Of wool or fine animal hair",
+              "reason": "Similarity: 66%"
+            },
+            {
+              "code": "6110.11.20",
+              "description": "Sweaters and cardigans",
+              "reason": "Similarity: 66%"
+            },
+            {
+              "code": "6117.80.20",
+              "description": "Of wool",
+              "reason": "Similarity: 65%"
+            }
+          ]
+        },
+        "conversationSummary": {
+          "totalQuestions": 0,
+          "productDescription": "woolen sweaters hand knitted",
+          "keyDecisions": []
+        },
+        "timestamp": "2026-01-02T12:06:10.525Z"
+      },
+      "timing": 1223,
+      "chapterCorrect": true,
+      "headingCorrect": false,
+      "codeCorrect": null,
+      "responseType": "classification",
+      "returnedCode": "6117.10.20",
+      "returnedChapter": "61"
+    },
+    {
+      "testCase": {
+        "id": "TEX005",
+        "category": "Textiles",
+        "input": "polyester sarees embroidered",
+        "expectedChapter": "62",
+        "expectedHeading": "6206",
+        "acceptableChapters": [
+          "61",
+          "62"
+        ],
+        "difficulty": "medium",
+        "notes": "Sarees can be under multiple headings"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355570734_cc4r331oh",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355572018",
+            "text": "Which category best describes your product?",
+            "options": [
+              "54::Polyester sarees",
+              "58::Saree falls",
+              "52::Saree"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"polyester sarees embroidered\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:12.018Z"
+      },
+      "timing": 1286,
+      "chapterCorrect": false,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "54"
+    },
+    {
+      "testCase": {
+        "id": "TEX006",
+        "category": "Textiles",
+        "input": "jute bags shopping",
+        "expectedChapter": "63",
+        "expectedHeading": "6305",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355572224_g6fmurdvy",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355573714",
+            "text": "Which category best describes your product?",
+            "options": [
+              "59::Jute fabrics and articles used in machinery or ...",
+              "44::Of jute fibre",
+              "58::Other narrow fabrics of jute",
+              "53::Jute",
+              "57::Of jute: ---- Other"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"jute bags shopping\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:13.714Z"
+      },
+      "timing": 1490,
+      "chapterCorrect": false,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "59"
+    },
+    {
+      "testCase": {
+        "id": "FOOD001",
+        "category": "Food",
+        "input": "basmati rice 5kg bags",
+        "expectedChapter": "10",
+        "expectedHeading": "1006",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355573925_n28fvsdf6",
+        "responseType": "classification",
+        "result": {
+          "hsCode": "1006.30.20",
+          "description": "Basmati rice",
+          "confidence": 56,
+          "reasoning": "\"basmati rice 5kg bags\" → Basmati rice",
+          "alternatives": [
+            {
+              "code": "1006.30.92",
+              "description": "--- Other: ---- Basmati rice",
+              "reason": "Similarity: 56%"
+            },
+            {
+              "code": "1006.30.12",
+              "description": "--- Parboiled: ---- Basmati rice",
+              "reason": "Similarity: 55%"
+            },
+            {
+              "code": "1006.30.11",
+              "description": "--- Parboiled: ---- Rice, GI recognised",
+              "reason": "Similarity: 50%"
+            }
+          ]
+        },
+        "conversationSummary": {
+          "totalQuestions": 0,
+          "productDescription": "basmati rice 5kg bags",
+          "keyDecisions": []
+        },
+        "timestamp": "2026-01-02T12:06:15.104Z"
+      },
+      "timing": 1179,
+      "chapterCorrect": true,
+      "headingCorrect": true,
+      "codeCorrect": null,
+      "responseType": "classification",
+      "returnedCode": "1006.30.20",
+      "returnedChapter": "10"
+    },
+    {
+      "testCase": {
+        "id": "FOOD002",
+        "category": "Food",
+        "input": "arabica coffee beans roasted",
+        "expectedChapter": "09",
+        "expectedHeading": "0901",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355575311_j2gjhhcp3",
+        "responseType": "classification",
+        "result": {
+          "hsCode": "0901.11.11",
+          "description": "Arabica plantation: ---- A Grade",
+          "confidence": 55,
+          "reasoning": "\"arabica coffee beans roasted\" → Arabica plantation: ---- A Grade",
+          "alternatives": [
+            {
+              "code": "0901.11.22",
+              "description": "Arabica Cherry: ---- PB Grade",
+              "reason": "Similarity: 53%"
+            },
+            {
+              "code": "0901.11.12",
+              "description": "Arabica plantation: ---- B Grade",
+              "reason": "Similarity: 53%"
+            },
+            {
+              "code": "0901.11.13",
+              "description": "Arabica plantation: ---- C Grade",
+              "reason": "Similarity: 53%"
+            }
+          ]
+        },
+        "conversationSummary": {
+          "totalQuestions": 0,
+          "productDescription": "arabica coffee beans roasted",
+          "keyDecisions": []
+        },
+        "timestamp": "2026-01-02T12:06:16.572Z"
+      },
+      "timing": 1261,
+      "chapterCorrect": true,
+      "headingCorrect": true,
+      "codeCorrect": null,
+      "responseType": "classification",
+      "returnedCode": "0901.11.11",
+      "returnedChapter": "9"
+    },
+    {
+      "testCase": {
+        "id": "FOOD003",
+        "category": "Food",
+        "input": "instant coffee powder nescafe type",
+        "expectedChapter": "21",
+        "expectedHeading": "2101",
+        "difficulty": "medium",
+        "notes": "Instant coffee is Ch.21, not Ch.09"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355576774_jwfdydqtx",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355580312",
+            "text": "Which category best describes your product?",
+            "options": [
+              "09::Powder",
+              "21::Instant coffee",
+              "18::Cocoa powder",
+              "29::Caffeine and its salts"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"instant coffee powder nescafe type\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:20.312Z"
+      },
+      "timing": 3538,
+      "chapterCorrect": false,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "9"
+    },
+    {
+      "testCase": {
+        "id": "FOOD004",
+        "category": "Food",
+        "input": "darjeeling tea loose leaf",
+        "expectedChapter": "09",
+        "expectedHeading": "0902",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355580523_5nxpxd6tt",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355581941",
+            "text": "Which category best describes your product?",
+            "options": [
+              "09::Black Tea",
+              "21::Quick brewing black tea",
+              "84::Tea leaf rolling or cutting machine",
+              "24::Jarda scented tobacco"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"darjeeling tea loose leaf\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:21.941Z"
+      },
+      "timing": 1419,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "9"
+    },
+    {
+      "testCase": {
+        "id": "FOOD005",
+        "category": "Food",
+        "input": "turmeric powder organic",
+        "expectedChapter": "09",
+        "expectedHeading": "0910",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355582156_eba35e1kp",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355583435",
+            "text": "Which category best describes your product?",
+            "options": [
+              "71::Powder",
+              "25::Powder",
+              "32::Prepared organic dye-stuff pigments",
+              "33::In powder",
+              "09::Powder: ---- Poppy"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"turmeric powder organic\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:23.435Z"
+      },
+      "timing": 1279,
+      "chapterCorrect": false,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "71"
+    },
+    {
+      "testCase": {
+        "id": "FOOD006",
+        "category": "Food",
+        "input": "alphonso mango fresh",
+        "expectedChapter": "08",
+        "expectedHeading": "0804",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355583649_7f3pbr9iy",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355584938",
+            "text": "Which category best describes your product?",
+            "options": [
+              "08::Alphonso (Hapus)",
+              "03::Ghol",
+              "28::Aluminium sulphate (iron free)",
+              "09::Rob cherry: ---- AB Grade",
+              "78::Foil"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"alphonso mango fresh\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:24.938Z"
+      },
+      "timing": 1289,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "8"
+    },
+    {
+      "testCase": {
+        "id": "FOOD007",
+        "category": "Food",
+        "input": "dried mango slices",
+        "expectedChapter": "08",
+        "expectedHeading": "0804",
+        "difficulty": "medium",
+        "notes": "Dried fruit same chapter as fresh"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355585142_hazc9gn9v",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355586460",
+            "text": "Which category best describes your product?",
+            "options": [
+              "21::Dried",
+              "19::Dried",
+              "08::Dried",
+              "04::Other : -- Dried",
+              "09::Dried"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"dried mango slices\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:26.460Z"
+      },
+      "timing": 1318,
+      "chapterCorrect": false,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "21"
+    },
+    {
+      "testCase": {
+        "id": "FOOD008",
+        "category": "Food",
+        "input": "frozen shrimp peeled",
+        "expectedChapter": "03",
+        "expectedHeading": "0306",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355586674_1wovnqt0f",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355588117",
+            "text": "Which category best describes your product?",
+            "options": [
+              "03::Other",
+              "07::Other",
+              "02::Frozen : -- Other",
+              "05::Other: ---- Frozen",
+              "08::Peel of citrus fruit or melons ("
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"frozen shrimp peeled\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:28.117Z"
+      },
+      "timing": 1443,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "3"
+    },
+    {
+      "testCase": {
+        "id": "FOOD009",
+        "category": "Food",
+        "input": "black pepper whole",
+        "expectedChapter": "09",
+        "expectedHeading": "0904",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355588332_0nhumtez7",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355589532",
+            "text": "Which category best describes your product?",
+            "options": [
+              "32::Blacks",
+              "38::Activated natural mineral products: ---- Animal...",
+              "28::Carbon blacks"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"black pepper whole\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:29.532Z"
+      },
+      "timing": 1200,
+      "chapterCorrect": false,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "32"
+    },
+    {
+      "testCase": {
+        "id": "FOOD010",
+        "category": "Food",
+        "input": "cashew nuts roasted salted",
+        "expectedChapter": "08",
+        "expectedHeading": "0801",
+        "acceptableChapters": [
+          "08",
+          "20"
+        ],
+        "difficulty": "medium",
+        "notes": "Processed nuts could be Ch.20"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355589741_f8r6t64xg",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355590897",
+            "text": "Which category best describes your product?",
+            "options": [
+              "20::Cashew nut",
+              "26::Roasted",
+              "19::Extruded or expanded products",
+              "11::Roasted",
+              "08::Other"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"cashew nuts roasted salted\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:30.897Z"
+      },
+      "timing": 1156,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "20"
+    },
+    {
+      "testCase": {
+        "id": "ELEC001",
+        "category": "Electronics",
+        "input": "LED light bulbs",
+        "expectedChapter": "85",
+        "expectedHeading": "8539",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355591112_56n02p300",
+        "responseType": "classification",
+        "result": {
+          "hsCode": "8539.52.00",
+          "description": "Light-emitting diode (LED) light sources: - - Light- emitting diode (LED) lamps",
+          "confidence": 78,
+          "reasoning": "\"LED light bulbs\" → Light-emitting diode (LED) light sources: - - Light- emitting diode (LED) lamps",
+          "alternatives": [
+            {
+              "code": "8539.51.00",
+              "description": "Light-emitting diode (LED) light sources: - - Light- emitting diode (LED) modules",
+              "reason": "Similarity: 56%"
+            },
+            {
+              "code": "8539.31.10",
+              "description": "Compact fluorescent lamps",
+              "reason": "Similarity: 54%"
+            }
+          ]
+        },
+        "conversationSummary": {
+          "totalQuestions": 0,
+          "productDescription": "LED light bulbs",
+          "keyDecisions": []
+        },
+        "timestamp": "2026-01-02T12:06:32.932Z"
+      },
+      "timing": 1820,
+      "chapterCorrect": true,
+      "headingCorrect": true,
+      "codeCorrect": null,
+      "responseType": "classification",
+      "returnedCode": "8539.52.00",
+      "returnedChapter": "85"
+    },
+    {
+      "testCase": {
+        "id": "ELEC002",
+        "category": "Electronics",
+        "input": "mobile phone chargers USB",
+        "expectedChapter": "85",
+        "expectedHeading": "8504",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355593133_rceg8hrve",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355594638",
+            "text": "Which category best describes your product?",
+            "options": [
+              "85::Rectifier: ----Battery chargers",
+              "40::Plugs",
+              "84::Converters",
+              "87::Electrically operated"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"mobile phone chargers USB\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:34.638Z"
+      },
+      "timing": 1505,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "85"
+    },
+    {
+      "testCase": {
+        "id": "ELEC003",
+        "category": "Electronics",
+        "input": "laptop computers",
+        "expectedChapter": "84",
+        "expectedHeading": "8471",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355594848_vwmqzop65",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "heading_1767355596178",
+            "text": "Which type of product is this?",
+            "options": [
+              "8474::Other",
+              "8471::Micro computer",
+              "8473::Other",
+              "8478::Other",
+              "8470::Other electronic calculating machines : -- Other"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Select the product type for \"laptop computers\".",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:36.178Z"
+      },
+      "timing": 1330,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "84"
+    },
+    {
+      "testCase": {
+        "id": "ELEC004",
+        "category": "Electronics",
+        "input": "iPhone 15 smartphone",
+        "expectedChapter": "85",
+        "expectedHeading": "8517",
+        "difficulty": "medium",
+        "notes": "Brand name - should understand this is a phone"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355596390_c4repw8ob",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355597704",
+            "text": "Which category best describes your product?",
+            "options": [
+              "85::Telephone sets",
+              "95::Electronic",
+              "84::Micro computer",
+              "96::Electronic",
+              "90::Instant print cameras"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"iPhone 15 smartphone\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:37.704Z"
+      },
+      "timing": 1314,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "85"
+    },
+    {
+      "testCase": {
+        "id": "ELEC005",
+        "category": "Electronics",
+        "input": "Samsung television 55 inch",
+        "expectedChapter": "85",
+        "expectedHeading": "8528",
+        "difficulty": "medium",
+        "notes": "Brand name - should understand this is a TV"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355597917_pczocfyu3",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355599118",
+            "text": "Which category best describes your product?",
+            "options": [
+              "85::Telephone sets",
+              "95::Electronic"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"Samsung television 55 inch\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:39.118Z"
+      },
+      "timing": 1201,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "85"
+    },
+    {
+      "testCase": {
+        "id": "ELEC006",
+        "category": "Electronics",
+        "input": "electric motors 5HP",
+        "expectedChapter": "85",
+        "expectedHeading": "8501",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355599330_z9hwa24z9",
+        "responseType": "classification",
+        "result": {
+          "hsCode": "8501.33.10",
+          "description": "DC motors",
+          "confidence": 54,
+          "reasoning": "\"electric motors 5HP\" → DC motors",
+          "alternatives": [
+            {
+              "code": "8501.31.19",
+              "description": "DC motors: ----Other",
+              "reason": "Similarity: 53%"
+            },
+            {
+              "code": "8501.10",
+              "description": "Motors of an output not exceeding 37.5 W",
+              "reason": "Similarity: 52%"
+            },
+            {
+              "code": "8501.31.11",
+              "description": "DC motors: ----Micro motor",
+              "reason": "Similarity: 52%"
+            }
+          ]
+        },
+        "conversationSummary": {
+          "totalQuestions": 0,
+          "productDescription": "electric motors 5HP",
+          "keyDecisions": []
+        },
+        "timestamp": "2026-01-02T12:06:40.538Z"
+      },
+      "timing": 1208,
+      "chapterCorrect": true,
+      "headingCorrect": true,
+      "codeCorrect": null,
+      "responseType": "classification",
+      "returnedCode": "8501.33.10",
+      "returnedChapter": "85"
+    },
+    {
+      "testCase": {
+        "id": "ELEC007",
+        "category": "Electronics",
+        "input": "solar panels photovoltaic",
+        "expectedChapter": "85",
+        "expectedHeading": "8541",
+        "difficulty": "medium"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355600746_raakk103t",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355601933",
+            "text": "Which category best describes your product?",
+            "options": [
+              "85::Photosensitive semiconductor devices",
+              "94::Other electric luminaires and lighting fittings...",
+              "84::Solar water heaters",
+              "76::Pressure cookers",
+              "98::For other projects"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"solar panels photovoltaic\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:41.933Z"
+      },
+      "timing": 1187,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "85"
+    },
+    {
+      "testCase": {
+        "id": "ELEC008",
+        "category": "Electronics",
+        "input": "air conditioner split unit",
+        "expectedChapter": "84",
+        "expectedHeading": "8415",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355602146_kse9a9y23",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "heading_1767355603378",
+            "text": "Which type of product is this?",
+            "options": [
+              "8415::Split air-conditioner two tones and above",
+              "8479::Evaporative air coolers",
+              "8414::Other",
+              "8412::Other",
+              "8413::Other"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Select the product type for \"air conditioner split unit\".",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:43.378Z"
+      },
+      "timing": 1232,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "84"
+    },
+    {
+      "testCase": {
+        "id": "CHEM001",
+        "category": "Chemicals",
+        "input": "paracetamol tablets 500mg",
+        "expectedChapter": "30",
+        "expectedHeading": "3004",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355603579_ip4ew02xn",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355604869",
+            "text": "Which category best describes your product?",
+            "options": [
+              "34::Tablets and cakes",
+              "31::Goods of this Chapter in tablets or similar for...",
+              "85::X 25 pads",
+              "30::Antiepiliptic drugs",
+              "29::Timolo maleate"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"paracetamol tablets 500mg\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:44.869Z"
+      },
+      "timing": 1290,
+      "chapterCorrect": false,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "34"
+    },
+    {
+      "testCase": {
+        "id": "CHEM002",
+        "category": "Chemicals",
+        "input": "ayurvedic herbal medicine capsules",
+        "expectedChapter": "30",
+        "expectedHeading": "3004",
+        "acceptableChapters": [
+          "30",
+          "21"
+        ],
+        "difficulty": "hard",
+        "notes": "Ayurvedic can be medicament or food supplement"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355605077_wprzzo4ou",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355606237",
+            "text": "Which category best describes your product?",
+            "options": [
+              "96::Gelatin capsules",
+              "13::Other",
+              "12::Other",
+              "30::Ayurvedic"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"ayurvedic herbal medicine capsules\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:46.237Z"
+      },
+      "timing": 1160,
+      "chapterCorrect": false,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "96"
+    },
+    {
+      "testCase": {
+        "id": "CHEM003",
+        "category": "Chemicals",
+        "input": "sodium hydroxide industrial grade",
+        "expectedChapter": "28",
+        "expectedHeading": "2815",
+        "difficulty": "medium"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355606450_oh5vdfd4k",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355607667",
+            "text": "Which category best describes your product?",
+            "options": [
+              "71::Industrial",
+              "85::For industrial use",
+              "98::Machinery: ----For industrial plant project",
+              "84::Other"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"sodium hydroxide industrial grade\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:47.667Z"
+      },
+      "timing": 1217,
+      "chapterCorrect": false,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "71"
+    },
+    {
+      "testCase": {
+        "id": "CHEM004",
+        "category": "Chemicals",
+        "input": "hand sanitizer gel",
+        "expectedChapter": "38",
+        "expectedHeading": "3808",
+        "acceptableChapters": [
+          "33",
+          "38"
+        ],
+        "difficulty": "medium"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355607869_tma5bw2lc",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355609116",
+            "text": "Which category best describes your product?",
+            "options": [
+              "29::Isopropyl alcohol",
+              "30::Gel preparations designed to be used in human o...",
+              "37::Sensitisin",
+              "34::For toilet use (",
+              "33::Personal deodorants and antiperspirants"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"hand sanitizer gel\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:49.116Z"
+      },
+      "timing": 1247,
+      "chapterCorrect": false,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "29"
+    },
+    {
+      "testCase": {
+        "id": "CHEM005",
+        "category": "Chemicals",
+        "input": "organic fertilizer npk",
+        "expectedChapter": "31",
+        "expectedHeading": "3105",
+        "difficulty": "medium"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355609317_t88uu5za3",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355610578",
+            "text": "Which category best describes your product?",
+            "options": [
+              "34::Other organic surface-active agents",
+              "29::Organo-arsenic compounds: - - - Organo-silicon"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"organic fertilizer npk\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:50.578Z"
+      },
+      "timing": 1261,
+      "chapterCorrect": false,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "34"
+    },
+    {
+      "testCase": {
+        "id": "MET001",
+        "category": "Metals",
+        "input": "stainless steel bolts M8",
+        "expectedChapter": "73",
+        "expectedHeading": "7318",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355610792_k4cvxfw47",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355611973",
+            "text": "Which category best describes your product?",
+            "options": [
+              "73::Of stainless steel",
+              "72::Other: ---- Nickel chromium austenitic type"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"stainless steel bolts M8\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:51.973Z"
+      },
+      "timing": 1181,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "73"
+    },
+    {
+      "testCase": {
+        "id": "MET002",
+        "category": "Metals",
+        "input": "aluminum sheets 2mm thick",
+        "expectedChapter": "76",
+        "expectedHeading": "7606",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355612177_mvtylgb9r",
+        "responseType": "classification",
+        "result": {
+          "hsCode": "7605.11.00",
+          "description": "Of aluminium, not alloyed : -- Of which the maximum cross-sectional dimension exceeds 7 mm",
+          "confidence": 55,
+          "reasoning": "\"aluminum sheets 2mm thick\" → Of aluminium, not alloyed : -- Of which the maximum cross-sectional dimension exceeds 7 mm",
+          "alternatives": [
+            {
+              "code": "7605.11.00",
+              "description": "Of aluminium, not alloyed : -- Of which the maximum cross-sectional dimension exceeds 7 mm",
+              "reason": "Similarity: 55%"
+            },
+            {
+              "code": "7605.21.00",
+              "description": "Of aluminium alloys : -- Of which the maximum cross-sectional dimension exceeds 7 mm",
+              "reason": "Similarity: 54%"
+            },
+            {
+              "code": "7608.20.00",
+              "description": "Of aluminium alloys",
+              "reason": "Similarity: 54%"
+            }
+          ]
+        },
+        "conversationSummary": {
+          "totalQuestions": 0,
+          "productDescription": "aluminum sheets 2mm thick",
+          "keyDecisions": []
+        },
+        "timestamp": "2026-01-02T12:06:53.526Z"
+      },
+      "timing": 1349,
+      "chapterCorrect": true,
+      "headingCorrect": false,
+      "codeCorrect": null,
+      "responseType": "classification",
+      "returnedCode": "7605.11.00",
+      "returnedChapter": "76"
+    },
+    {
+      "testCase": {
+        "id": "MET003",
+        "category": "Metals",
+        "input": "iron pipes galvanized",
+        "expectedChapter": "73",
+        "expectedHeading": "7306",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355613732_qgtracjny",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355615016",
+            "text": "Which category best describes your product?",
+            "options": [
+              "73::Galvanised pipes: ---- Of iron",
+              "72::Plated or coated with zinc:----Galvannealed"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"iron pipes galvanized\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:55.016Z"
+      },
+      "timing": 1284,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "73"
+    },
+    {
+      "testCase": {
+        "id": "MET004",
+        "category": "Metals",
+        "input": "copper wire electrical",
+        "expectedChapter": "74",
+        "expectedHeading": "7408",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355615226_hsxnqxc8u",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "heading_1767355616482",
+            "text": "Which type of product is this?",
+            "options": [
+              "7407::Electrolytic copper rods or black copper rods",
+              "7418::Utensils: ----Of copper",
+              "7401::Cement copper (precipitated copper)",
+              "7419::Other articles of copper",
+              "7415::Other"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Select the product type for \"copper wire electrical\".",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:56.482Z"
+      },
+      "timing": 1256,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "74"
+    },
+    {
+      "testCase": {
+        "id": "MET005",
+        "category": "Metals",
+        "input": "gold jewelry necklace",
+        "expectedChapter": "71",
+        "expectedHeading": "7113",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355616690_8wus78uyl",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "heading_1767355617834",
+            "text": "Which type of product is this?",
+            "options": [
+              "7113::Of gold :----Studded with other precious and se...",
+              "7114::Articles of gold",
+              "7112::Other : -- Of gold",
+              "7102::Other",
+              "7106::Other"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Select the product type for \"gold jewelry necklace\".",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:06:57.834Z"
+      },
+      "timing": 1144,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "71"
+    },
+    {
+      "testCase": {
+        "id": "AUTO001",
+        "category": "Automotive",
+        "input": "car brake pads ceramic",
+        "expectedChapter": "87",
+        "expectedHeading": "8708",
+        "difficulty": "easy",
+        "notes": "Function over material - brake pads not ceramics"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355618041_zqosxtuwg",
+        "responseType": "classification",
+        "result": {
+          "hsCode": "8708.30.00",
+          "description": "Brakes and servo-brakes; parts thereof",
+          "confidence": 69,
+          "reasoning": "\"car brake pads ceramic\" → Brakes and servo-brakes; parts thereof",
+          "alternatives": [
+            {
+              "code": "8607.29.00",
+              "description": "Brakes and parts thereof : -- Other",
+              "reason": "Similarity: 41%"
+            },
+            {
+              "code": "6813.20.10",
+              "description": "Brake lining and pads",
+              "reason": "Similarity: 40%"
+            }
+          ]
+        },
+        "conversationSummary": {
+          "totalQuestions": 0,
+          "productDescription": "car brake pads ceramic",
+          "keyDecisions": []
+        },
+        "timestamp": "2026-01-02T12:06:59.898Z"
+      },
+      "timing": 1857,
+      "chapterCorrect": true,
+      "headingCorrect": true,
+      "codeCorrect": null,
+      "responseType": "classification",
+      "returnedCode": "8708.30.00",
+      "returnedChapter": "87"
+    },
+    {
+      "testCase": {
+        "id": "AUTO002",
+        "category": "Automotive",
+        "input": "motorcycle spare parts engine",
+        "expectedChapter": "87",
+        "expectedHeading": "8714",
+        "difficulty": "medium"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355620099_a2uxb1j53",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355621324",
+            "text": "Which category best describes your product?",
+            "options": [
+              "85::Parts",
+              "84::Parts"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"motorcycle spare parts engine\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:01.324Z"
+      },
+      "timing": 1225,
+      "chapterCorrect": false,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "85"
+    },
+    {
+      "testCase": {
+        "id": "AUTO003",
+        "category": "Automotive",
+        "input": "car tires radial 205/55R16",
+        "expectedChapter": "40",
+        "expectedHeading": "4011",
+        "difficulty": "easy",
+        "notes": "Tires are rubber products, not automotive"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355621530_cyt3bqo7q",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "heading_1767355622894",
+            "text": "Which type of product is this?",
+            "options": [
+              "4013::Of a kind used on bicycles",
+              "4011::Of a kind used on agricultural or forestry vehi...",
+              "4012::Solid rubber tyres for motor vehicles",
+              "4008::Tread rubber and tread packing strip for resoli...",
+              "4002::Tread rubber compound"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Select the product type for \"car tires radial 205/55R16\".",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:02.894Z"
+      },
+      "timing": 1364,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "40"
+    },
+    {
+      "testCase": {
+        "id": "AUTO004",
+        "category": "Automotive",
+        "input": "bicycle complete assembled",
+        "expectedChapter": "87",
+        "expectedHeading": "8712",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355623102_1ce0qvbdm",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355624297",
+            "text": "Which category best describes your product?",
+            "options": [
+              "90::Printed circuit assemblies for the goods of sub...",
+              "85::Other electrical and electronic assemblies and ...",
+              "84::Machines for assembling electric or electronic ...",
+              "44::Assembled flooring panels : -- Other",
+              "73::Towers"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"bicycle complete assembled\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:04.297Z"
+      },
+      "timing": 1195,
+      "chapterCorrect": false,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "90"
+    },
+    {
+      "testCase": {
+        "id": "AUTO005",
+        "category": "Automotive",
+        "input": "auto rickshaw three wheeler",
+        "expectedChapter": "87",
+        "expectedHeading": "8703",
+        "difficulty": "medium",
+        "notes": "Indian specific vehicle type"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355624509_pn3z44rnq",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355625703",
+            "text": "Which category best describes your product?",
+            "options": [
+              "87::Three-wheeled vehicles",
+              "40::For tractors: ---- Of a kind used in tyres of c...",
+              "93::Self propelled"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"auto rickshaw three wheeler\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:05.703Z"
+      },
+      "timing": 1194,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "87"
+    },
+    {
+      "testCase": {
+        "id": "FURN001",
+        "category": "Furniture",
+        "input": "wooden dining table",
+        "expectedChapter": "94",
+        "expectedHeading": "9403",
+        "difficulty": "easy"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355625911_24kv9yy4l",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "heading_1767355627283",
+            "text": "Which type of product is this?",
+            "options": [
+              "9403::Wooden furniture of a kind used in the kitchen",
+              "9401::Other seats",
+              "9402::Other",
+              "9404::Other",
+              "4419::Tableware and kitchenware"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Select the product type for \"wooden dining table\".",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:07.283Z"
+      },
+      "timing": 1372,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "94"
+    },
+    {
+      "testCase": {
+        "id": "FURN002",
+        "category": "Furniture",
+        "input": "teak wood planks",
+        "expectedChapter": "44",
+        "expectedHeading": "4407",
+        "difficulty": "easy",
+        "notes": "Raw wood, not furniture"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355627488_7y0uzn56z",
+        "responseType": "classification",
+        "result": {
+          "hsCode": "4403.42.00",
+          "description": "Teak",
+          "confidence": 51,
+          "reasoning": "\"teak wood planks\" → Teak",
+          "alternatives": [
+            {
+              "code": "4407.23.00",
+              "description": "Teak",
+              "reason": "Similarity: 51%"
+            },
+            {
+              "code": "4412.31.30",
+              "description": "Other tea chest panels",
+              "reason": "Similarity: 45%"
+            },
+            {
+              "code": "4403.99.28",
+              "description": "Sal (Chorea robusta, Sandalwood (Santalum album), Semul (Bombax ceiba), Walnut wood (Juglans binata), Anjam (Hardwickiabinata), Sisso (Dalbergia sisso) and White cedar (Dysozylum spp.) and the like: ---- White cedar [Dysozylum",
+              "reason": "Similarity: 45%"
+            }
+          ]
+        },
+        "conversationSummary": {
+          "totalQuestions": 0,
+          "productDescription": "teak wood planks",
+          "keyDecisions": []
+        },
+        "timestamp": "2026-01-02T12:07:08.907Z"
+      },
+      "timing": 1419,
+      "chapterCorrect": true,
+      "headingCorrect": false,
+      "codeCorrect": null,
+      "responseType": "classification",
+      "returnedCode": "4403.42.00",
+      "returnedChapter": "44"
+    },
+    {
+      "testCase": {
+        "id": "FURN003",
+        "category": "Furniture",
+        "input": "wooden chair with steel legs",
+        "expectedChapter": "94",
+        "expectedHeading": "9401",
+        "difficulty": "hard",
+        "notes": "Composite product - classify by primary material/function"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355629110_nyzfyzg3j",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355630422",
+            "text": "Which category best describes your product?",
+            "options": [
+              "94::Of Steel",
+              "72::Other bars and rods",
+              "44::Wooden sticks",
+              "82::Circular saw blades ("
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"wooden chair with steel legs\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:10.422Z"
+      },
+      "timing": 1312,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "94"
+    },
+    {
+      "testCase": {
+        "id": "FURN004",
+        "category": "Furniture",
+        "input": "bamboo handicrafts decorative",
+        "expectedChapter": "46",
+        "expectedHeading": "4602",
+        "difficulty": "medium"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355630634_5qq6bp0v1",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355631827",
+            "text": "Which category best describes your product?",
+            "options": [
+              "46::Other",
+              "44::Other : -- Of bamboo",
+              "55::Obtained from bamboo: ---- Other",
+              "94::Furniture of other materials",
+              "14::Bamboos"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"bamboo handicrafts decorative\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:11.827Z"
+      },
+      "timing": 1193,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "46"
+    },
+    {
+      "testCase": {
+        "id": "FURN005",
+        "category": "Furniture",
+        "input": "plastic chairs outdoor",
+        "expectedChapter": "94",
+        "expectedHeading": "9401",
+        "difficulty": "easy",
+        "notes": "Furniture by function, not plastic products"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355632032_roltf7g73",
+        "responseType": "classification",
+        "result": {
+          "hsCode": "9403.70.00",
+          "description": "Furniture of plastics",
+          "confidence": 65,
+          "reasoning": "\"plastic chairs outdoor\" → Furniture of plastics",
+          "alternatives": [
+            {
+              "code": "9401.59.00",
+              "description": "Seats of cane, osier, bamboo or similar materials : -- Other",
+              "reason": "Similarity: 51%"
+            }
+          ]
+        },
+        "conversationSummary": {
+          "totalQuestions": 0,
+          "productDescription": "plastic chairs outdoor",
+          "keyDecisions": []
+        },
+        "timestamp": "2026-01-02T12:07:13.993Z"
+      },
+      "timing": 1961,
+      "chapterCorrect": true,
+      "headingCorrect": false,
+      "codeCorrect": null,
+      "responseType": "classification",
+      "returnedCode": "9403.70.00",
+      "returnedChapter": "94"
+    },
+    {
+      "testCase": {
+        "id": "VAGUE001",
+        "category": "Vague",
+        "input": "rice",
+        "expectedChapter": "10",
+        "expectedHeading": "1006",
+        "difficulty": "medium",
+        "notes": "Should ask clarifying questions or default to unmilled rice"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355634196_204t7smvh",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355635398",
+            "text": "Which category best describes your product?",
+            "options": [
+              "11::Rice flour:---- White rice flour",
+              "10::Other: ---- Other"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"rice\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:15.398Z"
+      },
+      "timing": 1202,
+      "chapterCorrect": false,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "11"
+    },
+    {
+      "testCase": {
+        "id": "VAGUE002",
+        "category": "Vague",
+        "input": "coffee",
+        "expectedChapter": "09",
+        "acceptableChapters": [
+          "09",
+          "21"
+        ],
+        "difficulty": "medium",
+        "notes": "Could be beans (09) or instant (21) - should ask"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355635605_3ehy82uyn",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355636967",
+            "text": "Which category best describes your product?",
+            "options": [
+              "09::Extracted",
+              "21::Roasted coffee substitutes",
+              "29::Caffeine and its salts"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"coffee\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:16.967Z"
+      },
+      "timing": 1362,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "9"
+    },
+    {
+      "testCase": {
+        "id": "VAGUE003",
+        "category": "Vague",
+        "input": "clothes",
+        "expectedChapter": "62",
+        "acceptableChapters": [
+          "61",
+          "62",
+          "63"
+        ],
+        "difficulty": "hard",
+        "notes": "Very vague - should ask type of clothing"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355637180_p327k4ddl",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "heading_1767355638479",
+            "text": "Which type of product is this?",
+            "options": [
+              "6202::Other",
+              "6205::Other",
+              "6201::Other",
+              "6214::Other",
+              "6208::Other"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Select the product type for \"clothes\".",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:18.479Z"
+      },
+      "timing": 1299,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "62"
+    },
+    {
+      "testCase": {
+        "id": "VAGUE004",
+        "category": "Vague",
+        "input": "machine parts",
+        "expectedChapter": "84",
+        "acceptableChapters": [
+          "84",
+          "85",
+          "87"
+        ],
+        "difficulty": "hard",
+        "notes": "Very vague - should ask what type of machine"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355638694_70ythoa34",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355639973",
+            "text": "Which category best describes your product?",
+            "options": [
+              "84::Parts",
+              "74::Other: ----Parts",
+              "71::Parts",
+              "96::Parts",
+              "73::Other parts"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"machine parts\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:19.973Z"
+      },
+      "timing": 1279,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "84"
+    },
+    {
+      "testCase": {
+        "id": "VAGUE005",
+        "category": "Vague",
+        "input": "food items",
+        "expectedChapter": "21",
+        "acceptableChapters": [
+          "04",
+          "07",
+          "08",
+          "09",
+          "10",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21"
+        ],
+        "difficulty": "hard",
+        "notes": "Extremely vague - must ask clarifying question"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355640188_kdlija8y0",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355641614",
+            "text": "Which category best describes your product?",
+            "options": [
+              "82::Other sets of assorted articles",
+              "96::Sets of articles from two or more of the forego...",
+              "76::Utensils: ----Other Table",
+              "42::Other",
+              "71::Other articles"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"food items\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:21.614Z"
+      },
+      "timing": 1426,
+      "chapterCorrect": false,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "82"
+    },
+    {
+      "testCase": {
+        "id": "COLL001",
+        "category": "Colloquial",
+        "input": "veggies fresh",
+        "expectedChapter": "07",
+        "difficulty": "medium",
+        "notes": "Colloquial for vegetables"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355641819_jwgqb7ykf",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355643018",
+            "text": "Which category best describes your product?",
+            "options": [
+              "08::Fresh",
+              "09::Fresh",
+              "02::Fresh or chilled : -- Other",
+              "03::Fresh or chilled",
+              "07::Cucumbers and gherkins"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"veggies fresh\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:23.018Z"
+      },
+      "timing": 1199,
+      "chapterCorrect": false,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "8"
+    },
+    {
+      "testCase": {
+        "id": "COLL002",
+        "category": "Colloquial",
+        "input": "tshirts",
+        "expectedChapter": "61",
+        "expectedHeading": "6109",
+        "difficulty": "easy",
+        "notes": "No space, no apostrophe"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355643218_r3g70kqef",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "heading_1767355644576",
+            "text": "Which type of product is this?",
+            "options": [
+              "6109::Other",
+              "6104::Other",
+              "6105::Shirts",
+              "6103::Other",
+              "6107::Other"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Select the product type for \"tshirts\".",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:24.576Z"
+      },
+      "timing": 1358,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "61"
+    },
+    {
+      "testCase": {
+        "id": "COLL003",
+        "category": "Colloquial",
+        "input": "AC spare parts",
+        "expectedChapter": "84",
+        "expectedHeading": "8415",
+        "difficulty": "medium",
+        "notes": "AC = Air Conditioner"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355644791_cx1cz612m",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355645999",
+            "text": "Which category best describes your product?",
+            "options": [
+              "85::Parts",
+              "84::Parts"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"AC spare parts\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:25.999Z"
+      },
+      "timing": 1208,
+      "chapterCorrect": false,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "85"
+    },
+    {
+      "testCase": {
+        "id": "COLL004",
+        "category": "Colloquial",
+        "input": "phone covers silicone",
+        "expectedChapter": "39",
+        "acceptableChapters": [
+          "39",
+          "42"
+        ],
+        "difficulty": "medium",
+        "notes": "Phone accessories"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355646206_39afjzvva",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355647398",
+            "text": "Which category best describes your product?",
+            "options": [
+              "85::Telephone sets",
+              "63::Silk cushion covers",
+              "64::Leather sandals with plastic or synthetic sole",
+              "40::Feeding bottle nipples",
+              "42::Leather sofa cover"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"phone covers silicone\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:27.398Z"
+      },
+      "timing": 1192,
+      "chapterCorrect": false,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "85"
+    },
+    {
+      "testCase": {
+        "id": "COLL005",
+        "category": "Colloquial",
+        "input": "gym equipment weights",
+        "expectedChapter": "95",
+        "expectedHeading": "9506",
+        "difficulty": "medium"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355647606_9jy1rm4l7",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355648925",
+            "text": "Which category best describes your product?",
+            "options": [
+              "84::Parts and accessories equally suitable for use ...",
+              "71::Parts",
+              "90::Parts and accessories"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"gym equipment weights\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:28.925Z"
+      },
+      "timing": 1319,
+      "chapterCorrect": false,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "84"
+    },
+    {
+      "testCase": {
+        "id": "TYPO001",
+        "category": "Typos",
+        "input": "cotten tshirts",
+        "expectedChapter": "61",
+        "expectedHeading": "6109",
+        "difficulty": "medium",
+        "notes": "Misspelled cotton"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355649134_90ke8spb6",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "heading_1767355650358",
+            "text": "Which type of product is this?",
+            "options": [
+              "6109::Other",
+              "6104::Other",
+              "6105::Shirts",
+              "6103::Other",
+              "6107::Other"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Select the product type for \"cotten tshirts\".",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:30.358Z"
+      },
+      "timing": 1224,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "61"
+    },
+    {
+      "testCase": {
+        "id": "TYPO002",
+        "category": "Typos",
+        "input": "banannas fresh",
+        "expectedChapter": "08",
+        "expectedHeading": "0803",
+        "difficulty": "medium",
+        "notes": "Misspelled bananas"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355650564_q2lz50ias",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355651814",
+            "text": "Which category best describes your product?",
+            "options": [
+              "08::Fresh",
+              "09::Fresh",
+              "02::Fresh or chilled : -- Other",
+              "03::Fresh or chilled",
+              "07::Cucumbers and gherkins"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"banannas fresh\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:31.814Z"
+      },
+      "timing": 1250,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "8"
+    },
+    {
+      "testCase": {
+        "id": "TYPO003",
+        "category": "Typos",
+        "input": "eletric motors",
+        "expectedChapter": "85",
+        "expectedHeading": "8501",
+        "difficulty": "medium",
+        "notes": "Misspelled electric"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355652027_zy1my55ik",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355653299",
+            "text": "Which category best describes your product?",
+            "options": [
+              "85::DC motors",
+              "87::Other"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"eletric motors\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:33.299Z"
+      },
+      "timing": 1272,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "85"
+    },
+    {
+      "testCase": {
+        "id": "TYPO004",
+        "category": "Typos",
+        "input": "aluminium sheets",
+        "expectedChapter": "76",
+        "expectedHeading": "7606",
+        "difficulty": "easy",
+        "notes": "British spelling - should work"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355653501_1490vwqwf",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355654733",
+            "text": "Which category best describes your product?",
+            "options": [
+              "76::Of aluminium alloys : -- Of which the maximum c...",
+              "72::Plated or coated with aluminium : -- Plated or ...",
+              "28::Aluminium chlorite"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"aluminium sheets\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:34.733Z"
+      },
+      "timing": 1232,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "76"
+    },
+    {
+      "testCase": {
+        "id": "TYPO005",
+        "category": "Typos",
+        "input": "reconditioned auto parts",
+        "expectedChapter": "87",
+        "expectedHeading": "8708",
+        "difficulty": "medium"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355654941_gptmm2mzv",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355658820",
+            "text": "Which category best describes your product?",
+            "options": [
+              "87::Parts",
+              "84::Other parts of diesel engine: ----Of diesel eng...",
+              "85::Parts",
+              "71::Parts"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"reconditioned auto parts\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:38.820Z"
+      },
+      "timing": 3879,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "87"
+    },
+    {
+      "testCase": {
+        "id": "COMP001",
+        "category": "Composite",
+        "input": "leather handbag with metal clasp",
+        "expectedChapter": "42",
+        "expectedHeading": "4202",
+        "difficulty": "medium",
+        "notes": "Primary material is leather"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355659020_rx2dh61oy",
+        "responseType": "classification",
+        "result": {
+          "hsCode": "4114.20.20",
+          "description": "Metallised leather",
+          "confidence": 69,
+          "reasoning": "\"leather handbag with metal clasp\" → Metallised leather",
+          "alternatives": [
+            {
+              "code": "6403.99.20",
+              "description": "Leather sandals with plastic or synthetic sole",
+              "reason": "Similarity: 44%"
+            },
+            {
+              "code": "4115.10.00",
+              "description": "Composition leather with a basis of leather or leather fibre, in slabs, sheets or strip, whether or not in rolls",
+              "reason": "Similarity: 43%"
+            }
+          ]
+        },
+        "conversationSummary": {
+          "totalQuestions": 0,
+          "productDescription": "leather handbag with metal clasp",
+          "keyDecisions": []
+        },
+        "timestamp": "2026-01-02T12:07:41.021Z"
+      },
+      "timing": 2001,
+      "chapterCorrect": false,
+      "headingCorrect": false,
+      "codeCorrect": null,
+      "responseType": "classification",
+      "returnedCode": "4114.20.20",
+      "returnedChapter": "41"
+    },
+    {
+      "testCase": {
+        "id": "COMP002",
+        "category": "Composite",
+        "input": "cotton shirt with polyester blend",
+        "expectedChapter": "62",
+        "acceptableChapters": [
+          "61",
+          "62"
+        ],
+        "difficulty": "hard",
+        "notes": "Depends on which material dominates"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355661226_ndcxgezyf",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355662498",
+            "text": "Which category best describes your product?",
+            "options": [
+              "55::Other yarn",
+              "52::Other"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"cotton shirt with polyester blend\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:42.498Z"
+      },
+      "timing": 1272,
+      "chapterCorrect": false,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "55"
+    },
+    {
+      "testCase": {
+        "id": "COMP003",
+        "category": "Composite",
+        "input": "gift set perfume and lotion",
+        "expectedChapter": "33",
+        "difficulty": "hard",
+        "notes": "Sets classified by primary item"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355662708_h4w15838g",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "heading_1767355663872",
+            "text": "Which type of product is this?",
+            "options": [
+              "3307::Other",
+              "3304::Other",
+              "3301::Other",
+              "3306::Other",
+              "3303::Other"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Select the product type for \"gift set perfume and lotion\".",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:43.872Z"
+      },
+      "timing": 1164,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "33"
+    },
+    {
+      "testCase": {
+        "id": "COMP004",
+        "category": "Composite",
+        "input": "toy car with remote control",
+        "expectedChapter": "95",
+        "expectedHeading": "9503",
+        "difficulty": "medium",
+        "notes": "Toy, not electronics or vehicle"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355664076_4a2dcqazd",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355667379",
+            "text": "Which category best describes your product?",
+            "options": [
+              "95::Parts: ---- Of electronic toys",
+              "88::Other",
+              "84::Self-propelled trucks powered by an electric motor",
+              "93::Self propelled",
+              "89::Patrol or surveillance boat"
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"toy car with remote control\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:47.379Z"
+      },
+      "timing": 3303,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "95"
+    },
+    {
+      "testCase": {
+        "id": "COMP005",
+        "category": "Composite",
+        "input": "stainless steel water bottle plastic cap",
+        "expectedChapter": "73",
+        "acceptableChapters": [
+          "39",
+          "73"
+        ],
+        "difficulty": "hard",
+        "notes": "Primary material is steel"
+      },
+      "response": {
+        "success": true,
+        "conversationId": "conv_1767355667583_yyzymztec",
+        "responseType": "questions",
+        "questions": [
+          {
+            "id": "chapter_1767355668818",
+            "text": "Which category best describes your product?",
+            "options": [
+              "73::Of stainless steel",
+              "72::Universal plates of stainless steel or heat res..."
+            ],
+            "allowOther": false,
+            "priority": "required"
+          }
+        ],
+        "questionContext": "Product \"stainless steel water bottle plastic cap\" could fall under multiple categories.",
+        "roundNumber": 1,
+        "totalQuestionsAsked": 1,
+        "timestamp": "2026-01-02T12:07:48.818Z"
+      },
+      "timing": 1235,
+      "chapterCorrect": true,
+      "headingCorrect": null,
+      "codeCorrect": null,
+      "responseType": "questions",
+      "returnedChapter": "73"
+    }
+  ]
+}

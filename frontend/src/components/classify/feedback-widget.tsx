@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Check, X, HelpCircle } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/cn'
 import { submitFeedback } from '@/lib/api-client'
 
 interface FeedbackWidgetProps {
@@ -50,8 +50,8 @@ export function FeedbackWidget({
 
   if (feedback) {
     return (
-      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-        <Check className="h-4 w-4 text-success" />
+      <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+        <Check className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
         <span>Thanks for your feedback!</span>
       </div>
     )
@@ -59,38 +59,56 @@ export function FeedbackWidget({
 
   return (
     <div className="flex flex-col gap-3">
-      <p className="text-sm text-muted-foreground">Was this classification correct?</p>
+      <p className="text-sm text-slate-500 dark:text-slate-400">Was this classification correct?</p>
       <div className="flex flex-wrap gap-2">
-        <Button
-          variant="outline"
-          size="sm"
+        <button
           onClick={() => handleFeedback('correct')}
           disabled={isSubmitting}
-          className="gap-1.5"
+          className={cn(
+            'flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all',
+            'border border-slate-200 dark:border-slate-700',
+            'bg-white dark:bg-slate-800',
+            'text-slate-700 dark:text-slate-200',
+            'hover:bg-emerald-50 dark:hover:bg-emerald-500/10',
+            'hover:border-emerald-300 dark:hover:border-emerald-500/50',
+            'disabled:opacity-50 disabled:cursor-not-allowed'
+          )}
         >
-          <Check className="h-4 w-4 text-success" />
+          <Check className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
           Correct
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
+        </button>
+        <button
           onClick={() => handleFeedback('incorrect')}
           disabled={isSubmitting}
-          className="gap-1.5"
+          className={cn(
+            'flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all',
+            'border border-slate-200 dark:border-slate-700',
+            'bg-white dark:bg-slate-800',
+            'text-slate-700 dark:text-slate-200',
+            'hover:bg-red-50 dark:hover:bg-red-500/10',
+            'hover:border-red-300 dark:hover:border-red-500/50',
+            'disabled:opacity-50 disabled:cursor-not-allowed'
+          )}
         >
-          <X className="h-4 w-4 text-destructive" />
+          <X className="h-4 w-4 text-red-600 dark:text-red-400" />
           Wrong
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
+        </button>
+        <button
           onClick={() => handleFeedback('unsure')}
           disabled={isSubmitting}
-          className="gap-1.5"
+          className={cn(
+            'flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all',
+            'border border-slate-200 dark:border-slate-700',
+            'bg-white dark:bg-slate-800',
+            'text-slate-700 dark:text-slate-200',
+            'hover:bg-amber-50 dark:hover:bg-amber-500/10',
+            'hover:border-amber-300 dark:hover:border-amber-500/50',
+            'disabled:opacity-50 disabled:cursor-not-allowed'
+          )}
         >
-          <HelpCircle className="h-4 w-4 text-warning" />
+          <HelpCircle className="h-4 w-4 text-amber-600 dark:text-amber-400" />
           Unsure
-        </Button>
+        </button>
       </div>
     </div>
   )

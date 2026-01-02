@@ -187,6 +187,161 @@ function shouldExcludeByModifier(
   return false;
 }
 
+// ========================================
+// Semantic Aliases for Intelligent Keyword Matching
+// ========================================
+
+/**
+ * Semantic aliases map user keywords to their equivalent HS description terms
+ * This allows "LED" to match "light-emitting diode" in descriptions
+ */
+const SEMANTIC_ALIASES: Record<string, string[]> = {
+  // Lamp types
+  'led': ['led', 'light-emitting diode', 'light emitting diode', 'led light', 'led lamp', 'led source'],
+  'filament': ['filament', 'tungsten', 'incandescent'],
+  'halogen': ['halogen', 'tungsten halogen'],
+  'discharge': ['discharge', 'fluorescent', 'mercury', 'sodium', 'metal halide', 'arc lamp', 'arc-lamp'],
+  'fluorescent': ['fluorescent', 'discharge', 'cfl', 'compact fluorescent'],
+  'uv': ['ultraviolet', 'ultra-violet', 'uv', 'black light'],
+  'ultraviolet': ['ultraviolet', 'ultra-violet', 'uv'],
+  'infrared': ['infrared', 'infra-red', 'ir', 'heat lamp'],
+  'ir': ['infrared', 'infra-red', 'ir'],
+  'incandescent': ['incandescent', 'filament', 'tungsten'],
+  // Electrical terms
+  'bulb': ['bulb', 'lamp', 'light source'],
+  'bulbs': ['bulbs', 'lamps', 'light sources'],
+};
+
+/**
+ * Expand user keywords using semantic aliases
+ * Returns the expanded list including both original keywords and their aliases
+ */
+function expandKeywordsWithAliases(keywords: string[]): string[] {
+  const expanded: Set<string> = new Set();
+
+  for (const kw of keywords) {
+    const kwLower = kw.toLowerCase();
+    expanded.add(kwLower);
+
+    // Check if this keyword has aliases
+    if (SEMANTIC_ALIASES[kwLower]) {
+      for (const alias of SEMANTIC_ALIASES[kwLower]) {
+        expanded.add(alias.toLowerCase());
+      }
+    }
+  }
+
+  return Array.from(expanded);
+}
+
+/**
+ * Check if a description matches any of the keywords or their semantic aliases
+ * Returns true if there's a match
+ */
+function matchesKeywordWithAliases(description: string, keywords: string[]): boolean {
+  const descLower = description.toLowerCase();
+  const expandedKeywords = expandKeywordsWithAliases(keywords);
+
+  return expandedKeywords.some(kw => {
+    if (kw.length < 2) return false;
+
+    // Check for phrase match (for multi-word aliases like "light-emitting diode")
+    if (kw.includes(' ') || kw.includes('-')) {
+      if (descLower.includes(kw)) return true;
+    }
+
+    // Check for whole word match
+    const kwRegex = new RegExp(`\\b${kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+    if (kwRegex.test(descLower)) return true;
+
+    return false;
+  });
+}
+
+/**
+ * SMART EXCLUSION: Product-specific exclusion patterns
+ * When user mentions "coffee", exclude tea-related codes and vice versa
+ */
+const PRODUCT_EXCLUSION_PATTERNS: Array<{
+  keywords: string[];  // If ANY of these keywords present
+  excludePatterns: RegExp[];  // Exclude options matching these patterns
+  reason: string;
+}> = [
+  {
+    keywords: ['coffee', 'arabica', 'robusta', 'liberica', 'excelsa'],
+    excludePatterns: [
+      /\btea\b(?!\s*bags?\s*for\s*coffee)/i,  // Exclude "tea" but not "tea bags for coffee"
+      /\bmate\b/i,  // Exclude maté
+      /\bspice[s]?\b/i,  // Exclude spices (unless it's a coffee spice blend)
+    ],
+    reason: 'Coffee product - exclude tea/mate/spices'
+  },
+  {
+    keywords: ['tea', 'green tea', 'black tea', 'oolong', 'chai'],
+    excludePatterns: [
+      /\bcoffee\b(?!\s*substitute)/i,  // Exclude coffee but not "coffee substitute"
+      /\barabica\b/i,
+      /\brobusta\b/i,
+    ],
+    reason: 'Tea product - exclude coffee'
+  },
+  {
+    keywords: ['wheat', 'durum', 'spelt'],
+    excludePatterns: [
+      /\brice\b/i,
+      /\bbarley\b/i,
+      /\boats\b/i,
+      /\brye\b/i,
+    ],
+    reason: 'Wheat product - exclude other grains'
+  },
+  {
+    keywords: ['rice', 'basmati', 'jasmine rice'],
+    excludePatterns: [
+      /\bwheat\b/i,
+      /\bbarley\b/i,
+      /\boats\b/i,
+    ],
+    reason: 'Rice product - exclude other grains'
+  }
+];
+
+/**
+ * Check if an option should be excluded based on product-specific patterns
+ */
+function shouldExcludeByProductSpecific(
+  optionCode: string,
+  optionDescription: string,
+  userKeywords: string[]
+): boolean {
+  const descLower = optionDescription.toLowerCase();
+
+  for (const pattern of PRODUCT_EXCLUSION_PATTERNS) {
+    // Check if any pattern keywords are in user keywords
+    const hasPatternKeyword = pattern.keywords.some(kw =>
+      userKeywords.some(uk => {
+        const ukLower = uk.toLowerCase();
+        const kwLower = kw.toLowerCase();
+        // Word boundary match
+        const regex = new RegExp(`\\b${ukLower.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+        return regex.test(kwLower) || kwLower === ukLower;
+      })
+    );
+
+    if (hasPatternKeyword) {
+      // Check if this option matches any exclude pattern
+      for (const excludePattern of pattern.excludePatterns) {
+        if (excludePattern.test(descLower)) {
+          logger.debug(`[SMART-EXCLUDE] Excluding "${optionDescription.substring(0, 40)}..." - ${pattern.reason}`);
+          return true;
+        }
+      }
+    }
+  }
+
+  return false;
+}
+
 /**
  * Simple keyword-based option filtering (code-level, not LLM)
  * This ensures options match user's keywords when possible
@@ -196,8 +351,10 @@ function shouldExcludeByModifier(
  * 1. WHOLE WORD match - "tea" matches "Tea" but NOT "teats"
  * 2. PLURAL match - "mango" matches "mangoes" (short suffix only)
  * 3. ABBREVIATION match - "robusta" matches "Rob" (for long keywords only)
+ * 4. SEMANTIC ALIAS match - "led" matches "light-emitting diode"
  *
  * PHASE 1: Now also applies product type modifier exclusions
+ * SMART: Now applies product-specific exclusions (coffee excludes tea, etc.)
  */
 function filterOptionsByKeywordsSimple(
   options: HierarchyOption[],
@@ -214,6 +371,15 @@ function filterOptionsByKeywordsSimple(
     if (filteredOptions.length < beforeModifierFilter) {
       logger.info(`[FILTER] Modifier filter: ${beforeModifierFilter} -> ${filteredOptions.length} options`);
     }
+  }
+
+  // SMART: Apply product-specific exclusions (coffee excludes tea, etc.)
+  const beforeSmartFilter = filteredOptions.length;
+  filteredOptions = filteredOptions.filter(opt =>
+    !shouldExcludeByProductSpecific(opt.code, opt.description, userKeywords)
+  );
+  if (filteredOptions.length < beforeSmartFilter) {
+    logger.info(`[FILTER] Smart product filter: ${beforeSmartFilter} -> ${filteredOptions.length} options`);
   }
 
   if (userKeywords.length === 0 || filteredOptions.length <= 1) {
@@ -260,6 +426,12 @@ function filterOptionsByKeywordsSimple(
             return true;
           }
         }
+      }
+
+      // Method 4: SEMANTIC ALIAS match
+      // "led" matches "light-emitting diode" via semantic aliases
+      if (matchesKeywordWithAliases(descLower, [kwLower])) {
+        return true;
       }
 
       return false;
@@ -782,48 +954,210 @@ async function getCodeDescription(code: string): Promise<string | null> {
   return null;
 }
 
+// ============================================================================
+// LABEL TRANSFORMATION HELPERS
+// These functions transform raw HS database descriptions into user-friendly labels
+// ============================================================================
+
 /**
- * ROOT CAUSE FIX: Generate UNIQUE labels that distinguish between similar codes
+ * Converts ALL CAPS text to sentence case while preserving technical acronyms
+ */
+function toSentenceCase(str: string): string {
+  // List of acronyms to preserve as uppercase
+  const acronyms = new Set([
+    'LED', 'LCD', 'UV', 'IR', 'USB', 'HDMI', 'AC', 'DC',
+    'DNA', 'RNA', 'PVC', 'HDPE', 'PET', 'ABS', 'CNC',
+    'GPS', 'GSM', 'LTE', 'WIFI', 'RAM', 'ROM', 'SSD', 'HDD',
+    'OLED', 'AMOLED', 'NFC', 'RFID', 'PCB', 'SMD', 'IC', 'CPU', 'GPU'
+  ]);
+
+  // If not ALL CAPS, return as-is
+  if (str !== str.toUpperCase()) {
+    return str;
+  }
+
+  // Convert to sentence case
+  const words = str.toLowerCase().split(' ');
+
+  return words.map((word, index) => {
+    const upperWord = word.toUpperCase();
+
+    // Preserve acronyms
+    if (acronyms.has(upperWord)) {
+      return upperWord;
+    }
+
+    // Capitalize first word
+    if (index === 0) {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }
+
+    return word;
+  }).join(' ');
+}
+
+/**
+ * Removes legal jargon and useless phrases that add no value for users
+ */
+function removeJargon(str: string): string {
+  const jargonPatterns: [RegExp, string][] = [
+    [/,?\s*not elsewhere specified or included/gi, ''],
+    [/,?\s*not elsewhere specified/gi, ''],
+    [/,?\s*whether or not\s*/gi, ' '], // Replace with space to avoid word concatenation
+    [/,?\s*and the like\s*/gi, ''],
+    [/\s*including but not limited to\s*/gi, ' including '],
+    [/,?\s*or the like\s*/gi, ''],
+    [/,?\s*and other\s*/gi, ' and other '],
+    [/\s*\(excl\..*?\)/gi, ''],  // Remove exclusion notes
+    [/\s*\(other than.*?\)/gi, ''], // Remove "other than" notes
+  ];
+
+  let result = str;
+  for (const [pattern, replacement] of jargonPatterns) {
+    result = result.replace(pattern, replacement);
+  }
+
+  return result.replace(/\s+/g, ' ').trim();
+}
+
+/**
+ * Cleans formatting artifacts from HS descriptions (colons, dashes, etc.)
+ */
+function cleanFormatting(str: string): string {
+  return str
+    // Clean colon-dash patterns
+    .replace(/\s*:\s*-{1,4}\s*/g, ' - ')
+    // Clean leading dashes
+    .replace(/^[-\s]+/, '')
+    // Clean trailing dashes
+    .replace(/[-\s]+$/, '')
+    // Clean double "Other"
+    .replace(/^Other\s*-\s*Other$/i, 'Other')
+    .replace(/^Other\s*:\s*Other$/i, 'Other')
+    // Normalize spaces
+    .replace(/\s+/g, ' ')
+    // Clean multiple dashes
+    .replace(/\s*-\s*-\s*/g, ' - ')
+    .trim();
+}
+
+/**
+ * Truncates label to max length at word boundary with ellipsis
+ */
+function truncateLabel(str: string, maxLength: number = 50): string {
+  if (str.length <= maxLength) {
+    return str;
+  }
+
+  // Find last space before maxLength
+  const truncated = str.substring(0, maxLength);
+  const lastSpace = truncated.lastIndexOf(' ');
+
+  if (lastSpace > maxLength * 0.6) {
+    return truncated.substring(0, lastSpace) + '...';
+  }
+
+  return truncated + '...';
+}
+
+/**
+ * Creates a user-friendly label from raw HS description
+ * Returns both a primary (truncated) and full version for flexibility
+ */
+function createFriendlyLabel(description: string): { primary: string; full: string } {
+  // Step 1: Clean DGFT dates/notifications
+  let cleaned = description
+    .replace(/\s*\d{2}\/\d{4}-\d{2,4}\s+\d{2}\.\d{2}\.\d{4}\s*/g, '')
+    .trim();
+
+  // Step 2: Clean formatting artifacts
+  cleaned = cleanFormatting(cleaned);
+
+  // Step 3: Convert case (ALL CAPS → sentence case)
+  cleaned = toSentenceCase(cleaned);
+
+  // Step 4: Remove jargon
+  cleaned = removeJargon(cleaned);
+
+  // Step 5: Final cleanup
+  cleaned = cleaned
+    .replace(/\s+/g, ' ')
+    .replace(/^,\s*/, '')
+    .replace(/,\s*$/, '')
+    .trim();
+
+  // Handle empty result
+  if (!cleaned) {
+    cleaned = 'Other';
+  }
+
+  return {
+    primary: truncateLabel(cleaned, 50),
+    full: cleaned
+  };
+}
+
+/**
+ * Extracts a qualifier from full description that's not in primary label
+ */
+function extractQualifierFromFull(full: string, primary: string): string | null {
+  // If full is same as primary (or just with ...), no qualifier
+  if (full === primary || full === primary.replace('...', '')) {
+    return null;
+  }
+
+  // Get the part after primary
+  const primaryClean = primary.replace('...', '').trim();
+  const remaining = full.replace(primaryClean, '').trim();
+
+  if (remaining && remaining !== '-' && remaining.length > 2) {
+    return truncateLabel(remaining.replace(/^[-\s]+/, ''), 30);
+  }
+
+  return null;
+}
+
+// ============================================================================
+// END LABEL TRANSFORMATION HELPERS
+// ============================================================================
+
+/**
+ * ROOT CAUSE FIX: Generate UNIQUE, USER-FRIENDLY labels that distinguish between similar codes
+ *
+ * Now uses label transformation helpers to:
+ *   - Convert ALL CAPS to sentence case
+ *   - Remove legal jargon (NOT ELSEWHERE SPECIFIED, etc.)
+ *   - Clean formatting artifacts (: ----, etc.)
+ *   - Preserve technical acronyms (LED, USB, etc.)
+ *   - Truncate to 50 chars with smart word-boundary truncation
  *
  * Problem it solves:
- *   "Durum wheat : -- Seed" → Should extract "Seed"
- *   "Durum wheat : -- Other" → Should extract "Other"
- *   "Other : -- Seed" → Should extract "Seed"
- *
- * Fixed behavior:
- *   Step 1: Clean the description (remove DGFT dates)
- *   Step 2: Parse the description format (": --" or ":--" or ": ----")
- *   Step 3: Try base label first
- *   Step 4: Add qualifier if we have one and it's meaningful
- *   Step 5: Handle "Other" or empty qualifiers with seed/other distinction
- *   Step 6: Last resort - add meaningful code part
+ *   "PIG FAT, FREE OF LEAN MEAT" → "Pig fat, free of lean meat"
+ *   "Durum wheat : -- Seed" → "Durum wheat - Seed"
+ *   "INSTRUMENTS AND APPARATUS, NOT ELSEWHERE SPECIFIED" → "Instruments and apparatus"
  */
 function generateUniqueLabel(
   code: string,
   description: string,
   existingLabels: Set<string>
 ): string {
-  // Step 1: Clean the description
-  let cleanDesc = description
-    .replace(/\s*\d{2}\/\d{4}-\d{2,4}\s+\d{2}\.\d{2}\.\d{4}\s*/g, '') // Remove DGFT dates
-    .trim();
+  // Step 1: Apply friendly label transformation
+  const { primary: friendlyLabel } = createFriendlyLabel(description);
 
-  // Step 2: Parse the description format
-  // Common formats:
-  // "Category : -- Qualifier" (e.g., "Durum wheat : -- Seed")
-  // "Category :-- Qualifier" (e.g., "Durum wheat :-- Seed")
-  // "Category: ---- Detail" (e.g., "Coffee, not roasted: ----Not decaffeinated")
+  // Step 2: Parse to extract base and qualifier for deduplication logic
+  // (Need to do this on the original to preserve structure for grade detection)
+  const cleanDesc = description
+    .replace(/\s*\d{2}\/\d{4}-\d{2,4}\s+\d{2}\.\d{2}\.\d{4}\s*/g, '')
+    .trim();
 
   let baseLabel = '';
   let qualifier = '';
 
-  // Try to split by ": --" or ":--" or ": ----"
   const colonDashMatch = cleanDesc.match(/^(.+?)\s*:\s*-{1,4}\s*(.+)$/);
   if (colonDashMatch) {
     baseLabel = colonDashMatch[1]!.trim();
     qualifier = colonDashMatch[2]!.trim();
   } else if (cleanDesc.includes(':')) {
-    // Simple colon split
     const parts = cleanDesc.split(':');
     baseLabel = parts[0]!.trim();
     qualifier = parts.slice(1).join(':').replace(/^[\s-]+/, '').trim();
@@ -831,47 +1165,49 @@ function generateUniqueLabel(
     baseLabel = cleanDesc;
   }
 
-  // Step 3: Check if we have a meaningful qualifier that should ALWAYS be shown
-  // Grade indicators should always be displayed (A Grade, B Grade, AB Grade, PB Grade, etc.)
+  // Apply sentence case transformation to base and qualifier
+  const friendlyBase = toSentenceCase(removeJargon(cleanFormatting(baseLabel)));
+  const friendlyQualifier = toSentenceCase(removeJargon(cleanFormatting(qualifier)));
+
+  // Step 3: Check for grade qualifiers (A Grade, B Grade, etc.) - always show these
   const gradePatterns = /\b([A-C]|AB|PB|B\/B\/B|AAA|AA)\s*(Grade)?\b/i;
   const hasGradeQualifier = qualifier && gradePatterns.test(qualifier);
 
-  // If there's a grade qualifier, always include it (don't just return base label)
-  if (hasGradeQualifier) {
-    const labelWithGrade = `${baseLabel} - ${qualifier}`;
+  if (hasGradeQualifier && friendlyQualifier) {
+    const labelWithGrade = `${friendlyBase} - ${friendlyQualifier}`;
     if (!existingLabels.has(labelWithGrade)) {
       existingLabels.add(labelWithGrade);
-      return labelWithGrade;
+      return truncateLabel(labelWithGrade, 60); // Slightly longer for grades
     }
   }
 
-  // For non-grade qualifiers, try base label first (only if unique)
-  const isGenericBase = baseLabel.toLowerCase() === 'other';
-  if (!isGenericBase && !existingLabels.has(baseLabel) && baseLabel.length > 0 && !hasGradeQualifier) {
-    existingLabels.add(baseLabel);
-    return baseLabel;
+  // Step 4: Try friendly primary label first (if unique and not generic)
+  const isGenericBase = friendlyLabel.toLowerCase() === 'other';
+  if (!isGenericBase && !existingLabels.has(friendlyLabel) && friendlyLabel.length > 0 && !hasGradeQualifier) {
+    existingLabels.add(friendlyLabel);
+    return friendlyLabel;
   }
 
-  // Step 4: Add qualifier if we have one and it's meaningful
-  if (qualifier && qualifier.length > 0 && qualifier.toLowerCase() !== 'other') {
-    const labelWithQualifier = `${baseLabel} - ${qualifier}`;
-    if (!existingLabels.has(labelWithQualifier)) {
-      existingLabels.add(labelWithQualifier);
-      return labelWithQualifier;
+  // Step 5: Add friendly qualifier if meaningful
+  if (friendlyQualifier && friendlyQualifier.length > 0 && friendlyQualifier.toLowerCase() !== 'other') {
+    const labelWithQualifier = `${friendlyBase} - ${friendlyQualifier}`;
+    const truncated = truncateLabel(labelWithQualifier, 55);
+    if (!existingLabels.has(truncated)) {
+      existingLabels.add(truncated);
+      return truncated;
     }
   }
 
-  // Step 5: If qualifier is "Other" or empty, try more specific label
-  if (qualifier.toLowerCase() === 'other' || !qualifier) {
-    // Check if this is a seed vs non-seed distinction
+  // Step 6: If qualifier is "Other" or empty, try more specific label
+  if (!friendlyQualifier || friendlyQualifier.toLowerCase() === 'other') {
     if (cleanDesc.toLowerCase().includes('seed')) {
-      const seedLabel = `${baseLabel} - Seed`;
+      const seedLabel = `${friendlyBase} - Seed`;
       if (!existingLabels.has(seedLabel)) {
         existingLabels.add(seedLabel);
         return seedLabel;
       }
     } else {
-      const otherLabel = `${baseLabel} - Other`;
+      const otherLabel = `${friendlyBase} - Other`;
       if (!existingLabels.has(otherLabel)) {
         existingLabels.add(otherLabel);
         return otherLabel;
@@ -879,12 +1215,10 @@ function generateUniqueLabel(
     }
   }
 
-  // Step 6: Last resort - add meaningful code part
-  // Extract the last meaningful segment (e.g., "11" from "1001.11")
+  // Step 7: Last resort - add meaningful code suffix
   const codeParts = code.replace(/\.00$/, '').split('.');
   const lastPart = codeParts[codeParts.length - 1]!;
 
-  // Try to make it meaningful
   let suffix = '';
   if (lastPart === '11' || lastPart === '91') {
     suffix = 'Seed';
@@ -896,15 +1230,16 @@ function generateUniqueLabel(
     suffix = lastPart;
   }
 
-  const finalLabel = `${baseLabel} - ${suffix}`;
+  const finalLabel = `${friendlyBase} - ${suffix}`;
   if (!existingLabels.has(finalLabel)) {
     existingLabels.add(finalLabel);
-    return finalLabel;
+    return truncateLabel(finalLabel, 55);
   }
 
   // Absolute last resort - add full code
-  existingLabels.add(`${baseLabel} (${code})`);
-  return `${baseLabel} (${code})`;
+  const lastResortLabel = `${friendlyBase} (${code})`;
+  existingLabels.add(lastResortLabel);
+  return truncateLabel(lastResortLabel, 55);
 }
 
 /**
@@ -1420,7 +1755,8 @@ function parseNavigationResponse(
 export async function navigateHierarchy(
   userInput: string,
   currentCode: string | null,
-  history: NavigationHistory[]
+  history: NavigationHistory[],
+  accumulatedModifiers: string[] = []  // PHASE 2 FIX: Accept accumulated modifiers from user answers
 ): Promise<NavigationResult> {
   const startTime = Date.now();
 
@@ -1433,6 +1769,15 @@ export async function navigateHierarchy(
     const productTypeModifiers = queryAnalysis.productTypeModifiers;
     if (productTypeModifiers.length > 0) {
       logger.info(`[LLM-NAV] Product type modifiers detected: [${productTypeModifiers.join(', ')}]`);
+    }
+
+    // PHASE 2 FIX: Combine original keywords with accumulated modifiers from user answers
+    // This ensures the navigator uses ALL information the user has provided
+    const allModifiers = [...new Set([...productTypeModifiers, ...accumulatedModifiers])];
+    if (accumulatedModifiers.length > 0) {
+      logger.info(`[PHASE 2 FIX] Combined modifiers: [${allModifiers.join(', ')}]`);
+      logger.info(`[PHASE 2 FIX]   - From query: [${productTypeModifiers.join(', ')}]`);
+      logger.info(`[PHASE 2 FIX]   - From answers: [${accumulatedModifiers.join(', ')}]`);
     }
 
     // PHASE 2 + ROOT CAUSE FIX: Check for functional override at root level
@@ -1521,21 +1866,23 @@ export async function navigateHierarchy(
 
     logger.info(`[LLM-NAV] At ${currentCode || 'root'}, found ${options.length} options`);
 
-    // PHASE 1: Apply keyword filtering with product type modifier exclusions
+    // PHASE 1 + PHASE 2 FIX: Apply keyword filtering with ALL modifiers (from query + answers)
     // This ensures "instant coffee" only sees Ch.21 options, "rob coffee" only sees Robusta
+    // PHASE 2 FIX: Now also uses accumulated modifiers from user answers!
     const beforeFilter = options.length;
-    options = filterOptionsByKeywordsSimple(options, userKeywords, productTypeModifiers);
+    options = filterOptionsByKeywordsSimple(options, userKeywords, allModifiers);
     if (options.length < beforeFilter) {
       logger.info(`[LLM-NAV] Filtered by keywords/modifiers: ${beforeFilter} -> ${options.length} options`);
     }
 
-    // PHASE 3: Apply elimination filtering based on user-specified modifiers
+    // PHASE 3 + PHASE 2 FIX: Apply elimination filtering with ALL modifiers
     // This ensures "Arabica coffee" only sees Arabica codes, not Robusta
+    // PHASE 2 FIX: Now includes modifiers from user answers in the elimination!
     const eliminationResult = filterHierarchyChildren(
       options,
       {
-        productTypeModifiers: queryAnalysis.productTypeModifiers,
-        modifiers: queryAnalysis.modifiers,
+        productTypeModifiers: allModifiers,  // PHASE 2 FIX: Use combined modifiers
+        modifiers: [...queryAnalysis.modifiers, ...accumulatedModifiers],  // PHASE 2 FIX: Include answer modifiers
         originalQuery: userInput
       }
     );
@@ -1755,14 +2102,20 @@ export async function navigateWithAutoContinue(
   userInput: string,
   currentCode: string | null,
   history: NavigationHistory[],
+  accumulatedModifiers: string[] = [],  // PHASE 2 FIX: Accept accumulated modifiers from user answers
   maxDepth: number = 10
 ): Promise<NavigationResult> {
   let code = currentCode;
   let currentHistory = [...history];
   let depth = 0;
 
+  // PHASE 2 FIX: Log accumulated modifiers for debugging
+  if (accumulatedModifiers.length > 0) {
+    logger.info(`[PHASE 2 FIX] Navigator received accumulated modifiers: [${accumulatedModifiers.join(', ')}]`);
+  }
+
   while (depth < maxDepth) {
-    const result = await navigateHierarchy(userInput, code, currentHistory);
+    const result = await navigateHierarchy(userInput, code, currentHistory, accumulatedModifiers);
 
     if (result.type === 'question' || result.type === 'classification' || result.type === 'error') {
       return result;

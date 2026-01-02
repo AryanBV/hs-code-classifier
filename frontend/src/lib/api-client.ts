@@ -121,6 +121,7 @@ export interface AlternativeCode {
   code: string
   description: string
   confidence?: number
+  reason?: string
 }
 
 /**

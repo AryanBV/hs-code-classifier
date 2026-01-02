@@ -201,8 +201,74 @@ export function getFunctionalOverrideChapter(query: string): string | null {
 }
 
 /**
+ * SMART DISAMBIGUATION: Product-specific patterns that resolve ambiguity
+ * These are checked BEFORE the generic disambiguation logic
+ */
+const SMART_DISAMBIGUATION: Record<string, {
+  clearIndicators: { pattern: RegExp; chapter: string; reason: string }[];
+}> = {
+  'coffee': {
+    clearIndicators: [
+      // Chapter 09 indicators (raw/roasted coffee beans)
+      { pattern: /\barabica\b/i, chapter: '09', reason: 'Arabica variety specified' },
+      { pattern: /\brobusta\b/i, chapter: '09', reason: 'Robusta variety specified' },
+      { pattern: /\brob\b/i, chapter: '09', reason: 'Rob (Robusta) variety specified' },
+      { pattern: /\bnot\s*roasted\b/i, chapter: '09', reason: 'Not roasted = raw beans' },
+      { pattern: /\bunroasted\b/i, chapter: '09', reason: 'Unroasted = raw beans' },
+      { pattern: /\bgreen\s*coffee\b/i, chapter: '09', reason: 'Green coffee = raw beans' },
+      { pattern: /\braw\s*coffee\b/i, chapter: '09', reason: 'Raw coffee = beans' },
+      { pattern: /\broasted\b(?!\s*(instant|soluble|extract))/i, chapter: '09', reason: 'Roasted coffee' },
+      { pattern: /\bcoffee\s*bean[s]?\b/i, chapter: '09', reason: 'Coffee beans' },
+      { pattern: /\bplantation\b/i, chapter: '09', reason: 'Plantation grade = raw beans' },
+      { pattern: /\bgrade\s*[a-c]\b/i, chapter: '09', reason: 'Grade specification = raw beans' },
+      { pattern: /\b[a-c]\s*grade\b/i, chapter: '09', reason: 'Grade specification = raw beans' },
+      { pattern: /\bparchment\b/i, chapter: '09', reason: 'Parchment processing = raw beans' },
+      { pattern: /\bcherry\b/i, chapter: '09', reason: 'Cherry processing = raw beans' },
+      { pattern: /\bhusk[s]?\b/i, chapter: '09', reason: 'Coffee husks = Ch.09' },
+      { pattern: /\bskin[s]?\b/i, chapter: '09', reason: 'Coffee skins = Ch.09' },
+      { pattern: /\bdecaf(feinated)?\b(?!\s*instant)/i, chapter: '09', reason: 'Decaffeinated beans' },
+
+      // Chapter 21 indicators (instant/extract/preparations)
+      { pattern: /\binstant\b/i, chapter: '21', reason: 'Instant coffee' },
+      { pattern: /\bsoluble\b/i, chapter: '21', reason: 'Soluble coffee' },
+      { pattern: /\bextract\b/i, chapter: '21', reason: 'Coffee extract' },
+      { pattern: /\bessence\b/i, chapter: '21', reason: 'Coffee essence' },
+      { pattern: /\bconcentrate\b/i, chapter: '21', reason: 'Coffee concentrate' },
+      { pattern: /\b3[- ]?in[- ]?1\b/i, chapter: '21', reason: '3-in-1 coffee mix' },
+      { pattern: /\bcoffee\s*mix\b/i, chapter: '21', reason: 'Coffee mix' },
+    ]
+  },
+  'tea': {
+    clearIndicators: [
+      // Chapter 09 indicators (tea leaves)
+      { pattern: /\bgreen\s*tea\b/i, chapter: '09', reason: 'Green tea leaves' },
+      { pattern: /\bblack\s*tea\b/i, chapter: '09', reason: 'Black tea leaves' },
+      { pattern: /\boolong\b/i, chapter: '09', reason: 'Oolong tea leaves' },
+      { pattern: /\bwhite\s*tea\b/i, chapter: '09', reason: 'White tea leaves' },
+      { pattern: /\btea\s*lea(f|ves)\b/i, chapter: '09', reason: 'Tea leaves' },
+
+      // Chapter 21 indicators (instant/extract)
+      { pattern: /\binstant\s*tea\b/i, chapter: '21', reason: 'Instant tea' },
+      { pattern: /\btea\s*extract\b/i, chapter: '21', reason: 'Tea extract' },
+    ]
+  },
+  'coffee powder': {
+    clearIndicators: [
+      // Ground roasted = Ch.09
+      { pattern: /\bground\b.*\broasted\b/i, chapter: '09', reason: 'Ground roasted coffee' },
+      { pattern: /\broasted\b.*\bground\b/i, chapter: '09', reason: 'Roasted ground coffee' },
+      // Instant = Ch.21
+      { pattern: /\binstant\b/i, chapter: '21', reason: 'Instant coffee powder' },
+      { pattern: /\bsoluble\b/i, chapter: '21', reason: 'Soluble coffee powder' },
+    ]
+  }
+};
+
+/**
  * PHASE 2: Check for ambiguous terms that need user disambiguation
  * Returns info for generating a question BEFORE searching
+ *
+ * ENHANCED: Now checks for SMART disambiguation patterns first
  */
 export function checkAmbiguousTerms(query: string): { term: string; info: AmbiguousTerm } | null {
   const data = loadChapterData();
@@ -224,8 +290,22 @@ export function checkAmbiguousTerms(query: string): { term: string; info: Ambigu
 
     console.log(`[PHASE 2] Found ambiguous term: "${term}"`);
 
-    // Check if user already provided disambiguating information
-    // by checking if any chapter's include keywords strongly match
+    // ========================================
+    // SMART DISAMBIGUATION: Check product-specific patterns FIRST
+    // ========================================
+    const smartPatterns = SMART_DISAMBIGUATION[termLower];
+    if (smartPatterns) {
+      for (const indicator of smartPatterns.clearIndicators) {
+        if (indicator.pattern.test(query)) {
+          console.log(`[PHASE 2] SMART DISAMBIGUATED: "${indicator.reason}" → Ch.${indicator.chapter}`);
+          return null;  // No ambiguity - clear indicator found
+        }
+      }
+    }
+
+    // ========================================
+    // LEGACY: Generic disambiguation check
+    // ========================================
     let hasDisambiguation = false;
 
     for (const chapter of info.possibleChapters) {
@@ -265,6 +345,29 @@ export function checkAmbiguousTerms(query: string): { term: string; info: Ambigu
   }
 
   console.log(`[PHASE 2] No ambiguous terms found`);
+  return null;
+}
+
+/**
+ * Get the resolved chapter when smart disambiguation succeeds
+ * Returns the chapter code or null if no clear indicator
+ */
+export function getSmartDisambiguatedChapter(query: string): { chapter: string; reason: string } | null {
+  const normalizedQuery = normalizeQuery(query);
+
+  for (const [term, patterns] of Object.entries(SMART_DISAMBIGUATION)) {
+    // Check if the term is in the query
+    const termRegex = new RegExp(`\\b${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+    if (!termRegex.test(normalizedQuery)) continue;
+
+    for (const indicator of patterns.clearIndicators) {
+      if (indicator.pattern.test(query)) {
+        console.log(`[PHASE 2] Smart disambiguation: "${indicator.reason}" → Ch.${indicator.chapter}`);
+        return { chapter: indicator.chapter, reason: indicator.reason };
+      }
+    }
+  }
+
   return null;
 }
 

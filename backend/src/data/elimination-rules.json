@@ -225,5 +225,51 @@
       "exclude": ["flavored", "flavoured", "with flavor", "with flavour"],
       "description": "When user specifies unflavored, exclude flavored codes"
     }
+  },
+  "lampTypeExclusions": {
+    "led": {
+      "include": ["led", "led light", "led bulb", "led lamp", "led tube", "led panel", "led strip", "light-emitting diode", "light emitting diode"],
+      "exclude": ["filament", "tungsten", "halogen", "incandescent", "discharge", "fluorescent", "arc lamp", "arc-lamp", "sealed beam", "infrared", "infra-red", "ultraviolet", "mercury", "sodium", "neon"],
+      "description": "When user specifies LED, exclude other lamp types (filament, discharge, UV/IR)"
+    },
+    "filament": {
+      "include": ["filament", "filament lamp", "filament bulb", "incandescent", "tungsten", "halogen", "halogen lamp", "halogen bulb"],
+      "exclude": ["led", "light-emitting diode", "discharge", "fluorescent", "arc", "mercury", "sodium", "neon"],
+      "description": "When user specifies filament/halogen/incandescent, exclude LED and discharge lamps"
+    },
+    "halogen": {
+      "include": ["halogen", "halogen lamp", "halogen bulb", "tungsten halogen"],
+      "exclude": ["led", "light-emitting diode", "discharge", "fluorescent", "arc", "standard filament"],
+      "description": "When user specifies halogen, exclude LED and other lamp types"
+    },
+    "discharge": {
+      "include": ["discharge", "discharge lamp", "fluorescent", "cfl", "compact fluorescent", "mercury", "sodium", "metal halide", "arc lamp", "arc-lamp"],
+      "exclude": ["led", "light-emitting diode", "filament", "tungsten", "halogen", "incandescent"],
+      "description": "When user specifies discharge/fluorescent, exclude LED and filament lamps"
+    },
+    "fluorescent": {
+      "include": ["fluorescent", "fluorescent lamp", "fluorescent tube", "cfl", "compact fluorescent"],
+      "exclude": ["led", "light-emitting diode", "filament", "tungsten", "halogen", "incandescent"],
+      "description": "When user specifies fluorescent, exclude LED and filament lamps"
+    },
+    "uv": {
+      "include": ["uv", "uv lamp", "ultraviolet", "ultra-violet", "uv light", "blacklight", "black light"],
+      "exclude": ["led", "light-emitting diode", "filament", "halogen", "visible light", "household"],
+      "description": "When user specifies UV, exclude visible light lamp types"
+    },
+    "infrared": {
+      "include": ["infrared", "infra-red", "ir lamp", "heat lamp", "ir light"],
+      "exclude": ["led", "light-emitting diode", "filament", "visible light", "household", "ultraviolet"],
+      "description": "When user specifies infrared/IR, exclude visible light lamp types"
+    }
+  },
+  "semanticAliases": {
+    "description": "Semantic aliases for keyword matching - maps user terms to description terms",
+    "led": ["led", "light-emitting diode", "light emitting diode", "led light", "led lamp"],
+    "filament": ["filament", "tungsten", "incandescent"],
+    "halogen": ["halogen", "tungsten halogen"],
+    "discharge": ["discharge", "fluorescent", "mercury vapor", "sodium vapor"],
+    "uv": ["ultraviolet", "ultra-violet", "uv"],
+    "infrared": ["infrared", "infra-red", "ir"]
   }
 }

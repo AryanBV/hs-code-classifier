@@ -662,6 +662,28 @@
         "keywords": ["footwear", "shoes", "boots", "sandals", "sneakers", "slippers"],
         "forceChapter": "64",
         "reason": "Footwear is always Ch.64 regardless of material"
+      },
+      {
+        "keywords": [
+          "LED light", "LED bulb", "LED lamp", "LED tube", "LED strip", "LED panel",
+          "light bulb", "light bulbs", "electric lamp", "electric lamps",
+          "discharge lamp", "fluorescent lamp", "halogen lamp", "incandescent lamp",
+          "CFL bulb", "compact fluorescent", "filament lamp", "filament bulb",
+          "household lamp", "household bulb", "lighting bulb", "lighting lamp"
+        ],
+        "forceChapter": "85",
+        "reason": "Electric lamps and light bulbs are Ch.85 (electrical equipment), specifically 8539 for lamps"
+      },
+      {
+        "keywords": [
+          "luminaire", "luminaires", "lighting fixture", "lighting fixtures",
+          "ceiling light", "pendant light", "wall light", "chandelier",
+          "spotlight", "spotlights", "floodlight", "floodlights",
+          "table lamp", "floor lamp", "desk lamp", "reading lamp",
+          "street light", "street lamp", "garden light", "outdoor light"
+        ],
+        "forceChapter": "94",
+        "reason": "Luminaires and lighting fixtures (complete units) are Ch.94 (9405), not just the bulb"
       }
     ]
   },

@@ -66,6 +66,12 @@ interface FlavoringRule {
   description: string;
 }
 
+interface LampTypeRule {
+  include: string[];
+  exclude: string[];
+  description: string;
+}
+
 interface EliminationRules {
   metadata: {
     version: string;
@@ -78,6 +84,8 @@ interface EliminationRules {
   formExclusions: Record<string, FormRule>;
   decaffeinationExclusions: Record<string, DecaffeinationRule>;
   flavoringExclusions: Record<string, FlavoringRule>;
+  lampTypeExclusions?: Record<string, LampTypeRule>;
+  semanticAliases?: Record<string, string[]>;
 }
 
 // ========================================
@@ -105,7 +113,9 @@ function loadEliminationRules(): void {
       materialExclusions: {},
       formExclusions: {},
       decaffeinationExclusions: {},
-      flavoringExclusions: {}
+      flavoringExclusions: {},
+      lampTypeExclusions: {},
+      semanticAliases: {}
     };
   }
 }
@@ -193,6 +203,15 @@ export function extractModifiersFromText(text: string): string[] {
   for (const [flavor, rules] of Object.entries(eliminationRules!.flavoringExclusions)) {
     if (rules.include.some(inc => lowerText.includes(inc.toLowerCase()))) {
       modifiers.push(flavor);
+    }
+  }
+
+  // Check lamp type exclusions
+  if (eliminationRules!.lampTypeExclusions) {
+    for (const [lampType, rules] of Object.entries(eliminationRules!.lampTypeExclusions)) {
+      if (rules.include.some(inc => lowerText.includes(inc.toLowerCase()))) {
+        modifiers.push(lampType);
+      }
     }
   }
 
@@ -513,6 +532,52 @@ function checkFlavoringExclusion(
 }
 
 /**
+ * Check if a code should be eliminated based on lamp type exclusions
+ * (e.g., "LED light bulbs" should exclude filament, discharge, UV/IR lamps)
+ */
+function checkLampTypeExclusion(
+  codeDescription: string,
+  modifiers: string[]
+): EliminationResult {
+  loadEliminationRules();
+
+  if (!eliminationRules!.lampTypeExclusions) {
+    return { shouldInclude: true, reason: 'No lamp type exclusions configured' };
+  }
+
+  const lowerDesc = codeDescription.toLowerCase();
+
+  for (const [lampType, rules] of Object.entries(eliminationRules!.lampTypeExclusions)) {
+    // Check if user specified this lamp type
+    const userSpecifiedLampType = modifiers.some(m =>
+      rules.include.some(inc => m.toLowerCase().includes(inc.toLowerCase()) || inc.toLowerCase().includes(m.toLowerCase()))
+    );
+
+    if (userSpecifiedLampType) {
+      // Check if code description contains excluded lamp types
+      for (const excluded of rules.exclude) {
+        if (lowerDesc.includes(excluded.toLowerCase())) {
+          // But make sure it doesn't ALSO contain the included lamp type
+          const hasIncluded = rules.include.some(inc =>
+            lowerDesc.includes(inc.toLowerCase())
+          );
+
+          if (!hasIncluded) {
+            return {
+              shouldInclude: false,
+              reason: `Excluded: User specified "${lampType}" lamp type, code contains "${excluded}"`,
+              matchedRule: `lampTypeExclusion:${lampType}`
+            };
+          }
+        }
+      }
+    }
+  }
+
+  return { shouldInclude: true, reason: 'No lamp type exclusion applies' };
+}
+
+/**
  * Check if a code should be eliminated based on material exclusions
  * (e.g., "brake pads for cars" should force Chapter 87, not material chapters)
  */
@@ -646,6 +711,16 @@ export function filterCandidatesByElimination(
       eliminatedCount++;
       if (flavorResult.matchedRule && !appliedRules.includes(flavorResult.matchedRule)) {
         appliedRules.push(flavorResult.matchedRule);
+      }
+      return false;
+    }
+
+    // Check lamp type exclusions (for LED vs filament vs discharge lamps)
+    const lampResult = checkLampTypeExclusion(candidate.description, allModifiers);
+    if (!lampResult.shouldInclude) {
+      eliminatedCount++;
+      if (lampResult.matchedRule && !appliedRules.includes(lampResult.matchedRule)) {
+        appliedRules.push(lampResult.matchedRule);
       }
       return false;
     }
