@@ -1,0 +1,27 @@
+name: Keep Supabase Alive
+
+on:
+  schedule:
+    # Runs every 5 days at midnight UTC
+    - cron: '0 0 */5 * *'
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+jobs:
+  ping-database:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase Keep-Alive Endpoint
+        run: |
+          response=$(curl -s -w "\n%{http_code}" "https://waowoznsvaosgcgiivzo.supabase.co/functions/v1/keep-alive")
+          http_code=$(echo "$response" | tail -n1)
+          body=$(echo "$response" | head -n -1)
+
+          echo "Response: $body"
+          echo "HTTP Status: $http_code"
+
+          if [ "$http_code" -ne 200 ]; then
+            echo "Failed to ping database"
+            exit 1
+          fi
+
+          echo "Database pinged successfully!"
