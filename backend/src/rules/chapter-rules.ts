@@ -64,6 +64,48 @@ export const CHAPTER_RULES: ChapterRule[] = [
     legal_basis: 'Heading 4011: New pneumatic tyres of rubber. Tyres have their own specific heading regardless of vehicle use.'
   },
 
+  {
+    id: 'cutlery_tools',
+    name: 'Cutlery & Hand Tools -> Ch.82',
+    description: 'Knives, cutlery, and hand tools classified by product type',
+    condition: (attrs) => {
+      const query = [attrs.function, attrs.form, attrs.raw_query]
+        .filter(Boolean).join(' ').toLowerCase();
+      return /\b(knife|knives|cutlery|razor|scissors|blade|sword|machete|pliers|wrench|screwdriver|chisel)\b/.test(query);
+    },
+    chapter: '82',
+    priority: 66,
+    legal_basis: 'Chapter 82: Tools, implements, cutlery, spoons and forks of base metal.'
+  },
+
+  {
+    id: 'toys_games',
+    name: 'Toys & Games -> Ch.95',
+    description: 'Toys, games, and sports articles',
+    condition: (attrs) => {
+      const query = [attrs.function, attrs.form, attrs.raw_query]
+        .filter(Boolean).join(' ').toLowerCase();
+      return /\b(toy|toys|doll|dolls|plaything|action figure|board game|stuffed animal)\b/.test(query);
+    },
+    chapter: '95',
+    priority: 67,
+    legal_basis: 'Chapter 95: Toys, games and sports requisites.'
+  },
+
+  {
+    id: 'thermos_vacuum_flasks',
+    name: 'Thermos/Vacuum Flasks -> Ch.96',
+    description: 'Vacuum flasks and similar vacuum vessels',
+    condition: (attrs) => {
+      const query = [attrs.function, attrs.form, attrs.raw_query]
+        .filter(Boolean).join(' ').toLowerCase();
+      return /\b(thermos|vacuum flask|vacuum bottle|insulated bottle|insulated flask)\b/.test(query);
+    },
+    chapter: '96',
+    priority: 66,
+    legal_basis: 'Heading 9617: Vacuum flasks and other vacuum vessels.'
+  },
+
   // ==========================================
   // FUNCTION OVER MATERIAL (High Priority)
   // ==========================================
