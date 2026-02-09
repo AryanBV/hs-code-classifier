@@ -1,13 +1,10 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import classifyRoutes from './routes/classify.routes';
-import classifyLLMRoutes from './routes/classify-llm.routes';
-import vectorSearchRoutes from './routes/vector-search.routes';
-import classifyConversationalRoutes from './routes/classify-conversational.routes';
 import { logger } from './utils/logger';
 import { rateLimiter, startRateLimitCleanup } from './middleware/rateLimiter';
 import { connectDatabase, disconnectDatabase } from './utils/prisma';
+import classifyRouter from './api/classify';
 
 // Load environment variables
 dotenv.config();
@@ -65,7 +62,7 @@ app.use((req: Request, res: Response, next) => {
 app.get('/health', (req: Request, res: Response) => {
   res.status(200).json({
     status: 'ok',
-    message: 'HS Code Classifier API is running',
+    message: 'Crozza HS Code Classifier API is running',
     timestamp: new Date().toISOString(),
     environment: {
       nodeEnv: process.env.NODE_ENV,
@@ -76,11 +73,8 @@ app.get('/health', (req: Request, res: Response) => {
   });
 });
 
-// API routes
-app.use('/api', classifyRoutes);
-app.use('/api', classifyLLMRoutes);
-app.use('/api/vector-search', vectorSearchRoutes);
-app.use('/api/classify-conversational', classifyConversationalRoutes);
+// Classification routes
+app.use('/api/classify', classifyRouter);
 
 // 404 handler
 app.use((req: Request, res: Response) => {
@@ -117,9 +111,9 @@ async function startServer() {
     await connectDatabase();
 
     app.listen(PORT, () => {
-      logger.info(`🚀 Server running on http://localhost:${PORT}`);
-      logger.info(`📊 Health check: http://localhost:${PORT}/health`);
-      logger.info(`🔧 Environment: ${process.env.NODE_ENV || 'development'}`);
+      logger.info(`Server running on http://localhost:${PORT}`);
+      logger.info(`Health check: http://localhost:${PORT}/health`);
+      logger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
     });
   } catch (error) {
     logger.error('Failed to start server');

@@ -13,7 +13,17 @@
     "prisma:push": "prisma db push",
     "prisma:seed": "ts-node prisma/seed.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test:intelligent": "npx ts-node src/tests/intelligent-test-suite/test-runner.ts"
+    "test:intelligent": "npx ts-node src/tests/intelligent-test-suite/test-runner.ts",
+    "test:comprehensive": "npx ts-node src/tests/runners/comprehensive-test-runner.ts",
+    "test:integration": "npx ts-node src/tests/integration-test.ts",
+    "test:notes-accessor": "npx ts-node src/tests/audit/chapter-notes-accessor-test.ts",
+    "test:baseline:before": "npx ts-node src/tests/baseline/run-baseline.ts",
+    "test:baseline:after": "npx ts-node src/tests/baseline/run-baseline.ts --after",
+    "test:baseline:compare": "npx ts-node src/tests/baseline/compare-results.ts",
+    "test:integration:notes": "npx ts-node src/tests/integration/pipeline-notes-integration.test.ts",
+    "generate:tier2": "npx ts-node src/tests/test-data/tier2-database/generate-tier2.ts",
+    "generate:tier3": "npx ts-node src/tests/test-data/tier3-llm/generate-tier3.ts",
+    "merge:tiers": "npx ts-node src/tests/test-data/merge-tiers.ts"
   },
   "keywords": [
     "hs-code",

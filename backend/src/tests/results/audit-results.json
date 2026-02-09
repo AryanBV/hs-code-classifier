@@ -1,0 +1,3212 @@
+{
+  "timestamp": "2026-01-21T08:35:32.950Z",
+  "summary": {
+    "total": 100,
+    "chapterCorrect": 71,
+    "headingCorrect": 49,
+    "chapterAccuracy": "71.0%",
+    "headingAccuracy": "49.0%",
+    "ruleBasedCount": 80,
+    "ruleBasedAccuracy": "67.5%",
+    "llmFallbackCount": 20,
+    "llmFallbackAccuracy": "85.0%",
+    "avgResponseTime": "4448ms"
+  },
+  "rulePerformance": {
+    "vehicle_parts_function": {
+      "correct": 9,
+      "total": 18,
+      "failures": [
+        "\"air filter for diesel engine truck\" -> Ch.87 (expected Ch.84)",
+        "\"windscreen wiper motor 12V automotive\" -> Ch.87 (expected Ch.85)",
+        "\"car battery 12V 65Ah\" -> Ch.87 (expected Ch.85)",
+        "\"truck tyre 315/80R22.5 radial\" -> Ch.87 (expected Ch.40)",
+        "\"inner tube for motorcycle tyre\" -> Ch.87 (expected Ch.40)",
+        "\"motorcycle helmet ISI approved\" -> Ch.87 (expected Ch.65)",
+        "\"leather vest motorcycle\" -> Ch.87 (expected Ch.42)",
+        "\"diesel engine for truck\" -> Ch.87 (expected Ch.84)",
+        "\"electric motor AC induction 5HP\" -> Ch.87 (expected Ch.85)"
+      ]
+    },
+    "raw_coffee": {
+      "correct": 5,
+      "total": 5,
+      "failures": []
+    },
+    "instant_coffee": {
+      "correct": 5,
+      "total": 5,
+      "failures": []
+    },
+    "spices": {
+      "correct": 11,
+      "total": 11,
+      "failures": []
+    },
+    "medicaments_dosage": {
+      "correct": 6,
+      "total": 10,
+      "failures": [
+        "\"paracetamol powder bulk API\" -> Ch.30 (expected Ch.29)",
+        "\"ibuprofen raw material powder\" -> Ch.30 (expected Ch.29)",
+        "\"vitamin C tablets 1000mg food supplement\" -> Ch.30 (expected Ch.21)",
+        "\"espresso capsules nespresso compatible\" -> Ch.30 (expected Ch.09)"
+      ]
+    },
+    "knitted_apparel": {
+      "correct": 5,
+      "total": 5,
+      "failures": []
+    },
+    "woven_apparel": {
+      "correct": 8,
+      "total": 12,
+      "failures": [
+        "\"mink fur coat full length\" -> Ch.62 (expected Ch.43)",
+        "\"rabbit pelt jacket with fur\" -> Ch.62 (expected Ch.43)",
+        "\"genuine leather jacket brown\" -> Ch.62 (expected Ch.42)",
+        "\"leather coat men's long\" -> Ch.62 (expected Ch.42)"
+      ]
+    },
+    "cotton_textiles": {
+      "correct": 0,
+      "total": 5,
+      "failures": [
+        "\"denim jeans men's cotton woven\" -> Ch.52 (expected Ch.62)",
+        "\"cotton socks knitted ankle length\" -> Ch.52 (expected Ch.61)",
+        "\"baby cotton romper knitted\" -> Ch.52 (expected Ch.61)",
+        "\"cotton jacket men woven\" -> Ch.52 (expected Ch.62)",
+        "\"underwear men cotton knitted\" -> Ch.52 (expected Ch.61)"
+      ]
+    },
+    "silk_textiles": {
+      "correct": 0,
+      "total": 1,
+      "failures": [
+        "\"silk saree woven traditional\" -> Ch.50 (expected Ch.62)"
+      ]
+    },
+    "plastic_articles": {
+      "correct": 2,
+      "total": 4,
+      "failures": [
+        "\"nylon monofilament fishing line\" -> Ch.39 (expected Ch.54)",
+        "\"acrylic staple fiber for spinning\" -> Ch.39 (expected Ch.55)"
+      ]
+    },
+    "mechanical_machinery": {
+      "correct": 2,
+      "total": 3,
+      "failures": [
+        "\"rubber hose hydraulic reinforced\" -> Ch.84 (expected Ch.40)"
+      ]
+    },
+    "electrical_machinery": {
+      "correct": 1,
+      "total": 1,
+      "failures": []
+    }
+  },
+  "llmFailuresByChapter": {
+    "80": [
+      "\"pure tin ingots 99.9%\" -> Ch.81",
+      "\"tin foil pure metal wrapping\" -> Ch.76",
+      "\"tin solder bar lead-free\" -> Ch.78"
+    ]
+  },
+  "detailedResults": [
+    {
+      "query": "ceramic brake pads for heavy trucks",
+      "expectedChapter": "87",
+      "expectedHeading": "8708",
+      "extractedAttributes": {
+        "material": "ceramic",
+        "form": "brake pads",
+        "function": "braking",
+        "intended_use": "motor vehicles",
+        "raw_query": "ceramic brake pads for heavy trucks"
+      },
+      "attributeExtractionTime": 1718,
+      "routedChapter": "87",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "vehicle_parts_function",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "8708",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "8708"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "8708.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 1834,
+      "totalTime": 3552
+    },
+    {
+      "query": "steel brake discs for passenger cars",
+      "expectedChapter": "87",
+      "expectedHeading": "8708",
+      "extractedAttributes": {
+        "material": "steel",
+        "form": "brake discs",
+        "function": "braking",
+        "intended_use": "motor vehicles",
+        "raw_query": "steel brake discs for passenger cars"
+      },
+      "attributeExtractionTime": 1304,
+      "routedChapter": "87",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "vehicle_parts_function",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "8708",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "8708"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "8708.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 732,
+      "totalTime": 2036
+    },
+    {
+      "query": "rubber oil seals for automobile engines",
+      "expectedChapter": "87",
+      "expectedHeading": "8708",
+      "extractedAttributes": {
+        "material": "rubber",
+        "form": "seals",
+        "intended_use": "motor vehicles",
+        "raw_query": "rubber oil seals for automobile engines"
+      },
+      "attributeExtractionTime": 3730,
+      "routedChapter": "87",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "vehicle_parts_function",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "8706",
+      "headingSimilarity": 0.3617320605995553,
+      "headingCandidates": [
+        "8706",
+        "8705",
+        "8704",
+        "8716",
+        "8710"
+      ],
+      "headingSearchTime": 1700,
+      "headingCorrect": false,
+      "selectedCode": "8706.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 858,
+      "totalTime": 6288
+    },
+    {
+      "query": "aluminium alloy wheels for cars",
+      "expectedChapter": "87",
+      "expectedHeading": "8708",
+      "extractedAttributes": {
+        "material": "aluminium alloy",
+        "form": "wheels",
+        "intended_use": "motor vehicles",
+        "raw_query": "aluminium alloy wheels for cars"
+      },
+      "attributeExtractionTime": 1478,
+      "routedChapter": "87",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "vehicle_parts_function",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "8703",
+      "headingSimilarity": 0.33692037995094726,
+      "headingCandidates": [
+        "8703",
+        "8704",
+        "8705",
+        "8713",
+        "8711"
+      ],
+      "headingSearchTime": 1478,
+      "headingCorrect": false,
+      "selectedCode": "8703.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 711,
+      "totalTime": 3667
+    },
+    {
+      "query": "plastic bumper for Toyota Innova",
+      "expectedChapter": "87",
+      "expectedHeading": "8708",
+      "extractedAttributes": {
+        "material": "plastic",
+        "form": "bumper",
+        "intended_use": "motor vehicles",
+        "raw_query": "plastic bumper for Toyota Innova"
+      },
+      "attributeExtractionTime": 1414,
+      "routedChapter": "87",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "vehicle_parts_function",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "8705",
+      "headingSimilarity": 0.26614480394206397,
+      "headingCandidates": [
+        "8705",
+        "8704",
+        "8703",
+        "8702",
+        "8715"
+      ],
+      "headingSearchTime": 1559,
+      "headingCorrect": false,
+      "selectedCode": "8705.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 742,
+      "totalTime": 3715
+    },
+    {
+      "query": "clutch plate assembly for Tata truck",
+      "expectedChapter": "87",
+      "expectedHeading": "8708",
+      "extractedAttributes": {
+        "form": "assembly",
+        "intended_use": "motor vehicles",
+        "raw_query": "clutch plate assembly for Tata truck"
+      },
+      "attributeExtractionTime": 1257,
+      "routedChapter": "87",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "vehicle_parts_function",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "8706",
+      "headingSimilarity": 0.35057849736746904,
+      "headingCandidates": [
+        "8706",
+        "8709",
+        "8704",
+        "8705",
+        "8702"
+      ],
+      "headingSearchTime": 1424,
+      "headingCorrect": false,
+      "selectedCode": "8706.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 746,
+      "totalTime": 3427
+    },
+    {
+      "query": "shock absorber for Maruti Swift",
+      "expectedChapter": "87",
+      "expectedHeading": "8708",
+      "extractedAttributes": {
+        "intended_use": "motor vehicles",
+        "raw_query": "shock absorber for Maruti Swift"
+      },
+      "attributeExtractionTime": 1260,
+      "routedChapter": "87",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "vehicle_parts_function",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "8708",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "8708"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "8708.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 747,
+      "totalTime": 2007
+    },
+    {
+      "query": "air filter for diesel engine truck",
+      "expectedChapter": "84",
+      "expectedHeading": "8421",
+      "extractedAttributes": {
+        "function": "filtering",
+        "intended_use": "motor vehicles",
+        "raw_query": "air filter for diesel engine truck"
+      },
+      "attributeExtractionTime": 1469,
+      "routedChapter": "87",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "vehicle_parts_function",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "8708",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "8708"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": false,
+      "selectedCode": "8708.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 747,
+      "totalTime": 2216
+    },
+    {
+      "query": "fuel injection pump for car",
+      "expectedChapter": "87",
+      "expectedHeading": "8708",
+      "extractedAttributes": {
+        "intended_use": "motor vehicles",
+        "raw_query": "fuel injection pump for car"
+      },
+      "attributeExtractionTime": 1330,
+      "routedChapter": "87",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "vehicle_parts_function",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "8706",
+      "headingSimilarity": 0.31754394560528676,
+      "headingCandidates": [
+        "8706",
+        "8710",
+        "8705",
+        "8704",
+        "8702"
+      ],
+      "headingSearchTime": 1482,
+      "headingCorrect": false,
+      "selectedCode": "8706.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 721,
+      "totalTime": 3533
+    },
+    {
+      "query": "windscreen wiper motor 12V automotive",
+      "expectedChapter": "85",
+      "expectedHeading": "8501",
+      "extractedAttributes": {
+        "intended_use": "motor vehicles",
+        "raw_query": "windscreen wiper motor 12V automotive"
+      },
+      "attributeExtractionTime": 1163,
+      "routedChapter": "87",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "vehicle_parts_function",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "8711",
+      "headingSimilarity": 0.34196077758190835,
+      "headingCandidates": [
+        "8711",
+        "8705",
+        "8703",
+        "8708",
+        "8704"
+      ],
+      "headingSearchTime": 2308,
+      "headingCorrect": false,
+      "selectedCode": "8711.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 752,
+      "totalTime": 4223
+    },
+    {
+      "query": "car battery 12V 65Ah",
+      "expectedChapter": "85",
+      "expectedHeading": "8507",
+      "extractedAttributes": {
+        "intended_use": "motor vehicles",
+        "raw_query": "car battery 12V 65Ah"
+      },
+      "attributeExtractionTime": 1262,
+      "routedChapter": "87",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "vehicle_parts_function",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "8705",
+      "headingSimilarity": 0.35639505072728994,
+      "headingCandidates": [
+        "8705",
+        "8710",
+        "8711",
+        "8702",
+        "8713"
+      ],
+      "headingSearchTime": 1320,
+      "headingCorrect": false,
+      "selectedCode": "8705.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 742,
+      "totalTime": 3324
+    },
+    {
+      "query": "silicone radiator hose for bus",
+      "expectedChapter": "87",
+      "expectedHeading": "8708",
+      "extractedAttributes": {
+        "material": "silicone",
+        "intended_use": "motor vehicles/bus",
+        "raw_query": "silicone radiator hose for bus"
+      },
+      "attributeExtractionTime": 1501,
+      "routedChapter": "87",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "vehicle_parts_function",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 1,
+      "chapterCorrect": true,
+      "foundHeading": "8708",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "8708"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "8708.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 809,
+      "totalTime": 2311
+    },
+    {
+      "query": "truck tyre 315/80R22.5 radial",
+      "expectedChapter": "40",
+      "expectedHeading": "4011",
+      "extractedAttributes": {
+        "material": "rubber",
+        "form": "tyre",
+        "intended_use": "motor vehicles",
+        "raw_query": "truck tyre 315/80R22.5 radial"
+      },
+      "attributeExtractionTime": 1370,
+      "routedChapter": "87",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "vehicle_parts_function",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "8705",
+      "headingSimilarity": 0.3579076807792334,
+      "headingCandidates": [
+        "8705",
+        "8709",
+        "8704",
+        "8716",
+        "8702"
+      ],
+      "headingSearchTime": 1405,
+      "headingCorrect": false,
+      "selectedCode": "8705.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 793,
+      "totalTime": 3568
+    },
+    {
+      "query": "inner tube for motorcycle tyre",
+      "expectedChapter": "40",
+      "expectedHeading": "4013",
+      "extractedAttributes": {
+        "form": "inner tube",
+        "intended_use": "motor vehicles",
+        "raw_query": "inner tube for motorcycle tyre"
+      },
+      "attributeExtractionTime": 1431,
+      "routedChapter": "87",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "vehicle_parts_function",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "8711",
+      "headingSimilarity": 0.4047423835329116,
+      "headingCandidates": [
+        "8711",
+        "8712",
+        "8703",
+        "8705",
+        "8710"
+      ],
+      "headingSearchTime": 1324,
+      "headingCorrect": false,
+      "selectedCode": "8711.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 908,
+      "totalTime": 3663
+    },
+    {
+      "query": "motorcycle helmet ISI approved",
+      "expectedChapter": "65",
+      "expectedHeading": "6506",
+      "extractedAttributes": {
+        "intended_use": "motor vehicles",
+        "raw_query": "motorcycle helmet ISI approved"
+      },
+      "attributeExtractionTime": 1379,
+      "routedChapter": "87",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "vehicle_parts_function",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "8711",
+      "headingSimilarity": 0.41377733390859783,
+      "headingCandidates": [
+        "8711",
+        "8703",
+        "8702",
+        "8707",
+        "8706"
+      ],
+      "headingSearchTime": 1335,
+      "headingCorrect": false,
+      "selectedCode": "8711.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 734,
+      "totalTime": 3448
+    },
+    {
+      "query": "arabica coffee beans grade A plantation",
+      "expectedChapter": "09",
+      "expectedHeading": "0901",
+      "extractedAttributes": {
+        "material": "coffee",
+        "form": "beans",
+        "composition": "grade A",
+        "raw_query": "arabica coffee beans grade A plantation"
+      },
+      "attributeExtractionTime": 1587,
+      "routedChapter": "09",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "raw_coffee",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 1,
+      "chapterCorrect": true,
+      "foundHeading": "0901",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "0901"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "0901.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 707,
+      "totalTime": 2295
+    },
+    {
+      "query": "robusta coffee beans raw green",
+      "expectedChapter": "09",
+      "expectedHeading": "0901",
+      "extractedAttributes": {
+        "material": "coffee",
+        "form": "beans",
+        "processing_state": "raw",
+        "composition": "robusta",
+        "raw_query": "robusta coffee beans raw green"
+      },
+      "attributeExtractionTime": 1537,
+      "routedChapter": "09",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "raw_coffee",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "0901",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "0901"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "0901.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 737,
+      "totalTime": 2274
+    },
+    {
+      "query": "roasted coffee beans whole not ground",
+      "expectedChapter": "09",
+      "expectedHeading": "0901",
+      "extractedAttributes": {
+        "material": "coffee",
+        "form": "beans",
+        "processing_state": "roasted",
+        "raw_query": "roasted coffee beans whole not ground"
+      },
+      "attributeExtractionTime": 1316,
+      "routedChapter": "09",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "raw_coffee",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 1,
+      "chapterCorrect": true,
+      "foundHeading": "0901",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "0901"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "0901.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 800,
+      "totalTime": 2117
+    },
+    {
+      "query": "instant coffee powder spray dried",
+      "expectedChapter": "21",
+      "expectedHeading": "2101",
+      "extractedAttributes": {
+        "material": "coffee",
+        "form": "powder",
+        "processing_state": "instant",
+        "raw_query": "instant coffee powder spray dried"
+      },
+      "attributeExtractionTime": 1581,
+      "routedChapter": "21",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "instant_coffee",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 1,
+      "chapterCorrect": true,
+      "foundHeading": "2101",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "2101"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "2101.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 768,
+      "totalTime": 2350
+    },
+    {
+      "query": "freeze dried soluble coffee granules",
+      "expectedChapter": "21",
+      "expectedHeading": "2101",
+      "extractedAttributes": {
+        "material": "coffee",
+        "form": "granules",
+        "processing_state": "freeze dried",
+        "raw_query": "freeze dried soluble coffee granules"
+      },
+      "attributeExtractionTime": 1837,
+      "routedChapter": "21",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "instant_coffee",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "2101",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "2101"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "2101.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 874,
+      "totalTime": 2711
+    },
+    {
+      "query": "coffee extract liquid concentrate",
+      "expectedChapter": "21",
+      "expectedHeading": "2101",
+      "extractedAttributes": {
+        "material": "coffee",
+        "form": "liquid concentrate",
+        "processing_state": "processed",
+        "raw_query": "coffee extract liquid concentrate"
+      },
+      "attributeExtractionTime": 1404,
+      "routedChapter": "21",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "instant_coffee",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "2101",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "2101"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "2101.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 790,
+      "totalTime": 2194
+    },
+    {
+      "query": "black pepper whole Malabar grade",
+      "expectedChapter": "09",
+      "expectedHeading": "0904",
+      "extractedAttributes": {
+        "material": "black pepper",
+        "form": "whole",
+        "composition": "Malabar grade",
+        "raw_query": "black pepper whole Malabar grade"
+      },
+      "attributeExtractionTime": 1430,
+      "routedChapter": "09",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "spices",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "0904",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "0904"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "0904.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 776,
+      "totalTime": 2206
+    },
+    {
+      "query": "ground black pepper powder",
+      "expectedChapter": "09",
+      "expectedHeading": "0904",
+      "extractedAttributes": {
+        "material": "black pepper",
+        "form": "powder",
+        "processing_state": "processed",
+        "raw_query": "ground black pepper powder"
+      },
+      "attributeExtractionTime": 1100,
+      "routedChapter": "09",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "spices",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "0904",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "0904"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "0904.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 838,
+      "totalTime": 1938
+    },
+    {
+      "query": "turmeric fingers whole dried",
+      "expectedChapter": "09",
+      "expectedHeading": "0910",
+      "extractedAttributes": {
+        "material": "turmeric",
+        "form": "fingers",
+        "processing_state": "dried",
+        "raw_query": "turmeric fingers whole dried"
+      },
+      "attributeExtractionTime": 1542,
+      "routedChapter": "09",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "spices",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "0910",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "0910"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "0910.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 748,
+      "totalTime": 2290
+    },
+    {
+      "query": "turmeric powder ground",
+      "expectedChapter": "09",
+      "expectedHeading": "0910",
+      "extractedAttributes": {
+        "material": "turmeric",
+        "form": "powder",
+        "processing_state": "ground",
+        "raw_query": "turmeric powder ground"
+      },
+      "attributeExtractionTime": 1376,
+      "routedChapter": "09",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "spices",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "0910",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "0910"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "0910.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 787,
+      "totalTime": 2163
+    },
+    {
+      "query": "cardamom green whole pods",
+      "expectedChapter": "09",
+      "expectedHeading": "0908",
+      "extractedAttributes": {
+        "material": "cardamom",
+        "form": "whole pods",
+        "processing_state": "raw",
+        "raw_query": "cardamom green whole pods"
+      },
+      "attributeExtractionTime": 1527,
+      "routedChapter": "09",
+      "chapterConfidence": 90,
+      "chapterRuleUsed": null,
+      "chapterLLMFallback": true,
+      "chapterRoutingTime": 5359,
+      "chapterCorrect": true,
+      "foundHeading": "0908",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "0908"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "0908.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 724,
+      "totalTime": 7610
+    },
+    {
+      "query": "cumin seeds whole jeera",
+      "expectedChapter": "09",
+      "expectedHeading": "0909",
+      "extractedAttributes": {
+        "material": "seeds",
+        "form": "whole",
+        "processing_state": "raw",
+        "raw_query": "cumin seeds whole jeera"
+      },
+      "attributeExtractionTime": 1325,
+      "routedChapter": "09",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "spices",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "0910",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "0910"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": false,
+      "selectedCode": "0910.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 777,
+      "totalTime": 2102
+    },
+    {
+      "query": "cinnamon bark quills Ceylon",
+      "expectedChapter": "09",
+      "expectedHeading": "0906",
+      "extractedAttributes": {
+        "material": "cinnamon bark",
+        "form": "quills",
+        "raw_query": "cinnamon bark quills Ceylon"
+      },
+      "attributeExtractionTime": 1379,
+      "routedChapter": "09",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "spices",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 1,
+      "chapterCorrect": true,
+      "foundHeading": "0906",
+      "headingSimilarity": 0.38127512168363975,
+      "headingCandidates": [
+        "0906",
+        "0907",
+        "0910",
+        "0908",
+        "0909"
+      ],
+      "headingSearchTime": 1476,
+      "headingCorrect": true,
+      "selectedCode": "0906.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 761,
+      "totalTime": 3617
+    },
+    {
+      "query": "cloves whole dried flower buds",
+      "expectedChapter": "09",
+      "expectedHeading": "0907",
+      "extractedAttributes": {
+        "material": "flower buds",
+        "form": "whole",
+        "processing_state": "dried",
+        "raw_query": "cloves whole dried flower buds"
+      },
+      "attributeExtractionTime": 1152,
+      "routedChapter": "09",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "spices",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "0907",
+      "headingSimilarity": 0.4156803736496202,
+      "headingCandidates": [
+        "0907",
+        "0906",
+        "0909",
+        "0910",
+        "0908"
+      ],
+      "headingSearchTime": 1277,
+      "headingCorrect": true,
+      "selectedCode": "0907.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 749,
+      "totalTime": 3178
+    },
+    {
+      "query": "ginger fresh whole root",
+      "expectedChapter": "09",
+      "expectedHeading": "0910",
+      "extractedAttributes": {
+        "material": "ginger",
+        "form": "whole root",
+        "processing_state": "raw",
+        "raw_query": "ginger fresh whole root"
+      },
+      "attributeExtractionTime": 1405,
+      "routedChapter": "09",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "spices",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "0910",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "0910"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "0910.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 912,
+      "totalTime": 2317
+    },
+    {
+      "query": "ginger dried sliced",
+      "expectedChapter": "09",
+      "expectedHeading": "0910",
+      "extractedAttributes": {
+        "material": "ginger",
+        "form": "sliced",
+        "processing_state": "dried",
+        "raw_query": "ginger dried sliced"
+      },
+      "attributeExtractionTime": 1218,
+      "routedChapter": "09",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "spices",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "0910",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "0910"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "0910.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 721,
+      "totalTime": 1939
+    },
+    {
+      "query": "saffron threads pure Kashmir",
+      "expectedChapter": "09",
+      "expectedHeading": "0910",
+      "extractedAttributes": {
+        "material": "saffron",
+        "form": "threads",
+        "processing_state": "pure",
+        "raw_query": "saffron threads pure Kashmir"
+      },
+      "attributeExtractionTime": 1386,
+      "routedChapter": "09",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "spices",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "0910",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "0910"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "0910.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 763,
+      "totalTime": 2149
+    },
+    {
+      "query": "curry powder mixed spices",
+      "expectedChapter": "09",
+      "expectedHeading": "0910",
+      "extractedAttributes": {
+        "form": "powder",
+        "raw_query": "curry powder mixed spices"
+      },
+      "attributeExtractionTime": 1396,
+      "routedChapter": "09",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "spices",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "0910",
+      "headingSimilarity": 0.3548204985367961,
+      "headingCandidates": [
+        "0910",
+        "0908",
+        "0907",
+        "0904",
+        "0906"
+      ],
+      "headingSearchTime": 1505,
+      "headingCorrect": true,
+      "selectedCode": "0910.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 736,
+      "totalTime": 3637
+    },
+    {
+      "query": "green tea leaves loose",
+      "expectedChapter": "09",
+      "expectedHeading": "0902",
+      "extractedAttributes": {
+        "material": "tea leaves",
+        "form": "loose",
+        "processing_state": "raw",
+        "raw_query": "green tea leaves loose"
+      },
+      "attributeExtractionTime": 1392,
+      "routedChapter": "09",
+      "chapterConfidence": 90,
+      "chapterRuleUsed": null,
+      "chapterLLMFallback": true,
+      "chapterRoutingTime": 5448,
+      "chapterCorrect": true,
+      "foundHeading": "0902",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "0902"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "0902.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 939,
+      "totalTime": 7779
+    },
+    {
+      "query": "black tea CTC Assam",
+      "expectedChapter": "09",
+      "expectedHeading": "0902",
+      "extractedAttributes": {
+        "material": "tea",
+        "form": "CTC",
+        "processing_state": "processed",
+        "raw_query": "black tea CTC Assam"
+      },
+      "attributeExtractionTime": 1256,
+      "routedChapter": "09",
+      "chapterConfidence": 90,
+      "chapterRuleUsed": null,
+      "chapterLLMFallback": true,
+      "chapterRoutingTime": 4596,
+      "chapterCorrect": true,
+      "foundHeading": "0902",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "0902"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "0902.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 723,
+      "totalTime": 6575
+    },
+    {
+      "query": "paracetamol tablets 500mg blister pack",
+      "expectedChapter": "30",
+      "expectedHeading": "3004",
+      "extractedAttributes": {
+        "form": "tablet",
+        "intended_use": "medical",
+        "raw_query": "paracetamol tablets 500mg blister pack"
+      },
+      "attributeExtractionTime": 1090,
+      "routedChapter": "30",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "medicaments_dosage",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "3004",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "3004"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "3004.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 711,
+      "totalTime": 1801
+    },
+    {
+      "query": "amoxicillin capsules 250mg",
+      "expectedChapter": "30",
+      "expectedHeading": "3004",
+      "extractedAttributes": {
+        "material": "amoxicillin",
+        "form": "capsule",
+        "function": "antibiotic",
+        "intended_use": "medical",
+        "composition": "250mg",
+        "raw_query": "amoxicillin capsules 250mg"
+      },
+      "attributeExtractionTime": 1704,
+      "routedChapter": "30",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "medicaments_dosage",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "3004",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "3004"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "3004.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 740,
+      "totalTime": 2444
+    },
+    {
+      "query": "metformin hydrochloride tablets 500mg",
+      "expectedChapter": "30",
+      "expectedHeading": "3004",
+      "extractedAttributes": {
+        "material": "metformin hydrochloride",
+        "form": "tablet",
+        "intended_use": "medical",
+        "raw_query": "metformin hydrochloride tablets 500mg"
+      },
+      "attributeExtractionTime": 1308,
+      "routedChapter": "30",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "medicaments_dosage",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "3004",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "3004"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "3004.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 756,
+      "totalTime": 2064
+    },
+    {
+      "query": "omeprazole delayed release capsules 20mg",
+      "expectedChapter": "30",
+      "expectedHeading": "3004",
+      "extractedAttributes": {
+        "form": "capsule",
+        "intended_use": "medical",
+        "raw_query": "omeprazole delayed release capsules 20mg"
+      },
+      "attributeExtractionTime": 1133,
+      "routedChapter": "30",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "medicaments_dosage",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "3004",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "3004"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "3004.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 894,
+      "totalTime": 2027
+    },
+    {
+      "query": "paracetamol powder bulk API",
+      "expectedChapter": "29",
+      "expectedHeading": "2924",
+      "extractedAttributes": {
+        "material": "paracetamol",
+        "form": "powder",
+        "intended_use": "medical",
+        "processing_state": "bulk",
+        "raw_query": "paracetamol powder bulk API"
+      },
+      "attributeExtractionTime": 1836,
+      "routedChapter": "30",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "medicaments_dosage",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "3004",
+      "headingSimilarity": 0.3642577150021622,
+      "headingCandidates": [
+        "3004",
+        "3001",
+        "3003",
+        "3005",
+        "3006"
+      ],
+      "headingSearchTime": 1623,
+      "headingCorrect": false,
+      "selectedCode": "3004.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 750,
+      "totalTime": 4209
+    },
+    {
+      "query": "ibuprofen raw material powder",
+      "expectedChapter": "29",
+      "expectedHeading": "2918",
+      "extractedAttributes": {
+        "material": "ibuprofen",
+        "form": "powder",
+        "intended_use": "medical",
+        "processing_state": "raw",
+        "raw_query": "ibuprofen raw material powder"
+      },
+      "attributeExtractionTime": 1560,
+      "routedChapter": "30",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "medicaments_dosage",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "3001",
+      "headingSimilarity": 0.3141784965991974,
+      "headingCandidates": [
+        "3001",
+        "3005",
+        "3004",
+        "3002",
+        "3003"
+      ],
+      "headingSearchTime": 1395,
+      "headingCorrect": false,
+      "selectedCode": "3001.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 745,
+      "totalTime": 3700
+    },
+    {
+      "query": "insulin injection 100IU/ml vial",
+      "expectedChapter": "30",
+      "expectedHeading": "3004",
+      "extractedAttributes": {
+        "form": "vial",
+        "function": "injection",
+        "intended_use": "medical",
+        "raw_query": "insulin injection 100IU/ml vial"
+      },
+      "attributeExtractionTime": 1436,
+      "routedChapter": "30",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "medicaments_dosage",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "3002",
+      "headingSimilarity": 0.24134662798961282,
+      "headingCandidates": [
+        "3002",
+        "3001",
+        "3004",
+        "3003",
+        "3005"
+      ],
+      "headingSearchTime": 1686,
+      "headingCorrect": false,
+      "selectedCode": "3002.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 743,
+      "totalTime": 3865
+    },
+    {
+      "query": "povidone iodine solution 5% antiseptic",
+      "expectedChapter": "30",
+      "expectedHeading": "3004",
+      "extractedAttributes": {
+        "material": "povidone iodine",
+        "form": "solution",
+        "function": "antiseptic",
+        "intended_use": "medical",
+        "composition": "5% povidone iodine",
+        "raw_query": "povidone iodine solution 5% antiseptic"
+      },
+      "attributeExtractionTime": 1745,
+      "routedChapter": "30",
+      "chapterConfidence": 90,
+      "chapterRuleUsed": null,
+      "chapterLLMFallback": true,
+      "chapterRoutingTime": 5538,
+      "chapterCorrect": true,
+      "foundHeading": "3005",
+      "headingSimilarity": 0.31141519350545477,
+      "headingCandidates": [
+        "3005",
+        "3001",
+        "3002",
+        "3003",
+        "3004"
+      ],
+      "headingSearchTime": 1548,
+      "headingCorrect": false,
+      "selectedCode": "3005.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 708,
+      "totalTime": 9539
+    },
+    {
+      "query": "ayurvedic medicine Chyawanprash",
+      "expectedChapter": "30",
+      "expectedHeading": "3004",
+      "extractedAttributes": {
+        "intended_use": "medical",
+        "raw_query": "ayurvedic medicine Chyawanprash"
+      },
+      "attributeExtractionTime": 1828,
+      "routedChapter": "30",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "medicaments_dosage",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "3004",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "3004"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "3004.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 690,
+      "totalTime": 2518
+    },
+    {
+      "query": "vitamin C tablets 1000mg food supplement",
+      "expectedChapter": "21",
+      "expectedHeading": "2106",
+      "extractedAttributes": {
+        "form": "tablet",
+        "intended_use": "food supplement",
+        "raw_query": "vitamin C tablets 1000mg food supplement"
+      },
+      "attributeExtractionTime": 1285,
+      "routedChapter": "30",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "medicaments_dosage",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "3004",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "3004"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": false,
+      "selectedCode": "3004.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 694,
+      "totalTime": 1979
+    },
+    {
+      "query": "men's cotton t-shirt knitted",
+      "expectedChapter": "61",
+      "expectedHeading": "6109",
+      "extractedAttributes": {
+        "material": "cotton",
+        "form": "fabric",
+        "raw_query": "men's cotton t-shirt knitted"
+      },
+      "attributeExtractionTime": 1994,
+      "routedChapter": "61",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "knitted_apparel",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "6109",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "6109"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "6109.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 669,
+      "totalTime": 2663
+    },
+    {
+      "query": "women's polyester blouse woven",
+      "expectedChapter": "62",
+      "expectedHeading": "6206",
+      "extractedAttributes": {
+        "material": "polyester",
+        "form": "fabric",
+        "raw_query": "women's polyester blouse woven"
+      },
+      "attributeExtractionTime": 1315,
+      "routedChapter": "62",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "woven_apparel",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "6206",
+      "headingSimilarity": 0.43334311743723286,
+      "headingCandidates": [
+        "6206",
+        "6208",
+        "6204",
+        "6205",
+        "6202"
+      ],
+      "headingSearchTime": 1726,
+      "headingCorrect": true,
+      "selectedCode": "6206.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 691,
+      "totalTime": 3732
+    },
+    {
+      "query": "men's formal cotton shirt woven",
+      "expectedChapter": "62",
+      "expectedHeading": "6205",
+      "extractedAttributes": {
+        "material": "cotton",
+        "form": "fabric",
+        "raw_query": "men's formal cotton shirt woven"
+      },
+      "attributeExtractionTime": 1373,
+      "routedChapter": "62",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "woven_apparel",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "6205",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "6205"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "6205.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 697,
+      "totalTime": 2070
+    },
+    {
+      "query": "denim jeans men's cotton woven",
+      "expectedChapter": "62",
+      "expectedHeading": "6203",
+      "extractedAttributes": {
+        "material": "cotton",
+        "form": "fabric",
+        "intended_use": "apparel",
+        "raw_query": "denim jeans men's cotton woven"
+      },
+      "attributeExtractionTime": 1262,
+      "routedChapter": "52",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "cotton_textiles",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "5208",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "5208"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": false,
+      "selectedCode": "5208.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 680,
+      "totalTime": 1942
+    },
+    {
+      "query": "wool sweater knitted pullover",
+      "expectedChapter": "61",
+      "expectedHeading": "6110",
+      "extractedAttributes": {
+        "material": "wool",
+        "form": "fabric",
+        "raw_query": "wool sweater knitted pullover"
+      },
+      "attributeExtractionTime": 1601,
+      "routedChapter": "61",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "knitted_apparel",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "6110",
+      "headingSimilarity": 0.33059162911226636,
+      "headingCandidates": [
+        "6110",
+        "6102",
+        "6101",
+        "6106",
+        "6105"
+      ],
+      "headingSearchTime": 1674,
+      "headingCorrect": true,
+      "selectedCode": "6110.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 666,
+      "totalTime": 3941
+    },
+    {
+      "query": "silk saree woven traditional",
+      "expectedChapter": "62",
+      "expectedHeading": "6206",
+      "extractedAttributes": {
+        "material": "silk",
+        "form": "fabric",
+        "raw_query": "silk saree woven traditional"
+      },
+      "attributeExtractionTime": 1686,
+      "routedChapter": "50",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "silk_textiles",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "5007",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "5007"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": false,
+      "selectedCode": "5007.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 706,
+      "totalTime": 2392
+    },
+    {
+      "query": "cotton socks knitted ankle length",
+      "expectedChapter": "61",
+      "expectedHeading": "6115",
+      "extractedAttributes": {
+        "material": "cotton",
+        "form": "fabric",
+        "raw_query": "cotton socks knitted ankle length"
+      },
+      "attributeExtractionTime": 1192,
+      "routedChapter": "52",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "cotton_textiles",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "5208",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "5208"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": false,
+      "selectedCode": "5208.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 687,
+      "totalTime": 1879
+    },
+    {
+      "query": "polyester tracksuit knitted sportswear",
+      "expectedChapter": "61",
+      "expectedHeading": "6112",
+      "extractedAttributes": {
+        "material": "polyester",
+        "form": "fabric",
+        "intended_use": "sportswear",
+        "raw_query": "polyester tracksuit knitted sportswear"
+      },
+      "attributeExtractionTime": 1304,
+      "routedChapter": "61",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "knitted_apparel",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "6112",
+      "headingSimilarity": 0.40283967222694494,
+      "headingCandidates": [
+        "6112",
+        "6103",
+        "6104",
+        "6107",
+        "6108"
+      ],
+      "headingSearchTime": 1605,
+      "headingCorrect": true,
+      "selectedCode": "6112.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 691,
+      "totalTime": 3600
+    },
+    {
+      "query": "men's wool suit woven two piece",
+      "expectedChapter": "62",
+      "expectedHeading": "6203",
+      "extractedAttributes": {
+        "material": "wool",
+        "form": "fabric",
+        "intended_use": "apparel",
+        "raw_query": "men's wool suit woven two piece"
+      },
+      "attributeExtractionTime": 1310,
+      "routedChapter": "62",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "woven_apparel",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "6203",
+      "headingSimilarity": 0.4481080606015988,
+      "headingCandidates": [
+        "6203",
+        "6201",
+        "6205",
+        "6211",
+        "6207"
+      ],
+      "headingSearchTime": 1464,
+      "headingCorrect": true,
+      "selectedCode": "6203.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 691,
+      "totalTime": 3465
+    },
+    {
+      "query": "baby cotton romper knitted",
+      "expectedChapter": "61",
+      "expectedHeading": "6111",
+      "extractedAttributes": {
+        "material": "cotton",
+        "form": "fabric",
+        "intended_use": "baby clothing",
+        "raw_query": "baby cotton romper knitted"
+      },
+      "attributeExtractionTime": 1259,
+      "routedChapter": "52",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "cotton_textiles",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 1,
+      "chapterCorrect": false,
+      "foundHeading": "5208",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "5208"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": false,
+      "selectedCode": "5208.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 709,
+      "totalTime": 1969
+    },
+    {
+      "query": "mink fur coat full length",
+      "expectedChapter": "43",
+      "expectedHeading": "4303",
+      "extractedAttributes": {
+        "material": "mink fur",
+        "form": "coat",
+        "raw_query": "mink fur coat full length"
+      },
+      "attributeExtractionTime": 1505,
+      "routedChapter": "62",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "woven_apparel",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "6202",
+      "headingSimilarity": 0.2654794892382968,
+      "headingCandidates": [
+        "6202",
+        "6201",
+        "6214",
+        "6211",
+        "6216"
+      ],
+      "headingSearchTime": 1517,
+      "headingCorrect": false,
+      "selectedCode": "6202.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 725,
+      "totalTime": 3747
+    },
+    {
+      "query": "fox fur stole ladies accessory",
+      "expectedChapter": "43",
+      "expectedHeading": "4303",
+      "extractedAttributes": {
+        "material": "fox fur",
+        "form": "stole",
+        "intended_use": "accessory",
+        "raw_query": "fox fur stole ladies accessory"
+      },
+      "attributeExtractionTime": 1402,
+      "routedChapter": "43",
+      "chapterConfidence": 90,
+      "chapterRuleUsed": null,
+      "chapterLLMFallback": true,
+      "chapterRoutingTime": 5071,
+      "chapterCorrect": true,
+      "foundHeading": "4303",
+      "headingSimilarity": 0.33764273934491706,
+      "headingCandidates": [
+        "4303",
+        "4304",
+        "4301",
+        "4302"
+      ],
+      "headingSearchTime": 1429,
+      "headingCorrect": true,
+      "selectedCode": "4303.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 703,
+      "totalTime": 8605
+    },
+    {
+      "query": "rabbit pelt jacket with fur",
+      "expectedChapter": "43",
+      "expectedHeading": "4303",
+      "extractedAttributes": {
+        "material": "rabbit pelt",
+        "form": "jacket",
+        "raw_query": "rabbit pelt jacket with fur"
+      },
+      "attributeExtractionTime": 1395,
+      "routedChapter": "62",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "woven_apparel",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "6201",
+      "headingSimilarity": 0.24636451144112692,
+      "headingCandidates": [
+        "6201",
+        "6202",
+        "6211",
+        "6203",
+        "6204"
+      ],
+      "headingSearchTime": 1360,
+      "headingCorrect": false,
+      "selectedCode": "6201.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 687,
+      "totalTime": 3442
+    },
+    {
+      "query": "genuine leather jacket brown",
+      "expectedChapter": "42",
+      "expectedHeading": "4203",
+      "extractedAttributes": {
+        "material": "genuine leather",
+        "form": "jacket",
+        "raw_query": "genuine leather jacket brown"
+      },
+      "attributeExtractionTime": 1457,
+      "routedChapter": "62",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "woven_apparel",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "6201",
+      "headingSimilarity": 0.24647054810734248,
+      "headingCandidates": [
+        "6201",
+        "6203",
+        "6202",
+        "6211",
+        "6217"
+      ],
+      "headingSearchTime": 1670,
+      "headingCorrect": false,
+      "selectedCode": "6201.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 799,
+      "totalTime": 3926
+    },
+    {
+      "query": "cowhide leather handbag",
+      "expectedChapter": "42",
+      "expectedHeading": "4202",
+      "extractedAttributes": {
+        "material": "cowhide leather",
+        "form": "handbag",
+        "raw_query": "cowhide leather handbag"
+      },
+      "attributeExtractionTime": 1780,
+      "routedChapter": "42",
+      "chapterConfidence": 90,
+      "chapterRuleUsed": null,
+      "chapterLLMFallback": true,
+      "chapterRoutingTime": 5273,
+      "chapterCorrect": true,
+      "foundHeading": "4202",
+      "headingSimilarity": 0.3697935154972529,
+      "headingCandidates": [
+        "4202",
+        "4201",
+        "4206",
+        "4205",
+        "4203"
+      ],
+      "headingSearchTime": 1516,
+      "headingCorrect": true,
+      "selectedCode": "4202.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 794,
+      "totalTime": 9363
+    },
+    {
+      "query": "leather belt men genuine hide",
+      "expectedChapter": "42",
+      "expectedHeading": "4203",
+      "extractedAttributes": {
+        "material": "genuine hide",
+        "intended_use": "fashion",
+        "raw_query": "leather belt men genuine hide"
+      },
+      "attributeExtractionTime": 1384,
+      "routedChapter": "42",
+      "chapterConfidence": 90,
+      "chapterRuleUsed": null,
+      "chapterLLMFallback": true,
+      "chapterRoutingTime": 5418,
+      "chapterCorrect": true,
+      "foundHeading": "4201",
+      "headingSimilarity": 0.34415012598037964,
+      "headingCandidates": [
+        "4201",
+        "4202",
+        "4206",
+        "4203",
+        "4205"
+      ],
+      "headingSearchTime": 1382,
+      "headingCorrect": false,
+      "selectedCode": "4201.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 821,
+      "totalTime": 9005
+    },
+    {
+      "query": "tinplate steel sheets for canning",
+      "expectedChapter": "72",
+      "expectedHeading": "7210",
+      "extractedAttributes": {
+        "material": "steel",
+        "form": "sheets",
+        "intended_use": "canning",
+        "raw_query": "tinplate steel sheets for canning"
+      },
+      "attributeExtractionTime": 1393,
+      "routedChapter": "72",
+      "chapterConfidence": 90,
+      "chapterRuleUsed": null,
+      "chapterLLMFallback": true,
+      "chapterRoutingTime": 5158,
+      "chapterCorrect": true,
+      "foundHeading": "7211",
+      "headingSimilarity": 0.389846003660804,
+      "headingCandidates": [
+        "7211",
+        "7212",
+        "7209",
+        "7208",
+        "7210"
+      ],
+      "headingSearchTime": 2405,
+      "headingCorrect": false,
+      "selectedCode": "7211.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 703,
+      "totalTime": 9659
+    },
+    {
+      "query": "galvanized steel sheet coils",
+      "expectedChapter": "72",
+      "expectedHeading": "7210",
+      "extractedAttributes": {
+        "material": "steel",
+        "form": "sheet coils",
+        "processing_state": "processed",
+        "raw_query": "galvanized steel sheet coils"
+      },
+      "attributeExtractionTime": 2012,
+      "routedChapter": "72",
+      "chapterConfidence": 90,
+      "chapterRuleUsed": null,
+      "chapterLLMFallback": true,
+      "chapterRoutingTime": 5252,
+      "chapterCorrect": true,
+      "foundHeading": "7209",
+      "headingSimilarity": 0.36755809187889366,
+      "headingCandidates": [
+        "7209",
+        "7208",
+        "7212",
+        "7211",
+        "7210"
+      ],
+      "headingSearchTime": 1522,
+      "headingCorrect": false,
+      "selectedCode": "7209.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 703,
+      "totalTime": 9489
+    },
+    {
+      "query": "pure tin ingots 99.9%",
+      "expectedChapter": "80",
+      "expectedHeading": "8001",
+      "extractedAttributes": {
+        "material": "tin",
+        "form": "ingots",
+        "processing_state": "raw",
+        "composition": "99.9% pure tin",
+        "raw_query": "pure tin ingots 99.9%"
+      },
+      "attributeExtractionTime": 1495,
+      "routedChapter": "81",
+      "chapterConfidence": 90,
+      "chapterRuleUsed": null,
+      "chapterLLMFallback": true,
+      "chapterRoutingTime": 4552,
+      "chapterCorrect": false,
+      "foundHeading": "8112",
+      "headingSimilarity": 0.36278615483004717,
+      "headingCandidates": [
+        "8112",
+        "8101",
+        "8109",
+        "8108",
+        "8106"
+      ],
+      "headingSearchTime": 1119,
+      "headingCorrect": false,
+      "selectedCode": "8112.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 690,
+      "totalTime": 7856
+    },
+    {
+      "query": "tin foil pure metal wrapping",
+      "expectedChapter": "80",
+      "expectedHeading": "8007",
+      "extractedAttributes": {
+        "material": "tin",
+        "form": "foil",
+        "composition": "pure metal",
+        "raw_query": "tin foil pure metal wrapping"
+      },
+      "attributeExtractionTime": 1513,
+      "routedChapter": "76",
+      "chapterConfidence": 85,
+      "chapterRuleUsed": null,
+      "chapterLLMFallback": true,
+      "chapterRoutingTime": 5567,
+      "chapterCorrect": false,
+      "foundHeading": "7607",
+      "headingSimilarity": 0.45302695035935736,
+      "headingCandidates": [
+        "7607",
+        "7606",
+        "7614",
+        "7605",
+        "7603"
+      ],
+      "headingSearchTime": 1136,
+      "headingCorrect": false,
+      "selectedCode": "7607.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 720,
+      "totalTime": 8936
+    },
+    {
+      "query": "tin solder bar lead-free",
+      "expectedChapter": "80",
+      "expectedHeading": "8003",
+      "extractedAttributes": {
+        "material": "tin",
+        "form": "bar",
+        "composition": "lead-free",
+        "raw_query": "tin solder bar lead-free"
+      },
+      "attributeExtractionTime": 1616,
+      "routedChapter": "78",
+      "chapterConfidence": 90,
+      "chapterRuleUsed": null,
+      "chapterLLMFallback": true,
+      "chapterRoutingTime": 4853,
+      "chapterCorrect": false,
+      "foundHeading": "7801",
+      "headingSimilarity": 0.3516536355018616,
+      "headingCandidates": [
+        "7801",
+        "7804",
+        "7802",
+        "7806"
+      ],
+      "headingSearchTime": 1418,
+      "headingCorrect": false,
+      "selectedCode": "7801.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 822,
+      "totalTime": 8709
+    },
+    {
+      "query": "stainless steel plates flat",
+      "expectedChapter": "72",
+      "expectedHeading": "7219",
+      "extractedAttributes": {
+        "material": "stainless steel",
+        "form": "plates",
+        "raw_query": "stainless steel plates flat"
+      },
+      "attributeExtractionTime": 1330,
+      "routedChapter": "72",
+      "chapterConfidence": 90,
+      "chapterRuleUsed": null,
+      "chapterLLMFallback": true,
+      "chapterRoutingTime": 4836,
+      "chapterCorrect": true,
+      "foundHeading": "7220",
+      "headingSimilarity": 0.47116707179448747,
+      "headingCandidates": [
+        "7220",
+        "7219",
+        "7208",
+        "7225",
+        "7209"
+      ],
+      "headingSearchTime": 1757,
+      "headingCorrect": false,
+      "selectedCode": "7220.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 692,
+      "totalTime": 8615
+    },
+    {
+      "query": "polyester filament yarn continuous",
+      "expectedChapter": "54",
+      "expectedHeading": "5402",
+      "extractedAttributes": {
+        "material": "polyester",
+        "form": "filament yarn",
+        "raw_query": "polyester filament yarn continuous"
+      },
+      "attributeExtractionTime": 1366,
+      "routedChapter": "54",
+      "chapterConfidence": 90,
+      "chapterRuleUsed": null,
+      "chapterLLMFallback": true,
+      "chapterRoutingTime": 4582,
+      "chapterCorrect": true,
+      "foundHeading": "5402",
+      "headingSimilarity": 0.4589999318122897,
+      "headingCandidates": [
+        "5402",
+        "5403",
+        "5405",
+        "5406",
+        "5407"
+      ],
+      "headingSearchTime": 1309,
+      "headingCorrect": true,
+      "selectedCode": "5402.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 706,
+      "totalTime": 7963
+    },
+    {
+      "query": "nylon monofilament fishing line",
+      "expectedChapter": "54",
+      "expectedHeading": "5404",
+      "extractedAttributes": {
+        "material": "nylon",
+        "form": "monofilament",
+        "intended_use": "fishing",
+        "raw_query": "nylon monofilament fishing line"
+      },
+      "attributeExtractionTime": 1377,
+      "routedChapter": "39",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "plastic_articles",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "3916",
+      "headingSimilarity": 0.3236819610785321,
+      "headingCandidates": [
+        "3916",
+        "3908",
+        "3913",
+        "3920",
+        "3909"
+      ],
+      "headingSearchTime": 1529,
+      "headingCorrect": false,
+      "selectedCode": "3916.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 728,
+      "totalTime": 3634
+    },
+    {
+      "query": "viscose rayon filament thread",
+      "expectedChapter": "54",
+      "expectedHeading": "5403",
+      "extractedAttributes": {
+        "material": "viscose rayon",
+        "form": "filament thread",
+        "raw_query": "viscose rayon filament thread"
+      },
+      "attributeExtractionTime": 1501,
+      "routedChapter": "54",
+      "chapterConfidence": 90,
+      "chapterRuleUsed": null,
+      "chapterLLMFallback": true,
+      "chapterRoutingTime": 5619,
+      "chapterCorrect": true,
+      "foundHeading": "5406",
+      "headingSimilarity": 0.4908162951469457,
+      "headingCandidates": [
+        "5406",
+        "5402",
+        "5403",
+        "5401",
+        "5405"
+      ],
+      "headingSearchTime": 1606,
+      "headingCorrect": false,
+      "selectedCode": "5406.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 790,
+      "totalTime": 9516
+    },
+    {
+      "query": "polyester staple fiber short cut",
+      "expectedChapter": "55",
+      "expectedHeading": "5503",
+      "extractedAttributes": {
+        "material": "polyester",
+        "form": "fiber",
+        "raw_query": "polyester staple fiber short cut"
+      },
+      "attributeExtractionTime": 2072,
+      "routedChapter": "55",
+      "chapterConfidence": 90,
+      "chapterRuleUsed": null,
+      "chapterLLMFallback": true,
+      "chapterRoutingTime": 5344,
+      "chapterCorrect": true,
+      "foundHeading": "5513",
+      "headingSimilarity": 0.4231791931666393,
+      "headingCandidates": [
+        "5513",
+        "5501",
+        "5514",
+        "5515",
+        "5502"
+      ],
+      "headingSearchTime": 1496,
+      "headingCorrect": false,
+      "selectedCode": "5513.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 690,
+      "totalTime": 9602
+    },
+    {
+      "query": "acrylic staple fiber for spinning",
+      "expectedChapter": "55",
+      "expectedHeading": "5503",
+      "extractedAttributes": {
+        "material": "acrylic",
+        "form": "fiber",
+        "raw_query": "acrylic staple fiber for spinning"
+      },
+      "attributeExtractionTime": 1898,
+      "routedChapter": "39",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "plastic_articles",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "3906",
+      "headingSimilarity": 0.3360103068342568,
+      "headingCandidates": [
+        "3906",
+        "3916",
+        "3907",
+        "3905",
+        "3908"
+      ],
+      "headingSearchTime": 1367,
+      "headingCorrect": false,
+      "selectedCode": "3906.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 675,
+      "totalTime": 3940
+    },
+    {
+      "query": "viscose staple fiber rayon",
+      "expectedChapter": "55",
+      "expectedHeading": "5504",
+      "extractedAttributes": {
+        "material": "viscose staple fiber",
+        "raw_query": "viscose staple fiber rayon"
+      },
+      "attributeExtractionTime": 3433,
+      "routedChapter": "55",
+      "chapterConfidence": 90,
+      "chapterRuleUsed": null,
+      "chapterLLMFallback": true,
+      "chapterRoutingTime": 16296,
+      "chapterCorrect": true,
+      "foundHeading": "5506",
+      "headingSimilarity": 0.44858251247822944,
+      "headingCandidates": [
+        "5506",
+        "5509",
+        "5515",
+        "5507",
+        "5504"
+      ],
+      "headingSearchTime": 3103,
+      "headingCorrect": false,
+      "selectedCode": "5506.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 699,
+      "totalTime": 23531
+    },
+    {
+      "query": "leather coat men's long",
+      "expectedChapter": "42",
+      "expectedHeading": "4203",
+      "extractedAttributes": {
+        "material": "leather",
+        "form": "coat",
+        "intended_use": "apparel",
+        "raw_query": "leather coat men's long"
+      },
+      "attributeExtractionTime": 1586,
+      "routedChapter": "62",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "woven_apparel",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "6201",
+      "headingSimilarity": 0.38528035923003234,
+      "headingCandidates": [
+        "6201",
+        "6203",
+        "6202",
+        "6205",
+        "6211"
+      ],
+      "headingSearchTime": 1604,
+      "headingCorrect": false,
+      "selectedCode": "6201.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 718,
+      "totalTime": 3908
+    },
+    {
+      "query": "leather vest motorcycle",
+      "expectedChapter": "42",
+      "expectedHeading": "4203",
+      "extractedAttributes": {
+        "material": "leather",
+        "form": "vest",
+        "intended_use": "motor vehicles",
+        "raw_query": "leather vest motorcycle"
+      },
+      "attributeExtractionTime": 1549,
+      "routedChapter": "87",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "vehicle_parts_function",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "8711",
+      "headingSimilarity": 0.4037807348770561,
+      "headingCandidates": [
+        "8711",
+        "8710",
+        "8702",
+        "8704",
+        "8703"
+      ],
+      "headingSearchTime": 1333,
+      "headingCorrect": false,
+      "selectedCode": "8711.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 737,
+      "totalTime": 3619
+    },
+    {
+      "query": "leather gloves winter lined",
+      "expectedChapter": "42",
+      "expectedHeading": "4203",
+      "extractedAttributes": {
+        "material": "leather",
+        "form": "gloves",
+        "intended_use": "winter wear",
+        "raw_query": "leather gloves winter lined"
+      },
+      "attributeExtractionTime": 1890,
+      "routedChapter": "42",
+      "chapterConfidence": 90,
+      "chapterRuleUsed": null,
+      "chapterLLMFallback": true,
+      "chapterRoutingTime": 10737,
+      "chapterCorrect": true,
+      "foundHeading": "4203",
+      "headingSimilarity": 0.3120042607779192,
+      "headingCandidates": [
+        "4203",
+        "4206",
+        "4205",
+        "4201",
+        "4202"
+      ],
+      "headingSearchTime": 1674,
+      "headingCorrect": true,
+      "selectedCode": "4203.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 692,
+      "totalTime": 14993
+    },
+    {
+      "query": "wool coat women woven fabric",
+      "expectedChapter": "62",
+      "expectedHeading": "6202",
+      "extractedAttributes": {
+        "material": "wool",
+        "form": "fabric",
+        "intended_use": "apparel",
+        "raw_query": "wool coat women woven fabric"
+      },
+      "attributeExtractionTime": 1384,
+      "routedChapter": "62",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "woven_apparel",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "6202",
+      "headingSimilarity": 0.48154081239171154,
+      "headingCandidates": [
+        "6202",
+        "6206",
+        "6204",
+        "6201",
+        "6211"
+      ],
+      "headingSearchTime": 1593,
+      "headingCorrect": true,
+      "selectedCode": "6202.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 866,
+      "totalTime": 3843
+    },
+    {
+      "query": "cotton jacket men woven",
+      "expectedChapter": "62",
+      "expectedHeading": "6203",
+      "extractedAttributes": {
+        "material": "cotton",
+        "form": "fabric",
+        "intended_use": "apparel/men's clothing",
+        "raw_query": "cotton jacket men woven"
+      },
+      "attributeExtractionTime": 1540,
+      "routedChapter": "52",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "cotton_textiles",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "5208",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "5208"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": false,
+      "selectedCode": "5208.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 1404,
+      "totalTime": 2944
+    },
+    {
+      "query": "nylon jacket windbreaker woven",
+      "expectedChapter": "62",
+      "expectedHeading": "6201",
+      "extractedAttributes": {
+        "material": "nylon",
+        "form": "fabric",
+        "raw_query": "nylon jacket windbreaker woven"
+      },
+      "attributeExtractionTime": 1570,
+      "routedChapter": "62",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "woven_apparel",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "6202",
+      "headingSimilarity": 0.34889294796544057,
+      "headingCandidates": [
+        "6202",
+        "6201",
+        "6204",
+        "6211",
+        "6206"
+      ],
+      "headingSearchTime": 1442,
+      "headingCorrect": false,
+      "selectedCode": "6202.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 683,
+      "totalTime": 3695
+    },
+    {
+      "query": "knitted polo shirt men cotton",
+      "expectedChapter": "61",
+      "expectedHeading": "6105",
+      "extractedAttributes": {
+        "material": "cotton",
+        "form": "fabric",
+        "intended_use": "apparel/men's clothing",
+        "raw_query": "knitted polo shirt men cotton"
+      },
+      "attributeExtractionTime": 1403,
+      "routedChapter": "61",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "knitted_apparel",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "6105",
+      "headingSimilarity": 0.4276321316628575,
+      "headingCandidates": [
+        "6105",
+        "6103",
+        "6107",
+        "6101",
+        "6110"
+      ],
+      "headingSearchTime": 1910,
+      "headingCorrect": true,
+      "selectedCode": "6105.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 683,
+      "totalTime": 3996
+    },
+    {
+      "query": "knitted dress women viscose",
+      "expectedChapter": "61",
+      "expectedHeading": "6104",
+      "extractedAttributes": {
+        "material": "viscose",
+        "form": "fabric",
+        "intended_use": "women's clothing",
+        "raw_query": "knitted dress women viscose"
+      },
+      "attributeExtractionTime": 1414,
+      "routedChapter": "61",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "knitted_apparel",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "6108",
+      "headingSimilarity": 0.35114523927675845,
+      "headingCandidates": [
+        "6108",
+        "6104",
+        "6106",
+        "6102",
+        "6115"
+      ],
+      "headingSearchTime": 1552,
+      "headingCorrect": false,
+      "selectedCode": "6108.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 833,
+      "totalTime": 3799
+    },
+    {
+      "query": "underwear men cotton knitted",
+      "expectedChapter": "61",
+      "expectedHeading": "6107",
+      "extractedAttributes": {
+        "material": "cotton",
+        "form": "fabric",
+        "intended_use": "apparel",
+        "processing_state": "knitted",
+        "raw_query": "underwear men cotton knitted"
+      },
+      "attributeExtractionTime": 1445,
+      "routedChapter": "52",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "cotton_textiles",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "5208",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "5208"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": false,
+      "selectedCode": "5208.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 712,
+      "totalTime": 2157
+    },
+    {
+      "query": "woven dress shirt formal men",
+      "expectedChapter": "62",
+      "expectedHeading": "6205",
+      "extractedAttributes": {
+        "material": "null",
+        "form": "fabric",
+        "function": "null",
+        "intended_use": "null",
+        "processing_state": "null",
+        "composition": "null",
+        "raw_query": "woven dress shirt formal men"
+      },
+      "attributeExtractionTime": 1223,
+      "routedChapter": "62",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "woven_apparel",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "6205",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "6205"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "6205.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 711,
+      "totalTime": 1934
+    },
+    {
+      "query": "woven trousers men cotton chino",
+      "expectedChapter": "62",
+      "expectedHeading": "6203",
+      "extractedAttributes": {
+        "material": "cotton",
+        "form": "fabric",
+        "intended_use": "apparel",
+        "raw_query": "woven trousers men cotton chino"
+      },
+      "attributeExtractionTime": 1593,
+      "routedChapter": "62",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "woven_apparel",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 1,
+      "chapterCorrect": true,
+      "foundHeading": "6203",
+      "headingSimilarity": 0.42640028719896983,
+      "headingCandidates": [
+        "6203",
+        "6205",
+        "6210",
+        "6204",
+        "6207"
+      ],
+      "headingSearchTime": 1537,
+      "headingCorrect": true,
+      "selectedCode": "6203.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 695,
+      "totalTime": 3826
+    },
+    {
+      "query": "woven skirt women linen",
+      "expectedChapter": "62",
+      "expectedHeading": "6204",
+      "extractedAttributes": {
+        "material": "linen",
+        "form": "fabric",
+        "intended_use": "women's clothing",
+        "raw_query": "woven skirt women linen"
+      },
+      "attributeExtractionTime": 1152,
+      "routedChapter": "62",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "woven_apparel",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "6204",
+      "headingSimilarity": 0.41999028086778156,
+      "headingCandidates": [
+        "6204",
+        "6208",
+        "6206",
+        "6211",
+        "6203"
+      ],
+      "headingSearchTime": 1533,
+      "headingCorrect": true,
+      "selectedCode": "6204.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 714,
+      "totalTime": 3399
+    },
+    {
+      "query": "roasted coffee ground filter",
+      "expectedChapter": "09",
+      "expectedHeading": "0901",
+      "extractedAttributes": {
+        "material": "coffee",
+        "form": "ground",
+        "function": "filtering",
+        "processing_state": "roasted",
+        "raw_query": "roasted coffee ground filter"
+      },
+      "attributeExtractionTime": 2256,
+      "routedChapter": "09",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "raw_coffee",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "0901",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "0901"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "0901.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 839,
+      "totalTime": 3095
+    },
+    {
+      "query": "coffee beans decaffeinated roasted",
+      "expectedChapter": "09",
+      "expectedHeading": "0901",
+      "extractedAttributes": {
+        "material": "coffee",
+        "form": "beans",
+        "processing_state": "roasted",
+        "composition": "decaffeinated",
+        "raw_query": "coffee beans decaffeinated roasted"
+      },
+      "attributeExtractionTime": 1375,
+      "routedChapter": "09",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "raw_coffee",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "0901",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "0901"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "0901.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 695,
+      "totalTime": 2070
+    },
+    {
+      "query": "instant coffee 3-in-1 sachets",
+      "expectedChapter": "21",
+      "expectedHeading": "2101",
+      "extractedAttributes": {
+        "material": "coffee",
+        "form": "sachets",
+        "processing_state": "instant",
+        "raw_query": "instant coffee 3-in-1 sachets"
+      },
+      "attributeExtractionTime": 1564,
+      "routedChapter": "21",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "instant_coffee",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "2101",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "2101"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": true,
+      "selectedCode": "2101.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 711,
+      "totalTime": 2275
+    },
+    {
+      "query": "coffee concentrate cold brew liquid",
+      "expectedChapter": "21",
+      "expectedHeading": "2101",
+      "extractedAttributes": {
+        "material": "coffee",
+        "form": "liquid",
+        "processing_state": "processed",
+        "raw_query": "coffee concentrate cold brew liquid"
+      },
+      "attributeExtractionTime": 1791,
+      "routedChapter": "21",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "instant_coffee",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "2101",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "2101"
+      ],
+      "headingSearchTime": 1,
+      "headingCorrect": true,
+      "selectedCode": "2101.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 726,
+      "totalTime": 2518
+    },
+    {
+      "query": "espresso capsules nespresso compatible",
+      "expectedChapter": "09",
+      "expectedHeading": "0901",
+      "extractedAttributes": {
+        "form": "capsules",
+        "intended_use": "coffee equipment",
+        "raw_query": "espresso capsules nespresso compatible"
+      },
+      "attributeExtractionTime": 2495,
+      "routedChapter": "30",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "medicaments_dosage",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "3004",
+      "headingSimilarity": 0.95,
+      "headingCandidates": [
+        "3004"
+      ],
+      "headingSearchTime": 0,
+      "headingCorrect": false,
+      "selectedCode": "3004.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 681,
+      "totalTime": 3176
+    },
+    {
+      "query": "diesel engine for truck",
+      "expectedChapter": "84",
+      "expectedHeading": "8408",
+      "extractedAttributes": {
+        "intended_use": "motor vehicles/trucks",
+        "raw_query": "diesel engine for truck"
+      },
+      "attributeExtractionTime": 1514,
+      "routedChapter": "87",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "vehicle_parts_function",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 1,
+      "chapterCorrect": false,
+      "foundHeading": "8709",
+      "headingSimilarity": 0.4955211577130063,
+      "headingCandidates": [
+        "8709",
+        "8706",
+        "8705",
+        "8702",
+        "8716"
+      ],
+      "headingSearchTime": 1757,
+      "headingCorrect": false,
+      "selectedCode": "8709.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 960,
+      "totalTime": 4232
+    },
+    {
+      "query": "hydraulic pump industrial",
+      "expectedChapter": "84",
+      "expectedHeading": "8413",
+      "extractedAttributes": {
+        "intended_use": "industrial",
+        "raw_query": "hydraulic pump industrial"
+      },
+      "attributeExtractionTime": 1990,
+      "routedChapter": "84",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "mechanical_machinery",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "8410",
+      "headingSimilarity": 0.35554354985769754,
+      "headingCandidates": [
+        "8410",
+        "8413",
+        "8467",
+        "8408",
+        "8425"
+      ],
+      "headingSearchTime": 2313,
+      "headingCorrect": false,
+      "selectedCode": "8410.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 699,
+      "totalTime": 5002
+    },
+    {
+      "query": "air compressor piston type",
+      "expectedChapter": "84",
+      "expectedHeading": "8414",
+      "extractedAttributes": {
+        "raw_query": "air compressor piston type"
+      },
+      "attributeExtractionTime": 1123,
+      "routedChapter": "84",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "mechanical_machinery",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "8408",
+      "headingSimilarity": 0.38925445739898956,
+      "headingCandidates": [
+        "8408",
+        "8407",
+        "8414",
+        "8467",
+        "8411"
+      ],
+      "headingSearchTime": 1605,
+      "headingCorrect": false,
+      "selectedCode": "8408.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 677,
+      "totalTime": 3405
+    },
+    {
+      "query": "electric motor AC induction 5HP",
+      "expectedChapter": "85",
+      "expectedHeading": "8501",
+      "extractedAttributes": {
+        "intended_use": "motor vehicles",
+        "raw_query": "electric motor AC induction 5HP"
+      },
+      "attributeExtractionTime": 1264,
+      "routedChapter": "87",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "vehicle_parts_function",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "8711",
+      "headingSimilarity": 0.4364340565463338,
+      "headingCandidates": [
+        "8711",
+        "8703",
+        "8705",
+        "8706",
+        "8702"
+      ],
+      "headingSearchTime": 1332,
+      "headingCorrect": false,
+      "selectedCode": "8711.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 718,
+      "totalTime": 3314
+    },
+    {
+      "query": "power transformer 1000KVA",
+      "expectedChapter": "85",
+      "expectedHeading": "8504",
+      "extractedAttributes": {
+        "intended_use": "electric power distribution",
+        "raw_query": "power transformer 1000KVA"
+      },
+      "attributeExtractionTime": 2028,
+      "routedChapter": "85",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "electrical_machinery",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "8504",
+      "headingSimilarity": 0.3685489140211241,
+      "headingCandidates": [
+        "8504",
+        "8502",
+        "8535",
+        "8536",
+        "8501"
+      ],
+      "headingSearchTime": 1766,
+      "headingCorrect": true,
+      "selectedCode": "8504.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 708,
+      "totalTime": 4502
+    },
+    {
+      "query": "PVC pipe for water supply",
+      "expectedChapter": "39",
+      "expectedHeading": "3917",
+      "extractedAttributes": {
+        "material": "PVC",
+        "form": "pipe",
+        "intended_use": "water supply",
+        "raw_query": "PVC pipe for water supply"
+      },
+      "attributeExtractionTime": 1096,
+      "routedChapter": "39",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "plastic_articles",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "3922",
+      "headingSimilarity": 0.2601989507675171,
+      "headingCandidates": [
+        "3922",
+        "3917",
+        "3904",
+        "3924",
+        "3905"
+      ],
+      "headingSearchTime": 1462,
+      "headingCorrect": false,
+      "selectedCode": "3922.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 686,
+      "totalTime": 3244
+    },
+    {
+      "query": "plastic container food grade HDPE",
+      "expectedChapter": "39",
+      "expectedHeading": "3923",
+      "extractedAttributes": {
+        "material": "HDPE",
+        "form": "container",
+        "intended_use": "food",
+        "raw_query": "plastic container food grade HDPE"
+      },
+      "attributeExtractionTime": 1409,
+      "routedChapter": "39",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "plastic_articles",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": true,
+      "foundHeading": "3924",
+      "headingSimilarity": 0.3315318724056593,
+      "headingCandidates": [
+        "3924",
+        "3908",
+        "3923",
+        "3921",
+        "3902"
+      ],
+      "headingSearchTime": 1265,
+      "headingCorrect": false,
+      "selectedCode": "3924.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 713,
+      "totalTime": 3387
+    },
+    {
+      "query": "natural rubber sheet smoked",
+      "expectedChapter": "40",
+      "expectedHeading": "4001",
+      "extractedAttributes": {
+        "material": "natural rubber",
+        "form": "sheet",
+        "processing_state": "smoked",
+        "raw_query": "natural rubber sheet smoked"
+      },
+      "attributeExtractionTime": 1731,
+      "routedChapter": "40",
+      "chapterConfidence": 90,
+      "chapterRuleUsed": null,
+      "chapterLLMFallback": true,
+      "chapterRoutingTime": 8319,
+      "chapterCorrect": true,
+      "foundHeading": "4001",
+      "headingSimilarity": 0.43848327168922696,
+      "headingCandidates": [
+        "4001",
+        "4008",
+        "4002",
+        "4005",
+        "4003"
+      ],
+      "headingSearchTime": 1452,
+      "headingCorrect": true,
+      "selectedCode": "4001.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 693,
+      "totalTime": 12195
+    },
+    {
+      "query": "rubber hose hydraulic reinforced",
+      "expectedChapter": "40",
+      "expectedHeading": "4009",
+      "extractedAttributes": {
+        "material": "rubber",
+        "form": "hose",
+        "function": "hydraulic",
+        "raw_query": "rubber hose hydraulic reinforced"
+      },
+      "attributeExtractionTime": 1375,
+      "routedChapter": "84",
+      "chapterConfidence": 95,
+      "chapterRuleUsed": "mechanical_machinery",
+      "chapterLLMFallback": false,
+      "chapterRoutingTime": 0,
+      "chapterCorrect": false,
+      "foundHeading": "8477",
+      "headingSimilarity": 0.2590474850790989,
+      "headingCandidates": [
+        "8477",
+        "8484",
+        "8410",
+        "8467",
+        "8408"
+      ],
+      "headingSearchTime": 2238,
+      "headingCorrect": false,
+      "selectedCode": "8477.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 756,
+      "totalTime": 4369
+    },
+    {
+      "query": "rubber gasket seal O-ring",
+      "expectedChapter": "40",
+      "expectedHeading": "4016",
+      "extractedAttributes": {
+        "material": "rubber",
+        "form": "O-ring",
+        "function": "sealing",
+        "raw_query": "rubber gasket seal O-ring"
+      },
+      "attributeExtractionTime": 1649,
+      "routedChapter": "40",
+      "chapterConfidence": 90,
+      "chapterRuleUsed": null,
+      "chapterLLMFallback": true,
+      "chapterRoutingTime": 6360,
+      "chapterCorrect": true,
+      "foundHeading": "4014",
+      "headingSimilarity": 0.4177992143870366,
+      "headingCandidates": [
+        "4014",
+        "4006",
+        "4013",
+        "4009",
+        "4011"
+      ],
+      "headingSearchTime": 1383,
+      "headingCorrect": false,
+      "selectedCode": "4014.00.00",
+      "codeConfidence": 70,
+      "codeSelectionTime": 723,
+      "totalTime": 10115
+    }
+  ]
+}

@@ -255,7 +255,7 @@ async function fetchAPI<T>(
 }
 
 /**
- * Classify a product using LLM-enhanced classification (Phase 8)
+ * Classify a product using the unified classification endpoint
  *
  * @param request - Classification request data
  * @returns Classification results
@@ -263,31 +263,40 @@ async function fetchAPI<T>(
 export async function classifyProduct(
   request: ClassifyRequest
 ): Promise<ClassifyResponse> {
-  // Use the new LLM classification endpoint (Phase 8 - 56.7% accuracy)
-  const llmResponse = await fetchAPI<any>('/api/classify-llm', {
+  // Use the unified /api/classify endpoint
+  const response = await fetchAPI<any>('/api/classify', {
     method: 'POST',
     body: JSON.stringify({
-      productDescription: request.productDescription,
-      candidateLimit: 10
+      query: request.productDescription
     }),
   })
 
-  // Transform LLM response to match ClassifyResponse format
-  if (llmResponse.success && llmResponse.result) {
+  // Handle classification response
+  if (response.responseType === 'classification' && response.hsCode) {
     return {
       success: true,
       results: [{
-        hsCode: llmResponse.result.hsCode,
-        description: llmResponse.result.description || '',
-        confidence: llmResponse.result.confidence,
-        reasoning: llmResponse.result.reasoning
+        hsCode: response.hsCode,
+        description: response.description || '',
+        confidence: response.confidence || 0,
+        reasoning: response.reasoning || ''
       }],
       classificationId: `cls_${Date.now()}_${Math.random().toString(36).substring(7)}`,
-      timestamp: llmResponse.timestamp
+      timestamp: new Date().toISOString()
     }
   }
 
-  // Fallback if LLM fails
+  // Handle question response - return empty results, caller should use classifyConversational
+  if (response.responseType === 'question') {
+    return {
+      success: true,
+      results: [],
+      classificationId: `cls_question_${Date.now()}`,
+      timestamp: new Date().toISOString()
+    }
+  }
+
+  // Fallback if response format is unexpected
   return {
     success: false,
     results: [],
@@ -432,51 +441,88 @@ export function getSessionId(): string {
 export async function classifyConversational(
   request: ConversationalClassifyRequest
 ): Promise<ConversationalClassifyResponse> {
-  return fetchAPI<ConversationalClassifyResponse>('/api/classify-conversational', {
+  // Use the unified /api/classify endpoint with answer continuation support
+  const response = await fetchAPI<any>('/api/classify', {
     method: 'POST',
-    body: JSON.stringify(request),
+    body: JSON.stringify({
+      query: request.productDescription,
+      previousAnswers: request.answers
+    }),
   })
+
+  // Transform response to ConversationalClassifyResponse format
+  if (response.responseType === 'question') {
+    return {
+      success: true,
+      conversationId: request.conversationId || `conv_${Date.now()}`,
+      responseType: 'questions',
+      questions: response.options ? [{
+        id: 'q1',
+        text: response.question || '',
+        options: response.options.map((opt: any) => opt.label || opt),
+        allowOther: true,
+        priority: 'required' as const
+      }] : [],
+      questionContext: response.context,
+      timestamp: new Date().toISOString()
+    }
+  }
+
+  // Handle classification response
+  return {
+    success: true,
+    conversationId: request.conversationId || `conv_${Date.now()}`,
+    responseType: 'classification',
+    result: {
+      hsCode: response.hsCode || '',
+      description: response.description || '',
+      confidence: response.confidence || 0,
+      reasoning: response.reasoning || '',
+      alternatives: []
+    },
+    timestamp: new Date().toISOString()
+  }
 }
+
+// NOTE: The following functions are stubs as the original endpoints were removed.
+// The unified /api/classify endpoint now handles all classification flows.
 
 /**
  * Get details of a conversation (for debugging/audit)
- *
- * @param conversationId - Conversation ID
- * @returns Conversation details
+ * @deprecated Endpoint removed - returns stub response
  */
 export async function getConversation(
-  conversationId: string
+  _conversationId: string
 ): Promise<{ success: boolean; conversation: any }> {
-  return fetchAPI(`/api/classify-conversational/${conversationId}`)
+  // Stub: endpoint no longer exists
+  return { success: false, conversation: null }
 }
 
 /**
  * Abandon a conversation and start fresh
- *
- * @param conversationId - Conversation ID to abandon
- * @returns Success status
+ * @deprecated Endpoint removed - returns success (no-op)
  */
 export async function abandonConversation(
-  conversationId: string
+  _conversationId: string
 ): Promise<{ success: boolean; message: string }> {
-  return fetchAPI(`/api/classify-conversational/${conversationId}`, {
-    method: 'DELETE',
-  })
+  // Stub: no-op since conversations are now stateless
+  return { success: true, message: 'Conversation reset (no-op - stateless)' }
 }
 
 /**
  * Skip remaining questions and get best guess classification
- *
- * @param conversationId - Conversation ID
- * @param sessionId - Session ID
- * @returns Classification result
+ * @deprecated Use classifyConversational with current answers instead
  */
 export async function skipToClassification(
-  conversationId: string,
-  sessionId: string
+  _conversationId: string,
+  _sessionId: string
 ): Promise<ConversationalClassifyResponse> {
-  return fetchAPI<ConversationalClassifyResponse>('/api/classify-conversational/skip', {
-    method: 'POST',
-    body: JSON.stringify({ conversationId, sessionId }),
-  })
+  // Stub: returns a prompt to use regular classification
+  return {
+    success: false,
+    conversationId: _conversationId,
+    responseType: 'classification',
+    error: 'Skip not supported - please submit current answers to continue',
+    timestamp: new Date().toISOString()
+  }
 }

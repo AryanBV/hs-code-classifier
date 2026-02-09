@@ -1,0 +1,1728 @@
+{
+  "session": "Session 5 Validation",
+  "timestamp": "2026-01-21T14:07:42.132Z",
+  "model": "gpt-4o-mini",
+  "summary": {
+    "totalTests": 100,
+    "overallChapterAccuracy": "79.0%",
+    "rulePathAccuracy": "78.9%",
+    "llmPathAccuracy": "79.2%",
+    "targetsMet": false
+  },
+  "metrics": {
+    "totalTests": 100,
+    "timestamp": "2026-01-21T14:07:42.132Z",
+    "overallChapterAccuracy": 69,
+    "overallWithAlternatives": 79,
+    "byPath": {
+      "rule": {
+        "total": 76,
+        "correct": 60,
+        "accuracy": 78.94736842105263,
+        "avgConfidence": 95,
+        "avgResponseTimeMs": 2441.1447368421054
+      },
+      "llm": {
+        "total": 24,
+        "correct": 19,
+        "accuracy": 79.16666666666666,
+        "avgConfidence": 75,
+        "avgResponseTimeMs": 19802.958333333332
+      }
+    },
+    "byCategory": {
+      "automotive": {
+        "total": 25,
+        "correct": 22,
+        "accuracy": 88,
+        "pathBreakdown": {
+          "rule": 25,
+          "llm": 0
+        }
+      },
+      "simple": {
+        "total": 40,
+        "correct": 26,
+        "accuracy": 65,
+        "pathBreakdown": {
+          "rule": 23,
+          "llm": 17
+        }
+      },
+      "itc-official": {
+        "total": 20,
+        "correct": 17,
+        "accuracy": 85,
+        "pathBreakdown": {
+          "rule": 18,
+          "llm": 2
+        }
+      },
+      "ambiguous": {
+        "total": 15,
+        "correct": 14,
+        "accuracy": 93.33333333333333,
+        "pathBreakdown": {
+          "rule": 10,
+          "llm": 5
+        }
+      }
+    },
+    "byDifficulty": {
+      "easy": {
+        "total": 49,
+        "correct": 33,
+        "accuracy": 67.3469387755102
+      },
+      "medium": {
+        "total": 33,
+        "correct": 29,
+        "accuracy": 87.87878787878788
+      },
+      "hard": {
+        "total": 18,
+        "correct": 17,
+        "accuracy": 94.44444444444444
+      }
+    },
+    "targets": {
+      "overallChapterAccuracy": {
+        "target": 80,
+        "actual": 79,
+        "met": false
+      },
+      "llmPathAccuracy": {
+        "target": 70,
+        "actual": 79.16666666666666,
+        "met": true
+      }
+    }
+  },
+  "results": [
+    {
+      "testId": "S5-AUTO-001",
+      "query": "ceramic brake pads for heavy trucks",
+      "category": "automotive",
+      "expectedChapter": "87",
+      "actualChapter": "87",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 3266,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AUTO-002",
+      "query": "brake drum cast iron for Tata truck rear axle",
+      "category": "automotive",
+      "expectedChapter": "87",
+      "actualChapter": "87",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 2337,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AUTO-003",
+      "query": "disc brake rotor ventilated for passenger car",
+      "category": "automotive",
+      "expectedChapter": "87",
+      "actualChapter": "87",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 2320,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AUTO-004",
+      "query": "rubber oil seals for automobile engines",
+      "category": "automotive",
+      "expectedChapter": "87",
+      "actualChapter": "87",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 2284,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AUTO-005",
+      "query": "piston rings chrome plated for diesel engine truck",
+      "category": "automotive",
+      "expectedChapter": "87",
+      "actualChapter": "87",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 2231,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AUTO-006",
+      "query": "cylinder head gasket multi-layer steel for car engine",
+      "category": "automotive",
+      "expectedChapter": "87",
+      "actualChapter": "87",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 1954,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AUTO-007",
+      "query": "silicone radiator hose for bus coolant system",
+      "category": "automotive",
+      "expectedChapter": "87",
+      "actualChapter": "87",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 2647,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AUTO-008",
+      "query": "plastic bumper for Toyota Innova passenger car",
+      "category": "automotive",
+      "expectedChapter": "87",
+      "actualChapter": "87",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 2200,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AUTO-009",
+      "query": "aluminium alloy wheel rims for passenger cars",
+      "category": "automotive",
+      "expectedChapter": "87",
+      "actualChapter": "87",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 1822,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AUTO-010",
+      "query": "side mirror assembly with glass for Hyundai i20",
+      "category": "automotive",
+      "expectedChapter": "87",
+      "actualChapter": "87",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 2073,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AUTO-011",
+      "query": "car door handle chrome plated exterior",
+      "category": "automotive",
+      "expectedChapter": "87",
+      "actualChapter": "87",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 2409,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AUTO-012",
+      "query": "coil spring suspension front for SUV",
+      "category": "automotive",
+      "expectedChapter": "87",
+      "actualChapter": "87",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 2217,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AUTO-013",
+      "query": "rubber suspension bushing for truck chassis",
+      "category": "automotive",
+      "expectedChapter": "87",
+      "actualChapter": "87",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 2403,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AUTO-014",
+      "query": "steering rack assembly hydraulic for sedan",
+      "category": "automotive",
+      "expectedChapter": "87",
+      "actualChapter": "87",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 2046,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AUTO-015",
+      "query": "clutch plate friction disc for Mahindra pickup",
+      "category": "automotive",
+      "expectedChapter": "87",
+      "actualChapter": "87",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 2210,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AUTO-016",
+      "query": "drive shaft propeller shaft for truck",
+      "category": "automotive",
+      "expectedChapter": "87",
+      "actualChapter": "87",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 1531,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AUTO-017",
+      "query": "truck tyre 315/80R22.5 radial new pneumatic",
+      "category": "automotive",
+      "expectedChapter": "40",
+      "actualChapter": "40",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "tyres_rubber",
+      "confidence": 95,
+      "responseTimeMs": 1666,
+      "reasoning": "Heading 4011: New pneumatic tyres of rubber. Tyres have their own specific heading regardless of vehicle use."
+    },
+    {
+      "testId": "S5-AUTO-018",
+      "query": "car battery 12V 65Ah lead-acid starter",
+      "category": "automotive",
+      "expectedChapter": "85",
+      "actualChapter": "85",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "batteries_accumulators",
+      "confidence": 95,
+      "responseTimeMs": 2136,
+      "reasoning": "Heading 8507: Electric accumulators. Batteries have their own specific heading regardless of vehicle use."
+    },
+    {
+      "testId": "S5-AUTO-019",
+      "query": "air filter element for diesel truck engine",
+      "category": "automotive",
+      "expectedChapter": "84",
+      "actualChapter": "84",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "filters_machinery",
+      "confidence": 95,
+      "responseTimeMs": 1741,
+      "reasoning": "Heading 8421: Filtering or purifying machinery. Filters have their own specific heading regardless of vehicle use."
+    },
+    {
+      "testId": "S5-AUTO-020",
+      "query": "oil filter cartridge for petrol engine car",
+      "category": "automotive",
+      "expectedChapter": "84",
+      "actualChapter": "84",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "filters_machinery",
+      "confidence": 95,
+      "responseTimeMs": 1638,
+      "reasoning": "Heading 8421: Filtering or purifying machinery. Filters have their own specific heading regardless of vehicle use."
+    },
+    {
+      "testId": "S5-AUTO-021",
+      "query": "motorcycle tyre 120/80-17 tubeless radial",
+      "category": "automotive",
+      "expectedChapter": "40",
+      "actualChapter": "40",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "tyres_rubber",
+      "confidence": 95,
+      "responseTimeMs": 2115,
+      "reasoning": "Heading 4011: New pneumatic tyres of rubber. Tyres have their own specific heading regardless of vehicle use."
+    },
+    {
+      "testId": "S5-AUTO-022",
+      "query": "alternator 12V 100A for car engine",
+      "category": "automotive",
+      "expectedChapter": "85",
+      "actualChapter": "87",
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 4633,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AUTO-023",
+      "query": "starter motor 12V for diesel truck",
+      "category": "automotive",
+      "expectedChapter": "85",
+      "actualChapter": "87",
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 2712,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AUTO-024",
+      "query": "wiper blade rubber refill for SUV windshield",
+      "category": "automotive",
+      "expectedChapter": "87",
+      "actualChapter": "87",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 1543,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AUTO-025",
+      "query": "timing belt rubber reinforced for Honda engine",
+      "category": "automotive",
+      "expectedChapter": "40",
+      "actualChapter": "87",
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 1477,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-SIMP-001",
+      "query": "basmati rice long grain 5kg bag",
+      "category": "simple",
+      "expectedChapter": "10",
+      "actualChapter": "10",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "cereals",
+      "confidence": 95,
+      "responseTimeMs": 2266,
+      "reasoning": "Chapter 10: Cereals."
+    },
+    {
+      "testId": "S5-SIMP-002",
+      "query": "fresh red apples Shimla variety",
+      "category": "simple",
+      "expectedChapter": "08",
+      "actualChapter": "08",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "llm",
+      "girsApplied": [
+        "1",
+        "2a",
+        "3a",
+        "3b"
+      ],
+      "notesUsed": [
+        "08"
+      ],
+      "confidence": 90,
+      "responseTimeMs": 29148,
+      "reasoning": "The product 'fresh red apples Shimla variety' is classified under Chapter 08 as it falls under the category of edible fruits. GIR 1 confirms that the product is a whole fruit intended for food use, and there are no exclusions in the chapter notes that would disqualify it from this classification."
+    },
+    {
+      "testId": "S5-SIMP-003",
+      "query": "black pepper whole dried Malabar grade",
+      "category": "simple",
+      "expectedChapter": "09",
+      "actualChapter": "09",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "spices",
+      "confidence": 95,
+      "responseTimeMs": 2608,
+      "reasoning": "Chapter 09: Coffee, tea, mate and spices."
+    },
+    {
+      "testId": "S5-SIMP-004",
+      "query": "refined white cane sugar crystal",
+      "category": "simple",
+      "expectedChapter": "17",
+      "actualChapter": "17",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "llm",
+      "girsApplied": [
+        "1",
+        "2a",
+        "3a",
+        "3b"
+      ],
+      "notesUsed": [
+        "17"
+      ],
+      "confidence": 90,
+      "responseTimeMs": 23277,
+      "reasoning": "The product 'refined white cane sugar crystal' is classified under Chapter 17 as it pertains to sugars and sugar confectionery. GIR 1 confirms that the product fits the description of sugar, and there are no exclusions in the chapter notes that would disqualify it."
+    },
+    {
+      "testId": "S5-SIMP-005",
+      "query": "wheat flour all purpose maida",
+      "category": "simple",
+      "expectedChapter": "11",
+      "actualChapter": "11",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "llm",
+      "girsApplied": [
+        "1",
+        "2a",
+        "3a",
+        "3b"
+      ],
+      "notesUsed": [
+        "11",
+        "10",
+        "19"
+      ],
+      "confidence": 90,
+      "responseTimeMs": 18504,
+      "reasoning": "The product 'wheat flour all purpose maida' is classified under Chapter 11 as it pertains to products of the milling industry, specifically flour made from wheat. Chapter 10 is excluded as it does not cover processed grains like flour, which is specifically addressed in Chapter 11."
+    },
+    {
+      "testId": "S5-SIMP-006",
+      "query": "extra virgin olive oil cold pressed 1 liter",
+      "category": "simple",
+      "expectedChapter": "15",
+      "actualChapter": "15",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "llm",
+      "girsApplied": [
+        "1",
+        "2a",
+        "3a",
+        "3b"
+      ],
+      "notesUsed": [
+        "15"
+      ],
+      "confidence": 90,
+      "responseTimeMs": 13815,
+      "reasoning": "The product 'extra virgin olive oil cold pressed' is classified under Chapter 15, which covers animal or vegetable fats and oils. According to GIR 1, the terms of the heading and chapter notes confirm that olive oil is included in this chapter, specifically under heading 1509 for olive oil. The processing state as 'cold pressed' does not exclude it from this classification."
+    },
+    {
+      "testId": "S5-SIMP-007",
+      "query": "green tea leaves loose Darjeeling",
+      "category": "simple",
+      "expectedChapter": "09",
+      "actualChapter": "09",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "llm",
+      "girsApplied": [
+        "1",
+        "2a",
+        "3a",
+        "3b"
+      ],
+      "notesUsed": [
+        "09",
+        "21"
+      ],
+      "confidence": 90,
+      "responseTimeMs": 17031,
+      "reasoning": "The product 'green tea leaves loose Darjeeling' falls under Chapter 09, which covers coffee, tea, mat, and spices. The extracted attributes indicate that the product is tea leaves, which are specifically classified under this chapter. GIR 1 confirms that the terms of the heading and chapter notes support this classification."
+    },
+    {
+      "testId": "S5-SIMP-008",
+      "query": "turmeric powder ground haldi",
+      "category": "simple",
+      "expectedChapter": "09",
+      "actualChapter": "09",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "spices",
+      "confidence": 95,
+      "responseTimeMs": 2062,
+      "reasoning": "Chapter 09: Coffee, tea, mate and spices."
+    },
+    {
+      "testId": "S5-SIMP-009",
+      "query": "fresh raw prawns shrimp frozen",
+      "category": "simple",
+      "expectedChapter": "03",
+      "actualChapter": "03",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "llm",
+      "girsApplied": [
+        "1",
+        "2a",
+        "3a",
+        "3b"
+      ],
+      "notesUsed": [
+        "03"
+      ],
+      "confidence": 90,
+      "responseTimeMs": 52347,
+      "reasoning": "The product 'fresh raw prawns shrimp frozen' falls under Chapter 03, which covers fish and crustaceans, including raw and frozen forms. GIR 1 confirms that this chapter is appropriate as it specifically includes crustaceans, and there are no exclusions that apply to this product."
+    },
+    {
+      "testId": "S5-SIMP-010",
+      "query": "milk chocolate bar with almonds",
+      "category": "simple",
+      "expectedChapter": "18",
+      "actualChapter": "18",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "llm",
+      "girsApplied": [
+        "1",
+        "2a",
+        "3a",
+        "3b"
+      ],
+      "notesUsed": [
+        "18",
+        "04"
+      ],
+      "confidence": 90,
+      "responseTimeMs": 29738,
+      "reasoning": "The product 'milk chocolate bar with almonds' is primarily classified under Chapter 18 (Cocoa and Cocoa Preparations) as it is a chocolate product. According to GIR 1, the specific nature of the product (chocolate) aligns with the descriptions in Chapter 18, making it more specific than Chapter 04, which pertains to dairy products. The essential character of the product is derived from chocolate, thus confirming its classification under Chapter 18."
+    },
+    {
+      "testId": "S5-SIMP-011",
+      "query": "men cotton t-shirt knitted round neck casual",
+      "category": "simple",
+      "expectedChapter": "61",
+      "actualChapter": "61",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "knitted_apparel",
+      "confidence": 95,
+      "responseTimeMs": 2468,
+      "reasoning": "Chapter 61: Knitted or crocheted apparel."
+    },
+    {
+      "testId": "S5-SIMP-012",
+      "query": "women formal cotton shirt woven with collar",
+      "category": "simple",
+      "expectedChapter": "62",
+      "actualChapter": "62",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "woven_apparel",
+      "confidence": 95,
+      "responseTimeMs": 2649,
+      "reasoning": "Chapter 62: Woven apparel."
+    },
+    {
+      "testId": "S5-SIMP-013",
+      "query": "wool sweater knitted pullover hand made",
+      "category": "simple",
+      "expectedChapter": "61",
+      "actualChapter": "61",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "knitted_apparel",
+      "confidence": 95,
+      "responseTimeMs": 3042,
+      "reasoning": "Chapter 61: Knitted or crocheted apparel."
+    },
+    {
+      "testId": "S5-SIMP-014",
+      "query": "cotton bed sheet queen size white",
+      "category": "simple",
+      "expectedChapter": "63",
+      "actualChapter": "52",
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "rule",
+      "ruleApplied": "cotton_textiles",
+      "confidence": 95,
+      "responseTimeMs": 2268,
+      "reasoning": "Chapter 52: Cotton fabrics (not made-up garments)."
+    },
+    {
+      "testId": "S5-SIMP-015",
+      "query": "bath towel cotton terry cloth blue",
+      "category": "simple",
+      "expectedChapter": "63",
+      "actualChapter": "52",
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "rule",
+      "ruleApplied": "cotton_textiles",
+      "confidence": 95,
+      "responseTimeMs": 2438,
+      "reasoning": "Chapter 52: Cotton fabrics (not made-up garments)."
+    },
+    {
+      "testId": "S5-SIMP-016",
+      "query": "cotton socks knitted ankle length mens",
+      "category": "simple",
+      "expectedChapter": "61",
+      "actualChapter": "61",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "knitted_hosiery",
+      "confidence": 95,
+      "responseTimeMs": 2878,
+      "reasoning": "Chapter 61: Knitted hosiery. Socks and stockings are knitted articles."
+    },
+    {
+      "testId": "S5-SIMP-017",
+      "query": "polyester curtains printed home decor",
+      "category": "simple",
+      "expectedChapter": "63",
+      "actualChapter": "54",
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "llm",
+      "girsApplied": [
+        "1",
+        "2a",
+        "3a",
+        "3b"
+      ],
+      "notesUsed": [
+        "52",
+        "55",
+        "54"
+      ],
+      "confidence": 90,
+      "responseTimeMs": 22979,
+      "reasoning": "The product is made of polyester, which is classified under Chapter 54 as it pertains to man-made fibers and textiles. GIR 1 indicates that the classification should be based on the material and its specific use in textiles, which aligns with the description of polyester curtains for home decor."
+    },
+    {
+      "testId": "S5-SIMP-018",
+      "query": "silk saree woven traditional handloom Banarasi",
+      "category": "simple",
+      "expectedChapter": "62",
+      "actualChapter": "62",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "woven_sarees",
+      "confidence": 95,
+      "responseTimeMs": 2267,
+      "reasoning": "Chapter 62: Woven apparel. Sarees are made-up garments."
+    },
+    {
+      "testId": "S5-SIMP-019",
+      "query": "laptop computer 15 inch Windows Intel i5",
+      "category": "simple",
+      "expectedChapter": "84",
+      "actualChapter": "85",
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "rule",
+      "ruleApplied": "electrical_machinery",
+      "confidence": 95,
+      "responseTimeMs": 2184,
+      "reasoning": "Chapter 85: Electrical machinery and equipment."
+    },
+    {
+      "testId": "S5-SIMP-020",
+      "query": "smartphone Android 6 inch display 5G",
+      "category": "simple",
+      "expectedChapter": "85",
+      "actualChapter": "85",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "electrical_machinery",
+      "confidence": 95,
+      "responseTimeMs": 2375,
+      "reasoning": "Chapter 85: Electrical machinery and equipment."
+    },
+    {
+      "testId": "S5-SIMP-021",
+      "query": "LED television 55 inch smart TV 4K",
+      "category": "simple",
+      "expectedChapter": "85",
+      "actualChapter": "85",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "electrical_machinery",
+      "confidence": 95,
+      "responseTimeMs": 2880,
+      "reasoning": "Chapter 85: Electrical machinery and equipment."
+    },
+    {
+      "testId": "S5-SIMP-022",
+      "query": "double door refrigerator frost free 300L",
+      "category": "simple",
+      "expectedChapter": "84",
+      "actualChapter": "84",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "llm",
+      "girsApplied": [
+        "1",
+        "2a",
+        "3a",
+        "3b"
+      ],
+      "notesUsed": [
+        "84"
+      ],
+      "confidence": 90,
+      "responseTimeMs": 28406,
+      "reasoning": "The product 'double door refrigerator frost free 300L' is classified under Chapter 84 as it pertains to machinery and mechanical appliances, specifically household appliances. GIR 1 indicates that the classification is determined by the terms of headings and chapter notes, and there is no exclusion for refrigerators in this chapter."
+    },
+    {
+      "testId": "S5-SIMP-023",
+      "query": "front load washing machine automatic 7kg",
+      "category": "simple",
+      "expectedChapter": "84",
+      "actualChapter": "84",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "mechanical_machinery",
+      "confidence": 95,
+      "responseTimeMs": 2236,
+      "reasoning": "Chapter 84: Machinery and mechanical appliances."
+    },
+    {
+      "testId": "S5-SIMP-024",
+      "query": "microwave oven convection 25 liter stainless",
+      "category": "simple",
+      "expectedChapter": "85",
+      "actualChapter": "73",
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "rule",
+      "ruleApplied": "iron_steel_articles",
+      "confidence": 95,
+      "responseTimeMs": 2518,
+      "reasoning": "Chapter 73: Articles of iron or steel."
+    },
+    {
+      "testId": "S5-SIMP-025",
+      "query": "split air conditioner 1.5 ton inverter",
+      "category": "simple",
+      "expectedChapter": "84",
+      "actualChapter": "84",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "llm",
+      "girsApplied": [
+        "1",
+        "2a",
+        "3a",
+        "3b"
+      ],
+      "notesUsed": [
+        "84",
+        "85"
+      ],
+      "confidence": 90,
+      "responseTimeMs": 26255,
+      "reasoning": "The product 'split air conditioner 1.5 ton inverter' is classified under Chapter 84 as it pertains to machinery and mechanical appliances for air conditioning. GIR 1 indicates that the classification is determined by the terms of headings and chapter notes, and there is no exclusion for air conditioning machinery in this chapter."
+    },
+    {
+      "testId": "S5-SIMP-026",
+      "query": "stainless steel pipes seamless industrial",
+      "category": "simple",
+      "expectedChapter": "73",
+      "actualChapter": "",
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "llm",
+      "confidence": 0,
+      "responseTimeMs": 0,
+      "reasoning": "",
+      "error": "PrismaClientKnownRequestError: \nInvalid `prisma.$queryRaw()` invocation:\n\n\nCan't reach database server at `aws-1-ap-northeast-1.pooler.supabase.com:6543`\n\nPlease make sure your database server is running at `aws-1-ap-northeast-1.pooler.supabase.com:6543`."
+    },
+    {
+      "testId": "S5-SIMP-027",
+      "query": "copper wire bare electrical grade",
+      "category": "simple",
+      "expectedChapter": "74",
+      "actualChapter": "85",
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "rule",
+      "ruleApplied": "electrical_machinery",
+      "confidence": 95,
+      "responseTimeMs": 4174,
+      "reasoning": "Chapter 85: Electrical machinery and equipment."
+    },
+    {
+      "testId": "S5-SIMP-028",
+      "query": "aluminium sheets plain rolled",
+      "category": "simple",
+      "expectedChapter": "76",
+      "actualChapter": "85",
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "rule",
+      "ruleApplied": "electrical_machinery",
+      "confidence": 95,
+      "responseTimeMs": 3146,
+      "reasoning": "Chapter 85: Electrical machinery and equipment."
+    },
+    {
+      "testId": "S5-SIMP-029",
+      "query": "gold necklace 22 karat hallmarked jewelry",
+      "category": "simple",
+      "expectedChapter": "71",
+      "actualChapter": "",
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "llm",
+      "confidence": 0,
+      "responseTimeMs": 0,
+      "reasoning": "",
+      "error": "PrismaClientKnownRequestError: \nInvalid `prisma.$queryRaw()` invocation:\n\n\nCan't reach database server at `aws-1-ap-northeast-1.pooler.supabase.com:6543`\n\nPlease make sure your database server is running at `aws-1-ap-northeast-1.pooler.supabase.com:6543`."
+    },
+    {
+      "testId": "S5-SIMP-030",
+      "query": "iron nails common wire construction",
+      "category": "simple",
+      "expectedChapter": "73",
+      "actualChapter": "73",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "iron_steel_articles",
+      "confidence": 95,
+      "responseTimeMs": 5001,
+      "reasoning": "Chapter 73: Articles of iron or steel."
+    },
+    {
+      "testId": "S5-SIMP-031",
+      "query": "PVC pipe rigid 4 inch water supply",
+      "category": "simple",
+      "expectedChapter": "39",
+      "actualChapter": "39",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "plastic_articles",
+      "confidence": 95,
+      "responseTimeMs": 2973,
+      "reasoning": "Chapter 39: Plastics (unless classified elsewhere by function)."
+    },
+    {
+      "testId": "S5-SIMP-032",
+      "query": "plastic bucket 20 liter with handle",
+      "category": "simple",
+      "expectedChapter": "39",
+      "actualChapter": "39",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "plastic_articles",
+      "confidence": 95,
+      "responseTimeMs": 3270,
+      "reasoning": "Chapter 39: Plastics (unless classified elsewhere by function)."
+    },
+    {
+      "testId": "S5-SIMP-033",
+      "query": "rubber gloves industrial heavy duty latex",
+      "category": "simple",
+      "expectedChapter": "40",
+      "actualChapter": "",
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "llm",
+      "confidence": 0,
+      "responseTimeMs": 0,
+      "reasoning": "",
+      "error": "PrismaClientKnownRequestError: \nInvalid `prisma.$queryRaw()` invocation:\n\n\nCan't reach database server at `aws-1-ap-northeast-1.pooler.supabase.com:6543`\n\nPlease make sure your database server is running at `aws-1-ap-northeast-1.pooler.supabase.com:6543`."
+    },
+    {
+      "testId": "S5-SIMP-034",
+      "query": "polyethylene shopping bags carry bags",
+      "category": "simple",
+      "expectedChapter": "39",
+      "actualChapter": "87",
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 7424,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-SIMP-035",
+      "query": "natural rubber sheet smoked RSS grade",
+      "category": "simple",
+      "expectedChapter": "40",
+      "actualChapter": "",
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "llm",
+      "confidence": 0,
+      "responseTimeMs": 0,
+      "reasoning": "",
+      "error": "PrismaClientKnownRequestError: \nInvalid `prisma.$queryRaw()` invocation:\n\n\nCan't reach database server at `aws-1-ap-northeast-1.pooler.supabase.com:6543`\n\nPlease make sure your database server is running at `aws-1-ap-northeast-1.pooler.supabase.com:6543`."
+    },
+    {
+      "testId": "S5-SIMP-036",
+      "query": "wooden dining table teak 6 seater",
+      "category": "simple",
+      "expectedChapter": "94",
+      "actualChapter": "94",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "llm",
+      "girsApplied": [
+        "1",
+        "2a",
+        "3a",
+        "3b"
+      ],
+      "notesUsed": [
+        "44",
+        "94"
+      ],
+      "confidence": 90,
+      "responseTimeMs": 31376,
+      "reasoning": "The product is a wooden dining table, which falls under the category of furniture. Chapter 94 specifically covers furniture and related items, making it the most appropriate classification according to GIR 1, as it is more specific than Chapter 44, which deals with wood and articles of wood."
+    },
+    {
+      "testId": "S5-SIMP-037",
+      "query": "ballpoint pen blue ink plastic body",
+      "category": "simple",
+      "expectedChapter": "96",
+      "actualChapter": "39",
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "rule",
+      "ruleApplied": "plastic_articles",
+      "confidence": 95,
+      "responseTimeMs": 2825,
+      "reasoning": "Chapter 39: Plastics (unless classified elsewhere by function)."
+    },
+    {
+      "testId": "S5-SIMP-038",
+      "query": "umbrella folding automatic rain protection",
+      "category": "simple",
+      "expectedChapter": "66",
+      "actualChapter": "66",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "llm",
+      "girsApplied": [
+        "1",
+        "2a",
+        "3a",
+        "3b"
+      ],
+      "notesUsed": [
+        "66",
+        "88",
+        "85"
+      ],
+      "confidence": 90,
+      "responseTimeMs": 32174,
+      "reasoning": "The product 'umbrella folding automatic rain protection' falls under Chapter 66, which specifically covers umbrellas and similar items. GIR 1 indicates that classification should be based on the terms of headings and chapter notes, and since umbrellas are explicitly mentioned in Chapter 66, it is the most appropriate classification."
+    },
+    {
+      "testId": "S5-SIMP-039",
+      "query": "wristwatch quartz analog stainless steel",
+      "category": "simple",
+      "expectedChapter": "91",
+      "actualChapter": "73",
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "rule",
+      "ruleApplied": "iron_steel_articles",
+      "confidence": 95,
+      "responseTimeMs": 2696,
+      "reasoning": "Chapter 73: Articles of iron or steel."
+    },
+    {
+      "testId": "S5-SIMP-040",
+      "query": "acoustic guitar wooden 6 string classical",
+      "category": "simple",
+      "expectedChapter": "92",
+      "actualChapter": "92",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "llm",
+      "girsApplied": [
+        "1",
+        "2a",
+        "3a",
+        "3b"
+      ],
+      "notesUsed": [
+        "92"
+      ],
+      "confidence": 90,
+      "responseTimeMs": 28484,
+      "reasoning": "The product is an acoustic guitar, which is classified under Chapter 92 as a musical instrument. GIR 1 applies here as the product fits the description of musical instruments in the chapter notes, and there is no more specific chapter that excludes it."
+    },
+    {
+      "testId": "S5-ITC-001",
+      "query": "paracetamol tablets 500mg blister pack retail",
+      "category": "itc-official",
+      "expectedChapter": "30",
+      "actualChapter": "30",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "medicaments_dosage",
+      "confidence": 95,
+      "responseTimeMs": 2627,
+      "reasoning": "Chapter 30: Medicaments in measured doses or retail packing."
+    },
+    {
+      "testId": "S5-ITC-002",
+      "query": "paracetamol powder bulk API pharmaceutical grade",
+      "category": "itc-official",
+      "expectedChapter": "29",
+      "actualChapter": "29",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "bulk_api_chemicals",
+      "confidence": 95,
+      "responseTimeMs": 3174,
+      "reasoning": "Chapter 29: Organic chemicals. Pharmaceutical APIs in bulk form are chemicals, not medicaments."
+    },
+    {
+      "testId": "S5-ITC-003",
+      "query": "ibuprofen raw material powder bulk API",
+      "category": "itc-official",
+      "expectedChapter": "29",
+      "actualChapter": "29",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "bulk_api_chemicals",
+      "confidence": 95,
+      "responseTimeMs": 2699,
+      "reasoning": "Chapter 29: Organic chemicals. Pharmaceutical APIs in bulk form are chemicals, not medicaments."
+    },
+    {
+      "testId": "S5-ITC-004",
+      "query": "arabica coffee beans grade A plantation not roasted green",
+      "category": "itc-official",
+      "expectedChapter": "09",
+      "actualChapter": "09",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "raw_coffee",
+      "confidence": 95,
+      "responseTimeMs": 2111,
+      "reasoning": "Chapter 09: Coffee not further processed than roasting."
+    },
+    {
+      "testId": "S5-ITC-005",
+      "query": "roasted coffee beans whole not ground arabica",
+      "category": "itc-official",
+      "expectedChapter": "09",
+      "actualChapter": "09",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "raw_coffee",
+      "confidence": 95,
+      "responseTimeMs": 2859,
+      "reasoning": "Chapter 09: Coffee not further processed than roasting."
+    },
+    {
+      "testId": "S5-ITC-006",
+      "query": "instant coffee powder spray dried soluble",
+      "category": "itc-official",
+      "expectedChapter": "21",
+      "actualChapter": "21",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "instant_coffee",
+      "confidence": 95,
+      "responseTimeMs": 2180,
+      "reasoning": "Chapter 21: Coffee extracts and concentrates. Raw/roasted coffee is Chapter 09."
+    },
+    {
+      "testId": "S5-ITC-007",
+      "query": "coffee concentrate cold brew liquid extract",
+      "category": "itc-official",
+      "expectedChapter": "21",
+      "actualChapter": "21",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "instant_coffee",
+      "confidence": 95,
+      "responseTimeMs": 2385,
+      "reasoning": "Chapter 21: Coffee extracts and concentrates. Raw/roasted coffee is Chapter 09."
+    },
+    {
+      "testId": "S5-ITC-008",
+      "query": "raw cotton not carded or combed Indian variety",
+      "category": "itc-official",
+      "expectedChapter": "52",
+      "actualChapter": "87",
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 1754,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-ITC-009",
+      "query": "polyester filament yarn continuous single high tenacity",
+      "category": "itc-official",
+      "expectedChapter": "54",
+      "actualChapter": "54",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "llm",
+      "girsApplied": [
+        "1",
+        "2a",
+        "3a",
+        "3b"
+      ],
+      "notesUsed": [
+        "54"
+      ],
+      "confidence": 90,
+      "responseTimeMs": 27256,
+      "reasoning": "The product is classified under Chapter 54 as it pertains to synthetic or artificial filaments, specifically polyester filament yarn, which falls under the definition of man-made fibers as outlined in the chapter notes. GIR 1 was applied to determine the classification based on the terms of the headings and chapter notes."
+    },
+    {
+      "testId": "S5-ITC-010",
+      "query": "polyester staple fiber short cut for spinning",
+      "category": "itc-official",
+      "expectedChapter": "55",
+      "actualChapter": "55",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "llm",
+      "girsApplied": [
+        "1",
+        "2a",
+        "3a",
+        "3b"
+      ],
+      "notesUsed": [
+        "55",
+        "54"
+      ],
+      "confidence": 90,
+      "responseTimeMs": 17199,
+      "reasoning": "The product is classified under Chapter 55 because it consists of polyester staple fibers, which are man-made fibers produced from organic polymers. The specific mention of 'staple fiber' aligns with the definitions provided in Chapter 55, and there are no exclusions that would prevent its classification in this chapter."
+    },
+    {
+      "testId": "S5-ITC-011",
+      "query": "genuine leather jacket brown mens casual",
+      "category": "itc-official",
+      "expectedChapter": "42",
+      "actualChapter": "42",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "leather_articles",
+      "confidence": 95,
+      "responseTimeMs": 2457,
+      "reasoning": "Chapter 42: Articles of leather. Leather articles classified by material, not as textiles."
+    },
+    {
+      "testId": "S5-ITC-012",
+      "query": "leather handbag women genuine cowhide",
+      "category": "itc-official",
+      "expectedChapter": "42",
+      "actualChapter": "42",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "leather_articles",
+      "confidence": 95,
+      "responseTimeMs": 2565,
+      "reasoning": "Chapter 42: Articles of leather. Leather articles classified by material, not as textiles."
+    },
+    {
+      "testId": "S5-ITC-013",
+      "query": "mink fur coat full length ladies luxury",
+      "category": "itc-official",
+      "expectedChapter": "43",
+      "actualChapter": "43",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "furskin_articles",
+      "confidence": 95,
+      "responseTimeMs": 1916,
+      "reasoning": "Chapter 43: Furskins and artificial fur. Furskin articles classified here, not as textiles."
+    },
+    {
+      "testId": "S5-ITC-014",
+      "query": "tinplate steel sheets for canning industry coated",
+      "category": "itc-official",
+      "expectedChapter": "72",
+      "actualChapter": "62",
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "rule",
+      "ruleApplied": "woven_apparel",
+      "confidence": 95,
+      "responseTimeMs": 2324,
+      "reasoning": "Chapter 62: Woven apparel."
+    },
+    {
+      "testId": "S5-ITC-015",
+      "query": "stainless steel bolts hexagonal M10 grade A2",
+      "category": "itc-official",
+      "expectedChapter": "73",
+      "actualChapter": "73",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "iron_steel_articles",
+      "confidence": 95,
+      "responseTimeMs": 2148,
+      "reasoning": "Chapter 73: Articles of iron or steel."
+    },
+    {
+      "testId": "S5-ITC-016",
+      "query": "electric motor AC induction 5HP industrial three phase",
+      "category": "itc-official",
+      "expectedChapter": "85",
+      "actualChapter": "85",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "electrical_machinery",
+      "confidence": 95,
+      "responseTimeMs": 2288,
+      "reasoning": "Chapter 85: Electrical machinery and equipment."
+    },
+    {
+      "testId": "S5-ITC-017",
+      "query": "centrifugal pump water industrial cast iron",
+      "category": "itc-official",
+      "expectedChapter": "84",
+      "actualChapter": "84",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "mechanical_machinery",
+      "confidence": 95,
+      "responseTimeMs": 2216,
+      "reasoning": "Chapter 84: Machinery and mechanical appliances."
+    },
+    {
+      "testId": "S5-ITC-018",
+      "query": "vitamin C tablets 1000mg food supplement dietary",
+      "category": "itc-official",
+      "expectedChapter": "21",
+      "actualChapter": "21",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "food_supplements",
+      "confidence": 95,
+      "responseTimeMs": 2256,
+      "reasoning": "Chapter 21: Food preparations. Food supplements and vitamins classified here, not as medicaments."
+    },
+    {
+      "testId": "S5-ITC-019",
+      "query": "tomato ketchup bottled sauce condiment",
+      "category": "itc-official",
+      "expectedChapter": "21",
+      "actualChapter": "85",
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "rule",
+      "ruleApplied": "electrical_machinery",
+      "confidence": 95,
+      "responseTimeMs": 1795,
+      "reasoning": "Chapter 85: Electrical machinery and equipment."
+    },
+    {
+      "testId": "S5-ITC-020",
+      "query": "portland cement powder bulk hydraulic binder",
+      "category": "itc-official",
+      "expectedChapter": "25",
+      "actualChapter": "25",
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "raw_cement",
+      "confidence": 95,
+      "responseTimeMs": 1699,
+      "reasoning": "Chapter 25: Raw cement and mineral products."
+    },
+    {
+      "testId": "S5-AMB-001",
+      "query": "spark plug for car engine ignition",
+      "category": "ambiguous",
+      "expectedChapter": "85",
+      "actualChapter": "87",
+      "alternativeChapters": [
+        "87"
+      ],
+      "correct": false,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 1504,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AMB-002",
+      "query": "car windshield laminated safety glass",
+      "category": "ambiguous",
+      "expectedChapter": "70",
+      "actualChapter": "87",
+      "alternativeChapters": [
+        "87"
+      ],
+      "correct": false,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 1823,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AMB-003",
+      "query": "rubber floor mat for car interior",
+      "category": "ambiguous",
+      "expectedChapter": "40",
+      "actualChapter": "87",
+      "alternativeChapters": [
+        "87"
+      ],
+      "correct": false,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 2220,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AMB-004",
+      "query": "motorcycle helmet protective headgear",
+      "category": "ambiguous",
+      "expectedChapter": "65",
+      "actualChapter": "87",
+      "alternativeChapters": [
+        "87"
+      ],
+      "correct": false,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 1904,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AMB-005",
+      "query": "car seat cover leather custom fit",
+      "category": "ambiguous",
+      "expectedChapter": "42",
+      "actualChapter": "87",
+      "alternativeChapters": [
+        "87"
+      ],
+      "correct": false,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 1986,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AMB-006",
+      "query": "vehicle headlight bulb halogen H4",
+      "category": "ambiguous",
+      "expectedChapter": "85",
+      "actualChapter": "87",
+      "alternativeChapters": [
+        "87"
+      ],
+      "correct": false,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "vehicle_parts_function",
+      "confidence": 95,
+      "responseTimeMs": 1919,
+      "reasoning": "Chapter 87 Note 2: Parts and accessories of motor vehicles are classified in Chapter 87 regardless of material composition."
+    },
+    {
+      "testId": "S5-AMB-007",
+      "query": "silicone sealant tube for construction",
+      "category": "ambiguous",
+      "expectedChapter": "32",
+      "actualChapter": "39",
+      "alternativeChapters": [
+        "39"
+      ],
+      "correct": false,
+      "correctOrAlternative": true,
+      "pathTaken": "llm",
+      "girsApplied": [
+        "1",
+        "2a",
+        "3a",
+        "3b"
+      ],
+      "notesUsed": [
+        "40",
+        "39",
+        "28"
+      ],
+      "confidence": 90,
+      "responseTimeMs": 19364,
+      "reasoning": "The product is a silicone sealant, which is classified under Chapter 39 (Plastics and Articles Thereof) as it is primarily made of silicone, a synthetic polymer. The specific use in construction does not exclude it from this chapter, and there is no more specific chapter that applies."
+    },
+    {
+      "testId": "S5-AMB-008",
+      "query": "foam mattress memory foam polyurethane",
+      "category": "ambiguous",
+      "expectedChapter": "94",
+      "actualChapter": "94",
+      "alternativeChapters": [
+        "39"
+      ],
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "llm",
+      "girsApplied": [
+        "1",
+        "2a",
+        "3a",
+        "3b"
+      ],
+      "notesUsed": [
+        "94",
+        "39",
+        "63"
+      ],
+      "confidence": 90,
+      "responseTimeMs": 13388,
+      "reasoning": "The product 'foam mattress memory foam polyurethane' is classified under Chapter 94 as it pertains to bedding and mattresses. Chapter 94 specifically covers furniture and bedding, including mattresses, which aligns with the product description. The exclusion of pneumatic or water mattresses does not apply here, as the product is a memory foam mattress made of polyurethane."
+    },
+    {
+      "testId": "S5-AMB-009",
+      "query": "plastic chair stackable garden outdoor",
+      "category": "ambiguous",
+      "expectedChapter": "94",
+      "actualChapter": "39",
+      "alternativeChapters": [
+        "39"
+      ],
+      "correct": false,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "plastic_articles",
+      "confidence": 95,
+      "responseTimeMs": 2327,
+      "reasoning": "Chapter 39: Plastics (unless classified elsewhere by function)."
+    },
+    {
+      "testId": "S5-AMB-010",
+      "query": "sports bra lycra elastic womens fitness",
+      "category": "ambiguous",
+      "expectedChapter": "61",
+      "actualChapter": "61",
+      "alternativeChapters": [
+        "62"
+      ],
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "llm",
+      "girsApplied": [
+        "1",
+        "2a",
+        "3a",
+        "3b"
+      ],
+      "notesUsed": [
+        "61",
+        "60",
+        "62"
+      ],
+      "confidence": 90,
+      "responseTimeMs": 12795,
+      "reasoning": "The product 'sports bra lycra elastic womens fitness' is a made-up knitted article, which falls under Chapter 61 as it specifically covers knitted or crocheted garments. The material (lycra) does not exclude it from this chapter, and there is no more specific chapter that applies."
+    },
+    {
+      "testId": "S5-AMB-011",
+      "query": "canvas tote bag cotton shopping reusable",
+      "category": "ambiguous",
+      "expectedChapter": "42",
+      "actualChapter": "52",
+      "alternativeChapters": [
+        "63"
+      ],
+      "correct": false,
+      "correctOrAlternative": false,
+      "pathTaken": "rule",
+      "ruleApplied": "cotton_textiles",
+      "confidence": 95,
+      "responseTimeMs": 1676,
+      "reasoning": "Chapter 52: Cotton fabrics (not made-up garments)."
+    },
+    {
+      "testId": "S5-AMB-012",
+      "query": "USB flash drive 64GB data storage",
+      "category": "ambiguous",
+      "expectedChapter": "84",
+      "actualChapter": "85",
+      "alternativeChapters": [
+        "85"
+      ],
+      "correct": false,
+      "correctOrAlternative": true,
+      "pathTaken": "llm",
+      "girsApplied": [
+        "1",
+        "2a",
+        "3a",
+        "3b"
+      ],
+      "notesUsed": [
+        "85",
+        "84",
+        "96"
+      ],
+      "confidence": 90,
+      "responseTimeMs": 18907,
+      "reasoning": "The product 'USB flash drive 64GB data storage' is classified under Chapter 85, which covers electrical machinery and equipment, including storage devices like USB flash drives. This classification is supported by GIR 1, as the product fits the description of electronic devices and there is no exclusion in the chapter notes that would prevent its classification here."
+    },
+    {
+      "testId": "S5-AMB-013",
+      "query": "power bank lithium portable charger 10000mAh",
+      "category": "ambiguous",
+      "expectedChapter": "85",
+      "actualChapter": "85",
+      "alternativeChapters": [
+        "84"
+      ],
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "electrical_machinery",
+      "confidence": 95,
+      "responseTimeMs": 2389,
+      "reasoning": "Chapter 85: Electrical machinery and equipment."
+    },
+    {
+      "testId": "S5-AMB-014",
+      "query": "yoga mat PVC exercise fitness",
+      "category": "ambiguous",
+      "expectedChapter": "95",
+      "actualChapter": "39",
+      "alternativeChapters": [
+        "39"
+      ],
+      "correct": false,
+      "correctOrAlternative": true,
+      "pathTaken": "rule",
+      "ruleApplied": "plastic_articles",
+      "confidence": 95,
+      "responseTimeMs": 2067,
+      "reasoning": "Chapter 39: Plastics (unless classified elsewhere by function)."
+    },
+    {
+      "testId": "S5-AMB-015",
+      "query": "drone with camera quadcopter aerial photography",
+      "category": "ambiguous",
+      "expectedChapter": "88",
+      "actualChapter": "88",
+      "alternativeChapters": [
+        "85"
+      ],
+      "correct": true,
+      "correctOrAlternative": true,
+      "pathTaken": "llm",
+      "girsApplied": [
+        "1",
+        "2a",
+        "3a",
+        "3b"
+      ],
+      "notesUsed": [
+        "88",
+        "90"
+      ],
+      "confidence": 90,
+      "responseTimeMs": 12828,
+      "reasoning": "The product is classified under Chapter 88 as it falls under the definition of 'unmanned aircraft' designed for aerial photography, which is explicitly included in the chapter notes. GIR 1 confirms that this chapter is the most specific and applicable for drones."
+    }
+  ]
+}

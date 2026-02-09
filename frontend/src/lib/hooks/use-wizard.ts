@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useCallback, useRef, useEffect } from 'react'
-import { getSessionId } from '@/lib/api-client'
 import { parseError, type ClassificationError } from '@/lib/types/errors'
 
 // ============================================================================
@@ -154,7 +153,7 @@ export function useWizard() {
   // ---------------------------------------------------------------------------
 
   const callApi = useCallback(async (body: Record<string, unknown>): Promise<ApiResponse> => {
-    const response = await fetch(`${API_BASE_URL}/api/classify-conversational`, {
+    const response = await fetch(`${API_BASE_URL}/api/classify`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
@@ -165,7 +164,44 @@ export function useWizard() {
       throw new Error(errorData.message || errorData.error || `API error: ${response.status}`)
     }
 
-    return response.json()
+    const data = await response.json()
+
+    // Adapt backend response to frontend expected format
+    if (data.responseType === 'classification') {
+      return {
+        success: true,
+        responseType: 'classification' as const,
+        conversationId: `conv_${Date.now()}`,
+        result: {
+          hsCode: data.hsCode,
+          description: data.description,
+          confidence: data.confidence,
+          reasoning: data.reasoning,
+          alternatives: []
+        },
+        timestamp: new Date().toISOString()
+      }
+    } else if (data.responseType === 'question') {
+      // Transform question options from QuestionOption[] to expected format
+      const options = (data.options || []).map((opt: any) =>
+        opt.leads_to_chapter
+          ? `${opt.leads_to_chapter}::${opt.label}`
+          : opt.label
+      )
+      return {
+        success: true,
+        responseType: 'questions' as const,
+        conversationId: `conv_${Date.now()}`,
+        questions: [{
+          id: 'q1',
+          text: data.question,
+          options: options
+        }],
+        timestamp: new Date().toISOString()
+      }
+    }
+
+    throw new Error('Unknown response type')
   }, [])
 
   // ---------------------------------------------------------------------------
@@ -190,10 +226,8 @@ export function useWizard() {
     }))
 
     try {
-      const sessionId = getSessionId()
       const response = await callApi({
-        productDescription: productDescription.trim(),
-        sessionId,
+        query: productDescription.trim(),
       })
 
       if (!response.success) {
@@ -279,18 +313,10 @@ export function useWizard() {
     }))
 
     try {
-      const sessionId = getSessionId()
-      // Get the question ID and raw option string for the backend
-      const questionId = state.currentQuestion.id
-      const rawOptionValue = state.currentQuestion.rawOptions[optionIndex]
-
+      // Get the selected option label for the backend
       const response = await callApi({
-        productDescription: state.product,
-        sessionId,
-        conversationId: currentConversationId,
-        answers: {
-          [questionId]: rawOptionValue
-        },
+        query: state.product,
+        previousAnswers: { intended_use: selectedOption.label }
       })
 
       console.log('[WIZARD] selectOption response:', {

@@ -227,3 +227,33 @@ frontend/.nyc_output/
 
 # Misc
 frontend/*.tsbuildinfo
+
+# ========================================
+# Cleanup: Media & temp files (ARY-45)
+# ========================================
+
+# Media files
+*.mp3
+*.mp4
+*.webm
+*.wav
+*.ogg
+*.avi
+*.mov
+*.flac
+*.aac
+
+# Backup and temp files
+*.bak
+*.old
+*.copy
+*.tmp
+*.temp
+*.orig
+
+# Claude temp files
+tmpclaude-*
+
+# Large data artifacts
+backend/data/embedding-*.json
+backend/data/*-audit-results.json

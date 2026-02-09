@@ -90,165 +90,45 @@ model ProductSynonym {
 }
 
 // ========================================
-// Table 4: User Classifications
+// Table 4: Differentiators
 // ========================================
-model UserClassification {
-  id                     Int       @id @default(autoincrement())
-  sessionId              String?   @map("session_id") @db.VarChar(100)
-  productDescription     String    @map("product_description") @db.Text
-  categoryDetected       String?   @map("category_detected") @db.VarChar(100)
-  questionnaireAnswers   Json?     @map("questionnaire_answers") // JSONB in PostgreSQL
-  suggestedHsCode        String?   @map("suggested_hs_code") @db.VarChar(20)
-  confidenceScore        Int?      @map("confidence_score") // 0-100
-  countryCode            String?   @map("country_code") @db.VarChar(2)
-  userFeedback           String?   @map("user_feedback") @db.VarChar(20) // "correct", "incorrect", "unsure"
-  correctedCode          String?   @map("corrected_code") @db.VarChar(20)
-  createdAt              DateTime  @default(now()) @map("created_at")
+// Stores attributes that distinguish one 8-digit HS code from another within a heading
+model Differentiator {
+  id              Int      @id @default(autoincrement())
+  heading         String   @db.VarChar(4)           // e.g., "0901"
+  subheading      String?  @db.VarChar(6)           // e.g., "090111" (optional)
+  code            String   @db.VarChar(10)          // Full HS code this differentiator applies to
+  category        String   @db.VarChar(50)          // MATERIAL, GRADE, SIZE, etc.
+  attributeKey    String   @map("attribute_key") @db.VarChar(100)   // e.g., "type", "grade", "material"
+  attributeValue  String   @map("attribute_value") @db.VarChar(200) // e.g., "plantation", "A", "cotton"
+  synonyms        String[] @default([])             // Alternative terms: ["plantation grade", "estate"]
+  description     String?                           // Explanation
+  isCatchAll      Boolean  @default(false) @map("is_catch_all")    // True for .90, .99, .00 codes
+  priority        Int      @default(50)             // Higher = check first
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
 
-  // Indexes
-  @@index([sessionId], name: "idx_session")
-  @@index([suggestedHsCode], name: "idx_suggested_code")
-  @@index([categoryDetected], name: "idx_category")
-  @@index([createdAt], name: "idx_created_at")
-  @@map("user_classifications")
+  @@unique([code, category, attributeKey])
+  @@index([heading], name: "idx_diff_heading")
+  @@index([category], name: "idx_diff_category")
+  @@index([code], name: "idx_diff_code")
+  @@map("differentiators")
 }
 
 // ========================================
-// Table 5: Country Mappings
+// Table 5: Heading Differentiator Summary
 // ========================================
-model CountryMapping {
-  id                   Int      @id @default(autoincrement())
-  indiaCode            String   @map("india_code") @db.VarChar(20)
-  country              String   @db.VarChar(50)
-  localCode            String   @map("local_code") @db.VarChar(20)
-  importDutyRate       String?  @map("import_duty_rate") @db.VarChar(50)
-  specialRequirements  String?  @map("special_requirements") @db.Text
-  createdAt            DateTime @default(now()) @map("created_at")
-  updatedAt            DateTime @updatedAt @map("updated_at")
+// Summary of differentiator extraction status for each heading
+model HeadingDifferentiatorSummary {
+  heading                  String   @id @db.VarChar(4)
+  chapter                  String   @db.VarChar(2)
+  headingDescription       String?  @map("heading_description")
+  differentiatorCategories String[] @default([]) @map("differentiator_categories")
+  totalCodes               Int      @default(0) @map("total_codes")
+  hasCatchAll              Boolean  @default(false) @map("has_catch_all")
+  extractionStatus         String   @default("pending") @map("extraction_status") @db.VarChar(20)
+  extractedAt              DateTime? @map("extracted_at")
+  notes                    String?
 
-  // Indexes
-  @@index([indiaCode], name: "idx_india_code")
-  @@index([country], name: "idx_country")
-  @@unique([indiaCode, country], name: "unique_india_code_country")
-  @@map("country_mappings")
-}
-
-// ========================================
-// Table 6: Classification Feedback
-// ========================================
-model ClassificationFeedback {
-  id                   Int      @id @default(autoincrement())
-  classificationId     String?  @map("classification_id") @db.VarChar(100) // Unique search ID
-  sessionId            String?  @map("session_id") @db.VarChar(100)
-  productDescription   String   @map("product_description") @db.Text
-  suggestedCode        String   @map("suggested_code") @db.VarChar(20)
-  suggestedChapter     String?  @map("suggested_chapter") @db.VarChar(2)
-  confidence           Float    // AI confidence score 0.0-100.0
-
-  rating               Int?     // 1-5 stars
-  userFeedback         String?  @map("user_feedback") @db.VarChar(20) // "correct", "incorrect", "partial", "unsure"
-  userCorrectedCode    String?  @map("user_corrected_code") @db.VarChar(20)
-  correctedChapter     String?  @map("corrected_chapter") @db.VarChar(2)
-  feedbackNotes        String?  @map("feedback_notes") @db.Text
-
-  classificationMethod String?  @map("classification_method") @db.VarChar(50) // "keyword", "vector", "decision_tree", "ai"
-  countryCode          String?  @map("country_code") @db.VarChar(2) @default("IN")
-
-  createdAt            DateTime @default(now()) @map("created_at")
-  updatedAt            DateTime @updatedAt @map("updated_at")
-
-  // Indexes for analytics queries
-  @@index([classificationId], name: "idx_feedback_classification_id")
-  @@index([suggestedCode], name: "idx_feedback_suggested_code")
-  @@index([userCorrectedCode], name: "idx_feedback_corrected_code")
-  @@index([rating], name: "idx_feedback_rating")
-  @@index([createdAt], name: "idx_feedback_created")
-  @@index([countryCode], name: "idx_feedback_country_code")
-  @@map("classification_feedback")
-}
-
-// ========================================
-// Table 7: Classification Conversations
-// ========================================
-// Stores multi-turn conversations for clarifying questions
-model ClassificationConversation {
-  id                 String   @id @default(cuid())
-  sessionId          String   @map("session_id") @db.VarChar(100)
-  productDescription String   @map("product_description") @db.Text
-
-  // Conversation status: active, completed, abandoned
-  status             String   @default("active") @db.VarChar(20)
-
-  // Final classification result (populated when completed)
-  finalHsCode        String?  @map("final_hs_code") @db.VarChar(20)
-  finalConfidence    Float?   @map("final_confidence")
-  finalReasoning     String?  @map("final_reasoning") @db.Text
-  finalDescription   String?  @map("final_description") @db.Text
-
-  // Tracking metrics
-  totalQuestions     Int      @default(0) @map("total_questions")
-  totalRounds        Int      @default(0) @map("total_rounds")
-
-  // Enhanced query built from original + all answers
-  enhancedQuery      String?  @map("enhanced_query") @db.Text
-
-  // Timestamps
-  createdAt          DateTime @default(now()) @map("created_at")
-  updatedAt          DateTime @updatedAt @map("updated_at")
-  completedAt        DateTime? @map("completed_at")
-
-  // Relations
-  turns              ConversationTurn[]
-
-  // Indexes
-  @@index([sessionId], name: "idx_conv_session")
-  @@index([status], name: "idx_conv_status")
-  @@index([createdAt], name: "idx_conv_created")
-  @@index([finalHsCode], name: "idx_conv_final_code")
-  @@map("classification_conversations")
-}
-
-// ========================================
-// Table 8: Conversation Turns (Q&A pairs)
-// ========================================
-// Each turn is either questions from LLM or final classification
-model ConversationTurn {
-  id                String   @id @default(cuid())
-  conversationId    String   @map("conversation_id")
-  turnNumber        Int      @map("turn_number") // 1, 2, 3...
-
-  // Type: "question" or "classification"
-  responseType      String   @map("response_type") @db.VarChar(20)
-
-  // If responseType = "question"
-  questionContext   String?  @map("question_context") @db.Text // Why asking
-  questions         Json?    // [{id, text, options[], allowOther, priority}]
-
-  // If responseType = "classification"
-  hsCode            String?  @map("hs_code") @db.VarChar(20)
-  hsDescription     String?  @map("hs_description") @db.Text
-  confidence        Float?
-  reasoning         String?  @db.Text
-  alternatives      Json?    // [{code, description, confidence}]
-
-  // User's answers (populated after user responds)
-  userAnswers       Json?    @map("user_answers") // {questionId: selectedOption}
-
-  // Performance tracking
-  llmModel          String?  @map("llm_model") @db.VarChar(50)
-  responseTimeMs    Int?     @map("response_time_ms")
-  candidatesFound   Int?     @map("candidates_found")
-
-  // Timestamps
-  createdAt         DateTime @default(now()) @map("created_at")
-  answeredAt        DateTime? @map("answered_at")
-
-  // Relations
-  conversation      ClassificationConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
-
-  // Indexes
-  @@index([conversationId], name: "idx_turn_conversation")
-  @@index([turnNumber], name: "idx_turn_number")
-  @@index([responseType], name: "idx_turn_type")
-  @@map("conversation_turns")
+  @@map("heading_differentiator_summary")
 }

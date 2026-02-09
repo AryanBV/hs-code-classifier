@@ -1,0 +1,768 @@
+{
+  "session": "Session 5 A/B Test: Notes vs No Notes",
+  "timestamp": "2026-01-21T14:22:56.603Z",
+  "model": "gpt-4o-mini",
+  "summary": {
+    "llmProductsTested": 24,
+    "withNotesAccuracy": "95.8%",
+    "withoutNotesAccuracy": "91.7%",
+    "notesImprovement": "+4.2%",
+    "notesValueTarget": "improvement > 0%",
+    "targetMet": true
+  },
+  "metrics": {
+    "totalLLMProducts": 24,
+    "withNotesAccuracy": 95.83333333333334,
+    "withoutNotesAccuracy": 91.66666666666666,
+    "notesImprovementRate": 4.166666666666666,
+    "notesDegradeRate": 0,
+    "noChangeRate": 91.66666666666666,
+    "avgConfidenceWithNotes": 90,
+    "avgConfidenceWithoutNotes": 90,
+    "avgTimeWithNotes": 16010.5,
+    "avgTimeWithoutNotes": 9318.583333333334
+  },
+  "results": [
+    {
+      "testId": "S5-SIMP-002",
+      "query": "fresh red apples Shimla variety",
+      "expectedChapter": "08",
+      "withNotes": {
+        "chapter": "08",
+        "confidence": 90,
+        "responseTimeMs": 14656,
+        "notesUsed": [
+          "08"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product 'fresh red apples Shimla variety' is classified under Chapter 08 as it pertains to edible fruits. GIR 1 confirms that this chapter covers fresh fruits, and there are no exclusions applicable to fresh apples in the chapter notes."
+      },
+      "withoutNotes": {
+        "chapter": "08",
+        "confidence": 90,
+        "responseTimeMs": 8652,
+        "reasoning": "The product 'fresh red apples Shimla variety' is classified under Chapter 08 as it pertains to fruits, specifically fresh fruits. GIR 1 applies here as there are no chapter notes excluding this product from Chapter 08, and it is the most specific chapter for fresh fruits."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-SIMP-004",
+      "query": "refined white cane sugar crystal",
+      "expectedChapter": "17",
+      "withNotes": {
+        "chapter": "17",
+        "confidence": 90,
+        "responseTimeMs": 31307,
+        "notesUsed": [
+          "17"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product 'refined white cane sugar crystal' is classified under Chapter 17 as it pertains to sugars and sugar confectionery. GIR 1 confirms that the product fits the description of sugar, and there are no exclusions in the chapter notes that would disqualify it from this classification."
+      },
+      "withoutNotes": {
+        "chapter": "17",
+        "confidence": 90,
+        "responseTimeMs": 11760,
+        "reasoning": "The product 'refined white cane sugar crystal' is classified under Chapter 17, which covers sugars and sugar confectionery. GIR 1 applies as there are no chapter notes excluding sugar, and it is the most specific chapter for this product based on its material and form."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-SIMP-005",
+      "query": "wheat flour all purpose maida",
+      "expectedChapter": "11",
+      "withNotes": {
+        "chapter": "11",
+        "confidence": 90,
+        "responseTimeMs": 16595,
+        "notesUsed": [
+          "11",
+          "10",
+          "19"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product 'wheat flour all purpose maida' is classified under Chapter 11 as it pertains to products of the milling industry, specifically flour made from wheat. Chapter 10 is excluded as it does not cover processed products like flour, which is specifically addressed in Chapter 11."
+      },
+      "withoutNotes": {
+        "chapter": "11",
+        "confidence": 90,
+        "responseTimeMs": 10171,
+        "reasoning": "The product 'wheat flour all purpose maida' is classified under Chapter 11, which covers 'Products of the milling industry; malt; starches; inulin; wheat gluten.' This classification is determined by GIR 1, as the product is specifically a flour derived from wheat, which falls under the milling industry category. Other candidate chapters (10 and 19) do not provide a more specific classification for processed wheat flour."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-SIMP-006",
+      "query": "extra virgin olive oil cold pressed 1 liter",
+      "expectedChapter": "15",
+      "withNotes": {
+        "chapter": "15",
+        "confidence": 90,
+        "responseTimeMs": 13166,
+        "notesUsed": [
+          "15"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product 'extra virgin olive oil cold pressed' is classified under Chapter 15, which covers animal or vegetable fats and oils. According to GIR 1, the product fits the description of oils derived from plants, specifically olive oil, which is not excluded by the chapter notes."
+      },
+      "withoutNotes": {
+        "chapter": "15",
+        "confidence": 90,
+        "responseTimeMs": 6705,
+        "reasoning": "The product is classified under Chapter 15 as it pertains to animal or vegetable fats and oils, specifically olive oil. There are no chapter notes excluding it, and it is the most specific chapter available for this type of product according to GIR 1."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-SIMP-007",
+      "query": "green tea leaves loose Darjeeling",
+      "expectedChapter": "09",
+      "withNotes": {
+        "chapter": "09",
+        "confidence": 90,
+        "responseTimeMs": 11291,
+        "notesUsed": [
+          "09",
+          "21"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product 'green tea leaves loose Darjeeling' falls under Chapter 09, which covers Coffee, Tea, Mat and Spices. The extracted attributes indicate that the product is tea leaves, and since it is not excluded by any chapter notes, it is classified under this chapter according to GIR 1."
+      },
+      "withoutNotes": {
+        "chapter": "09",
+        "confidence": 90,
+        "responseTimeMs": 7811,
+        "reasoning": "The product 'green tea leaves loose Darjeeling' falls under Chapter 09, which specifically covers 'Coffee, tea, maté and spices'. Since the product is processed tea leaves and there is no exclusion in the chapter notes, it is classified here based on GIR 1, as it is the most specific chapter for tea products."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-SIMP-009",
+      "query": "fresh raw prawns shrimp frozen",
+      "expectedChapter": "03",
+      "withNotes": {
+        "chapter": "03",
+        "confidence": 90,
+        "responseTimeMs": 22519,
+        "notesUsed": [
+          "03"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product 'fresh raw prawns shrimp frozen' falls under Chapter 03, which covers fish and crustaceans, including frozen raw prawns and shrimp. GIR 1 confirms that the product is included in the terms of the heading as it specifically mentions crustaceans, and there are no exclusions in the chapter notes that apply to this product."
+      },
+      "withoutNotes": {
+        "chapter": "03",
+        "confidence": 90,
+        "responseTimeMs": 35667,
+        "reasoning": "The product 'fresh raw prawns shrimp frozen' falls under Chapter 03, which covers fish and crustaceans, as it specifically includes frozen prawns and shrimp. This classification is determined by GIR 1, as there are no chapter notes excluding this product from Chapter 03, and it is the most specific chapter available for this type of product."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-SIMP-010",
+      "query": "milk chocolate bar with almonds",
+      "expectedChapter": "18",
+      "withNotes": {
+        "chapter": "18",
+        "confidence": 90,
+        "responseTimeMs": 32914,
+        "notesUsed": [
+          "18",
+          "04",
+          "08"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product 'milk chocolate bar with almonds' is classified under Chapter 18 as it contains cocoa and is a confectionery product. GIR 1 indicates that the specific nature of the product (chocolate) aligns with the description in Chapter 18, which covers cocoa and cocoa preparations."
+      },
+      "withoutNotes": {
+        "chapter": "18",
+        "confidence": 90,
+        "responseTimeMs": 11620,
+        "reasoning": "The product 'milk chocolate bar with almonds' is classified under Chapter 18, which covers cocoa and cocoa preparations, including chocolate. This classification is determined by GIR 1, as the product is specifically a chocolate product, and there are no exclusions in Chapter 18 that would prevent its classification there."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-SIMP-017",
+      "query": "polyester curtains printed home decor",
+      "expectedChapter": "63",
+      "withNotes": {
+        "chapter": "54",
+        "confidence": 90,
+        "responseTimeMs": 13195,
+        "notesUsed": [
+          "52",
+          "55",
+          "54"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product is made of polyester, which is classified under man-made fibers. Chapter 54 specifically covers synthetic fibers and textiles made from them, making it the most appropriate classification according to GIR 1, as it aligns with the material and intended use of the product."
+      },
+      "withoutNotes": {
+        "chapter": "55",
+        "confidence": 90,
+        "responseTimeMs": 9504,
+        "reasoning": "The product is made of polyester, which is a synthetic fiber. Chapter 55 covers man-made staple fibers, including polyester fabrics, which aligns with the product's attributes as home decor fabric. GIR 1 and GIR 3(a) support this classification as it is more specific than the other candidate chapters."
+      },
+      "withNotesCorrect": false,
+      "withoutNotesCorrect": false,
+      "notesMadeADifference": true,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-SIMP-022",
+      "query": "double door refrigerator frost free 300L",
+      "expectedChapter": "84",
+      "withNotes": {
+        "chapter": "84",
+        "confidence": 90,
+        "responseTimeMs": 102714,
+        "notesUsed": [
+          "84"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product 'double door refrigerator frost free 300L' is classified under Chapter 84 as it pertains to machinery and mechanical appliances, specifically household appliances. GIR 1 indicates that the classification is determined by the terms of the headings and the chapter notes, and there is no exclusion for refrigerators in this chapter."
+      },
+      "withoutNotes": {
+        "chapter": "84",
+        "confidence": 90,
+        "responseTimeMs": 13343,
+        "reasoning": "The product 'double door refrigerator frost free 300L' is classified under Chapter 84 as it falls under the category of machinery and appliances, specifically refrigerators, which are covered in this chapter. GIR 1 applies as there are no chapter notes excluding this product from Chapter 84."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-SIMP-025",
+      "query": "split air conditioner 1.5 ton inverter",
+      "expectedChapter": "84",
+      "withNotes": {
+        "chapter": "84",
+        "confidence": 90,
+        "responseTimeMs": 9714,
+        "notesUsed": [
+          "84",
+          "85"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product 'split air conditioner 1.5 ton inverter' is classified under Chapter 84, which covers machinery and mechanical appliances. Specifically, air conditioning machines fall under heading 8415, which is part of Chapter 84. This classification is supported by GIR 1, as the product fits the description of machinery for air conditioning."
+      },
+      "withoutNotes": {
+        "chapter": "84",
+        "confidence": 90,
+        "responseTimeMs": 10393,
+        "reasoning": "The product 'split air conditioner 1.5 ton inverter' is classified under Chapter 84 as it pertains to machinery and mechanical appliances, specifically those for air conditioning. GIR 1 indicates that we classify by the terms of headings, and since air conditioning units are specifically mentioned in Chapter 84, this chapter is appropriate. Chapter 85 relates to electrical machinery, which does not specifically cover air conditioning units as a primary function."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-SIMP-026",
+      "query": "stainless steel pipes seamless industrial",
+      "expectedChapter": "73",
+      "withNotes": {
+        "chapter": "73",
+        "confidence": 90,
+        "responseTimeMs": 9474,
+        "notesUsed": [
+          "72",
+          "73"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product 'stainless steel pipes seamless industrial' falls under Chapter 73 as it pertains to 'Articles of iron or steel', specifically pipes which are classified under this chapter. Chapter 72 covers raw materials and semi-finished products, while Chapter 73 is more specific to finished products like pipes."
+      },
+      "withoutNotes": {
+        "chapter": "73",
+        "confidence": 90,
+        "responseTimeMs": 6404,
+        "reasoning": "The product 'stainless steel pipes seamless industrial' is classified under Chapter 73 as it pertains to 'Articles of iron or steel', which includes pipes and tubes. Chapter 72 covers raw materials (iron and steel), while Chapter 73 specifically addresses finished products made from these materials, making it more specific according to GIR 3(a)."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-SIMP-029",
+      "query": "gold necklace 22 karat hallmarked jewelry",
+      "expectedChapter": "71",
+      "withNotes": {
+        "chapter": "71",
+        "confidence": 90,
+        "responseTimeMs": 9080,
+        "notesUsed": [
+          "71"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product is a gold necklace, which falls under Chapter 71 as it consists of precious metal (gold). The classification is supported by GIR 1, as Chapter 71 specifically covers articles made of precious metals, including jewelry."
+      },
+      "withoutNotes": {
+        "chapter": "71",
+        "confidence": 90,
+        "responseTimeMs": 5788,
+        "reasoning": "The product is a gold necklace, which falls under Chapter 71 as it pertains to precious metals and jewelry. GIR 1 indicates that classification should be based on the terms of headings, and since there are no chapter notes excluding jewelry made of gold, Chapter 71 is the appropriate classification."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-SIMP-033",
+      "query": "rubber gloves industrial heavy duty latex",
+      "expectedChapter": "40",
+      "withNotes": {
+        "chapter": "40",
+        "confidence": 90,
+        "responseTimeMs": 12005,
+        "notesUsed": [
+          "40"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product 'rubber gloves industrial heavy duty latex' is classified under Chapter 40 as it falls under the category of rubber and articles thereof. The gloves are made of latex, which is a form of rubber, and there is no more specific chapter that applies to industrial gloves, thus GIR 1 applies here."
+      },
+      "withoutNotes": {
+        "chapter": "40",
+        "confidence": 90,
+        "responseTimeMs": 5699,
+        "reasoning": "The product 'rubber gloves industrial heavy duty latex' is classified under Chapter 40 as it pertains to rubber and articles thereof. There are no specific exclusions in the chapter notes for gloves made of latex, and the product does not fall under any more specific category based on the provided attributes."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-SIMP-035",
+      "query": "natural rubber sheet smoked RSS grade",
+      "expectedChapter": "40",
+      "withNotes": {
+        "chapter": "40",
+        "confidence": 90,
+        "responseTimeMs": 4963,
+        "notesUsed": [
+          "40"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product is classified under Chapter 40 as it consists of natural rubber, which falls within the scope of this chapter according to GIR 1. The specific mention of 'natural rubber' and the absence of exclusions in the chapter notes support this classification."
+      },
+      "withoutNotes": {
+        "chapter": "40",
+        "confidence": 90,
+        "responseTimeMs": 5226,
+        "reasoning": "The product is classified under Chapter 40 as it consists of natural rubber in the form of sheets. There are no specific exclusions in the chapter notes that would prevent this classification, and it aligns with the general characteristics of rubber products."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-SIMP-036",
+      "query": "wooden dining table teak 6 seater",
+      "expectedChapter": "94",
+      "withNotes": {
+        "chapter": "94",
+        "confidence": 90,
+        "responseTimeMs": 8180,
+        "notesUsed": [
+          "94",
+          "44"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product is a wooden dining table, which falls under the category of furniture. Chapter 94 specifically covers furniture and related items, making it the most appropriate classification according to GIR 1, as it is more specific than Chapter 44, which deals with wood and articles of wood in general."
+      },
+      "withoutNotes": {
+        "chapter": "94",
+        "confidence": 90,
+        "responseTimeMs": 5848,
+        "reasoning": "The product is a wooden dining table, which falls under the category of furniture. Chapter 94 specifically covers furniture and its parts, making it the most appropriate classification according to GIR 1, as it is a specific heading for furniture rather than a general material-based classification in Chapter 44 (wood and articles of wood)."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-SIMP-038",
+      "query": "umbrella folding automatic rain protection",
+      "expectedChapter": "66",
+      "withNotes": {
+        "chapter": "66",
+        "confidence": 90,
+        "responseTimeMs": 7200,
+        "notesUsed": [
+          "66",
+          "88",
+          "85"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product 'umbrella folding automatic rain protection' falls under Chapter 66, which specifically covers umbrellas and similar items. GIR 1 indicates that classification should be based on the terms of headings and chapter notes, and since there is a specific chapter for umbrellas, it takes precedence over more general classifications."
+      },
+      "withoutNotes": {
+        "chapter": "66",
+        "confidence": 90,
+        "responseTimeMs": 7267,
+        "reasoning": "The product 'umbrella folding automatic rain protection' is classified under Chapter 66, which covers umbrellas and similar articles. This classification is determined by GIR 1, as the product fits the description of umbrellas, which are specifically mentioned in this chapter. Other candidate chapters (88 and 85) do not provide a more specific classification for this type of product."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-SIMP-040",
+      "query": "acoustic guitar wooden 6 string classical",
+      "expectedChapter": "92",
+      "withNotes": {
+        "chapter": "92",
+        "confidence": 90,
+        "responseTimeMs": 7651,
+        "notesUsed": [
+          "92"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product 'acoustic guitar wooden 6 string classical' is classified under Chapter 92 as it specifically pertains to musical instruments, which is the focus of this chapter. GIR 1 confirms that the product fits the description of musical instruments, and there are no exclusions in the chapter notes that would disqualify it."
+      },
+      "withoutNotes": {
+        "chapter": "92",
+        "confidence": 90,
+        "responseTimeMs": 6188,
+        "reasoning": "The product 'acoustic guitar wooden 6 string classical' falls under Chapter 92, which covers musical instruments. GIR 1 indicates that classification should be based on the terms of headings, and since there is no exclusion in Chapter 92 for this type of instrument, it is the most appropriate classification."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-ITC-009",
+      "query": "polyester filament yarn continuous single high tenacity",
+      "expectedChapter": "54",
+      "withNotes": {
+        "chapter": "54",
+        "confidence": 90,
+        "responseTimeMs": 5704,
+        "notesUsed": [
+          "54"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product is a polyester filament yarn, which falls under the category of man-made fibers. According to Chapter Notes for Chapter 54, synthetic fibers such as polyester are classified here, and the specific form of filament yarn aligns with the definitions provided in the chapter. Therefore, GIR 1 applies as the primary classification rule."
+      },
+      "withoutNotes": {
+        "chapter": "54",
+        "confidence": 90,
+        "responseTimeMs": 5388,
+        "reasoning": "The product 'polyester filament yarn continuous single high tenacity' is classified under Chapter 54 as it pertains to synthetic filament yarns. GIR 1 applies as there are no chapter notes excluding this product from Chapter 54, and it is the most specific chapter available for filament yarns made from polyester."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-ITC-010",
+      "query": "polyester staple fiber short cut for spinning",
+      "expectedChapter": "55",
+      "withNotes": {
+        "chapter": "55",
+        "confidence": 90,
+        "responseTimeMs": 8111,
+        "notesUsed": [
+          "55"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product 'polyester staple fiber short cut for spinning' is classified under Chapter 55 as it pertains to man-made fibers, specifically synthetic fibers like polyester. GIR 1 indicates that the terms of the headings and chapter notes guide the classification, and since there are no exclusions for polyester staple fibers in Chapter 55, it is the appropriate classification."
+      },
+      "withoutNotes": {
+        "chapter": "55",
+        "confidence": 90,
+        "responseTimeMs": 4675,
+        "reasoning": "The product 'polyester staple fiber short cut for spinning' is classified under Chapter 55 as it pertains to synthetic fibers, specifically polyester fibers, which are covered under this chapter. GIR 1 applies as there are no exclusions in the chapter notes for this type of product."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-AMB-007",
+      "query": "silicone sealant tube for construction",
+      "expectedChapter": "32",
+      "withNotes": {
+        "chapter": "39",
+        "confidence": 90,
+        "responseTimeMs": 8413,
+        "notesUsed": [
+          "40",
+          "39",
+          "28"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product is a silicone sealant tube, which falls under the category of plastics and articles thereof. Chapter 39 specifically covers plastics, and since silicone is a synthetic polymer, it is classified here. GIR 1 indicates that the classification should be based on the terms of headings and chapter notes, and there is no more specific chapter that excludes this product."
+      },
+      "withoutNotes": {
+        "chapter": "40",
+        "confidence": 90,
+        "responseTimeMs": 9793,
+        "reasoning": "The product is a silicone sealant, which falls under the category of rubber and its articles. Chapter 40 covers rubber and articles thereof, and there is no more specific chapter that excludes silicone sealants. Therefore, GIR 1 applies, leading to classification under Chapter 40."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": false,
+      "notesMadeADifference": true,
+      "notesImprovedResult": true
+    },
+    {
+      "testId": "S5-AMB-008",
+      "query": "foam mattress memory foam polyurethane",
+      "expectedChapter": "94",
+      "withNotes": {
+        "chapter": "94",
+        "confidence": 90,
+        "responseTimeMs": 7358,
+        "notesUsed": [
+          "94",
+          "39",
+          "63"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product is a foam mattress made of polyurethane, which falls under Chapter 94 as it pertains to bedding and mattresses. The chapter notes do not exclude foam mattresses, and there is no more specific chapter that applies to this product."
+      },
+      "withoutNotes": {
+        "chapter": "94",
+        "confidence": 90,
+        "responseTimeMs": 6348,
+        "reasoning": "The product is a foam mattress, which falls under Chapter 94 (Furniture; bedding, mattresses, mattress supports, cushions and similar stuffed furnishings) as it is specifically designed for sleeping and is classified under furniture. This classification is supported by GIR 3(a) as it is more specific than the other candidate chapters."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-AMB-010",
+      "query": "sports bra lycra elastic womens fitness",
+      "expectedChapter": "61",
+      "withNotes": {
+        "chapter": "61",
+        "confidence": 90,
+        "responseTimeMs": 6311,
+        "notesUsed": [
+          "61",
+          "60",
+          "62"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product is a sports bra made of lycra, which is a knitted garment. According to GIR 1, knitted garments are classified under Chapter 61, which specifically covers made-up knitted or crocheted articles. The material and intended use align with this classification."
+      },
+      "withoutNotes": {
+        "chapter": "61",
+        "confidence": 90,
+        "responseTimeMs": 7463,
+        "reasoning": "The product is a sports bra made of lycra, which falls under knitted or crocheted garments as per GIR 1 and GIR 3(a). Chapter 61 specifically covers knitted garments, making it the most appropriate classification."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-AMB-012",
+      "query": "USB flash drive 64GB data storage",
+      "expectedChapter": "84",
+      "withNotes": {
+        "chapter": "85",
+        "confidence": 90,
+        "responseTimeMs": 11990,
+        "notesUsed": [
+          "85",
+          "84",
+          "96"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product 'USB flash drive 64GB data storage' is classified under Chapter 85, which covers electrical machinery and equipment, including data storage devices. The specific heading for USB flash drives falls under this chapter, making it the most appropriate classification according to GIR 1, as there is no exclusion in the chapter notes for such devices."
+      },
+      "withoutNotes": {
+        "chapter": "85",
+        "confidence": 90,
+        "responseTimeMs": 15925,
+        "reasoning": "The product 'USB flash drive 64GB data storage' is classified under Chapter 85, which covers electrical machinery and equipment. This classification is supported by GIR 1, as the product is specifically an electronic data storage device, which falls under the headings related to electrical apparatus. There are no exclusions in Chapter 85 that would prevent this classification."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    },
+    {
+      "testId": "S5-AMB-015",
+      "query": "drone with camera quadcopter aerial photography",
+      "expectedChapter": "88",
+      "withNotes": {
+        "chapter": "88",
+        "confidence": 90,
+        "responseTimeMs": 9741,
+        "notesUsed": [
+          "88",
+          "90"
+        ],
+        "girsApplied": [
+          "1",
+          "2a",
+          "3a",
+          "3b"
+        ],
+        "reasoning": "The product is classified under Chapter 88 as it is an unmanned aircraft designed for aerial photography, which falls under the definition provided in the chapter notes. The specific mention of 'unmanned aircraft' in Chapter 88 confirms its classification here, as it does not fall under the exclusions for toys or amusement purposes."
+      },
+      "withoutNotes": {
+        "chapter": "88",
+        "confidence": 90,
+        "responseTimeMs": 6008,
+        "reasoning": "The product is classified under Chapter 88 as it pertains to aircraft and spacecraft, which includes drones. The function of aerial photography aligns with the use of drones, making this chapter more specific than Chapter 90, which generally covers optical instruments and equipment."
+      },
+      "withNotesCorrect": true,
+      "withoutNotesCorrect": true,
+      "notesMadeADifference": false,
+      "notesImprovedResult": false
+    }
+  ]
+}
