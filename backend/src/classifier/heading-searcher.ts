@@ -3,6 +3,7 @@
 import { HeadingSearchResult, ExtractedAttributes } from './types';
 import { searchWithinChapter } from '../database/hs-codes';
 import { generateEmbedding, createSearchQuery } from './attribute-extractor';
+import { getFormattedChapterNotes } from './notes-helper';
 
 /**
  * Rule-based heading selection for known patterns
@@ -161,6 +162,13 @@ export async function findHeading(
 
   // Search ONLY within the determined chapter, level 4 = headings
   const candidates = await searchWithinChapter(embedding, chapter, 4, 10);
+
+  // Pre-warm notes cache for code-selector (which uses same chapter)
+  // TODO(ARY-42): Inject notes into heading search when it gets an LLM path (M3)
+  const chapterNotes = await getFormattedChapterNotes(chapter);
+  if (chapterNotes) {
+    console.log(`  Chapter ${chapter} notes available (${chapterNotes.length} chars)`);
+  }
 
   if (candidates.length === 0) {
     throw new Error(`No headings found in chapter ${chapter}`);

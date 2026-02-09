@@ -4,6 +4,7 @@ import OpenAI from 'openai';
 import { ExtractedAttributes, CodeSelectionResult } from './types';
 import { searchWithinChapter, getCodesUnderHeading } from '../database/hs-codes';
 import { generateEmbedding, createSearchQuery } from './attribute-extractor';
+import { getFormattedChapterNotes } from './notes-helper';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -74,6 +75,19 @@ async function llmSelectCode(
     return text;
   }).join('\n');
 
+  // Extract chapter from first candidate's code
+  const chapter = candidates[0]?.code?.replace(/\./g, '').substring(0, 2);
+
+  // Fetch chapter notes for LLM context
+  let notesSection = '';
+  if (chapter) {
+    const notes = await getFormattedChapterNotes(chapter);
+    if (notes) {
+      notesSection = `\nOFFICIAL CLASSIFICATION RULES (Chapter ${chapter}):\n${notes}\n\nApply these rules when selecting the specific tariff code.\n`;
+      console.log(`  Injecting chapter ${chapter} notes into code selection (${notes.length} chars)`);
+    }
+  }
+
   const prompt = `Select the most appropriate 8-digit HS Code for this product.
 
 PRODUCT: "${attrs.raw_query}"
@@ -83,7 +97,7 @@ ATTRIBUTES:
 - Form: ${attrs.form || 'not specified'}
 - Function: ${attrs.function || 'not specified'}
 - Intended use: ${attrs.intended_use || 'not specified'}
-
+${notesSection}
 CANDIDATE CODES:
 ${candidateText}
 
@@ -91,6 +105,7 @@ RULES:
 1. Select the MOST SPECIFIC code matching the product
 2. Consider material, form, and function
 3. If uncertain between codes, prefer the more general one
+4. If chapter notes specify classification rules, follow them
 
 Respond ONLY with JSON:
 {
