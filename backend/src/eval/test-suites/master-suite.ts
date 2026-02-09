@@ -208,6 +208,89 @@ const askCases: EvalTestCase[] = [
 ];
 
 // ---------------------------------------------------------------------------
+// "Ask" cases v2 — single-word ambiguous (should trigger clarifying questions)
+// ---------------------------------------------------------------------------
+
+const askCasesSingleWord: EvalTestCase[] = [
+  { id: 'ASK-011', query: 'rings', source: 'hand-written-ask-v2', category: 'ambiguous', expected_routing: 'ask', difficulty: 'hard', expected_ambiguity: 'Could be jewelry (Ch.71), piston rings (Ch.87), rubber seals (Ch.40), or iron/steel (Ch.73)' },
+  { id: 'ASK-012', query: 'tubes', source: 'hand-written-ask-v2', category: 'ambiguous', expected_routing: 'ask', difficulty: 'hard', expected_ambiguity: 'Could be rubber (Ch.40), plastic (Ch.39), metal (Ch.73/76), or glass (Ch.70)' },
+  { id: 'ASK-013', query: 'valves', source: 'hand-written-ask-v2', category: 'ambiguous', expected_routing: 'ask', difficulty: 'hard', expected_ambiguity: 'Could be taps/valves (Ch.84), vehicle engine (Ch.87), or rubber (Ch.40)' },
+  { id: 'ASK-014', query: 'filters', source: 'hand-written-ask-v2', category: 'ambiguous', expected_routing: 'ask', difficulty: 'hard', expected_ambiguity: 'Could be filtering machinery (Ch.84), vehicle (Ch.87), or coffee (Ch.84)' },
+  { id: 'ASK-015', query: 'springs', source: 'hand-written-ask-v2', category: 'ambiguous', expected_routing: 'ask', difficulty: 'hard', expected_ambiguity: 'Could be vehicle suspension (Ch.87), iron/steel (Ch.73), or mattress (Ch.94)' },
+  { id: 'ASK-016', query: 'cord', source: 'hand-written-ask-v2', category: 'ambiguous', expected_routing: 'ask', difficulty: 'hard', expected_ambiguity: 'Could be textile (Ch.56), rubber (Ch.40), or electrical (Ch.85)' },
+  { id: 'ASK-017', query: 'tape', source: 'hand-written-ask-v2', category: 'ambiguous', expected_routing: 'ask', difficulty: 'hard', expected_ambiguity: 'Could be adhesive (Ch.39), insulating (Ch.85), textile (Ch.58), or magnetic (Ch.85)' },
+  { id: 'ASK-018', query: 'brush', source: 'hand-written-ask-v2', category: 'ambiguous', expected_routing: 'ask', difficulty: 'hard', expected_ambiguity: 'Could be paint brush (Ch.96), hair brush (Ch.96), or industrial (Ch.84)' },
+  { id: 'ASK-019', query: 'caps', source: 'hand-written-ask-v2', category: 'ambiguous', expected_routing: 'ask', difficulty: 'hard', expected_ambiguity: 'Could be headwear (Ch.65), bottle caps (Ch.83), or plastic closures (Ch.39)' },
+  { id: 'ASK-020', query: 'plate', source: 'hand-written-ask-v2', category: 'ambiguous', expected_routing: 'ask', difficulty: 'hard', expected_ambiguity: 'Could be steel plate (Ch.72), ceramic plate (Ch.69), or tableware (Ch.69/73)' },
+];
+
+// ---------------------------------------------------------------------------
+// "Ask" cases v2 — multi-word ambiguous (still insufficient for classification)
+// ---------------------------------------------------------------------------
+
+const askCasesMultiWord: EvalTestCase[] = [
+  { id: 'ASK-021', query: 'rubber product for industrial use', source: 'hand-written-ask-v2', category: 'ambiguous', expected_routing: 'ask', difficulty: 'medium', expected_ambiguity: 'Missing specific product form (hose, seal, sheet, belt)' },
+  { id: 'ASK-022', query: 'steel component', source: 'hand-written-ask-v2', category: 'ambiguous', expected_routing: 'ask', difficulty: 'medium', expected_ambiguity: 'Missing form (flat, long, pipe, fastener) and use' },
+  { id: 'ASK-023', query: 'plastic container', source: 'hand-written-ask-v2', category: 'ambiguous', expected_routing: 'ask', difficulty: 'medium', expected_ambiguity: 'Missing specific type (bottle, box, drum) and use' },
+  { id: 'ASK-024', query: 'electronic device', source: 'hand-written-ask-v2', category: 'ambiguous', expected_routing: 'ask', difficulty: 'medium', expected_ambiguity: 'Missing specific device type (phone, computer, sensor)' },
+  { id: 'ASK-025', query: 'leather item for export', source: 'hand-written-ask-v2', category: 'ambiguous', expected_routing: 'ask', difficulty: 'medium', expected_ambiguity: 'Missing specific product (bag, belt, garment, wallet)' },
+  { id: 'ASK-026', query: 'machine parts', source: 'hand-written-ask-v2', category: 'ambiguous', expected_routing: 'ask', difficulty: 'medium', expected_ambiguity: 'Missing machine type and specific part' },
+  { id: 'ASK-027', query: 'chemical compound', source: 'hand-written-ask-v2', category: 'ambiguous', expected_routing: 'ask', difficulty: 'medium', expected_ambiguity: 'Missing compound type (organic, inorganic, pharmaceutical)' },
+  { id: 'ASK-028', query: 'glass product', source: 'hand-written-ask-v2', category: 'ambiguous', expected_routing: 'ask', difficulty: 'medium', expected_ambiguity: 'Missing form (sheet, bottle, fiber, optical)' },
+  { id: 'ASK-029', query: 'ceramic article', source: 'hand-written-ask-v2', category: 'ambiguous', expected_routing: 'ask', difficulty: 'medium', expected_ambiguity: 'Missing type (tableware, sanitary, industrial, decorative)' },
+  { id: 'ASK-030', query: 'textile material', source: 'hand-written-ask-v2', category: 'ambiguous', expected_routing: 'ask', difficulty: 'medium', expected_ambiguity: 'Missing fiber type, form (yarn, fabric, garment), and construction' },
+];
+
+// ---------------------------------------------------------------------------
+// "Reject" cases — nonsense/spam that should be rejected
+// ---------------------------------------------------------------------------
+
+const rejectCases: EvalTestCase[] = [
+  { id: 'REJ-001', query: 'asdfghjkl', source: 'hand-written-ask-v2', category: 'edge_case', expected_routing: 'reject', difficulty: 'easy', notes: 'Keyboard mash - no product' },
+  { id: 'REJ-002', query: 'hello how are you', source: 'hand-written-ask-v2', category: 'edge_case', expected_routing: 'reject', difficulty: 'easy', notes: 'Conversational - no product' },
+  { id: 'REJ-003', query: 'buy 1 get 1 free', source: 'hand-written-ask-v2', category: 'edge_case', expected_routing: 'reject', difficulty: 'easy', notes: 'Marketing text - no product' },
+  { id: 'REJ-004', query: 'best price please contact', source: 'hand-written-ask-v2', category: 'edge_case', expected_routing: 'reject', difficulty: 'easy', notes: 'Sales inquiry - no product' },
+  { id: 'REJ-005', query: '\u{1F389}\u{1F38A}\u{1F388}', source: 'hand-written-ask-v2', category: 'edge_case', expected_routing: 'reject', difficulty: 'easy', notes: 'Emoji-only - no product' },
+];
+
+// ---------------------------------------------------------------------------
+// Ground truth confidence flags
+// ---------------------------------------------------------------------------
+
+const CONFIDENCE_OVERRIDES: Record<string, 'high' | 'medium' | 'low'> = {
+  // High confidence (7): well-known, unambiguous HS codes
+  'S5-SIMP-002': 'high',   // fresh red apples -> Ch.08
+  'S5-SIMP-004': 'high',   // refined white cane sugar -> Ch.17
+  'S5-SIMP-005': 'high',   // wheat flour maida -> Ch.11
+  'S5-SIMP-019': 'high',   // laptop computer -> Ch.84
+  'S5-SIMP-020': 'high',   // smartphone -> Ch.85
+  'S5-SIMP-029': 'high',   // gold necklace 22k -> Ch.71
+  'S5-SIMP-040': 'high',   // acoustic guitar -> Ch.92
+  // Medium confidence (7): plausible but could have edge-case interpretations
+  'S5-AMB-001': 'medium',  // spark plug -> Ch.85 (could be argued Ch.87)
+  'S5-AMB-003': 'medium',  // rubber floor mat -> Ch.40 (could be Ch.87)
+  'S5-AMB-007': 'medium',  // silicone sealant -> Ch.32 (could be Ch.39)
+  'S5-AMB-008': 'medium',  // foam mattress -> Ch.94 (could be Ch.39)
+  'S5-AMB-012': 'medium',  // USB flash drive -> Ch.84 (could be Ch.85)
+  'S5-AUTO-020': 'medium', // oil filter cartridge -> Ch.84 (exception)
+  'S5-AUTO-025': 'medium', // timing belt rubber -> Ch.40 (exception)
+  // Low confidence (6): ground truth might need revision
+  'S5-AMB-004': 'low',     // motorcycle helmet -> Ch.65 (debatable vs Ch.87)
+  'S5-AMB-005': 'low',     // car seat cover leather -> Ch.42 (debatable vs Ch.87)
+  'S5-AMB-010': 'low',     // sports bra lycra -> Ch.61 (assumes knitted, could be woven)
+  'S5-AMB-014': 'low',     // yoga mat PVC -> Ch.95 (debatable vs Ch.39)
+  'S5-AMB-015': 'low',     // drone with camera -> Ch.88 (debatable vs Ch.85)
+  'S5-AUTO-022': 'low',    // alternator 12V -> Ch.85 (heading 8511 is specific)
+};
+
+function applyConfidenceOverrides(cases: EvalTestCase[]): EvalTestCase[] {
+  return cases.map(tc => {
+    const confidence = CONFIDENCE_OVERRIDES[tc.id];
+    return confidence ? { ...tc, ground_truth_confidence: confidence } : tc;
+  });
+}
+
+// ---------------------------------------------------------------------------
 // Combine and deduplicate
 // ---------------------------------------------------------------------------
 
@@ -223,13 +306,16 @@ function deduplicateSuite(cases: EvalTestCase[]): EvalTestCase[] {
   return Array.from(seen.values());
 }
 
-const allCases: EvalTestCase[] = [
+const allCases: EvalTestCase[] = applyConfidenceOverrides([
   ...comprehensiveCases,
   ...ambiguousCases,
   ...automotiveSupplemental.filter(c => isUnique(c.query)),
   ...simpleSupplemental.filter(c => isUnique(c.query)),
   ...askCases,
-];
+  ...askCasesSingleWord,
+  ...askCasesMultiWord,
+  ...rejectCases,
+]);
 
 export const masterSuite: EvalTestCase[] = deduplicateSuite(allCases);
 
@@ -254,6 +340,9 @@ export function validateSuite(suite: EvalTestCase[]): void {
     errors.push(`Need 5+ ask cases, got ${askCasesCount.length}`);
   }
 
+  const rejectCasesCount = suite.filter(t => t.expected_routing === 'reject');
+  // No minimum for reject yet — just count them
+
   const ids = suite.map(t => t.id);
   const uniqueIds = new Set(ids);
   if (uniqueIds.size !== ids.length) {
@@ -276,13 +365,16 @@ if (require.main === module) {
   validateSuite(masterSuite);
   const classify = masterSuite.filter(t => t.expected_routing === 'classify');
   const ask = masterSuite.filter(t => t.expected_routing === 'ask');
+  const reject = masterSuite.filter(t => t.expected_routing === 'reject');
   const categories = [...new Set(masterSuite.map(t => t.category))].sort();
 
   console.log(`Suite valid: ${masterSuite.length} test cases`);
   console.log(`  classify: ${classify.length}`);
   console.log(`  ask: ${ask.length}`);
+  console.log(`  reject: ${reject.length}`);
   console.log(`  categories: ${categories.join(', ')}`);
   console.log(`  with expected_chapter: ${masterSuite.filter(t => t.expected_chapter).length}`);
   console.log(`  with expected_heading: ${masterSuite.filter(t => t.expected_heading).length}`);
   console.log(`  with expected_code: ${masterSuite.filter(t => t.expected_code).length}`);
+  console.log(`  with ground_truth_confidence: ${masterSuite.filter(t => t.ground_truth_confidence).length}`);
 }

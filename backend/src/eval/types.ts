@@ -18,6 +18,7 @@ export interface EvalTestCase {
   difficulty: 'easy' | 'medium' | 'hard';
   tier?: 1 | 2 | 3;
   notes?: string;
+  ground_truth_confidence?: 'high' | 'medium' | 'low';
 }
 
 export interface EvalReport {
