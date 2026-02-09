@@ -88,8 +88,14 @@ export const CHAPTER_RULES: ChapterRule[] = [
                         'tea', 'wheat', 'rice', 'seeds']
         .some(kw => query.includes(kw));
 
+      // Don't match if it's a toy, game, or model (Ch.95)
+      const notToy = !/\b(toy|toys|doll|dolls|miniature|plaything|puzzle|stuffed|plush)\b/.test(query) &&
+                     !query.includes('model car') &&
+                     !query.includes('action figure') &&
+                     !query.includes('board game');
+
       return (functionKeywords.some(kw => query.includes(kw)) ||
-             useKeywords.some(kw => attrs.intended_use?.toLowerCase().includes(kw))) && notFood;
+             useKeywords.some(kw => attrs.intended_use?.toLowerCase().includes(kw))) && notFood && notToy;
     },
     chapter: '87',
     priority: 100,
