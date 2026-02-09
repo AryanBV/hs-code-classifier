@@ -110,3 +110,57 @@ export interface ClassificationRequest {
   query: string;
   countryCode?: string;
 }
+
+// ===== Brain Module Types (M3: ARY-26/ARY-27) =====
+
+export interface QAPair {
+  question: string;
+  answer: string;
+}
+
+export interface BrainAttributes {
+  material: string;
+  form: string;
+  function: string;
+  intended_use: string;
+  processing_state: string;
+  composition: string;
+  industry: string;
+  origin: string;
+}
+
+export interface BrainQuestion {
+  text: string;
+  options: BrainQuestionOption[];
+  attribute_needed: string;
+  context: string;
+}
+
+export interface BrainQuestionOption {
+  id: string;
+  label: string;
+  leads_to_chapter: string;
+  description: string;
+}
+
+export interface BrainOutput {
+  attributes: BrainAttributes;
+  readiness: {
+    score: number;
+    missing_critical: string[];
+    has_ambiguity: boolean;
+  };
+  decision: 'classify' | 'ask_targeted' | 'disambiguate' | 'reject';
+  confidence: number;
+  reasoning: string;
+  question: BrainQuestion;
+  suggested_chapters: string[];
+}
+
+export interface RouteDecision {
+  action: 'classify' | 'ask' | 'reject';
+  attributes?: ExtractedAttributes;
+  suggestedChapters?: string[];
+  question?: QuestionResponse;
+  message?: string;
+}
