@@ -3,6 +3,7 @@
 import OpenAI from 'openai';
 import { ExtractedAttributes, ChapterRoutingResult } from './types';
 import { applyChapterRules } from '../rules/chapter-rules';
+import { detectConfusingPair, ConfusingPair } from '../data/confusing-chapter-pairs';
 import { globalSemanticSearch } from '../database/hs-codes';
 import {
   getNotesForClassification,
@@ -58,6 +59,12 @@ export async function routeToChapter(
     .slice(0, 3)
     .map(([chapter]) => chapter);
 
+  // Check for confusing chapter pairs among top candidates
+  const confusingPair = detectConfusingPair(attrs.raw_query, topChapters);
+  if (confusingPair) {
+    console.log(`  Confusing pair detected: Ch.${confusingPair.chapters[0]} vs Ch.${confusingPair.chapters[1]}`);
+  }
+
   // Get chapter notes AND GIR rules for LLM decision
   // Include GIRs: 1 (chapter notes), 2a (parts/function), 3a (specific heading), 3b (essential character)
   const notesData = await getNotesForClassification(topChapters, ['1', '2a', '3a', '3b']);
@@ -66,7 +73,7 @@ export async function routeToChapter(
   console.log(`  GIRs included: ${notesData.relevantGIRs.map(g => g.number).join(', ')}`);
 
   // LLM decides based on chapter notes + GIRs
-  return await llmChapterDecision(attrs, topChapters, notesData);
+  return await llmChapterDecision(attrs, topChapters, notesData, confusingPair);
 }
 
 /**
@@ -75,7 +82,8 @@ export async function routeToChapter(
 async function llmChapterDecision(
   attrs: ExtractedAttributes,
   candidateChapters: string[],
-  notesData: NotesForClassification
+  notesData: NotesForClassification,
+  confusingPair: ConfusingPair | null = null
 ): Promise<ChapterRoutingResult> {
 
   // A/B TEST TOGGLE: Set DISABLE_CHAPTER_NOTES=true to test LLM without notes
@@ -93,6 +101,19 @@ async function llmChapterDecision(
     console.warn(`  ⚠️ Notes context may be large: ~${estimatedTokens} tokens`);
   }
 
+  // Build disambiguation warning if confusing pair detected
+  let disambiguationContext = '';
+  if (confusingPair) {
+    disambiguationContext = `
+=== DISAMBIGUATION WARNING ===
+Chapters ${confusingPair.chapters[0]} and ${confusingPair.chapters[1]} are commonly confused for this product type.
+Key distinction: ${confusingPair.question}
+- Chapter ${confusingPair.options[0]!.chapter}: ${confusingPair.options[0]!.description} (e.g., ${confusingPair.options[0]!.examples})
+- Chapter ${confusingPair.options[1]!.chapter}: ${confusingPair.options[1]!.description} (e.g., ${confusingPair.options[1]!.examples})
+=== END DISAMBIGUATION ===
+`;
+  }
+
   const prompt = `You are an HS Code classification expert for Indian Customs (ITC-HS). Determine the correct CHAPTER (2-digit) for this product.
 
 PRODUCT: "${attrs.raw_query}"
@@ -107,7 +128,7 @@ EXTRACTED ATTRIBUTES:
 === LEGAL CLASSIFICATION CONTEXT ===
 ${notesContext}
 === END CONTEXT ===
-
+${disambiguationContext}
 CRITICAL CLASSIFICATION PRINCIPLES (apply in order):
 
 1. GIR 1 - FIRST: Classification by terms of headings AND chapter/section notes

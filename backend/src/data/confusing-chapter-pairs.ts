@@ -225,3 +225,15 @@ export function isConfusingPair(chapter1: string, chapter2: string): boolean {
       (pair.chapters[0] === chapter2 && pair.chapters[1] === chapter1)
   );
 }
+
+/**
+ * Get the disambiguation data for a pair of chapters.
+ * Used by Brain (M3) to generate targeted clarifying questions.
+ */
+export function getConfusingPairQuestion(ch1: string, ch2: string): ConfusingPair | null {
+  return CONFUSING_PAIRS.find(
+    pair =>
+      (pair.chapters[0] === ch1 && pair.chapters[1] === ch2) ||
+      (pair.chapters[0] === ch2 && pair.chapters[1] === ch1)
+  ) || null;
+}
