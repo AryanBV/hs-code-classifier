@@ -25,7 +25,10 @@
     "test:integration:notes": "npx ts-node src/tests/integration/pipeline-notes-integration.test.ts",
     "generate:tier2": "npx ts-node src/tests/test-data/tier2-database/generate-tier2.ts",
     "generate:tier3": "npx ts-node src/tests/test-data/tier3-llm/generate-tier3.ts",
-    "merge:tiers": "npx ts-node src/tests/test-data/merge-tiers.ts"
+    "merge:tiers": "npx ts-node src/tests/test-data/merge-tiers.ts",
+    "eval": "npx tsx --require dotenv/config src/eval/runner.ts",
+    "eval:quick": "npx tsx --require dotenv/config src/eval/runner.ts --suite quick",
+    "eval:compare": "npx tsx src/eval/compare.ts"
   },
   "keywords": [
     "hs-code",
@@ -60,6 +63,7 @@
     "prisma": "^5.20.0",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.6.3",
     "vitest": "^3.2.4"
   },
