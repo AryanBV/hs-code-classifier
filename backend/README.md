@@ -11,7 +11,7 @@ Node.js + Express backend with Prisma ORM for HS code classification.
 - **Language:** TypeScript (strict mode)
 - **ORM:** Prisma
 - **Database:** PostgreSQL 15 (Supabase)
-- **AI:** OpenAI GPT-4o
+- **AI:** OpenAI GPT-4o-mini
 
 ---
 

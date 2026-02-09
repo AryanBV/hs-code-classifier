@@ -19,7 +19,7 @@ Indian exporters face **₹50,000-5,00,000 penalties** for incorrect HS code cla
 ![Next.js](https://img.shields.io/badge/Next.js-14-000000?style=flat&logo=next.js&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?style=flat&logo=postgresql&logoColor=white)
 ![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?style=flat&logo=prisma&logoColor=white)
-![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o-412991?style=flat&logo=openai&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o--mini-412991?style=flat&logo=openai&logoColor=white)
 
 ### Frontend
 - **Next.js 14** with React 18
@@ -38,7 +38,7 @@ Indian exporters face **₹50,000-5,00,000 penalties** for incorrect HS code cla
 - JSONB for decision trees
 
 ### AI/ML
-- **OpenAI GPT-4o** for edge case classification
+- **OpenAI GPT-4o-mini** for edge case classification
 - Hybrid approach: Keyword matching (30%) + Decision trees (40%) + AI reasoning (30%)
 
 ---
@@ -85,7 +85,7 @@ User Input → Category Detection (AI) → Smart Questionnaire → Classificatio
 3 Parallel Methods:
     • Keyword Matching (PostgreSQL FTS)
     • Decision Tree Rules
-    • AI Reasoning (GPT-4o)
+    • AI Reasoning (GPT-4o-mini)
     ↓
 Confidence Aggregation → Country Mapping → Final Result with Reasoning
 ```
