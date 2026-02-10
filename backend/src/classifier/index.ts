@@ -1,6 +1,6 @@
 // backend/src/classifier/index.ts
 
-import { ClassificationResult, ExtractedAttributes } from './types';
+import { ClassificationResult, ExtractedAttributes, BrainOutput, ChapterRoutingResult } from './types';
 import { analyzeSpecificity } from './specificity-analyzer';
 import { extractAttributes } from './attribute-extractor';
 import { routeToChapter } from './chapter-router';
@@ -34,6 +34,7 @@ export async function classify(
   // BRAIN PATH (USE_BRAIN=true)
   // =========================================================
   if (USE_BRAIN) {
+    let retainedBrainOutput: BrainOutput | null = null;
     try {
       // Convert previousAnswers Record to QAPair[] for Brain
       const qaPairs = options.previousAnswers
@@ -46,6 +47,7 @@ export async function classify(
       // Brain replaces Stage 0 + Stage 1
       console.log('Brain: Analyzing query...');
       const brainOutput = await analyzeBrain(query, qaPairs);
+      retainedBrainOutput = brainOutput;
       const decision = route(brainOutput, query);
 
       console.log(`  Decision: ${decision.action}`);
@@ -78,12 +80,30 @@ export async function classify(
       const attributes = decision.attributes!;
       console.log('  Brain attributes:', JSON.stringify(attributes, null, 2));
 
-      // Stage 2: Chapter Routing
+      // Stage 2: Chapter Routing — Trust Brain's chapters (ARY-48 Fix 1)
       console.log('\nStage 2: Chapter Routing');
-      const chapterResult = await routeToChapter(attributes);
-      console.log(`  Chapter: ${chapterResult.chapter}`);
-      console.log(`  Confidence: ${chapterResult.confidence}%`);
-      console.log(`  Rule: ${chapterResult.rule_applied || 'LLM decision'}`);
+      let chapterResult: ChapterRoutingResult;
+
+      if (decision.suggestedChapters && decision.suggestedChapters.length > 0) {
+        const brainChapter = decision.suggestedChapters[0]!;
+        const brainConf = Math.round(
+          brainOutput.confidence > 1 ? brainOutput.confidence : brainOutput.confidence * 100
+        );
+        chapterResult = {
+          chapter: brainChapter,
+          confidence: Math.min(brainConf, 95),
+          reasoning: `Brain suggested chapter ${brainChapter} (from [${decision.suggestedChapters.join(', ')}]). ${brainOutput.reasoning}`,
+          rule_applied: 'brain_suggested_chapters',
+        };
+        console.log(`  Chapter: ${chapterResult.chapter} (Brain-trusted)`);
+        console.log(`  Confidence: ${chapterResult.confidence}%`);
+        console.log(`  Brain chapters: [${decision.suggestedChapters.join(', ')}]`);
+      } else {
+        chapterResult = await routeToChapter(attributes);
+        console.log(`  Chapter: ${chapterResult.chapter} (router fallback)`);
+        console.log(`  Confidence: ${chapterResult.confidence}%`);
+        console.log(`  Rule: ${chapterResult.rule_applied || 'LLM decision'}`);
+      }
       console.log(`  Reasoning: ${chapterResult.reasoning}`);
 
       // Stage 3: Heading Search
