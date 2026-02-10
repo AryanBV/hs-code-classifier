@@ -57,6 +57,7 @@ export interface ClassificationResult {
   question?: string;
   options?: QuestionOption[];
   context?: string;
+  brain_used?: boolean;
 }
 
 export interface QuestionResponse {
