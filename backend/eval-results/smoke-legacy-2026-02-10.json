@@ -1,0 +1,377 @@
+{
+  "metadata": {
+    "timestamp": "2026-02-10T03:51:38.097Z",
+    "run_id": "smoke-legacy-2026-02-10",
+    "total_cases": 20,
+    "duration_seconds": 140,
+    "model": "gpt-4o-mini",
+    "notes": "Suite: quick",
+    "errors": 3,
+    "suite": "quick"
+  },
+  "routing": {
+    "accuracy": 65,
+    "confusion_matrix": {
+      "classify_as_classify": 10,
+      "classify_as_ask": 4,
+      "classify_as_reject": 3,
+      "ask_as_classify": 0,
+      "ask_as_ask": 3,
+      "ask_as_reject": 0,
+      "reject_as_classify": 0,
+      "reject_as_ask": 0,
+      "reject_as_reject": 0
+    }
+  },
+  "classification": {
+    "weighted_average": 51,
+    "chapter_accuracy": 90,
+    "heading_accuracy": 40,
+    "code_accuracy": 10,
+    "per_chapter_breakdown": {
+      "21": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 100
+      },
+      "25": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 100
+      },
+      "29": {
+        "correct": 2,
+        "total": 2,
+        "accuracy": 100
+      },
+      "32": {
+        "correct": 0,
+        "total": 1,
+        "accuracy": 0
+      },
+      "54": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 100
+      },
+      "55": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 100
+      },
+      "85": {
+        "correct": 2,
+        "total": 2,
+        "accuracy": 100
+      },
+      "87": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 100
+      }
+    }
+  },
+  "question_quality": {
+    "targeted_pct": 100,
+    "relevant_pct": 33.33333333333333,
+    "average_score": 1.3333333333333333
+  },
+  "details": [
+    {
+      "test_case_id": "QK-01",
+      "query": "basmati rice long grain 5kg bag",
+      "expected_routing": "classify",
+      "actual_routing": "ask",
+      "routing_correct": false,
+      "question_asked": "What is this product used for?",
+      "question_score": 1,
+      "response_time_ms": 3,
+      "score": 0
+    },
+    {
+      "test_case_id": "QK-02",
+      "query": "men cotton t-shirt knitted round neck casual",
+      "expected_routing": "classify",
+      "actual_routing": "reject",
+      "routing_correct": false,
+      "response_time_ms": 2414,
+      "score": 0,
+      "error": "PrismaClientInitializationError: \nInvalid `prisma.$queryRaw()` invocation:\n\n\nCan't reach database server at `aws-1-ap-northeast-1.pooler.supabase.com:6543`\n\nPlease make sure your database server is running at `aws-1-ap-northeast-1.pooler.supabase.com:6543`."
+    },
+    {
+      "test_case_id": "QK-03",
+      "query": "black pepper whole dried Malabar grade",
+      "expected_routing": "classify",
+      "actual_routing": "reject",
+      "routing_correct": false,
+      "response_time_ms": 1275,
+      "score": 0,
+      "error": "PrismaClientInitializationError: \nInvalid `prisma.$queryRaw()` invocation:\n\n\nCan't reach database server at `aws-1-ap-northeast-1.pooler.supabase.com:6543`\n\nPlease make sure your database server is running at `aws-1-ap-northeast-1.pooler.supabase.com:6543`."
+    },
+    {
+      "test_case_id": "QK-04",
+      "query": "PVC pipe rigid 4 inch water supply",
+      "expected_routing": "classify",
+      "actual_routing": "ask",
+      "routing_correct": false,
+      "question_asked": "What is this product used for?",
+      "question_score": 1,
+      "response_time_ms": 1,
+      "score": 0
+    },
+    {
+      "test_case_id": "QK-05",
+      "query": "LED display screen",
+      "expected_routing": "classify",
+      "actual_routing": "reject",
+      "routing_correct": false,
+      "response_time_ms": 1415,
+      "score": 0,
+      "error": "PrismaClientInitializationError: \nInvalid `prisma.$queryRaw()` invocation:\n\n\nCan't reach database server at `aws-1-ap-northeast-1.pooler.supabase.com:6543`\n\nPlease make sure your database server is running at `aws-1-ap-northeast-1.pooler.supabase.com:6543`."
+    },
+    {
+      "test_case_id": "QK-06",
+      "query": "ceramic brake pads for heavy trucks",
+      "expected_routing": "classify",
+      "actual_routing": "classify",
+      "routing_correct": true,
+      "expected_chapter": "87",
+      "actual_chapter": "87",
+      "chapter_correct": true,
+      "expected_heading": "8708",
+      "actual_heading": "8708",
+      "heading_correct": true,
+      "expected_code": "8708.30.00",
+      "actual_code": "8708.30.00",
+      "code_correct": true,
+      "alternative_match": false,
+      "confidence": 94,
+      "response_time_ms": 11080,
+      "score": 100
+    },
+    {
+      "test_case_id": "QK-07",
+      "query": "instant coffee powder spray dried soluble",
+      "expected_routing": "classify",
+      "actual_routing": "classify",
+      "routing_correct": true,
+      "expected_chapter": "21",
+      "actual_chapter": "21",
+      "chapter_correct": true,
+      "expected_heading": "2101",
+      "actual_heading": "2101",
+      "heading_correct": true,
+      "actual_code": "2101.11.20",
+      "code_correct": false,
+      "alternative_match": false,
+      "confidence": 94,
+      "response_time_ms": 8818,
+      "score": 70
+    },
+    {
+      "test_case_id": "QK-08",
+      "query": "portland cement powder bulk hydraulic binder",
+      "expected_routing": "classify",
+      "actual_routing": "classify",
+      "routing_correct": true,
+      "expected_chapter": "25",
+      "actual_chapter": "25",
+      "chapter_correct": true,
+      "expected_heading": "2523",
+      "actual_heading": "2523",
+      "heading_correct": true,
+      "actual_code": "2523.21.00",
+      "code_correct": false,
+      "alternative_match": false,
+      "confidence": 94,
+      "response_time_ms": 10073,
+      "score": 70
+    },
+    {
+      "test_case_id": "QK-09",
+      "query": "lithium ion battery for laptop",
+      "expected_routing": "classify",
+      "actual_routing": "classify",
+      "routing_correct": true,
+      "expected_chapter": "85",
+      "actual_chapter": "85",
+      "chapter_correct": true,
+      "expected_heading": "8507",
+      "actual_heading": "8507",
+      "heading_correct": true,
+      "actual_code": "8507.60.00",
+      "code_correct": false,
+      "alternative_match": false,
+      "confidence": 94,
+      "response_time_ms": 8815,
+      "score": 70
+    },
+    {
+      "test_case_id": "QK-10",
+      "query": "electric motor AC induction 5HP industrial three phase",
+      "expected_routing": "classify",
+      "actual_routing": "classify",
+      "routing_correct": true,
+      "expected_chapter": "85",
+      "actual_chapter": "85",
+      "chapter_correct": true,
+      "actual_heading": "8501",
+      "heading_correct": false,
+      "actual_code": "8501.53.10",
+      "code_correct": false,
+      "alternative_match": false,
+      "confidence": 75,
+      "response_time_ms": 11382,
+      "score": 40
+    },
+    {
+      "test_case_id": "QK-11",
+      "query": "paracetamol powder bulk API pharmaceutical grade",
+      "expected_routing": "classify",
+      "actual_routing": "classify",
+      "routing_correct": true,
+      "expected_chapter": "29",
+      "actual_chapter": "29",
+      "chapter_correct": true,
+      "expected_heading": "2924",
+      "actual_heading": "2923",
+      "heading_correct": false,
+      "actual_code": "2923.90.00",
+      "code_correct": false,
+      "alternative_match": false,
+      "confidence": 75,
+      "response_time_ms": 11734,
+      "score": 40
+    },
+    {
+      "test_case_id": "QK-12",
+      "query": "mink fur coat full length ladies luxury",
+      "expected_routing": "classify",
+      "actual_routing": "ask",
+      "routing_correct": false,
+      "question_asked": "What is this product used for?",
+      "question_score": 1,
+      "response_time_ms": 1,
+      "score": 0
+    },
+    {
+      "test_case_id": "QK-13",
+      "query": "polyester filament yarn continuous single high tenacity",
+      "expected_routing": "classify",
+      "actual_routing": "classify",
+      "routing_correct": true,
+      "expected_chapter": "54",
+      "actual_chapter": "54",
+      "chapter_correct": true,
+      "actual_heading": "5402",
+      "heading_correct": false,
+      "actual_code": "5402.20.90",
+      "code_correct": false,
+      "alternative_match": false,
+      "confidence": 77,
+      "response_time_ms": 16557,
+      "score": 40
+    },
+    {
+      "test_case_id": "QK-14",
+      "query": "polyester staple fiber short cut for spinning",
+      "expected_routing": "classify",
+      "actual_routing": "classify",
+      "routing_correct": true,
+      "expected_chapter": "55",
+      "actual_chapter": "55",
+      "chapter_correct": true,
+      "actual_heading": "5506",
+      "heading_correct": false,
+      "actual_code": "5506.20.00",
+      "code_correct": false,
+      "alternative_match": false,
+      "confidence": 76,
+      "response_time_ms": 19063,
+      "score": 40
+    },
+    {
+      "test_case_id": "QK-15",
+      "query": "ibuprofen raw material powder bulk API",
+      "expected_routing": "classify",
+      "actual_routing": "classify",
+      "routing_correct": true,
+      "expected_chapter": "29",
+      "actual_chapter": "29",
+      "chapter_correct": true,
+      "actual_heading": "2941",
+      "heading_correct": false,
+      "actual_code": "2941.90.90",
+      "code_correct": false,
+      "alternative_match": false,
+      "confidence": 74,
+      "response_time_ms": 11245,
+      "score": 40
+    },
+    {
+      "test_case_id": "QK-16",
+      "query": "brake pads",
+      "expected_routing": "ask",
+      "actual_routing": "ask",
+      "routing_correct": true,
+      "question_asked": "What type of vehicle/equipment are these parts for?",
+      "question_score": 1,
+      "response_time_ms": 1,
+      "score": 50
+    },
+    {
+      "test_case_id": "QK-17",
+      "query": "coffee",
+      "expected_routing": "ask",
+      "actual_routing": "ask",
+      "routing_correct": true,
+      "question_asked": "What type of coffee product is this?",
+      "question_score": 2,
+      "response_time_ms": 0,
+      "score": 100
+    },
+    {
+      "test_case_id": "QK-18",
+      "query": "filter",
+      "expected_routing": "ask",
+      "actual_routing": "ask",
+      "routing_correct": true,
+      "question_asked": "What type of vehicle/equipment are these parts for?",
+      "question_score": 1,
+      "response_time_ms": 1,
+      "score": 50
+    },
+    {
+      "test_case_id": "QK-19",
+      "query": "drone with camera quadcopter aerial photography",
+      "expected_routing": "classify",
+      "actual_routing": "ask",
+      "routing_correct": false,
+      "question_asked": "What is this product used for?",
+      "question_score": 1,
+      "response_time_ms": 0,
+      "score": 0
+    },
+    {
+      "test_case_id": "QK-20",
+      "query": "silicone sealant tube for construction",
+      "expected_routing": "classify",
+      "actual_routing": "classify",
+      "routing_correct": true,
+      "expected_chapter": "32",
+      "actual_chapter": "39",
+      "chapter_correct": false,
+      "actual_heading": "3910",
+      "heading_correct": false,
+      "actual_code": "3910.00.90",
+      "code_correct": false,
+      "alternative_chapters": [
+        "39"
+      ],
+      "alternative_match": true,
+      "confidence": 74,
+      "response_time_ms": 16191,
+      "score": 30
+    }
+  ]
+}
