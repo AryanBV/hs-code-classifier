@@ -8,12 +8,20 @@ import { getFormattedChapterNotes } from './notes-helper';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
+export interface BrainContext {
+  industry?: string;
+  origin?: string;
+  reasoning: string;
+  suggestedChapters: string[];
+}
+
 /**
  * Select the final 8-digit code within the determined heading
  */
 export async function selectCode(
   attrs: ExtractedAttributes,
-  heading: string
+  heading: string,
+  brainContext?: BrainContext
 ): Promise<CodeSelectionResult> {
 
   console.log(`Selecting tariff-line code within heading ${heading}`);
@@ -45,7 +53,7 @@ export async function selectCode(
 
   // If few codes (<=5), let LLM decide directly
   if (allCodes.length <= 5) {
-    return await llmSelectCode(attrs, allCodes);
+    return await llmSelectCode(attrs, allCodes, brainContext);
   }
 
   // Many codes - use semantic search to narrow, then LLM
@@ -55,10 +63,10 @@ export async function selectCode(
   const candidates = await searchWithinChapter(embedding, heading, 10, 5);
 
   if (candidates.length === 0) {
-    return await llmSelectCode(attrs, allCodes.slice(0, 5));
+    return await llmSelectCode(attrs, allCodes.slice(0, 5), brainContext);
   }
 
-  return await llmSelectCode(attrs, candidates);
+  return await llmSelectCode(attrs, candidates, brainContext);
 }
 
 /**
@@ -66,7 +74,8 @@ export async function selectCode(
  */
 async function llmSelectCode(
   attrs: ExtractedAttributes,
-  candidates: any[]
+  candidates: any[],
+  brainContext?: BrainContext
 ): Promise<CodeSelectionResult> {
 
   // Build candidate list
@@ -97,6 +106,15 @@ ATTRIBUTES:
 - Form: ${attrs.form || 'not specified'}
 - Function: ${attrs.function || 'not specified'}
 - Intended use: ${attrs.intended_use || 'not specified'}
+${attrs.industry ? `- Industry: ${attrs.industry}` : ''}
+${attrs.origin ? `- Origin: ${attrs.origin}` : ''}
+${brainContext ? `
+CLASSIFICATION CONTEXT (from upstream analysis):
+- Industry sector: ${brainContext.industry || 'not specified'}
+- Geographic origin: ${brainContext.origin || 'not specified'}
+- Analysis reasoning: ${brainContext.reasoning}
+- Suggested chapters: [${brainContext.suggestedChapters.join(', ')}]
+Use this context to select the most specific matching code.` : ''}
 ${notesSection}
 CANDIDATE CODES:
 ${candidateText}
@@ -119,7 +137,23 @@ Respond ONLY with JSON:
       model: 'gpt-4o-mini',
       messages: [{ role: 'user', content: prompt }],
       temperature: 0.1,
-      response_format: { type: 'json_object' }
+      response_format: {
+        type: 'json_schema',
+        json_schema: {
+          name: 'code_selection_result',
+          strict: true,
+          schema: {
+            type: 'object',
+            properties: {
+              code: { type: 'string' },
+              confidence: { type: 'number' },
+              reasoning: { type: 'string' },
+            },
+            required: ['code', 'confidence', 'reasoning'],
+            additionalProperties: false,
+          },
+        },
+      }
     });
 
     const choice = response.choices[0];

@@ -115,7 +115,14 @@ export async function classify(
 
       // Stage 4-5: Code Selection
       console.log('\nStage 4-5: Code Selection');
-      const codeResult = await selectCode(attributes, headingResult.heading);
+      const codeResult = await selectCode(attributes, headingResult.heading,
+        retainedBrainOutput ? {
+          industry: retainedBrainOutput.attributes.industry || undefined,
+          origin: retainedBrainOutput.attributes.origin || undefined,
+          reasoning: retainedBrainOutput.reasoning,
+          suggestedChapters: retainedBrainOutput.suggested_chapters,
+        } : undefined
+      );
       console.log(`  Code: ${codeResult.code}`);
       console.log(`  Confidence: ${codeResult.confidence}%`);
 
