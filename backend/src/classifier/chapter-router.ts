@@ -176,7 +176,23 @@ Respond ONLY with JSON:
       model: 'gpt-4o-mini',
       messages: [{ role: 'user', content: prompt }],
       temperature: 0.1,
-      response_format: { type: 'json_object' }
+      response_format: {
+        type: 'json_schema',
+        json_schema: {
+          name: 'chapter_routing_decision',
+          strict: true,
+          schema: {
+            type: 'object',
+            properties: {
+              chapter: { type: 'string' },
+              confidence: { type: 'number' },
+              reasoning: { type: 'string' },
+            },
+            required: ['chapter', 'confidence', 'reasoning'],
+            additionalProperties: false,
+          },
+        },
+      }
     });
 
     const choice = response.choices[0];
