@@ -43,6 +43,16 @@ export interface HeadingCandidate {
   similarity: number;
 }
 
+export interface HeadingRerankerResult {
+  selected_heading: string;
+  confidence: number;
+  reasoning: string;
+  ranking: Array<{
+    code: string;
+    score: number;
+  }>;
+}
+
 export interface CodeSelectionResult {
   code: string;  // 8-digit code
   description: string;
