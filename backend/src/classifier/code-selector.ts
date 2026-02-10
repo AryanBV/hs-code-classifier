@@ -104,7 +104,7 @@ ${candidateText}
 RULES:
 1. Select the MOST SPECIFIC code matching the product
 2. Consider material, form, and function
-3. If uncertain between codes, prefer the more general one
+3. If uncertain between codes, prefer the MOST SPECIFIC code that matches the product. Codes ending in .00 or containing 'Other', 'not elsewhere specified', or 'n.e.s.' are catch-all codes — select them ONLY if no specific code matches
 4. If chapter notes specify classification rules, follow them
 
 Respond ONLY with JSON:
