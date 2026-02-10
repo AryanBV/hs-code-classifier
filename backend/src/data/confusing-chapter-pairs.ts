@@ -186,7 +186,70 @@ export const CONFUSING_PAIRS: ConfusingPair[] = [
         examples: 'Rubber tires, rubber hoses, rubber seals'
       }
     ]
-  }
+  },
+
+  // Ch.29 vs Ch.30: Bulk chemical/API vs Pharmaceutical formulation (ARY-30)
+  {
+    chapters: ['29', '30'],
+    keywords: ['paracetamol', 'ibuprofen', 'amoxicillin', 'API', 'pharmaceutical', 'medicine', 'drug', 'tablet', 'capsule', 'injection', 'vial', 'formulation', 'bulk'],
+    question: 'Is this a BULK chemical/API (active pharmaceutical ingredient) or a FORMULATED pharmaceutical product?',
+    options: [
+      {
+        label: 'Bulk API / raw chemical',
+        chapter: '29',
+        description: 'Organic chemicals — unformulated powder/granules for further processing',
+        examples: 'Paracetamol API powder, ibuprofen bulk, amoxicillin trihydrate'
+      },
+      {
+        label: 'Pharmaceutical formulation (dosage form)',
+        chapter: '30',
+        description: 'Pharmaceutical products — tablets, capsules, injections for patient use',
+        examples: 'Paracetamol 500mg tablets, insulin injection vial, amoxicillin capsules'
+      }
+    ]
+  },
+
+  // Ch.52 vs Ch.55: Cotton vs Man-made staple fibers (ARY-30)
+  {
+    chapters: ['52', '55'],
+    keywords: ['cotton', 'polyester', 'nylon', 'acrylic', 'fiber', 'fibre', 'yarn', 'thread', 'fabric', 'blend', 'staple'],
+    question: 'What is the PREDOMINANT fiber in this textile product?',
+    options: [
+      {
+        label: 'Cotton (>50% cotton content)',
+        chapter: '52',
+        description: 'Cotton — yarn, fabric, or articles predominantly of cotton',
+        examples: 'Cotton yarn, 100% cotton fabric, combed cotton thread'
+      },
+      {
+        label: 'Man-made staple fibers (>50% synthetic)',
+        chapter: '55',
+        description: 'Man-made staple fibres — polyester, nylon, acrylic',
+        examples: 'Polyester staple fiber, acrylic yarn, nylon blend fabric'
+      }
+    ]
+  },
+
+  // Ch.85 vs Ch.87: Electrical machinery vs Vehicle parts (ARY-30)
+  {
+    chapters: ['85', '87'],
+    keywords: ['motor', 'generator', 'wiper', 'starter', 'alternator', 'automotive', 'vehicle', 'car', 'truck', '12V', '24V'],
+    question: 'Is this an ELECTRICAL component or a STRUCTURAL/MECHANICAL vehicle part?',
+    options: [
+      {
+        label: 'Electrical component (motor, generator)',
+        chapter: '85',
+        description: 'Electrical machinery — motors, generators, electrical equipment',
+        examples: 'Wiper motor, starter motor, alternator, car audio system'
+      },
+      {
+        label: 'Structural/mechanical vehicle part',
+        chapter: '87',
+        description: 'Vehicle parts — body panels, bumpers, chassis, brake parts',
+        examples: 'Door panel, bumper, brake pads, shock absorber, wiper blade'
+      }
+    ]
+  },
 ];
 
 /**

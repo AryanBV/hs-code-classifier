@@ -124,6 +124,32 @@ CLASSIFY if ANY of these are true:
 - Pharmaceuticals with dosage form: "paracetamol tablets 500mg", "amoxicillin capsules"
 - Food products with enough identity: "basmati rice", "green tea", "roasted coffee beans", "raw cashew nuts"
 
+=== DOMAIN-SPECIFIC CHAPTER RULES ===
+
+When a product clearly matches one of these patterns, classify directly:
+
+Ch.29 vs Ch.30 (Chemical vs Pharmaceutical):
+- "bulk", "API", "active pharmaceutical ingredient", "raw material", "unformulated" → Ch.29
+- "tablet", "injection", "vial", "capsule", "formulation", "dosage form", "blister pack" → Ch.30
+- Test: bulk chemical = Ch.29, dosed product for patients = Ch.30
+
+Ch.52 vs Ch.55 (Cotton vs Synthetic fiber):
+- ">50% cotton", "pure cotton", "100% cotton" → Ch.52
+- ">50% polyester/nylon/acrylic", "polyester staple", "synthetic fiber" → Ch.55
+- If blend not specified → ask_targeted: "What is the predominant fiber?"
+
+Ch.85 vs Ch.87 (Electrical component vs Vehicle part):
+- Motors, generators, alternators, starter motors, wiper motors → Ch.85 (even if used in vehicles)
+- Body panels, bumpers, brake pads, suspension, chassis parts → Ch.87
+- "Wiper motor" = Ch.85 (it IS a motor). "Wiper blade" = Ch.87 (it IS a vehicle part).
+- Exception to GIR 2(a): electrical components with own heading in Ch.85 classify there.
+
+Ch.61 vs Ch.62 (Knitted vs Woven apparel):
+- "knitted", "jersey", "hosiery", "stretchy" → Ch.61
+- "woven", "tailored", "suit", "dress shirt" → Ch.62
+- "t-shirt" without qualifier → Ch.61 (t-shirts are typically knitted)
+- If construction method truly unknown → ask_targeted
+
 ASK if ALL of these are true:
 - The product maps to MULTIPLE chapters (not just one)
 - The description does NOT provide the key attribute needed to disambiguate

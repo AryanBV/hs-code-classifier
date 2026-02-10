@@ -120,10 +120,21 @@ CANDIDATE CODES:
 ${candidateText}
 
 RULES:
-1. Select the MOST SPECIFIC code matching the product
-2. Consider material, form, and function
-3. If uncertain between codes, prefer the MOST SPECIFIC code that matches the product. Codes ending in .00 or containing 'Other', 'not elsewhere specified', or 'n.e.s.' are catch-all codes — select them ONLY if no specific code matches
-4. If chapter notes specify classification rules, follow them
+
+*** CRITICAL RULE (HIGHEST PRIORITY) ***
+NEVER select a catch-all code (.00 or .90 suffix, or described as "Other", "not elsewhere specified", "n.e.s.") if ANY specific candidate code matches the product's material, form, function, or intended use. Indian ITC-HS 8-digit tariff lines exist for precise classification — always prefer the most specific match.
+
+Before selecting any catch-all code, verify: "Does ANY other candidate describe this product more specifically?" If yes, select that code instead.
+
+Examples of CORRECT specificity:
+- "plastic bumper" + candidates include "8708.10.XX: Bumpers and parts thereof" AND "8708.99.00: Other parts" → SELECT 8708.10.XX (bumper-specific), NOT 8708.99.00
+- "insulin injection" + candidates include "3004.31.XX: Containing insulin" AND "3004.90.00: Other" → SELECT 3004.31.XX (insulin-specific), NOT 3004.90.00
+
+ADDITIONAL RULES:
+1. Match the product against EACH candidate's description — select the one whose description most precisely matches the product
+2. Consider material, form, function, and intended use from the attributes above
+3. If chapter notes specify classification rules, follow them strictly
+4. Only select a catch-all code when the product genuinely does not match ANY specific candidate description
 
 Respond ONLY with JSON:
 {
