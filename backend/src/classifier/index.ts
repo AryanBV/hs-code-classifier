@@ -6,6 +6,7 @@ import { extractAttributes } from './attribute-extractor';
 import { routeToChapter } from './chapter-router';
 import { findHeading } from './heading-searcher';
 import { selectCode } from './code-selector';
+import { rerankHeadings } from './heading-reranker';
 import { analyzeBrain } from './brain';
 import { route } from './router';
 
@@ -108,10 +109,25 @@ export async function classify(
 
       // Stage 3: Heading Search
       console.log('\nStage 3: Heading Search');
-      const headingResult = await findHeading(attributes, chapterResult.chapter);
-      console.log(`  Heading: ${headingResult.heading}`);
+      let headingResult = await findHeading(attributes, chapterResult.chapter);
+      const pgvectorHeading = headingResult.heading;
+      console.log(`  Heading (pgvector): ${headingResult.heading}`);
       console.log(`  Description: ${headingResult.description}`);
       console.log(`  Similarity: ${headingResult.similarity.toFixed(3)}`);
+
+      // Stage 3.5: Heading Re-Ranking (LLM)
+      if (headingResult.candidates.length >= 2) {
+        const brainCtx = retainedBrainOutput ? {
+          industry: retainedBrainOutput.attributes.industry || undefined,
+          origin: retainedBrainOutput.attributes.origin || undefined,
+          reasoning: retainedBrainOutput.reasoning,
+          suggestedChapters: retainedBrainOutput.suggested_chapters,
+        } : undefined;
+        headingResult = await rerankHeadings(attributes, headingResult, chapterResult, brainCtx);
+        if (headingResult.heading !== pgvectorHeading) {
+          console.log(`  Heading (re-ranked): ${headingResult.heading}`);
+        }
+      }
 
       // Stage 4-5: Code Selection
       console.log('\nStage 4-5: Code Selection');
@@ -207,10 +223,15 @@ export async function classify(
 
     // Stage 3: Heading Search
     console.log('\nStage 3: Heading Search');
-    const headingResult = await findHeading(attributes, chapterResult.chapter);
-    console.log(`  Heading: ${headingResult.heading}`);
+    let headingResult = await findHeading(attributes, chapterResult.chapter);
+    console.log(`  Heading (pgvector): ${headingResult.heading}`);
     console.log(`  Description: ${headingResult.description}`);
     console.log(`  Similarity: ${headingResult.similarity.toFixed(3)}`);
+
+    // Stage 3.5: Heading Re-Ranking (LLM)
+    if (headingResult.candidates.length >= 2) {
+      headingResult = await rerankHeadings(attributes, headingResult, chapterResult);
+    }
 
     // Stage 4-5: Code Selection
     console.log('\nStage 4-5: Code Selection');
@@ -284,3 +305,4 @@ export { extractAttributes } from './attribute-extractor';
 export { routeToChapter } from './chapter-router';
 export { findHeading } from './heading-searcher';
 export { selectCode } from './code-selector';
+export { rerankHeadings } from './heading-reranker';
