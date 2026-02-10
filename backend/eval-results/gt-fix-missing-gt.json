@@ -1,0 +1,2215 @@
+{
+  "metadata": {
+    "script": "fix-missing-gt.ts",
+    "timestamp": "2026-02-10T10:47:46.350Z",
+    "total_cases_analyzed": 55,
+    "proposals_generated": 55,
+    "by_confidence": {
+      "HIGH": 12,
+      "MEDIUM": 34,
+      "LOW": 9
+    }
+  },
+  "proposals": [
+    {
+      "case_id": "S5-AMB-001",
+      "query": "spark plug for car engine ignition",
+      "source_file": "session5-ambiguous",
+      "fix_type": "missing_gt",
+      "current_chapter": "85",
+      "proposed_chapter": "85",
+      "proposed_heading": "8511",
+      "proposed_code": "8511.10.00",
+      "confidence": "HIGH",
+      "reasoning": "Proposed heading 8511 (sim=0.419). Proposed code 8511.10.00 (sim=0.498). Notes: Ch.85 (electrical ignition) or Ch.87 (vehicle parts)",
+      "candidates": [
+        {
+          "code": "8511",
+          "description": "Electrical ignition or starting equipment of a kind used for spark-ignition or compression-ignition internal combustion engines (for example, ignition magnetos, magneto-dynamos, ignition coils, sparking plugs and glow plugs, starter motors); generators (for example, dynamos, alternators) and cut-outs of a kind used in conjunction with such engines.",
+          "similarity": 0.4190975580985956
+        },
+        {
+          "code": "8545",
+          "description": "Carbon electrodes, carbon brushes, lamp carbons, battery carbons and other articles of graphite or other carbon, with or without metal, of a kind used for electrical purposes.",
+          "similarity": 0.27732162340412336
+        },
+        {
+          "code": "8513",
+          "description": "Portable electric lamps designed to function by their own source of energy (for example, dry batteries, accumulators, agnetos), other than lighting equipment of heading 85.12.",
+          "similarity": 0.25021252038628106
+        },
+        {
+          "code": "8515",
+          "description": "Electric (including electrically heated gas), laser or other light or photon beam, ultrasonic, electron beam, magnetic pulse or plasma arc soldering, brazing or welding machines and apparatus, whether or not capable of cutting; electric machines and apparatus for hot spraying of metals or cermets.",
+          "similarity": 0.23428149427661304
+        },
+        {
+          "code": "8538",
+          "description": "PARTS SUITABLE FOR USE SOLELY OR PRINCIPALLY WITH THE APPARATUS OF HEADINGS 8535, 8536 OR 8537",
+          "similarity": 0.2230867032835937
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AMB-002",
+      "query": "car windshield laminated safety glass",
+      "source_file": "session5-ambiguous",
+      "fix_type": "missing_gt",
+      "current_chapter": "70",
+      "proposed_chapter": "70",
+      "proposed_heading": "7007",
+      "proposed_code": "7007.21.90",
+      "confidence": "HIGH",
+      "reasoning": "Proposed heading 7007 (sim=0.386). Proposed code 7007.21.90 (sim=0.412). Notes: Ch.70 (safety glass) or Ch.87 (vehicle parts)",
+      "candidates": [
+        {
+          "code": "7007",
+          "description": "Safety glass, consisting of toughened (tempered) or laminated glass.",
+          "similarity": 0.385694003957868
+        },
+        {
+          "code": "7009",
+          "description": "Glass mirrors, whether or not framed, including rear-view mirrors.",
+          "similarity": 0.31341152449216003
+        },
+        {
+          "code": "7008",
+          "description": "Multiple-walled insulating units of glass.",
+          "similarity": 0.298517405986788
+        },
+        {
+          "code": "7005",
+          "description": "Float glass and surface ground or polished glass, in sheets, whether or not having an absorbent, reflecting or non-reflecting layer, but not otherwise worked.",
+          "similarity": 0.28247253403231354
+        },
+        {
+          "code": "7003",
+          "description": "Cast glass and rolled glass, in sheets or profiles, whether or not having an absorbent, reflecting or non-reflecting layer, but not otherwise worked.",
+          "similarity": 0.2809106968747739
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AMB-003",
+      "query": "rubber floor mat for car interior",
+      "source_file": "session5-ambiguous",
+      "fix_type": "missing_gt",
+      "current_chapter": "40",
+      "proposed_chapter": "40",
+      "proposed_heading": "4013",
+      "proposed_code": "4013.10.10",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 4013 (sim=0.323). Proposed code 4013.10.10 (sim=0.388). Notes: Ch.40 (rubber articles) or Ch.87 (vehicle accessory)",
+      "candidates": [
+        {
+          "code": "4013",
+          "description": "Inner tubes, of rubber.",
+          "similarity": 0.32301785671498107
+        },
+        {
+          "code": "4012",
+          "description": "Retreaded or used pneumatic tyres of rubber; solid or cushion tyres, tyre treads and tyre flaps, of rubber.",
+          "similarity": 0.3220459626885681
+        },
+        {
+          "code": "4011",
+          "description": "New pneumatic tyres, of rubber.",
+          "similarity": 0.3176772405101519
+        },
+        {
+          "code": "4017",
+          "description": "Hard rubber (for example, ebonite) in all forms, including waste and scrap; articles of hard rubber.",
+          "similarity": 0.3118955698044441
+        },
+        {
+          "code": "4001",
+          "description": "Natural rubber, balata, gutta-percha, guayule, chicle and similar natural gums, in primary forms or in plates, sheets or strip.",
+          "similarity": 0.30932468175888284
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AMB-004",
+      "query": "motorcycle helmet protective headgear",
+      "source_file": "session5-ambiguous",
+      "fix_type": "missing_gt",
+      "current_chapter": "65",
+      "proposed_chapter": "65",
+      "proposed_heading": "6506",
+      "proposed_code": "6506.10.20",
+      "confidence": "HIGH",
+      "reasoning": "Proposed heading 6506 (sim=0.419). Proposed code 6506.10.20 (sim=0.504). Notes: Ch.65 (headgear) or Ch.87 (vehicle accessory)",
+      "candidates": [
+        {
+          "code": "6506",
+          "description": "Other headgear, whether or not lined or trimmed.",
+          "similarity": 0.4188215136528045
+        },
+        {
+          "code": "6502",
+          "description": "Hat-shapes, plaited or made by assembling strips of any material, neither blocked to shape, nor with made brims, nor lined, nor trimmed.",
+          "similarity": 0.41706553850163885
+        },
+        {
+          "code": "6507",
+          "description": "Head-bands, linings, covers, hat foundations, hat frames, peaks and chinstraps, for headgear.",
+          "similarity": 0.4100945836362002
+        },
+        {
+          "code": "6501",
+          "description": "Hat-forms, hat bodies and hoods of felt, neither blocked to shape nor with made brims; plateaux and manchons (including slit manchons), of felt.",
+          "similarity": 0.40890660339037277
+        },
+        {
+          "code": "6504",
+          "description": "Hats and other headgear, plaited or made by assembling strips of any material, whether or not lined or trimmed.",
+          "similarity": 0.39366282111337636
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AMB-005",
+      "query": "car seat cover leather custom fit",
+      "source_file": "session5-ambiguous",
+      "fix_type": "missing_gt",
+      "current_chapter": "42",
+      "proposed_chapter": "42",
+      "proposed_heading": "4201",
+      "proposed_code": "4201.00.00",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 4201 (sim=0.301). Proposed code 4201.00.00 (sim=0.295). Notes: Ch.42 (leather articles) or Ch.87 (vehicle accessory)",
+      "candidates": [
+        {
+          "code": "4201",
+          "description": "Saddlery and harness for any animal (including traces, leads, knee pads, muzzles, saddle cloths, saddle bags, dog coats and the like), of any material.",
+          "similarity": 0.30125999450683816
+        },
+        {
+          "code": "4202",
+          "description": "Trunks, suit-cases, vanity-cases, executive-cases, brief- cases, school satchels, spectacle cases, binocular cases, camera cases, musical instrument cases, gun cases, holsters and similar containers; travelling- bags, insulated food or beverages bags, toilet bags, rucksacks, handbags, shopping- bags, wallets, purses, map-cases, cigarette- cases, tobacco- pouches, tool bags, sports bags, bottle- cases, jewellery boxes, powder-boxes, cutlery cases and similar containers, of leather or of composition leather, of sheeting of plastics, of textile materials, of vulcanised fibre or of paperboard, or wholly or mainly covered with such materials or with paper.",
+          "similarity": 0.28720997908085755
+        },
+        {
+          "code": "4205",
+          "description": "Other articles of leather or of composition leather.",
+          "similarity": 0.2678747613504676
+        },
+        {
+          "code": "4203",
+          "description": "Articles of apparel and clothing accessories, of leather or of composition leather.",
+          "similarity": 0.26533838923711905
+        },
+        {
+          "code": "4206",
+          "description": "Articles of gut (other than silk-worm gut), of goldbeaters skin, of bladders or of tendons.",
+          "similarity": 0.25425623331926905
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AMB-006",
+      "query": "vehicle headlight bulb halogen H4",
+      "source_file": "session5-ambiguous",
+      "fix_type": "missing_gt",
+      "current_chapter": "85",
+      "proposed_chapter": "85",
+      "proposed_heading": "8539",
+      "proposed_code": "8539.21.10",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 8539 (sim=0.294). Proposed code 8539.21.10 (sim=0.384). Notes: Ch.85 (electric lamps) or Ch.87 (vehicle parts)",
+      "candidates": [
+        {
+          "code": "8539",
+          "description": "ELECTRIC FILAMENT OR DISCHARGE LAMPS INCLUDING SEALED BEAM LAMP UNITS AND ULTRAVIOLET OR INFRA-RED LAMPS, ARC- LAMPS; LIGHTEMITTING DIODE (LED) LIGHT SOURCES",
+          "similarity": 0.29422263537510474
+        },
+        {
+          "code": "8512",
+          "description": "Electrical lighting or signalling equipment (excluding articles of heading 85.39), windscreen wipers, defrosters and demisters, of a kind used for cycles or motor vehicles.",
+          "similarity": 0.26162048533146054
+        },
+        {
+          "code": "8513",
+          "description": "Portable electric lamps designed to function by their own source of energy (for example, dry batteries, accumulators, agnetos), other than lighting equipment of heading 85.12.",
+          "similarity": 0.2373008273423216
+        },
+        {
+          "code": "8538",
+          "description": "PARTS SUITABLE FOR USE SOLELY OR PRINCIPALLY WITH THE APPARATUS OF HEADINGS 8535, 8536 OR 8537",
+          "similarity": 0.22109705696377757
+        },
+        {
+          "code": "8529",
+          "description": "PARTS SUITABLE FOR USE SOLELY OR PRINCIPALLY WITH THE APPARATUS OF HEADINGS 8524 TO 8528",
+          "similarity": 0.22040750439077716
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AMB-007",
+      "query": "silicone sealant tube for construction",
+      "source_file": "session5-ambiguous",
+      "fix_type": "missing_gt",
+      "current_chapter": "32",
+      "proposed_chapter": "32",
+      "proposed_heading": "3214",
+      "proposed_code": "3214.90.10",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 3214 (sim=0.271). Proposed code 3214.90.10 (sim=0.275). Notes: Ch.32 (mastics/putty) or Ch.39 (silicone/plastic)",
+      "candidates": [
+        {
+          "code": "3214",
+          "description": "Glaziers putty, grafting putty, resin cements, caulking compounds and other mastics; painters fillings; non-refractory surfacing preparations for faades, indoor walls, floors, ceilings or the like.",
+          "similarity": 0.2705153629951721
+        },
+        {
+          "code": "3213",
+          "description": "Artists, students or signboard painters colours, modifying tints, amusement colours and the like, in tablets, tubes, jars, bottles, pans or in similar forms or packings.",
+          "similarity": 0.17331620017789873
+        },
+        {
+          "code": "3210",
+          "description": "Other paints and varnishes (including enamels, lacquers and distempers); prepared water pigments of a kind used for finishing leather.",
+          "similarity": 0.16508865820230934
+        },
+        {
+          "code": "3209",
+          "description": "Paints and varnishes (including enamels and lacquers) based on synthetic polymers or chemically modified natural polymers, dispersed or dissolved in an aqueous medium.",
+          "similarity": 0.1590207015884344
+        },
+        {
+          "code": "3204",
+          "description": "Synthetic organic colouring matter, whether or not chemically defined; preparations as specified in Note 3 to this Chapter based on synthetic organic colouring matter; synthetic organic products of a kind used as fluorescent brightening agents or as luminophores, whether or not chemically defined.",
+          "similarity": 0.15328352033646597
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AMB-008",
+      "query": "foam mattress memory foam polyurethane",
+      "source_file": "session5-ambiguous",
+      "fix_type": "missing_gt",
+      "current_chapter": "94",
+      "proposed_chapter": "94",
+      "proposed_heading": "9404",
+      "proposed_code": "9404.29.20",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 9404 (sim=0.318). Proposed code 9404.29.20 (sim=0.366). Notes: Ch.94 (mattresses) or Ch.39 (cellular plastic)",
+      "candidates": [
+        {
+          "code": "9404",
+          "description": "Mattress supports; articles of bedding and similar furnishing (for example, mattresses, quilts, eiderdowns, cushions, pouffes and pillows) fitted with springs or stuffed or internally fitted with any material or of cellular rubber or plastics, whether or not covered.",
+          "similarity": 0.31816511398062464
+        },
+        {
+          "code": "9406",
+          "description": "Prefabricated buildings.",
+          "similarity": 0.21562019195436632
+        },
+        {
+          "code": "9403",
+          "description": "Other furniture and parts thereof.",
+          "similarity": 0.1994617223900087
+        },
+        {
+          "code": "9401",
+          "description": "Seats (other than those of heading 9402), whether or not convertible into beds, and parts thereof.",
+          "similarity": 0.1981737492836
+        },
+        {
+          "code": "9402",
+          "description": "Medical, surgical, dental or veterinary furniture (for example, operating tables, examination tables, hospital beds with mechanical fittings, dentists chairs); barbers chairs and similar chairs, having rotating as well as both reclining and elevating movements; parts of the foregoing articles.",
+          "similarity": 0.15647323520721057
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AMB-009",
+      "query": "plastic chair stackable garden outdoor",
+      "source_file": "session5-ambiguous",
+      "fix_type": "missing_gt",
+      "current_chapter": "94",
+      "proposed_chapter": "94",
+      "proposed_heading": "9402",
+      "proposed_code": "9402.10.10",
+      "confidence": "LOW",
+      "reasoning": "Proposed heading 9402 (sim=0.201). Proposed code 9402.10.10 (sim=0.229). Notes: Ch.94 (furniture) or Ch.39 (plastic articles)",
+      "candidates": [
+        {
+          "code": "9402",
+          "description": "Medical, surgical, dental or veterinary furniture (for example, operating tables, examination tables, hospital beds with mechanical fittings, dentists chairs); barbers chairs and similar chairs, having rotating as well as both reclining and elevating movements; parts of the foregoing articles.",
+          "similarity": 0.2011219621039022
+        },
+        {
+          "code": "9406",
+          "description": "Prefabricated buildings.",
+          "similarity": 0.19523392291271258
+        },
+        {
+          "code": "9401",
+          "description": "Seats (other than those of heading 9402), whether or not convertible into beds, and parts thereof.",
+          "similarity": 0.18870050671409622
+        },
+        {
+          "code": "9403",
+          "description": "Other furniture and parts thereof.",
+          "similarity": 0.17611049200092255
+        },
+        {
+          "code": "9404",
+          "description": "Mattress supports; articles of bedding and similar furnishing (for example, mattresses, quilts, eiderdowns, cushions, pouffes and pillows) fitted with springs or stuffed or internally fitted with any material or of cellular rubber or plastics, whether or not covered.",
+          "similarity": 0.17138017756165724
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AMB-010",
+      "query": "sports bra lycra elastic womens fitness",
+      "source_file": "session5-ambiguous",
+      "fix_type": "missing_gt",
+      "current_chapter": "61",
+      "proposed_chapter": "61",
+      "proposed_heading": "6104",
+      "proposed_code": "6104.43.00",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 6104 (sim=0.252). Proposed code 6104.43.00 (sim=0.259). Notes: Ch.61 (knitted) or Ch.62 (woven) - depends on construction",
+      "candidates": [
+        {
+          "code": "6104",
+          "description": "Womens or girls suits, ensembles, jackets, blazers, dresses, skirts, divided skirts, trousers, bib and brace overalls, breeches and shorts (other than swimwear), knitted or crocheted.",
+          "similarity": 0.25217373656191056
+        },
+        {
+          "code": "6108",
+          "description": "Womens or girls slips, petticoats, briefs, panties, nightdresses, pyjamas, negligees, bathrobes, dressing gowns and similar articles, knitted or crocheted.",
+          "similarity": 0.2419097418731302
+        },
+        {
+          "code": "6106",
+          "description": "Womens or girls blouses, shirts and shirt-blouses, Womens or girls blouses, shirts and shirt-blouses, knitted or crocheted.",
+          "similarity": 0.24101902544498444
+        },
+        {
+          "code": "6115",
+          "description": "Panty hose, tights, stockings, socks and other hosiery, including graduated compression hosiery (for example, stockings for varicose veins) and footwear without applied soles, knitted or crocheted.",
+          "similarity": 0.2322709272938418
+        },
+        {
+          "code": "6112",
+          "description": "Track suits, ski suits and swimwear, knitted or crocheted.",
+          "similarity": 0.230248914346164
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AMB-011",
+      "query": "canvas tote bag cotton shopping reusable",
+      "source_file": "session5-ambiguous",
+      "fix_type": "missing_gt",
+      "current_chapter": "42",
+      "proposed_chapter": "42",
+      "proposed_heading": "4202",
+      "proposed_code": "4202.22.20",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 4202 (sim=0.257). Proposed code 4202.22.20 (sim=0.359). Notes: Ch.42 (bags) or Ch.63 (textile articles)",
+      "candidates": [
+        {
+          "code": "4202",
+          "description": "Trunks, suit-cases, vanity-cases, executive-cases, brief- cases, school satchels, spectacle cases, binocular cases, camera cases, musical instrument cases, gun cases, holsters and similar containers; travelling- bags, insulated food or beverages bags, toilet bags, rucksacks, handbags, shopping- bags, wallets, purses, map-cases, cigarette- cases, tobacco- pouches, tool bags, sports bags, bottle- cases, jewellery boxes, powder-boxes, cutlery cases and similar containers, of leather or of composition leather, of sheeting of plastics, of textile materials, of vulcanised fibre or of paperboard, or wholly or mainly covered with such materials or with paper.",
+          "similarity": 0.2568739209696007
+        },
+        {
+          "code": "4201",
+          "description": "Saddlery and harness for any animal (including traces, leads, knee pads, muzzles, saddle cloths, saddle bags, dog coats and the like), of any material.",
+          "similarity": 0.19542600471609883
+        },
+        {
+          "code": "4206",
+          "description": "Articles of gut (other than silk-worm gut), of goldbeaters skin, of bladders or of tendons.",
+          "similarity": 0.17796293431410004
+        },
+        {
+          "code": "4205",
+          "description": "Other articles of leather or of composition leather.",
+          "similarity": 0.16793305182257456
+        },
+        {
+          "code": "4203",
+          "description": "Articles of apparel and clothing accessories, of leather or of composition leather.",
+          "similarity": 0.16466223702841354
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AMB-012",
+      "query": "USB flash drive 64GB data storage",
+      "source_file": "session5-ambiguous",
+      "fix_type": "missing_gt",
+      "current_chapter": "84",
+      "proposed_chapter": "84",
+      "proposed_heading": "8471",
+      "proposed_code": "8471.70.20",
+      "confidence": "LOW",
+      "reasoning": "Proposed heading 8471 (sim=0.135). Proposed code 8471.70.20 (sim=0.232). Notes: Ch.84 (computer storage) or Ch.85 (electronic)",
+      "candidates": [
+        {
+          "code": "8471",
+          "description": "Automatic data processing machines and units thereof; magnetic or optical readers, machines for transcribing data onto data media in coded form and machines for processing such data, not elsewhere specified or included.",
+          "similarity": 0.13463820230706358
+        },
+        {
+          "code": "8470",
+          "description": "Calculating machines and pocket-size data recording, reproducing and displaying machines with calculating functions; accounting machines, postage-franking machines, ticket-issuing machines and similar machines, incorporating a calculating device; cash registers.",
+          "similarity": 0.1228101292720335
+        },
+        {
+          "code": "8486",
+          "description": "MACHINES AND APPARATUS OF A KIND USED SOLELY SEMICONDUCTOR BOULES OR WAFERS, SEMICONDUCTOR DEVICES, ELECTRONIC INTEGRATED CIRCUITS OR FLAT PANEL DISPLAYS; MACHINES AND APPARATUS SPECIFIED IN NOTE 11(C) TO THIS CHAPTER; PARTS AND ACCESSORIES",
+          "similarity": 0.10340515087262248
+        },
+        {
+          "code": "8466",
+          "description": "Parts and accessories suitable for use solely or principally with the machines of headings 84.56 to 84.65, including work or tool holders, self-opening dieheads, dividing heads and other special attachments for the machines; tool holders for any type of tool for working in the hand.",
+          "similarity": 0.09801996367991406
+        },
+        {
+          "code": "8408",
+          "description": "Compression-ignition internal combustion piston engines (diesel or semi-diesel engines).",
+          "similarity": 0.0967477622555718
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AMB-013",
+      "query": "power bank lithium portable charger 10000mAh",
+      "source_file": "session5-ambiguous",
+      "fix_type": "missing_gt",
+      "current_chapter": "85",
+      "proposed_chapter": "85",
+      "proposed_heading": "8513",
+      "proposed_code": "8513.10.90",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 8513 (sim=0.277). Proposed code 8513.10.90 (sim=0.274). Notes: Ch.85 (accumulators) or Ch.84 (computer accessory)",
+      "candidates": [
+        {
+          "code": "8513",
+          "description": "Portable electric lamps designed to function by their own source of energy (for example, dry batteries, accumulators, agnetos), other than lighting equipment of heading 85.12.",
+          "similarity": 0.2766567697098209
+        },
+        {
+          "code": "8506",
+          "description": "Primary cells and primary batteries.",
+          "similarity": 0.25477522668544816
+        },
+        {
+          "code": "8529",
+          "description": "PARTS SUITABLE FOR USE SOLELY OR PRINCIPALLY WITH THE APPARATUS OF HEADINGS 8524 TO 8528",
+          "similarity": 0.19952086502563615
+        },
+        {
+          "code": "8538",
+          "description": "PARTS SUITABLE FOR USE SOLELY OR PRINCIPALLY WITH THE APPARATUS OF HEADINGS 8535, 8536 OR 8537",
+          "similarity": 0.19633454560280073
+        },
+        {
+          "code": "8510",
+          "description": "Shavers, hair clippers and hair-removing appliances, with selfcontained electric motor.",
+          "similarity": 0.1925352995958438
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AMB-014",
+      "query": "yoga mat PVC exercise fitness",
+      "source_file": "session5-ambiguous",
+      "fix_type": "missing_gt",
+      "current_chapter": "95",
+      "proposed_chapter": "95",
+      "proposed_heading": "9506",
+      "proposed_code": "9506.99.20",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 9506 (sim=0.238). Proposed code 9506.99.20 (sim=0.275). Notes: Ch.95 (sports equipment) or Ch.39 (plastic sheet)",
+      "candidates": [
+        {
+          "code": "9506",
+          "description": "Articles and equipment for general physical exercise, gymnastics, athletics, other sports (including table-tennis) or outdoor games, not specified or included elsewhere in this Chapter; swimming pools and paddling pools.",
+          "similarity": 0.23760610744989608
+        },
+        {
+          "code": "9503",
+          "description": "Tricycles, scooters, pedal cars and similar wheeled toys; dolls carriages; dolls; other toys; reduced-size (scale) models and similar recreational models, working or not; puzzles of all kinds.",
+          "similarity": 0.17583283339934574
+        },
+        {
+          "code": "9504",
+          "description": "VIDEO GAME CONSOLES AND MACHINES, TABLE OR PARLOUR GAMES, INCLUDING PINTABLES, BILLIARDS, SPECIAL TABLES FOR CASINO GAMES AND AUTOMATIC BOWLING EQUIPMENT, AMUSEMENT MACHINES OPERATED BY COINS, BANK NOTES, BANK CARDS, TOKENS OR BY ANY OTHER MEANS OF PAYMENT",
+          "similarity": 0.1523200364303613
+        },
+        {
+          "code": "9505",
+          "description": "Festive, carnival or other entertainment articles, including conjuring tricks and novelty jokes.",
+          "similarity": 0.1325493813962909
+        },
+        {
+          "code": "9508",
+          "description": "TRAVELLING CIRCUSES AND TRAVELLING MENAGERIES; AMUSEMENT PARK RIDES AND WATER PARK AMUSEMENTS; FAIRGROUND AMUSEMENTS, INCLUDING SHOOTING GALLERIES; TRAVELLING THEATRES",
+          "similarity": 0.11536389704181316
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AMB-015",
+      "query": "drone with camera quadcopter aerial photography",
+      "source_file": "session5-ambiguous",
+      "fix_type": "missing_gt",
+      "current_chapter": "88",
+      "proposed_chapter": "88",
+      "proposed_heading": "8806",
+      "proposed_code": "8806.22.00",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 8806 (sim=0.237). Proposed code 8806.22.00 (sim=0.283). Notes: Ch.88 (aircraft/UAV) or Ch.85 (electronic device)",
+      "candidates": [
+        {
+          "code": "8806",
+          "description": "UNMANNED AIRCRAFT",
+          "similarity": 0.2365456434976141
+        },
+        {
+          "code": "8801",
+          "description": "Balloons and dirigibles; gliders, hang gliders and other nonpowered aircraft.",
+          "similarity": 0.218928433028711
+        },
+        {
+          "code": "8802",
+          "description": "OTHER AIRCRAFT, EXCEPT UNMANNED AIRCRAFT OF HEADING 88.06 (FOR EXAMPLE, HELICOPTERS, AEROPLANES), SPACECRAFT (INCLUDING SATELLITES) AND SUBORBITAL AND SPACECRAFT LAUNCH VEHICLES",
+          "similarity": 0.2176825954601853
+        },
+        {
+          "code": "8804",
+          "description": "Parachutes (including dirigible parachutes and paragliders) and rotochutes; parts thereof and accessories thereto.",
+          "similarity": 0.21168461039502162
+        },
+        {
+          "code": "8807",
+          "description": "PARTS OF GOODS OF HEADING 8801, 8802 OR 8806",
+          "similarity": 0.20474894685288803
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AUTO-002",
+      "query": "brake drum cast iron for Tata truck rear axle",
+      "source_file": "session5-automotive",
+      "fix_type": "missing_gt",
+      "current_chapter": "87",
+      "proposed_chapter": "87",
+      "proposed_heading": "8709",
+      "proposed_code": "8708.30.00",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 8709 (sim=0.263). Proposed code 8708.30.00 (sim=0.341). Notes: GIR 2a: cast iron -> function (brake drum)",
+      "candidates": [
+        {
+          "code": "8709",
+          "description": "Works trucks, self-propelled, not fitted with lifting or handling equipment, of the type used in factories, warehouses, dock areas or airports for short distance transport of goods; tractors of the type used on railway station platforms; parts of the foregoing vehicles.",
+          "similarity": 0.2629348274709131
+        },
+        {
+          "code": "8706",
+          "description": "Chassis fitted with engines, for the motor vehicles of headings 87.01 to 87.05.",
+          "similarity": 0.2566052445824254
+        },
+        {
+          "code": "8707",
+          "description": "Bodies (including cabs), for the motor vehicles of headings 87.01 to 87.05.",
+          "similarity": 0.2537881211575307
+        },
+        {
+          "code": "8708",
+          "description": "Parts and accessories of the motor vehicles of headings 87.01 to 87.05.",
+          "similarity": 0.2517463041770811
+        },
+        {
+          "code": "8714",
+          "description": "Parts and accessories of vehicles of headings 87.11 to 87.13.",
+          "similarity": 0.25108306851735607
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AUTO-003",
+      "query": "disc brake rotor ventilated for passenger car",
+      "source_file": "session5-automotive",
+      "fix_type": "missing_gt",
+      "current_chapter": "87",
+      "proposed_chapter": "87",
+      "proposed_heading": "8713",
+      "proposed_code": "8708.30.00",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 8713 (sim=0.238). Proposed code 8708.30.00 (sim=0.321). Notes: GIR 2a: steel rotor -> function (brakes)",
+      "candidates": [
+        {
+          "code": "8713",
+          "description": "Carriages for disabled persons, whether or not motorised or otherwise mechanically propelled.",
+          "similarity": 0.23817563056946478
+        },
+        {
+          "code": "8715",
+          "description": "Baby carriages and parts thereof.",
+          "similarity": 0.23473297241533297
+        },
+        {
+          "code": "8702",
+          "description": "Motor vehicles for the transport of ten or more persons, including the driver.",
+          "similarity": 0.23447581848071797
+        },
+        {
+          "code": "8703",
+          "description": "Motor cars and other motor vehicles principally designed for the transport of persons (other than those of heading 87.02), including station wagons and racing cars.",
+          "similarity": 0.2271152301362056
+        },
+        {
+          "code": "8705",
+          "description": "Special purpose motor vehicles, other than those principally designed for the transport of persons or goods (for example, breakdown lorries, crane lorries, fire fighting vehicles, concretemixer lorries, road sweeper lorries, spraying lorries, mobile workshops, mobile radiological units).",
+          "similarity": 0.2227502233609704
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AUTO-005",
+      "query": "piston rings chrome plated for diesel engine truck",
+      "source_file": "session5-automotive",
+      "fix_type": "missing_gt",
+      "current_chapter": "87",
+      "proposed_chapter": "87",
+      "proposed_heading": "8706",
+      "proposed_code": "8706.00.42",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 8706 (sim=0.298). Proposed code 8706.00.42 (sim=0.312). Notes: GIR 2a: metal rings -> function (engine parts)",
+      "candidates": [
+        {
+          "code": "8706",
+          "description": "Chassis fitted with engines, for the motor vehicles of headings 87.01 to 87.05.",
+          "similarity": 0.2983310703441928
+        },
+        {
+          "code": "8709",
+          "description": "Works trucks, self-propelled, not fitted with lifting or handling equipment, of the type used in factories, warehouses, dock areas or airports for short distance transport of goods; tractors of the type used on railway station platforms; parts of the foregoing vehicles.",
+          "similarity": 0.2637371263660755
+        },
+        {
+          "code": "8705",
+          "description": "Special purpose motor vehicles, other than those principally designed for the transport of persons or goods (for example, breakdown lorries, crane lorries, fire fighting vehicles, concretemixer lorries, road sweeper lorries, spraying lorries, mobile workshops, mobile radiological units).",
+          "similarity": 0.24017380893749296
+        },
+        {
+          "code": "8710",
+          "description": "Tanks and other armoured fighting vehicles, motorised, whether or not fitted with weapons, and parts of such vehicles.",
+          "similarity": 0.2088330014646651
+        },
+        {
+          "code": "8708",
+          "description": "Parts and accessories of the motor vehicles of headings 87.01 to 87.05.",
+          "similarity": 0.20815054579960202
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AUTO-006",
+      "query": "cylinder head gasket multi-layer steel for car engine",
+      "source_file": "session5-automotive",
+      "fix_type": "missing_gt",
+      "current_chapter": "87",
+      "proposed_chapter": "87",
+      "proposed_heading": "8706",
+      "proposed_code": "8706.00.42",
+      "confidence": "LOW",
+      "reasoning": "Proposed heading 8706 (sim=0.200). Proposed code 8706.00.42 (sim=0.217). Notes: GIR 2a: gasket -> function (engine seal)",
+      "candidates": [
+        {
+          "code": "8706",
+          "description": "Chassis fitted with engines, for the motor vehicles of headings 87.01 to 87.05.",
+          "similarity": 0.20019944905640774
+        },
+        {
+          "code": "8703",
+          "description": "Motor cars and other motor vehicles principally designed for the transport of persons (other than those of heading 87.02), including station wagons and racing cars.",
+          "similarity": 0.1513236837571389
+        },
+        {
+          "code": "8707",
+          "description": "Bodies (including cabs), for the motor vehicles of headings 87.01 to 87.05.",
+          "similarity": 0.15066023027839393
+        },
+        {
+          "code": "8705",
+          "description": "Special purpose motor vehicles, other than those principally designed for the transport of persons or goods (for example, breakdown lorries, crane lorries, fire fighting vehicles, concretemixer lorries, road sweeper lorries, spraying lorries, mobile workshops, mobile radiological units).",
+          "similarity": 0.1490293053458468
+        },
+        {
+          "code": "8701",
+          "description": "Tractors (other than tractors of heading 87.09).",
+          "similarity": 0.13668035517340238
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AUTO-010",
+      "query": "side mirror assembly with glass for Hyundai i20",
+      "source_file": "session5-automotive",
+      "fix_type": "missing_gt",
+      "current_chapter": "87",
+      "proposed_chapter": "87",
+      "proposed_heading": "8707",
+      "proposed_code": "8708.22.00",
+      "confidence": "LOW",
+      "reasoning": "Proposed heading 8707 (sim=0.175). Proposed code 8708.22.00 (sim=0.290). Notes: GIR 2a: glass/plastic -> function (vehicle accessory)",
+      "candidates": [
+        {
+          "code": "8707",
+          "description": "Bodies (including cabs), for the motor vehicles of headings 87.01 to 87.05.",
+          "similarity": 0.1752670556306839
+        },
+        {
+          "code": "8714",
+          "description": "Parts and accessories of vehicles of headings 87.11 to 87.13.",
+          "similarity": 0.16500707477289023
+        },
+        {
+          "code": "8711",
+          "description": "Motorcycles (including mopeds) and cycles fitted with an auxiliary motor, with or without side-cars; side-cars.",
+          "similarity": 0.16494814053023288
+        },
+        {
+          "code": "8708",
+          "description": "Parts and accessories of the motor vehicles of headings 87.01 to 87.05.",
+          "similarity": 0.16022847172874666
+        },
+        {
+          "code": "8715",
+          "description": "Baby carriages and parts thereof.",
+          "similarity": 0.14802014827728271
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AUTO-011",
+      "query": "car door handle chrome plated exterior",
+      "source_file": "session5-automotive",
+      "fix_type": "missing_gt",
+      "current_chapter": "87",
+      "proposed_chapter": "87",
+      "proposed_heading": "8714",
+      "proposed_code": "8714.92.90",
+      "confidence": "LOW",
+      "reasoning": "Proposed heading 8714 (sim=0.187). Proposed code 8714.92.90 (sim=0.209). Notes: GIR 2a: metal -> function (door parts)",
+      "candidates": [
+        {
+          "code": "8714",
+          "description": "Parts and accessories of vehicles of headings 87.11 to 87.13.",
+          "similarity": 0.18653184175491466
+        },
+        {
+          "code": "8708",
+          "description": "Parts and accessories of the motor vehicles of headings 87.01 to 87.05.",
+          "similarity": 0.18065669055839528
+        },
+        {
+          "code": "8713",
+          "description": "Carriages for disabled persons, whether or not motorised or otherwise mechanically propelled.",
+          "similarity": 0.1679349096897086
+        },
+        {
+          "code": "8707",
+          "description": "Bodies (including cabs), for the motor vehicles of headings 87.01 to 87.05.",
+          "similarity": 0.1598437821771972
+        },
+        {
+          "code": "8706",
+          "description": "Chassis fitted with engines, for the motor vehicles of headings 87.01 to 87.05.",
+          "similarity": 0.15558051135656426
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AUTO-012",
+      "query": "coil spring suspension front for SUV",
+      "source_file": "session5-automotive",
+      "fix_type": "missing_gt",
+      "current_chapter": "87",
+      "proposed_chapter": "87",
+      "proposed_heading": "8705",
+      "proposed_code": "8705.20.00",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 8705 (sim=0.228). Proposed code 8705.20.00 (sim=0.238). Notes: GIR 2a: steel spring -> function (suspension)",
+      "candidates": [
+        {
+          "code": "8705",
+          "description": "Special purpose motor vehicles, other than those principally designed for the transport of persons or goods (for example, breakdown lorries, crane lorries, fire fighting vehicles, concretemixer lorries, road sweeper lorries, spraying lorries, mobile workshops, mobile radiological units).",
+          "similarity": 0.2276954271702678
+        },
+        {
+          "code": "8716",
+          "description": "Trailers and semi-trailers; other vehicles, not mechanically",
+          "similarity": 0.217769482202252
+        },
+        {
+          "code": "8709",
+          "description": "Works trucks, self-propelled, not fitted with lifting or handling equipment, of the type used in factories, warehouses, dock areas or airports for short distance transport of goods; tractors of the type used on railway station platforms; parts of the foregoing vehicles.",
+          "similarity": 0.21519394426382266
+        },
+        {
+          "code": "8715",
+          "description": "Baby carriages and parts thereof.",
+          "similarity": 0.2110073016873253
+        },
+        {
+          "code": "8704",
+          "description": "Motor vehicles for the transport of goods.",
+          "similarity": 0.20941326264064275
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AUTO-014",
+      "query": "steering rack assembly hydraulic for sedan",
+      "source_file": "session5-automotive",
+      "fix_type": "missing_gt",
+      "current_chapter": "87",
+      "proposed_chapter": "87",
+      "proposed_heading": "8715",
+      "proposed_code": "8715.00.20",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 8715 (sim=0.266). Proposed code 8715.00.20 (sim=0.273). Notes: GIR 2a: mechanical assembly -> function (steering)",
+      "candidates": [
+        {
+          "code": "8715",
+          "description": "Baby carriages and parts thereof.",
+          "similarity": 0.2656199038028717
+        },
+        {
+          "code": "8714",
+          "description": "Parts and accessories of vehicles of headings 87.11 to 87.13.",
+          "similarity": 0.25264109655373757
+        },
+        {
+          "code": "8713",
+          "description": "Carriages for disabled persons, whether or not motorised or otherwise mechanically propelled.",
+          "similarity": 0.2504052222258135
+        },
+        {
+          "code": "8706",
+          "description": "Chassis fitted with engines, for the motor vehicles of headings 87.01 to 87.05.",
+          "similarity": 0.24795746827632748
+        },
+        {
+          "code": "8707",
+          "description": "Bodies (including cabs), for the motor vehicles of headings 87.01 to 87.05.",
+          "similarity": 0.2474188208580017
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AUTO-015",
+      "query": "clutch plate friction disc for Mahindra pickup",
+      "source_file": "session5-automotive",
+      "fix_type": "missing_gt",
+      "current_chapter": "87",
+      "proposed_chapter": "87",
+      "proposed_heading": "8709",
+      "proposed_code": "8708.93.00",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 8709 (sim=0.240). Proposed code 8708.93.00 (sim=0.322). Notes: GIR 2a: friction material -> function (clutch)",
+      "candidates": [
+        {
+          "code": "8709",
+          "description": "Works trucks, self-propelled, not fitted with lifting or handling equipment, of the type used in factories, warehouses, dock areas or airports for short distance transport of goods; tractors of the type used on railway station platforms; parts of the foregoing vehicles.",
+          "similarity": 0.2397774886687084
+        },
+        {
+          "code": "8706",
+          "description": "Chassis fitted with engines, for the motor vehicles of headings 87.01 to 87.05.",
+          "similarity": 0.22100441157818462
+        },
+        {
+          "code": "8714",
+          "description": "Parts and accessories of vehicles of headings 87.11 to 87.13.",
+          "similarity": 0.21896132641800548
+        },
+        {
+          "code": "8708",
+          "description": "Parts and accessories of the motor vehicles of headings 87.01 to 87.05.",
+          "similarity": 0.21787782013416912
+        },
+        {
+          "code": "8711",
+          "description": "Motorcycles (including mopeds) and cycles fitted with an auxiliary motor, with or without side-cars; side-cars.",
+          "similarity": 0.21465945462278435
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AUTO-016",
+      "query": "drive shaft propeller shaft for truck",
+      "source_file": "session5-automotive",
+      "fix_type": "missing_gt",
+      "current_chapter": "87",
+      "proposed_chapter": "87",
+      "proposed_heading": "8709",
+      "proposed_code": "8709.90.00",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 8709 (sim=0.305). Proposed code 8709.90.00 (sim=0.311). Notes: GIR 2a: steel shaft -> function (transmission)",
+      "candidates": [
+        {
+          "code": "8709",
+          "description": "Works trucks, self-propelled, not fitted with lifting or handling equipment, of the type used in factories, warehouses, dock areas or airports for short distance transport of goods; tractors of the type used on railway station platforms; parts of the foregoing vehicles.",
+          "similarity": 0.30470110149973517
+        },
+        {
+          "code": "8706",
+          "description": "Chassis fitted with engines, for the motor vehicles of headings 87.01 to 87.05.",
+          "similarity": 0.26051699864459077
+        },
+        {
+          "code": "8701",
+          "description": "Tractors (other than tractors of heading 87.09).",
+          "similarity": 0.25743620053314387
+        },
+        {
+          "code": "8705",
+          "description": "Special purpose motor vehicles, other than those principally designed for the transport of persons or goods (for example, breakdown lorries, crane lorries, fire fighting vehicles, concretemixer lorries, road sweeper lorries, spraying lorries, mobile workshops, mobile radiological units).",
+          "similarity": 0.25319833317991014
+        },
+        {
+          "code": "8704",
+          "description": "Motor vehicles for the transport of goods.",
+          "similarity": 0.2495510876446354
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AUTO-020",
+      "query": "oil filter cartridge for petrol engine car",
+      "source_file": "session5-automotive",
+      "fix_type": "missing_gt",
+      "current_chapter": "84",
+      "proposed_chapter": "84",
+      "proposed_heading": "8408",
+      "proposed_code": "8421.23.00",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 8408 (sim=0.227). Proposed code 8421.23.00 (sim=0.338). Notes: Exception: Filters have specific heading 8421 in Ch.84",
+      "candidates": [
+        {
+          "code": "8408",
+          "description": "Compression-ignition internal combustion piston engines (diesel or semi-diesel engines).",
+          "similarity": 0.22710064599498603
+        },
+        {
+          "code": "8409",
+          "description": "Parts suitable for use solely or principally with the engines of",
+          "similarity": 0.21725447475910808
+        },
+        {
+          "code": "8407",
+          "description": "Spark-ignition reciprocating or rotary internal combustion piston engines.",
+          "similarity": 0.21661547622311683
+        },
+        {
+          "code": "8405",
+          "description": "Producer gas or water gas generators, with or without their purifiers; acetylene gas generators and similar water process gas generators, with or without their purifiers.",
+          "similarity": 0.20197818857626648
+        },
+        {
+          "code": "8421",
+          "description": "Centrifuges, including centrifugal dryers; filtering or purifying machinery and apparatus, for liquids or gases.",
+          "similarity": 0.2005680321292801
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AUTO-021",
+      "query": "motorcycle tyre 120/80-17 tubeless radial",
+      "source_file": "session5-automotive",
+      "fix_type": "missing_gt",
+      "current_chapter": "40",
+      "proposed_chapter": "40",
+      "proposed_heading": "4013",
+      "proposed_code": "4013.90.20",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 4013 (sim=0.327). Proposed code 4013.90.20 (sim=0.379). Notes: Exception: Tyres have specific heading 4011 in Ch.40",
+      "candidates": [
+        {
+          "code": "4013",
+          "description": "Inner tubes, of rubber.",
+          "similarity": 0.32683232542890517
+        },
+        {
+          "code": "4011",
+          "description": "New pneumatic tyres, of rubber.",
+          "similarity": 0.3236443908638511
+        },
+        {
+          "code": "4012",
+          "description": "Retreaded or used pneumatic tyres of rubber; solid or cushion tyres, tyre treads and tyre flaps, of rubber.",
+          "similarity": 0.3226044389481044
+        },
+        {
+          "code": "4009",
+          "description": "Tubes, pipes and hoses, of vulcanised rubber other than hard rubber, with or without their fittings (for example, joints, elbows, flanges).",
+          "similarity": 0.2823576674737662
+        },
+        {
+          "code": "4014",
+          "description": "Hygienic or pharmaceutical articles (including teats), of vulcanised rubber other than hard rubber, with or without fittings of hard rubber.",
+          "similarity": 0.2669575492194256
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AUTO-022",
+      "query": "alternator 12V 100A for car engine",
+      "source_file": "session5-automotive",
+      "fix_type": "missing_gt",
+      "current_chapter": "85",
+      "proposed_chapter": "85",
+      "proposed_heading": "8511",
+      "proposed_code": "8502.13.60",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 8511 (sim=0.299). Proposed code 8502.13.60 (sim=0.371). Notes: Electrical generators -> Ch.85 (specific heading 8511)",
+      "candidates": [
+        {
+          "code": "8511",
+          "description": "Electrical ignition or starting equipment of a kind used for spark-ignition or compression-ignition internal combustion engines (for example, ignition magnetos, magneto-dynamos, ignition coils, sparking plugs and glow plugs, starter motors); generators (for example, dynamos, alternators) and cut-outs of a kind used in conjunction with such engines.",
+          "similarity": 0.2993407099456664
+        },
+        {
+          "code": "8502",
+          "description": "Electric generating sets and rotary converters.",
+          "similarity": 0.2606592852073696
+        },
+        {
+          "code": "8535",
+          "description": "Electrical apparatus for switching or protecting electrical circuits, or for making connections to or in electrical circuits (for example, switches, fuses, lightning arresters, voltage limiters, surge suppressors, plugs and other connectors, junction boxes), for a voltage exceeding 1,000 volts.",
+          "similarity": 0.23967415931754144
+        },
+        {
+          "code": "8501",
+          "description": "Electric motors and generators (excluding generating sets).",
+          "similarity": 0.23378606547422842
+        },
+        {
+          "code": "8504",
+          "description": "Electrical transformers, static converters (for example, rectifiers) and inductors.",
+          "similarity": 0.22546895374080134
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AUTO-023",
+      "query": "starter motor 12V for diesel truck",
+      "source_file": "session5-automotive",
+      "fix_type": "missing_gt",
+      "current_chapter": "85",
+      "proposed_chapter": "85",
+      "proposed_heading": "8511",
+      "proposed_code": "8511.40.00",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 8511 (sim=0.317). Proposed code 8511.40.00 (sim=0.386). Notes: Electric motors -> Ch.85 (specific heading 8511)",
+      "candidates": [
+        {
+          "code": "8511",
+          "description": "Electrical ignition or starting equipment of a kind used for spark-ignition or compression-ignition internal combustion engines (for example, ignition magnetos, magneto-dynamos, ignition coils, sparking plugs and glow plugs, starter motors); generators (for example, dynamos, alternators) and cut-outs of a kind used in conjunction with such engines.",
+          "similarity": 0.3167775054904848
+        },
+        {
+          "code": "8501",
+          "description": "Electric motors and generators (excluding generating sets).",
+          "similarity": 0.2885851780030495
+        },
+        {
+          "code": "8502",
+          "description": "Electric generating sets and rotary converters.",
+          "similarity": 0.27498388290405273
+        },
+        {
+          "code": "8509",
+          "description": "Electro-mechanical domestic appliances, with self- contained electric motor, other than vacuum cleaners of heading 85.08.",
+          "similarity": 0.24477416276931763
+        },
+        {
+          "code": "8529",
+          "description": "PARTS SUITABLE FOR USE SOLELY OR PRINCIPALLY WITH THE APPARATUS OF HEADINGS 8524 TO 8528",
+          "similarity": 0.24207080995192576
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AUTO-024",
+      "query": "wiper blade rubber refill for SUV windshield",
+      "source_file": "session5-automotive",
+      "fix_type": "missing_gt",
+      "current_chapter": "87",
+      "proposed_chapter": "87",
+      "proposed_heading": "8714",
+      "proposed_code": "8714.92.90",
+      "confidence": "LOW",
+      "reasoning": "Proposed heading 8714 (sim=0.183). Proposed code 8714.92.90 (sim=0.234). Notes: GIR 2a: rubber -> function (vehicle accessory)",
+      "candidates": [
+        {
+          "code": "8714",
+          "description": "Parts and accessories of vehicles of headings 87.11 to 87.13.",
+          "similarity": 0.18309928078051385
+        },
+        {
+          "code": "8705",
+          "description": "Special purpose motor vehicles, other than those principally designed for the transport of persons or goods (for example, breakdown lorries, crane lorries, fire fighting vehicles, concretemixer lorries, road sweeper lorries, spraying lorries, mobile workshops, mobile radiological units).",
+          "similarity": 0.17848448772312375
+        },
+        {
+          "code": "8716",
+          "description": "Trailers and semi-trailers; other vehicles, not mechanically",
+          "similarity": 0.17676977030600294
+        },
+        {
+          "code": "8708",
+          "description": "Parts and accessories of the motor vehicles of headings 87.01 to 87.05.",
+          "similarity": 0.17236538231373322
+        },
+        {
+          "code": "8711",
+          "description": "Motorcycles (including mopeds) and cycles fitted with an auxiliary motor, with or without side-cars; side-cars.",
+          "similarity": 0.15918555247568444
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-AUTO-025",
+      "query": "timing belt rubber reinforced for Honda engine",
+      "source_file": "session5-automotive",
+      "fix_type": "missing_gt",
+      "current_chapter": "40",
+      "proposed_chapter": "40",
+      "proposed_heading": "4010",
+      "proposed_code": "4010.11.10",
+      "confidence": "HIGH",
+      "reasoning": "Proposed heading 4010 (sim=0.357). Proposed code 4010.11.10 (sim=0.374). Notes: Transmission belts have specific heading 4010 in Ch.40",
+      "candidates": [
+        {
+          "code": "4010",
+          "description": "Conveyor or transmission belts or belting, of vulcanised rubber.",
+          "similarity": 0.35701659321784973
+        },
+        {
+          "code": "4003",
+          "description": "Reclaimed rubber in primary forms or in plates, sheets or strip.",
+          "similarity": 0.2967136590693493
+        },
+        {
+          "code": "4009",
+          "description": "Tubes, pipes and hoses, of vulcanised rubber other than hard rubber, with or without their fittings (for example, joints, elbows, flanges).",
+          "similarity": 0.28583724158517265
+        },
+        {
+          "code": "4011",
+          "description": "New pneumatic tyres, of rubber.",
+          "similarity": 0.27783533930778503
+        },
+        {
+          "code": "4005",
+          "description": "Compounded rubber, unvulcanised, in primary forms or in plates, sheets or strip.",
+          "similarity": 0.277182946708872
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-002",
+      "query": "fresh red apples Shimla variety",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "08",
+      "proposed_chapter": "08",
+      "proposed_heading": "0808",
+      "proposed_code": "0808.10.00",
+      "confidence": "HIGH",
+      "reasoning": "Proposed heading 0808 (sim=0.379). Proposed code 0808.10.00 (sim=0.395). Notes: Fresh fruit Ch.08",
+      "candidates": [
+        {
+          "code": "0808",
+          "description": "Apples, pears and quinces, fresh.",
+          "similarity": 0.37886831571474533
+        },
+        {
+          "code": "0809",
+          "description": "Apricots, cherries, peaches (including nectarines), plums and sloes, fresh.",
+          "similarity": 0.35082861781120545
+        },
+        {
+          "code": "0807",
+          "description": "Melons (including watermelons) and papaws (papayas), fresh.",
+          "similarity": 0.33667874366152994
+        },
+        {
+          "code": "0814",
+          "description": "Peel of citrus fruit or melons (including watermelons), fresh, frozen, dried or provisionally preserved in brine, in sulphur water or in other preservative solutions",
+          "similarity": 0.32757214739489204
+        },
+        {
+          "code": "0810",
+          "description": "Other fruit, fresh.",
+          "similarity": 0.31624504618258165
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-004",
+      "query": "refined white cane sugar crystal",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "17",
+      "proposed_chapter": "17",
+      "proposed_heading": "1701",
+      "proposed_code": "1701.91.00",
+      "confidence": "HIGH",
+      "reasoning": "Proposed heading 1701 (sim=0.483). Proposed code 1701.91.00 (sim=0.508). Notes: Sugar Ch.17",
+      "candidates": [
+        {
+          "code": "1701",
+          "description": "Cane or beet sugar and chemically pure sucrose, in solid form.",
+          "similarity": 0.4826003046154439
+        },
+        {
+          "code": "1702",
+          "description": "Other sugars, including chemically pure lactose, maltose, glucose and fructose, in solid form; sugar syrups not containing added flavouring or colouring matter; artificial honey, whether or not mixed with natural honey; caramel.",
+          "similarity": 0.4434147179126866
+        },
+        {
+          "code": "1703",
+          "description": "Molasses resulting from the extraction or refining of sugar.",
+          "similarity": 0.4412669109920684
+        },
+        {
+          "code": "1704",
+          "description": "Sugar confectionery (including white chocolate), not containing cocoa.",
+          "similarity": 0.4357909973041427
+        },
+        {
+          "code": "1701.91.00",
+          "description": "Other:--Refined sugar containing added flavoring",
+          "similarity": 0.5081663415134543
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-005",
+      "query": "wheat flour all purpose maida",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "11",
+      "proposed_chapter": "11",
+      "proposed_heading": "1101",
+      "proposed_code": "1101.00.00",
+      "confidence": "HIGH",
+      "reasoning": "Proposed heading 1101 (sim=0.398). Proposed code 1101.00.00 (sim=0.409). Notes: Flour from cereals Ch.11",
+      "candidates": [
+        {
+          "code": "1101",
+          "description": "Wheat or meslin flour.",
+          "similarity": 0.39787616140020277
+        },
+        {
+          "code": "1102",
+          "description": "CEREAL FLOURS OTHER THAN THAT OF WHEAT OR MESLIN",
+          "similarity": 0.3674818623838232
+        },
+        {
+          "code": "1109",
+          "description": "Wheat gluten, whether or not dried",
+          "similarity": 0.348197699922119
+        },
+        {
+          "code": "1104",
+          "description": "Cereal grains otherwise worked (for example, hulled, rolled, flaked, pearled, sliced or kibbled), except rice of heading 10.06; germ of cereals, whole, rolled, flaked or ground.",
+          "similarity": 0.31940929880876834
+        },
+        {
+          "code": "1105",
+          "description": "Flour, meal, powder, flakes, granules and pellets of potatoes.",
+          "similarity": 0.3128578346542581
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-009",
+      "query": "fresh raw prawns shrimp frozen",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "03",
+      "proposed_chapter": "03",
+      "proposed_heading": "0304",
+      "proposed_code": "0306.17.50",
+      "confidence": "HIGH",
+      "reasoning": "Proposed heading 0304 (sim=0.368). Proposed code 0306.17.50 (sim=0.456). Notes: Crustaceans Ch.03",
+      "candidates": [
+        {
+          "code": "0304",
+          "description": "Fish fillets and other fish meat (whether or not minced), fresh, chilled or frozen.",
+          "similarity": 0.368042171001437
+        },
+        {
+          "code": "0306",
+          "description": "CRUSTACEANS, WHETHER IN SHELL OR NOT, LIVE, FRESH, CHILLED, FROZEN, DRIED, SALTED OR IN BRINE; SMOKED CRUSTACEANS, WHETHER IN SHELL OR NOT, WHETHER OR NOT COOKED BEFORE OR DURING THE SMOKING PROCESS; CRUSTACEANS, IN SHELL, COOKED BY STEAMING OR BY BOILING IN WATER, WHETHER OR NOT CHILLED, FROZEN, DRIED, SALTED OR INBRINE",
+          "similarity": 0.33423591648126205
+        },
+        {
+          "code": "0302",
+          "description": "Fish, fresh or chilled, excluding fish fillets and other fish meat of heading 03.04.",
+          "similarity": 0.3249721229076409
+        },
+        {
+          "code": "0308",
+          "description": "AQUATIC INVERTEBRATES OTHER THAN CRUSTACEANS AND MOLLUSCS, LIVE, FRESH, CHILLED, FROZEN, DRIED, SALTED OR IN BRINE; SMOKED AQUATIC INVERTEBRATES OTHER THAN CRUSTACEANS AND MOLLUSCS, WHETHER OR NOT COOKED BEFORE OR DURING THE SMOKING PROCESS",
+          "similarity": 0.3087509962544177
+        },
+        {
+          "code": "0307",
+          "description": "MOLLUSCS, WHETHER IN SHELL OR NOT, LIVE, FRESH, CHILLED, FROZEN, DRIED, SALTED OR IN BRINE; SMOKED MOLLUSCS, WHETHER IN SHELL OR NOT, WHETHER OR NOT COOKED BEFORE OR DURING THE SMOKING PROCESS",
+          "similarity": 0.2967507839202902
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-010",
+      "query": "milk chocolate bar with almonds",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "18",
+      "proposed_chapter": "18",
+      "proposed_heading": "1806",
+      "proposed_code": "1806.31.00",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 1806 (sim=0.340). Proposed code 1806.31.00 (sim=0.400). Notes: Chocolate products Ch.18",
+      "candidates": [
+        {
+          "code": "1806",
+          "description": "Chocolate and other food preparations containing cocoa.",
+          "similarity": 0.34046941995621693
+        },
+        {
+          "code": "1801",
+          "description": "Cocoa beans, whole or broken, raw or roasted",
+          "similarity": 0.3239819583849808
+        },
+        {
+          "code": "1803",
+          "description": "Cocoa paste, whether or not defatted.",
+          "similarity": 0.31893885135651545
+        },
+        {
+          "code": "1804",
+          "description": "Cocoa butter, fat and oil",
+          "similarity": 0.2954266423495602
+        },
+        {
+          "code": "1805",
+          "description": "Cocoa powder, not containing added sugar or other sweetening matter",
+          "similarity": 0.2867413250783265
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-014",
+      "query": "cotton bed sheet queen size white",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "63",
+      "proposed_chapter": "63",
+      "proposed_heading": "6302",
+      "proposed_code": "6302.10.10",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 6302 (sim=0.271). Proposed code 6302.10.10 (sim=0.340). Notes: Bed linen Ch.63",
+      "candidates": [
+        {
+          "code": "6302",
+          "description": "Bed linen, table linen, toilet linen and kitchen linen.",
+          "similarity": 0.27128087111001487
+        },
+        {
+          "code": "6303",
+          "description": "Curtains (including drapes) and interior blinds; curtain or bed valances.",
+          "similarity": 0.2168163657188431
+        },
+        {
+          "code": "6308",
+          "description": "Sets consisting of woven fabric and yarn, whether or not with accessories, for making up into rugs, tapestries, embroidered table cloths or serviettes, or similar textile articles, put up in packings for retail sale.",
+          "similarity": 0.21321369488320951
+        },
+        {
+          "code": "6301",
+          "description": "Blankets and travelling rugs",
+          "similarity": 0.2090169960846341
+        },
+        {
+          "code": "6306",
+          "description": "TARPAULINS, AWNINGS ANDSUNBLINDS; TENTS (INCLUDING TEMPORARY CANOPIES AND SIMILAR ARTICLES); SAILS FOR BOATS, SAILBOARDS OR LANDCRAFT; CAMPING GOODS",
+          "similarity": 0.17919717841123162
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-015",
+      "query": "bath towel cotton terry cloth blue",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "63",
+      "proposed_chapter": "63",
+      "proposed_heading": "6301",
+      "proposed_code": "6301.30.00",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 6301 (sim=0.270). Proposed code 6301.30.00 (sim=0.324). Notes: Towels Ch.63",
+      "candidates": [
+        {
+          "code": "6301",
+          "description": "Blankets and travelling rugs",
+          "similarity": 0.2704304295521762
+        },
+        {
+          "code": "6302",
+          "description": "Bed linen, table linen, toilet linen and kitchen linen.",
+          "similarity": 0.26796205448878185
+        },
+        {
+          "code": "6308",
+          "description": "Sets consisting of woven fabric and yarn, whether or not with accessories, for making up into rugs, tapestries, embroidered table cloths or serviettes, or similar textile articles, put up in packings for retail sale.",
+          "similarity": 0.25084944074448634
+        },
+        {
+          "code": "6303",
+          "description": "Curtains (including drapes) and interior blinds; curtain or bed valances.",
+          "similarity": 0.22664551436901248
+        },
+        {
+          "code": "6306",
+          "description": "TARPAULINS, AWNINGS ANDSUNBLINDS; TENTS (INCLUDING TEMPORARY CANOPIES AND SIMILAR ARTICLES); SAILS FOR BOATS, SAILBOARDS OR LANDCRAFT; CAMPING GOODS",
+          "similarity": 0.22592898243030757
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-017",
+      "query": "polyester curtains printed home decor",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "63",
+      "proposed_chapter": "63",
+      "proposed_heading": "6303",
+      "proposed_code": "6303.99.10",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 6303 (sim=0.277). Proposed code 6303.99.10 (sim=0.306). Notes: Curtains Ch.63",
+      "candidates": [
+        {
+          "code": "6303",
+          "description": "Curtains (including drapes) and interior blinds; curtain or bed valances.",
+          "similarity": 0.2769067718442224
+        },
+        {
+          "code": "6308",
+          "description": "Sets consisting of woven fabric and yarn, whether or not with accessories, for making up into rugs, tapestries, embroidered table cloths or serviettes, or similar textile articles, put up in packings for retail sale.",
+          "similarity": 0.22910594940185547
+        },
+        {
+          "code": "6302",
+          "description": "Bed linen, table linen, toilet linen and kitchen linen.",
+          "similarity": 0.21231788396835327
+        },
+        {
+          "code": "6304",
+          "description": "Other furnishing articles, excluding those of heading 94.04.",
+          "similarity": 0.19628025535945148
+        },
+        {
+          "code": "6306",
+          "description": "TARPAULINS, AWNINGS ANDSUNBLINDS; TENTS (INCLUDING TEMPORARY CANOPIES AND SIMILAR ARTICLES); SAILS FOR BOATS, SAILBOARDS OR LANDCRAFT; CAMPING GOODS",
+          "similarity": 0.187819158667897
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-019",
+      "query": "laptop computer 15 inch Windows Intel i5",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "84",
+      "proposed_chapter": "84",
+      "proposed_heading": "8458",
+      "proposed_code": "8471.30.10",
+      "confidence": "LOW",
+      "reasoning": "Proposed heading 8458 (sim=0.161). Proposed code 8471.30.10 (sim=0.232). Notes: Computers Ch.84",
+      "candidates": [
+        {
+          "code": "8458",
+          "description": "Lathes (including turning centres) for removing metal.",
+          "similarity": 0.1614396283436489
+        },
+        {
+          "code": "8470",
+          "description": "Calculating machines and pocket-size data recording, reproducing and displaying machines with calculating functions; accounting machines, postage-franking machines, ticket-issuing machines and similar machines, incorporating a calculating device; cash registers.",
+          "similarity": 0.1558025200720098
+        },
+        {
+          "code": "8472",
+          "description": "Other office machines (for example, hectograph or stencil duplicating machines, addressing machines, automatic banknote dispensers, coin-sorting machines, coin- counting or wrapping machines, pencil- sharpening machines, perforating or stapling machines).",
+          "similarity": 0.15048514306545369
+        },
+        {
+          "code": "8457",
+          "description": "Machining centres, unit construction machines (single station) and multi-station transfer machines, for working metal.",
+          "similarity": 0.14513952790027518
+        },
+        {
+          "code": "8486",
+          "description": "MACHINES AND APPARATUS OF A KIND USED SOLELY SEMICONDUCTOR BOULES OR WAFERS, SEMICONDUCTOR DEVICES, ELECTRONIC INTEGRATED CIRCUITS OR FLAT PANEL DISPLAYS; MACHINES AND APPARATUS SPECIFIED IN NOTE 11(C) TO THIS CHAPTER; PARTS AND ACCESSORIES",
+          "similarity": 0.1445566031601072
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-020",
+      "query": "smartphone Android 6 inch display 5G",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "85",
+      "proposed_chapter": "85",
+      "proposed_heading": "8517",
+      "proposed_code": "8517.13.00",
+      "confidence": "LOW",
+      "reasoning": "Proposed heading 8517 (sim=0.197). Proposed code 8517.13.00 (sim=0.250). Notes: Telephones Ch.85",
+      "candidates": [
+        {
+          "code": "8517",
+          "description": "TELEPHONE SETS, SMARTPHONES AND OTHER TELEPHONES FOR CELLULAR NETWORKS OR FOR OTHER WIRELESS N ETWO R KS : O THE R APPARAT US F OR THE TRANSMISSION OR RECEPTION OF VICE, IMAGES OR O T HE R D ATA , IN CL U DI NG A P PA RAT US FOR COMMUNICATION IN A WIRED OR WIRELESS NETWORK (SUCH AS A LOCAL OR WIDE AREA NETWORK), OTHER THAN TRANSMISSION OR RECEPTION APPARATUS OF HEADING 8443, 8525, 8527 OR",
+          "similarity": 0.1974640190601349
+        },
+        {
+          "code": "8524",
+          "description": "FLAT PANEL DISPLAY MODULES, WHETHER OR NOT INCORPORATING TOUCH-SENSITIVE SCREENS",
+          "similarity": 0.16185513095752646
+        },
+        {
+          "code": "8541",
+          "description": "SEMICONDUCTOR DEVICES (FOR EXAMPLE, DIODES, TRANSISTORS, SEMICONDUCTOR- BASED TRANSDUCERS); PHOTOSENSITIVE SEMICONDUCTOR, DEVICES, INCLUDING PHOTOVOLTAIC CELLS WHETHER OR NOT ASSEMBLED IN MODULES OR MADE UP INTO PANELS; LIGHT-EMITTING DIODES (LED), WHETHER OR NOT ASSEMBLED WITH OTHER LIGHT-EMITTING DIODES (LED); MOUNTED PIEZO-ELECTRIC CRYSTALS",
+          "similarity": 0.12483244760326628
+        },
+        {
+          "code": "8518",
+          "description": "Microphones and stands therefor; loudspeakers, whether or not mounted in their enclosures; headphones and earphones, whether or not combined with a microphone, and sets consisting of a microphone and one or more loudspeakers; audiofrequency electric amplifiers; electric sound amplifier sets.",
+          "similarity": 0.0999639481306076
+        },
+        {
+          "code": "8506",
+          "description": "Primary cells and primary batteries.",
+          "similarity": 0.09290011609791393
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-021",
+      "query": "LED television 55 inch smart TV 4K",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "85",
+      "proposed_chapter": "85",
+      "proposed_heading": "8524",
+      "proposed_code": "8524.92.90",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 8524 (sim=0.264). Proposed code 8524.92.90 (sim=0.288). Notes: Televisions Ch.85",
+      "candidates": [
+        {
+          "code": "8524",
+          "description": "FLAT PANEL DISPLAY MODULES, WHETHER OR NOT INCORPORATING TOUCH-SENSITIVE SCREENS",
+          "similarity": 0.2637620506073888
+        },
+        {
+          "code": "8539",
+          "description": "ELECTRIC FILAMENT OR DISCHARGE LAMPS INCLUDING SEALED BEAM LAMP UNITS AND ULTRAVIOLET OR INFRA-RED LAMPS, ARC- LAMPS; LIGHTEMITTING DIODE (LED) LIGHT SOURCES",
+          "similarity": 0.21921117787294553
+        },
+        {
+          "code": "8528",
+          "description": "Monitors and projectors, not incorporating television reception apparatus; reception apparatus for television, whether or not incorporating radio-broadcast receivers or sound or video recording or reproducing apparatus.",
+          "similarity": 0.20925335586071014
+        },
+        {
+          "code": "8521",
+          "description": "Video recording or reproducing apparatus, whether or not incorporating a video tuner.",
+          "similarity": 0.1980542568612933
+        },
+        {
+          "code": "8525",
+          "description": "Transmission apparatus for radio-broadcasting or television, whether or not incorporating reception apparatus or sound recording or reproducing apparatus; television cameras, digital cameras and video camera recorders.",
+          "similarity": 0.1940631303749606
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-022",
+      "query": "double door refrigerator frost free 300L",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "84",
+      "proposed_chapter": "84",
+      "proposed_heading": "8418",
+      "proposed_code": "8418.30.90",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 8418 (sim=0.265). Proposed code 8418.30.90 (sim=0.321). Notes: Refrigerators Ch.84",
+      "candidates": [
+        {
+          "code": "8418",
+          "description": "Refrigerators, freezers and other refrigerating or freezing conditioning machines of heading 84.15.",
+          "similarity": 0.2652966580843088
+        },
+        {
+          "code": "8415",
+          "description": "Air conditioning machines, comprising a motor- driven fan and elements for changing the temperature and humidity, including those machines in which the humidity cannot be separately regulated.",
+          "similarity": 0.17565448864591893
+        },
+        {
+          "code": "8422",
+          "description": "Dish washing machines; machinery for cleaning or drying bottles or other containers; machinery for filling, closing, sealing or labelling bottles, cans, boxes, bags or other containers; machinery for capsuling bottles, jars, tubes and similar containers; other packing or wrapping machinery (including heat-shrink wrapping machinery); machinery for aerating beverages.",
+          "similarity": 0.1601098441848542
+        },
+        {
+          "code": "8436",
+          "description": "Other agricultural, horticultural, forestry, poultry-keeping or bee-keeping machinery, including germination plant fitted with mechanical or thermal equipment; poultry incubators and brooders.",
+          "similarity": 0.14865971255551236
+        },
+        {
+          "code": "8435",
+          "description": "Presses, crushers and similar machinery used in the manufacture of wine, cider, fruit juices or similar beverages.",
+          "similarity": 0.1448137391279687
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-023",
+      "query": "front load washing machine automatic 7kg",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "84",
+      "proposed_chapter": "84",
+      "proposed_heading": "8450",
+      "proposed_code": "8450.11.00",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 8450 (sim=0.332). Proposed code 8450.11.00 (sim=0.403). Notes: Washing machines Ch.84",
+      "candidates": [
+        {
+          "code": "8450",
+          "description": "Household or laundry-type washing machines, including machines which both wash and dry.",
+          "similarity": 0.33207028114586956
+        },
+        {
+          "code": "8451",
+          "description": "Machinery (other than machines of heading 84.50) for washing, cleaning, wringing, drying, ironing, pressing (including fusing presses), bleaching, dyeing, dressing, finishing, coating or impregnating textile yarns, fabrics or made up textile articles and machines for applying the paste to the base fabric or other support used in the manufacture of floor coverings such as linoleum; machines for reeling, unreeling, folding, cutting or pinking textile fabrics.",
+          "similarity": 0.26331369816905825
+        },
+        {
+          "code": "8422",
+          "description": "Dish washing machines; machinery for cleaning or drying bottles or other containers; machinery for filling, closing, sealing or labelling bottles, cans, boxes, bags or other containers; machinery for capsuling bottles, jars, tubes and similar containers; other packing or wrapping machinery (including heat-shrink wrapping machinery); machinery for aerating beverages.",
+          "similarity": 0.26145467298682656
+        },
+        {
+          "code": "8423",
+          "description": "Weighing machinery (excluding balances of a sensitivity of 5 cg or better), including weight operated counting or checking machines; weighing machine weights of all kinds.",
+          "similarity": 0.25063454373007454
+        },
+        {
+          "code": "8476",
+          "description": "Automatic goods-vending machines (for example, postage stamp, cigarette, food or beverage machines), including moneychanging machines.",
+          "similarity": 0.239787771080467
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-024",
+      "query": "microwave oven convection 25 liter stainless",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "85",
+      "proposed_chapter": "85",
+      "proposed_heading": "8514",
+      "proposed_code": "8514.11.00",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 8514 (sim=0.246). Proposed code 8514.11.00 (sim=0.272). Notes: Microwave ovens Ch.85",
+      "candidates": [
+        {
+          "code": "8514",
+          "description": "Industrial or laboratory electric furnaces and ovens (including those functioning by induction or dielectric loss); other industrial or laboratory equipment for the heat treatment of materials by induction or dielectric loss.",
+          "similarity": 0.24587298929692014
+        },
+        {
+          "code": "8516",
+          "description": "Electric instantaneous or storage water heaters and immersion heaters; electric space heating apparatus and soil heating apparatus; electro- thermic hair-dressing apparatus (for example, hair dryers, hair curlers, curling tong heaters) and hand dryers; electric smoothing irons; other electro- thermic appliances of a kind used for domestic purposes; electric heating resistors, other than those of heading 85.45.",
+          "similarity": 0.20270335674286466
+        },
+        {
+          "code": "8540",
+          "description": "Thermionic, cold cathode or photo-cathode valves and tubes (for example, vacuum or vapour or gas filled valves and tubes, mercury arc rectifying valves and tubes, cathode-ray tubes, television camera tubes).",
+          "similarity": 0.18965714450563853
+        },
+        {
+          "code": "8518",
+          "description": "Microphones and stands therefor; loudspeakers, whether or not mounted in their enclosures; headphones and earphones, whether or not combined with a microphone, and sets consisting of a microphone and one or more loudspeakers; audiofrequency electric amplifiers; electric sound amplifier sets.",
+          "similarity": 0.18906619418456616
+        },
+        {
+          "code": "8515",
+          "description": "Electric (including electrically heated gas), laser or other light or photon beam, ultrasonic, electron beam, magnetic pulse or plasma arc soldering, brazing or welding machines and apparatus, whether or not capable of cutting; electric machines and apparatus for hot spraying of metals or cermets.",
+          "similarity": 0.1818075098761941
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-025",
+      "query": "split air conditioner 1.5 ton inverter",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "84",
+      "proposed_chapter": "84",
+      "proposed_heading": "8415",
+      "proposed_code": "8415.81.10",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 8415 (sim=0.278). Proposed code 8415.81.10 (sim=0.372). Notes: Air conditioners Ch.84",
+      "candidates": [
+        {
+          "code": "8415",
+          "description": "Air conditioning machines, comprising a motor- driven fan and elements for changing the temperature and humidity, including those machines in which the humidity cannot be separately regulated.",
+          "similarity": 0.27770316103427173
+        },
+        {
+          "code": "8418",
+          "description": "Refrigerators, freezers and other refrigerating or freezing conditioning machines of heading 84.15.",
+          "similarity": 0.21939552773157256
+        },
+        {
+          "code": "8414",
+          "description": "AIR OR VACUUM PUMPS, AIR OR OTHER GAS COMPRESSORS AND FANS; VENTILATING OR RECYCLING HOODS INCORPORATING A FAN, WHETHER OR NOT FITTED WITH FILTERS; GAS-TIGHT BIOLOGICAL SAFETY CABINETS, WHETHER OR NOT FITTED WITH FILTERS",
+          "similarity": 0.19202210235793393
+        },
+        {
+          "code": "8405",
+          "description": "Producer gas or water gas generators, with or without their purifiers; acetylene gas generators and similar water process gas generators, with or without their purifiers.",
+          "similarity": 0.1909609664632046
+        },
+        {
+          "code": "8404",
+          "description": "Auxiliary plant for use with boilers of heading 84.02 or 84.03 (for example, economisers, super-heaters, soot removers, gas recoverers); condensers for steam or other vapour power units.",
+          "similarity": 0.18106906244776289
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-029",
+      "query": "gold necklace 22 karat hallmarked jewelry",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "71",
+      "proposed_chapter": "71",
+      "proposed_heading": "7108",
+      "proposed_code": "7108.12.10",
+      "confidence": "HIGH",
+      "reasoning": "Proposed heading 7108 (sim=0.423). Proposed code 7108.12.10 (sim=0.434). Notes: Jewelry Ch.71",
+      "candidates": [
+        {
+          "code": "7108",
+          "description": "Gold (including gold plated with platinum) unwrought or in semi-manufactured forms, or in powder form.",
+          "similarity": 0.42311969857694587
+        },
+        {
+          "code": "7114",
+          "description": "Articles of goldsmiths or silversmiths wares and parts thereof, of precious metal or of metal clad with precious metal.",
+          "similarity": 0.38383508872494376
+        },
+        {
+          "code": "7102",
+          "description": "Diamonds, whether or not worked, but not mounted or set.",
+          "similarity": 0.37620046734809875
+        },
+        {
+          "code": "7106",
+          "description": "Silver (including silver plated with gold or platinum), unwrought or in semi-manufactured forms, or in powder form.",
+          "similarity": 0.37581144282954515
+        },
+        {
+          "code": "7115",
+          "description": "Other articles of precious metal or of metal clad with precious metal",
+          "similarity": 0.37390096498716563
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-032",
+      "query": "plastic bucket 20 liter with handle",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "39",
+      "proposed_chapter": "39",
+      "proposed_heading": "3924",
+      "proposed_code": "3925.10.00",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 3924 (sim=0.286). Proposed code 3925.10.00 (sim=0.351). Notes: Plastic household articles Ch.39",
+      "candidates": [
+        {
+          "code": "3924",
+          "description": "Tableware, kitchenware, other household articles and hygienic or toilet articles, of plastics.",
+          "similarity": 0.2856616888852861
+        },
+        {
+          "code": "3923",
+          "description": "Articles for the conveyance or packing of goods, of plastics; stoppers, lids, caps and other closures, of plastics.",
+          "similarity": 0.280519953950651
+        },
+        {
+          "code": "3922",
+          "description": "Baths, shower-baths, sinks, wash-basins, bidets, lavatory pans, seats and covers, flushing cisterns and similar sanitary ware, of plastics.",
+          "similarity": 0.2723804983639142
+        },
+        {
+          "code": "3925",
+          "description": "Builders ware of plastics, not elsewhere specified or included.",
+          "similarity": 0.2525655997485905
+        },
+        {
+          "code": "3917",
+          "description": "Tubes, pipes and hoses, and fittings therefor (for example, joints, elbows, flanges), of plastics.",
+          "similarity": 0.2439725406202643
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-033",
+      "query": "rubber gloves industrial heavy duty latex",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "40",
+      "proposed_chapter": "40",
+      "proposed_heading": "4015",
+      "proposed_code": "4015.90.30",
+      "confidence": "HIGH",
+      "reasoning": "Proposed heading 4015 (sim=0.419). Proposed code 4015.90.30 (sim=0.489). Notes: Rubber articles Ch.40",
+      "candidates": [
+        {
+          "code": "4015",
+          "description": "Articles of apparel and clothing accessories (including gloves, mittens and mitts), for all purposes, of vulcanised rubber other than hard rubber.",
+          "similarity": 0.41874013393883325
+        },
+        {
+          "code": "4016",
+          "description": "Other articles of vulcanised rubber other than hard rubber.",
+          "similarity": 0.38323256569686204
+        },
+        {
+          "code": "4017",
+          "description": "Hard rubber (for example, ebonite) in all forms, including waste and scrap; articles of hard rubber.",
+          "similarity": 0.3825311494702287
+        },
+        {
+          "code": "4014",
+          "description": "Hygienic or pharmaceutical articles (including teats), of vulcanised rubber other than hard rubber, with or without fittings of hard rubber.",
+          "similarity": 0.3812981560941223
+        },
+        {
+          "code": "4005",
+          "description": "Compounded rubber, unvulcanised, in primary forms or in plates, sheets or strip.",
+          "similarity": 0.3761467561809603
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-034",
+      "query": "polyethylene shopping bags carry bags",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "39",
+      "proposed_chapter": "39",
+      "proposed_heading": "3923",
+      "proposed_code": "3923.21.00",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 3923 (sim=0.270). Proposed code 3923.21.00 (sim=0.377). Notes: Plastic bags Ch.39",
+      "candidates": [
+        {
+          "code": "3923",
+          "description": "Articles for the conveyance or packing of goods, of plastics; stoppers, lids, caps and other closures, of plastics.",
+          "similarity": 0.26954685838381465
+        },
+        {
+          "code": "3902",
+          "description": "Polymers of propylene or of other olefins, in primary forms.",
+          "similarity": 0.26931032308217207
+        },
+        {
+          "code": "3907",
+          "description": "Polyacetals, other polyethers and epoxide resins, in primary forms; polycarbonates, alkyd resins, polyallyl esters and other polyesters, in primary forms.",
+          "similarity": 0.2569556014822696
+        },
+        {
+          "code": "3908",
+          "description": "Polyamides in primary forms.",
+          "similarity": 0.25274816122673194
+        },
+        {
+          "code": "3914",
+          "description": "Ion-exchangers based on polymers of headings 39.01 to 39.13, in primary forms.",
+          "similarity": 0.241644189757803
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-036",
+      "query": "wooden dining table teak 6 seater",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "94",
+      "proposed_chapter": "94",
+      "proposed_heading": "9401",
+      "proposed_code": "9401.41.00",
+      "confidence": "LOW",
+      "reasoning": "Proposed heading 9401 (sim=0.214). Proposed code 9401.41.00 (sim=0.275). Notes: Furniture Ch.94",
+      "candidates": [
+        {
+          "code": "9401",
+          "description": "Seats (other than those of heading 9402), whether or not convertible into beds, and parts thereof.",
+          "similarity": 0.21424035727031998
+        },
+        {
+          "code": "9402",
+          "description": "Medical, surgical, dental or veterinary furniture (for example, operating tables, examination tables, hospital beds with mechanical fittings, dentists chairs); barbers chairs and similar chairs, having rotating as well as both reclining and elevating movements; parts of the foregoing articles.",
+          "similarity": 0.19473939224300962
+        },
+        {
+          "code": "9403",
+          "description": "Other furniture and parts thereof.",
+          "similarity": 0.1856892721971226
+        },
+        {
+          "code": "9406",
+          "description": "Prefabricated buildings.",
+          "similarity": 0.1833723594768265
+        },
+        {
+          "code": "9405",
+          "description": "LUMINAIRES AND LIGHTING FITTINGS INCLUDING SEARCHLIGHTS AND SPOTLIGHTS AND PARTS THEREOF, NOT ELSEWHERE SPECIFIED OR INCLUDED; ILLUMINATED SIGNS, ILLUMINATED NAME-PLATES AND THE LIKE, HAVING A PERMANENTLY FIXED LIGHT SOURCE, AND PARTS THEREOF NOT ELSEWHERE SPECIFIED OR INCLUDED",
+          "similarity": 0.14285341756662262
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-037",
+      "query": "ballpoint pen blue ink plastic body",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "96",
+      "proposed_chapter": "96",
+      "proposed_heading": "9608",
+      "proposed_code": "9608.10.11",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 9608 (sim=0.332). Proposed code 9608.10.11 (sim=0.412). Notes: Writing instruments Ch.96",
+      "candidates": [
+        {
+          "code": "9608",
+          "description": "Ball point pens; felt tipped and other porous- tipped pens and markers; fountain pens, stylograph pens and other pens; duplicating stylos; propelling or sliding pencils; pen- holders, pencil-holders and similar holders; parts (including caps and clips) of the foregoing articles, other than those of heading 9609.",
+          "similarity": 0.3319452900853932
+        },
+        {
+          "code": "9612",
+          "description": "Typewriter or similar ribbons, inked or otherwise prepared for giving impressions, whether or not on spools or in cartridges; ink- pads, whether or not inked, with or without boxes.",
+          "similarity": 0.2590638995170593
+        },
+        {
+          "code": "9611",
+          "description": "Date, sealing or numbering stamps, and the like (including devices for printing or embossing labels), designed for operating in the hand; hand-operated composing sticks and hand printing sets incorporating such composing sticks.",
+          "similarity": 0.2211850749739963
+        },
+        {
+          "code": "9609",
+          "description": "Pencils (other than pencils of heading 96.08), crayons, pencil leads, pastels, drawing charcoals, writing or drawing chalks and tailors chalks.",
+          "similarity": 0.19636993429840044
+        },
+        {
+          "code": "9617",
+          "description": "Vacuum flasks and other vacuum vessels, complete with cases; parts thereof other than glass inners.",
+          "similarity": 0.17358910643892278
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-038",
+      "query": "umbrella folding automatic rain protection",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "66",
+      "proposed_chapter": "66",
+      "proposed_heading": "6601",
+      "proposed_code": "6601.10.00",
+      "confidence": "HIGH",
+      "reasoning": "Proposed heading 6601 (sim=0.350). Proposed code 6601.10.00 (sim=0.355). Notes: Umbrellas Ch.66",
+      "candidates": [
+        {
+          "code": "6601",
+          "description": "Umbrellas and sun umbrellas (including walking-stick umbrellas, garden umbrellas and similar umbrellas).",
+          "similarity": 0.3504361986593989
+        },
+        {
+          "code": "6602",
+          "description": "Walking-sticks, seat-sticks, whips, riding-crops and the like.",
+          "similarity": 0.2735980316160941
+        },
+        {
+          "code": "6603",
+          "description": "Parts, trimmings and accessories of articles of heading 66.01 or 66.02.",
+          "similarity": 0.27344053983688354
+        },
+        {
+          "code": "6601.10.00",
+          "description": "Garden or similar umbrellas",
+          "similarity": 0.35505199432373047
+        },
+        {
+          "code": "6601.91.00",
+          "description": "Other : -- Having a telescopic shaft",
+          "similarity": 0.3388150940206869
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-039",
+      "query": "wristwatch quartz analog stainless steel",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "91",
+      "proposed_chapter": "91",
+      "proposed_heading": "9101",
+      "proposed_code": "9101.21.00",
+      "confidence": "HIGH",
+      "reasoning": "Proposed heading 9101 (sim=0.414). Proposed code 9101.21.00 (sim=0.425). Notes: Watches Ch.91",
+      "candidates": [
+        {
+          "code": "9101",
+          "description": "Wrist-watches, pocket-watches and other watches, including stop-watches, with case of precious metal or of metal clad with precious metal.",
+          "similarity": 0.413852652584874
+        },
+        {
+          "code": "9102",
+          "description": "Wrist-watches, pocket-watches and other watches, including stop-watches, other than those of heading 9101",
+          "similarity": 0.384184844244436
+        },
+        {
+          "code": "9113",
+          "description": "Watch straps, watch bands and watch bracelets, and parts thereof.",
+          "similarity": 0.36416548748839195
+        },
+        {
+          "code": "9108",
+          "description": "Watch movements, complete and assembled.",
+          "similarity": 0.3496914268275674
+        },
+        {
+          "code": "9111",
+          "description": "Watch cases and parts thereof.",
+          "similarity": 0.3449847985817711
+        }
+      ],
+      "code_exists_in_db": true
+    },
+    {
+      "case_id": "S5-SIMP-040",
+      "query": "acoustic guitar wooden 6 string classical",
+      "source_file": "session5-simple",
+      "fix_type": "missing_gt",
+      "current_chapter": "92",
+      "proposed_chapter": "92",
+      "proposed_heading": "9202",
+      "proposed_code": "9202.10.00",
+      "confidence": "MEDIUM",
+      "reasoning": "Proposed heading 9202 (sim=0.309). Proposed code 9202.10.00 (sim=0.316). Notes: Musical instruments Ch.92",
+      "candidates": [
+        {
+          "code": "9202",
+          "description": "Other string musical instruments (for example, guitars, violins, harps).",
+          "similarity": 0.3089683695492089
+        },
+        {
+          "code": "9207",
+          "description": "Musical instruments, the sound of which is produced, or must be amplified, electrically (for example, organs, guitars, accordions).",
+          "similarity": 0.28936825458001036
+        },
+        {
+          "code": "9208",
+          "description": "Musical boxes, fairground organs, mechanical street organs, mechanical singing birds, musical saws and other musical instruments not falling within any other heading of this Chapter; decoy calls of all kinds; whistles, call horns and other mouthblown sound signalling instruments.",
+          "similarity": 0.27067860714452374
+        },
+        {
+          "code": "9201",
+          "description": "Pianos, including automatic pianos; harpsichords and other keyboard stringed instruments.",
+          "similarity": 0.26969115318709136
+        },
+        {
+          "code": "9205",
+          "description": "Wind musical instruments (for example, keyboard pipe organs, accordions, clarinets, trumpets, bagpipes), other than fairground organs and mechanical street organs.",
+          "similarity": 0.2696340060670388
+        }
+      ],
+      "code_exists_in_db": true
+    }
+  ]
+}

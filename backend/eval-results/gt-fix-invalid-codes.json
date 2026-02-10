@@ -1,0 +1,2661 @@
+{
+  "metadata": {
+    "script": "fix-invalid-codes.ts",
+    "timestamp": "2026-02-10T10:55:55.281Z",
+    "total_cases_analyzed": 296,
+    "proposals_generated": 63,
+    "by_confidence": {
+      "HIGH": 0,
+      "MEDIUM": 63,
+      "LOW": 0
+    }
+  },
+  "proposals": [
+    {
+      "case_id": "TC005",
+      "query": "plastic bumper for Toyota Innova",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "87",
+      "current_heading": "8708",
+      "current_code": "8708.10.00",
+      "proposed_chapter": "87",
+      "proposed_heading": "8708",
+      "proposed_code": "8708.10.90",
+      "confidence": "MEDIUM",
+      "reasoning": "16 candidates in heading 8708. Recommending 8708.10.90 (sim=0.300). Original 8708.10.00 not in DB.",
+      "candidates": [
+        {
+          "code": "8708.10.90",
+          "description": "Other",
+          "similarity": 0.30011950728428194
+        },
+        {
+          "code": "8708.10.10",
+          "description": "For tractors",
+          "similarity": 0.28478445773495253
+        },
+        {
+          "code": "8704.10.10",
+          "description": "With net weight (excluding pay-load) exceeding 8 tonnes and maximum pay-load capacity not less than 10 tonnes",
+          "similarity": 0.23457883666066248
+        },
+        {
+          "code": "8704.10.90",
+          "description": "Other",
+          "similarity": 0.23293268680573176
+        },
+        {
+          "code": "8708.95.00",
+          "description": "Other parts and accessories : -- Safety airbags with inflater system; parts thereof",
+          "similarity": 0.2324518284259064
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC010",
+      "query": "windscreen wiper motor 12V automotive",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "85",
+      "current_heading": "8501",
+      "current_code": "8501.10.00",
+      "proposed_chapter": "85",
+      "proposed_heading": "8501",
+      "proposed_code": "8501.10.13",
+      "confidence": "MEDIUM",
+      "reasoning": "46 candidates in heading 8501. Recommending 8501.10.13 (sim=0.432). Original 8501.10.00 not in DB.",
+      "candidates": [
+        {
+          "code": "8501.10.13",
+          "description": "DC motor: ----Wiper motor",
+          "similarity": 0.43226811693501466
+        },
+        {
+          "code": "8501.31.13",
+          "description": "DC motors: ----Wiper motor",
+          "similarity": 0.410387521363055
+        },
+        {
+          "code": "8512.40.00",
+          "description": "Windscreen wipers, defrosters and demisters",
+          "similarity": 0.3858045684520517
+        },
+        {
+          "code": "8501.10.11",
+          "description": "DC motor: ----Micro motor",
+          "similarity": 0.3668286124961748
+        },
+        {
+          "code": "8501.52.20",
+          "description": "Slipring motor",
+          "similarity": 0.3577144657203243
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC013",
+      "query": "truck tyre 315/80R22.5 radial",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "40",
+      "current_heading": "4011",
+      "current_code": "4011.20.00",
+      "proposed_chapter": "40",
+      "proposed_heading": "4011",
+      "proposed_code": "4011.10.10",
+      "confidence": "MEDIUM",
+      "reasoning": "13 candidates in heading 4011. Recommending 4011.10.10 (sim=0.401). Original 4011.20.00 not in DB.",
+      "candidates": [
+        {
+          "code": "4011.10.10",
+          "description": "Radials",
+          "similarity": 0.40066797133279086
+        },
+        {
+          "code": "4011.20.10",
+          "description": "Radials",
+          "similarity": 0.3964496676385827
+        },
+        {
+          "code": "4012.19.10",
+          "description": "For two wheelers",
+          "similarity": 0.388031727788942
+        },
+        {
+          "code": "4012.20.20",
+          "description": "For passenger automobile vehicles, including two wheelers, three wheelers and personal type vehicles",
+          "similarity": 0.3793079113135259
+        },
+        {
+          "code": "4013.90.41",
+          "description": "For tractors: ---- Rear tyres",
+          "similarity": 0.3699703812599182
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC014",
+      "query": "inner tube for motorcycle tyre",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "40",
+      "current_heading": "4013",
+      "current_code": "4013.90.00",
+      "proposed_chapter": "40",
+      "proposed_heading": "4013",
+      "proposed_code": "4013.90.20",
+      "confidence": "MEDIUM",
+      "reasoning": "10 candidates in heading 4013. Recommending 4013.90.20 (sim=0.455). Original 4013.90.00 not in DB.",
+      "candidates": [
+        {
+          "code": "4013.90.20",
+          "description": "For motor cycle",
+          "similarity": 0.45509920059452047
+        },
+        {
+          "code": "4013.90.50",
+          "description": "For tractors: ---- Of a kind used in tyres of cycle rickshaws and three-wheeled powered cycle-rickshaws",
+          "similarity": 0.42961839260945434
+        },
+        {
+          "code": "4013.90.41",
+          "description": "For tractors: ---- Rear tyres",
+          "similarity": 0.4287103755050681
+        },
+        {
+          "code": "4013.10.10",
+          "description": "For motor car",
+          "similarity": 0.4253474264922825
+        },
+        {
+          "code": "4011.50.10",
+          "description": "Multi-cellular polyurethane (MCP) tubeless tyre",
+          "similarity": 0.42261041133279664
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC015",
+      "query": "motorcycle helmet ISI approved",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "65",
+      "current_heading": "6506",
+      "current_code": "6506.10.00",
+      "proposed_chapter": "65",
+      "proposed_heading": "6506",
+      "proposed_code": "6506.10.10",
+      "confidence": "MEDIUM",
+      "reasoning": "5 candidates in heading 6506. Recommending 6506.10.10 (sim=0.367). Original 6506.10.00 not in DB.",
+      "candidates": [
+        {
+          "code": "6506.10.10",
+          "description": "Speed glass welding helmets or other helmets meant for industrial use",
+          "similarity": 0.3671637068044049
+        },
+        {
+          "code": "6506.10.20",
+          "description": "Headgear for ballistic protection",
+          "similarity": 0.3606214474520486
+        },
+        {
+          "code": "6506.10.90",
+          "description": "Other",
+          "similarity": 0.33174486973942874
+        },
+        {
+          "code": "6506.91.00",
+          "description": "Other : -- Of rubber or of plastics",
+          "similarity": 0.29240517065494287
+        },
+        {
+          "code": "6506.99.00",
+          "description": "Other : -- Of other materials",
+          "similarity": 0.2909674471040107
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC101",
+      "query": "arabica coffee beans grade A plantation",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "09",
+      "current_heading": "0901",
+      "current_code": "0901.11.10",
+      "proposed_chapter": "09",
+      "proposed_heading": "0901",
+      "proposed_code": "0901.11.12",
+      "confidence": "MEDIUM",
+      "reasoning": "28 candidates in heading 0901. Recommending 0901.11.12 (sim=0.443). Original 0901.11.10 not in DB.",
+      "candidates": [
+        {
+          "code": "0901.11.12",
+          "description": "Arabica plantation: ---- B Grade",
+          "similarity": 0.44311745330871266
+        },
+        {
+          "code": "0901.11.13",
+          "description": "Arabica plantation: ---- C Grade",
+          "similarity": 0.4384835697124331
+        },
+        {
+          "code": "0901.11.11",
+          "description": "Arabica plantation: ---- A Grade",
+          "similarity": 0.43463854559933046
+        },
+        {
+          "code": "0901.11.24",
+          "description": "Arabica Cherry: ---- B/B/B Grade",
+          "similarity": 0.42807336376348404
+        },
+        {
+          "code": "0901.11.23",
+          "description": "Arabica Cherry: ---- C Grade",
+          "similarity": 0.4185737419978601
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC103",
+      "query": "roasted coffee beans whole not ground",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "09",
+      "current_heading": "0901",
+      "current_code": "0901.21.00",
+      "proposed_chapter": "09",
+      "proposed_heading": "0901",
+      "proposed_code": "0901.11.44",
+      "confidence": "MEDIUM",
+      "reasoning": "28 candidates in heading 0901. Recommending 0901.11.44 (sim=0.466). Original 0901.21.00 not in DB.",
+      "candidates": [
+        {
+          "code": "0901.11.44",
+          "description": "Rob cherry: ---- B/B/B Grade",
+          "similarity": 0.46557153453572586
+        },
+        {
+          "code": "0901.11.42",
+          "description": "Rob cherry: ---- PB Grade",
+          "similarity": 0.462868869304657
+        },
+        {
+          "code": "0901.11.45",
+          "description": "Rob cherry: ---- Bulk",
+          "similarity": 0.46207774836520277
+        },
+        {
+          "code": "0901.11.32",
+          "description": "Rob Parchment: ---- PB Grade",
+          "similarity": 0.4613837003707886
+        },
+        {
+          "code": "0901.11.43",
+          "description": "Rob cherry: ---- C Grade",
+          "similarity": 0.45989176870037585
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC104",
+      "query": "instant coffee powder spray dried",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "21",
+      "current_heading": "2101",
+      "current_code": "2101.11.00",
+      "proposed_chapter": "21",
+      "proposed_heading": "2101",
+      "proposed_code": "2101.11.10",
+      "confidence": "MEDIUM",
+      "reasoning": "12 candidates in heading 2101. Recommending 2101.11.10 (sim=0.427). Original 2101.11.00 not in DB.",
+      "candidates": [
+        {
+          "code": "2106.90.80",
+          "description": "Custard powder",
+          "similarity": 0.45546692905433084
+        },
+        {
+          "code": "2104.10.10",
+          "description": "Dried",
+          "similarity": 0.4366219043731814
+        },
+        {
+          "code": "2102.30.00",
+          "description": "Prepared baking powders",
+          "similarity": 0.42981725094524337
+        },
+        {
+          "code": "2101.11.10",
+          "description": "Instant coffee, flavoured",
+          "similarity": 0.42747336603145514
+        },
+        {
+          "code": "2101.11.20",
+          "description": "Instant coffee, not flavoured",
+          "similarity": 0.4258029207108853
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC105",
+      "query": "freeze dried soluble coffee granules",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "21",
+      "current_heading": "2101",
+      "current_code": "2101.11.00",
+      "proposed_chapter": "21",
+      "proposed_heading": "2101",
+      "proposed_code": "2101.11.20",
+      "confidence": "MEDIUM",
+      "reasoning": "12 candidates in heading 2101. Recommending 2101.11.20 (sim=0.384). Original 2101.11.00 not in DB.",
+      "candidates": [
+        {
+          "code": "2104.10.10",
+          "description": "Dried",
+          "similarity": 0.43761254472508304
+        },
+        {
+          "code": "2106.90.92",
+          "description": "Other: ---- Sterilized or pasteurized millstone",
+          "similarity": 0.4176879076323682
+        },
+        {
+          "code": "2104.10.90",
+          "description": "Other",
+          "similarity": 0.394111633300784
+        },
+        {
+          "code": "2104.20.00",
+          "description": "Homogenised composite food preparations",
+          "similarity": 0.3917975917224429
+        },
+        {
+          "code": "2106.10.00",
+          "description": "Protein concentrates and textured protein substances",
+          "similarity": 0.38935361973687566
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC106",
+      "query": "coffee extract liquid concentrate",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "21",
+      "current_heading": "2101",
+      "current_code": "2101.11.00",
+      "proposed_chapter": "21",
+      "proposed_heading": "2101",
+      "proposed_code": "2101.11.10",
+      "confidence": "MEDIUM",
+      "reasoning": "12 candidates in heading 2101. Recommending 2101.11.10 (sim=0.478). Original 2101.11.00 not in DB.",
+      "candidates": [
+        {
+          "code": "2101.11.10",
+          "description": "Instant coffee, flavoured",
+          "similarity": 0.4779127045091671
+        },
+        {
+          "code": "2101.12.00",
+          "description": "Extracts, essences and concentrates, of coffee, and preparations with a basis of these extracts, essences or concentrates or with a basis of coffee : -- Preparations with a basis of extracts, essences or concentrates or with a basis of coffee",
+          "similarity": 0.47608778023198695
+        },
+        {
+          "code": "2101.11.20",
+          "description": "Instant coffee, not flavoured",
+          "similarity": 0.4737781599892492
+        },
+        {
+          "code": "2101.11.90",
+          "description": "Other",
+          "similarity": 0.4710149151691819
+        },
+        {
+          "code": "2101.20.20",
+          "description": "Quick brewing black tea",
+          "similarity": 0.46773966954587665
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC107",
+      "query": "black pepper whole Malabar grade",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "09",
+      "current_heading": "0904",
+      "current_code": "0904.11.00",
+      "proposed_chapter": "09",
+      "proposed_heading": "0904",
+      "proposed_code": "0904.11.40",
+      "confidence": "MEDIUM",
+      "reasoning": "16 candidates in heading 0904. Recommending 0904.11.40 (sim=0.457). Original 0904.11.00 not in DB.",
+      "candidates": [
+        {
+          "code": "0904.11.40",
+          "description": "Black pepper ungarbled",
+          "similarity": 0.4567131153687134
+        },
+        {
+          "code": "0904.11.30",
+          "description": "Black pepper, garbled",
+          "similarity": 0.44288293208087615
+        },
+        {
+          "code": "0904.11.20",
+          "description": "Light black pepper",
+          "similarity": 0.4340955058279401
+        },
+        {
+          "code": "0904.11.60",
+          "description": "Pepper pinheads",
+          "similarity": 0.43280460052380554
+        },
+        {
+          "code": "0904.11.10",
+          "description": "Pepper, long",
+          "similarity": 0.42591736162202076
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC111",
+      "query": "cardamom green whole pods",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "09",
+      "current_heading": "0908",
+      "current_code": "0908.31.00",
+      "proposed_chapter": "09",
+      "proposed_heading": "0908",
+      "proposed_code": "0908.31.30",
+      "confidence": "MEDIUM",
+      "reasoning": "15 candidates in heading 0908. Recommending 0908.31.30 (sim=0.464). Original 0908.31.00 not in DB.",
+      "candidates": [
+        {
+          "code": "0908.31.30",
+          "description": "Small, coorg green",
+          "similarity": 0.4641420202424583
+        },
+        {
+          "code": "0908.31.20",
+          "description": "Small (ellettaria),alleppey green",
+          "similarity": 0.4629658074297578
+        },
+        {
+          "code": "0908.32.20",
+          "description": "Small cardamom seeds",
+          "similarity": 0.44941622621819977
+        },
+        {
+          "code": "0908.32.30",
+          "description": "Cardamom husk",
+          "similarity": 0.4415412878071502
+        },
+        {
+          "code": "0904.11.50",
+          "description": "Green pepper, dehydrated",
+          "similarity": 0.43517538518759
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC112",
+      "query": "cumin seeds whole jeera",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "09",
+      "current_heading": "0909",
+      "current_code": "0909.31.00",
+      "proposed_chapter": "09",
+      "proposed_heading": "0909",
+      "proposed_code": "0909.31.21",
+      "confidence": "MEDIUM",
+      "reasoning": "20 candidates in heading 0909. Recommending 0909.31.21 (sim=0.455). Original 0909.31.00 not in DB.",
+      "candidates": [
+        {
+          "code": "0909.31.21",
+          "description": "Cumin, other than black: ---- Of seed quality",
+          "similarity": 0.4551941102974555
+        },
+        {
+          "code": "0909.31.11",
+          "description": "Cumin, black :---- Of seed quality",
+          "similarity": 0.4488229228292293
+        },
+        {
+          "code": "0909.31.29",
+          "description": "Cumin, other than black: ---- Other",
+          "similarity": 0.44769139743771946
+        },
+        {
+          "code": "0909.32.00",
+          "description": "Seeds of cumin : --Crushed or ground",
+          "similarity": 0.44303045317984435
+        },
+        {
+          "code": "0909.31.19",
+          "description": "Cumin, black :----Other",
+          "similarity": 0.44196371215257635
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC113",
+      "query": "cinnamon bark quills Ceylon",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "09",
+      "current_heading": "0906",
+      "current_code": "0906.11.00",
+      "proposed_chapter": "09",
+      "proposed_heading": "0906",
+      "proposed_code": "0906.11.10",
+      "confidence": "MEDIUM",
+      "reasoning": "6 candidates in heading 0906. Recommending 0906.11.10 (sim=0.448). Original 0906.11.00 not in DB.",
+      "candidates": [
+        {
+          "code": "0906.11.10",
+          "description": "Cinnamon bark",
+          "similarity": 0.4484473302497667
+        },
+        {
+          "code": "0906.11.20",
+          "description": "Cinnamon tree flowers",
+          "similarity": 0.41611275816971904
+        },
+        {
+          "code": "0906.11.90",
+          "description": "Other",
+          "similarity": 0.41296719274022764
+        },
+        {
+          "code": "0906.19.10",
+          "description": "cassia",
+          "similarity": 0.4008886157671899
+        },
+        {
+          "code": "0906.19.90",
+          "description": "other",
+          "similarity": 0.38457641463664916
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC114",
+      "query": "cloves whole dried flower buds",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "09",
+      "current_heading": "0907",
+      "current_code": "0907.10.00",
+      "proposed_chapter": "09",
+      "proposed_heading": "0907",
+      "proposed_code": "0907.10.30",
+      "confidence": "MEDIUM",
+      "reasoning": "5 candidates in heading 0907. Recommending 0907.10.30 (sim=0.493). Original 0907.10.00 not in DB.",
+      "candidates": [
+        {
+          "code": "0907.10.30",
+          "description": "Stem",
+          "similarity": 0.49296361333783223
+        },
+        {
+          "code": "0907.10.90",
+          "description": "Other",
+          "similarity": 0.4901050925254822
+        },
+        {
+          "code": "0907.10.10",
+          "description": "Extracted",
+          "similarity": 0.47554138594372786
+        },
+        {
+          "code": "0907.10.20",
+          "description": "Not Extracted (other than stem)",
+          "similarity": 0.4658203243452619
+        },
+        {
+          "code": "0907.20.00",
+          "description": "Crushed or ground",
+          "similarity": 0.44702504101619667
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC115",
+      "query": "ginger fresh whole root",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "09",
+      "current_heading": "0910",
+      "current_code": "0910.11.00",
+      "proposed_chapter": "09",
+      "proposed_heading": "0910",
+      "proposed_code": "0910.11.10",
+      "confidence": "MEDIUM",
+      "reasoning": "29 candidates in heading 0910. Recommending 0910.11.10 (sim=0.376). Original 0910.11.00 not in DB.",
+      "candidates": [
+        {
+          "code": "0910.11.10",
+          "description": "Fresh",
+          "similarity": 0.37581929944330295
+        },
+        {
+          "code": "0910.30.10",
+          "description": "Fresh",
+          "similarity": 0.3431805977088761
+        },
+        {
+          "code": "0910.11.20",
+          "description": "Dried, unbleached",
+          "similarity": 0.3419300435039494
+        },
+        {
+          "code": "0910.11.30",
+          "description": "Dried, bleached",
+          "similarity": 0.3300049605961297
+        },
+        {
+          "code": "0910.11.90",
+          "description": "Other",
+          "similarity": 0.3293971510463971
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC116",
+      "query": "ginger dried sliced",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "09",
+      "current_heading": "0910",
+      "current_code": "0910.12.00",
+      "proposed_chapter": "09",
+      "proposed_heading": "0910",
+      "proposed_code": "0910.11.20",
+      "confidence": "MEDIUM",
+      "reasoning": "29 candidates in heading 0910. Recommending 0910.11.20 (sim=0.375). Original 0910.12.00 not in DB.",
+      "candidates": [
+        {
+          "code": "0910.11.20",
+          "description": "Dried, unbleached",
+          "similarity": 0.37486767023013656
+        },
+        {
+          "code": "0910.11.30",
+          "description": "Dried, bleached",
+          "similarity": 0.36451062810167856
+        },
+        {
+          "code": "0910.11.10",
+          "description": "Fresh",
+          "similarity": 0.3483570606495707
+        },
+        {
+          "code": "0910.30.20",
+          "description": "Dried",
+          "similarity": 0.348171630610727
+        },
+        {
+          "code": "0910.11.90",
+          "description": "Other",
+          "similarity": 0.33570577715074224
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC117",
+      "query": "saffron threads pure Kashmir",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "09",
+      "current_heading": "0910",
+      "current_code": "0910.20.00",
+      "proposed_chapter": "09",
+      "proposed_heading": "0910",
+      "proposed_code": "0910.20.20",
+      "confidence": "MEDIUM",
+      "reasoning": "29 candidates in heading 0910. Recommending 0910.20.20 (sim=0.330). Original 0910.20.00 not in DB.",
+      "candidates": [
+        {
+          "code": "0910.20.20",
+          "description": "Saffron stamen",
+          "similarity": 0.3302876454420307
+        },
+        {
+          "code": "0910.20.10",
+          "description": "Saffron stigma",
+          "similarity": 0.32981065930064624
+        },
+        {
+          "code": "0910.20.90",
+          "description": "Other",
+          "similarity": 0.2896351343610808
+        },
+        {
+          "code": "0910.11.20",
+          "description": "Dried, unbleached",
+          "similarity": 0.2812999058544625
+        },
+        {
+          "code": "0908.31.30",
+          "description": "Small, coorg green",
+          "similarity": 0.2808831501533524
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC119",
+      "query": "green tea leaves loose",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "09",
+      "current_heading": "0902",
+      "current_code": "0902.10.00",
+      "proposed_chapter": "09",
+      "proposed_heading": "0902",
+      "proposed_code": "0902.20.40",
+      "confidence": "MEDIUM",
+      "reasoning": "20 candidates in heading 0902. Recommending 0902.20.40 (sim=0.448). Original 0902.10.00 not in DB.",
+      "candidates": [
+        {
+          "code": "0902.20.40",
+          "description": "Green Tea waste",
+          "similarity": 0.4478102953547135
+        },
+        {
+          "code": "0902.20.10",
+          "description": "Green Tea in packets exceeding content 3 kg. but not exceeding 20 kg.",
+          "similarity": 0.42777135537693944
+        },
+        {
+          "code": "0902.20.20",
+          "description": "Green Tea in bulk",
+          "similarity": 0.4214736568049464
+        },
+        {
+          "code": "0902.20.30",
+          "description": "Green Tea agglomerated in forms such as ball, brick and tablets",
+          "similarity": 0.4133487447084523
+        },
+        {
+          "code": "0902.40.60",
+          "description": "Black Tea waste",
+          "similarity": 0.39860274220656067
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC120",
+      "query": "black tea CTC Assam",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "09",
+      "current_heading": "0902",
+      "current_code": "0902.30.00",
+      "proposed_chapter": "09",
+      "proposed_heading": "0902",
+      "proposed_code": "0902.40.20",
+      "confidence": "MEDIUM",
+      "reasoning": "20 candidates in heading 0902. Recommending 0902.40.20 (sim=0.421). Original 0902.30.00 not in DB.",
+      "candidates": [
+        {
+          "code": "0902.40.20",
+          "description": "Black Tea, leaf in bulk",
+          "similarity": 0.42067710510765555
+        },
+        {
+          "code": "0902.40.60",
+          "description": "Black Tea waste",
+          "similarity": 0.420655532958115
+        },
+        {
+          "code": "0902.40.30",
+          "description": "Black Tea, dust in bulk",
+          "similarity": 0.4165283839072753
+        },
+        {
+          "code": "0902.40.50",
+          "description": "Black Tea, agglomerated in forms such as ball, brick and tablets",
+          "similarity": 0.4142642472509903
+        },
+        {
+          "code": "0902.30.90",
+          "description": "Other",
+          "similarity": 0.41416085789670554
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC202",
+      "query": "amoxicillin capsules 250mg",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "30",
+      "current_heading": "3004",
+      "current_code": "3004.10.00",
+      "proposed_chapter": "30",
+      "proposed_heading": "3004",
+      "proposed_code": "3004.10.30",
+      "confidence": "MEDIUM",
+      "reasoning": "141 candidates in heading 3004. Recommending 3004.10.30 (sim=0.405). Original 3004.10.00 not in DB.",
+      "candidates": [
+        {
+          "code": "3004.10.30",
+          "description": "Amoxycillin",
+          "similarity": 0.405082643032074
+        },
+        {
+          "code": "3004.10.60",
+          "description": "Ampicillin and Cloxacillin combinations",
+          "similarity": 0.38713459334178557
+        },
+        {
+          "code": "3004.10.20",
+          "description": "Ampicillin",
+          "similarity": 0.3843754759058646
+        },
+        {
+          "code": "3004.10.50",
+          "description": "Cloxacillin",
+          "similarity": 0.3616718649864197
+        },
+        {
+          "code": "3004.10.40",
+          "description": "Becampicillin",
+          "similarity": 0.3572114408016205
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC205",
+      "query": "paracetamol powder bulk API",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "29",
+      "current_heading": "2924",
+      "current_code": "2924.29.00",
+      "proposed_chapter": "29",
+      "proposed_heading": "2924",
+      "proposed_code": "2924.29.80",
+      "confidence": "MEDIUM",
+      "reasoning": "21 candidates in heading 2924. Recommending 2924.29.80 (sim=0.446). Original 2924.29.00 not in DB.",
+      "candidates": [
+        {
+          "code": "2933.33.32",
+          "description": "Pipradrol (INN), piritramide (INN), propiram (INN), remifentanil (INN) and trimeperidine (INN); salts thereof: - - - - Piritramide (INN) and its salt",
+          "similarity": 0.4469549985554824
+        },
+        {
+          "code": "2933.33.35",
+          "description": "Pipradrol (INN), piritramide (INN), propiram (INN), remifentanil (INN) and trimeperidine (INN); salts thereof: - - - - Trimeperidine (INN) and its salt",
+          "similarity": 0.4467858507271414
+        },
+        {
+          "code": "2924.29.80",
+          "description": "Paracetamol",
+          "similarity": 0.445868975416544
+        },
+        {
+          "code": "2933.33.33",
+          "description": "Pipradrol (INN), piritramide (INN), propiram (INN), remifentanil (INN) and trimeperidine (INN); salts thereof: - - - - Propiram (INN) and its salt",
+          "similarity": 0.44540308578601406
+        },
+        {
+          "code": "2933.33.31",
+          "description": "Pipradrol (INN), piritramide (INN), propiram (INN), remifentanil (INN) and trimeperidine (INN); salts thereof: - - - - Pipradrol (INN) and its salt",
+          "similarity": 0.44366357402043655
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC206",
+      "query": "ibuprofen raw material powder",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "29",
+      "current_heading": "2918",
+      "current_code": "2918.99.00",
+      "proposed_chapter": "29",
+      "proposed_heading": "2918",
+      "proposed_code": "2918.11.10",
+      "confidence": "MEDIUM",
+      "reasoning": "48 candidates in heading 2918. Recommending 2918.11.10 (sim=N/A). Original 2918.99.00 not in DB.",
+      "candidates": [
+        {
+          "code": "2942.00.12",
+          "description": "Ibuprofane",
+          "similarity": 0.4419267045877462
+        },
+        {
+          "code": "2934.99.30",
+          "description": "Buprofezin (ISO)",
+          "similarity": 0.3718401048374078
+        },
+        {
+          "code": "2926.30.00",
+          "description": "Fenproporex (INN) and its salts; methadone (INN) intermediate (4-cyano-2-dimethylamino-4,4- diphenylbutane)",
+          "similarity": 0.3549875924043029
+        },
+        {
+          "code": "2901.24.00",
+          "description": "Unsaturated : -- Buta-1,3-diene and isoprene",
+          "similarity": 0.333312660459401
+        },
+        {
+          "code": "2941.90.12",
+          "description": "Rifampicin and its salts: ---- 3 Formyl Rifa S V(Rifa int)",
+          "similarity": 0.333173265078873
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC207",
+      "query": "insulin injection 100IU/ml vial",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "30",
+      "current_heading": "3004",
+      "current_code": "3004.31.00",
+      "proposed_chapter": "30",
+      "proposed_heading": "3004",
+      "proposed_code": "3004.31.10",
+      "confidence": "MEDIUM",
+      "reasoning": "141 candidates in heading 3004. Recommending 3004.31.10 (sim=0.432). Original 3004.31.00 not in DB.",
+      "candidates": [
+        {
+          "code": "3004.31.10",
+          "description": "Insulin injection",
+          "similarity": 0.4321378807939369
+        },
+        {
+          "code": "3003.31.00",
+          "description": "Other, containing hormones or other products of heading 29.37 : -- Containing insulin",
+          "similarity": 0.3266574545706842
+        },
+        {
+          "code": "3002.41.14",
+          "description": "Single vaccines for: - - - - Polio",
+          "similarity": 0.29255432619673194
+        },
+        {
+          "code": "3002.41.12",
+          "description": "Single vaccines for: - - - - Hepatitis",
+          "similarity": 0.2879890031821135
+        },
+        {
+          "code": "3002.41.17",
+          "description": "Single vaccines for: - - - - Japanese encephalitis",
+          "similarity": 0.28402625703185835
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC303",
+      "query": "men's formal cotton shirt woven",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "62",
+      "current_heading": "6205",
+      "current_code": "6205.20.00",
+      "proposed_chapter": "62",
+      "proposed_heading": "6205",
+      "proposed_code": "6205.20.10",
+      "confidence": "MEDIUM",
+      "reasoning": "9 candidates in heading 6205. Recommending 6205.20.10 (sim=0.527). Original 6205.20.00 not in DB.",
+      "candidates": [
+        {
+          "code": "6205.20.10",
+          "description": "Handloom",
+          "similarity": 0.526947846670011
+        },
+        {
+          "code": "6205.20.90",
+          "description": "Other",
+          "similarity": 0.51695154960934
+        },
+        {
+          "code": "6205.90.90",
+          "description": "Other",
+          "similarity": 0.49298010536376313
+        },
+        {
+          "code": "6205.90.19",
+          "description": "Other",
+          "similarity": 0.49192423853774936
+        },
+        {
+          "code": "6205.90.11",
+          "description": "Khadi",
+          "similarity": 0.47527504794226916
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC304",
+      "query": "denim jeans men's cotton woven",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "62",
+      "current_heading": "6203",
+      "current_code": "6203.42.00",
+      "proposed_chapter": "62",
+      "proposed_heading": "6203",
+      "proposed_code": "6203.19.10",
+      "confidence": "MEDIUM",
+      "reasoning": "22 candidates in heading 6203. Recommending 6203.19.10 (sim=0.387). Original 6203.42.00 not in DB.",
+      "candidates": [
+        {
+          "code": "6203.19.10",
+          "description": "Of cotton",
+          "similarity": 0.3874471649464566
+        },
+        {
+          "code": "6205.20.10",
+          "description": "Handloom",
+          "similarity": 0.37925853605619353
+        },
+        {
+          "code": "6203.32.00",
+          "description": "Jackets and blazers : -- Of cotton",
+          "similarity": 0.3791110371483608
+        },
+        {
+          "code": "6205.20.90",
+          "description": "Other",
+          "similarity": 0.3744774683998513
+        },
+        {
+          "code": "6203.22.00",
+          "description": "Ensembles : -- Of cotton",
+          "similarity": 0.3707957786795968
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC305",
+      "query": "wool sweater knitted pullover",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "61",
+      "current_heading": "6110",
+      "current_code": "6110.11.00",
+      "proposed_chapter": "61",
+      "proposed_heading": "6110",
+      "proposed_code": "6110.11.20",
+      "confidence": "MEDIUM",
+      "reasoning": "9 candidates in heading 6110. Recommending 6110.11.20 (sim=0.395). Original 6110.11.00 not in DB.",
+      "candidates": [
+        {
+          "code": "6110.11.20",
+          "description": "Sweaters and cardigans",
+          "similarity": 0.39483112646619767
+        },
+        {
+          "code": "6110.19.00",
+          "description": "Of wool or fine animal hair : -- Other",
+          "similarity": 0.38062112389144764
+        },
+        {
+          "code": "6110.12.00",
+          "description": "Of wool or fine animal hair : -- Of Kashmir (cashmere) goats",
+          "similarity": 0.3802887541313861
+        },
+        {
+          "code": "6106.90.20",
+          "description": "Of wool or fine animal hair",
+          "similarity": 0.36669975220862583
+        },
+        {
+          "code": "6110.11.90",
+          "description": "Other",
+          "similarity": 0.3648772565910763
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "TC306",
+      "query": "silk saree woven traditional",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "62",
+      "current_heading": "6206",
+      "current_code": "6206.10.00",
+      "proposed_chapter": "62",
+      "proposed_heading": "6206",
+      "proposed_code": "6206.10.10",
+      "confidence": "MEDIUM",
+      "reasoning": "7 candidates in heading 6206. Recommending 6206.10.10 (sim=0.391). Original 6206.10.00 not in DB.",
+      "candidates": [
+        {
+          "code": "6204.59.11",
+          "description": "of silk:---- Embroidered with Lucknow Chikan Craft",
+          "similarity": 0.44206267940624555
+        },
+        {
+          "code": "6204.19.12",
+          "description": "Of silk: ---- Embroidered with Lucknow Chikan Craft",
+          "similarity": 0.4335316498837919
+        },
+        {
+          "code": "6204.29.13",
+          "description": "Of silk ---- embroidered with Lucknow Chikan Craft",
+          "similarity": 0.4277537253196597
+        },
+        {
+          "code": "6211.49.22",
+          "description": "of silk: ---- Embroidered with Lucknow Chikan Craft",
+          "similarity": 0.4238706321870558
+        },
+        {
+          "code": "6204.39.13",
+          "description": "Of silk: ---- embroidered with Lucknow Chikan Craft",
+          "similarity": 0.42044640535755384
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC001",
+      "query": "mink fur coat full length",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "43",
+      "current_heading": "4303",
+      "current_code": "4303.10.00",
+      "proposed_chapter": "43",
+      "proposed_heading": "4303",
+      "proposed_code": "4303.90.90",
+      "confidence": "MEDIUM",
+      "reasoning": "6 candidates in heading 4303. Recommending 4303.90.90 (sim=0.355). Original 4303.10.00 not in DB.",
+      "candidates": [
+        {
+          "code": "4301.10.00",
+          "description": "Of mink, whole, with or without head, tail or paws",
+          "similarity": 0.4126371741294861
+        },
+        {
+          "code": "4302.11.00",
+          "description": "Whole skins, with or without head, tail or paws, not assembled : -- Of mink",
+          "similarity": 0.40630530006195364
+        },
+        {
+          "code": "4301.30.00",
+          "description": "Of lamb, the following : Astrakhan, Broadtail, Caracul, Persian and similar lamb, Indian, Chinese, Mongolian or Tibetan lamb, whole, with or without head, tail or paws",
+          "similarity": 0.3712422881641064
+        },
+        {
+          "code": "4304.00.19",
+          "description": "Other",
+          "similarity": 0.35843794245267857
+        },
+        {
+          "code": "4301.60.00",
+          "description": "Of fox, whole, with or without head, tail or paws",
+          "similarity": 0.3560272541029904
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC002",
+      "query": "fox fur stole ladies accessory",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "43",
+      "current_heading": "4303",
+      "current_code": "4303.10.00",
+      "proposed_chapter": "43",
+      "proposed_heading": "4303",
+      "proposed_code": "4303.10.90",
+      "confidence": "MEDIUM",
+      "reasoning": "6 candidates in heading 4303. Recommending 4303.10.90 (sim=0.338). Original 4303.10.00 not in DB.",
+      "candidates": [
+        {
+          "code": "4303.10.90",
+          "description": "Articles of apparel and clothing accessories: ---- Other",
+          "similarity": 0.33753194511699325
+        },
+        {
+          "code": "4303.90.90",
+          "description": "Other",
+          "similarity": 0.3307066559791565
+        },
+        {
+          "code": "4301.30.00",
+          "description": "Of lamb, the following : Astrakhan, Broadtail, Caracul, Persian and similar lamb, Indian, Chinese, Mongolian or Tibetan lamb, whole, with or without head, tail or paws",
+          "similarity": 0.32949236001006144
+        },
+        {
+          "code": "4304.00.11",
+          "description": "Artificial fur as trimmings and embellishments for garments, made ups, knitwear, plastic and leather goods",
+          "similarity": 0.3256087109083712
+        },
+        {
+          "code": "4301.60.00",
+          "description": "Of fox, whole, with or without head, tail or paws",
+          "similarity": 0.32457516642956996
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC003",
+      "query": "rabbit pelt jacket with fur",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "43",
+      "current_heading": "4303",
+      "current_code": "4303.10.00",
+      "proposed_chapter": "43",
+      "proposed_heading": "4303",
+      "proposed_code": "4303.90.10",
+      "confidence": "MEDIUM",
+      "reasoning": "6 candidates in heading 4303. Recommending 4303.90.10 (sim=0.389). Original 4303.10.00 not in DB.",
+      "candidates": [
+        {
+          "code": "4301.30.00",
+          "description": "Of lamb, the following : Astrakhan, Broadtail, Caracul, Persian and similar lamb, Indian, Chinese, Mongolian or Tibetan lamb, whole, with or without head, tail or paws",
+          "similarity": 0.4185030238482096
+        },
+        {
+          "code": "4303.90.10",
+          "description": "Of wild animals covered under the Wild Life (Protection) Act,1972",
+          "similarity": 0.3885716199874878
+        },
+        {
+          "code": "4303.10.10",
+          "description": "Articles of apparel and clothing accessories: ---- Of wild animals covered under the Wild Life (Protection) Act,1972",
+          "similarity": 0.38764414860939156
+        },
+        {
+          "code": "4301.60.00",
+          "description": "Of fox, whole, with or without head, tail or paws",
+          "similarity": 0.37437529120592594
+        },
+        {
+          "code": "4301.10.00",
+          "description": "Of mink, whole, with or without head, tail or paws",
+          "similarity": 0.3741016983985901
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC004",
+      "query": "genuine leather jacket brown",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "42",
+      "current_heading": "4203",
+      "current_code": "4203.10.00",
+      "proposed_chapter": "42",
+      "proposed_heading": "4203",
+      "proposed_code": "4203.10.10",
+      "confidence": "MEDIUM",
+      "reasoning": "11 candidates in heading 4203. Recommending 4203.10.10 (sim=0.363). Original 4203.10.00 not in DB.",
+      "candidates": [
+        {
+          "code": "4203.10.10",
+          "description": "Jackets and jerseys",
+          "similarity": 0.3634748323589867
+        },
+        {
+          "code": "4202.91.00",
+          "description": "Other : -- With outer surface of leather or of composition leather",
+          "similarity": 0.3531502537369149
+        },
+        {
+          "code": "4202.11.90",
+          "description": "Other",
+          "similarity": 0.3529174468167291
+        },
+        {
+          "code": "4202.31.90",
+          "description": "Other",
+          "similarity": 0.3517203298115197
+        },
+        {
+          "code": "4202.21.90",
+          "description": "Other",
+          "similarity": 0.3508225067714722
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC005",
+      "query": "cowhide leather handbag",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "42",
+      "current_heading": "4202",
+      "current_code": "4202.21.00",
+      "proposed_chapter": "42",
+      "proposed_heading": "4202",
+      "proposed_code": "4202.21.10",
+      "confidence": "MEDIUM",
+      "reasoning": "44 candidates in heading 4202. Recommending 4202.21.10 (sim=0.453). Original 4202.21.00 not in DB.",
+      "candidates": [
+        {
+          "code": "4202.21.10",
+          "description": "Hand-bags for ladies",
+          "similarity": 0.45303863566883673
+        },
+        {
+          "code": "4202.29.10",
+          "description": "Hand bags of other materials excluding wicker-work or basket work",
+          "similarity": 0.4437924325466187
+        },
+        {
+          "code": "4202.22.20",
+          "description": "Hand-bags and shopping bags, of cotton",
+          "similarity": 0.4366573615857918
+        },
+        {
+          "code": "4202.22.10",
+          "description": "Hand-bags and shopping bags, of artificial plastic material",
+          "similarity": 0.43317140343700666
+        },
+        {
+          "code": "4202.22.30",
+          "description": "Hand-bags and shopping bags, of Jute",
+          "similarity": 0.42725855112076117
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC007",
+      "query": "tinplate steel sheets for canning",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "72",
+      "current_heading": "7210",
+      "current_code": "7210.12.00",
+      "proposed_chapter": "72",
+      "proposed_heading": "7210",
+      "proposed_code": "7210.11.10",
+      "confidence": "MEDIUM",
+      "reasoning": "17 candidates in heading 7210. Recommending 7210.11.10 (sim=N/A). Original 7210.12.00 not in DB.",
+      "candidates": [
+        {
+          "code": "7208.26.10",
+          "description": "Plates",
+          "similarity": 0.4440966050452112
+        },
+        {
+          "code": "7208.25.10",
+          "description": "Plates",
+          "similarity": 0.4416010379791291
+        },
+        {
+          "code": "7208.27.10",
+          "description": "Plates",
+          "similarity": 0.44106227510796414
+        },
+        {
+          "code": "7220.12.22",
+          "description": "Strips for pipes and tubes (other than skelp): ---- Nickel chromium austenitic type",
+          "similarity": 0.4401734173297913
+        },
+        {
+          "code": "7220.11.22",
+          "description": "Strips for pipes and tubes (other than skelp): ---- Nickel chromium austenitic type",
+          "similarity": 0.4392252673103936
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC008",
+      "query": "galvanized steel sheet coils",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "72",
+      "current_heading": "7210",
+      "current_code": "7210.49.00",
+      "proposed_chapter": "72",
+      "proposed_heading": "7210",
+      "proposed_code": "7210.49.10",
+      "confidence": "MEDIUM",
+      "reasoning": "17 candidates in heading 7210. Recommending 7210.49.10 (sim=0.482). Original 7210.49.00 not in DB.",
+      "candidates": [
+        {
+          "code": "7225.91.10",
+          "description": "Galvannealed",
+          "similarity": 0.5073441115813332
+        },
+        {
+          "code": "7225.92.10",
+          "description": "Galvannealed",
+          "similarity": 0.5016538056215356
+        },
+        {
+          "code": "7210.49.10",
+          "description": "Galvannealed",
+          "similarity": 0.482153282101365
+        },
+        {
+          "code": "7210.30.91",
+          "description": "Other:----Galvannealed",
+          "similarity": 0.4774297279717953
+        },
+        {
+          "code": "7212.20.91",
+          "description": "Other:----Galvannealed",
+          "similarity": 0.4750403039121527
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC009",
+      "query": "pure tin ingots 99.9%",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "80",
+      "current_heading": "8001",
+      "current_code": "8001.10.00",
+      "proposed_chapter": "80",
+      "proposed_heading": "8001",
+      "proposed_code": "8001.10.90",
+      "confidence": "MEDIUM",
+      "reasoning": "3 candidates in heading 8001. Recommending 8001.10.90 (sim=0.514). Original 8001.10.00 not in DB.",
+      "candidates": [
+        {
+          "code": "8001.10.90",
+          "description": "Ingots, pigs, slabs and other primary forms of tin",
+          "similarity": 0.513921276149788
+        },
+        {
+          "code": "8001.10.10",
+          "description": "Blocks",
+          "similarity": 0.4492327631434516
+        },
+        {
+          "code": "8002.00.10",
+          "description": "Tin scrap, namely the following: Block tin covered by ISRI code word Ranch; High tin base babbit covered by ISRI code word Raves; Pewter covered by ISRI code word Ranks.",
+          "similarity": 0.44723770651368144
+        },
+        {
+          "code": "8001.20.00",
+          "description": "Tin alloys",
+          "similarity": 0.4465675290307469
+        },
+        {
+          "code": "8003.00.20",
+          "description": "Bars,other than hollow bars and rods",
+          "similarity": 0.4272929259327928
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC010",
+      "query": "tin foil pure metal wrapping",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "80",
+      "current_heading": "8007",
+      "current_code": "8007.00.00",
+      "proposed_chapter": "80",
+      "proposed_heading": "8007",
+      "proposed_code": "8007.00.10",
+      "confidence": "MEDIUM",
+      "reasoning": "2 candidates in heading 8007. Recommending 8007.00.10 (sim=0.292). Original 8007.00.00 not in DB.",
+      "candidates": [
+        {
+          "code": "8001.10.90",
+          "description": "Ingots, pigs, slabs and other primary forms of tin",
+          "similarity": 0.31705422154230556
+        },
+        {
+          "code": "8002.00.10",
+          "description": "Tin scrap, namely the following: Block tin covered by ISRI code word Ranch; High tin base babbit covered by ISRI code word Raves; Pewter covered by ISRI code word Ranks.",
+          "similarity": 0.3140733463676777
+        },
+        {
+          "code": "8001.20.00",
+          "description": "Tin alloys",
+          "similarity": 0.30948594921660044
+        },
+        {
+          "code": "8003.00.30",
+          "description": "Profiles",
+          "similarity": 0.30434004638552437
+        },
+        {
+          "code": "8001.10.10",
+          "description": "Blocks",
+          "similarity": 0.3043220574471903
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC011",
+      "query": "tin solder bar lead-free",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "80",
+      "current_heading": "8003",
+      "current_code": "8003.00.00",
+      "proposed_chapter": "80",
+      "proposed_heading": "8003",
+      "proposed_code": "8003.00.20",
+      "confidence": "MEDIUM",
+      "reasoning": "4 candidates in heading 8003. Recommending 8003.00.20 (sim=0.330). Original 8003.00.00 not in DB.",
+      "candidates": [
+        {
+          "code": "8003.00.20",
+          "description": "Bars,other than hollow bars and rods",
+          "similarity": 0.33027858526344867
+        },
+        {
+          "code": "8003.00.10",
+          "description": "Hollow bars",
+          "similarity": 0.32217134005341963
+        },
+        {
+          "code": "8002.00.10",
+          "description": "Tin scrap, namely the following: Block tin covered by ISRI code word Ranch; High tin base babbit covered by ISRI code word Raves; Pewter covered by ISRI code word Ranks.",
+          "similarity": 0.31879048719519754
+        },
+        {
+          "code": "8003.00.30",
+          "description": "Profiles",
+          "similarity": 0.31855891236311784
+        },
+        {
+          "code": "8003.00.40",
+          "description": "Wires",
+          "similarity": 0.31355575838352745
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC012",
+      "query": "stainless steel plates flat",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "72",
+      "current_heading": "7219",
+      "current_code": "7219.31.00",
+      "proposed_chapter": "72",
+      "proposed_heading": "7219",
+      "proposed_code": "7219.22.12",
+      "confidence": "MEDIUM",
+      "reasoning": "54 candidates in heading 7219. Recommending 7219.22.12 (sim=0.518). Original 7219.31.00 not in DB.",
+      "candidates": [
+        {
+          "code": "7219.22.12",
+          "description": "Universal plates of stainless steel or heat resisting steel: ---- Nickel chromium austenitic type",
+          "similarity": 0.5183049109628965
+        },
+        {
+          "code": "7219.22.19",
+          "description": "Universal plates of stainless steel or heat resisting steel: ---- Other",
+          "similarity": 0.5129434435502426
+        },
+        {
+          "code": "7219.22.11",
+          "description": "Universal plates of stainless steel or heat resisting steel: ---- Chromium type",
+          "similarity": 0.506232975427395
+        },
+        {
+          "code": "7219.21.12",
+          "description": "Exceeding 14 mm Universal plates of stainless steel/heat resisting steel, nickel chromium austenitic type:",
+          "similarity": 0.5027598289168089
+        },
+        {
+          "code": "7219.90.12",
+          "description": "Sheets and plates: ---- Thickness 3 mm to 4.75 mm",
+          "similarity": 0.4836844225306042
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC015",
+      "query": "viscose rayon filament thread",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "54",
+      "current_heading": "5403",
+      "current_code": "5403.10.00",
+      "proposed_chapter": "54",
+      "proposed_heading": "5403",
+      "proposed_code": "5403.10.20",
+      "confidence": "MEDIUM",
+      "reasoning": "30 candidates in heading 5403. Recommending 5403.10.20 (sim=0.569). Original 5403.10.00 not in DB.",
+      "candidates": [
+        {
+          "code": "5403.10.20",
+          "description": "Viscose rayon tyre yarn - 1,833 decitex",
+          "similarity": 0.5687053373070164
+        },
+        {
+          "code": "5403.32.00",
+          "description": "Other yarn, single : -- Of viscose rayon, with a twist exceeding 120 turns per metre",
+          "similarity": 0.5668650518156728
+        },
+        {
+          "code": "5403.10.10",
+          "description": "Viscose rayon tyre yarn - 1,233 decitex",
+          "similarity": 0.5663289348687052
+        },
+        {
+          "code": "5403.31.00",
+          "description": "Other yarn, single : -- Of viscose rayon, untwisted or with a twist not exceeding 120",
+          "similarity": 0.5540586315288695
+        },
+        {
+          "code": "5403.10.90",
+          "description": "Other",
+          "similarity": 0.5326311270814472
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC017",
+      "query": "acrylic staple fiber for spinning",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "55",
+      "current_heading": "5503",
+      "current_code": "5503.30.00",
+      "proposed_chapter": "55",
+      "proposed_heading": "5503",
+      "proposed_code": "5503.11.10",
+      "confidence": "MEDIUM",
+      "reasoning": "15 candidates in heading 5503. Recommending 5503.11.10 (sim=N/A). Original 5503.30.00 not in DB.",
+      "candidates": [
+        {
+          "code": "5506.30.00",
+          "description": "Acrylic or modacrylic",
+          "similarity": 0.6029824377883944
+        },
+        {
+          "code": "5501.30.00",
+          "description": "Acrylic or modacrylic",
+          "similarity": 0.5757224902941291
+        },
+        {
+          "code": "5509.31.00",
+          "description": "Containing 85 percent or more by weight of acrylic or modacrylic staple fibre -- Single yarn",
+          "similarity": 0.5676373404592057
+        },
+        {
+          "code": "5509.32.00",
+          "description": "Containing 85 percent or more by weight of acrylic or modacrylic staple fibre -- Multiple (folded) or cabled yarn",
+          "similarity": 0.5613384581409976
+        },
+        {
+          "code": "5509.62.00",
+          "description": "Other yarn, of acrylic or modacrylic staple fibres : -- Mixed mainly or solely with cotton",
+          "similarity": 0.5557263493537903
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC018",
+      "query": "viscose staple fiber rayon",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "55",
+      "current_heading": "5504",
+      "current_code": "5504.10.00",
+      "proposed_chapter": "55",
+      "proposed_heading": "5504",
+      "proposed_code": "5504.10.11",
+      "confidence": "MEDIUM",
+      "reasoning": "9 candidates in heading 5504. Recommending 5504.10.11 (sim=0.608). Original 5504.10.00 not in DB.",
+      "candidates": [
+        {
+          "code": "5504.10.11",
+          "description": "Obtained from wood other than bamboo: ---- Flame retaradant Viscose Rayon fibre",
+          "similarity": 0.6079016690195612
+        },
+        {
+          "code": "5504.10.21",
+          "description": "Obtained from bamboo: ---- Flame retaradant Viscose Rayon fibre",
+          "similarity": 0.5967183709144592
+        },
+        {
+          "code": "5510.20.10",
+          "description": "Viscose rayon spun yarn",
+          "similarity": 0.5756786971475288
+        },
+        {
+          "code": "5510.30.10",
+          "description": "Viscose rayon spun yarn",
+          "similarity": 0.5725127970438739
+        },
+        {
+          "code": "5510.12.10",
+          "description": "Viscose rayon spun yarn",
+          "similarity": 0.566187313156188
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC019",
+      "query": "leather coat men's long",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "42",
+      "current_heading": "4203",
+      "current_code": "4203.10.00",
+      "proposed_chapter": "42",
+      "proposed_heading": "4203",
+      "proposed_code": "4203.40.20",
+      "confidence": "MEDIUM",
+      "reasoning": "11 candidates in heading 4203. Recommending 4203.40.20 (sim=0.348). Original 4203.10.00 not in DB.",
+      "candidates": [
+        {
+          "code": "4203.40.20",
+          "description": "Semi-chrome grain garments",
+          "similarity": 0.34805826258312655
+        },
+        {
+          "code": "4203.10.10",
+          "description": "Jackets and jerseys",
+          "similarity": 0.3441443555527157
+        },
+        {
+          "code": "4203.10.90",
+          "description": "Other",
+          "similarity": 0.3302449184802132
+        },
+        {
+          "code": "4203.40.90",
+          "description": "Other",
+          "similarity": 0.3297911676328843
+        },
+        {
+          "code": "4202.92.00",
+          "description": "Other : -- With outer",
+          "similarity": 0.32880302243250803
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC020",
+      "query": "leather vest motorcycle",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "42",
+      "current_heading": "4203",
+      "current_code": "4203.10.00",
+      "proposed_chapter": "42",
+      "proposed_heading": "4203",
+      "proposed_code": "4203.10.10",
+      "confidence": "MEDIUM",
+      "reasoning": "11 candidates in heading 4203. Recommending 4203.10.10 (sim=0.347). Original 4203.10.00 not in DB.",
+      "candidates": [
+        {
+          "code": "4203.10.10",
+          "description": "Jackets and jerseys",
+          "similarity": 0.3465719246694914
+        },
+        {
+          "code": "4203.30.00",
+          "description": "Belts and bandoliers",
+          "similarity": 0.34418091177941346
+        },
+        {
+          "code": "4203.40.20",
+          "description": "Semi-chrome grain garments",
+          "similarity": 0.338653445243845
+        },
+        {
+          "code": "4202.11.60",
+          "description": "Vanity-cases",
+          "similarity": 0.325538861880031
+        },
+        {
+          "code": "4201.00.00",
+          "description": "Saddlery and harness for any animal (including traces, leads, knee pads, muzzles, saddle cloths, saddle bags, dog coats and the like), of any material.",
+          "similarity": 0.32519737927930725
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC021",
+      "query": "leather gloves winter lined",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "42",
+      "current_heading": "4203",
+      "current_code": "4203.21.00",
+      "proposed_chapter": "42",
+      "proposed_heading": "4203",
+      "proposed_code": "4203.21.20",
+      "confidence": "MEDIUM",
+      "reasoning": "11 candidates in heading 4203. Recommending 4203.21.20 (sim=0.430). Original 4203.21.00 not in DB.",
+      "candidates": [
+        {
+          "code": "4203.21.20",
+          "description": "Mittens and mitts",
+          "similarity": 0.4300415986850743
+        },
+        {
+          "code": "4203.29.30",
+          "description": "Mittens and mitts",
+          "similarity": 0.4177185447904853
+        },
+        {
+          "code": "4203.21.10",
+          "description": "Gloves",
+          "similarity": 0.4103780388832121
+        },
+        {
+          "code": "4203.29.20",
+          "description": "Other gloves",
+          "similarity": 0.4046959933819839
+        },
+        {
+          "code": "4203.29.10",
+          "description": "Gloves for use in industry",
+          "similarity": 0.40134244569197053
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC022",
+      "query": "wool coat women woven fabric",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "62",
+      "current_heading": "6202",
+      "current_code": "6202.11.00",
+      "proposed_chapter": "62",
+      "proposed_heading": "6202",
+      "proposed_code": "6202.20.90",
+      "confidence": "MEDIUM",
+      "reasoning": "8 candidates in heading 6202. Recommending 6202.20.90 (sim=0.502). Original 6202.11.00 not in DB.",
+      "candidates": [
+        {
+          "code": "6202.20.90",
+          "description": "Other",
+          "similarity": 0.5018348693847656
+        },
+        {
+          "code": "6202.20.10",
+          "description": "Overcoats, raincoats, car-coats, capes, cloaks and similar articles",
+          "similarity": 0.4815055705911635
+        },
+        {
+          "code": "6206.20.00",
+          "description": "Of wool or fine animal hair",
+          "similarity": 0.481489285275021
+        },
+        {
+          "code": "6202.40.90",
+          "description": "Other",
+          "similarity": 0.4813810300003877
+        },
+        {
+          "code": "6204.11.00",
+          "description": "Suits : -- Of wool or fine animal hair",
+          "similarity": 0.47640421986579895
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC024",
+      "query": "nylon jacket windbreaker woven",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "62",
+      "current_heading": "6201",
+      "current_code": "6201.93.00",
+      "proposed_chapter": "62",
+      "proposed_heading": "6201",
+      "proposed_code": "6201.40.10",
+      "confidence": "MEDIUM",
+      "reasoning": "8 candidates in heading 6201. Recommending 6201.40.10 (sim=0.363). Original 6201.93.00 not in DB.",
+      "candidates": [
+        {
+          "code": "6203.33.00",
+          "description": "Jackets and blazers : -- Of synthetic fibres",
+          "similarity": 0.3736129406421327
+        },
+        {
+          "code": "6204.31.90",
+          "description": "Jackets and blazers: ---- Other",
+          "similarity": 0.3724258098094717
+        },
+        {
+          "code": "6203.32.00",
+          "description": "Jackets and blazers : -- Of cotton",
+          "similarity": 0.3653310021560845
+        },
+        {
+          "code": "6210.40.10",
+          "description": "Bullet proof jacket, bomb disposal jacket and the like",
+          "similarity": 0.3644489211501003
+        },
+        {
+          "code": "6201.40.10",
+          "description": "Overcoats, raincoats, car-coats, capes, cloaks and similar articles",
+          "similarity": 0.3629887916439213
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC025",
+      "query": "knitted polo shirt men cotton",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "61",
+      "current_heading": "6105",
+      "current_code": "6105.10.00",
+      "proposed_chapter": "61",
+      "proposed_heading": "6105",
+      "proposed_code": "6105.10.10",
+      "confidence": "MEDIUM",
+      "reasoning": "6 candidates in heading 6105. Recommending 6105.10.10 (sim=0.385). Original 6105.10.00 not in DB.",
+      "candidates": [
+        {
+          "code": "6105.10.10",
+          "description": "Shirts, hand crocheted",
+          "similarity": 0.38529415305922865
+        },
+        {
+          "code": "6105.10.90",
+          "description": "Other",
+          "similarity": 0.383004587382215
+        },
+        {
+          "code": "6105.90.90",
+          "description": "Other",
+          "similarity": 0.3606436467554366
+        },
+        {
+          "code": "6105.90.10",
+          "description": "Of silk",
+          "similarity": 0.3579889237880707
+        },
+        {
+          "code": "6105.20.20",
+          "description": "Of artificial fibres",
+          "similarity": 0.3571522406158185
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC028",
+      "query": "woven dress shirt formal men",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "62",
+      "current_heading": "6205",
+      "current_code": "6205.20.00",
+      "proposed_chapter": "62",
+      "proposed_heading": "6205",
+      "proposed_code": "6205.20.10",
+      "confidence": "MEDIUM",
+      "reasoning": "9 candidates in heading 6205. Recommending 6205.20.10 (sim=0.479). Original 6205.20.00 not in DB.",
+      "candidates": [
+        {
+          "code": "6205.20.10",
+          "description": "Handloom",
+          "similarity": 0.4787338090697649
+        },
+        {
+          "code": "6205.20.90",
+          "description": "Other",
+          "similarity": 0.464803608369613
+        },
+        {
+          "code": "6205.90.90",
+          "description": "Other",
+          "similarity": 0.45749169334720463
+        },
+        {
+          "code": "6205.90.19",
+          "description": "Other",
+          "similarity": 0.45672985653459897
+        },
+        {
+          "code": "6205.30.90",
+          "description": "Other",
+          "similarity": 0.45097830891609514
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC029",
+      "query": "woven trousers men cotton chino",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "62",
+      "current_heading": "6203",
+      "current_code": "6203.42.00",
+      "proposed_chapter": "62",
+      "proposed_heading": "6203",
+      "proposed_code": "6203.42.10",
+      "confidence": "MEDIUM",
+      "reasoning": "22 candidates in heading 6203. Recommending 6203.42.10 (sim=0.430). Original 6203.42.00 not in DB.",
+      "candidates": [
+        {
+          "code": "6203.42.10",
+          "description": "Trousers, bib and brace overalls, breeches and shorts: ---- Handloom",
+          "similarity": 0.42964065074920654
+        },
+        {
+          "code": "6203.19.10",
+          "description": "Of cotton",
+          "similarity": 0.42701550883147243
+        },
+        {
+          "code": "6203.42.90",
+          "description": "Trousers, bib and brace overalls, breeches and shorts: ---- Other",
+          "similarity": 0.4155007004737854
+        },
+        {
+          "code": "6203.32.00",
+          "description": "Jackets and blazers : -- Of cotton",
+          "similarity": 0.4145541736217848
+        },
+        {
+          "code": "6205.20.10",
+          "description": "Handloom",
+          "similarity": 0.41256022453308105
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC030",
+      "query": "woven skirt women linen",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "62",
+      "current_heading": "6204",
+      "current_code": "6204.59.00",
+      "proposed_chapter": "62",
+      "proposed_heading": "6204",
+      "proposed_code": "6204.51.00",
+      "confidence": "MEDIUM",
+      "reasoning": "66 candidates in heading 6204. Recommending 6204.51.00 (sim=0.470). Original 6204.59.00 not in DB.",
+      "candidates": [
+        {
+          "code": "6204.51.00",
+          "description": "Skirts and divided skirts : -- Of wool or fine animal hair",
+          "similarity": 0.4702872633934154
+        },
+        {
+          "code": "6204.59.11",
+          "description": "of silk:---- Embroidered with Lucknow Chikan Craft",
+          "similarity": 0.4631159879634448
+        },
+        {
+          "code": "6204.59.19",
+          "description": "of silk:---- Other",
+          "similarity": 0.4540977097924437
+        },
+        {
+          "code": "6204.42.20",
+          "description": "Handloom",
+          "similarity": 0.44906717235251026
+        },
+        {
+          "code": "6204.62.10",
+          "description": "Handloom",
+          "similarity": 0.44558742318079125
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC031",
+      "query": "roasted coffee ground filter",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "09",
+      "current_heading": "0901",
+      "current_code": "0901.21.00",
+      "proposed_chapter": "09",
+      "proposed_heading": "0901",
+      "proposed_code": "0901.11.32",
+      "confidence": "MEDIUM",
+      "reasoning": "28 candidates in heading 0901. Recommending 0901.11.32 (sim=0.413). Original 0901.21.00 not in DB.",
+      "candidates": [
+        {
+          "code": "0901.11.32",
+          "description": "Rob Parchment: ---- PB Grade",
+          "similarity": 0.41256500520005857
+        },
+        {
+          "code": "0901.11.44",
+          "description": "Rob cherry: ---- B/B/B Grade",
+          "similarity": 0.4101442587547618
+        },
+        {
+          "code": "0901.11.33",
+          "description": "Rob Parchment: ---- C Grade",
+          "similarity": 0.4095766734572267
+        },
+        {
+          "code": "0901.11.31",
+          "description": "Rob Parchment: ---- AB Grade",
+          "similarity": 0.4076334613879893
+        },
+        {
+          "code": "0901.11.42",
+          "description": "Rob cherry: ---- PB Grade",
+          "similarity": 0.4069064678819917
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC032",
+      "query": "coffee beans decaffeinated roasted",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "09",
+      "current_heading": "0901",
+      "current_code": "0901.22.00",
+      "proposed_chapter": "09",
+      "proposed_heading": "0901",
+      "proposed_code": "0901.11.44",
+      "confidence": "MEDIUM",
+      "reasoning": "28 candidates in heading 0901. Recommending 0901.11.44 (sim=0.456). Original 0901.22.00 not in DB.",
+      "candidates": [
+        {
+          "code": "0901.11.44",
+          "description": "Rob cherry: ---- B/B/B Grade",
+          "similarity": 0.45629839208409906
+        },
+        {
+          "code": "0901.12.00",
+          "description": "Coffee, not roasted : --Decaffeinated",
+          "similarity": 0.456112265586853
+        },
+        {
+          "code": "0901.11.42",
+          "description": "Rob cherry: ---- PB Grade",
+          "similarity": 0.45480790734291077
+        },
+        {
+          "code": "0901.11.43",
+          "description": "Rob cherry: ---- C Grade",
+          "similarity": 0.45116511278360494
+        },
+        {
+          "code": "0901.11.41",
+          "description": "Rob cherry: ---- AB Grade",
+          "similarity": 0.4502499460876084
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC034",
+      "query": "coffee concentrate cold brew liquid",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "21",
+      "current_heading": "2101",
+      "current_code": "2101.11.00",
+      "proposed_chapter": "21",
+      "proposed_heading": "2101",
+      "proposed_code": "2101.20.20",
+      "confidence": "MEDIUM",
+      "reasoning": "12 candidates in heading 2101. Recommending 2101.20.20 (sim=0.411). Original 2101.11.00 not in DB.",
+      "candidates": [
+        {
+          "code": "2101.20.20",
+          "description": "Quick brewing black tea",
+          "similarity": 0.411354362964633
+        },
+        {
+          "code": "2101.30.90",
+          "description": "Other",
+          "similarity": 0.3869353167376117
+        },
+        {
+          "code": "2101.11.10",
+          "description": "Instant coffee, flavoured",
+          "similarity": 0.38579004791230687
+        },
+        {
+          "code": "2101.11.20",
+          "description": "Instant coffee, not flavoured",
+          "similarity": 0.3845316905341627
+        },
+        {
+          "code": "2101.12.00",
+          "description": "Extracts, essences and concentrates, of coffee, and preparations with a basis of these extracts, essences or concentrates or with a basis of coffee : -- Preparations with a basis of extracts, essences or concentrates or with a basis of coffee",
+          "similarity": 0.38426531740841563
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC035",
+      "query": "espresso capsules nespresso compatible",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "09",
+      "current_heading": "0901",
+      "current_code": "0901.21.00",
+      "proposed_chapter": "09",
+      "proposed_heading": "0901",
+      "proposed_code": "0901.90.10",
+      "confidence": "MEDIUM",
+      "reasoning": "28 candidates in heading 0901. Recommending 0901.90.10 (sim=0.304). Original 0901.21.00 not in DB.",
+      "candidates": [
+        {
+          "code": "0901.90.10",
+          "description": "Coffee husks and skins",
+          "similarity": 0.30358416108034936
+        },
+        {
+          "code": "0901.11.22",
+          "description": "Arabica Cherry: ---- PB Grade",
+          "similarity": 0.30317250163801335
+        },
+        {
+          "code": "0901.11.23",
+          "description": "Arabica Cherry: ---- C Grade",
+          "similarity": 0.30216875393707354
+        },
+        {
+          "code": "0901.90.90",
+          "description": "Other",
+          "similarity": 0.3020816951369747
+        },
+        {
+          "code": "0901.90.20",
+          "description": "Coffee substitutes containing coffee",
+          "similarity": 0.3013346823854115
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC036",
+      "query": "diesel engine for truck",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "84",
+      "current_heading": "8408",
+      "current_code": "8408.20.00",
+      "proposed_chapter": "84",
+      "proposed_heading": "8408",
+      "proposed_code": "8408.20.20",
+      "confidence": "MEDIUM",
+      "reasoning": "8 candidates in heading 8408. Recommending 8408.20.20 (sim=0.396). Original 8408.20.00 not in DB.",
+      "candidates": [
+        {
+          "code": "8408.20.20",
+          "description": "Engines of cylinder capacity exceeding 250 cc",
+          "similarity": 0.3964589659620592
+        },
+        {
+          "code": "8408.20.10",
+          "description": "Of cylinder capacity not exceeding 250 cc",
+          "similarity": 0.395554554992374
+        },
+        {
+          "code": "8408.90.10",
+          "description": "Stationary engines of cylinder capacity exceeding 50 cc",
+          "similarity": 0.3868953653040317
+        },
+        {
+          "code": "8408.10.92",
+          "description": "Other: ----Of a cylinder capacity exceeding 100 cc but not exceeding 250 cc",
+          "similarity": 0.38643789968264763
+        },
+        {
+          "code": "8408.10.93",
+          "description": "Other: ----Of a cylinder capacity exceeding 250 cc",
+          "similarity": 0.3854572338410922
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC037",
+      "query": "hydraulic pump industrial",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "84",
+      "current_heading": "8413",
+      "current_code": "8413.60.00",
+      "proposed_chapter": "84",
+      "proposed_heading": "8413",
+      "proposed_code": "8413.81.30",
+      "confidence": "MEDIUM",
+      "reasoning": "38 candidates in heading 8413. Recommending 8413.81.30 (sim=0.438). Original 8413.60.00 not in DB.",
+      "candidates": [
+        {
+          "code": "8413.81.30",
+          "description": "Axial flow and mixed flow vertical pump designed primarily for handling water",
+          "similarity": 0.43785815690257346
+        },
+        {
+          "code": "8413.30.20",
+          "description": "Oil pump",
+          "similarity": 0.4344179332256317
+        },
+        {
+          "code": "8413.81.20",
+          "description": "Hydraulic ram",
+          "similarity": 0.43336621821220855
+        },
+        {
+          "code": "8413.50.21",
+          "description": "Primarily designed for handling water: ----Deep tube well turbine pump",
+          "similarity": 0.4333428492162945
+        },
+        {
+          "code": "8413.70.93",
+          "description": "other ----Horizontal self priming pumps",
+          "similarity": 0.43289053440093994
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC038",
+      "query": "air compressor piston type",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "84",
+      "current_heading": "8414",
+      "current_code": "8414.40.00",
+      "proposed_chapter": "84",
+      "proposed_heading": "8414",
+      "proposed_code": "8414.40.10",
+      "confidence": "MEDIUM",
+      "reasoning": "34 candidates in heading 8414. Recommending 8414.40.10 (sim=0.358). Original 8414.40.00 not in DB.",
+      "candidates": [
+        {
+          "code": "8407.32.90",
+          "description": "Other",
+          "similarity": 0.36228535400120365
+        },
+        {
+          "code": "8407.33.90",
+          "description": "Other",
+          "similarity": 0.35970055220727026
+        },
+        {
+          "code": "8407.31.90",
+          "description": "Other",
+          "similarity": 0.35928137787802483
+        },
+        {
+          "code": "8414.40.10",
+          "description": "Reciprocating air compressors",
+          "similarity": 0.3584443797535444
+        },
+        {
+          "code": "8407.34.90",
+          "description": "Other",
+          "similarity": 0.3542768849647988
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC039",
+      "query": "electric motor AC induction 5HP",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "85",
+      "current_heading": "8501",
+      "current_code": "8501.52.00",
+      "proposed_chapter": "85",
+      "proposed_heading": "8501",
+      "proposed_code": "8501.52.10",
+      "confidence": "MEDIUM",
+      "reasoning": "46 candidates in heading 8501. Recommending 8501.52.10 (sim=0.518). Original 8501.52.00 not in DB.",
+      "candidates": [
+        {
+          "code": "8501.52.10",
+          "description": "Squirrel cage induction motor, 3 phase type",
+          "similarity": 0.5176572028313388
+        },
+        {
+          "code": "8501.51.10",
+          "description": "Squirrel cage induction motor 3 phase type",
+          "similarity": 0.5170328791488548
+        },
+        {
+          "code": "8501.53.10",
+          "description": "Squirrel cage induction motor, 3 phase type",
+          "similarity": 0.5162986978559524
+        },
+        {
+          "code": "8501.40.10",
+          "description": "Fractional Horse power motor",
+          "similarity": 0.47290636518318574
+        },
+        {
+          "code": "8501.53.20",
+          "description": "Slipring motor",
+          "similarity": 0.46326158612325086
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC040",
+      "query": "power transformer 1000KVA",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "85",
+      "current_heading": "8504",
+      "current_code": "8504.23.00",
+      "proposed_chapter": "85",
+      "proposed_heading": "8504",
+      "proposed_code": "8504.23.10",
+      "confidence": "MEDIUM",
+      "reasoning": "23 candidates in heading 8504. Recommending 8504.23.10 (sim=0.534). Original 8504.23.00 not in DB.",
+      "candidates": [
+        {
+          "code": "8504.23.10",
+          "description": "Having a power handling capacity exceeding 10000 kVA but not exceeding 50000 kVA",
+          "similarity": 0.5338169177229152
+        },
+        {
+          "code": "8504.23.20",
+          "description": "Having a power handling capacity exceeding 50000 kVA but not exceeding 100000 kVA",
+          "similarity": 0.5303234105723967
+        },
+        {
+          "code": "8504.34.00",
+          "description": "Other transformers : -- Having a power handling capacity exceeding 500 kVA",
+          "similarity": 0.5122284860066245
+        },
+        {
+          "code": "8504.33.00",
+          "description": "Other transformers : -- Having a power handling capacity exceeding 16 kVA but not exceeding 500 kVA",
+          "similarity": 0.5121907853511698
+        },
+        {
+          "code": "8504.22.00",
+          "description": "Liquid dielectric transformers : -- Having a power handling capacity exceeding 650 kVA but not exceeding 10,000 kVA",
+          "similarity": 0.4979776147644026
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC041",
+      "query": "PVC pipe for water supply",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "39",
+      "current_heading": "3917",
+      "current_code": "3917.23.00",
+      "proposed_chapter": "39",
+      "proposed_heading": "3917",
+      "proposed_code": "3917.31.00",
+      "confidence": "MEDIUM",
+      "reasoning": "22 candidates in heading 3917. Recommending 3917.31.00 (sim=0.321). Original 3917.23.00 not in DB.",
+      "candidates": [
+        {
+          "code": "3904.10.20",
+          "description": "Suspension grade PVC resin",
+          "similarity": 0.36272528767585754
+        },
+        {
+          "code": "3926.90.10",
+          "description": "PVC belt conveyor",
+          "similarity": 0.33147725462913513
+        },
+        {
+          "code": "3904.90.10",
+          "description": "Chlorinated poly vinyl chloride (CPVC) resin",
+          "similarity": 0.3263268665270136
+        },
+        {
+          "code": "3905.12.10",
+          "description": "Poly(vinyl acetate) (PVA), moulding material",
+          "similarity": 0.32146889823304625
+        },
+        {
+          "code": "3917.31.00",
+          "description": "Other tubes, pipes and hoses : -- Flexible tubes, pipes and hoses, having a minimum burst pressure of 27.6 Mpa",
+          "similarity": 0.3211607252167814
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC042",
+      "query": "plastic container food grade HDPE",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "39",
+      "current_heading": "3923",
+      "current_code": "3923.30.00",
+      "proposed_chapter": "39",
+      "proposed_heading": "3923",
+      "proposed_code": "3923.30.10",
+      "confidence": "MEDIUM",
+      "reasoning": "16 candidates in heading 3923. Recommending 3923.30.10 (sim=0.388). Original 3923.30.00 not in DB.",
+      "candidates": [
+        {
+          "code": "3901.20.00",
+          "description": "Polyethylene having a specific gravity of 0.94 or more",
+          "similarity": 0.4113371775940474
+        },
+        {
+          "code": "3901.10.20",
+          "description": "Low density polyethylene (LDPE)",
+          "similarity": 0.4098772352860718
+        },
+        {
+          "code": "3901.10.10",
+          "description": "Linear low density polyethylene (LLDPE), in which ethylene monomer unit contributes 95 percent or more by weight of the total polymer content",
+          "similarity": 0.4062507562338433
+        },
+        {
+          "code": "3925.10.00",
+          "description": "Reservoirs, tanks, vats and similar containers, of a capacity exceeding 300 l",
+          "similarity": 0.4036914230493137
+        },
+        {
+          "code": "3901.40.10",
+          "description": "Linear low density polyethylene (LLDPE), in which ethylene monomer unit contributes less than 95 percent by weight of the total polymer content",
+          "similarity": 0.3990422487258911
+        }
+      ],
+      "code_exists_in_db": false
+    },
+    {
+      "case_id": "EC045",
+      "query": "rubber gasket seal O-ring",
+      "source_file": "comprehensive-test-set.json",
+      "fix_type": "invalid_code",
+      "current_chapter": "40",
+      "current_heading": "4016",
+      "current_code": "4016.93.00",
+      "proposed_chapter": "40",
+      "proposed_heading": "4016",
+      "proposed_code": "4016.93.20",
+      "confidence": "MEDIUM",
+      "reasoning": "22 candidates in heading 4016. Recommending 4016.93.20 (sim=0.531). Original 4016.93.00 not in DB.",
+      "candidates": [
+        {
+          "code": "4016.93.20",
+          "description": "Rubber ring (O-ring)",
+          "similarity": 0.5311927869779594
+        },
+        {
+          "code": "4016.93.30",
+          "description": "Rubber seals ( Oil seals and the like )",
+          "similarity": 0.4990703164977033
+        },
+        {
+          "code": "4016.93.40",
+          "description": "Gaskets",
+          "similarity": 0.4757988183738344
+        },
+        {
+          "code": "4016.93.10",
+          "description": "Patches for puncture repair of self-vulcanizing rubber or a rubber backing",
+          "similarity": 0.47493583113338333
+        },
+        {
+          "code": "4016.93.50",
+          "description": "Washers",
+          "similarity": 0.4678374927993856
+        }
+      ],
+      "code_exists_in_db": false
+    }
+  ]
+}

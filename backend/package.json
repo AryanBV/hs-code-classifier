@@ -28,7 +28,12 @@
     "merge:tiers": "npx ts-node src/tests/test-data/merge-tiers.ts",
     "eval": "npx tsx --require dotenv/config src/eval/runner.ts",
     "eval:quick": "npx tsx --require dotenv/config src/eval/runner.ts --suite quick",
-    "eval:compare": "npx tsx src/eval/compare.ts"
+    "eval:compare": "npx tsx src/eval/compare.ts",
+    "gt-fix": "npx tsx src/eval/gt-fix/run-all.ts",
+    "gt-fix:invalid": "npx tsx --require dotenv/config src/eval/gt-fix/fix-invalid-codes.ts",
+    "gt-fix:missing": "npx tsx --require dotenv/config src/eval/gt-fix/fix-missing-gt.ts",
+    "gt-fix:llm": "npx tsx --require dotenv/config src/eval/gt-fix/flag-llm-cases.ts",
+    "gt-fix:merge": "npx tsx src/eval/gt-fix/merge-and-review.ts"
   },
   "keywords": [
     "hs-code",
