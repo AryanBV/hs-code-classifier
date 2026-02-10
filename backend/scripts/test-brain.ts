@@ -98,7 +98,7 @@ async function runTests(): Promise<void> {
 
     try {
       const brainOutput = await analyzeBrain(tc.query);
-      const routeDecision = route(brainOutput);
+      const routeDecision = route(brainOutput, tc.query);
 
       const actionMatch = routeDecision.action === tc.expectedAction;
       const decisionMatch = brainOutput.decision === tc.expectedDecision;

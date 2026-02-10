@@ -14,10 +14,10 @@ import {
 /**
  * Convert BrainOutput to a pipeline-compatible RouteDecision.
  */
-export function route(brain: BrainOutput): RouteDecision {
+export function route(brain: BrainOutput, query: string = ''): RouteDecision {
   if (!brain || !brain.decision) {
     console.warn('[Router] Malformed BrainOutput — defaulting to classify');
-    return buildClassifyFallback(brain);
+    return buildClassifyFallback(brain, query);
   }
 
   switch (brain.decision) {
@@ -32,18 +32,18 @@ export function route(brain: BrainOutput): RouteDecision {
       return buildAskDecision(brain);
 
     case 'classify':
-      return buildClassifyDecision(brain);
+      return buildClassifyDecision(brain, query);
 
     default:
       console.warn(`[Router] Unknown decision "${brain.decision}" — defaulting to classify`);
-      return buildClassifyFallback(brain);
+      return buildClassifyFallback(brain, query);
   }
 }
 
-function buildClassifyDecision(brain: BrainOutput): RouteDecision {
+function buildClassifyDecision(brain: BrainOutput, query: string): RouteDecision {
   return {
     action: 'classify',
-    attributes: brainToExtractedAttributes(brain),
+    attributes: brainToExtractedAttributes(brain, query),
     suggestedChapters: brain.suggested_chapters || [],
   };
 }
@@ -73,10 +73,10 @@ function buildAskDecision(brain: BrainOutput): RouteDecision {
   };
 }
 
-function buildClassifyFallback(brain: BrainOutput | null): RouteDecision {
+function buildClassifyFallback(brain: BrainOutput | null, query: string = ''): RouteDecision {
   return {
     action: 'classify',
-    attributes: brain ? brainToExtractedAttributes(brain) : { raw_query: '' },
+    attributes: brain ? brainToExtractedAttributes(brain, query) : { raw_query: query },
     suggestedChapters: brain?.suggested_chapters || [],
   };
 }
@@ -85,7 +85,7 @@ function buildClassifyFallback(brain: BrainOutput | null): RouteDecision {
  * Convert BrainAttributes to ExtractedAttributes for downstream compatibility.
  * Empty strings become undefined. Drops brain-only fields (industry, origin).
  */
-function brainToExtractedAttributes(brain: BrainOutput): ExtractedAttributes {
+function brainToExtractedAttributes(brain: BrainOutput, query: string): ExtractedAttributes {
   const a = brain.attributes;
   return {
     material: a.material || undefined,
@@ -94,6 +94,6 @@ function brainToExtractedAttributes(brain: BrainOutput): ExtractedAttributes {
     intended_use: a.intended_use || undefined,
     processing_state: a.processing_state || undefined,
     composition: a.composition || undefined,
-    raw_query: '', // Set by caller when wiring into pipeline (ARY-28)
+    raw_query: query,
   };
 }
