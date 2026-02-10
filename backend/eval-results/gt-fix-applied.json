@@ -1,0 +1,1823 @@
+{
+  "applied_at": "2026-02-10T13:33:14.261Z",
+  "summary": {
+    "invalid_codes": {
+      "accepted": 63,
+      "rejected": 0
+    },
+    "missing_gt": {
+      "accepted": 46,
+      "rejected": 9,
+      "removed_from_suite": 0
+    },
+    "llm_flagged": {
+      "changed": 6,
+      "kept_original": 72,
+      "removed_from_suite": 0
+    },
+    "total_cases_before": 386,
+    "total_cases_after": 386,
+    "total_gt_changes": 115,
+    "total_removed": 0
+  },
+  "changes": [
+    {
+      "case_id": "EC001",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "4303.10.00",
+      "new_code": "4303.90.90",
+      "new_heading": "4303",
+      "new_chapter": "43",
+      "reason": "Same heading 4303, new code in DB"
+    },
+    {
+      "case_id": "EC002",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "4303.10.00",
+      "new_code": "4303.10.90",
+      "new_heading": "4303",
+      "new_chapter": "43",
+      "reason": "Same heading 4303, new code in DB"
+    },
+    {
+      "case_id": "EC003",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "4303.10.00",
+      "new_code": "4303.90.10",
+      "new_heading": "4303",
+      "new_chapter": "43",
+      "reason": "Same heading 4303, new code in DB"
+    },
+    {
+      "case_id": "EC004",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "4203.10.00",
+      "new_code": "4203.10.10",
+      "new_heading": "4203",
+      "new_chapter": "42",
+      "reason": "Same heading 4203, new code in DB"
+    },
+    {
+      "case_id": "EC005",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "4202.21.00",
+      "new_code": "4202.21.10",
+      "new_heading": "4202",
+      "new_chapter": "42",
+      "reason": "Same heading 4202, new code in DB"
+    },
+    {
+      "case_id": "EC007",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "7210.12.00",
+      "new_code": "7210.11.10",
+      "new_heading": "7210",
+      "new_chapter": "72",
+      "reason": "Same heading 7210, new code in DB"
+    },
+    {
+      "case_id": "EC008",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "7210.49.00",
+      "new_code": "7210.49.10",
+      "new_heading": "7210",
+      "new_chapter": "72",
+      "reason": "Same heading 7210, new code in DB"
+    },
+    {
+      "case_id": "EC009",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "8001.10.00",
+      "new_code": "8001.10.90",
+      "new_heading": "8001",
+      "new_chapter": "80",
+      "reason": "Same heading 8001, new code in DB"
+    },
+    {
+      "case_id": "EC010",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "8007.00.00",
+      "new_code": "8007.00.10",
+      "new_heading": "8007",
+      "new_chapter": "80",
+      "reason": "Same heading 8007, new code in DB"
+    },
+    {
+      "case_id": "EC011",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "8003.00.00",
+      "new_code": "8003.00.20",
+      "new_heading": "8003",
+      "new_chapter": "80",
+      "reason": "Same heading 8003, new code in DB"
+    },
+    {
+      "case_id": "EC012",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "7219.31.00",
+      "new_code": "7219.22.12",
+      "new_heading": "7219",
+      "new_chapter": "72",
+      "reason": "Same heading 7219, new code in DB"
+    },
+    {
+      "case_id": "EC015",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "5403.10.00",
+      "new_code": "5403.10.20",
+      "new_heading": "5403",
+      "new_chapter": "54",
+      "reason": "Same heading 5403, new code in DB"
+    },
+    {
+      "case_id": "EC017",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "5503.30.00",
+      "new_code": "5503.11.10",
+      "new_heading": "5503",
+      "new_chapter": "55",
+      "reason": "Same heading 5503, new code in DB"
+    },
+    {
+      "case_id": "EC018",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "5504.10.00",
+      "new_code": "5504.10.11",
+      "new_heading": "5504",
+      "new_chapter": "55",
+      "reason": "Same heading 5504, new code in DB"
+    },
+    {
+      "case_id": "EC019",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "4203.10.00",
+      "new_code": "4203.40.20",
+      "new_heading": "4203",
+      "new_chapter": "42",
+      "reason": "Same heading 4203, new code in DB"
+    },
+    {
+      "case_id": "EC020",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "4203.10.00",
+      "new_code": "4203.10.10",
+      "new_heading": "4203",
+      "new_chapter": "42",
+      "reason": "Same heading 4203, new code in DB"
+    },
+    {
+      "case_id": "EC021",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "4203.21.00",
+      "new_code": "4203.21.20",
+      "new_heading": "4203",
+      "new_chapter": "42",
+      "reason": "Same heading 4203, new code in DB"
+    },
+    {
+      "case_id": "EC022",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "6202.11.00",
+      "new_code": "6202.20.90",
+      "new_heading": "6202",
+      "new_chapter": "62",
+      "reason": "Same heading 6202, new code in DB"
+    },
+    {
+      "case_id": "EC024",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "6201.93.00",
+      "new_code": "6201.40.10",
+      "new_heading": "6201",
+      "new_chapter": "62",
+      "reason": "Same heading 6201, new code in DB"
+    },
+    {
+      "case_id": "EC025",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "6105.10.00",
+      "new_code": "6105.10.10",
+      "new_heading": "6105",
+      "new_chapter": "61",
+      "reason": "Same heading 6105, new code in DB"
+    },
+    {
+      "case_id": "EC028",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "6205.20.00",
+      "new_code": "6205.20.10",
+      "new_heading": "6205",
+      "new_chapter": "62",
+      "reason": "Same heading 6205, new code in DB"
+    },
+    {
+      "case_id": "EC029",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "6203.42.00",
+      "new_code": "6203.42.10",
+      "new_heading": "6203",
+      "new_chapter": "62",
+      "reason": "Same heading 6203, new code in DB"
+    },
+    {
+      "case_id": "EC030",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "6204.59.00",
+      "new_code": "6204.51.00",
+      "new_heading": "6204",
+      "new_chapter": "62",
+      "reason": "Same heading 6204, new code in DB"
+    },
+    {
+      "case_id": "EC031",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "0901.21.00",
+      "new_code": "0901.11.32",
+      "new_heading": "0901",
+      "new_chapter": "09",
+      "reason": "Same heading 0901, new code in DB"
+    },
+    {
+      "case_id": "EC032",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "0901.22.00",
+      "new_code": "0901.11.44",
+      "new_heading": "0901",
+      "new_chapter": "09",
+      "reason": "Same heading 0901, new code in DB"
+    },
+    {
+      "case_id": "EC034",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "2101.11.00",
+      "new_code": "2101.20.20",
+      "new_heading": "2101",
+      "new_chapter": "21",
+      "reason": "Same heading 2101, new code in DB"
+    },
+    {
+      "case_id": "EC035",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "0901.21.00",
+      "new_code": "0901.90.10",
+      "new_heading": "0901",
+      "new_chapter": "09",
+      "reason": "Same heading 0901, new code in DB"
+    },
+    {
+      "case_id": "EC036",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "8408.20.00",
+      "new_code": "8408.20.20",
+      "new_heading": "8408",
+      "new_chapter": "84",
+      "reason": "Same heading 8408, new code in DB"
+    },
+    {
+      "case_id": "EC037",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "8413.60.00",
+      "new_code": "8413.81.30",
+      "new_heading": "8413",
+      "new_chapter": "84",
+      "reason": "Same heading 8413, new code in DB"
+    },
+    {
+      "case_id": "EC038",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "8414.40.00",
+      "new_code": "8414.40.10",
+      "new_heading": "8414",
+      "new_chapter": "84",
+      "reason": "Same heading 8414, new code in DB"
+    },
+    {
+      "case_id": "EC039",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "8501.52.00",
+      "new_code": "8501.52.10",
+      "new_heading": "8501",
+      "new_chapter": "85",
+      "reason": "Same heading 8501, new code in DB"
+    },
+    {
+      "case_id": "EC040",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "8504.23.00",
+      "new_code": "8504.23.10",
+      "new_heading": "8504",
+      "new_chapter": "85",
+      "reason": "Same heading 8504, new code in DB"
+    },
+    {
+      "case_id": "EC041",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "3917.23.00",
+      "new_code": "3917.31.00",
+      "new_heading": "3917",
+      "new_chapter": "39",
+      "reason": "Same heading 3917, new code in DB"
+    },
+    {
+      "case_id": "EC042",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "3923.30.00",
+      "new_code": "3923.30.10",
+      "new_heading": "3923",
+      "new_chapter": "39",
+      "reason": "Same heading 3923, new code in DB"
+    },
+    {
+      "case_id": "EC045",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "4016.93.00",
+      "new_code": "4016.93.20",
+      "new_heading": "4016",
+      "new_chapter": "40",
+      "reason": "Same heading 4016, new code in DB"
+    },
+    {
+      "case_id": "TC005",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "8708.10.00",
+      "new_code": "8708.10.90",
+      "new_heading": "8708",
+      "new_chapter": "87",
+      "reason": "Same heading 8708, new code in DB"
+    },
+    {
+      "case_id": "TC010",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "8501.10.00",
+      "new_code": "8501.10.13",
+      "new_heading": "8501",
+      "new_chapter": "85",
+      "reason": "Same heading 8501, new code in DB"
+    },
+    {
+      "case_id": "TC013",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "4011.20.00",
+      "new_code": "4011.10.10",
+      "new_heading": "4011",
+      "new_chapter": "40",
+      "reason": "Same heading 4011, new code in DB"
+    },
+    {
+      "case_id": "TC014",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "4013.90.00",
+      "new_code": "4013.90.20",
+      "new_heading": "4013",
+      "new_chapter": "40",
+      "reason": "Same heading 4013, new code in DB"
+    },
+    {
+      "case_id": "TC015",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "6506.10.00",
+      "new_code": "6506.10.10",
+      "new_heading": "6506",
+      "new_chapter": "65",
+      "reason": "Same heading 6506, new code in DB"
+    },
+    {
+      "case_id": "TC101",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "0901.11.10",
+      "new_code": "0901.11.12",
+      "new_heading": "0901",
+      "new_chapter": "09",
+      "reason": "Same heading 0901, new code in DB"
+    },
+    {
+      "case_id": "TC103",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "0901.21.00",
+      "new_code": "0901.11.44",
+      "new_heading": "0901",
+      "new_chapter": "09",
+      "reason": "Same heading 0901, new code in DB"
+    },
+    {
+      "case_id": "TC104",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "2101.11.00",
+      "new_code": "2101.11.10",
+      "new_heading": "2101",
+      "new_chapter": "21",
+      "reason": "Same heading 2101, new code in DB"
+    },
+    {
+      "case_id": "TC105",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "2101.11.00",
+      "new_code": "2101.11.20",
+      "new_heading": "2101",
+      "new_chapter": "21",
+      "reason": "Same heading 2101, new code in DB"
+    },
+    {
+      "case_id": "TC106",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "2101.11.00",
+      "new_code": "2101.11.10",
+      "new_heading": "2101",
+      "new_chapter": "21",
+      "reason": "Same heading 2101, new code in DB"
+    },
+    {
+      "case_id": "TC107",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "0904.11.00",
+      "new_code": "0904.11.40",
+      "new_heading": "0904",
+      "new_chapter": "09",
+      "reason": "Same heading 0904, new code in DB"
+    },
+    {
+      "case_id": "TC111",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "0908.31.00",
+      "new_code": "0908.31.30",
+      "new_heading": "0908",
+      "new_chapter": "09",
+      "reason": "Same heading 0908, new code in DB"
+    },
+    {
+      "case_id": "TC112",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "0909.31.00",
+      "new_code": "0909.31.21",
+      "new_heading": "0909",
+      "new_chapter": "09",
+      "reason": "Same heading 0909, new code in DB"
+    },
+    {
+      "case_id": "TC113",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "0906.11.00",
+      "new_code": "0906.11.10",
+      "new_heading": "0906",
+      "new_chapter": "09",
+      "reason": "Same heading 0906, new code in DB"
+    },
+    {
+      "case_id": "TC114",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "0907.10.00",
+      "new_code": "0907.10.30",
+      "new_heading": "0907",
+      "new_chapter": "09",
+      "reason": "Same heading 0907, new code in DB"
+    },
+    {
+      "case_id": "TC115",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "0910.11.00",
+      "new_code": "0910.11.10",
+      "new_heading": "0910",
+      "new_chapter": "09",
+      "reason": "Same heading 0910, new code in DB"
+    },
+    {
+      "case_id": "TC116",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "0910.12.00",
+      "new_code": "0910.11.20",
+      "new_heading": "0910",
+      "new_chapter": "09",
+      "reason": "Same heading 0910, new code in DB"
+    },
+    {
+      "case_id": "TC117",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "0910.20.00",
+      "new_code": "0910.20.20",
+      "new_heading": "0910",
+      "new_chapter": "09",
+      "reason": "Same heading 0910, new code in DB"
+    },
+    {
+      "case_id": "TC119",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "0902.10.00",
+      "new_code": "0902.20.40",
+      "new_heading": "0902",
+      "new_chapter": "09",
+      "reason": "Same heading 0902, new code in DB"
+    },
+    {
+      "case_id": "TC120",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "0902.30.00",
+      "new_code": "0902.40.20",
+      "new_heading": "0902",
+      "new_chapter": "09",
+      "reason": "Same heading 0902, new code in DB"
+    },
+    {
+      "case_id": "TC202",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "3004.10.00",
+      "new_code": "3004.10.30",
+      "new_heading": "3004",
+      "new_chapter": "30",
+      "reason": "Same heading 3004, new code in DB"
+    },
+    {
+      "case_id": "TC205",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "2924.29.00",
+      "new_code": "2924.29.80",
+      "new_heading": "2924",
+      "new_chapter": "29",
+      "reason": "Same heading 2924, new code in DB"
+    },
+    {
+      "case_id": "TC206",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "2918.99.00",
+      "new_code": "2918.11.10",
+      "new_heading": "2918",
+      "new_chapter": "29",
+      "reason": "Same heading 2918, new code in DB"
+    },
+    {
+      "case_id": "TC207",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "3004.31.00",
+      "new_code": "3004.31.10",
+      "new_heading": "3004",
+      "new_chapter": "30",
+      "reason": "Same heading 3004, new code in DB"
+    },
+    {
+      "case_id": "TC303",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "6205.20.00",
+      "new_code": "6205.20.10",
+      "new_heading": "6205",
+      "new_chapter": "62",
+      "reason": "Same heading 6205, new code in DB"
+    },
+    {
+      "case_id": "TC304",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "6203.42.00",
+      "new_code": "6203.19.10",
+      "new_heading": "6203",
+      "new_chapter": "62",
+      "reason": "Same heading 6203, new code in DB"
+    },
+    {
+      "case_id": "TC305",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "6110.11.00",
+      "new_code": "6110.11.20",
+      "new_heading": "6110",
+      "new_chapter": "61",
+      "reason": "Same heading 6110, new code in DB"
+    },
+    {
+      "case_id": "TC306",
+      "category": "invalid_code",
+      "action": "accept",
+      "old_code": "6206.10.00",
+      "new_code": "6206.10.10",
+      "new_heading": "6206",
+      "new_chapter": "62",
+      "reason": "Same heading 6206, new code in DB"
+    },
+    {
+      "case_id": "S5-AMB-001",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "8511.10.00",
+      "new_heading": "8511",
+      "new_chapter": "85",
+      "reason": "HIGH confidence, code 8511.10.00 in DB"
+    },
+    {
+      "case_id": "S5-AMB-002",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "7007.21.90",
+      "new_heading": "7007",
+      "new_chapter": "70",
+      "reason": "HIGH confidence, code 7007.21.90 in DB"
+    },
+    {
+      "case_id": "S5-AMB-004",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "6506.10.20",
+      "new_heading": "6506",
+      "new_chapter": "65",
+      "reason": "HIGH confidence, code 6506.10.20 in DB"
+    },
+    {
+      "case_id": "S5-AUTO-025",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "4010.11.10",
+      "new_heading": "4010",
+      "new_chapter": "40",
+      "reason": "HIGH confidence, code 4010.11.10 in DB"
+    },
+    {
+      "case_id": "S5-SIMP-002",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "0808.10.00",
+      "new_heading": "0808",
+      "new_chapter": "08",
+      "reason": "HIGH confidence, code 0808.10.00 in DB"
+    },
+    {
+      "case_id": "S5-SIMP-004",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "1701.91.00",
+      "new_heading": "1701",
+      "new_chapter": "17",
+      "reason": "HIGH confidence, code 1701.91.00 in DB"
+    },
+    {
+      "case_id": "S5-SIMP-005",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "1101.00.00",
+      "new_heading": "1101",
+      "new_chapter": "11",
+      "reason": "HIGH confidence, code 1101.00.00 in DB"
+    },
+    {
+      "case_id": "S5-SIMP-009",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "0306.17.50",
+      "new_heading": "0304",
+      "new_chapter": "03",
+      "reason": "HIGH confidence, code 0306.17.50 in DB"
+    },
+    {
+      "case_id": "S5-SIMP-029",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "7108.12.10",
+      "new_heading": "7108",
+      "new_chapter": "71",
+      "reason": "HIGH confidence, code 7108.12.10 in DB"
+    },
+    {
+      "case_id": "S5-SIMP-033",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "4015.90.30",
+      "new_heading": "4015",
+      "new_chapter": "40",
+      "reason": "HIGH confidence, code 4015.90.30 in DB"
+    },
+    {
+      "case_id": "S5-SIMP-038",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "6601.10.00",
+      "new_heading": "6601",
+      "new_chapter": "66",
+      "reason": "HIGH confidence, code 6601.10.00 in DB"
+    },
+    {
+      "case_id": "S5-SIMP-039",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "9101.21.00",
+      "new_heading": "9101",
+      "new_chapter": "91",
+      "reason": "HIGH confidence, code 9101.21.00 in DB"
+    },
+    {
+      "case_id": "S5-AMB-003",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "4013.10.10",
+      "new_heading": "4013",
+      "new_chapter": "40",
+      "reason": "MEDIUM confidence, chapter match (40), code in DB"
+    },
+    {
+      "case_id": "S5-AMB-005",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "4201.00.00",
+      "new_heading": "4201",
+      "new_chapter": "42",
+      "reason": "MEDIUM confidence, chapter match (42), code in DB"
+    },
+    {
+      "case_id": "S5-AMB-006",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "8539.21.10",
+      "new_heading": "8539",
+      "new_chapter": "85",
+      "reason": "MEDIUM confidence, chapter match (85), code in DB"
+    },
+    {
+      "case_id": "S5-AMB-007",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "3214.90.10",
+      "new_heading": "3214",
+      "new_chapter": "32",
+      "reason": "MEDIUM confidence, chapter match (32), code in DB"
+    },
+    {
+      "case_id": "S5-AMB-008",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "9404.29.20",
+      "new_heading": "9404",
+      "new_chapter": "94",
+      "reason": "MEDIUM confidence, chapter match (94), code in DB"
+    },
+    {
+      "case_id": "S5-AMB-010",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "6104.43.00",
+      "new_heading": "6104",
+      "new_chapter": "61",
+      "reason": "MEDIUM confidence, chapter match (61), code in DB"
+    },
+    {
+      "case_id": "S5-AMB-011",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "4202.22.20",
+      "new_heading": "4202",
+      "new_chapter": "42",
+      "reason": "MEDIUM confidence, chapter match (42), code in DB"
+    },
+    {
+      "case_id": "S5-AMB-013",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "8513.10.90",
+      "new_heading": "8513",
+      "new_chapter": "85",
+      "reason": "MEDIUM confidence, chapter match (85), code in DB"
+    },
+    {
+      "case_id": "S5-AMB-014",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "9506.99.20",
+      "new_heading": "9506",
+      "new_chapter": "95",
+      "reason": "MEDIUM confidence, chapter match (95), code in DB"
+    },
+    {
+      "case_id": "S5-AMB-015",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "8806.22.00",
+      "new_heading": "8806",
+      "new_chapter": "88",
+      "reason": "MEDIUM confidence, chapter match (88), code in DB"
+    },
+    {
+      "case_id": "S5-AUTO-002",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "8708.30.00",
+      "new_heading": "8709",
+      "new_chapter": "87",
+      "reason": "MEDIUM confidence, chapter match (87), code in DB"
+    },
+    {
+      "case_id": "S5-AUTO-003",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "8708.30.00",
+      "new_heading": "8713",
+      "new_chapter": "87",
+      "reason": "MEDIUM confidence, chapter match (87), code in DB"
+    },
+    {
+      "case_id": "S5-AUTO-005",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "8706.00.42",
+      "new_heading": "8706",
+      "new_chapter": "87",
+      "reason": "MEDIUM confidence, chapter match (87), code in DB"
+    },
+    {
+      "case_id": "S5-AUTO-012",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "8705.20.00",
+      "new_heading": "8705",
+      "new_chapter": "87",
+      "reason": "MEDIUM confidence, chapter match (87), code in DB"
+    },
+    {
+      "case_id": "S5-AUTO-014",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "8715.00.20",
+      "new_heading": "8715",
+      "new_chapter": "87",
+      "reason": "MEDIUM confidence, chapter match (87), code in DB"
+    },
+    {
+      "case_id": "S5-AUTO-015",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "8708.93.00",
+      "new_heading": "8709",
+      "new_chapter": "87",
+      "reason": "MEDIUM confidence, chapter match (87), code in DB"
+    },
+    {
+      "case_id": "S5-AUTO-016",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "8709.90.00",
+      "new_heading": "8709",
+      "new_chapter": "87",
+      "reason": "MEDIUM confidence, chapter match (87), code in DB"
+    },
+    {
+      "case_id": "S5-AUTO-020",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "8421.23.00",
+      "new_heading": "8408",
+      "new_chapter": "84",
+      "reason": "MEDIUM confidence, chapter match (84), code in DB"
+    },
+    {
+      "case_id": "S5-AUTO-021",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "4013.90.20",
+      "new_heading": "4013",
+      "new_chapter": "40",
+      "reason": "MEDIUM confidence, chapter match (40), code in DB"
+    },
+    {
+      "case_id": "S5-AUTO-022",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "8502.13.60",
+      "new_heading": "8511",
+      "new_chapter": "85",
+      "reason": "MEDIUM confidence, chapter match (85), code in DB"
+    },
+    {
+      "case_id": "S5-AUTO-023",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "8511.40.00",
+      "new_heading": "8511",
+      "new_chapter": "85",
+      "reason": "MEDIUM confidence, chapter match (85), code in DB"
+    },
+    {
+      "case_id": "S5-SIMP-010",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "1806.31.00",
+      "new_heading": "1806",
+      "new_chapter": "18",
+      "reason": "MEDIUM confidence, chapter match (18), code in DB"
+    },
+    {
+      "case_id": "S5-SIMP-014",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "6302.10.10",
+      "new_heading": "6302",
+      "new_chapter": "63",
+      "reason": "MEDIUM confidence, chapter match (63), code in DB"
+    },
+    {
+      "case_id": "S5-SIMP-015",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "6301.30.00",
+      "new_heading": "6301",
+      "new_chapter": "63",
+      "reason": "MEDIUM confidence, chapter match (63), code in DB"
+    },
+    {
+      "case_id": "S5-SIMP-017",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "6303.99.10",
+      "new_heading": "6303",
+      "new_chapter": "63",
+      "reason": "MEDIUM confidence, chapter match (63), code in DB"
+    },
+    {
+      "case_id": "S5-SIMP-021",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "8524.92.90",
+      "new_heading": "8524",
+      "new_chapter": "85",
+      "reason": "MEDIUM confidence, chapter match (85), code in DB"
+    },
+    {
+      "case_id": "S5-SIMP-022",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "8418.30.90",
+      "new_heading": "8418",
+      "new_chapter": "84",
+      "reason": "MEDIUM confidence, chapter match (84), code in DB"
+    },
+    {
+      "case_id": "S5-SIMP-023",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "8450.11.00",
+      "new_heading": "8450",
+      "new_chapter": "84",
+      "reason": "MEDIUM confidence, chapter match (84), code in DB"
+    },
+    {
+      "case_id": "S5-SIMP-024",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "8514.11.00",
+      "new_heading": "8514",
+      "new_chapter": "85",
+      "reason": "MEDIUM confidence, chapter match (85), code in DB"
+    },
+    {
+      "case_id": "S5-SIMP-025",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "8415.81.10",
+      "new_heading": "8415",
+      "new_chapter": "84",
+      "reason": "MEDIUM confidence, chapter match (84), code in DB"
+    },
+    {
+      "case_id": "S5-SIMP-032",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "3925.10.00",
+      "new_heading": "3924",
+      "new_chapter": "39",
+      "reason": "MEDIUM confidence, chapter match (39), code in DB"
+    },
+    {
+      "case_id": "S5-SIMP-034",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "3923.21.00",
+      "new_heading": "3923",
+      "new_chapter": "39",
+      "reason": "MEDIUM confidence, chapter match (39), code in DB"
+    },
+    {
+      "case_id": "S5-SIMP-037",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "9608.10.11",
+      "new_heading": "9608",
+      "new_chapter": "96",
+      "reason": "MEDIUM confidence, chapter match (96), code in DB"
+    },
+    {
+      "case_id": "S5-SIMP-040",
+      "category": "missing_gt",
+      "action": "accept",
+      "old_code": null,
+      "new_code": "9202.10.00",
+      "new_heading": "9202",
+      "new_chapter": "92",
+      "reason": "MEDIUM confidence, chapter match (92), code in DB"
+    },
+    {
+      "case_id": "S5-AMB-009",
+      "category": "missing_gt",
+      "action": "reject",
+      "old_code": null,
+      "new_code": "9402.10.10",
+      "reason": "LOW confidence — too uncertain to add GT"
+    },
+    {
+      "case_id": "S5-AMB-012",
+      "category": "missing_gt",
+      "action": "reject",
+      "old_code": null,
+      "new_code": "8471.70.20",
+      "reason": "LOW confidence — too uncertain to add GT"
+    },
+    {
+      "case_id": "S5-AUTO-006",
+      "category": "missing_gt",
+      "action": "reject",
+      "old_code": null,
+      "new_code": "8706.00.42",
+      "reason": "LOW confidence — too uncertain to add GT"
+    },
+    {
+      "case_id": "S5-AUTO-010",
+      "category": "missing_gt",
+      "action": "reject",
+      "old_code": null,
+      "new_code": "8708.22.00",
+      "reason": "LOW confidence — too uncertain to add GT"
+    },
+    {
+      "case_id": "S5-AUTO-011",
+      "category": "missing_gt",
+      "action": "reject",
+      "old_code": null,
+      "new_code": "8714.92.90",
+      "reason": "LOW confidence — too uncertain to add GT"
+    },
+    {
+      "case_id": "S5-AUTO-024",
+      "category": "missing_gt",
+      "action": "reject",
+      "old_code": null,
+      "new_code": "8714.92.90",
+      "reason": "LOW confidence — too uncertain to add GT"
+    },
+    {
+      "case_id": "S5-SIMP-019",
+      "category": "missing_gt",
+      "action": "reject",
+      "old_code": null,
+      "new_code": "8471.30.10",
+      "reason": "LOW confidence — too uncertain to add GT"
+    },
+    {
+      "case_id": "S5-SIMP-020",
+      "category": "missing_gt",
+      "action": "reject",
+      "old_code": null,
+      "new_code": "8517.13.00",
+      "reason": "LOW confidence — too uncertain to add GT"
+    },
+    {
+      "case_id": "S5-SIMP-036",
+      "category": "missing_gt",
+      "action": "reject",
+      "old_code": null,
+      "new_code": "9401.41.00",
+      "reason": "LOW confidence — too uncertain to add GT"
+    },
+    {
+      "case_id": "LLM021",
+      "category": "llm_flagged",
+      "action": "accept",
+      "old_code": "2621.90.00",
+      "new_code": "2621.90.00",
+      "new_heading": "2621",
+      "new_chapter": "26",
+      "reason": "Fix metadata: chapter/heading -> 26/2621 (code exists in DB)"
+    },
+    {
+      "case_id": "LLM061",
+      "category": "llm_flagged",
+      "action": "accept",
+      "old_code": "7307.21.00",
+      "new_code": "7307.21.00",
+      "new_heading": "7307",
+      "new_chapter": "73",
+      "reason": "Fix metadata: chapter/heading -> 73/7307 (code exists in DB)"
+    },
+    {
+      "case_id": "LLM076",
+      "category": "llm_flagged",
+      "action": "accept",
+      "old_code": "8311.10.00",
+      "new_code": "8311.10.00",
+      "new_heading": "8311",
+      "new_chapter": "83",
+      "reason": "Fix metadata: chapter/heading -> 83/8311 (code exists in DB)"
+    },
+    {
+      "case_id": "LLM105",
+      "category": "llm_flagged",
+      "action": "accept",
+      "old_code": "8501.52.10",
+      "new_code": "8501.52.10",
+      "new_heading": "8501",
+      "new_chapter": "85",
+      "reason": "Fix metadata: chapter/heading -> 85/8501 (code exists in DB)"
+    },
+    {
+      "case_id": "LLM122",
+      "category": "llm_flagged",
+      "action": "accept",
+      "old_code": "9504.50.00",
+      "new_code": "9504.50.00",
+      "new_heading": "9504",
+      "new_chapter": "95",
+      "reason": "Fix metadata: chapter/heading -> 95/9504 (code exists in DB)"
+    },
+    {
+      "case_id": "LLM144",
+      "category": "llm_flagged",
+      "action": "accept",
+      "old_code": "1604.13.10",
+      "new_code": "1604.13.10",
+      "new_heading": "1604",
+      "new_chapter": "16",
+      "reason": "Fix metadata: chapter/heading -> 16/1604 (code exists in DB)"
+    },
+    {
+      "case_id": "LLM001",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "1006.30.00",
+      "new_code": null,
+      "reason": "Code 1006.30.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM004",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "1006.30.90",
+      "new_code": null,
+      "reason": "Code 1006.30.90 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM007",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "1102.90.00",
+      "new_code": null,
+      "reason": "Code 1102.90.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM009",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "1006.30.00",
+      "new_code": null,
+      "reason": "Code 1006.30.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM017",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "2508.10.11",
+      "new_code": null,
+      "reason": "Code 2508.10.11 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM025",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "3917.23.00",
+      "new_code": null,
+      "reason": "Code 3917.23.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM026",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "3920.51.00",
+      "new_code": null,
+      "reason": "Code 3920.51.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM027",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "3920.61.00",
+      "new_code": null,
+      "reason": "Code 3920.61.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM029",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "3926.90.90",
+      "new_code": null,
+      "reason": "Code 3926.90.90 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM033",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "3907.60.00",
+      "new_code": null,
+      "reason": "Code 3907.60.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM036",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "5209.31.00",
+      "new_code": null,
+      "reason": "Code 5209.31.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM038",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "5210.31.00",
+      "new_code": null,
+      "reason": "Code 5210.31.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM039",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "5209.22.00",
+      "new_code": null,
+      "reason": "Code 5209.22.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM040",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "5208.21.00",
+      "new_code": null,
+      "reason": "Code 5208.21.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM041",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "5209.51.00",
+      "new_code": null,
+      "reason": "Code 5209.51.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM042",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "5209.12.00",
+      "new_code": null,
+      "reason": "Code 5209.12.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM043",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "5208.52.00",
+      "new_code": null,
+      "reason": "Code 5208.52.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM044",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "5209.29.00",
+      "new_code": null,
+      "reason": "Code 5209.29.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM045",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "5209.32.00",
+      "new_code": null,
+      "reason": "Code 5209.32.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM046",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "5210.21.00",
+      "new_code": null,
+      "reason": "Code 5210.21.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM048",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "7113.11.30",
+      "new_code": null,
+      "reason": "Code 7113.11.30 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM049",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "7108.12.00",
+      "new_code": null,
+      "reason": "Code 7108.12.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM053",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "7113.19.10",
+      "new_code": null,
+      "reason": "Code 7113.19.10 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM054",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "7103.91.00",
+      "new_code": null,
+      "reason": "Code 7103.91.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM055",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "7114.11.00",
+      "new_code": null,
+      "reason": "Code 7114.11.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM056",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "7104.90.00",
+      "new_code": null,
+      "reason": "Code 7104.90.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM057",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "7113.19.50",
+      "new_code": null,
+      "reason": "Code 7113.19.50 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM059",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "7208.39.00",
+      "new_code": null,
+      "reason": "Code 7208.39.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM060",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "7219.32.00",
+      "new_code": null,
+      "reason": "Code 7219.32.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM062",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "7217.20.90",
+      "new_code": null,
+      "reason": "Code 7217.20.90 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM064",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "7204.21.00",
+      "new_code": null,
+      "reason": "Code 7204.21.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM066",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "7213.91.00",
+      "new_code": null,
+      "reason": "Code 7213.91.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM067",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "7210.49.00",
+      "new_code": null,
+      "reason": "Code 7210.49.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM074",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "7317.00.10",
+      "new_code": null,
+      "reason": "Code 7317.00.10 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM079",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "7408.11.00",
+      "new_code": null,
+      "reason": "Code 7408.11.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM083",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "7407.10.00",
+      "new_code": null,
+      "reason": "Code 7407.10.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM089",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "7607.11.00",
+      "new_code": null,
+      "reason": "Code 7607.11.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM098",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "8413.70.20",
+      "new_code": null,
+      "reason": "Code 8413.70.20 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM100",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "8406.81.10",
+      "new_code": null,
+      "reason": "Code 8406.81.10 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM101",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "8414.80.22",
+      "new_code": null,
+      "reason": "Code 8414.80.22 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM103",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "8421.21.00",
+      "new_code": null,
+      "reason": "Code 8421.21.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM104",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "8438.10.00",
+      "new_code": null,
+      "reason": "Code 8438.10.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM108",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "8424.81.00",
+      "new_code": null,
+      "reason": "Code 8424.81.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM110",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "8539.50.00",
+      "new_code": null,
+      "reason": "Code 8539.50.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM113",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "8541.40.11",
+      "new_code": null,
+      "reason": "Code 8541.40.11 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM114",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "8528.72.00",
+      "new_code": null,
+      "reason": "Code 8528.72.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM119",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "8537.10.00",
+      "new_code": null,
+      "reason": "Code 8537.10.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM120",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "8518.30.00",
+      "new_code": null,
+      "reason": "Code 8518.30.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM124",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "8513.10.00",
+      "new_code": null,
+      "reason": "Code 8513.10.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM125",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "9001.40.00",
+      "new_code": null,
+      "reason": "Code 9001.40.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM128",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "9018.90.20",
+      "new_code": null,
+      "reason": "Code 9018.90.20 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM130",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "9021.40.00",
+      "new_code": null,
+      "reason": "Code 9021.40.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM131",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "9018.90.30",
+      "new_code": null,
+      "reason": "Code 9018.90.30 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM134",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "9018.12.00",
+      "new_code": null,
+      "reason": "Code 9018.12.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM136",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "9018.19.00",
+      "new_code": null,
+      "reason": "Code 9018.19.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM137",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "0306.17.10",
+      "new_code": null,
+      "reason": "Code 0306.17.10 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM139",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "0305.10.00",
+      "new_code": null,
+      "reason": "Code 0305.10.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM140",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "0306.24.00",
+      "new_code": null,
+      "reason": "Code 0306.24.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM141",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "0307.41.00",
+      "new_code": null,
+      "reason": "Code 0307.41.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM150",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "0709.90.10",
+      "new_code": null,
+      "reason": "Code 0709.90.10 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM159",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "0804.10.00",
+      "new_code": null,
+      "reason": "Code 0804.10.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM169",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "1514.19.30",
+      "new_code": null,
+      "reason": "Code 1514.19.30 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM175",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "1702.30.00",
+      "new_code": null,
+      "reason": "Code 1702.30.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM181",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "1904.20.00",
+      "new_code": null,
+      "reason": "Code 1904.20.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM184",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "1902.30.00",
+      "new_code": null,
+      "reason": "Code 1902.30.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM187",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "2202.90.20",
+      "new_code": null,
+      "reason": "Code 2202.90.20 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM194",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "3301.29.51",
+      "new_code": null,
+      "reason": "Code 3301.29.51 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM195",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "3301.29.55",
+      "new_code": null,
+      "reason": "Code 3301.29.55 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM198",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "4819.10.00",
+      "new_code": null,
+      "reason": "Code 4819.10.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM200",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "4802.54.00",
+      "new_code": null,
+      "reason": "Code 4802.54.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM201",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "4811.59.00",
+      "new_code": null,
+      "reason": "Code 4811.59.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    },
+    {
+      "case_id": "LLM202",
+      "category": "llm_flagged",
+      "action": "keep_original",
+      "old_code": "4810.13.00",
+      "new_code": null,
+      "reason": "Code 4810.13.00 not in DB. Tier 3 (not in eval suite). Kept for chapter data."
+    }
+  ]
+}
