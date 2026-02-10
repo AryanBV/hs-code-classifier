@@ -1,0 +1,703 @@
+{
+  "metadata": {
+    "timestamp": "2026-02-10T06:50:10.578Z",
+    "sampleSize": 50,
+    "totalClassifyCases": 308,
+    "resultsFile": "brain-master-2026-02-10.json",
+    "samplingMethod": "stratified-by-category",
+    "categorySamples": {
+      "food_agri": 12,
+      "edge_case": 7,
+      "chemical": 7,
+      "automotive": 6,
+      "textile": 6,
+      "electronics": 5,
+      "metal": 4,
+      "ambiguous": 2,
+      "other": 1
+    }
+  },
+  "summary": {
+    "brainCorrect": 44,
+    "routerCorrect": 35,
+    "bothCorrect": 34,
+    "brainOnlyRight": 10,
+    "routerOnlyRight": 1,
+    "bothWrong": 5,
+    "total": 50,
+    "errors": 0,
+    "brainPct": "88.0",
+    "routerPct": "70.0",
+    "netGain": 9
+  },
+  "perCategory": {
+    "food_agri": {
+      "total": 12,
+      "brainOk": 11,
+      "routerOk": 8,
+      "brainOnly": 3,
+      "routerOnly": 0
+    },
+    "edge_case": {
+      "total": 7,
+      "brainOk": 6,
+      "routerOk": 6,
+      "brainOnly": 0,
+      "routerOnly": 0
+    },
+    "chemical": {
+      "total": 7,
+      "brainOk": 7,
+      "routerOk": 6,
+      "brainOnly": 1,
+      "routerOnly": 0
+    },
+    "automotive": {
+      "total": 6,
+      "brainOk": 6,
+      "routerOk": 5,
+      "brainOnly": 1,
+      "routerOnly": 0
+    },
+    "textile": {
+      "total": 6,
+      "brainOk": 5,
+      "routerOk": 4,
+      "brainOnly": 2,
+      "routerOnly": 1
+    },
+    "electronics": {
+      "total": 5,
+      "brainOk": 4,
+      "routerOk": 2,
+      "brainOnly": 2,
+      "routerOnly": 0
+    },
+    "metal": {
+      "total": 4,
+      "brainOk": 3,
+      "routerOk": 3,
+      "brainOnly": 0,
+      "routerOnly": 0
+    },
+    "ambiguous": {
+      "total": 2,
+      "brainOk": 1,
+      "routerOk": 0,
+      "brainOnly": 1,
+      "routerOnly": 0
+    },
+    "other": {
+      "total": 1,
+      "brainOk": 1,
+      "routerOk": 1,
+      "brainOnly": 0,
+      "routerOnly": 0
+    }
+  },
+  "results": [
+    {
+      "id": "DB005",
+      "query": "Black Tea, dust in bulk made in India",
+      "category": "food_agri",
+      "expected": "09",
+      "suggested": [
+        "09"
+      ],
+      "routerPicked": "09",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "DB167",
+      "query": "Chemically pure maltose for export",
+      "category": "food_agri",
+      "expected": "17",
+      "suggested": [
+        "17"
+      ],
+      "routerPicked": "29",
+      "brainHit": true,
+      "routerHit": false
+    },
+    {
+      "id": "DB180",
+      "query": "Squash: ---- Pineapple made in India",
+      "category": "food_agri",
+      "expected": "20",
+      "suggested": [
+        "20"
+      ],
+      "routerPicked": "20",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "DB011",
+      "query": "Dent corn (Zea mays var. indenta):----Yellow",
+      "category": "food_agri",
+      "expected": "10",
+      "suggested": [
+        "10"
+      ],
+      "routerPicked": "10",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "DB159",
+      "query": "Groats and meal : -- maize (corn)",
+      "category": "food_agri",
+      "expected": "11",
+      "suggested": [
+        "11"
+      ],
+      "routerPicked": "10",
+      "brainHit": true,
+      "routerHit": false
+    },
+    {
+      "id": "DB179",
+      "query": "Vegetables, fruit, nuts, fruit- peel and parts plants, preserved by sugar (drained, glac or crystallised).",
+      "category": "food_agri",
+      "expected": "20",
+      "suggested": [
+        "20"
+      ],
+      "routerPicked": "20",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "DB002",
+      "query": "Rob Parchment: ---- PB Grade for export",
+      "category": "food_agri",
+      "expected": "09",
+      "suggested": [
+        "48"
+      ],
+      "routerPicked": "48",
+      "brainHit": false,
+      "routerHit": false
+    },
+    {
+      "id": "DB004",
+      "query": "Cumin, than black: ---- seed quality",
+      "category": "food_agri",
+      "expected": "09",
+      "suggested": [
+        "09"
+      ],
+      "routerPicked": "09",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "DB012",
+      "query": "Barnyard (Echinochloa esculenta (L.)) for export",
+      "category": "food_agri",
+      "expected": "10",
+      "suggested": [
+        "10"
+      ],
+      "routerPicked": "07",
+      "brainHit": true,
+      "routerHit": false
+    },
+    {
+      "id": "TC117",
+      "query": "saffron threads pure Kashmir",
+      "category": "food_agri",
+      "expected": "09",
+      "suggested": [
+        "09"
+      ],
+      "routerPicked": "09",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "DB003",
+      "query": "I need to export green tea in packets exceeding content 3 kg. but not exceeding 20 kg.",
+      "category": "food_agri",
+      "expected": "09",
+      "suggested": [
+        "09"
+      ],
+      "routerPicked": "09",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "TC115",
+      "query": "ginger fresh whole root",
+      "category": "food_agri",
+      "expected": "09",
+      "suggested": [
+        "09"
+      ],
+      "routerPicked": "09",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "EC031",
+      "query": "roasted coffee ground filter",
+      "category": "edge_case",
+      "expected": "09",
+      "suggested": [
+        "09"
+      ],
+      "routerPicked": "09",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "EC038",
+      "query": "air compressor piston type",
+      "category": "edge_case",
+      "expected": "84",
+      "suggested": [
+        "84"
+      ],
+      "routerPicked": "84",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "EC045",
+      "query": "rubber gasket seal O-ring",
+      "category": "edge_case",
+      "expected": "40",
+      "suggested": [
+        "40"
+      ],
+      "routerPicked": "40",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "EC035",
+      "query": "espresso capsules nespresso compatible",
+      "category": "edge_case",
+      "expected": "09",
+      "suggested": [
+        "21"
+      ],
+      "routerPicked": "30",
+      "brainHit": false,
+      "routerHit": false
+    },
+    {
+      "id": "EC041",
+      "query": "PVC pipe for water supply",
+      "category": "edge_case",
+      "expected": "39",
+      "suggested": [
+        "39"
+      ],
+      "routerPicked": "39",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "EC015",
+      "query": "viscose rayon filament thread",
+      "category": "edge_case",
+      "expected": "54",
+      "suggested": [
+        "54"
+      ],
+      "routerPicked": "54",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "EC003",
+      "query": "rabbit pelt jacket with fur",
+      "category": "edge_case",
+      "expected": "43",
+      "suggested": [
+        "43"
+      ],
+      "routerPicked": "43",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "DB186",
+      "query": "Fuel oils conforming to standard IS 1593: ---- Grade LV",
+      "category": "chemical",
+      "expected": "27",
+      "suggested": [
+        "27"
+      ],
+      "routerPicked": "27",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "DB192",
+      "query": "Tread rubber compound, cushion compound, cushion gum and tread gum for resoling or repairing or retreading rubber tyres for export",
+      "category": "chemical",
+      "expected": "40",
+      "suggested": [
+        "40"
+      ],
+      "routerPicked": "40",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "DB181",
+      "query": "Fused magnesia (natural)",
+      "category": "chemical",
+      "expected": "25",
+      "suggested": [
+        "25"
+      ],
+      "routerPicked": "25",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "DB044",
+      "query": "polymerisation and copolymerisation products polystyrene and polymethyl methacrylate: ---- polymerisation and copolymerisation products polystyrene",
+      "category": "chemical",
+      "expected": "39",
+      "suggested": [
+        "39"
+      ],
+      "routerPicked": "39",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "S5-SIMP-033",
+      "query": "rubber gloves industrial heavy duty latex",
+      "category": "chemical",
+      "expected": "40",
+      "suggested": [
+        "40"
+      ],
+      "routerPicked": "40",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "DB034",
+      "query": "Antitubercular drugs; Antileprotic drugs; Antimalarial drugs: ---- Rifampicin",
+      "category": "chemical",
+      "expected": "30",
+      "suggested": [
+        "30"
+      ],
+      "routerPicked": "30",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "DB193",
+      "query": "I need to export chemically modified form of natural rubber including graft rubber",
+      "category": "chemical",
+      "expected": "40",
+      "suggested": [
+        "30",
+        "40",
+        "95"
+      ],
+      "routerPicked": "29",
+      "brainHit": true,
+      "routerHit": false
+    },
+    {
+      "id": "DB134",
+      "query": "Three-wheeled vehicles",
+      "category": "automotive",
+      "expected": "87",
+      "suggested": [
+        "87"
+      ],
+      "routerPicked": "87",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "S5-AUTO-002",
+      "query": "brake drum cast iron for Tata truck rear axle",
+      "category": "automotive",
+      "expected": "87",
+      "suggested": [
+        "87"
+      ],
+      "routerPicked": "87",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "DB140",
+      "query": "Specialised transport vehicles such as ambulances, prison vans and the like made in India",
+      "category": "automotive",
+      "expected": "87",
+      "suggested": [
+        "87"
+      ],
+      "routerPicked": "87",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "TC008",
+      "query": "air filter for diesel engine truck",
+      "category": "automotive",
+      "expected": "84",
+      "suggested": [
+        "84"
+      ],
+      "routerPicked": "84",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "TC007",
+      "query": "shock absorber for Maruti Swift",
+      "category": "automotive",
+      "expected": "87",
+      "suggested": [
+        "87"
+      ],
+      "routerPicked": "87",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "S5-AUTO-022",
+      "query": "alternator 12V 100A for car engine",
+      "category": "automotive",
+      "expected": "85",
+      "suggested": [
+        "85"
+      ],
+      "routerPicked": "87",
+      "brainHit": true,
+      "routerHit": false
+    },
+    {
+      "id": "TC305",
+      "query": "wool sweater knitted pullover",
+      "category": "textile",
+      "expected": "61",
+      "suggested": [
+        "61"
+      ],
+      "routerPicked": "61",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "DB057",
+      "query": "Single yarn, of combed fibres : -- for export",
+      "category": "textile",
+      "expected": "52",
+      "suggested": [
+        "55",
+        "52"
+      ],
+      "routerPicked": "55",
+      "brainHit": true,
+      "routerHit": false
+    },
+    {
+      "id": "TC303",
+      "query": "men's formal cotton shirt woven",
+      "category": "textile",
+      "expected": "62",
+      "suggested": [
+        "62"
+      ],
+      "routerPicked": "62",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "DB056",
+      "query": "Cotton sewing thread, not",
+      "category": "textile",
+      "expected": "52",
+      "suggested": [
+        "55"
+      ],
+      "routerPicked": "52",
+      "brainHit": false,
+      "routerHit": true
+    },
+    {
+      "id": "DB051",
+      "query": "Cambrics (including madapollam and jaconet)",
+      "category": "textile",
+      "expected": "52",
+      "suggested": [
+        "52"
+      ],
+      "routerPicked": "52",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "S5-SIMP-015",
+      "query": "bath towel cotton terry cloth blue",
+      "category": "textile",
+      "expected": "63",
+      "suggested": [
+        "63"
+      ],
+      "routerPicked": "52",
+      "brainHit": true,
+      "routerHit": false
+    },
+    {
+      "id": "DB113",
+      "query": "I need to export with self-contained electric motor : -- saws",
+      "category": "electronics",
+      "expected": "84",
+      "suggested": [
+        "84"
+      ],
+      "routerPicked": "85",
+      "brainHit": true,
+      "routerHit": false
+    },
+    {
+      "id": "S5-SIMP-023",
+      "query": "front load washing machine automatic 7kg",
+      "category": "electronics",
+      "expected": "84",
+      "suggested": [
+        "84"
+      ],
+      "routerPicked": "84",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "DB126",
+      "query": "Motor starters for DC motors",
+      "category": "electronics",
+      "expected": "85",
+      "suggested": [
+        "85"
+      ],
+      "routerPicked": "87",
+      "brainHit": true,
+      "routerHit": false
+    },
+    {
+      "id": "DB147",
+      "query": "Clinical thermometers for export",
+      "category": "electronics",
+      "expected": "90",
+      "suggested": [
+        "90"
+      ],
+      "routerPicked": "90",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "DB116",
+      "query": "Self-propelled trucks powered by an electric motor",
+      "category": "electronics",
+      "expected": "84",
+      "suggested": [
+        "87"
+      ],
+      "routerPicked": "87",
+      "brainHit": false,
+      "routerHit": false
+    },
+    {
+      "id": "DB084",
+      "query": "platinum :----Studded with diamonds heading 7104",
+      "category": "metal",
+      "expected": "71",
+      "suggested": [
+        "71"
+      ],
+      "routerPicked": "71",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "DB090",
+      "query": "Of platinum :----Studded with diamonds of heading 7102 made in India",
+      "category": "metal",
+      "expected": "71",
+      "suggested": [
+        "71"
+      ],
+      "routerPicked": "71",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "DB110",
+      "query": "Cookers and kitchen stoves made in India",
+      "category": "metal",
+      "expected": "73",
+      "suggested": [
+        "84"
+      ],
+      "routerPicked": "84",
+      "brainHit": false,
+      "routerHit": false
+    },
+    {
+      "id": "DB081",
+      "query": "Of gold :----Studded with other precious and semi-precious stones",
+      "category": "metal",
+      "expected": "71",
+      "suggested": [
+        "71"
+      ],
+      "routerPicked": "71",
+      "brainHit": true,
+      "routerHit": true
+    },
+    {
+      "id": "S5-AMB-015",
+      "query": "drone with camera quadcopter aerial photography",
+      "category": "ambiguous",
+      "expected": "88",
+      "suggested": [
+        "88"
+      ],
+      "routerPicked": "37",
+      "brainHit": true,
+      "routerHit": false
+    },
+    {
+      "id": "S5-AMB-007",
+      "query": "silicone sealant tube for construction",
+      "category": "ambiguous",
+      "expected": "32",
+      "suggested": [
+        "39"
+      ],
+      "routerPicked": "39",
+      "brainHit": false,
+      "routerHit": false
+    },
+    {
+      "id": "DB199",
+      "query": "Wood wool; wood flour.",
+      "category": "other",
+      "expected": "44",
+      "suggested": [
+        "44"
+      ],
+      "routerPicked": "44",
+      "brainHit": true,
+      "routerHit": true
+    }
+  ]
+}
