@@ -83,7 +83,7 @@ function buildClassifyFallback(brain: BrainOutput | null, query: string = ''): R
 
 /**
  * Convert BrainAttributes to ExtractedAttributes for downstream compatibility.
- * Empty strings become undefined. Drops brain-only fields (industry, origin).
+ * Empty strings become undefined. Maps all Brain fields including industry and origin.
  */
 function brainToExtractedAttributes(brain: BrainOutput, query: string): ExtractedAttributes {
   const a = brain.attributes;
@@ -94,6 +94,8 @@ function brainToExtractedAttributes(brain: BrainOutput, query: string): Extracte
     intended_use: a.intended_use || undefined,
     processing_state: a.processing_state || undefined,
     composition: a.composition || undefined,
+    industry: a.industry || undefined,
+    origin: a.origin || undefined,
     raw_query: query,
   };
 }

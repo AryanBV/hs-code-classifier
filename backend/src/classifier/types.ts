@@ -8,6 +8,8 @@ export interface ExtractedAttributes {
   processing_state?: string;
   composition?: string;
   packaging?: string;
+  industry?: string;
+  origin?: string;
   raw_query: string;
 }
 
