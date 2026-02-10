@@ -53,9 +53,13 @@ function applyHeadingRules(attrs: ExtractedAttributes, chapter: string): { headi
     if (query.includes('cardamom')) {
       return { heading: '0908', description: 'Nutmeg, mace and cardamoms' };
     }
-    // Turmeric, cumin, etc.
-    if (query.includes('turmeric') || query.includes('cumin') ||
-        query.includes('ginger') || query.includes('saffron')) {
+    // Cumin, coriander, fennel, anise → 0909
+    if (query.includes('cumin') || query.includes('coriander') ||
+        query.includes('fennel') || query.includes('anise') || query.includes('badian')) {
+      return { heading: '0909', description: 'Seeds of anise, badian, fennel, coriander, cumin; juniper berries' };
+    }
+    // Turmeric, ginger, saffron → 0910
+    if (query.includes('turmeric') || query.includes('ginger') || query.includes('saffron')) {
       return { heading: '0910', description: 'Ginger, saffron, turmeric, thyme, bay leaves, curry and other spices' };
     }
   }
