@@ -1,20 +1,20 @@
 {
   "metadata": {
-    "timestamp": "2026-02-10T03:54:48.978Z",
+    "timestamp": "2026-02-10T04:12:46.732Z",
     "run_id": "brain-master-2026-02-10",
     "total_cases": 386,
-    "duration_seconds": 5078,
+    "duration_seconds": 6193,
     "model": "gpt-4o-mini",
     "notes": "Full eval suite (tier 1+2 + session5 + ask)",
-    "errors": 0,
+    "errors": 3,
     "suite": "master"
   },
   "routing": {
-    "accuracy": 87.8238341968912,
+    "accuracy": 87.30569948186529,
     "confusion_matrix": {
-      "classify_as_classify": 310,
-      "classify_as_ask": 41,
-      "classify_as_reject": 0,
+      "classify_as_classify": 308,
+      "classify_as_ask": 40,
+      "classify_as_reject": 3,
       "ask_as_classify": 1,
       "ask_as_ask": 29,
       "ask_as_reject": 0,
@@ -24,10 +24,10 @@
     }
   },
   "classification": {
-    "weighted_average": 43.41935483870968,
-    "chapter_accuracy": 68.38709677419355,
-    "heading_accuracy": 35.16129032258065,
-    "code_accuracy": 18.387096774193548,
+    "weighted_average": 43.149350649350644,
+    "chapter_accuracy": 68.18181818181817,
+    "heading_accuracy": 35.064935064935064,
+    "code_accuracy": 17.857142857142858,
     "per_chapter_breakdown": {
       "10": {
         "correct": 5,
@@ -86,8 +86,8 @@
       },
       "30": {
         "correct": 13,
-        "total": 14,
-        "accuracy": 92.85714285714286
+        "total": 15,
+        "accuracy": 86.66666666666667
       },
       "32": {
         "correct": 0,
@@ -121,8 +121,8 @@
       },
       "52": {
         "correct": 3,
-        "total": 8,
-        "accuracy": 37.5
+        "total": 7,
+        "accuracy": 42.857142857142854
       },
       "54": {
         "correct": 2,
@@ -130,19 +130,19 @@
         "accuracy": 66.66666666666666
       },
       "55": {
-        "correct": 2,
-        "total": 3,
-        "accuracy": 66.66666666666666
+        "correct": 1,
+        "total": 2,
+        "accuracy": 50
       },
       "61": {
         "correct": 9,
-        "total": 16,
-        "accuracy": 56.25
+        "total": 17,
+        "accuracy": 52.94117647058824
       },
       "62": {
         "correct": 13,
-        "total": 19,
-        "accuracy": 68.42105263157895
+        "total": 18,
+        "accuracy": 72.22222222222221
       },
       "63": {
         "correct": 0,
@@ -165,8 +165,8 @@
         "accuracy": 0
       },
       "71": {
-        "correct": 10,
-        "total": 10,
+        "correct": 11,
+        "total": 11,
         "accuracy": 100
       },
       "72": {
@@ -175,9 +175,9 @@
         "accuracy": 62.5
       },
       "73": {
-        "correct": 4,
-        "total": 8,
-        "accuracy": 50
+        "correct": 3,
+        "total": 7,
+        "accuracy": 42.857142857142854
       },
       "80": {
         "correct": 0,
@@ -205,9 +205,9 @@
         "accuracy": 0
       },
       "90": {
-        "correct": 5,
-        "total": 6,
-        "accuracy": 83.33333333333334
+        "correct": 4,
+        "total": 5,
+        "accuracy": 80
       },
       "91": {
         "correct": 0,
@@ -252,9 +252,9 @@
     }
   },
   "question_quality": {
-    "targeted_pct": 89.65517241379311,
-    "relevant_pct": 86.20689655172413,
-    "average_score": 1.7586206896551724
+    "targeted_pct": 86.20689655172413,
+    "relevant_pct": 79.3103448275862,
+    "average_score": 1.6551724137931034
   },
   "details": [
     {
@@ -274,7 +274,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 14691,
+      "response_time_ms": 15253,
       "score": 100
     },
     {
@@ -294,7 +294,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 9324,
+      "response_time_ms": 9374,
       "score": 100
     },
     {
@@ -314,7 +314,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 73,
-      "response_time_ms": 12002,
+      "response_time_ms": 11087,
       "score": 40
     },
     {
@@ -334,7 +334,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 72,
-      "response_time_ms": 8204,
+      "response_time_ms": 9290,
       "score": 40
     },
     {
@@ -354,7 +354,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 71,
-      "response_time_ms": 8883,
+      "response_time_ms": 9639,
       "score": 40
     },
     {
@@ -374,7 +374,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 9002,
+      "response_time_ms": 9830,
       "score": 40
     },
     {
@@ -394,7 +394,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 8756,
+      "response_time_ms": 9707,
       "score": 100
     },
     {
@@ -414,7 +414,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 72,
-      "response_time_ms": 12898,
+      "response_time_ms": 13753,
       "score": 40
     },
     {
@@ -434,7 +434,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 72,
-      "response_time_ms": 10561,
+      "response_time_ms": 12384,
       "score": 40
     },
     {
@@ -454,7 +454,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 72,
-      "response_time_ms": 12855,
+      "response_time_ms": 12050,
       "score": 0
     },
     {
@@ -474,7 +474,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 10382,
+      "response_time_ms": 12374,
       "score": 100
     },
     {
@@ -494,7 +494,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 8735,
+      "response_time_ms": 10710,
       "score": 100
     },
     {
@@ -514,7 +514,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 13423,
+      "response_time_ms": 13159,
       "score": 40
     },
     {
@@ -534,7 +534,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 12156,
+      "response_time_ms": 13119,
       "score": 70
     },
     {
@@ -554,7 +554,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 12789,
+      "response_time_ms": 12527,
       "score": 0
     },
     {
@@ -574,7 +574,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 10598,
+      "response_time_ms": 12215,
       "score": 70
     },
     {
@@ -594,7 +594,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 9353,
+      "response_time_ms": 10006,
       "score": 70
     },
     {
@@ -614,7 +614,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 10487,
+      "response_time_ms": 13118,
       "score": 70
     },
     {
@@ -634,7 +634,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 12716,
+      "response_time_ms": 11476,
       "score": 70
     },
     {
@@ -654,7 +654,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 9761,
+      "response_time_ms": 10002,
       "score": 70
     },
     {
@@ -674,7 +674,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 9690,
+      "response_time_ms": 9050,
       "score": 70
     },
     {
@@ -694,7 +694,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 9566,
+      "response_time_ms": 10165,
       "score": 70
     },
     {
@@ -714,7 +714,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 9902,
+      "response_time_ms": 11381,
       "score": 70
     },
     {
@@ -734,7 +734,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 9848,
+      "response_time_ms": 9158,
       "score": 70
     },
     {
@@ -754,7 +754,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 10139,
+      "response_time_ms": 9682,
       "score": 70
     },
     {
@@ -774,7 +774,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 92,
-      "response_time_ms": 14569,
+      "response_time_ms": 14915,
       "score": 70
     },
     {
@@ -794,7 +794,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 9114,
+      "response_time_ms": 11983,
       "score": 40
     },
     {
@@ -814,7 +814,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 13393,
+      "response_time_ms": 10862,
       "score": 70
     },
     {
@@ -834,7 +834,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 80,
-      "response_time_ms": 8475,
+      "response_time_ms": 8635,
       "score": 70
     },
     {
@@ -854,7 +854,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 8622,
+      "response_time_ms": 8361,
       "score": 70
     },
     {
@@ -874,7 +874,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 9632,
+      "response_time_ms": 9831,
       "score": 70
     },
     {
@@ -894,7 +894,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 8712,
+      "response_time_ms": 8891,
       "score": 70
     },
     {
@@ -914,7 +914,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 78,
-      "response_time_ms": 11316,
+      "response_time_ms": 12974,
       "score": 70
     },
     {
@@ -934,7 +934,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 92,
-      "response_time_ms": 18424,
+      "response_time_ms": 14703,
       "score": 70
     },
     {
@@ -954,7 +954,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 92,
-      "response_time_ms": 18185,
+      "response_time_ms": 15021,
       "score": 70
     },
     {
@@ -974,7 +974,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 12912,
+      "response_time_ms": 12230,
       "score": 70
     },
     {
@@ -994,7 +994,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 12968,
+      "response_time_ms": 11311,
       "score": 70
     },
     {
@@ -1014,7 +1014,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 12686,
+      "response_time_ms": 13615,
       "score": 70
     },
     {
@@ -1034,7 +1034,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 10315,
+      "response_time_ms": 12537,
       "score": 70
     },
     {
@@ -1054,7 +1054,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 15341,
+      "response_time_ms": 14299,
       "score": 40
     },
     {
@@ -1074,7 +1074,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 67,
-      "response_time_ms": 11191,
+      "response_time_ms": 12370,
       "score": 40
     },
     {
@@ -1090,11 +1090,11 @@
       "actual_heading": "3002",
       "heading_correct": false,
       "expected_code": "3004.31.00",
-      "actual_code": "3002.49.90",
+      "actual_code": "3002.41.19",
       "code_correct": false,
       "alternative_match": false,
       "confidence": 71,
-      "response_time_ms": 12626,
+      "response_time_ms": 12791,
       "score": 40
     },
     {
@@ -1114,7 +1114,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 70,
-      "response_time_ms": 17511,
+      "response_time_ms": 21194,
       "score": 40
     },
     {
@@ -1134,7 +1134,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 12751,
+      "response_time_ms": 14218,
       "score": 100
     },
     {
@@ -1154,7 +1154,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 72,
-      "response_time_ms": 9410,
+      "response_time_ms": 10548,
       "score": 40
     },
     {
@@ -1174,7 +1174,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 10695,
+      "response_time_ms": 10673,
       "score": 100
     },
     {
@@ -1194,7 +1194,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 79,
-      "response_time_ms": 14931,
+      "response_time_ms": 12808,
       "score": 100
     },
     {
@@ -1214,7 +1214,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 12265,
+      "response_time_ms": 9682,
       "score": 70
     },
     {
@@ -1234,7 +1234,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 92,
-      "response_time_ms": 11511,
+      "response_time_ms": 9484,
       "score": 0
     },
     {
@@ -1254,7 +1254,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 13686,
+      "response_time_ms": 13217,
       "score": 70
     },
     {
@@ -1274,7 +1274,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 14312,
+      "response_time_ms": 13585,
       "score": 70
     },
     {
@@ -1294,7 +1294,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 78,
-      "response_time_ms": 18413,
+      "response_time_ms": 10665,
       "score": 100
     },
     {
@@ -1314,7 +1314,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 13338,
+      "response_time_ms": 11812,
       "score": 70
     },
     {
@@ -1334,7 +1334,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 79,
-      "response_time_ms": 12512,
+      "response_time_ms": 11878,
       "score": 100
     },
     {
@@ -1354,7 +1354,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 78,
-      "response_time_ms": 10222,
+      "response_time_ms": 10412,
       "score": 100
     },
     {
@@ -1374,7 +1374,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 15476,
+      "response_time_ms": 12752,
       "score": 70
     },
     {
@@ -1394,7 +1394,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 73,
-      "response_time_ms": 12164,
+      "response_time_ms": 14136,
       "score": 70
     },
     {
@@ -1413,8 +1413,8 @@
       "actual_code": "4303.10.90",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 74,
-      "response_time_ms": 11724,
+      "confidence": 77,
+      "response_time_ms": 12775,
       "score": 70
     },
     {
@@ -1434,7 +1434,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 16782,
+      "response_time_ms": 14954,
       "score": 40
     },
     {
@@ -1454,7 +1454,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 13797,
+      "response_time_ms": 12283,
       "score": 70
     },
     {
@@ -1474,7 +1474,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 80,
-      "response_time_ms": 7323,
+      "response_time_ms": 7041,
       "score": 40
     },
     {
@@ -1494,7 +1494,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 22790,
+      "response_time_ms": 21283,
       "score": 40
     },
     {
@@ -1514,7 +1514,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 73,
-      "response_time_ms": 21673,
+      "response_time_ms": 19102,
       "score": 40
     },
     {
@@ -1530,11 +1530,11 @@
       "actual_heading": "7110",
       "heading_correct": false,
       "expected_code": "8001.10.00",
-      "actual_code": "7110.19.90",
+      "actual_code": "7110.11.19",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 72,
-      "response_time_ms": 19463,
+      "confidence": 74,
+      "response_time_ms": 18058,
       "score": 0
     },
     {
@@ -1554,7 +1554,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 19246,
+      "response_time_ms": 18056,
       "score": 0
     },
     {
@@ -1574,7 +1574,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 72,
-      "response_time_ms": 19014,
+      "response_time_ms": 16618,
       "score": 0
     },
     {
@@ -1594,7 +1594,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 19486,
+      "response_time_ms": 19064,
       "score": 40
     },
     {
@@ -1614,7 +1614,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 21657,
+      "response_time_ms": 19632,
       "score": 70
     },
     {
@@ -1634,7 +1634,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 15230,
+      "response_time_ms": 11359,
       "score": 0
     },
     {
@@ -1654,28 +1654,18 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 78,
-      "response_time_ms": 17272,
+      "response_time_ms": 14070,
       "score": 40
     },
     {
       "test_case_id": "EC016",
       "query": "polyester staple fiber short cut",
       "expected_routing": "classify",
-      "actual_routing": "classify",
-      "routing_correct": true,
-      "expected_chapter": "55",
-      "actual_chapter": "55",
-      "chapter_correct": true,
-      "expected_heading": "5503",
-      "actual_heading": "5513",
-      "heading_correct": false,
-      "expected_code": "5503.20.00",
-      "actual_code": "5513.11.10",
-      "code_correct": false,
-      "alternative_match": false,
-      "confidence": 76,
-      "response_time_ms": 19195,
-      "score": 40
+      "actual_routing": "reject",
+      "routing_correct": false,
+      "response_time_ms": 506434,
+      "score": 0,
+      "error": "Error: Timeout: 30 seconds"
     },
     {
       "test_case_id": "EC017",
@@ -1694,7 +1684,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 14861,
+      "response_time_ms": 13531,
       "score": 0
     },
     {
@@ -1714,7 +1704,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 18219,
+      "response_time_ms": 15771,
       "score": 40
     },
     {
@@ -1734,7 +1724,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 12893,
+      "response_time_ms": 11272,
       "score": 0
     },
     {
@@ -1754,7 +1744,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 6775,
+      "response_time_ms": 6227,
       "score": 0
     },
     {
@@ -1774,7 +1764,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 71,
-      "response_time_ms": 19864,
+      "response_time_ms": 16983,
       "score": 70
     },
     {
@@ -1794,7 +1784,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 80,
-      "response_time_ms": 11979,
+      "response_time_ms": 11780,
       "score": 70
     },
     {
@@ -1814,7 +1804,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 92,
-      "response_time_ms": 9258,
+      "response_time_ms": 8534,
       "score": 0
     },
     {
@@ -1834,7 +1824,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 12825,
+      "response_time_ms": 12081,
       "score": 70
     },
     {
@@ -1854,7 +1844,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 78,
-      "response_time_ms": 12430,
+      "response_time_ms": 11573,
       "score": 70
     },
     {
@@ -1874,7 +1864,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 12190,
+      "response_time_ms": 10902,
       "score": 40
     },
     {
@@ -1894,7 +1884,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 79,
-      "response_time_ms": 12321,
+      "response_time_ms": 11941,
       "score": 100
     },
     {
@@ -1914,7 +1904,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 9036,
+      "response_time_ms": 9884,
       "score": 70
     },
     {
@@ -1934,7 +1924,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 12461,
+      "response_time_ms": 11627,
       "score": 70
     },
     {
@@ -1954,7 +1944,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 78,
-      "response_time_ms": 12025,
+      "response_time_ms": 12415,
       "score": 70
     },
     {
@@ -1974,7 +1964,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 92,
-      "response_time_ms": 10283,
+      "response_time_ms": 9903,
       "score": 70
     },
     {
@@ -1994,7 +1984,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 11086,
+      "response_time_ms": 10251,
       "score": 70
     },
     {
@@ -2014,7 +2004,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 9883,
+      "response_time_ms": 9451,
       "score": 70
     },
     {
@@ -2034,7 +2024,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 9591,
+      "response_time_ms": 9524,
       "score": 70
     },
     {
@@ -2054,7 +2044,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 13124,
+      "response_time_ms": 13400,
       "score": 0
     },
     {
@@ -2074,7 +2064,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 11696,
+      "response_time_ms": 12111,
       "score": 0
     },
     {
@@ -2094,7 +2084,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 13258,
+      "response_time_ms": 13689,
       "score": 70
     },
     {
@@ -2114,7 +2104,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 13747,
+      "response_time_ms": 11879,
       "score": 40
     },
     {
@@ -2133,8 +2123,8 @@
       "actual_code": "8501.52.10",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 78,
-      "response_time_ms": 12337,
+      "confidence": 77,
+      "response_time_ms": 13689,
       "score": 70
     },
     {
@@ -2153,8 +2143,8 @@
       "actual_code": "8504.22.00",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 75,
-      "response_time_ms": 12442,
+      "confidence": 76,
+      "response_time_ms": 12501,
       "score": 70
     },
     {
@@ -2167,15 +2157,15 @@
       "actual_chapter": "39",
       "chapter_correct": true,
       "expected_heading": "3917",
-      "actual_heading": "3922",
-      "heading_correct": false,
+      "actual_heading": "3917",
+      "heading_correct": true,
       "expected_code": "3917.23.00",
-      "actual_code": "3922.90.00",
+      "actual_code": "3917.29.50",
       "code_correct": false,
       "alternative_match": false,
       "confidence": 73,
-      "response_time_ms": 9379,
-      "score": 40
+      "response_time_ms": 11843,
+      "score": 70
     },
     {
       "test_case_id": "EC042",
@@ -2194,7 +2184,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 9630,
+      "response_time_ms": 10751,
       "score": 40
     },
     {
@@ -2214,7 +2204,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 20706,
+      "response_time_ms": 18369,
       "score": 100
     },
     {
@@ -2234,7 +2224,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 71,
-      "response_time_ms": 11742,
+      "response_time_ms": 12016,
       "score": 0
     },
     {
@@ -2254,7 +2244,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 19049,
+      "response_time_ms": 16435,
       "score": 40
     },
     {
@@ -2274,7 +2264,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 10174,
+      "response_time_ms": 9206,
       "score": 40
     },
     {
@@ -2294,7 +2284,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 78,
-      "response_time_ms": 13619,
+      "response_time_ms": 14796,
       "score": 0
     },
     {
@@ -2314,7 +2304,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 92,
-      "response_time_ms": 23249,
+      "response_time_ms": 14156,
       "score": 100
     },
     {
@@ -2334,7 +2324,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 92,
-      "response_time_ms": 9533,
+      "response_time_ms": 9859,
       "score": 40
     },
     {
@@ -2354,7 +2344,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 92,
-      "response_time_ms": 14190,
+      "response_time_ms": 15044,
       "score": 100
     },
     {
@@ -2370,11 +2360,11 @@
       "actual_heading": "0910",
       "heading_correct": false,
       "expected_code": "0909.31.11",
-      "actual_code": "0910.99.XX",
+      "actual_code": "0910.99.14",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 94,
-      "response_time_ms": 9524,
+      "confidence": 92,
+      "response_time_ms": 9633,
       "score": 40
     },
     {
@@ -2385,7 +2375,7 @@
       "routing_correct": false,
       "question_asked": "Input does not provide a recognizable product description; it lacks specific details about the product itself.",
       "question_score": 0,
-      "response_time_ms": 2296,
+      "response_time_ms": 2745,
       "score": 0
     },
     {
@@ -2405,7 +2395,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 18788,
+      "response_time_ms": 22228,
       "score": 0
     },
     {
@@ -2418,15 +2408,15 @@
       "actual_chapter": "09",
       "chapter_correct": true,
       "expected_heading": "0908",
-      "actual_heading": "0904",
-      "heading_correct": false,
+      "actual_heading": "0908",
+      "heading_correct": true,
       "expected_code": "0908.22.00",
-      "actual_code": "0904.12.00",
-      "code_correct": false,
+      "actual_code": "0908.22.00",
+      "code_correct": true,
       "alternative_match": false,
       "confidence": 73,
-      "response_time_ms": 21118,
-      "score": 40
+      "response_time_ms": 19868,
+      "score": 100
     },
     {
       "test_case_id": "DB010",
@@ -2445,7 +2435,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 92,
-      "response_time_ms": 13563,
+      "response_time_ms": 16469,
       "score": 100
     },
     {
@@ -2465,7 +2455,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 79,
-      "response_time_ms": 14564,
+      "response_time_ms": 15740,
       "score": 100
     },
     {
@@ -2485,7 +2475,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 16533,
+      "response_time_ms": 16168,
       "score": 0
     },
     {
@@ -2496,7 +2486,7 @@
       "routing_correct": false,
       "question_asked": "What form of panicum sumatrense are you exporting?",
       "question_score": 2,
-      "response_time_ms": 4489,
+      "response_time_ms": 4645,
       "score": 0
     },
     {
@@ -2516,7 +2506,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 17273,
+      "response_time_ms": 17749,
       "score": 40
     },
     {
@@ -2536,7 +2526,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 44,
-      "response_time_ms": 11102,
+      "response_time_ms": 10512,
       "score": 0
     },
     {
@@ -2556,7 +2546,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 16263,
+      "response_time_ms": 16985,
       "score": 40
     },
     {
@@ -2576,7 +2566,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 78,
-      "response_time_ms": 9164,
+      "response_time_ms": 9537,
       "score": 100
     },
     {
@@ -2596,7 +2586,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 43,
-      "response_time_ms": 12129,
+      "response_time_ms": 14941,
       "score": 0
     },
     {
@@ -2616,7 +2606,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 73,
-      "response_time_ms": 20201,
+      "response_time_ms": 18364,
       "score": 40
     },
     {
@@ -2625,9 +2615,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "What is the form of the product?",
+      "question_asked": "What is the primary form of the product?",
       "question_score": 1,
-      "response_time_ms": 9788,
+      "response_time_ms": 6554,
       "score": 0
     },
     {
@@ -2647,7 +2637,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 14039,
+      "response_time_ms": 11606,
       "score": 100
     },
     {
@@ -2658,7 +2648,7 @@
       "routing_correct": false,
       "question_asked": "Input is a chemical compound description but lacks sufficient context to classify as a product for export. It does not provide clear attributes or a recognizable product form.",
       "question_score": 2,
-      "response_time_ms": 2834,
+      "response_time_ms": 2957,
       "score": 0
     },
     {
@@ -2667,9 +2657,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "The input is not a clear product description and lacks specific details about the product, making it difficult to classify.",
-      "question_score": 0,
-      "response_time_ms": 2928,
+      "question_asked": "What type of halogenated derivative is this?",
+      "question_score": 2,
+      "response_time_ms": 5995,
       "score": 0
     },
     {
@@ -2678,9 +2668,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "What is the primary form of the acid product?",
+      "question_asked": "What form is the Tobias acid in?",
       "question_score": 2,
-      "response_time_ms": 5052,
+      "response_time_ms": 6515,
       "score": 0
     },
     {
@@ -2689,9 +2679,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "What form is this pharmaceutical product in?",
+      "question_asked": "What is the form of the product?",
       "question_score": 1,
-      "response_time_ms": 5090,
+      "response_time_ms": 4237,
       "score": 0
     },
     {
@@ -2711,7 +2701,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 15692,
+      "response_time_ms": 19716,
       "score": 40
     },
     {
@@ -2720,9 +2710,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "Input is a list of chemical compounds without a clear product description, making it unsuitable for classification.",
-      "question_score": 0,
-      "response_time_ms": 2824,
+      "question_asked": "What form is this product in?",
+      "question_score": 1,
+      "response_time_ms": 5614,
       "score": 0
     },
     {
@@ -2741,8 +2731,8 @@
       "actual_code": "3004.90.52",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 71,
-      "response_time_ms": 21221,
+      "confidence": 94,
+      "response_time_ms": 12694,
       "score": 0
     },
     {
@@ -2751,9 +2741,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "Input does not provide a recognizable product description, only a reference to a note without specific product details.",
+      "question_asked": "Input does not provide a recognizable product description and refers to a legal note rather than a specific item.",
       "question_score": 1,
-      "response_time_ms": 2714,
+      "response_time_ms": 2559,
       "score": 0
     },
     {
@@ -2762,9 +2752,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "What form does the oral rehydration salt take?",
+      "question_asked": "What form do the oral rehydration salts take?",
       "question_score": 2,
-      "response_time_ms": 4464,
+      "response_time_ms": 4781,
       "score": 0
     },
     {
@@ -2784,7 +2774,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 11544,
+      "response_time_ms": 11854,
       "score": 40
     },
     {
@@ -2804,7 +2794,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 11734,
+      "response_time_ms": 11425,
       "score": 100
     },
     {
@@ -2824,7 +2814,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 12186,
+      "response_time_ms": 13309,
       "score": 100
     },
     {
@@ -2844,7 +2834,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 71,
-      "response_time_ms": 16648,
+      "response_time_ms": 18941,
       "score": 40
     },
     {
@@ -2863,19 +2853,28 @@
       "actual_code": "8705.90.90",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 68,
-      "response_time_ms": 12744,
+      "confidence": 69,
+      "response_time_ms": 13581,
       "score": 0
     },
     {
       "test_case_id": "DB038",
       "query": "I need to export preparations of vitamins: ---- of vitamin b12",
       "expected_routing": "classify",
-      "actual_routing": "ask",
-      "routing_correct": false,
-      "question_asked": "What form does this vitamin B12 preparation take?",
-      "question_score": 2,
-      "response_time_ms": 9852,
+      "actual_routing": "classify",
+      "routing_correct": true,
+      "expected_chapter": "30",
+      "actual_chapter": "21",
+      "chapter_correct": false,
+      "expected_heading": "3004",
+      "actual_heading": "2102",
+      "heading_correct": false,
+      "expected_code": "3004.50.34",
+      "actual_code": "2102.10.90",
+      "code_correct": false,
+      "alternative_match": false,
+      "confidence": 74,
+      "response_time_ms": 10836,
       "score": 0
     },
     {
@@ -2895,7 +2894,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 13434,
+      "response_time_ms": 13894,
       "score": 100
     },
     {
@@ -2915,7 +2914,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 78,
-      "response_time_ms": 17754,
+      "response_time_ms": 16303,
       "score": 100
     },
     {
@@ -2935,7 +2934,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 71,
-      "response_time_ms": 15726,
+      "response_time_ms": 17440,
       "score": 40
     },
     {
@@ -2944,9 +2943,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "What form of poly (vinyl derivatives) is this and what is its intended use?",
+      "question_asked": "What form of poly (vinyl derivatives) is this?",
       "question_score": 2,
-      "response_time_ms": 6758,
+      "response_time_ms": 10234,
       "score": 0
     },
     {
@@ -2966,7 +2965,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 22489,
+      "response_time_ms": 22129,
       "score": 40
     },
     {
@@ -2986,7 +2985,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 12340,
+      "response_time_ms": 14887,
       "score": 40
     },
     {
@@ -2995,9 +2994,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "What type of polyester product is this?",
+      "question_asked": "What form is the polyester in?",
       "question_score": 2,
-      "response_time_ms": 3841,
+      "response_time_ms": 4510,
       "score": 0
     },
     {
@@ -3017,7 +3016,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 11466,
+      "response_time_ms": 12711,
       "score": 40
     },
     {
@@ -3037,7 +3036,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 9389,
+      "response_time_ms": 15134,
       "score": 0
     },
     {
@@ -3048,7 +3047,7 @@
       "routing_correct": false,
       "question_asked": "What material is the architectural membrane made of?",
       "question_score": 2,
-      "response_time_ms": 5209,
+      "response_time_ms": 5756,
       "score": 0
     },
     {
@@ -3057,9 +3056,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "What type of ion-exchanger is this?",
+      "question_asked": "What is the primary form or application of the ion-exchangers?",
       "question_score": 2,
-      "response_time_ms": 5233,
+      "response_time_ms": 6870,
       "score": 0
     },
     {
@@ -3079,7 +3078,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 79,
-      "response_time_ms": 11718,
+      "response_time_ms": 15407,
       "score": 100
     },
     {
@@ -3099,7 +3098,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 8551,
+      "response_time_ms": 11178,
       "score": 70
     },
     {
@@ -3119,7 +3118,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 68,
-      "response_time_ms": 13049,
+      "response_time_ms": 11806,
       "score": 0
     },
     {
@@ -3129,17 +3128,17 @@
       "actual_routing": "classify",
       "routing_correct": true,
       "expected_chapter": "52",
-      "actual_chapter": "58",
+      "actual_chapter": "63",
       "chapter_correct": false,
       "expected_heading": "5208",
-      "actual_heading": "5801",
+      "actual_heading": "6304",
       "heading_correct": false,
       "expected_code": "5208.41.50",
-      "actual_code": "5801.22.90",
+      "actual_code": "6304.92.99",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 79,
-      "response_time_ms": 16759,
+      "confidence": 78,
+      "response_time_ms": 19597,
       "score": 0
     },
     {
@@ -3150,7 +3149,7 @@
       "routing_correct": false,
       "question_asked": "What is the intended use of the single yarn?",
       "question_score": 2,
-      "response_time_ms": 5049,
+      "response_time_ms": 6250,
       "score": 0
     },
     {
@@ -3170,7 +3169,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 78,
-      "response_time_ms": 16347,
+      "response_time_ms": 19983,
       "score": 0
     },
     {
@@ -3190,7 +3189,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 80,
-      "response_time_ms": 16312,
+      "response_time_ms": 16491,
       "score": 40
     },
     {
@@ -3210,28 +3209,18 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 17391,
+      "response_time_ms": 17502,
       "score": 0
     },
     {
       "test_case_id": "DB058",
       "query": "I need to export multiple (folded) or cabled yarn, of uncombed fibres : -- measuring per single yarn less than 714.29 decitex but not less than 232.56 decitex (exceeding 14 metric number but not exceeding 43 metric number per single yarn)",
       "expected_routing": "classify",
-      "actual_routing": "classify",
-      "routing_correct": true,
-      "expected_chapter": "52",
-      "actual_chapter": "85",
-      "chapter_correct": false,
-      "expected_heading": "5206",
-      "actual_heading": "8544",
-      "heading_correct": false,
-      "expected_code": "5206.32.00",
-      "actual_code": "8544.19.90",
-      "code_correct": false,
-      "alternative_match": false,
-      "confidence": 72,
-      "response_time_ms": 15776,
-      "score": 0
+      "actual_routing": "reject",
+      "routing_correct": false,
+      "response_time_ms": 400943,
+      "score": 0,
+      "error": "Error: Timeout: 30 seconds"
     },
     {
       "test_case_id": "DB059",
@@ -3241,7 +3230,7 @@
       "routing_correct": false,
       "question_asked": "What material is the sheeting made of and what is its intended use?",
       "question_score": 2,
-      "response_time_ms": 10254,
+      "response_time_ms": 9563,
       "score": 0
     },
     {
@@ -3260,8 +3249,8 @@
       "actual_code": "5202.99.00",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 74,
-      "response_time_ms": 17529,
+      "confidence": 71,
+      "response_time_ms": 19030,
       "score": 40
     },
     {
@@ -3281,7 +3270,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 18991,
+      "response_time_ms": 25968,
       "score": 0
     },
     {
@@ -3301,7 +3290,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 13747,
+      "response_time_ms": 18936,
       "score": 0
     },
     {
@@ -3321,7 +3310,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 12240,
+      "response_time_ms": 16696,
       "score": 0
     },
     {
@@ -3341,18 +3330,27 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 82,
-      "response_time_ms": 13186,
+      "response_time_ms": 19637,
       "score": 0
     },
     {
       "test_case_id": "DB066",
       "query": "Of wool or fine animal hair",
       "expected_routing": "classify",
-      "actual_routing": "ask",
-      "routing_correct": false,
-      "question_asked": "What type of product is this made of wool or fine animal hair?",
-      "question_score": 2,
-      "response_time_ms": 4809,
+      "actual_routing": "classify",
+      "routing_correct": true,
+      "expected_chapter": "61",
+      "actual_chapter": "51",
+      "chapter_correct": false,
+      "expected_heading": "6108",
+      "actual_heading": "5102",
+      "heading_correct": false,
+      "expected_code": "6108.99.20",
+      "actual_code": "5102.19.90",
+      "code_correct": false,
+      "alternative_match": false,
+      "confidence": 83,
+      "response_time_ms": 25524,
       "score": 0
     },
     {
@@ -3372,7 +3370,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 78,
-      "response_time_ms": 13149,
+      "response_time_ms": 17393,
       "score": 0
     },
     {
@@ -3392,7 +3390,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 80,
-      "response_time_ms": 20729,
+      "response_time_ms": 17871,
       "score": 0
     },
     {
@@ -3401,9 +3399,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "What form is the wool or fine animal hair in?",
+      "question_asked": "What form does this wool or fine animal hair take?",
       "question_score": 2,
-      "response_time_ms": 5205,
+      "response_time_ms": 11609,
       "score": 0
     },
     {
@@ -3423,7 +3421,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 11262,
+      "response_time_ms": 15155,
       "score": 0
     },
     {
@@ -3443,7 +3441,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 79,
-      "response_time_ms": 12475,
+      "response_time_ms": 15408,
       "score": 0
     },
     {
@@ -3463,7 +3461,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 15611,
+      "response_time_ms": 15293,
       "score": 40
     },
     {
@@ -3474,7 +3472,7 @@
       "routing_correct": false,
       "question_asked": "What material are the shawls and scarves made of?",
       "question_score": 2,
-      "response_time_ms": 5695,
+      "response_time_ms": 6961,
       "score": 0
     },
     {
@@ -3494,27 +3492,18 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 78,
-      "response_time_ms": 12089,
+      "response_time_ms": 13276,
       "score": 0
     },
     {
       "test_case_id": "DB075",
       "query": "Embroidered with Lucknow Chikan Craft made in India",
       "expected_routing": "classify",
-      "actual_routing": "classify",
-      "routing_correct": true,
-      "expected_chapter": "62",
-      "actual_chapter": "58",
-      "chapter_correct": false,
-      "expected_heading": "6204",
-      "actual_heading": "5810",
-      "heading_correct": false,
-      "expected_code": "6204.33.10",
-      "actual_code": "5810.91.10",
-      "code_correct": false,
-      "alternative_match": false,
-      "confidence": 75,
-      "response_time_ms": 18220,
+      "actual_routing": "ask",
+      "routing_correct": false,
+      "question_asked": "What type of material is the embroidered fabric made of?",
+      "question_score": 2,
+      "response_time_ms": 5394,
       "score": 0
     },
     {
@@ -3534,7 +3523,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 78,
-      "response_time_ms": 13463,
+      "response_time_ms": 13517,
       "score": 40
     },
     {
@@ -3554,7 +3543,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 17444,
+      "response_time_ms": 17757,
       "score": 100
     },
     {
@@ -3563,9 +3552,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "What material are the under shirts made of?",
+      "question_asked": "What material are the undershirts made of?",
       "question_score": 2,
-      "response_time_ms": 4480,
+      "response_time_ms": 8559,
       "score": 0
     },
     {
@@ -3585,7 +3574,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 69,
-      "response_time_ms": 13001,
+      "response_time_ms": 14871,
       "score": 0
     },
     {
@@ -3605,7 +3594,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 12030,
+      "response_time_ms": 13506,
       "score": 40
     },
     {
@@ -3625,7 +3614,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 79,
-      "response_time_ms": 22120,
+      "response_time_ms": 22211,
       "score": 70
     },
     {
@@ -3638,14 +3627,14 @@
       "actual_chapter": "71",
       "chapter_correct": true,
       "expected_heading": "7103",
-      "actual_heading": "7116",
+      "actual_heading": "7104",
       "heading_correct": false,
       "expected_code": "7103.99.12",
-      "actual_code": "7116.20.00",
+      "actual_code": "7104.29.00",
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 15515,
+      "response_time_ms": 18625,
       "score": 40
     },
     {
@@ -3665,7 +3654,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 16743,
+      "response_time_ms": 20994,
       "score": 100
     },
     {
@@ -3685,7 +3674,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 79,
-      "response_time_ms": 19133,
+      "response_time_ms": 21766,
       "score": 40
     },
     {
@@ -3705,19 +3694,28 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 18118,
+      "response_time_ms": 21937,
       "score": 40
     },
     {
       "test_case_id": "DB086",
       "query": "Of gold: ----Unstudded",
       "expected_routing": "classify",
-      "actual_routing": "ask",
-      "routing_correct": false,
-      "question_asked": "What type of gold product is this?",
-      "question_score": 1,
-      "response_time_ms": 4419,
-      "score": 0
+      "actual_routing": "classify",
+      "routing_correct": true,
+      "expected_chapter": "71",
+      "actual_chapter": "71",
+      "chapter_correct": true,
+      "expected_heading": "7113",
+      "actual_heading": "7108",
+      "heading_correct": false,
+      "expected_code": "7113.19.11",
+      "actual_code": "7108.12.10",
+      "code_correct": false,
+      "alternative_match": false,
+      "confidence": 77,
+      "response_time_ms": 21648,
+      "score": 40
     },
     {
       "test_case_id": "DB087",
@@ -3736,7 +3734,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 13927,
+      "response_time_ms": 17616,
       "score": 40
     },
     {
@@ -3756,7 +3754,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 81,
-      "response_time_ms": 11267,
+      "response_time_ms": 15313,
       "score": 100
     },
     {
@@ -3776,7 +3774,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 79,
-      "response_time_ms": 13213,
+      "response_time_ms": 18147,
       "score": 100
     },
     {
@@ -3796,7 +3794,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 18429,
+      "response_time_ms": 17921,
       "score": 40
     },
     {
@@ -3805,9 +3803,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "Input does not provide a recognizable product description; it lacks specificity and context.",
+      "question_asked": "Input does not provide a recognizable product description; it lacks specific details about the product itself.",
       "question_score": 0,
-      "response_time_ms": 2201,
+      "response_time_ms": 2425,
       "score": 0
     },
     {
@@ -3818,7 +3816,7 @@
       "routing_correct": false,
       "question_asked": "What material are the sheets and plates made of?",
       "question_score": 2,
-      "response_time_ms": 4246,
+      "response_time_ms": 6837,
       "score": 0
     },
     {
@@ -3838,7 +3836,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 11966,
+      "response_time_ms": 11705,
       "score": 0
     },
     {
@@ -3847,9 +3845,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "What is the form or intended use of the ferro-phosphorus product?",
+      "question_asked": "What form or function does the Ferro-phosphorus serve?",
       "question_score": 2,
-      "response_time_ms": 5058,
+      "response_time_ms": 6091,
       "score": 0
     },
     {
@@ -3858,9 +3856,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "Input does not provide a recognizable product description; it lacks specific product details.",
+      "question_asked": "Input does not provide a recognizable product description, lacking specific details about the product itself.",
       "question_score": 0,
-      "response_time_ms": 2936,
+      "response_time_ms": 3404,
       "score": 0
     },
     {
@@ -3880,7 +3878,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 17222,
+      "response_time_ms": 22492,
       "score": 100
     },
     {
@@ -3900,7 +3898,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 12113,
+      "response_time_ms": 13765,
       "score": 0
     },
     {
@@ -3909,9 +3907,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "What material is the wire made of?",
+      "question_asked": "What material is the wire made of and what is its intended use?",
       "question_score": 1,
-      "response_time_ms": 3888,
+      "response_time_ms": 5572,
       "score": 0
     },
     {
@@ -3931,7 +3929,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 71,
-      "response_time_ms": 11154,
+      "response_time_ms": 14515,
       "score": 70
     },
     {
@@ -3944,14 +3942,14 @@
       "actual_chapter": "73",
       "chapter_correct": false,
       "expected_heading": "7204",
-      "actual_heading": "7321",
+      "actual_heading": "7324",
       "heading_correct": false,
       "expected_code": "7204.10.00",
-      "actual_code": "7321.12.90",
+      "actual_code": "7324.10.00",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 76,
-      "response_time_ms": 9911,
+      "confidence": 77,
+      "response_time_ms": 10618,
       "score": 0
     },
     {
@@ -3971,7 +3969,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 12807,
+      "response_time_ms": 14314,
       "score": 0
     },
     {
@@ -3991,27 +3989,18 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 15720,
+      "response_time_ms": 16571,
       "score": 100
     },
     {
       "test_case_id": "DB103",
       "query": "I need to export parts of air heaters and hot air distributors",
       "expected_routing": "classify",
-      "actual_routing": "classify",
-      "routing_correct": true,
-      "expected_chapter": "73",
-      "actual_chapter": "84",
-      "chapter_correct": false,
-      "expected_heading": "7322",
-      "actual_heading": "8419",
-      "heading_correct": false,
-      "expected_code": "7322.90.90",
-      "actual_code": "8419.50.19",
-      "code_correct": false,
-      "alternative_match": false,
-      "confidence": 75,
-      "response_time_ms": 19326,
+      "actual_routing": "ask",
+      "routing_correct": false,
+      "question_asked": "What material are the parts made of?",
+      "question_score": 2,
+      "response_time_ms": 4664,
       "score": 0
     },
     {
@@ -4031,7 +4020,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 80,
-      "response_time_ms": 11486,
+      "response_time_ms": 10692,
       "score": 100
     },
     {
@@ -4051,7 +4040,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 72,
-      "response_time_ms": 21466,
+      "response_time_ms": 19114,
       "score": 100
     },
     {
@@ -4071,7 +4060,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 71,
-      "response_time_ms": 15212,
+      "response_time_ms": 19177,
       "score": 0
     },
     {
@@ -4080,9 +4069,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "Input does not provide a recognizable product description and lacks critical details necessary for classification.",
+      "question_asked": "Input does not provide a recognizable product description and lacks essential details to classify any product.",
       "question_score": 0,
-      "response_time_ms": 2561,
+      "response_time_ms": 2751,
       "score": 0
     },
     {
@@ -4093,7 +4082,7 @@
       "routing_correct": false,
       "question_asked": "What type of article made of clad metal are you exporting?",
       "question_score": 2,
-      "response_time_ms": 4831,
+      "response_time_ms": 6254,
       "score": 0
     },
     {
@@ -4103,18 +4092,18 @@
       "actual_routing": "classify",
       "routing_correct": true,
       "expected_chapter": "73",
-      "actual_chapter": "73",
-      "chapter_correct": true,
+      "actual_chapter": "84",
+      "chapter_correct": false,
       "expected_heading": "7311",
-      "actual_heading": "7311",
-      "heading_correct": true,
+      "actual_heading": "8405",
+      "heading_correct": false,
       "expected_code": "7311.00.20",
-      "actual_code": "7311.00.20",
-      "code_correct": true,
+      "actual_code": "8405.90.00",
+      "code_correct": false,
       "alternative_match": false,
-      "confidence": 72,
-      "response_time_ms": 14300,
-      "score": 100
+      "confidence": 68,
+      "response_time_ms": 15067,
+      "score": 0
     },
     {
       "test_case_id": "DB110",
@@ -4132,8 +4121,8 @@
       "actual_code": "8416.90.00",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 68,
-      "response_time_ms": 14322,
+      "confidence": 71,
+      "response_time_ms": 14526,
       "score": 0
     },
     {
@@ -4153,7 +4142,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 81,
-      "response_time_ms": 7736,
+      "response_time_ms": 6712,
       "score": 0
     },
     {
@@ -4173,7 +4162,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 73,
-      "response_time_ms": 18774,
+      "response_time_ms": 20480,
       "score": 0
     },
     {
@@ -4193,7 +4182,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 10478,
+      "response_time_ms": 10070,
       "score": 0
     },
     {
@@ -4213,7 +4202,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 9196,
+      "response_time_ms": 10162,
       "score": 40
     },
     {
@@ -4232,8 +4221,8 @@
       "actual_code": "8481.80.41",
       "code_correct": true,
       "alternative_match": false,
-      "confidence": 75,
-      "response_time_ms": 11279,
+      "confidence": 74,
+      "response_time_ms": 12959,
       "score": 100
     },
     {
@@ -4253,7 +4242,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 8785,
+      "response_time_ms": 12479,
       "score": 0
     },
     {
@@ -4273,7 +4262,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 13397,
+      "response_time_ms": 12972,
       "score": 40
     },
     {
@@ -4282,9 +4271,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "Input is not a recognizable product description; it appears to be a request rather than a specific product inquiry.",
-      "question_score": 0,
-      "response_time_ms": 2704,
+      "question_asked": "Input is not a recognizable product description, but rather a vague statement about exporting materials.",
+      "question_score": 2,
+      "response_time_ms": 2561,
       "score": 0
     },
     {
@@ -4304,7 +4293,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 11863,
+      "response_time_ms": 12723,
       "score": 0
     },
     {
@@ -4317,15 +4306,15 @@
       "actual_chapter": "84",
       "chapter_correct": true,
       "expected_heading": "8412",
-      "actual_heading": "8412",
-      "heading_correct": true,
+      "actual_heading": "8406",
+      "heading_correct": false,
       "expected_code": "8412.80.20",
-      "actual_code": "8412.80.20",
-      "code_correct": true,
+      "actual_code": "8406.90.00",
+      "code_correct": false,
       "alternative_match": false,
-      "confidence": 78,
-      "response_time_ms": 16062,
-      "score": 100
+      "confidence": 76,
+      "response_time_ms": 16419,
+      "score": 40
     },
     {
       "test_case_id": "DB121",
@@ -4344,7 +4333,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 10784,
+      "response_time_ms": 11400,
       "score": 40
     },
     {
@@ -4360,11 +4349,11 @@
       "actual_heading": "8708",
       "heading_correct": false,
       "expected_code": "8501.31.13",
-      "actual_code": "8708.10.90",
+      "actual_code": "8708.94.00",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 73,
-      "response_time_ms": 11031,
+      "confidence": 74,
+      "response_time_ms": 14987,
       "score": 0
     },
     {
@@ -4384,7 +4373,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 67,
-      "response_time_ms": 11494,
+      "response_time_ms": 14058,
       "score": 0
     },
     {
@@ -4404,7 +4393,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 18499,
+      "response_time_ms": 16728,
       "score": 40
     },
     {
@@ -4424,7 +4413,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 10624,
+      "response_time_ms": 8357,
       "score": 0
     },
     {
@@ -4444,7 +4433,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 69,
-      "response_time_ms": 11099,
+      "response_time_ms": 11005,
       "score": 0
     },
     {
@@ -4464,7 +4453,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 71,
-      "response_time_ms": 18102,
+      "response_time_ms": 17503,
       "score": 100
     },
     {
@@ -4484,7 +4473,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 78,
-      "response_time_ms": 12271,
+      "response_time_ms": 12389,
       "score": 40
     },
     {
@@ -4504,7 +4493,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 79,
-      "response_time_ms": 12257,
+      "response_time_ms": 12423,
       "score": 100
     },
     {
@@ -4524,7 +4513,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 82,
-      "response_time_ms": 12491,
+      "response_time_ms": 12445,
       "score": 100
     },
     {
@@ -4535,7 +4524,7 @@
       "routing_correct": false,
       "question_asked": "Input is not a recognizable product description; it lacks specificity and detail.",
       "question_score": 0,
-      "response_time_ms": 3038,
+      "response_time_ms": 2379,
       "score": 0
     },
     {
@@ -4555,7 +4544,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 15991,
+      "response_time_ms": 16943,
       "score": 40
     },
     {
@@ -4566,7 +4555,7 @@
       "routing_correct": false,
       "question_asked": "What type of integrated monocoque vehicle is this?",
       "question_score": 2,
-      "response_time_ms": 4527,
+      "response_time_ms": 4555,
       "score": 0
     },
     {
@@ -4586,7 +4575,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 9022,
+      "response_time_ms": 10008,
       "score": 40
     },
     {
@@ -4606,7 +4595,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 81,
-      "response_time_ms": 14215,
+      "response_time_ms": 12154,
       "score": 40
     },
     {
@@ -4626,7 +4615,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 11973,
+      "response_time_ms": 12189,
       "score": 0
     },
     {
@@ -4635,9 +4624,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "What is the primary function of the specialized transport vehicles?",
+      "question_asked": "What is the primary function of the specialised transport vehicles?",
       "question_score": 2,
-      "response_time_ms": 4867,
+      "response_time_ms": 11457,
       "score": 0
     },
     {
@@ -4656,8 +4645,8 @@
       "actual_code": "8702.90.12",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 84,
-      "response_time_ms": 11713,
+      "confidence": 80,
+      "response_time_ms": 11587,
       "score": 70
     },
     {
@@ -4677,7 +4666,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 79,
-      "response_time_ms": 11981,
+      "response_time_ms": 16940,
       "score": 40
     },
     {
@@ -4696,8 +4685,8 @@
       "actual_code": "9008.50.20",
       "code_correct": true,
       "alternative_match": false,
-      "confidence": 75,
-      "response_time_ms": 17295,
+      "confidence": 77,
+      "response_time_ms": 18029,
       "score": 100
     },
     {
@@ -4717,7 +4706,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 16089,
+      "response_time_ms": 16872,
       "score": 100
     },
     {
@@ -4728,7 +4717,7 @@
       "routing_correct": false,
       "question_asked": "Input is not a specific product description, but rather a general statement about exporting parts and accessories.",
       "question_score": 1,
-      "response_time_ms": 2460,
+      "response_time_ms": 3421,
       "score": 0
     },
     {
@@ -4737,9 +4726,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "Input is too vague and does not provide a specific product description.",
+      "question_asked": "Input is not a specific product description, but rather a general term for categories of items.",
       "question_score": 0,
-      "response_time_ms": 2621,
+      "response_time_ms": 2987,
       "score": 0
     },
     {
@@ -4759,28 +4748,18 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 13935,
+      "response_time_ms": 13381,
       "score": 0
     },
     {
       "test_case_id": "DB146",
       "query": "Echo sounding instrument",
       "expected_routing": "classify",
-      "actual_routing": "classify",
-      "routing_correct": true,
-      "expected_chapter": "90",
-      "actual_chapter": "90",
-      "chapter_correct": true,
-      "expected_heading": "9014",
-      "actual_heading": "9030",
-      "heading_correct": false,
-      "expected_code": "9014.80.10",
-      "actual_code": "9030.84.00",
-      "code_correct": false,
-      "alternative_match": false,
-      "confidence": 71,
-      "response_time_ms": 19893,
-      "score": 40
+      "actual_routing": "reject",
+      "routing_correct": false,
+      "response_time_ms": 390871,
+      "score": 0,
+      "error": "Error: Timeout: 30 seconds"
     },
     {
       "test_case_id": "DB147",
@@ -4799,7 +4778,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 16820,
+      "response_time_ms": 17608,
       "score": 100
     },
     {
@@ -4808,9 +4787,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "What is the primary function of the blood transfusion apparatus?",
+      "question_asked": "What is the specific function of the blood transfusion apparatus?",
       "question_score": 2,
-      "response_time_ms": 5760,
+      "response_time_ms": 4260,
       "score": 0
     },
     {
@@ -4821,7 +4800,7 @@
       "routing_correct": false,
       "question_asked": "What is the intended use of the radiation generation units?",
       "question_score": 2,
-      "response_time_ms": 6391,
+      "response_time_ms": 4944,
       "score": 0
     },
     {
@@ -4841,7 +4820,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 19194,
+      "response_time_ms": 15484,
       "score": 100
     },
     {
@@ -4850,9 +4829,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "Input does not describe a specific product, but rather a characteristic of a product. It lacks sufficient detail to classify.",
-      "question_score": 0,
-      "response_time_ms": 2556,
+      "question_asked": "Input does not describe a specific product, it is a phrase about sugar content without any identifiable product details.",
+      "question_score": 1,
+      "response_time_ms": 2263,
       "score": 0
     },
     {
@@ -4872,7 +4851,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 70,
-      "response_time_ms": 12813,
+      "response_time_ms": 11562,
       "score": 100
     },
     {
@@ -4888,11 +4867,11 @@
       "actual_heading": "0801",
       "heading_correct": false,
       "expected_code": "0802.21.00",
-      "actual_code": "0801.31.00",
+      "actual_code": "0801.21.00",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 75,
-      "response_time_ms": 20501,
+      "confidence": 74,
+      "response_time_ms": 18840,
       "score": 40
     },
     {
@@ -4912,7 +4891,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 17521,
+      "response_time_ms": 16263,
       "score": 100
     },
     {
@@ -4932,7 +4911,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 18553,
+      "response_time_ms": 16163,
       "score": 100
     },
     {
@@ -4952,7 +4931,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 70,
-      "response_time_ms": 12813,
+      "response_time_ms": 12360,
       "score": 0
     },
     {
@@ -4972,7 +4951,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 16014,
+      "response_time_ms": 16621,
       "score": 40
     },
     {
@@ -4992,7 +4971,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 78,
-      "response_time_ms": 13065,
+      "response_time_ms": 13134,
       "score": 0
     },
     {
@@ -5012,7 +4991,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 82,
-      "response_time_ms": 13009,
+      "response_time_ms": 11035,
       "score": 0
     },
     {
@@ -5032,7 +5011,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 11595,
+      "response_time_ms": 9102,
       "score": 0
     },
     {
@@ -5052,7 +5031,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 80,
-      "response_time_ms": 20370,
+      "response_time_ms": 18558,
       "score": 40
     },
     {
@@ -5065,15 +5044,15 @@
       "actual_chapter": "15",
       "chapter_correct": true,
       "expected_heading": "1511",
-      "actual_heading": "1511",
-      "heading_correct": true,
+      "actual_heading": "1513",
+      "heading_correct": false,
       "expected_code": "1511.90.30",
-      "actual_code": "1511.90.30",
-      "code_correct": true,
+      "actual_code": "1513.29.90",
+      "code_correct": false,
       "alternative_match": false,
-      "confidence": 77,
-      "response_time_ms": 18214,
-      "score": 100
+      "confidence": 76,
+      "response_time_ms": 15171,
+      "score": 40
     },
     {
       "test_case_id": "DB163",
@@ -5092,7 +5071,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 16504,
+      "response_time_ms": 15895,
       "score": 100
     },
     {
@@ -5112,7 +5091,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 79,
-      "response_time_ms": 17277,
+      "response_time_ms": 18149,
       "score": 40
     },
     {
@@ -5132,7 +5111,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 21881,
+      "response_time_ms": 15779,
       "score": 40
     },
     {
@@ -5152,7 +5131,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 79,
-      "response_time_ms": 10629,
+      "response_time_ms": 7953,
       "score": 0
     },
     {
@@ -5172,7 +5151,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 80,
-      "response_time_ms": 6889,
+      "response_time_ms": 8125,
       "score": 0
     },
     {
@@ -5188,11 +5167,11 @@
       "actual_heading": "1702",
       "heading_correct": false,
       "expected_code": "1701.12.00",
-      "actual_code": "1702.60.90",
+      "actual_code": "1702.60.10",
       "code_correct": false,
       "alternative_match": false,
       "confidence": 78,
-      "response_time_ms": 18709,
+      "response_time_ms": 21224,
       "score": 40
     },
     {
@@ -5212,7 +5191,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 19976,
+      "response_time_ms": 18972,
       "score": 100
     },
     {
@@ -5232,7 +5211,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 17588,
+      "response_time_ms": 11386,
       "score": 0
     },
     {
@@ -5252,7 +5231,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 81,
-      "response_time_ms": 17490,
+      "response_time_ms": 17001,
       "score": 100
     },
     {
@@ -5265,14 +5244,14 @@
       "actual_chapter": "62",
       "chapter_correct": false,
       "expected_heading": "1905",
-      "actual_heading": "6202",
+      "actual_heading": "6212",
       "heading_correct": false,
       "expected_code": "1905.90.51",
-      "actual_code": "6202.20.90",
+      "actual_code": "6212.90.90",
       "code_correct": false,
       "alternative_match": false,
       "confidence": 70,
-      "response_time_ms": 12365,
+      "response_time_ms": 10405,
       "score": 0
     },
     {
@@ -5291,8 +5270,8 @@
       "actual_code": "0910.12.90",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 94,
-      "response_time_ms": 12454,
+      "confidence": 92,
+      "response_time_ms": 10483,
       "score": 0
     },
     {
@@ -5312,7 +5291,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 19156,
+      "response_time_ms": 16669,
       "score": 100
     },
     {
@@ -5332,7 +5311,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 19752,
+      "response_time_ms": 13766,
       "score": 0
     },
     {
@@ -5352,7 +5331,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 20428,
+      "response_time_ms": 19634,
       "score": 100
     },
     {
@@ -5372,7 +5351,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 20361,
+      "response_time_ms": 15973,
       "score": 100
     },
     {
@@ -5392,7 +5371,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 78,
-      "response_time_ms": 17869,
+      "response_time_ms": 11891,
       "score": 0
     },
     {
@@ -5412,7 +5391,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 84,
-      "response_time_ms": 14244,
+      "response_time_ms": 12840,
       "score": 100
     },
     {
@@ -5432,7 +5411,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 73,
-      "response_time_ms": 17260,
+      "response_time_ms": 11985,
       "score": 40
     },
     {
@@ -5452,7 +5431,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 80,
-      "response_time_ms": 22027,
+      "response_time_ms": 18725,
       "score": 100
     },
     {
@@ -5472,7 +5451,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 67,
-      "response_time_ms": 11924,
+      "response_time_ms": 11648,
       "score": 0
     },
     {
@@ -5492,7 +5471,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 23234,
+      "response_time_ms": 18084,
       "score": 100
     },
     {
@@ -5508,11 +5487,11 @@
       "actual_heading": "2519",
       "heading_correct": true,
       "expected_code": "2519.90.30",
-      "actual_code": "2519.90.20",
+      "actual_code": "2519.90.90",
       "code_correct": false,
       "alternative_match": false,
       "confidence": 80,
-      "response_time_ms": 25231,
+      "response_time_ms": 20114,
       "score": 70
     },
     {
@@ -5532,7 +5511,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 73,
-      "response_time_ms": 18776,
+      "response_time_ms": 16693,
       "score": 0
     },
     {
@@ -5552,7 +5531,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 18935,
+      "response_time_ms": 18019,
       "score": 40
     },
     {
@@ -5572,7 +5551,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 14013,
+      "response_time_ms": 11499,
       "score": 0
     },
     {
@@ -5592,7 +5571,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 72,
-      "response_time_ms": 14335,
+      "response_time_ms": 11774,
       "score": 0
     },
     {
@@ -5612,7 +5591,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 78,
-      "response_time_ms": 12376,
+      "response_time_ms": 13738,
       "score": 40
     },
     {
@@ -5631,8 +5610,8 @@
       "actual_code": "2715.00.10",
       "code_correct": true,
       "alternative_match": false,
-      "confidence": 76,
-      "response_time_ms": 14998,
+      "confidence": 75,
+      "response_time_ms": 12434,
       "score": 100
     },
     {
@@ -5641,9 +5620,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "Input does not provide a recognizable product description and lacks essential details to classify any product.",
+      "question_asked": "Input does not provide a recognizable product description and lacks essential attributes to classify a product.",
       "question_score": 0,
-      "response_time_ms": 3947,
+      "response_time_ms": 1982,
       "score": 0
     },
     {
@@ -5662,8 +5641,8 @@
       "actual_code": "4012.19.90",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 79,
-      "response_time_ms": 12421,
+      "confidence": 80,
+      "response_time_ms": 11041,
       "score": 40
     },
     {
@@ -5683,7 +5662,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 11607,
+      "response_time_ms": 10961,
       "score": 0
     },
     {
@@ -5703,7 +5682,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 21987,
+      "response_time_ms": 19253,
       "score": 0
     },
     {
@@ -5712,9 +5691,9 @@
       "expected_routing": "classify",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "What type of product is this used in construction or mining vehicles?",
-      "question_score": 2,
-      "response_time_ms": 6638,
+      "question_asked": "What type of product is this?",
+      "question_score": 1,
+      "response_time_ms": 5050,
       "score": 0
     },
     {
@@ -5725,7 +5704,7 @@
       "routing_correct": false,
       "question_asked": "What material are the doors and frames made of?",
       "question_score": 2,
-      "response_time_ms": 5901,
+      "response_time_ms": 3947,
       "score": 0
     },
     {
@@ -5745,7 +5724,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 72,
-      "response_time_ms": 11718,
+      "response_time_ms": 9741,
       "score": 0
     },
     {
@@ -5765,7 +5744,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 18692,
+      "response_time_ms": 15589,
       "score": 40
     },
     {
@@ -5785,7 +5764,7 @@
       "code_correct": true,
       "alternative_match": false,
       "confidence": 81,
-      "response_time_ms": 14315,
+      "response_time_ms": 11075,
       "score": 100
     },
     {
@@ -5805,7 +5784,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 22510,
+      "response_time_ms": 16376,
       "score": 40
     },
     {
@@ -5826,7 +5805,7 @@
       ],
       "alternative_match": true,
       "confidence": 73,
-      "response_time_ms": 17563,
+      "response_time_ms": 10694,
       "score": 30
     },
     {
@@ -5847,7 +5826,7 @@
       ],
       "alternative_match": true,
       "confidence": 70,
-      "response_time_ms": 16829,
+      "response_time_ms": 10555,
       "score": 30
     },
     {
@@ -5868,7 +5847,7 @@
       ],
       "alternative_match": true,
       "confidence": 70,
-      "response_time_ms": 17531,
+      "response_time_ms": 11298,
       "score": 30
     },
     {
@@ -5888,8 +5867,8 @@
         "87"
       ],
       "alternative_match": true,
-      "confidence": 71,
-      "response_time_ms": 18336,
+      "confidence": 72,
+      "response_time_ms": 11402,
       "score": 30
     },
     {
@@ -5910,7 +5889,7 @@
       ],
       "alternative_match": true,
       "confidence": 71,
-      "response_time_ms": 16086,
+      "response_time_ms": 11774,
       "score": 30
     },
     {
@@ -5931,7 +5910,7 @@
       ],
       "alternative_match": true,
       "confidence": 72,
-      "response_time_ms": 15354,
+      "response_time_ms": 11345,
       "score": 30
     },
     {
@@ -5952,7 +5931,7 @@
       ],
       "alternative_match": true,
       "confidence": 74,
-      "response_time_ms": 21309,
+      "response_time_ms": 15329,
       "score": 30
     },
     {
@@ -5973,7 +5952,7 @@
       ],
       "alternative_match": false,
       "confidence": 73,
-      "response_time_ms": 26912,
+      "response_time_ms": 19688,
       "score": 40
     },
     {
@@ -5994,7 +5973,7 @@
       ],
       "alternative_match": true,
       "confidence": 73,
-      "response_time_ms": 14517,
+      "response_time_ms": 8639,
       "score": 30
     },
     {
@@ -6015,7 +5994,7 @@
       ],
       "alternative_match": false,
       "confidence": 71,
-      "response_time_ms": 26438,
+      "response_time_ms": 19857,
       "score": 40
     },
     {
@@ -6036,7 +6015,7 @@
       ],
       "alternative_match": false,
       "confidence": 70,
-      "response_time_ms": 24975,
+      "response_time_ms": 20087,
       "score": 40
     },
     {
@@ -6057,7 +6036,7 @@
       ],
       "alternative_match": true,
       "confidence": 69,
-      "response_time_ms": 22227,
+      "response_time_ms": 20135,
       "score": 30
     },
     {
@@ -6078,7 +6057,7 @@
       ],
       "alternative_match": false,
       "confidence": 72,
-      "response_time_ms": 12574,
+      "response_time_ms": 17120,
       "score": 40
     },
     {
@@ -6099,7 +6078,7 @@
       ],
       "alternative_match": true,
       "confidence": 73,
-      "response_time_ms": 10167,
+      "response_time_ms": 9864,
       "score": 30
     },
     {
@@ -6119,8 +6098,8 @@
         "85"
       ],
       "alternative_match": false,
-      "confidence": 63,
-      "response_time_ms": 19344,
+      "confidence": 67,
+      "response_time_ms": 16650,
       "score": 0
     },
     {
@@ -6138,7 +6117,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 10042,
+      "response_time_ms": 9503,
       "score": 40
     },
     {
@@ -6156,7 +6135,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 9708,
+      "response_time_ms": 9181,
       "score": 40
     },
     {
@@ -6170,11 +6149,11 @@
       "chapter_correct": true,
       "actual_heading": "8706",
       "heading_correct": false,
-      "actual_code": "8706.00.39",
+      "actual_code": "8706.00.49",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 75,
-      "response_time_ms": 13539,
+      "confidence": 73,
+      "response_time_ms": 12403,
       "score": 40
     },
     {
@@ -6192,7 +6171,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 71,
-      "response_time_ms": 14754,
+      "response_time_ms": 16534,
       "score": 40
     },
     {
@@ -6210,7 +6189,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 68,
-      "response_time_ms": 19811,
+      "response_time_ms": 18772,
       "score": 40
     },
     {
@@ -6222,13 +6201,13 @@
       "expected_chapter": "87",
       "actual_chapter": "87",
       "chapter_correct": true,
-      "actual_heading": "8714",
+      "actual_heading": "8708",
       "heading_correct": false,
-      "actual_code": "8714.92.90",
+      "actual_code": "8708.29.00",
       "code_correct": false,
       "alternative_match": false,
       "confidence": 72,
-      "response_time_ms": 13940,
+      "response_time_ms": 11278,
       "score": 40
     },
     {
@@ -6246,7 +6225,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 10591,
+      "response_time_ms": 8791,
       "score": 40
     },
     {
@@ -6264,7 +6243,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 72,
-      "response_time_ms": 10795,
+      "response_time_ms": 9627,
       "score": 40
     },
     {
@@ -6282,7 +6261,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 73,
-      "response_time_ms": 10494,
+      "response_time_ms": 9188,
       "score": 40
     },
     {
@@ -6300,7 +6279,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 73,
-      "response_time_ms": 11568,
+      "response_time_ms": 14059,
       "score": 40
     },
     {
@@ -6318,7 +6297,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 72,
-      "response_time_ms": 16704,
+      "response_time_ms": 13209,
       "score": 40
     },
     {
@@ -6330,13 +6309,13 @@
       "expected_chapter": "40",
       "actual_chapter": "40",
       "chapter_correct": true,
-      "actual_heading": "4013",
+      "actual_heading": "4012",
       "heading_correct": false,
-      "actual_code": "4013.90.20",
+      "actual_code": "4012.19.10",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 77,
-      "response_time_ms": 18818,
+      "confidence": 75,
+      "response_time_ms": 14150,
       "score": 40
     },
     {
@@ -6350,11 +6329,11 @@
       "chapter_correct": false,
       "actual_heading": "8706",
       "heading_correct": false,
-      "actual_code": "8706.00.50",
+      "actual_code": "8706.00.39",
       "code_correct": false,
       "alternative_match": false,
       "confidence": 72,
-      "response_time_ms": 17027,
+      "response_time_ms": 12564,
       "score": 0
     },
     {
@@ -6372,7 +6351,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 15078,
+      "response_time_ms": 12629,
       "score": 0
     },
     {
@@ -6389,8 +6368,8 @@
       "actual_code": "8212.90.00",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 71,
-      "response_time_ms": 17608,
+      "confidence": 69,
+      "response_time_ms": 13630,
       "score": 0
     },
     {
@@ -6407,8 +6386,8 @@
       "actual_code": "8483.90.00",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 68,
-      "response_time_ms": 14829,
+      "confidence": 69,
+      "response_time_ms": 11796,
       "score": 0
     },
     {
@@ -6426,7 +6405,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 16649,
+      "response_time_ms": 15361,
       "score": 40
     },
     {
@@ -6444,7 +6423,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 78,
-      "response_time_ms": 19413,
+      "response_time_ms": 18714,
       "score": 40
     },
     {
@@ -6462,7 +6441,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 12339,
+      "response_time_ms": 12454,
       "score": 40
     },
     {
@@ -6480,7 +6459,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 73,
-      "response_time_ms": 27495,
+      "response_time_ms": 25563,
       "score": 40
     },
     {
@@ -6498,7 +6477,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 17605,
+      "response_time_ms": 16238,
       "score": 40
     },
     {
@@ -6516,7 +6495,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 17158,
+      "response_time_ms": 14778,
       "score": 0
     },
     {
@@ -6534,7 +6513,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 79,
-      "response_time_ms": 10356,
+      "response_time_ms": 7458,
       "score": 0
     },
     {
@@ -6552,7 +6531,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 68,
-      "response_time_ms": 17451,
+      "response_time_ms": 17720,
       "score": 0
     },
     {
@@ -6570,7 +6549,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 70,
-      "response_time_ms": 10216,
+      "response_time_ms": 10786,
       "score": 0
     },
     {
@@ -6588,7 +6567,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 94,
-      "response_time_ms": 9629,
+      "response_time_ms": 9040,
       "score": 40
     },
     {
@@ -6606,7 +6585,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 12512,
+      "response_time_ms": 12198,
       "score": 40
     },
     {
@@ -6624,7 +6603,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 72,
-      "response_time_ms": 18221,
+      "response_time_ms": 15828,
       "score": 40
     },
     {
@@ -6642,7 +6621,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 77,
-      "response_time_ms": 12815,
+      "response_time_ms": 11474,
       "score": 40
     },
     {
@@ -6660,7 +6639,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 73,
-      "response_time_ms": 11136,
+      "response_time_ms": 10530,
       "score": 0
     },
     {
@@ -6678,7 +6657,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 72,
-      "response_time_ms": 19858,
+      "response_time_ms": 18567,
       "score": 40
     },
     {
@@ -6696,7 +6675,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 76,
-      "response_time_ms": 19773,
+      "response_time_ms": 17449,
       "score": 40
     },
     {
@@ -6714,7 +6693,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 73,
-      "response_time_ms": 11951,
+      "response_time_ms": 10116,
       "score": 40
     },
     {
@@ -6732,7 +6711,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 17450,
+      "response_time_ms": 19270,
       "score": 40
     },
     {
@@ -6750,7 +6729,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 69,
-      "response_time_ms": 12549,
+      "response_time_ms": 12932,
       "score": 0
     },
     {
@@ -6764,11 +6743,11 @@
       "chapter_correct": false,
       "actual_heading": "4419",
       "heading_correct": false,
-      "actual_code": "4419.00.00",
+      "actual_code": "4419.20.00",
       "code_correct": false,
       "alternative_match": false,
-      "confidence": 61,
-      "response_time_ms": 18333,
+      "confidence": 60,
+      "response_time_ms": 18414,
       "score": 0
     },
     {
@@ -6786,7 +6765,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 73,
-      "response_time_ms": 15492,
+      "response_time_ms": 10468,
       "score": 0
     },
     {
@@ -6804,7 +6783,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 73,
-      "response_time_ms": 17840,
+      "response_time_ms": 18654,
       "score": 40
     },
     {
@@ -6822,7 +6801,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 68,
-      "response_time_ms": 9758,
+      "response_time_ms": 11411,
       "score": 0
     },
     {
@@ -6840,7 +6819,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 75,
-      "response_time_ms": 14523,
+      "response_time_ms": 15539,
       "score": 40
     },
     {
@@ -6849,9 +6828,9 @@
       "expected_routing": "ask",
       "actual_routing": "ask",
       "routing_correct": true,
-      "question_asked": "What type of brake pads are these?",
+      "question_asked": "What material are the brake pads made of?",
       "question_score": 2,
-      "response_time_ms": 12782,
+      "response_time_ms": 5561,
       "score": 100
     },
     {
@@ -6862,7 +6841,7 @@
       "routing_correct": true,
       "question_asked": "What type of coffee product is this?",
       "question_score": 2,
-      "response_time_ms": 7061,
+      "response_time_ms": 8398,
       "score": 100
     },
     {
@@ -6873,7 +6852,7 @@
       "routing_correct": true,
       "question_asked": "What type of filter is this made of?",
       "question_score": 2,
-      "response_time_ms": 5979,
+      "response_time_ms": 9666,
       "score": 100
     },
     {
@@ -6884,7 +6863,7 @@
       "routing_correct": true,
       "question_asked": "What is the primary function of these metal parts?",
       "question_score": 2,
-      "response_time_ms": 6433,
+      "response_time_ms": 4235,
       "score": 100
     },
     {
@@ -6893,10 +6872,10 @@
       "expected_routing": "ask",
       "actual_routing": "ask",
       "routing_correct": true,
-      "question_asked": "What form of rubber is this?",
-      "question_score": 2,
-      "response_time_ms": 5445,
-      "score": 100
+      "question_asked": "Input is too vague and does not provide a complete product description. It lacks essential attributes to classify the product.",
+      "question_score": 0,
+      "response_time_ms": 3812,
+      "score": 0
     },
     {
       "test_case_id": "ASK-006",
@@ -6906,7 +6885,7 @@
       "routing_correct": true,
       "question_asked": "What material are the gloves made of?",
       "question_score": 2,
-      "response_time_ms": 6276,
+      "response_time_ms": 4066,
       "score": 100
     },
     {
@@ -6917,7 +6896,7 @@
       "routing_correct": true,
       "question_asked": "Input is too vague and lacks sufficient detail to classify as a specific product description.",
       "question_score": 0,
-      "response_time_ms": 2558,
+      "response_time_ms": 3080,
       "score": 0
     },
     {
@@ -6928,7 +6907,7 @@
       "routing_correct": true,
       "question_asked": "What type of tablets are these?",
       "question_score": 2,
-      "response_time_ms": 5261,
+      "response_time_ms": 4206,
       "score": 100
     },
     {
@@ -6939,7 +6918,7 @@
       "routing_correct": true,
       "question_asked": "What type of oil is this?",
       "question_score": 1,
-      "response_time_ms": 5377,
+      "response_time_ms": 4848,
       "score": 50
     },
     {
@@ -6950,7 +6929,7 @@
       "routing_correct": true,
       "question_asked": "What material is the wire made of?",
       "question_score": 2,
-      "response_time_ms": 5283,
+      "response_time_ms": 3800,
       "score": 100
     },
     {
@@ -6961,7 +6940,7 @@
       "routing_correct": true,
       "question_asked": "What material are the rings made of?",
       "question_score": 2,
-      "response_time_ms": 5814,
+      "response_time_ms": 3776,
       "score": 100
     },
     {
@@ -6972,7 +6951,7 @@
       "routing_correct": true,
       "question_asked": "What material are the tubes made of?",
       "question_score": 2,
-      "response_time_ms": 4532,
+      "response_time_ms": 4931,
       "score": 100
     },
     {
@@ -6981,10 +6960,10 @@
       "expected_routing": "ask",
       "actual_routing": "ask",
       "routing_correct": true,
-      "question_asked": "What type of valves are these?",
-      "question_score": 2,
-      "response_time_ms": 6577,
-      "score": 100
+      "question_asked": "What type of valve is this?",
+      "question_score": 1,
+      "response_time_ms": 5552,
+      "score": 50
     },
     {
       "test_case_id": "ASK-014",
@@ -6994,7 +6973,7 @@
       "routing_correct": true,
       "question_asked": "What type of filters are these?",
       "question_score": 2,
-      "response_time_ms": 5281,
+      "response_time_ms": 4537,
       "score": 100
     },
     {
@@ -7003,9 +6982,9 @@
       "expected_routing": "ask",
       "actual_routing": "ask",
       "routing_correct": true,
-      "question_asked": "What type of springs are these and what is their intended use?",
+      "question_asked": "What material are the springs made of?",
       "question_score": 2,
-      "response_time_ms": 5567,
+      "response_time_ms": 4204,
       "score": 100
     },
     {
@@ -7016,7 +6995,7 @@
       "routing_correct": true,
       "question_asked": "What material is the cord made of?",
       "question_score": 2,
-      "response_time_ms": 5761,
+      "response_time_ms": 5232,
       "score": 100
     },
     {
@@ -7027,7 +7006,7 @@
       "routing_correct": true,
       "question_asked": "What type of tape is this?",
       "question_score": 2,
-      "response_time_ms": 5857,
+      "response_time_ms": 4060,
       "score": 100
     },
     {
@@ -7036,9 +7015,9 @@
       "expected_routing": "ask",
       "actual_routing": "ask",
       "routing_correct": true,
-      "question_asked": "What type of brush is this made of?",
+      "question_asked": "What type of brush is this?",
       "question_score": 2,
-      "response_time_ms": 6170,
+      "response_time_ms": 4720,
       "score": 100
     },
     {
@@ -7049,7 +7028,7 @@
       "routing_correct": true,
       "question_asked": "What material are the caps made of?",
       "question_score": 2,
-      "response_time_ms": 5326,
+      "response_time_ms": 3584,
       "score": 100
     },
     {
@@ -7060,7 +7039,7 @@
       "routing_correct": true,
       "question_asked": "What material is the plate made of?",
       "question_score": 2,
-      "response_time_ms": 4906,
+      "response_time_ms": 5013,
       "score": 100
     },
     {
@@ -7069,9 +7048,9 @@
       "expected_routing": "ask",
       "actual_routing": "ask",
       "routing_correct": true,
-      "question_asked": "What is the primary function of the rubber product?",
+      "question_asked": "What type of rubber product is this for industrial use?",
       "question_score": 2,
-      "response_time_ms": 4178,
+      "response_time_ms": 4500,
       "score": 100
     },
     {
@@ -7082,7 +7061,7 @@
       "routing_correct": true,
       "question_asked": "What is the primary function of the steel component?",
       "question_score": 2,
-      "response_time_ms": 5093,
+      "response_time_ms": 8548,
       "score": 100
     },
     {
@@ -7099,7 +7078,7 @@
       "code_correct": false,
       "alternative_match": false,
       "confidence": 74,
-      "response_time_ms": 12689,
+      "response_time_ms": 16407,
       "score": 0
     },
     {
@@ -7110,7 +7089,7 @@
       "routing_correct": true,
       "question_asked": "What type of electronic device is this?",
       "question_score": 2,
-      "response_time_ms": 4536,
+      "response_time_ms": 4526,
       "score": 100
     },
     {
@@ -7121,7 +7100,7 @@
       "routing_correct": true,
       "question_asked": "What type of leather item is this?",
       "question_score": 2,
-      "response_time_ms": 5897,
+      "response_time_ms": 3792,
       "score": 100
     },
     {
@@ -7130,9 +7109,9 @@
       "expected_routing": "ask",
       "actual_routing": "ask",
       "routing_correct": true,
-      "question_asked": "What type of machine parts are these intended for?",
+      "question_asked": "What type of machine parts are these?",
       "question_score": 2,
-      "response_time_ms": 6255,
+      "response_time_ms": 5582,
       "score": 100
     },
     {
@@ -7141,9 +7120,9 @@
       "expected_routing": "ask",
       "actual_routing": "ask",
       "routing_correct": true,
-      "question_asked": "Input is too vague and does not provide a specific product description.",
+      "question_asked": "Input is too vague and does not provide a specific product description for classification.",
       "question_score": 0,
-      "response_time_ms": 2390,
+      "response_time_ms": 2646,
       "score": 0
     },
     {
@@ -7154,7 +7133,7 @@
       "routing_correct": true,
       "question_asked": "What type of glass product is this?",
       "question_score": 2,
-      "response_time_ms": 5840,
+      "response_time_ms": 5887,
       "score": 100
     },
     {
@@ -7163,9 +7142,9 @@
       "expected_routing": "ask",
       "actual_routing": "ask",
       "routing_correct": true,
-      "question_asked": "What type of ceramic article is this?",
+      "question_asked": "What is the primary function of the ceramic article?",
       "question_score": 2,
-      "response_time_ms": 6797,
+      "response_time_ms": 5785,
       "score": 100
     },
     {
@@ -7176,7 +7155,7 @@
       "routing_correct": true,
       "question_asked": "Input is too vague and does not provide a specific product description, making it impossible to classify.",
       "question_score": 0,
-      "response_time_ms": 2618,
+      "response_time_ms": 2290,
       "score": 0
     },
     {
@@ -7187,7 +7166,7 @@
       "routing_correct": false,
       "question_asked": "Input is gibberish, not a recognizable product description.",
       "question_score": 0,
-      "response_time_ms": 6095,
+      "response_time_ms": 2252,
       "score": 0
     },
     {
@@ -7198,7 +7177,7 @@
       "routing_correct": false,
       "question_asked": "Input is gibberish, not a recognizable product description.",
       "question_score": 0,
-      "response_time_ms": 5635,
+      "response_time_ms": 2715,
       "score": 0
     },
     {
@@ -7207,9 +7186,9 @@
       "expected_routing": "reject",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "Input is commercial text, not a recognizable product description.",
+      "question_asked": "Input is a commercial offer, not a recognizable product description.",
       "question_score": 0,
-      "response_time_ms": 2123,
+      "response_time_ms": 2562,
       "score": 0
     },
     {
@@ -7220,7 +7199,7 @@
       "routing_correct": false,
       "question_asked": "Commercial/price inquiry, not a product description.",
       "question_score": 1,
-      "response_time_ms": 2110,
+      "response_time_ms": 2669,
       "score": 0
     },
     {
@@ -7229,9 +7208,9 @@
       "expected_routing": "reject",
       "actual_routing": "ask",
       "routing_correct": false,
-      "question_asked": "Input consists of emojis only, which do not represent a recognizable product description.",
+      "question_asked": "Input is gibberish, not a recognizable product description.",
       "question_score": 0,
-      "response_time_ms": 6903,
+      "response_time_ms": 2238,
       "score": 0
     }
   ]
