@@ -15,28 +15,28 @@ datasource db {
 // Table 1: HS Codes Master Data
 // ========================================
 model HsCode {
-  id               Int      @id @default(autoincrement())
-  code             String   @unique @db.VarChar(20) // "0101.21.00"
-  description      String   @db.Text // Official description (no duplicate field)
-  chapter          String   @db.VarChar(50) // "01"
-  heading          String   @db.VarChar(50) // "0101.21"
-  subheading       String?  @db.VarChar(50) // "0101.21.00"
-  countryCode      String   @default("IN") @map("country_code") @db.VarChar(2)
-  dutyRate         String?  @map("duty_rate") @db.VarChar(50) // "10%"
-  keywords         String[] // ["brake", "pad", "ceramic"]
-  commonProducts   String[] @map("common_products") // ["Ceramic brake pads", ...]
-  synonyms         String[] // ["brake pads", "brake linings"]
-  exportPolicy     String?  @map("export_policy") @db.VarChar(50) // "Free", "Restricted", "Prohibited"
-  notes            Json?    // JSONB field for all extracted PDF notes
-  embedding        Unsupported("vector(1536)")? // pgvector for semantic search - requires extension
+  id             Int                          @id @default(autoincrement())
+  code           String                       @unique @db.VarChar(20) // "0101.21.00"
+  description    String                       @db.Text // Official description (no duplicate field)
+  chapter        String                       @db.VarChar(50) // "01"
+  heading        String                       @db.VarChar(50) // "0101.21"
+  subheading     String?                      @db.VarChar(50) // "0101.21.00"
+  countryCode    String                       @default("IN") @map("country_code") @db.VarChar(2)
+  dutyRate       String?                      @map("duty_rate") @db.VarChar(50) // "10%"
+  keywords       String[] // ["brake", "pad", "ceramic"]
+  commonProducts String[]                     @map("common_products") // ["Ceramic brake pads", ...]
+  synonyms       String[] // ["brake pads", "brake linings"]
+  exportPolicy   String?                      @map("export_policy") @db.VarChar(50) // "Free", "Restricted", "Prohibited"
+  notes          Json? // JSONB field for all extracted PDF notes
+  embedding      Unsupported("vector(1536)")? // pgvector for semantic search - requires extension
 
   // Hierarchy helpers
-  isOther          Boolean  @default(false) @map("is_other") // True if description contains "Other"
-  parentHeading    String?  @map("parent_heading") @db.VarChar(50) // Link to parent for hierarchy
+  isOther       Boolean @default(false) @map("is_other") // True if description contains "Other"
+  parentHeading String? @map("parent_heading") @db.VarChar(50) // Link to parent for hierarchy
 
   // Metadata
-  createdAt        DateTime @default(now()) @map("created_at")
-  updatedAt        DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // Indexes for fast lookup
   @@index([code], name: "idx_code")
@@ -56,13 +56,13 @@ model HsCode {
 model HsCodeHierarchy {
   code          String   @id @db.VarChar(20) // HS code (e.g., "8408", "8408.20", "8408.20.10")
   parentCode    String?  @map("parent_code") @db.VarChar(20) // Parent code (e.g., "8408.20" -> parent is "8408")
-  level         Int      // Hierarchy level: 2=chapter, 4=heading, 6=subheading, 8/10=tariff
+  level         Int // Hierarchy level: 2=chapter, 4=heading, 6=subheading, 8/10=tariff
   childrenCodes String[] @map("children_codes") // Array of direct child codes
   allChildren   String[] @map("all_children") // Array of ALL descendant codes (recursive)
 
   // Metadata
-  createdAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // Indexes for fast hierarchy traversal
   @@index([parentCode], name: "idx_parent_code")
@@ -81,8 +81,8 @@ model ProductSynonym {
   category      String   @db.VarChar(100) // "Automotive Fluids"
   confidence    Float    @default(1.0) // 0.0-1.0
 
-  createdAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@index([canonicalTerm], name: "idx_canonical_term")
   @@index([hsCode], name: "idx_synonym_hs_code")
@@ -94,19 +94,19 @@ model ProductSynonym {
 // ========================================
 // Stores attributes that distinguish one 8-digit HS code from another within a heading
 model Differentiator {
-  id              Int      @id @default(autoincrement())
-  heading         String   @db.VarChar(4)           // e.g., "0901"
-  subheading      String?  @db.VarChar(6)           // e.g., "090111" (optional)
-  code            String   @db.VarChar(10)          // Full HS code this differentiator applies to
-  category        String   @db.VarChar(50)          // MATERIAL, GRADE, SIZE, etc.
-  attributeKey    String   @map("attribute_key") @db.VarChar(100)   // e.g., "type", "grade", "material"
-  attributeValue  String   @map("attribute_value") @db.VarChar(200) // e.g., "plantation", "A", "cotton"
-  synonyms        String[] @default([])             // Alternative terms: ["plantation grade", "estate"]
-  description     String?                           // Explanation
-  isCatchAll      Boolean  @default(false) @map("is_catch_all")    // True for .90, .99, .00 codes
-  priority        Int      @default(50)             // Higher = check first
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime @updatedAt @map("updated_at")
+  id             Int      @id @default(autoincrement())
+  heading        String   @db.VarChar(4) // e.g., "0901"
+  subheading     String?  @db.VarChar(6) // e.g., "090111" (optional)
+  code           String   @db.VarChar(10) // Full HS code this differentiator applies to
+  category       String   @db.VarChar(50) // MATERIAL, GRADE, SIZE, etc.
+  attributeKey   String   @map("attribute_key") @db.VarChar(100) // e.g., "type", "grade", "material"
+  attributeValue String   @map("attribute_value") @db.VarChar(200) // e.g., "plantation", "A", "cotton"
+  synonyms       String[] @default([]) // Alternative terms: ["plantation grade", "estate"]
+  description    String? // Explanation
+  isCatchAll     Boolean  @default(false) @map("is_catch_all") // True for .90, .99, .00 codes
+  priority       Int      @default(50) // Higher = check first
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
 
   @@unique([code, category, attributeKey])
   @@index([heading], name: "idx_diff_heading")
@@ -120,15 +120,108 @@ model Differentiator {
 // ========================================
 // Summary of differentiator extraction status for each heading
 model HeadingDifferentiatorSummary {
-  heading                  String   @id @db.VarChar(4)
-  chapter                  String   @db.VarChar(2)
-  headingDescription       String?  @map("heading_description")
-  differentiatorCategories String[] @default([]) @map("differentiator_categories")
-  totalCodes               Int      @default(0) @map("total_codes")
-  hasCatchAll              Boolean  @default(false) @map("has_catch_all")
-  extractionStatus         String   @default("pending") @map("extraction_status") @db.VarChar(20)
+  heading                  String    @id @db.VarChar(4)
+  chapter                  String    @db.VarChar(2)
+  headingDescription       String?   @map("heading_description")
+  differentiatorCategories String[]  @default([]) @map("differentiator_categories")
+  totalCodes               Int       @default(0) @map("total_codes")
+  hasCatchAll              Boolean   @default(false) @map("has_catch_all")
+  extractionStatus         String    @default("pending") @map("extraction_status") @db.VarChar(20)
   extractedAt              DateTime? @map("extracted_at")
   notes                    String?
 
   @@map("heading_differentiator_summary")
+}
+
+// ========================================
+// Phase 2f: Normalized HS schema
+// ========================================
+// Tables below replace the denormalized notes JSONB in hs_codes.
+// Notes now live once at the appropriate hierarchy level.
+// The legacy hs_codes table is untouched in this phase.
+
+model Section {
+  section  String    @id
+  title    String
+  notes    Json      @default("[]")
+  chapters Chapter[]
+
+  @@map("sections")
+}
+
+model Chapter {
+  chapter               String    @id
+  section               String
+  title                 String
+  notes                 Json      @default("[]")
+  sourcePdf             String?   @map("source_pdf")
+  extractedAt           DateTime? @map("extracted_at") @db.Timestamptz
+  verifiedAgainstCbicAt DateTime? @map("verified_against_cbic_at") @db.Timestamptz
+
+  sectionRef           Section            @relation(fields: [section], references: [section])
+  headings             Heading[]
+  exclusionsAsSource   ChapterExclusion[] @relation("ExclusionSourceChapter")
+  exclusionsAsRedirect ChapterExclusion[] @relation("ExclusionRedirectChapter")
+  policyConditions     PolicyCondition[]
+
+  @@index([section], name: "idx_chapters_section")
+  @@map("chapters")
+}
+
+model Heading {
+  heading String @id
+  chapter String
+  title   String
+  notes   Json   @default("[]")
+
+  chapterRef           Chapter            @relation(fields: [chapter], references: [chapter])
+  subheadings          Subheading[]
+  exclusionsAsRedirect ChapterExclusion[] @relation("ExclusionRedirectHeading")
+
+  @@index([chapter], name: "idx_headings_chapter")
+  @@map("headings")
+}
+
+model Subheading {
+  subheading String @id
+  heading    String
+  title      String
+  notes      Json   @default("[]")
+
+  headingRef Heading @relation(fields: [heading], references: [heading])
+
+  @@index([heading], name: "idx_subheadings_heading")
+  @@map("subheadings")
+}
+
+model ChapterExclusion {
+  id                  Int     @id @default(autoincrement())
+  sourceChapter       String  @map("source_chapter")
+  excludedProductText String  @map("excluded_product_text")
+  redirectsToChapter  String? @map("redirects_to_chapter")
+  redirectsToHeading  String? @map("redirects_to_heading")
+  sourceNoteNumber    String? @map("source_note_number")
+  sourceNoteText      String? @map("source_note_text")
+
+  sourceChapterRef   Chapter  @relation("ExclusionSourceChapter", fields: [sourceChapter], references: [chapter])
+  redirectChapterRef Chapter? @relation("ExclusionRedirectChapter", fields: [redirectsToChapter], references: [chapter])
+  redirectHeadingRef Heading? @relation("ExclusionRedirectHeading", fields: [redirectsToHeading], references: [heading])
+
+  @@index([sourceChapter], name: "idx_excl_source_chapter")
+  @@index([redirectsToChapter], name: "idx_excl_redirect_chapter")
+  @@map("chapter_exclusions")
+}
+
+model PolicyCondition {
+  id              Int     @id @default(autoincrement())
+  chapter         String?
+  code            String?
+  conditionNumber String? @map("condition_number")
+  description     String
+
+  chapterRef Chapter? @relation(fields: [chapter], references: [chapter])
+
+  @@index([chapter], name: "idx_pc_chapter")
+  @@index([code], name: "idx_pc_code")
+  @@map("policy_conditions")
 }
