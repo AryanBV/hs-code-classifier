@@ -51,12 +51,28 @@ Screens: `input-screen` → `loading-screen` → `question-screen` (if needed) �
 API client: `frontend/src/lib/api-client.ts` — Axios client pointing to `NEXT_PUBLIC_API_URL`.
 
 ### Database: Supabase (PostgreSQL + pgvector)
-- `hs_codes` table: 19,441 rows — columns: code (text), description (text), embedding (vector 1536), notes (JSONB), unit (text)
-- Code format in DB uses CHARACTER LENGTH including dots:
-  - Chapter: "01" → LENGTH = 2
-  - Heading: "0101" → LENGTH = 4
-  - Subheading: "0101.21" → LENGTH = 7 (includes 1 dot)
-  - Tariff line: "0101.21.00" → LENGTH = 10 (includes 2 dots)
+**Project:** `waowoznsvaosgcgiivzo` (region ap-northeast-1, Postgres 17)
+**Schema (Phase 2f normalized — applied May 2026):** 7 FK-enforced tables with strict CHECK constraints
+
+| Table | Rows | Purpose |
+|---|---|---|
+| `sections` | 21 | Roman numeral groupings (I..XXI) |
+| `chapters` | 97 | 2-digit, FK→sections, with 7 JSONB note columns (notes, chapter_subheading_notes, supplementary_notes, export_licensing_notes, definitions, extraction_warnings, notes_sources) |
+| `headings` | 1,232 | 4-digit, FK→chapters |
+| `subheadings` | 5,613 | 6-digit "NNNN.NN", FK→headings, flags: india_specific, wco_2022_match, india_specific_note |
+| `tariff_lines` | 12,460 | 8-digit "NNNN.NN.NN", FK→subheadings, columns: description, unit (NULL for now), export_policy, policy_condition, embedding (vector 1536, populated in Phase 5) |
+| `chapter_exclusions` | 1,153 | Structured "Ch.X does not cover Y → redirects to Z" rules with tsvector FTS on excluded_product_text |
+| `policy_conditions` | 0 | Sidecar; current Indian policy data lives at tariff_line level via `policy_condition` field |
+
+**Code formats (DB-enforced via CHECK constraints):**
+- Chapter: regex `^\d{2}$`
+- Heading: regex `^\d{4}$` AND `LEFT(heading, 2) = chapter`
+- Subheading: regex `^\d{4}\.\d{2}$` AND `LEFT(subheading, 4) = heading`
+- Tariff line: regex `^\d{4}\.\d{2}\.\d{2}$` AND `LEFT(code, 7) = subheading`
+
+**RLS:** Enabled on all 7 tables with public-read policy. service_role bypasses RLS for backend writes.
+
+**Legacy `hs_codes` table dropped.** Backup at `backend/backups/legacy-tables-2026-05-22T20-01-56.json` (156 MB, gitignored).
 
 ### External APIs
 - OpenAI: GPT-4o-mini for classification LLM calls, text-embedding-3-small for vector embeddings
@@ -106,17 +122,16 @@ API client: `frontend/src/lib/api-client.ts` — Axios client pointing to `NEXT_
 
 ## ⚠️ Critical Gotchas
 
-### 1. Database LENGTH Bug
-NEVER query with LENGTH(code) = 6 or LENGTH(code) = 8. HS codes include dots in the database.
-Use: LENGTH(code) = 2 (chapter), 4 (heading), 7 (subheading), 10 (tariff line).
-This was a critical bug that returned 0 rows for all 8-digit code lookups.
+### 1. Code format constraints (DB-enforced)
+The new schema uses regex CHECK constraints — bad codes physically cannot be inserted. Query by exact format: chapter="01", heading="0101", subheading="0101.21", tariff_line.code="0101.21.00". No more LENGTH bug (that was the legacy schema).
 
 ### 2. Chapter Notes JSONB Structure
 The `hs_codes.notes` JSONB field contains: chapterNotes (array), sectionNotes (array), policyConditions (string|null), exportLicensingNotes (string|null).
-Known data quality issues:
-- ~20 chapters have corrupted chapterTitle in JSONB
-- 10 chapters missing notes entirely: 50, 52, 53, 64, 75, 76, 78, 79, 80, 81
-- Some chapterNotes arrays have metadata headers as first element — skip them
+Data quality status (post-Phase-2):
+- All 97 chapters have verified notes (4 outlier chapters Ch.50/53/64/81 patched from WCO HS 2022 / UK HMRC trade-tariff)
+- 99.4% export_policy coverage at tariff_line level (76 PDF-blank NULLs verified legitimate)
+- 1,153 chapter_exclusion rules with FK redirects (rules-aware foundation for Phase 6)
+- 7 india_specific subheadings flagged where India retained pre-HS-2022 codes
 
 ### 3. OpenAI Response Format
 Use `json_schema` (strict structured outputs) NOT `json_object`. The json_object mode doesn't guarantee schema compliance.
@@ -126,7 +141,7 @@ Use `json_schema` (strict structured outputs) NOT `json_object`. The json_object
 - DO NOT change data/ files without understanding the classification rules they encode
 - DO NOT hardcode API keys — always use process.env
 - DO NOT commit .env files
-- DO NOT use LENGTH = 6 or 8 for HS code queries (see gotcha #1)
+- DO NOT bypass the DB-level CHECK constraints by raw SQL with malformed codes — they're defense-in-depth, not a nuisance
 
 ## Test Structure
 
@@ -142,16 +157,16 @@ Test case format:
 { query: 'ceramic brake pads for heavy trucks', expectedChapter: '87', expectedHeading: '8708', category: 'Vehicle Parts' }
 ```
 
-## Current Status (Feb 2026)
-- Chapter accuracy: 96.4% on 28 integration tests (WARNING: these are easy cases, real accuracy is likely 60-70%)
-- 8-digit code accuracy: Not measured at scale
-- Routing: Keyword-based specificity analyzer (to be replaced by LLM "Brain" in M3)
-- Trade intelligence: Data partially in DB but not displayed to user
-- Codebase: Cleaned up (ARY-45), foundation work in progress (M1)
+## Current Status (May 2026)
+- **Phase 2 (data foundation) COMPLETE** — 97 chapters / 12,460 tariff_lines / 1,153 exclusions, 7-audit verified, FK+CHECK constraints enforced
+- Legacy `hs_codes` table dropped; backend classifier code in `backend/src/classifier/` still references it and will break until Phase 4 rebuild
+- **Operative resume brief:** `C:\Users\ASUS\.claude\plans\eager-napping-dijkstra-resume.md` (single source of truth across sessions)
+- Next: Phase 3 architecture spike — manually trace 10-20 hard cases through the new pipeline design before building Phase 4-7
 
 ## Roadmap
-- M1: Foundation — NestJS, vitest, logging, data audit (current)
-- M2: Eval harness (168 cases) → measure real accuracy → improve with data
-- M3: Brain — LLM replaces keyword routing
+- ✓ Phase 1: Eval harness (168 cases, on `feat/phase-1-eval-harness`)
+- ✓ Phase 2: Data foundation (normalized schema + canonical data + 7-audit verified)
+- → Phase 3: Architecture spike (validate pipeline on 15 hard cases on paper)
+- Phase 4: Brain rebuild — flip refuse-when-uncertain, fix 8 diagnosed legacy bugs
 - M4: Trade intelligence — duty rates, export policy on every result
 - M5: Ship — PDF reports, CI, feedback, investor demo
