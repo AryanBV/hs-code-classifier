@@ -1,0 +1,51 @@
+{
+  "task": "A3-jasmine-3301.22-re-extract",
+  "extracted_at": "2026-05-24T00:00:00Z",
+  "pdf_source": "data/pdfs/Chapter 33 Essential Oils And Resinoids; Perfumery, Cosmetic Or Toilet Preparations.pdf",
+  "pdf_pages_inspected": [3, 4],
+  "pdf_pages_inspected_note": "Pages 3-4 span the heading 3301 family. Page 3 ends with row 33011990 (Other essential oils, Free). Page 4 begins with continuation header text 'other than those of citrus fruit:' (a wrapped header for the 3301 group), then row 330122, then row 33012400. No 8-digit tariff_line code 33012200 / 33012210 / 33012290 appears anywhere in the PDF.",
+  "subheading_3301_22_anchor_text": "Essential oils other than those of citrus fruit:--Of jasmin:",
+  "subheading_3301_22_pdf_layout": {
+    "code_cell": "330122",
+    "description_cell": "Essential oils other than those of citrus fruit:--Of jasmin:",
+    "export_policy_cell": "(empty)",
+    "policy_condition_cell": "(empty)",
+    "immediately_following_row": "33012400 | Essential oils other than those of citrus fruit : -- Of peppermint (Mentha piperita) | Free"
+  },
+  "wco_2022_alignment": "WCO HS 2022 6-digit standard for 3301.22 is 'Of jasmin' — anchor matches PDF.",
+  "pdf_layout_finding": "CONTRARY TO TASK BRIEF: The Indian Schedule-2 ITC(HS) 2022 PDF does NOT list any 8-digit tariff_line children under subheading 3301.22. The PDF row for 330122 is a structural subheading row with empty export_policy/policy_condition cells, and the next row jumps directly to 33012400 (subheading 3301.24). There is no evidence of column-wrap masking a hidden 8-digit jasmine code — adjacent siblings (3301.12, 3301.13, 3301.24) all use the .00 padding (33011200, 33011300, 33012400) when they have a single tariff line, and those are all clearly visible in the PDF. The task brief's premise that 'PDF lists at least 3301.22.NN codes' is not supported by the source document.",
+  "phase_2_extraction_was_correct": true,
+  "phase_2_india_specific_note_quoted": "Subheading 330122 appears as a row in Chapter 33, mapped to '--Of jasmin' (column wrap interleaves with the 8-digit child 33012400). India uses 3301.22 as the 'Of jasmin' subheading per its tariff structure. Real Indian entry, regardless of how the WCO HS 2022 numbering compares.",
+  "tariff_lines_in_pdf": 0,
+  "tariff_lines_already_in_db": 0,
+  "tariff_lines_already_in_json_but_not_db": 0,
+  "tariff_lines_to_insert": 1,
+  "proposed_inserts": [
+    {
+      "code": "3301.22.00",
+      "subheading": "3301.22",
+      "description": "Essential oils other than those of citrus fruit -- Of jasmin",
+      "unit": null,
+      "export_policy": "Free",
+      "policy_condition": null,
+      "source_pdf_page": 4,
+      "provenance": "SYNTHETIC_FALLBACK — Indian Schedule-2 PDF does NOT explicitly list any 8-digit code under 3301.22. The PDF row for 330122 is a subheading-only row with no 8-digit children. To make jasmine essential oil classifiable to an 8-digit tariff_line (per WCO HS 2022 standard), we propose a synthetic 3301.22.00 padded with .00, mirroring the pattern used in the same PDF for sibling subheadings 3301.12 (→33011200), 3301.13 (→33011300), 3301.24 (→33012400) which all use .00 padding when a single tariff line exists. Export policy 'Free' inferred from the consistent 'Free' policy across all sibling essential-oil tariff_lines in heading 3301 (except 3301.29.37 sandalwood and 3301.30.10 agar oil, both 'Restricted'); jasmine essential oil has no known Indian export restriction.",
+      "confidence": "LOW — this is a derived/inferred code, NOT a direct PDF extraction. Should be reviewed by a domain SME before being treated as canonical Indian tariff data. The DB CHECK constraints will accept this code (regex passes, LEFT(code,7)=subheading passes)."
+    }
+  ],
+  "uncertainties": [
+    {
+      "issue": "Task brief assumption contradicts PDF evidence",
+      "detail": "The A3 task brief asserts the Indian PDF lists 3301.22.NN codes that were missed by Phase 2 extraction due to column-wrap. After careful 2-page inspection (PDF pages 3 and 4 covering all of heading 3301), I found NO such codes. The Phase 2 extraction in chapter-33.json correctly captures the subheading 3301.22 with an empty tariff_lines array and an india_specific_note explaining the situation. The 'column wrap' note in the JSON refers to how the subheading row's description text spans visually next to the 33012400 row in the original PDF table layout, NOT to a hidden child tariff_line."
+    },
+    {
+      "issue": "Whether to insert a synthetic 3301.22.00 at all",
+      "detail": "Two valid interpretations: (A) Treat the absence of an 8-digit code as a genuine Indian-tariff gap and leave subheading 3301.22 with zero tariff_lines (matches PDF exactly, but breaks spike case 12 because the classifier requires an 8-digit code to return a result). (B) Mirror sibling subheadings that use .00 padding and synthesize 3301.22.00 (enables classification, but adds non-source-of-truth data to the DB). I have proposed option (B) flagged with confidence=LOW so the coordinator can decide. If option (A) is preferred, the proposed_inserts array should be emptied and case 12 should be handled as an explicit 'cannot classify to 8-digit' result in the classifier (returning the 6-digit subheading 3301.22 instead)."
+    },
+    {
+      "issue": "Export policy inference",
+      "detail": "Export policy 'Free' for the synthetic 3301.22.00 is inferred from sibling pattern (all jasmine-adjacent essential oils in 3301.12 through 3301.29 are 'Free' except 3301.29.37 sandalwood = Restricted). Jasmine essential oil has no known CITES restriction or DGFT notification, so 'Free' is the most likely correct policy — but this is inference, not source-of-truth from the PDF."
+    }
+  ],
+  "notes_for_coordinator": "Spike case 12 (jasmine essential oil) cannot be fully resolved by re-extracting from the PDF because the Indian Schedule-2 ITC(HS) 2022 genuinely does not provide an 8-digit tariff_line under subheading 3301.22 — this is a real gap in Indian tariff structure, not a Phase 2 extraction bug. The Phase 2 india_specific_note on subheading 3301.22 already correctly diagnosed this. Coordinator should decide: (A) leave 3301.22 empty and have the classifier return the 6-digit subheading (architectural fix); or (B) accept the proposed synthetic 3301.22.00 fallback (data fix). I have prepared (B) as a low-confidence proposal so the coordinator can choose. Strongly recommend NOT executing the INSERT until the architectural-vs-data tradeoff is decided."
+}

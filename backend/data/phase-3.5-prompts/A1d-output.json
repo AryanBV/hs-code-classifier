@@ -1,0 +1,736 @@
+{
+  "task": "A1d-cross-candidate-heading-code-refs",
+  "extracted_at": "2026-05-23T19:56:56.411Z",
+  "rules_proposed": 60,
+  "rules_skipped_ambiguous": 0,
+  "rules_skipped_invalid_heading": 0,
+  "rules_already_exist": 232,
+  "pattern_breakdown": {
+    "P1": 19,
+    "P2": 12,
+    "P3": 29
+  },
+  "highest_confidence_examples": [
+    {
+      "source_chapter": "39",
+      "rule_count": 14
+    },
+    {
+      "source_chapter": "84",
+      "rule_count": 8
+    },
+    {
+      "source_chapter": "85",
+      "rule_count": 5
+    }
+  ],
+  "self_spot_check": [
+    {
+      "index": 8,
+      "source_chapter": "29",
+      "source_note_number": "Note 2",
+      "redirects_to_heading": "2208",
+      "excluded_product_text": "(b) ethyl alcohol (heading 2207 or 2208)",
+      "source_note_text": "This Chapter does not cover : (a) goods of heading 1504 or crude glycerol of heading 1520; (b) ethyl alcohol (heading 2207 or 2208); (c) methane or propane (heading 2711); (d) the compounds of carbon mentioned in Note 2 to Chapter 28; (e) Immunological products of heading 3002; (f) urea (heading 3102 or 3105); (g) colouring matter of vegetable or animal origin (heading 3203), synthetic organic colouring matter, synthetic organic products of a kind used as fluorescent brightening agents or as ...",
+      "rationale": "Ch.29 Note 2 [P3] cites heading 2208"
+    },
+    {
+      "index": 44,
+      "source_chapter": "84",
+      "source_note_number": "Note 2",
+      "redirects_to_heading": "8437",
+      "excluded_product_text": "(ii) grain dampening machines (heading 8437)",
+      "source_note_text": "Subject to the operation of Note 3 to Section XVI and subject to Note 11 to this Chapter, a machine or appliance which answers to a description in one or more of the headings 8401 to 8424, or heading 8486 and at the same time to a description in one or more of the headings 8425 to 8480 is to be classified under the appropriate heading of the former group or under heading 8486, as the case may be, and not the latter group. (a) heading 8419 does not, however, cover: (i) germination plant, incub...",
+      "rationale": "Ch.84 Note 2 [P3] cites heading 8437"
+    },
+    {
+      "index": 53,
+      "source_chapter": "90",
+      "source_note_number": "Note 1",
+      "redirects_to_heading": "8426",
+      "excluded_product_text": "lifting or handling machinery (headings 8425 to 8428)",
+      "source_note_text": "This Chapter does not cover : (a) articles of a kind used in machines, appliances or for other technical uses, of vulcanised rubber other than hard rubber (heading 4016), of leather or of composition leather (heading 4205) or textile material (heading 5911); (b) supporting belts or other support articles of textile material, whose intended effect on the organ to be supported or held derives solely from their elasticity (for example, maternity belts, thoracic support bandages, abdominal suppor...",
+      "rationale": "Ch.90 Note 1 [P3] cites heading 8426"
+    },
+    {
+      "index": 36,
+      "source_chapter": "64",
+      "source_note_number": "Note 1",
+      "redirects_to_heading": "6812",
+      "excluded_product_text": "articles of asbestos (heading 6812)",
+      "source_note_text": "This chapter does not cover: a. disposable foot or shoe coverings of flimsy material (for example, paper, sheeting of plastics) without applied soles. These products are classified according to their constituent material; b. footwear of textile material, without an outer sole glued, sewn or otherwise affixed or applied to the upper (Section XI); c. worn footwear of heading 6309; d. articles of asbestos (heading 6812); e. orthopaedic footwear or other orthopaedic appliances, or parts thereof (...",
+      "rationale": "Ch.64 Note 1 [P3] cites heading 6812"
+    },
+    {
+      "index": 21,
+      "source_chapter": "39",
+      "source_note_number": "Note 7",
+      "redirects_to_heading": "3905",
+      "excluded_product_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914)",
+      "source_note_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914).",
+      "rationale": "Ch.39 Note 7 [P1] cites heading 3905"
+    }
+  ],
+  "proposed_inserts": [
+    {
+      "source_chapter": "19",
+      "excluded_product_text": "does not cover : (a) except in the case of stuffed products of heading 1902, food preparations containing more than 20% by weight of sausage, meat, meat offal, blood, insect, fish or crustaceans, molluscs or other aquaticinvertebrates, or any combination thereof (Chapter 16)",
+      "redirects_to_chapter": [
+        "19"
+      ],
+      "redirects_to_heading": "1902",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) except in the case of stuffed products of heading 1902, food preparations containing more than 20% by weight of sausage, meat, meat offal, blood, insect, fish or crustaceans, molluscs or other aquaticinvertebrates, or any combination thereof (Chapter 16); (b) biscuits or other articles made from flour or from starch, specially prepared for use in animal feeding (heading 2309); or (c) medicaments or other products of Chapter 30.",
+      "rationale": "Ch.19 Note 1 [P2] cites heading 1902"
+    },
+    {
+      "source_chapter": "22",
+      "excluded_product_text": "does not cover: (a) products of this Chapter (other than those of heading 2209) prepared for culinary purposes and thereby rendered unsuitable for consumption as beverages (generally heading 2103)",
+      "redirects_to_chapter": [
+        "22"
+      ],
+      "redirects_to_heading": "2209",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover: (a) products of this Chapter (other than those of heading 2209) prepared for culinary purposes and thereby rendered unsuitable for consumption as beverages (generally heading 2103); (b) sea water (heading 2501); (c) distilled or conductivity water or water of similar purity (heading 2853); (d) acetic acid of concentration exceeding 10 % by weight of acetic acid (heading 2915); (e) medicaments of heading 3003 or 3004; or (f) perfumery or toilet preparations (Chapte...",
+      "rationale": "Ch.22 Note 1 [P2] cites heading 2209"
+    },
+    {
+      "source_chapter": "26",
+      "excluded_product_text": "other waste or scrap containing precious metal or precious metal compounds, of a kind used principally for the recovery of precious metal (heading 7112 or 8549)",
+      "redirects_to_chapter": [
+        "85"
+      ],
+      "redirects_to_heading": "8549",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover: (a) slag or similar industrial waste prepared as macadam (heading 2517); (b) natural magnesium carbonate (magnesite), whether or not calcined (heading 2519); (c) sludges from the storage tanks of petroleum oils, consisting mainly of such oils (2710); (d) basic slag of Chapter 31; (e) slag wool, rock wool or similar mineral wools (heading 6806); (f) waste or scrap of precious metal or of metal clad with precious metal; other waste or scrap containing precious metal...",
+      "rationale": "Ch.26 Note 1 [P3] cites heading 8549"
+    },
+    {
+      "source_chapter": "26",
+      "excluded_product_text": "(a) slag, ash and residues of a kind used in industry either for the extraction of metals or as a basisforthe manucture of chemical compounds ofmetals, excluding ash and residuesfromthe incineration of municipal waste (heading 2621)",
+      "redirects_to_chapter": [
+        "26"
+      ],
+      "redirects_to_heading": "2621",
+      "source_note_number": "Note 3",
+      "source_note_text": "Heading 2620 applies only to: (a) slag, ash and residues of a kind used in industry either for the extraction of metals or as a basisforthe manucture of chemical compounds ofmetals, excluding ash and residuesfromthe incineration of municipal waste (heading 2621); and (b) slag, ash and residues containing arsenic, whether or not containing metals, of a kind used either for the extraction of arsenic or metals or for the manufacture of their chemical compounds.",
+      "rationale": "Ch.26 Note 3 [P3] cites heading 2621"
+    },
+    {
+      "source_chapter": "28",
+      "excluded_product_text": "(f) precious or semi-precious stones (natural, synthetic or reconstructed) or dust or powder of such stones (headings 7102 to 7105)",
+      "redirects_to_chapter": [
+        "71"
+      ],
+      "redirects_to_heading": "7103",
+      "source_note_number": "Note 3",
+      "source_note_text": "Subject to the provisions of Note 1 to Section VI, this Chapter does not cover: (a) sodium chloride or magnesium oxide, whether or not pure, or other products of Section V; (b) organo-inorganic compounds other than mentioned in Note 2 above; (c) products mentioned in Note 2, 3 , 4 or 5 to Chapter 31; (d) inorganic products of a kind used as luminophores, of heading 3206; glass frit and other glass in the form of powder, granules or flakes, of heading 3207; (e) artificial graphite (heading 380...",
+      "rationale": "Ch.28 Note 3 [P3] cites heading 7103"
+    },
+    {
+      "source_chapter": "28",
+      "excluded_product_text": "(f) precious or semi-precious stones (natural, synthetic or reconstructed) or dust or powder of such stones (headings 7102 to 7105)",
+      "redirects_to_chapter": [
+        "71"
+      ],
+      "redirects_to_heading": "7104",
+      "source_note_number": "Note 3",
+      "source_note_text": "Subject to the provisions of Note 1 to Section VI, this Chapter does not cover: (a) sodium chloride or magnesium oxide, whether or not pure, or other products of Section V; (b) organo-inorganic compounds other than mentioned in Note 2 above; (c) products mentioned in Note 2, 3 , 4 or 5 to Chapter 31; (d) inorganic products of a kind used as luminophores, of heading 3206; glass frit and other glass in the form of powder, granules or flakes, of heading 3207; (e) artificial graphite (heading 380...",
+      "rationale": "Ch.28 Note 3 [P3] cites heading 7104"
+    },
+    {
+      "source_chapter": "28",
+      "excluded_product_text": "(f) precious or semi-precious stones (natural, synthetic or reconstructed) or dust or powder of such stones (headings 7102 to 7105)",
+      "redirects_to_chapter": [
+        "71"
+      ],
+      "redirects_to_heading": "7105",
+      "source_note_number": "Note 3",
+      "source_note_text": "Subject to the provisions of Note 1 to Section VI, this Chapter does not cover: (a) sodium chloride or magnesium oxide, whether or not pure, or other products of Section V; (b) organo-inorganic compounds other than mentioned in Note 2 above; (c) products mentioned in Note 2, 3 , 4 or 5 to Chapter 31; (d) inorganic products of a kind used as luminophores, of heading 3206; glass frit and other glass in the form of powder, granules or flakes, of heading 3207; (e) artificial graphite (heading 380...",
+      "rationale": "Ch.28 Note 3 [P3] cites heading 7105"
+    },
+    {
+      "source_chapter": "29",
+      "excluded_product_text": "does not cover : (a) goods of heading 1504 or crude glycerol of heading 1520",
+      "redirects_to_chapter": [
+        "15"
+      ],
+      "redirects_to_heading": "1520",
+      "source_note_number": "Note 2",
+      "source_note_text": "This Chapter does not cover : (a) goods of heading 1504 or crude glycerol of heading 1520; (b) ethyl alcohol (heading 2207 or 2208); (c) methane or propane (heading 2711); (d) the compounds of carbon mentioned in Note 2 to Chapter 28; (e) Immunological products of heading 3002; (f) urea (heading 3102 or 3105); (g) colouring matter of vegetable or animal origin (heading 3203), synthetic organic colouring matter, synthetic organic products of a kind used as fluorescent brightening agents or as ...",
+      "rationale": "Ch.29 Note 2 [P2] cites heading 1520"
+    },
+    {
+      "source_chapter": "29",
+      "excluded_product_text": "(b) ethyl alcohol (heading 2207 or 2208)",
+      "redirects_to_chapter": [
+        "22"
+      ],
+      "redirects_to_heading": "2208",
+      "source_note_number": "Note 2",
+      "source_note_text": "This Chapter does not cover : (a) goods of heading 1504 or crude glycerol of heading 1520; (b) ethyl alcohol (heading 2207 or 2208); (c) methane or propane (heading 2711); (d) the compounds of carbon mentioned in Note 2 to Chapter 28; (e) Immunological products of heading 3002; (f) urea (heading 3102 or 3105); (g) colouring matter of vegetable or animal origin (heading 3203), synthetic organic colouring matter, synthetic organic products of a kind used as fluorescent brightening agents or as ...",
+      "rationale": "Ch.29 Note 2 [P3] cites heading 2208"
+    },
+    {
+      "source_chapter": "29",
+      "excluded_product_text": "(f) urea (heading 3102 or 3105)",
+      "redirects_to_chapter": [
+        "31"
+      ],
+      "redirects_to_heading": "3105",
+      "source_note_number": "Note 2",
+      "source_note_text": "This Chapter does not cover : (a) goods of heading 1504 or crude glycerol of heading 1520; (b) ethyl alcohol (heading 2207 or 2208); (c) methane or propane (heading 2711); (d) the compounds of carbon mentioned in Note 2 to Chapter 28; (e) Immunological products of heading 3002; (f) urea (heading 3102 or 3105); (g) colouring matter of vegetable or animal origin (heading 3203), synthetic organic colouring matter, synthetic organic products of a kind used as fluorescent brightening agents or as ...",
+      "rationale": "Ch.29 Note 2 [P3] cites heading 3105"
+    },
+    {
+      "source_chapter": "32",
+      "excluded_product_text": "does not cover : (a) separate chemically defined elements or compounds [except those of heading 3203 or 3204, inorganic products of a kind used as lumino-phores (heading 3206), glass obtained from fused quartz or other fused silica in the forms provided for in heading 3207, and also dyes and other c",
+      "redirects_to_chapter": [
+        "32"
+      ],
+      "redirects_to_heading": "3203",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) separate chemically defined elements or compounds [except those of heading 3203 or 3204, inorganic products of a kind used as lumino-phores (heading 3206), glass obtained from fused quartz or other fused silica in the forms provided for in heading 3207, and also dyes and other colouring matter put up in forms or packings for retail sale, of heading 3212]; (b) tannates or other tannin derivatives of products of headings 2936 to 2939, 2941 or 3501 to 3504; or (...",
+      "rationale": "Ch.32 Note 1 [P2] cites heading 3203"
+    },
+    {
+      "source_chapter": "32",
+      "excluded_product_text": "does not cover : (a) separate chemically defined elements or compounds [except those of heading 3203 or 3204, inorganic products of a kind used as lumino-phores (heading 3206), glass obtained from fused quartz or other fused silica in the forms provided for in heading 3207, and also dyes and other c",
+      "redirects_to_chapter": [
+        "32"
+      ],
+      "redirects_to_heading": "3204",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) separate chemically defined elements or compounds [except those of heading 3203 or 3204, inorganic products of a kind used as lumino-phores (heading 3206), glass obtained from fused quartz or other fused silica in the forms provided for in heading 3207, and also dyes and other colouring matter put up in forms or packings for retail sale, of heading 3212]; (b) tannates or other tannin derivatives of products of headings 2936 to 2939, 2941 or 3501 to 3504; or (...",
+      "rationale": "Ch.32 Note 1 [P2] cites heading 3204"
+    },
+    {
+      "source_chapter": "32",
+      "excluded_product_text": "(a) separate chemically defined elements or compounds [except those of heading 3203 or 3204, inorganic products of a kind used as lumino-phores (heading 3206)",
+      "redirects_to_chapter": [
+        "32"
+      ],
+      "redirects_to_heading": "3206",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) separate chemically defined elements or compounds [except those of heading 3203 or 3204, inorganic products of a kind used as lumino-phores (heading 3206), glass obtained from fused quartz or other fused silica in the forms provided for in heading 3207, and also dyes and other colouring matter put up in forms or packings for retail sale, of heading 3212]; (b) tannates or other tannin derivatives of products of headings 2936 to 2939, 2941 or 3501 to 3504; or (...",
+      "rationale": "Ch.32 Note 1 [P3] cites heading 3206"
+    },
+    {
+      "source_chapter": "33",
+      "excluded_product_text": "does not cover: (a) natural oleoresins or vegetable extracts of heading 1301 or 1302",
+      "redirects_to_chapter": [
+        "13"
+      ],
+      "redirects_to_heading": "1302",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover: (a) natural oleoresins or vegetable extracts of heading 1301 or 1302; (b) soap or other products of heading 3401; or (c) gum, wood or sulphate turpentine or other products of heading 3805.",
+      "rationale": "Ch.33 Note 1 [P2] cites heading 1302"
+    },
+    {
+      "source_chapter": "38",
+      "excluded_product_text": "(1) artificial graphite (heading 3801)",
+      "redirects_to_chapter": [
+        "38"
+      ],
+      "redirects_to_heading": "3801",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover: (a) separate chemically defined elements or compounds with the exception of the following : (1) artificial graphite (heading 3801); (2)insecticides,rodenticides,fungicides, herbicides, anti-sproutingpro-ducts and plant-growth regulators, disinfectants and similar products, put up as described in heading 3808; (3) products put up as chargesfor fire-extinguishers or put up in fire-extinguishing grenades (heading 3813); (4) certified reference materials specified in ...",
+      "rationale": "Ch.38 Note 1 [P3] cites heading 3801"
+    },
+    {
+      "source_chapter": "38",
+      "excluded_product_text": "(3) products put up as chargesfor fire-extinguishers or put up in fire-extinguishing grenades (heading 3813)",
+      "redirects_to_chapter": [
+        "38"
+      ],
+      "redirects_to_heading": "3813",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover: (a) separate chemically defined elements or compounds with the exception of the following : (1) artificial graphite (heading 3801); (2)insecticides,rodenticides,fungicides, herbicides, anti-sproutingpro-ducts and plant-growth regulators, disinfectants and similar products, put up as described in heading 3808; (3) products put up as chargesfor fire-extinguishers or put up in fire-extinguishing grenades (heading 3813); (4) certified reference materials specified in ...",
+      "rationale": "Ch.38 Note 1 [P3] cites heading 3813"
+    },
+    {
+      "source_chapter": "38",
+      "excluded_product_text": "(e) medicaments (Heading 3003 or 3004)",
+      "redirects_to_chapter": [
+        "30"
+      ],
+      "redirects_to_heading": "3004",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover: (a) separate chemically defined elements or compounds with the exception of the following : (1) artificial graphite (heading 3801); (2)insecticides,rodenticides,fungicides, herbicides, anti-sproutingpro-ducts and plant-growth regulators, disinfectants and similar products, put up as described in heading 3808; (3) products put up as chargesfor fire-extinguishers or put up in fire-extinguishing grenades (heading 3813); (4) certified reference materials specified in ...",
+      "rationale": "Ch.38 Note 1 [P3] cites heading 3004"
+    },
+    {
+      "source_chapter": "39",
+      "excluded_product_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914)",
+      "redirects_to_chapter": [
+        "39"
+      ],
+      "redirects_to_heading": "3901",
+      "source_note_number": "Note 7",
+      "source_note_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914).",
+      "rationale": "Ch.39 Note 7 [P1] cites heading 3901"
+    },
+    {
+      "source_chapter": "39",
+      "excluded_product_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914)",
+      "redirects_to_chapter": [
+        "39"
+      ],
+      "redirects_to_heading": "3902",
+      "source_note_number": "Note 7",
+      "source_note_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914).",
+      "rationale": "Ch.39 Note 7 [P1] cites heading 3902"
+    },
+    {
+      "source_chapter": "39",
+      "excluded_product_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914)",
+      "redirects_to_chapter": [
+        "39"
+      ],
+      "redirects_to_heading": "3903",
+      "source_note_number": "Note 7",
+      "source_note_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914).",
+      "rationale": "Ch.39 Note 7 [P1] cites heading 3903"
+    },
+    {
+      "source_chapter": "39",
+      "excluded_product_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914)",
+      "redirects_to_chapter": [
+        "39"
+      ],
+      "redirects_to_heading": "3904",
+      "source_note_number": "Note 7",
+      "source_note_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914).",
+      "rationale": "Ch.39 Note 7 [P1] cites heading 3904"
+    },
+    {
+      "source_chapter": "39",
+      "excluded_product_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914)",
+      "redirects_to_chapter": [
+        "39"
+      ],
+      "redirects_to_heading": "3905",
+      "source_note_number": "Note 7",
+      "source_note_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914).",
+      "rationale": "Ch.39 Note 7 [P1] cites heading 3905"
+    },
+    {
+      "source_chapter": "39",
+      "excluded_product_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914)",
+      "redirects_to_chapter": [
+        "39"
+      ],
+      "redirects_to_heading": "3906",
+      "source_note_number": "Note 7",
+      "source_note_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914).",
+      "rationale": "Ch.39 Note 7 [P1] cites heading 3906"
+    },
+    {
+      "source_chapter": "39",
+      "excluded_product_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914)",
+      "redirects_to_chapter": [
+        "39"
+      ],
+      "redirects_to_heading": "3907",
+      "source_note_number": "Note 7",
+      "source_note_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914).",
+      "rationale": "Ch.39 Note 7 [P1] cites heading 3907"
+    },
+    {
+      "source_chapter": "39",
+      "excluded_product_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914)",
+      "redirects_to_chapter": [
+        "39"
+      ],
+      "redirects_to_heading": "3908",
+      "source_note_number": "Note 7",
+      "source_note_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914).",
+      "rationale": "Ch.39 Note 7 [P1] cites heading 3908"
+    },
+    {
+      "source_chapter": "39",
+      "excluded_product_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914)",
+      "redirects_to_chapter": [
+        "39"
+      ],
+      "redirects_to_heading": "3909",
+      "source_note_number": "Note 7",
+      "source_note_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914).",
+      "rationale": "Ch.39 Note 7 [P1] cites heading 3909"
+    },
+    {
+      "source_chapter": "39",
+      "excluded_product_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914)",
+      "redirects_to_chapter": [
+        "39"
+      ],
+      "redirects_to_heading": "3910",
+      "source_note_number": "Note 7",
+      "source_note_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914).",
+      "rationale": "Ch.39 Note 7 [P1] cites heading 3910"
+    },
+    {
+      "source_chapter": "39",
+      "excluded_product_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914)",
+      "redirects_to_chapter": [
+        "39"
+      ],
+      "redirects_to_heading": "3911",
+      "source_note_number": "Note 7",
+      "source_note_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914).",
+      "rationale": "Ch.39 Note 7 [P1] cites heading 3911"
+    },
+    {
+      "source_chapter": "39",
+      "excluded_product_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914)",
+      "redirects_to_chapter": [
+        "39"
+      ],
+      "redirects_to_heading": "3912",
+      "source_note_number": "Note 7",
+      "source_note_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914).",
+      "rationale": "Ch.39 Note 7 [P1] cites heading 3912"
+    },
+    {
+      "source_chapter": "39",
+      "excluded_product_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914)",
+      "redirects_to_chapter": [
+        "39"
+      ],
+      "redirects_to_heading": "3913",
+      "source_note_number": "Note 7",
+      "source_note_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914).",
+      "rationale": "Ch.39 Note 7 [P1] cites heading 3913"
+    },
+    {
+      "source_chapter": "39",
+      "excluded_product_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914)",
+      "redirects_to_chapter": [
+        "39"
+      ],
+      "redirects_to_heading": "3914",
+      "source_note_number": "Note 7",
+      "source_note_text": "Heading 3915 does not apply to waste, parings and scrap of a single thermoplastic material, transformed into primary forms(headings 3901 to 3914).",
+      "rationale": "Ch.39 Note 7 [P1] cites heading 3914"
+    },
+    {
+      "source_chapter": "42",
+      "excluded_product_text": "(b) articles of apparel or clothing accessories (except gloves, mittens and mitts), lined with furskin or artificial fur or to which furskin or artificial fur is attached on the outside except as mere trimming (heading 4303 or 4304)",
+      "redirects_to_chapter": [
+        "43"
+      ],
+      "redirects_to_heading": "4304",
+      "source_note_number": "Note 2",
+      "source_note_text": "This Chapter does not cover: (a) sterile surgical catgut or similar sterile suture materials (heading 3006); (b) articles of apparel or clothing accessories (except gloves, mittens and mitts), lined with furskin or artificial fur or to which furskin or artificial fur is attached on the outside except as mere trimming (heading 4303 or 4304); (c) made up articles of netting (5608); (d) articles of Chapter 64; (e) headgear or parts thereof of Chapter 65; (f) whips,riding-crops or articles of hea...",
+      "rationale": "Ch.42 Note 2 [P3] cites heading 4304"
+    },
+    {
+      "source_chapter": "56",
+      "excluded_product_text": "does not cover textile yarn, or strip or the like of heading 5404 or 5405, in which the impregnation, coating or covering cannot be seen with the naked eye (usually Chapters 50 to 55)",
+      "redirects_to_chapter": [
+        "54"
+      ],
+      "redirects_to_heading": "5404",
+      "source_note_number": "Note 4",
+      "source_note_text": "Heading 5604 does not cover textile yarn, or strip or the like of heading 5404 or 5405, in which the impregnation, coating or covering cannot be seen with the naked eye (usually Chapters 50 to 55); for the purpose of this provision, no account should be taken of any resulting change of colour.",
+      "rationale": "Ch.56 Note 4 [P2] cites heading 5404"
+    },
+    {
+      "source_chapter": "56",
+      "excluded_product_text": "does not cover textile yarn, or strip or the like of heading 5404 or 5405, in which the impregnation, coating or covering cannot be seen with the naked eye (usually Chapters 50 to 55)",
+      "redirects_to_chapter": [
+        "54"
+      ],
+      "redirects_to_heading": "5405",
+      "source_note_number": "Note 4",
+      "source_note_text": "Heading 5604 does not cover textile yarn, or strip or the like of heading 5404 or 5405, in which the impregnation, coating or covering cannot be seen with the naked eye (usually Chapters 50 to 55); for the purpose of this provision, no account should be taken of any resulting change of colour.",
+      "rationale": "Ch.56 Note 4 [P2] cites heading 5405"
+    },
+    {
+      "source_chapter": "61",
+      "excluded_product_text": "does not apply to tract suits or ski suits, of heading 6112",
+      "redirects_to_chapter": [
+        "61"
+      ],
+      "redirects_to_heading": "6112",
+      "source_note_number": "Note 3",
+      "source_note_text": "For the purposes of headings 6103 and 6104: (a) the term \"\"\"\"suit\"\"\"\" means a set of garments composed of two or three pieces made up, in respect of their outersurface, in identical fabric and comprising: (i) one suit coat or jacket the outer shell of which, exclusive of sleeves, consists of four or more panels, designed to cover the upper part of the body, possibly with a tailored waistcoat in addition whose front is made from the same fabric as the outer surface of the other components of t...",
+      "rationale": "Ch.61 Note 3 [P2] cites heading 6112"
+    },
+    {
+      "source_chapter": "62",
+      "excluded_product_text": "does not apply to track suits and ski suits, of heading 6211",
+      "redirects_to_chapter": [
+        "62"
+      ],
+      "redirects_to_heading": "6211",
+      "source_note_number": "Note 3",
+      "source_note_text": "For the purposes of headings 6203 and 6204 : (a) the term \"suit\" means a set of garments composed of two or three pieces made up, in respect of their outersurface, in identical fabric and comprising : one suit coat or jacket the outer shell of which, exclusive of sleeves, consists of four or more panels, designed to cover the upper part of the body, possibly with a tailored waistcoat in addition whose front is made from the same fabric as the outer surface of the other components of the set a...",
+      "rationale": "Ch.62 Note 3 [P2] cites heading 6211"
+    },
+    {
+      "source_chapter": "64",
+      "excluded_product_text": "articles of asbestos (heading 6812)",
+      "redirects_to_chapter": [
+        "68"
+      ],
+      "redirects_to_heading": "6812",
+      "source_note_number": "Note 1",
+      "source_note_text": "This chapter does not cover: a. disposable foot or shoe coverings of flimsy material (for example, paper, sheeting of plastics) without applied soles. These products are classified according to their constituent material; b. footwear of textile material, without an outer sole glued, sewn or otherwise affixed or applied to the upper (Section XI); c. worn footwear of heading 6309; d. articles of asbestos (heading 6812); e. orthopaedic footwear or other orthopaedic appliances, or parts thereof (...",
+      "rationale": "Ch.64 Note 1 [P3] cites heading 6812"
+    },
+    {
+      "source_chapter": "64",
+      "excluded_product_text": "orthopaedic footwear or other orthopaedic appliances, or parts thereof (heading 9021)",
+      "redirects_to_chapter": [
+        "90"
+      ],
+      "redirects_to_heading": "9021",
+      "source_note_number": "Note 1",
+      "source_note_text": "This chapter does not cover: a. disposable foot or shoe coverings of flimsy material (for example, paper, sheeting of plastics) without applied soles. These products are classified according to their constituent material; b. footwear of textile material, without an outer sole glued, sewn or otherwise affixed or applied to the upper (Section XI); c. worn footwear of heading 6309; d. articles of asbestos (heading 6812); e. orthopaedic footwear or other orthopaedic appliances, or parts thereof (...",
+      "rationale": "Ch.64 Note 1 [P3] cites heading 9021"
+    },
+    {
+      "source_chapter": "64",
+      "excluded_product_text": "does not include pegs, protectors, eyelets, hooks, buckles, ornaments, braid, laces, pompons or other trimmings (which are to be classified in their appropriate headings) or buttons or other goods of heading 9606",
+      "redirects_to_chapter": [
+        "96"
+      ],
+      "redirects_to_heading": "9606",
+      "source_note_number": "Note 2",
+      "source_note_text": "For the purposes of heading 6406, the term 'parts' does not include pegs, protectors, eyelets, hooks, buckles, ornaments, braid, laces, pompons or other trimmings (which are to be classified in their appropriate headings) or buttons or other goods of heading 9606.",
+      "rationale": "Ch.64 Note 2 [P2] cites heading 9606"
+    },
+    {
+      "source_chapter": "72",
+      "excluded_product_text": "does not include products of heading 7301 or 7302",
+      "redirects_to_chapter": [
+        "73"
+      ],
+      "redirects_to_heading": "7302",
+      "source_note_number": "Note 1",
+      "source_note_text": "In this Chapter and, in the case of Notes (d), (e) and (f) throughout this Schedule, the following expressions have the meanings hereby assigned to them: (a) Pig Iron: Iron-carbon alloys not usefullymalleable, containingmore than 2% by weight of carbon and which may contain by weight one or more other elements within the following limits: - not more than 10% of chromium - not more than 6% of manganese - not more than 3% of phosphorus - not more than 8% of silicon - a total of not more than 10...",
+      "rationale": "Ch.72 Note 1 [P2] cites heading 7302"
+    },
+    {
+      "source_chapter": "84",
+      "excluded_product_text": "machinery, appliances or other articles for technical uses or parts thereof, of glass (heading 7019 or 7020)",
+      "redirects_to_chapter": [
+        "70"
+      ],
+      "redirects_to_heading": "7020",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) millstones, grindstones or other articles of Chapter 68; (b) machinery or appliances (for example, pumps) of ceramic material and ceramic parts of machinery or appliances of any material (Chapter 69); (c) laboratory glassware (heading 7017); machinery, appliances or other articles for technical uses or parts thereof, of glass (heading 7019 or 7020); (d) articles of heading 7321 or 7322 or similar articles of other base metals (Chapters 74 to 76 or 78 to 81); ...",
+      "rationale": "Ch.84 Note 1 [P3] cites heading 7020"
+    },
+    {
+      "source_chapter": "84",
+      "excluded_product_text": "(i) sewing machines for closing bags or similar containers (heading 8452)",
+      "redirects_to_chapter": [
+        "84"
+      ],
+      "redirects_to_heading": "8452",
+      "source_note_number": "Note 2",
+      "source_note_text": "Subject to the operation of Note 3 to Section XVI and subject to Note 11 to this Chapter, a machine or appliance which answers to a description in one or more of the headings 8401 to 8424, or heading 8486 and at the same time to a description in one or more of the headings 8425 to 8480 is to be classified under the appropriate heading of the former group or under heading 8486, as the case may be, and not the latter group. (a) heading 8419 does not, however, cover: (i) germination plant, incub...",
+      "rationale": "Ch.84 Note 2 [P3] cites heading 8452"
+    },
+    {
+      "source_chapter": "84",
+      "excluded_product_text": "(i) ink-jet printing machines (heading 8443)",
+      "redirects_to_chapter": [
+        "84"
+      ],
+      "redirects_to_heading": "8443",
+      "source_note_number": "Note 2",
+      "source_note_text": "Subject to the operation of Note 3 to Section XVI and subject to Note 11 to this Chapter, a machine or appliance which answers to a description in one or more of the headings 8401 to 8424, or heading 8486 and at the same time to a description in one or more of the headings 8425 to 8480 is to be classified under the appropriate heading of the former group or under heading 8486, as the case may be, and not the latter group. (a) heading 8419 does not, however, cover: (i) germination plant, incub...",
+      "rationale": "Ch.84 Note 2 [P3] cites heading 8443"
+    },
+    {
+      "source_chapter": "84",
+      "excluded_product_text": "(i) germination plant, incubators or brooders (heading 8436)",
+      "redirects_to_chapter": [
+        "84"
+      ],
+      "redirects_to_heading": "8436",
+      "source_note_number": "Note 2",
+      "source_note_text": "Subject to the operation of Note 3 to Section XVI and subject to Note 11 to this Chapter, a machine or appliance which answers to a description in one or more of the headings 8401 to 8424, or heading 8486 and at the same time to a description in one or more of the headings 8425 to 8480 is to be classified under the appropriate heading of the former group or under heading 8486, as the case may be, and not the latter group. (a) heading 8419 does not, however, cover: (i) germination plant, incub...",
+      "rationale": "Ch.84 Note 2 [P3] cites heading 8436"
+    },
+    {
+      "source_chapter": "84",
+      "excluded_product_text": "(ii) grain dampening machines (heading 8437)",
+      "redirects_to_chapter": [
+        "84"
+      ],
+      "redirects_to_heading": "8437",
+      "source_note_number": "Note 2",
+      "source_note_text": "Subject to the operation of Note 3 to Section XVI and subject to Note 11 to this Chapter, a machine or appliance which answers to a description in one or more of the headings 8401 to 8424, or heading 8486 and at the same time to a description in one or more of the headings 8425 to 8480 is to be classified under the appropriate heading of the former group or under heading 8486, as the case may be, and not the latter group. (a) heading 8419 does not, however, cover: (i) germination plant, incub...",
+      "rationale": "Ch.84 Note 2 [P3] cites heading 8437"
+    },
+    {
+      "source_chapter": "84",
+      "excluded_product_text": "(iii) diffusing apparatus for sugar juice extraction (heading 8438)",
+      "redirects_to_chapter": [
+        "84"
+      ],
+      "redirects_to_heading": "8438",
+      "source_note_number": "Note 2",
+      "source_note_text": "Subject to the operation of Note 3 to Section XVI and subject to Note 11 to this Chapter, a machine or appliance which answers to a description in one or more of the headings 8401 to 8424, or heading 8486 and at the same time to a description in one or more of the headings 8425 to 8480 is to be classified under the appropriate heading of the former group or under heading 8486, as the case may be, and not the latter group. (a) heading 8419 does not, however, cover: (i) germination plant, incub...",
+      "rationale": "Ch.84 Note 2 [P3] cites heading 8438"
+    },
+    {
+      "source_chapter": "84",
+      "excluded_product_text": "(iv) machinery for the heat-treatment of textile yarns, fabrics or made up textile articles (heading 8451)",
+      "redirects_to_chapter": [
+        "84"
+      ],
+      "redirects_to_heading": "8451",
+      "source_note_number": "Note 2",
+      "source_note_text": "Subject to the operation of Note 3 to Section XVI and subject to Note 11 to this Chapter, a machine or appliance which answers to a description in one or more of the headings 8401 to 8424, or heading 8486 and at the same time to a description in one or more of the headings 8425 to 8480 is to be classified under the appropriate heading of the former group or under heading 8486, as the case may be, and not the latter group. (a) heading 8419 does not, however, cover: (i) germination plant, incub...",
+      "rationale": "Ch.84 Note 2 [P3] cites heading 8451"
+    },
+    {
+      "source_chapter": "84",
+      "excluded_product_text": "or (ii) water-jet cutting machines (heading 8456)",
+      "redirects_to_chapter": [
+        "84"
+      ],
+      "redirects_to_heading": "8456",
+      "source_note_number": "Note 2",
+      "source_note_text": "Subject to the operation of Note 3 to Section XVI and subject to Note 11 to this Chapter, a machine or appliance which answers to a description in one or more of the headings 8401 to 8424, or heading 8486 and at the same time to a description in one or more of the headings 8425 to 8480 is to be classified under the appropriate heading of the former group or under heading 8486, as the case may be, and not the latter group. (a) heading 8419 does not, however, cover: (i) germination plant, incub...",
+      "rationale": "Ch.84 Note 2 [P3] cites heading 8456"
+    },
+    {
+      "source_chapter": "85",
+      "excluded_product_text": "Headings 8501 to 8504 do not apply to goods described in headings 8511, 8512, 8540, 8541 or 8542",
+      "redirects_to_chapter": [
+        "85"
+      ],
+      "redirects_to_heading": "8511",
+      "source_note_number": "Note 2",
+      "source_note_text": "Headings 8501 to 8504 do not apply to goods described in headings 8511, 8512, 8540, 8541 or 8542. However, metal tank mercury arc rectifiers remain classified in heading 8504.",
+      "rationale": "Ch.85 Note 2 [P1] cites heading 8511"
+    },
+    {
+      "source_chapter": "85",
+      "excluded_product_text": "Headings 8501 to 8504 do not apply to goods described in headings 8511, 8512, 8540, 8541 or 8542",
+      "redirects_to_chapter": [
+        "85"
+      ],
+      "redirects_to_heading": "8512",
+      "source_note_number": "Note 2",
+      "source_note_text": "Headings 8501 to 8504 do not apply to goods described in headings 8511, 8512, 8540, 8541 or 8542. However, metal tank mercury arc rectifiers remain classified in heading 8504.",
+      "rationale": "Ch.85 Note 2 [P1] cites heading 8512"
+    },
+    {
+      "source_chapter": "85",
+      "excluded_product_text": "Headings 8501 to 8504 do not apply to goods described in headings 8511, 8512, 8540, 8541 or 8542",
+      "redirects_to_chapter": [
+        "85"
+      ],
+      "redirects_to_heading": "8540",
+      "source_note_number": "Note 2",
+      "source_note_text": "Headings 8501 to 8504 do not apply to goods described in headings 8511, 8512, 8540, 8541 or 8542. However, metal tank mercury arc rectifiers remain classified in heading 8504.",
+      "rationale": "Ch.85 Note 2 [P1] cites heading 8540"
+    },
+    {
+      "source_chapter": "85",
+      "excluded_product_text": "Headings 8501 to 8504 do not apply to goods described in headings 8511, 8512, 8540, 8541 or 8542",
+      "redirects_to_chapter": [
+        "85"
+      ],
+      "redirects_to_heading": "8541",
+      "source_note_number": "Note 2",
+      "source_note_text": "Headings 8501 to 8504 do not apply to goods described in headings 8511, 8512, 8540, 8541 or 8542. However, metal tank mercury arc rectifiers remain classified in heading 8504.",
+      "rationale": "Ch.85 Note 2 [P1] cites heading 8541"
+    },
+    {
+      "source_chapter": "85",
+      "excluded_product_text": "Headings 8501 to 8504 do not apply to goods described in headings 8511, 8512, 8540, 8541 or 8542",
+      "redirects_to_chapter": [
+        "85"
+      ],
+      "redirects_to_heading": "8542",
+      "source_note_number": "Note 2",
+      "source_note_text": "Headings 8501 to 8504 do not apply to goods described in headings 8511, 8512, 8540, 8541 or 8542. However, metal tank mercury arc rectifiers remain classified in heading 8504.",
+      "rationale": "Ch.85 Note 2 [P1] cites heading 8542"
+    },
+    {
+      "source_chapter": "90",
+      "excluded_product_text": "lifting or handling machinery (headings 8425 to 8428)",
+      "redirects_to_chapter": [
+        "84"
+      ],
+      "redirects_to_heading": "8426",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) articles of a kind used in machines, appliances or for other technical uses, of vulcanised rubber other than hard rubber (heading 4016), of leather or of composition leather (heading 4205) or textile material (heading 5911); (b) supporting belts or other support articles of textile material, whose intended effect on the organ to be supported or held derives solely from their elasticity (for example, maternity belts, thoracic support bandages, abdominal suppor...",
+      "rationale": "Ch.90 Note 1 [P3] cites heading 8426"
+    },
+    {
+      "source_chapter": "90",
+      "excluded_product_text": "lifting or handling machinery (headings 8425 to 8428)",
+      "redirects_to_chapter": [
+        "84"
+      ],
+      "redirects_to_heading": "8427",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) articles of a kind used in machines, appliances or for other technical uses, of vulcanised rubber other than hard rubber (heading 4016), of leather or of composition leather (heading 4205) or textile material (heading 5911); (b) supporting belts or other support articles of textile material, whose intended effect on the organ to be supported or held derives solely from their elasticity (for example, maternity belts, thoracic support bandages, abdominal suppor...",
+      "rationale": "Ch.90 Note 1 [P3] cites heading 8427"
+    },
+    {
+      "source_chapter": "90",
+      "excluded_product_text": "lifting or handling machinery (headings 8425 to 8428)",
+      "redirects_to_chapter": [
+        "84"
+      ],
+      "redirects_to_heading": "8428",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) articles of a kind used in machines, appliances or for other technical uses, of vulcanised rubber other than hard rubber (heading 4016), of leather or of composition leather (heading 4205) or textile material (heading 5911); (b) supporting belts or other support articles of textile material, whose intended effect on the organ to be supported or held derives solely from their elasticity (for example, maternity belts, thoracic support bandages, abdominal suppor...",
+      "rationale": "Ch.90 Note 1 [P3] cites heading 8428"
+    },
+    {
+      "source_chapter": "91",
+      "excluded_product_text": "clock or watch springs are, however, to be classified as clock or watch parts (heading 9114)",
+      "redirects_to_chapter": [
+        "91"
+      ],
+      "redirects_to_heading": "9114",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) clock or watch glasses or weights (classified according to their constituent material); (b) watch chains (heading 7131 or 7117, as the case may be); (c) parts of general use defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics(Chapter 39) or of precious metal or metal clad with precious metal (generally heading 7115); clock or watch springs are, however, to be classified as clock or watch parts (heading 9114); (d) bearing ...",
+      "rationale": "Ch.91 Note 1 [P3] cites heading 9114"
+    },
+    {
+      "source_chapter": "96",
+      "excluded_product_text": "(f) articles of Chapter 90, for example, spectacle frames (heading 9003)",
+      "redirects_to_chapter": [
+        "90"
+      ],
+      "redirects_to_heading": "9003",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) pencils for cosmetic or toilet uses (Chapter 33); (b) articles of Chapter 66 (for example, parts of umbrellas or walking-sticks); (c) imitation Jewellery (heading 7117); (d) parts of general use, as defined in Note 2 of Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39); (e) cutlery or other articles of Chapter 82 with handles or other parts of carving or moulding materials; heading 9601 or 9602 applies, however, to separately p...",
+      "rationale": "Ch.96 Note 1 [P3] cites heading 9003"
+    },
+    {
+      "source_chapter": "96",
+      "excluded_product_text": "(f) articles of Chapter 90, for example, spectacle frames (heading 9003), mathematical drawing pens (heading 9017)",
+      "redirects_to_chapter": [
+        "90"
+      ],
+      "redirects_to_heading": "9017",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) pencils for cosmetic or toilet uses (Chapter 33); (b) articles of Chapter 66 (for example, parts of umbrellas or walking-sticks); (c) imitation Jewellery (heading 7117); (d) parts of general use, as defined in Note 2 of Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39); (e) cutlery or other articles of Chapter 82 with handles or other parts of carving or moulding materials; heading 9601 or 9602 applies, however, to separately p...",
+      "rationale": "Ch.96 Note 1 [P3] cites heading 9017"
+    },
+    {
+      "source_chapter": "96",
+      "excluded_product_text": "(f) articles of Chapter 90, for example, spectacle frames (heading 9003), mathematical drawing pens (heading 9017), brushes of a kind specialised for use in dentistry or for medical, surgical or veterinary purposes (heading 9018)",
+      "redirects_to_chapter": [
+        "90"
+      ],
+      "redirects_to_heading": "9018",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) pencils for cosmetic or toilet uses (Chapter 33); (b) articles of Chapter 66 (for example, parts of umbrellas or walking-sticks); (c) imitation Jewellery (heading 7117); (d) parts of general use, as defined in Note 2 of Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39); (e) cutlery or other articles of Chapter 82 with handles or other parts of carving or moulding materials; heading 9601 or 9602 applies, however, to separately p...",
+      "rationale": "Ch.96 Note 1 [P3] cites heading 9018"
+    }
+  ]
+}

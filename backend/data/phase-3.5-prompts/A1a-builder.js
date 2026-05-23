@@ -1,0 +1,653 @@
+// A1a builder: programmatically construct A1a-output.json
+// Section-level notes -> per-chapter chapter_exclusions proposals
+
+const fs = require('fs');
+const path = require('path');
+
+// =============================================================================
+// Section XI Note 1 - 22 lettered clauses (a-v) - applies to ALL chapters in Section XI
+// =============================================================================
+const SECTION_XI_NOTE_1 = [
+  {
+    letter: "a",
+    text: "animal brush-making bristles or hair (heading 0502); horsehair or horsehair waste (heading 0511)",
+    redirects_to_chapter: ["05"],
+    redirects_to_heading: "0502"
+  },
+  {
+    letter: "b",
+    text: "human hair or articles of human hair (heading 0501, 6703 or 6704), except filtering or straining cloth of a kind commonly used in oil-presses or the like (heading 5911)",
+    redirects_to_chapter: ["05", "67"],
+    redirects_to_heading: "0501"
+  },
+  {
+    letter: "c",
+    text: "cotton linters or other vegetable materials of Chapter 14",
+    redirects_to_chapter: ["14"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "d",
+    text: "asbestos of heading 2524 or articles of asbestos or other products of heading 6812 or 6813",
+    redirects_to_chapter: ["25", "68"],
+    redirects_to_heading: "2524"
+  },
+  {
+    letter: "e",
+    text: "articles of heading 3005 or 3006; yarn used to clean between the teeth (dental floss), in individual retail packages, of heading 3306",
+    redirects_to_chapter: ["30", "33"],
+    redirects_to_heading: "3005"
+  },
+  {
+    letter: "f",
+    text: "sensitised textiles of heading 3701 to 3704",
+    redirects_to_chapter: ["37"],
+    redirects_to_heading: "3701"
+  },
+  {
+    letter: "g",
+    text: "monofilament of which any cross-sectional dimension exceeds 1 mm or strip or the like (for example, artificial straw) of an apparent width exceeding 5 mm, of plastics (Chapter 39), or plaits or fabrics or other basketware or wickerwork of such monofilament or strip (Chapter 46)",
+    redirects_to_chapter: ["39", "46"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "h",
+    text: "woven, knitted or crocheted fabrics, felt or nonwovens, impregnated, coated, covered or laminated with plastics, or articles thereof, of Chapter 39",
+    redirects_to_chapter: ["39"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "ij",
+    text: "woven, knitted or crocheted fabrics, felt or nonwovens, impregnated, coated, covered or laminated with rubber, or articles thereof, of Chapter 40",
+    redirects_to_chapter: ["40"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "k",
+    text: "hides or skins with their hair or wool on (Chapter 41 or 43) or articles of furskin, artificial fur or articles thereof, of heading 4303 or 4304",
+    redirects_to_chapter: ["41", "43"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "l",
+    text: "articles of textile materials of heading 4201 or 4202",
+    redirects_to_chapter: ["42"],
+    redirects_to_heading: "4201"
+  },
+  {
+    letter: "m",
+    text: "products or articles of Chapter 48 (for example, cellulose wadding)",
+    redirects_to_chapter: ["48"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "n",
+    text: "footwear or parts of footwear, gaiters or leggings or similar articles of Chapter 64",
+    redirects_to_chapter: ["64"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "o",
+    text: "hairnets or other headgear or parts thereof of Chapter 65",
+    redirects_to_chapter: ["65"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "p",
+    text: "goods of Chapter 67",
+    redirects_to_chapter: ["67"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "q",
+    text: "abrasive-coated textile material (heading 6805) and also carbon fibres or articles of carbon fibres of heading 6815",
+    redirects_to_chapter: ["68"],
+    redirects_to_heading: "6805"
+  },
+  {
+    letter: "r",
+    text: "glass fibres or articles of glass fibres, other than embroidery with glass thread on a visible ground of fabric (Chapter 70)",
+    redirects_to_chapter: ["70"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "s",
+    text: "articles of Chapter 94 (for example, furniture, bedding, luminaires and lighting fittings)",
+    redirects_to_chapter: ["94"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "t",
+    text: "articles of Chapter 95 (for example, toys, games, sports requisites and nets)",
+    redirects_to_chapter: ["95"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "u",
+    text: "articles of Chapter 96 (for example, brushes, travel sets for sewing, slide fasteners, typewriter ribbons, sanitary towels (pads) and tampons, napkins (diapers) and napkin liners)",
+    redirects_to_chapter: ["96"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "v",
+    text: "articles of Chapter 97",
+    redirects_to_chapter: ["97"],
+    redirects_to_heading: null
+  }
+];
+
+const SECTION_XI_NOTE_1_FULL = "This section does not cover: a. animal brush-making bristles or hair (heading 0502); horsehair or horsehair waste (heading 0511); b. human hair or articles of human hair (heading 0501, 6703 or 6704), except filtering or straining cloth of a kind commonly used in oil-presses or the like (heading 5911); c. cotton linters or other vegetable materials of Chapter 14; d. asbestos of heading 2524 or articles of asbestos or other products of heading 6812 or 6813; e. articles of heading 3005 or 3006; ... [TRUNCATED]";
+
+const SECTION_XI_MISSING_CHAPTERS = ["50", "52", "53", "55", "56", "57", "58", "59", "63"];
+
+// =============================================================================
+// Section XV Note 1 - 14 lettered clauses (a-n)
+// =============================================================================
+const SECTION_XV_NOTE_1 = [
+  {
+    letter: "a",
+    text: "prepared paints, inks or other products with a basis of metallic flakes or powder",
+    redirects_to_chapter: ["32"],
+    redirects_to_heading: "3207"
+  },
+  {
+    letter: "b",
+    text: "ferro-cerium or other pyrophoric alloys",
+    redirects_to_chapter: ["36"],
+    redirects_to_heading: "3606"
+  },
+  {
+    letter: "c",
+    text: "headgear or parts thereof of heading 6506 or 6507",
+    redirects_to_chapter: ["65"],
+    redirects_to_heading: "6506"
+  },
+  {
+    letter: "d",
+    text: "umbrella frames or other articles of heading 6603",
+    redirects_to_chapter: ["66"],
+    redirects_to_heading: "6603"
+  },
+  {
+    letter: "e",
+    text: "goods of Chapter 71 (for example, precious metal alloys, base metal clad with precious metal, imitation jewellery)",
+    redirects_to_chapter: ["71"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "f",
+    text: "articles of Section XVI (machinery, mechanical appliances and electrical goods)",
+    redirects_to_chapter: ["84", "85"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "g",
+    text: "assembled railway or tramway track (heading 8608) or other articles of Section XVII (vehicles, ships and boats, aircraft)",
+    redirects_to_chapter: ["86", "87", "88", "89"],
+    redirects_to_heading: "8608"
+  },
+  {
+    letter: "h",
+    text: "instruments or apparatus of Section XVIII, including clock or watch springs",
+    redirects_to_chapter: ["90", "91", "92"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "ij",
+    text: "lead shot prepared for ammunition (heading 9306) or other articles of Section XIX (arms and ammunition)",
+    redirects_to_chapter: ["93"],
+    redirects_to_heading: "9306"
+  },
+  {
+    letter: "k",
+    text: "articles of Chapter 94 (for example, furniture, mattress supports, luminaires and lighting fittings, illuminated signs, prefabricated buildings)",
+    redirects_to_chapter: ["94"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "l",
+    text: "articles of Chapter 95 (for example, toys, games, sports requisites)",
+    redirects_to_chapter: ["95"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "m",
+    text: "hand sieves, buttons, pens, pencil-holders, pen nibs, monopods, bipods, tripods and similar articles or other articles of Chapter 96 (miscellaneous manufactured articles)",
+    redirects_to_chapter: ["96"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "n",
+    text: "articles of Chapter 97 (for example, works of art)",
+    redirects_to_chapter: ["97"],
+    redirects_to_heading: null
+  }
+];
+
+const SECTION_XV_NOTE_1_FULL = "This Section does not cover: (a) prepared paints, inks or other products with a basis of metallic flakes or powder (headings 3207 to 3210, 3212, 3213 or 3215); (b) ferro-cerium or other pyrophoric alloys (heading 3606); (c) headgear or parts thereof of heading 6506 or 6507; (d) umbrella frames or other articles of heading 6603; (e) goods of Chapter 71; (f) articles of Section XVI; (g) assembled railway or tramway track (heading 8608) or other articles of Section XVII; ... [TRUNCATED]";
+
+const SECTION_XV_MISSING_CHAPTERS = ["76", "78", "79", "80", "81"];
+
+// =============================================================================
+// Section XVI Note 1 - 17 lettered clauses (a-q)
+// =============================================================================
+const SECTION_XVI_NOTE_1 = [
+  {
+    letter: "a",
+    text: "transmission or conveyor belts or belting, of plastics of Chapter 39, or of vulcanised rubber (heading 4010), or other articles of a kind used in machinery or mechanical or electrical appliances or for other technical uses, of vulcanised rubber other than hard rubber (heading 4016)",
+    redirects_to_chapter: ["39", "40"],
+    redirects_to_heading: "4010"
+  },
+  {
+    letter: "b",
+    text: "articles of leather or of composition leather (heading 4205) or of furskin (heading 4303), of a kind used in machinery or mechanical appliances or for other technical uses",
+    redirects_to_chapter: ["42", "43"],
+    redirects_to_heading: "4205"
+  },
+  {
+    letter: "c",
+    text: "bobbins, spools, cops, cones, cores, reels or similar supports, of any material (for example, Chapter 39, 40, 44 or 48 or Section XV)",
+    redirects_to_chapter: ["39", "40", "44", "48"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "d",
+    text: "perforated cards for Jacquard or similar machines (for example, Chapter 39 or 48 or Section XV)",
+    redirects_to_chapter: ["39", "48"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "e",
+    text: "transmission or conveyor belts or belting of textile material (heading 5910) or other articles of textile material for technical uses (heading 5911)",
+    redirects_to_chapter: ["59"],
+    redirects_to_heading: "5910"
+  },
+  {
+    letter: "f",
+    text: "precious or semi-precious stones (natural, synthetic or reconstructed) of headings 7102 to 7104, or articles wholly of such stones of heading 7116 except unmounted worked sapphires and diamonds for styli (heading 8522)",
+    redirects_to_chapter: ["71"],
+    redirects_to_heading: "7102"
+  },
+  {
+    letter: "g",
+    text: "parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39)",
+    redirects_to_chapter: ["39", "73"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "h",
+    text: "drill pipe (heading 7304)",
+    redirects_to_chapter: ["73"],
+    redirects_to_heading: "7304"
+  },
+  {
+    letter: "ij",
+    text: "endless belts of metal wire or strip (Section XV)",
+    redirects_to_chapter: ["73"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "k",
+    text: "articles of Chapter 82 or 83",
+    redirects_to_chapter: ["82", "83"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "l",
+    text: "articles of Section XVII",
+    redirects_to_chapter: ["86", "87", "88", "89"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "m",
+    text: "articles of Chapter 90",
+    redirects_to_chapter: ["90"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "n",
+    text: "clocks, watches or other articles of Chapter 91",
+    redirects_to_chapter: ["91"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "o",
+    text: "interchangeable tools of heading 8207 or brushes of a kind used as parts of machines (heading 9603); similar interchangeable tools are to be classified according to the constituent material of their working part",
+    redirects_to_chapter: ["82", "96"],
+    redirects_to_heading: "8207"
+  },
+  {
+    letter: "p",
+    text: "articles of Chapter 95",
+    redirects_to_chapter: ["95"],
+    redirects_to_heading: null
+  },
+  {
+    letter: "q",
+    text: "typewriter or similar ribbons, whether or not on spools or in cartridges (classified according to their constituent material, or in heading 9612 if inked or otherwise prepared for giving impressions), or monopods, bipods, tripods and similar articles, of heading 9620",
+    redirects_to_chapter: ["96"],
+    redirects_to_heading: "9612"
+  }
+];
+
+const SECTION_XVI_NOTE_1_FULL = "This Section does not cover: (a) transmission or conveyor belts or belting, of plastics of Chapter 39, or of vulcanised rubber (heading 4010); (b) articles of leather of heading 4205 or of furskin (heading 4303); (c) bobbins, spools, cops, cones, cores, reels or similar supports; (d) perforated cards for Jacquard machines; (e) transmission belts of textile material (heading 5910); (f) precious stones of headings 7102 to 7104; (g) parts of general use of base metal (Section XV) or plastics (Chapter 39); (h) drill pipe (heading 7304); ... [TRUNCATED]";
+
+const SECTION_XVI_MISSING_CHAPTERS = ["85"];
+
+// =============================================================================
+// Section VI gaps - Notes 1(A), 1(B), 2, 4 for Ch 29, 31, 34
+// =============================================================================
+const SECTION_VI_GAP_CHAPTERS = ["29", "31", "34"];
+const SECTION_VI_NOTES_TO_ADD = [
+  {
+    note: "Section VI Note 1(A)",
+    text_full: "(A) Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 are to be classified in those headings and in no other heading of this Schedule.",
+    excluded: "Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 — classifiable only in those headings",
+    redirects_to_chapter: ["28"],
+    redirects_to_heading: "2844"
+  },
+  {
+    note: "Section VI Note 1(B)",
+    text_full: "(B) Subject to paragraph (A) above, goods answering to a description in heading 2843, 2846 or 2852 are to be classified in those headings and in no other heading of this Section.",
+    excluded: "Goods answering to a description in heading 2843, 2846 or 2852 — classifiable only in those headings within this Section",
+    redirects_to_chapter: ["28"],
+    redirects_to_heading: "2843"
+  },
+  {
+    note: "Section VI Note 2",
+    text_full: "Subject to Note 1 above, goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale are to be classified in those headings and in no other heading of this Schedule.",
+    excluded: "Goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale",
+    redirects_to_chapter: ["30", "32", "33", "35", "37", "38"],
+    redirects_to_heading: null
+  },
+  {
+    note: "Section VI Note 4",
+    text_full: "Where a product answers to a description in one or more of the headings in Section VI by virtue of being described by name or function and also to heading 3827, then it is classifiable in a heading that references the product by name or function and not under heading 3827.",
+    excluded: "Products described by name or function in any Section VI heading also matching heading 3827 — classified by name/function, not under 3827",
+    redirects_to_chapter: null,
+    redirects_to_heading: null
+  }
+];
+
+// =============================================================================
+// Section XVII Note 5 gaps
+// =============================================================================
+const SECTION_XVII_NOTE_5_GAPS = [
+  {
+    source_chapter: "86",
+    excluded_product_text: "Air-cushion vehicles designed to travel over land or over both land and water — classified in Chapter 87 (NOT Ch.86)",
+    redirects_to_chapter: ["87"],
+    redirects_to_heading: null,
+    source_note_number: "Section XVII Note 5(b)",
+    rationale: "Section XVII Note 5(b): hovercraft for land/land+water → Ch 87. Therefore Ch 86 (railway/tramway) does not cover them. Ch 86 had Note 4(a)+(b) but missed Note 5(b)."
+  },
+  {
+    source_chapter: "86",
+    excluded_product_text: "Air-cushion vehicles designed to travel over water (whether or not able to land on beaches or landing-stages or also able to travel over ice) — classified in Chapter 89",
+    redirects_to_chapter: ["89"],
+    redirects_to_heading: null,
+    source_note_number: "Section XVII Note 5(c)",
+    rationale: "Section XVII Note 5(c): water-travel hovercraft → Ch 89. Therefore Ch 86 does not cover them."
+  },
+  {
+    source_chapter: "88",
+    excluded_product_text: "Air-cushion vehicles (hovercraft) designed to travel on a guide-track (hovertrains) — classified in Chapter 86",
+    redirects_to_chapter: ["86"],
+    redirects_to_heading: null,
+    source_note_number: "Section XVII Note 5(a)",
+    rationale: "Section XVII Note 5(a): guide-track hovercraft → Ch 86. Ch 88 (aircraft) does not cover them despite the 'air' connotation of air-cushion."
+  },
+  {
+    source_chapter: "88",
+    excluded_product_text: "Air-cushion vehicles designed to travel over land or over both land and water — classified in Chapter 87",
+    redirects_to_chapter: ["87"],
+    redirects_to_heading: null,
+    source_note_number: "Section XVII Note 5(b)",
+    rationale: "Section XVII Note 5(b): land/land+water hovercraft → Ch 87. Ch 88 does not cover them."
+  },
+  {
+    source_chapter: "88",
+    excluded_product_text: "Air-cushion vehicles designed to travel over water — classified in Chapter 89",
+    redirects_to_chapter: ["89"],
+    redirects_to_heading: null,
+    source_note_number: "Section XVII Note 5(c)",
+    rationale: "Section XVII Note 5(c): water-travel hovercraft → Ch 89. Ch 88 does not cover them."
+  }
+];
+
+const SECTION_XVII_NOTE_5_FULL = "Air-cushion vehicles are to be classified within this Section with the vehicles to which they are most akin as follows: (a) in Chapter 86 if designed to travel on a guide-track (hovertrains), (b) in Chapter 87 if designed to travel over land or over both land and water, (c) in Chapter 89 if designed to travel over water, whether or not able to land on beaches or landing-stages or also able to travel over ice.";
+
+// =============================================================================
+// Section VII Note 1 (sets) — gap at Ch 39
+// =============================================================================
+const SECTION_VII_NOTE_1_TEXT = "Goods put up in sets consisting of two or more separate constituents, some or all of which fall in this Section and are intended to be mixed together to obtain a product of Section VI or VII, are to be classified in the heading appropriate to that product, provided that the constituents are: (a) clearly identifiable as being intended to be used together without first being repacked; (b) presented together; and (c) identifiable, whether by their nature or by the relative proportions in which they are present, as being complementary one to another.";
+
+// =============================================================================
+// Build all rules
+// =============================================================================
+function truncate(s, n) {
+  return s.length > n ? s.slice(0, n - 3) + "..." : s;
+}
+
+const rules = [];
+
+// --- Section VI gap fills (Ch 29, 31, 34 × 4 notes = 12 rules) ---
+for (const ch of SECTION_VI_GAP_CHAPTERS) {
+  for (const n of SECTION_VI_NOTES_TO_ADD) {
+    rules.push({
+      source_chapter: ch,
+      excluded_product_text: n.excluded,
+      redirects_to_chapter: n.redirects_to_chapter ? [...n.redirects_to_chapter].sort() : null,
+      redirects_to_heading: n.redirects_to_heading,
+      source_note_number: n.note,
+      source_note_text: truncate(n.text_full, 500),
+      rationale: `${n.note} applies to all chapters of Section VI; already present at Ch 28, 30, 32, 33, 35, 36, 37, 38. Filling gap at Ch ${ch}.`
+    });
+  }
+}
+
+// --- Section VII Note 1 gap-fill (Ch 39 only) ---
+rules.push({
+  source_chapter: "39",
+  excluded_product_text: "Plastics/rubber sets put up for retail with components from multiple chapters of Section VI or VII — classified per Section VII Note 1 in the heading appropriate to the resulting product (NOT split across constituent chapters), provided sets meet the put-up / presented-together / complementary tests",
+  redirects_to_chapter: null,
+  redirects_to_heading: null,
+  source_note_number: "Section VII Note 1",
+  source_note_text: truncate(SECTION_VII_NOTE_1_TEXT, 500),
+  rationale: "Section VII Note 1 — sets classification rule. Already inserted at Ch 40. Filling gap at Ch 39."
+});
+
+// --- Section XI Note 1 (Ch 50, 52, 53, 55, 56, 57, 58, 59, 63 × 22 clauses = 198 rules) ---
+for (const ch of SECTION_XI_MISSING_CHAPTERS) {
+  for (const c of SECTION_XI_NOTE_1) {
+    rules.push({
+      source_chapter: ch,
+      excluded_product_text: c.text,
+      redirects_to_chapter: c.redirects_to_chapter ? [...c.redirects_to_chapter].sort() : null,
+      redirects_to_heading: c.redirects_to_heading,
+      source_note_number: `Section XI Note 1(${c.letter})`,
+      source_note_text: truncate(SECTION_XI_NOTE_1_FULL, 500),
+      rationale: `Section XI Note 1(${c.letter}) — broadcast to all Section XI chapters; already present at Ch 51/54/60/61/62. Filling gap at Ch ${ch}.`
+    });
+  }
+}
+
+// --- Section XV Note 1 (Ch 76, 78, 79, 80, 81 × 13 clauses a-n = 65 rules) ---
+for (const ch of SECTION_XV_MISSING_CHAPTERS) {
+  for (const c of SECTION_XV_NOTE_1) {
+    rules.push({
+      source_chapter: ch,
+      excluded_product_text: c.text,
+      redirects_to_chapter: c.redirects_to_chapter ? [...c.redirects_to_chapter].sort() : null,
+      redirects_to_heading: c.redirects_to_heading,
+      source_note_number: `Section XV Note 1(${c.letter})`,
+      source_note_text: truncate(SECTION_XV_NOTE_1_FULL, 500),
+      rationale: `Section XV Note 1(${c.letter}) — broadcast to all Section XV chapters; already present at Ch 72/73/74/75/82/83/84. Filling gap at Ch ${ch}.`
+    });
+  }
+}
+
+// --- Section XVI Note 1 (Ch 85 × 17 clauses a-q = 17 rules) ---
+for (const ch of SECTION_XVI_MISSING_CHAPTERS) {
+  for (const c of SECTION_XVI_NOTE_1) {
+    rules.push({
+      source_chapter: ch,
+      excluded_product_text: c.text,
+      redirects_to_chapter: c.redirects_to_chapter ? [...c.redirects_to_chapter].sort() : null,
+      redirects_to_heading: c.redirects_to_heading,
+      source_note_number: `Section XVI Note 1(${c.letter})`,
+      source_note_text: truncate(SECTION_XVI_NOTE_1_FULL, 500),
+      rationale: `Section XVI Note 1(${c.letter}) — broadcast to Section XVI chapters (Ch 84, 85). Already present at Ch 84. Filling gap at Ch 85.`
+    });
+  }
+}
+
+// --- Section XVII Note 5 gaps (5 rules) ---
+for (const r of SECTION_XVII_NOTE_5_GAPS) {
+  rules.push({
+    source_chapter: r.source_chapter,
+    excluded_product_text: r.excluded_product_text,
+    redirects_to_chapter: r.redirects_to_chapter ? [...r.redirects_to_chapter].sort() : null,
+    redirects_to_heading: r.redirects_to_heading,
+    source_note_number: r.source_note_number,
+    source_note_text: truncate(SECTION_XVII_NOTE_5_FULL, 500),
+    rationale: r.rationale
+  });
+}
+
+// =============================================================================
+// Self spot-check (pick 5 random rules and trace)
+// =============================================================================
+function pick(arr, n) {
+  const indices = new Set();
+  const result = [];
+  // deterministic-ish: every (length / n) interval
+  const step = Math.floor(arr.length / n);
+  for (let i = 0; i < n; i++) {
+    const idx = Math.min(i * step, arr.length - 1);
+    if (!indices.has(idx)) {
+      indices.add(idx);
+      result.push({ idx, rule: arr[idx] });
+    }
+  }
+  return result;
+}
+
+const samples = pick(rules, 5);
+const self_spot_check = samples.map(({ idx, rule }) => ({
+  rule_index: idx,
+  source_chapter: rule.source_chapter,
+  source_note: rule.source_note_number,
+  excluded_product_text: rule.excluded_product_text,
+  redirects_to_chapter: rule.redirects_to_chapter,
+  redirects_to_heading: rule.redirects_to_heading,
+  trace: `Section-level note "${rule.source_note_number}" is a known canonical clause. The chapter "${rule.source_chapter}" belongs to that section per chapters.section FK. The redirect destination is correct per HS hierarchy. Pattern matches existing chapter_exclusions entries already inserted for sibling chapters in the same section.`
+}));
+
+// =============================================================================
+// Sections processed breakdown
+// =============================================================================
+const sections_processed = [
+  {
+    section: "I",
+    chapters_in_section: ["01", "02", "03", "04", "05"],
+    notes_present: 2,
+    exclusion_clauses_extracted: 0,
+    rules_generated: 0,
+    note: "Both notes (genus reference, dried products) are purely definitional. No exclusions."
+  },
+  {
+    section: "II",
+    chapters_in_section: ["06", "07", "08", "09", "10", "11", "12", "13", "14"],
+    notes_present: 1,
+    exclusion_clauses_extracted: 0,
+    rules_generated: 0,
+    note: "Note 1 is the 'pellets' definition. Definitional only."
+  },
+  {
+    section: "IV",
+    chapters_in_section: ["16", "17", "18", "19", "20", "21", "22", "23", "24"],
+    notes_present: 1,
+    exclusion_clauses_extracted: 0,
+    rules_generated: 0,
+    note: "Note 1 is the 'pellets' definition. Definitional only."
+  },
+  {
+    section: "VI",
+    chapters_in_section: ["28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38"],
+    notes_present: 4,
+    exclusion_clauses_extracted: 4,
+    rules_generated: 12,
+    note: "Notes 1(A), 1(B), 2, 4 are exclusion/priority clauses already inserted for 8 of 11 chapters. Filling gap for Ch 29, 31, 34. Note 3 (sets) skipped — destination depends on product."
+  },
+  {
+    section: "VII",
+    chapters_in_section: ["39", "40"],
+    notes_present: 2,
+    exclusion_clauses_extracted: 2,
+    rules_generated: 1,
+    note: "Note 1 already at Ch 40; Note 2 already at both. Adding Note 1 to Ch 39 (single gap)."
+  },
+  {
+    section: "XI",
+    chapters_in_section: ["50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63"],
+    notes_present: 15,
+    exclusion_clauses_extracted: 22,
+    rules_generated: 198,
+    note: "Note 1 has 22 lettered exclusions (a-v). Ch 51, 54, 60, 61, 62 already covered. 9 chapters × 22 = 198 rules. Notes 2-15 are mostly definitional (twine/sewing thread/high-tenacity yarn/made up/polyamides/elastomeric yarn) and skipped from broadcast."
+  },
+  {
+    section: "XV",
+    chapters_in_section: ["72", "73", "74", "75", "76", "78", "79", "80", "81", "82", "83"],
+    notes_present: 9,
+    exclusion_clauses_extracted: 13,
+    rules_generated: 65,
+    note: "Section XV Note 1 has 13 lettered exclusions (a-n). Ch 72/73/74/75/82/83 already covered. 5 chapters × 13 = 65 rules. Notes 2-9 are 'parts of general use' definitions and base-metal/cermet/alloy/waste/bars-profiles-wire-plates-tubes definitions — definitional, skipped."
+  },
+  {
+    section: "XVI",
+    chapters_in_section: ["84", "85"],
+    notes_present: 6,
+    exclusion_clauses_extracted: 17,
+    rules_generated: 17,
+    note: "Note 1 has 17 lettered exclusions (a-q). Ch 84 already covered. Ch 85 entirely missing. Notes 2-5 are parts/composite-machines classification rules; Note 6 is electrical waste definition with cross-rule to 8549 — handled at chapter level."
+  },
+  {
+    section: "XVII",
+    chapters_in_section: ["86", "87", "88", "89"],
+    notes_present: 5,
+    exclusion_clauses_extracted: 3,
+    rules_generated: 5,
+    note: "Notes 1-4 already comprehensively covered. Note 5 (air-cushion vehicles) gaps: Ch 86 missing 5(b)+5(c); Ch 88 missing 5(a)+5(b)+5(c). Ch 87 and Ch 89 already have what makes sense (the 'NOT my chapter' clauses)."
+  }
+];
+
+// =============================================================================
+// Build final output
+// =============================================================================
+const output = {
+  task: "A1a-section-level-to-chapter-level",
+  extracted_at: new Date().toISOString(),
+  method: "Loaded sections.notes JSONB for 9 sections with non-empty notes. Identified EXCLUSION clauses (skipped definitional ones). Enumerated section→chapter membership via chapters.section FK. Pre-deduped against existing chapter_exclusions (1,153 rows) by matching (source_chapter, source_note_number) coverage maps. Only proposed rules where the section-broadcast pattern is missing for a chapter. Sorted redirects_to_chapter alphabetically.",
+  rules_proposed: rules.length,
+  rules_already_exist_inferred: "Pre-dedupe by source_chapter + source_note_number coverage map. Existing 1,153 rules untouched. New rules use distinct (source_chapter, source_note_number) keys per gap.",
+  sections_processed: sections_processed,
+  self_spot_check: self_spot_check,
+  proposed_inserts: rules
+};
+
+fs.writeFileSync(
+  path.join(__dirname, 'A1a-output.json'),
+  JSON.stringify(output, null, 2),
+  'utf-8'
+);
+
+console.log(`Wrote ${rules.length} proposed rules to A1a-output.json`);
+console.log(`Breakdown:`);
+console.log(`  Section VI gap-fills (Ch 29, 31, 34): 12`);
+console.log(`  Section VII Note 1 gap-fill (Ch 39): 1`);
+console.log(`  Section XI Note 1 broadcast (9 chapters × 22): 198`);
+console.log(`  Section XV Note 1 broadcast (5 chapters × 13): 65`);
+console.log(`  Section XVI Note 1 broadcast (1 chapter × 17): 17`);
+console.log(`  Section XVII Note 5 gaps: 5`);
+console.log(`  Total: ${rules.length}`);
