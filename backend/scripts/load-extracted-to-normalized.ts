@@ -1,18 +1,22 @@
 /**
  * Load extracted chapter JSON files into the normalized HS schema.
  *
- * Reads `backend/data/extracted/chapter-NN.json` files produced by the
- * Phase 2b extraction pilot and upserts them into the Phase 2f tables:
- *   sections, chapters, headings, subheadings, chapter_exclusions, policy_conditions.
+ * Reads `backend/data/extracted/chapter-NN.json` (97 canonical files, post-normalize
+ * + WCO patches + phantom cleanup) and inserts them into the Phase 2f tables:
+ *   sections, chapters, headings, subheadings, tariff_lines,
+ *   chapter_exclusions, policy_conditions
  *
- * Idempotent: re-running produces the same DB state.
- *   - Sections/chapters/headings/subheadings use upsert
- *   - chapter_exclusions and policy_conditions use delete-then-insert
- *     (scoped to the chapter being processed) so re-runs don't accumulate duplicates.
+ * Strict validation:
+ *   - Fails LOUDLY on missing critical keys (chapter, section, title, headings)
+ *   - Validates code prefix consistency before INSERT (DB also checks via CHECK constraints)
+ *   - Tracks expected row counts and reports per-chapter delta
+ *
+ * Idempotent: re-running upserts; chapter_exclusions/policy_conditions/tariff_lines
+ * use delete-then-insert scoped to the chapter being processed.
  *
  * Run: cd backend && npx ts-node scripts/load-extracted-to-normalized.ts
  *
- * Phase 2f.
+ * Phase 2f (extended with tariff_lines + WCO compliance flags).
  */
 
 import * as dotenv from 'dotenv';
@@ -24,9 +28,11 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 import { Prisma } from '@prisma/client';
 import { prisma } from '../src/utils/prisma';
 
-// ============================================================
-// Standard WCO section titles
-// ============================================================
+const EXTRACTED_DIR = path.resolve(__dirname, '../data/extracted');
+
+// Expected totals (post-cleanup; used for validation, not enforcement)
+const EXPECTED = { chapters: 97, headings: 1232, subheadings: 5613, tariffLines: 12460 };
+
 const SECTION_TITLES: Record<string, string> = {
   I: 'Live Animals; Animal Products',
   II: 'Vegetable Products',
@@ -45,41 +51,39 @@ const SECTION_TITLES: Record<string, string> = {
   XV: 'Base Metals and Articles of Base Metal',
   XVI: 'Machinery and Mechanical Appliances; Electrical Equipment',
   XVII: 'Vehicles, Aircraft, Vessels and Associated Transport Equipment',
-  XVIII:
-    'Optical, Photographic, Cinematographic, Measuring Instruments; Clocks; Musical Instruments',
+  XVIII: 'Optical, Photographic, Cinematographic, Measuring Instruments; Clocks; Musical Instruments',
   XIX: 'Arms and Ammunition; Parts and Accessories thereof',
   XX: 'Miscellaneous Manufactured Articles',
   XXI: "Works of Art, Collectors' Pieces and Antiques",
 };
 
 // ============================================================
-// Types matching the extracted chapter JSON shape
+// Types (canonical extracted JSON shape)
 // ============================================================
-interface ExtractedNote {
-  number: string;
-  text: string;
-}
-
+interface ExtractedNote { number: string; text: string; notification_date?: string; notification_no?: string; }
+interface ExtractedDefinition { term: string; text: string; }
 interface ExtractedTariffLine {
   code: string;
   description: string;
   unit?: string | null;
+  export_policy?: string | null;
+  policy_condition?: string | null;
 }
-
 interface ExtractedSubheading {
   subheading: string;
   title: string;
   subheading_notes?: ExtractedNote[];
   tariff_lines?: ExtractedTariffLine[];
+  india_specific?: boolean;
+  wco_2022_match?: boolean;
+  india_specific_note?: string;
 }
-
 interface ExtractedHeading {
   heading: string;
   title: string;
   heading_notes?: ExtractedNote[];
   subheadings?: ExtractedSubheading[];
 }
-
 interface ExtractedExclusion {
   excluded_product_text: string;
   redirects_to_chapter?: string | null;
@@ -87,44 +91,36 @@ interface ExtractedExclusion {
   source_note_number?: string | null;
   source_note_text?: string | null;
 }
-
 interface ExtractedPolicyCondition {
   condition_number?: string | null;
   description: string;
   code?: string | null;
 }
-
 interface ExtractedChapter {
   chapter: string;
-  title: string;
   section: string;
-  chapter_notes?: ExtractedNote[];
-  section_notes?: ExtractedNote[];
-  exclusion_clauses?: ExtractedExclusion[];
-  headings?: ExtractedHeading[];
-  policy_conditions?: ExtractedPolicyCondition[];
+  title: string;
   source_pdf?: string | null;
   extracted_at?: string | null;
+  extractor_model?: string | null;
+  extraction_warnings?: string[];
+  chapter_notes?: ExtractedNote[];
+  section_notes?: ExtractedNote[];
+  chapter_subheading_notes?: ExtractedNote[];
+  supplementary_notes?: ExtractedNote[];
+  export_licensing_notes?: ExtractedNote[];
+  definitions?: ExtractedDefinition[];
+  notes_sources?: Record<string, string>;
+  exclusion_clauses?: ExtractedExclusion[];
+  policy_conditions?: ExtractedPolicyCondition[];
+  headings: ExtractedHeading[];
 }
 
 // ============================================================
 // Helpers
 // ============================================================
-const EXTRACTED_DIR = path.resolve(__dirname, '../data/extracted');
-
-function listChapterFiles(): string[] {
-  if (!fs.existsSync(EXTRACTED_DIR)) {
-    return [];
-  }
-  return fs
-    .readdirSync(EXTRACTED_DIR)
-    .filter((f) => /^chapter-\d{2}\.json$/i.test(f))
-    .sort();
-}
-
-function readChapter(file: string): ExtractedChapter {
-  const full = path.join(EXTRACTED_DIR, file);
-  const raw = fs.readFileSync(full, 'utf-8');
+function readChapter(filePath: string): ExtractedChapter {
+  const raw = fs.readFileSync(filePath, 'utf-8').replace(/^﻿/, '');
   return JSON.parse(raw) as ExtractedChapter;
 }
 
@@ -134,168 +130,205 @@ function parseDateOrNull(value: string | null | undefined): Date | null {
   return Number.isNaN(d.getTime()) ? null : d;
 }
 
-// Convert an array of notes into a Prisma-acceptable JSON value.
-// Prisma's `Json` columns require `InputJsonValue`, which doesn't structurally
-// match our typed interfaces — so we serialize through JSON.parse(JSON.stringify(...)).
 function asJson(value: unknown): Prisma.InputJsonValue {
   return JSON.parse(JSON.stringify(value ?? [])) as Prisma.InputJsonValue;
+}
+
+class LoadError extends Error {}
+
+function strictRequire(file: string, chapter: ExtractedChapter): void {
+  const errors: string[] = [];
+  if (!chapter.chapter || !/^\d{2}$/.test(chapter.chapter)) {
+    errors.push(`invalid chapter key: ${JSON.stringify(chapter.chapter)}`);
+  }
+  if (!chapter.section || !SECTION_TITLES[chapter.section]) {
+    errors.push(`invalid section: ${JSON.stringify(chapter.section)}`);
+  }
+  if (!chapter.title || chapter.title.trim().length === 0) {
+    errors.push('empty title');
+  }
+  if (!Array.isArray(chapter.headings) || chapter.headings.length === 0) {
+    errors.push('no headings');
+  }
+  if (errors.length > 0) {
+    throw new LoadError(`${file}: STRICT VALIDATION FAILED — ${errors.join('; ')}`);
+  }
+}
+
+function validateHierarchy(file: string, chapter: ExtractedChapter): void {
+  const errors: string[] = [];
+  for (const h of chapter.headings) {
+    if (!/^\d{4}$/.test(h.heading)) errors.push(`heading "${h.heading}" not 4-digit`);
+    if (!h.heading.startsWith(chapter.chapter)) errors.push(`heading "${h.heading}" doesn't start with chapter "${chapter.chapter}"`);
+    for (const sh of h.subheadings ?? []) {
+      if (!/^\d{4}\.\d{2}$/.test(sh.subheading)) errors.push(`subheading "${sh.subheading}" not NNNN.NN`);
+      else if (!sh.subheading.startsWith(h.heading)) errors.push(`subheading "${sh.subheading}" doesn't start with heading "${h.heading}"`);
+      for (const tl of sh.tariff_lines ?? []) {
+        if (!/^\d{4}\.\d{2}\.\d{2}$/.test(tl.code)) errors.push(`tariff_line "${tl.code}" not NNNN.NN.NN`);
+        else if (!tl.code.startsWith(sh.subheading)) errors.push(`tariff_line "${tl.code}" doesn't start with subheading "${sh.subheading}"`);
+      }
+    }
+  }
+  if (errors.length > 0) {
+    throw new LoadError(`${file}: HIERARCHY VALIDATION FAILED — ${errors.slice(0, 5).join('; ')}${errors.length > 5 ? ` ... and ${errors.length - 5} more` : ''}`);
+  }
 }
 
 interface LoadStats {
   chaptersLoaded: number;
   headings: number;
   subheadings: number;
+  tariffLines: number;
   exclusions: number;
   policyConditions: number;
   warnings: string[];
+  errors: string[];
 }
 
 // ============================================================
-// Per-chapter load (single transaction)
+// Per-chapter load (single transaction per chapter)
 // ============================================================
-async function loadChapter(data: ExtractedChapter, stats: LoadStats, file: string): Promise<void> {
-  const sectionKey = data.section?.trim();
-  if (!sectionKey) {
-    stats.warnings.push(`${file}: missing "section" field — skipped`);
-    return;
-  }
-  const sectionTitle = SECTION_TITLES[sectionKey];
-  if (!sectionTitle) {
-    stats.warnings.push(
-      `${file}: unknown section "${sectionKey}" — not in WCO standard title map; skipped`,
-    );
-    return;
-  }
+async function loadChapter(data: ExtractedChapter, stats: LoadStats, file: string, opts: { phase: 'hierarchy' | 'sidecars' }): Promise<void> {
+  strictRequire(file, data);
+  validateHierarchy(file, data);
 
-  const chapterKey = data.chapter?.trim();
-  if (!chapterKey) {
-    stats.warnings.push(`${file}: missing "chapter" field — skipped`);
-    return;
-  }
+  const sectionKey = data.section;
+  const sectionTitle = SECTION_TITLES[sectionKey]!;
+  const chapterKey = data.chapter;
 
-  const sectionNotes = data.section_notes ?? [];
-  const chapterNotes = data.chapter_notes ?? [];
-  const headings = data.headings ?? [];
-  const exclusions = data.exclusion_clauses ?? [];
-  const policyConditions = data.policy_conditions ?? [];
+  await prisma.$transaction(
+    async (tx) => {
+      if (opts.phase === 'hierarchy') {
+      // 1. Section
+      await tx.section.upsert({
+        where: { section: sectionKey },
+        create: { section: sectionKey, title: sectionTitle, notes: asJson(data.section_notes ?? []) },
+        update: { title: sectionTitle, notes: asJson(data.section_notes ?? []) },
+      });
 
-  await prisma.$transaction(async (tx) => {
-    // 1. Upsert section
-    await tx.section.upsert({
-      where: { section: sectionKey },
-      create: {
-        section: sectionKey,
-        title: sectionTitle,
-        notes: asJson(sectionNotes),
-      },
-      update: {
-        title: sectionTitle,
-        notes: asJson(sectionNotes),
-      },
-    });
-
-    // 2. Upsert chapter
-    await tx.chapter.upsert({
-      where: { chapter: chapterKey },
-      create: {
-        chapter: chapterKey,
-        section: sectionKey,
-        title: data.title ?? '',
-        notes: asJson(chapterNotes),
-        sourcePdf: data.source_pdf ?? null,
-        extractedAt: parseDateOrNull(data.extracted_at),
-      },
-      update: {
-        section: sectionKey,
-        title: data.title ?? '',
-        notes: asJson(chapterNotes),
-        sourcePdf: data.source_pdf ?? null,
-        extractedAt: parseDateOrNull(data.extracted_at),
-      },
-    });
-
-    // 3. Upsert headings + subheadings
-    for (const h of headings) {
-      const headingKey = h.heading?.trim();
-      if (!headingKey) continue;
-
-      await tx.heading.upsert({
-        where: { heading: headingKey },
+      // 2. Chapter
+      await tx.chapter.upsert({
+        where: { chapter: chapterKey },
         create: {
-          heading: headingKey,
           chapter: chapterKey,
-          title: h.title ?? '',
-          notes: asJson(h.heading_notes ?? []),
+          section: sectionKey,
+          title: data.title,
+          notes: asJson(data.chapter_notes ?? []),
+          chapterSubheadingNotes: asJson(data.chapter_subheading_notes ?? []),
+          supplementaryNotes: asJson(data.supplementary_notes ?? []),
+          exportLicensingNotes: asJson(data.export_licensing_notes ?? []),
+          definitions: asJson(data.definitions ?? []),
+          extractionWarnings: asJson(data.extraction_warnings ?? []),
+          notesSources: asJson(data.notes_sources ?? {}),
+          sourcePdf: data.source_pdf ?? null,
+          extractedAt: parseDateOrNull(data.extracted_at),
+          verifiedAgainstWcoAt: new Date(),
         },
         update: {
-          chapter: chapterKey,
-          title: h.title ?? '',
-          notes: asJson(h.heading_notes ?? []),
+          section: sectionKey,
+          title: data.title,
+          notes: asJson(data.chapter_notes ?? []),
+          chapterSubheadingNotes: asJson(data.chapter_subheading_notes ?? []),
+          supplementaryNotes: asJson(data.supplementary_notes ?? []),
+          exportLicensingNotes: asJson(data.export_licensing_notes ?? []),
+          definitions: asJson(data.definitions ?? []),
+          extractionWarnings: asJson(data.extraction_warnings ?? []),
+          notesSources: asJson(data.notes_sources ?? {}),
+          sourcePdf: data.source_pdf ?? null,
+          extractedAt: parseDateOrNull(data.extracted_at),
+          verifiedAgainstWcoAt: new Date(),
         },
       });
-      stats.headings += 1;
 
-      for (const sh of h.subheadings ?? []) {
-        const subKey = sh.subheading?.trim();
-        if (!subKey) continue;
-
-        await tx.subheading.upsert({
-          where: { subheading: subKey },
-          create: {
-            subheading: subKey,
-            heading: headingKey,
-            title: sh.title ?? '',
-            notes: asJson(sh.subheading_notes ?? []),
-          },
-          update: {
-            heading: headingKey,
-            title: sh.title ?? '',
-            notes: asJson(sh.subheading_notes ?? []),
-          },
+      // 3. Headings + Subheadings + Tariff lines
+      for (const h of data.headings) {
+        await tx.heading.upsert({
+          where: { heading: h.heading },
+          create: { heading: h.heading, chapter: chapterKey, title: h.title, notes: asJson(h.heading_notes ?? []) },
+          update: { chapter: chapterKey, title: h.title, notes: asJson(h.heading_notes ?? []) },
         });
-        stats.subheadings += 1;
+        stats.headings += 1;
+
+        for (const sh of h.subheadings ?? []) {
+          await tx.subheading.upsert({
+            where: { subheading: sh.subheading },
+            create: {
+              subheading: sh.subheading,
+              heading: h.heading,
+              title: sh.title,
+              notes: asJson(sh.subheading_notes ?? []),
+              indiaSpecific: sh.india_specific === true,
+              wco2022Match: sh.wco_2022_match !== false,
+              indiaSpecificNote: sh.india_specific_note ?? null,
+            },
+            update: {
+              heading: h.heading,
+              title: sh.title,
+              notes: asJson(sh.subheading_notes ?? []),
+              indiaSpecific: sh.india_specific === true,
+              wco2022Match: sh.wco_2022_match !== false,
+              indiaSpecificNote: sh.india_specific_note ?? null,
+            },
+          });
+          stats.subheadings += 1;
+
+          // Delete-then-insert tariff lines for this subheading (idempotent)
+          await tx.tariffLine.deleteMany({ where: { subheading: sh.subheading } });
+          const tlData = (sh.tariff_lines ?? []).map((tl) => ({
+            code: tl.code,
+            subheading: sh.subheading,
+            description: tl.description,
+            unit: tl.unit ?? null,
+            exportPolicy: tl.export_policy ?? null,
+            policyCondition: tl.policy_condition ?? null,
+          }));
+          if (tlData.length > 0) {
+            await tx.tariffLine.createMany({ data: tlData });
+            stats.tariffLines += tlData.length;
+          }
+        }
       }
-    }
+      } // end phase=hierarchy
 
-    // 4. Replace chapter exclusions for this chapter
-    await tx.chapterExclusion.deleteMany({ where: { sourceChapter: chapterKey } });
-    if (exclusions.length > 0) {
-      await tx.chapterExclusion.createMany({
-        data: exclusions.map((e) => ({
-          sourceChapter: chapterKey,
-          excludedProductText: e.excluded_product_text ?? '',
-          redirectsToChapter: e.redirects_to_chapter ?? null,
-          redirectsToHeading: e.redirects_to_heading ?? null,
-          sourceNoteNumber: e.source_note_number ?? null,
-          sourceNoteText: e.source_note_text ?? null,
-        })),
-      });
-      stats.exclusions += exclusions.length;
-    }
+      if (opts.phase === 'sidecars') {
+        // 4. Chapter exclusions (delete-then-insert)
+        await tx.chapterExclusion.deleteMany({ where: { sourceChapter: chapterKey } });
+        const exclusions = data.exclusion_clauses ?? [];
+        if (exclusions.length > 0) {
+          await tx.chapterExclusion.createMany({
+            data: exclusions.map((e) => ({
+              sourceChapter: chapterKey,
+              excludedProductText: e.excluded_product_text,
+              redirectsToChapter: e.redirects_to_chapter ?? null,
+              redirectsToHeading: e.redirects_to_heading ?? null,
+              sourceNoteNumber: e.source_note_number ?? null,
+              sourceNoteText: e.source_note_text ?? null,
+            })),
+          });
+          stats.exclusions += exclusions.length;
+        }
 
-    // 5. Replace policy conditions for this chapter
-    //    Policies scoped to this chapter (chapter=chapterKey) are removed;
-    //    code-scoped policies under this chapter are NOT in scope here (we
-    //    only delete the chapter-scoped ones we own).
-    await tx.policyCondition.deleteMany({ where: { chapter: chapterKey } });
+        // 5. Policy conditions (delete chapter-scoped, recreate)
+        await tx.policyCondition.deleteMany({ where: { chapter: chapterKey } });
+        for (const pc of data.policy_conditions ?? []) {
+          if (!pc.description) continue;
+          const hasCode = !!pc.code;
+          await tx.policyCondition.create({
+            data: {
+              chapter: hasCode ? null : chapterKey,
+              code: hasCode ? (pc.code ?? null) : null,
+              conditionNumber: pc.condition_number ?? null,
+              description: pc.description,
+            },
+          });
+          stats.policyConditions += 1;
+        }
+      }
+    },
+    { timeout: 60000 },
+  );
 
-    for (const pc of policyConditions) {
-      if (!pc.description) continue;
-      const hasCode = !!pc.code;
-      // Schema CHECK constraint: exactly one of (chapter, code) must be set.
-      await tx.policyCondition.create({
-        data: {
-          chapter: hasCode ? null : chapterKey,
-          code: hasCode ? (pc.code ?? null) : null,
-          conditionNumber: pc.condition_number ?? null,
-          description: pc.description,
-        },
-      });
-      stats.policyConditions += 1;
-    }
-  });
-
-  stats.chaptersLoaded += 1;
+  if (opts.phase === 'hierarchy') stats.chaptersLoaded += 1;
 }
 
 // ============================================================
@@ -303,60 +336,85 @@ async function loadChapter(data: ExtractedChapter, stats: LoadStats, file: strin
 // ============================================================
 async function main(): Promise<void> {
   console.log(`[load-extracted] reading from ${EXTRACTED_DIR}`);
-  const files = listChapterFiles();
+  const files = fs.readdirSync(EXTRACTED_DIR).filter((f) => /^chapter-\d{2}\.json$/i.test(f)).sort();
 
   if (files.length === 0) {
-    console.warn(
-      `[load-extracted] WARNING: no chapter-NN.json files found in ${EXTRACTED_DIR}. Nothing to load.`,
-    );
+    console.error(`[load-extracted] FATAL: no chapter-NN.json files found. Aborting.`);
     await prisma.$disconnect();
-    return;
+    process.exit(1);
   }
 
   console.log(`[load-extracted] found ${files.length} chapter file(s)`);
 
   const stats: LoadStats = {
-    chaptersLoaded: 0,
-    headings: 0,
-    subheadings: 0,
-    exclusions: 0,
-    policyConditions: 0,
-    warnings: [],
+    chaptersLoaded: 0, headings: 0, subheadings: 0, tariffLines: 0,
+    exclusions: 0, policyConditions: 0, warnings: [], errors: [],
   };
 
+  // PASS 1: load hierarchy (sections, chapters, headings, subheadings, tariff_lines)
+  // Skip exclusions/policy_conditions — their FK redirects can point to chapters
+  // that haven't been loaded yet.
+  console.log('\n[load-extracted] Pass 1: hierarchy (sections + chapters + headings + subheadings + tariff_lines)');
   for (const file of files) {
+    const t0 = Date.now();
     try {
-      const data = readChapter(file);
-      const startedAt = Date.now();
-      await loadChapter(data, stats, file);
-      const ms = Date.now() - startedAt;
-      console.log(
-        `  ✓ ${file} — chapter ${data.chapter} | ${data.headings?.length ?? 0} headings, ` +
-          `${(data.exclusion_clauses ?? []).length} exclusions (${ms}ms)`,
-      );
+      const data = readChapter(path.join(EXTRACTED_DIR, file));
+      await loadChapter(data, stats, file, { phase: 'hierarchy' });
+      stats.chaptersLoaded += 0; // chaptersLoaded incremented inside; reset below for pass 2 not needed
+      const ms = Date.now() - t0;
+      const h = data.headings.length;
+      const sh = data.headings.reduce((a, x) => a + (x.subheadings?.length ?? 0), 0);
+      const tl = data.headings.reduce((a, x) => a + (x.subheadings?.reduce((b, y) => b + (y.tariff_lines?.length ?? 0), 0) ?? 0), 0);
+      console.log(`  ✓ ${file} | ${h}h ${sh}sh ${tl}tl (${ms}ms)`);
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
-      stats.warnings.push(`${file}: ${msg}`);
+      stats.errors.push(`pass1 ${file}: ${msg}`);
       console.error(`  ✗ ${file} — ${msg}`);
     }
   }
 
-  console.log('\n[load-extracted] summary');
-  console.log(`  chapters loaded:    ${stats.chaptersLoaded}`);
-  console.log(`  headings upserted:  ${stats.headings}`);
-  console.log(`  subheadings:        ${stats.subheadings}`);
+  // PASS 2: chapter_exclusions + policy_conditions (FK redirects now resolvable)
+  console.log('\n[load-extracted] Pass 2: chapter_exclusions + policy_conditions');
+  for (const file of files) {
+    const t0 = Date.now();
+    try {
+      const data = readChapter(path.join(EXTRACTED_DIR, file));
+      const beforeExcl = stats.exclusions;
+      const beforePc = stats.policyConditions;
+      await loadChapter(data, stats, file, { phase: 'sidecars' });
+      const dExcl = stats.exclusions - beforeExcl;
+      const dPc = stats.policyConditions - beforePc;
+      const ms = Date.now() - t0;
+      console.log(`  ✓ ${file} | ${dExcl} excl, ${dPc} pol (${ms}ms)`);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      stats.errors.push(`pass2 ${file}: ${msg}`);
+      console.error(`  ✗ ${file} — ${msg}`);
+    }
+  }
+
+  // Final validation: counts must match EXPECTED (within tolerance)
+  console.log('\n=== Load Summary ===');
+  console.log(`  chapters_loaded:    ${stats.chaptersLoaded.toString().padStart(5)} / ${EXPECTED.chapters} expected ${stats.chaptersLoaded === EXPECTED.chapters ? '✓' : '⚠'}`);
+  console.log(`  headings:           ${stats.headings.toString().padStart(5)} / ${EXPECTED.headings} expected ${stats.headings === EXPECTED.headings ? '✓' : '⚠'}`);
+  console.log(`  subheadings:        ${stats.subheadings.toString().padStart(5)} / ${EXPECTED.subheadings} expected ${stats.subheadings === EXPECTED.subheadings ? '✓' : '⚠'}`);
+  console.log(`  tariff_lines:       ${stats.tariffLines.toString().padStart(5)} / ${EXPECTED.tariffLines} expected ${stats.tariffLines === EXPECTED.tariffLines ? '✓' : '⚠'}`);
   console.log(`  exclusions:         ${stats.exclusions}`);
-  console.log(`  policy conditions:  ${stats.policyConditions}`);
-  if (stats.warnings.length > 0) {
-    console.log(`  warnings (${stats.warnings.length}):`);
-    for (const w of stats.warnings) console.log(`    - ${w}`);
+  console.log(`  policy_conditions:  ${stats.policyConditions}`);
+
+  if (stats.errors.length > 0) {
+    console.error(`\n[load-extracted] ${stats.errors.length} error(s):`);
+    for (const e of stats.errors) console.error(`  - ${e}`);
+    await prisma.$disconnect();
+    process.exit(1);
   }
 
   await prisma.$disconnect();
+  console.log('\n[load-extracted] ✓ all chapters loaded successfully');
 }
 
 main().catch(async (err) => {
-  console.error('[load-extracted] fatal:', err);
+  console.error('[load-extracted] FATAL:', err);
   await prisma.$disconnect();
   process.exit(1);
 });

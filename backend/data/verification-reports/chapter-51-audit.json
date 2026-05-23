@@ -1,0 +1,161 @@
+{
+  "chapter": "51",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings_count": 0,
+  "soft_warnings_count": 0,
+  "wco_patched_notes_skipped": false,
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "51130040",
+        "in_pdf": true,
+        "pdf_context_near_code": "coarse animal hair or of horse hair : Free 51130010 Unbleached Free 51130020 Bleached 51130030 Dyed 51130040 Printed Free 51130090 Other Free ",
+        "json_description": "Printed",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "51011100",
+        "in_pdf": true,
+        "pdf_context_near_code": "licy Itc(hs) Code. Description Export Policy Policy Condition 5101 Wool, not carded or combed. Free 51011100 Greasy, including fleece-washed wool : -- Shorn wool Free 51011900 Greasy, including fleece",
+        "json_description": "Greasy, including fleece-washed wool : -- Shorn wool",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "51129040",
+        "in_pdf": true,
+        "pdf_context_near_code": "51123090 Other 511290 Other Free 51129010 Unbleached Free 51129020 Bleached Free 51129030 Dyed Free 51129040 Printed Free 51129050 of Handloom Free 51129090 Other 5113 Woven fabrics of coarse animal h",
+        "json_description": "Printed",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "51052100",
+        "in_pdf": true,
+        "pdf_context_near_code": "ol Free 51040010 51040090 Yarn waste Free 5105 Other Free 51051000 Waste of coarse animal hair Free 51052100 510529 Garnetted stock of wool or of fine or coarse animal hair. Garnetted stock of wool or",
+        "json_description": "Wool tops and other combed wool : -- Combed wool in fragments",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "51123010",
+        "in_pdf": true,
+        "pdf_context_near_code": "122040 Printed 51122090 Other 511230 Other, mixed mainly or solely with man-made staple fibres Free 51123010 Unbleached Free 51123020 Bleached Free 51123030 Dyed Free 51123040 Printed Free 51123090 Ot",
+        "json_description": "Unbleached",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "51111910",
+        "in_pdf": true,
+        "pdf_context_near_code": "nimal hair : -- Of a weight not 51111130 exceeding 300 g/m 51111140 51111190 Unbleached Free 511119 51111910 Bleached Free 51111920 51111930 Dyed Free 51111940 51111990 Printed Free 511120 Other Free ",
+        "json_description": "Unbleached",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "51082000",
+        "in_pdf": true,
+        "pdf_context_near_code": " weight of wool 51072040 51072090 Worsted hosiery yarn Free 5108 51081000 Worsted knitted yarn Free 51082000 5109 Worsted weaving yarn Free 510910 51091010 Woollen carpet yarn Free 51091090 51099000 O",
+        "json_description": "Combed",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "51071040",
+        "in_pdf": true,
+        "pdf_context_near_code": "Free 51071010 Worsted hosiery yarn 51071020 Worsted knitted yarn 51071030 Worsted weaving yarn Free 51071040 51071090 Woollen carpet yarn Free 510720 51072010 Other Free 51072020 51072030 Containing l",
+        "json_description": "Woollen carpet yarn",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "51051000",
+        "in_pdf": true,
+        "pdf_context_near_code": "r 5104 510400 Waste of sheeps and lambs wool Free 51040010 51040090 Yarn waste Free 5105 Other Free 51051000 Waste of coarse animal hair Free 51052100 510529 Garnetted stock of wool or of fine or coar",
+        "json_description": "Carded wool",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "51061020",
+        "in_pdf": true,
+        "pdf_context_near_code": "sale. 510610 Containing 85 percent or more by weight of wool Free 51061010 Shoddy woollen yarn Free 51061020 Mungo woollen yarn Free 51061090 Other 510620 Containing less than 85 percent by weight of ",
+        "json_description": "Mungo woollen yarn",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      }
+    ],
+    "subheading_spot_check": [
+      {
+        "subheading": "510720",
+        "in_pdf_standalone": true,
+        "any_child_in_pdf": true,
+        "accepted": true,
+        "json_description": "Containing less than 85 percent by weight of wool",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": []
+      },
+      {
+        "subheading": "510219",
+        "in_pdf_standalone": true,
+        "any_child_in_pdf": true,
+        "accepted": true,
+        "json_description": "Fine animal hair : -- Other",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": []
+      },
+      {
+        "subheading": "510211",
+        "in_pdf_standalone": true,
+        "any_child_in_pdf": true,
+        "accepted": true,
+        "json_description": "Fine animal hair : -- Of Kashmir (cashmere) goats",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": []
+      },
+      {
+        "subheading": "510910",
+        "in_pdf_standalone": true,
+        "any_child_in_pdf": true,
+        "accepted": true,
+        "json_description": "Containing 85 percent or more by weight of wool or of fine animal hair",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": []
+      },
+      {
+        "subheading": "510810",
+        "in_pdf_standalone": true,
+        "any_child_in_pdf": true,
+        "accepted": true,
+        "json_description": "Carded",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": []
+      }
+    ],
+    "hierarchy_errors": [],
+    "hierarchy_errors_total": 0,
+    "missed_codes": [],
+    "extra_codes": [],
+    "note_mismatches": [],
+    "count_check": {
+      "headings_in_json": 13,
+      "subheadings_in_json": 38,
+      "tariff_lines_in_json": 105
+    },
+    "notes_count": 1
+  },
+  "warnings": []
+}

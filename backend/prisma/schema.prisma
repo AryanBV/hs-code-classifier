@@ -150,13 +150,19 @@ model Section {
 }
 
 model Chapter {
-  chapter               String    @id
-  section               String
-  title                 String
-  notes                 Json      @default("[]")
-  sourcePdf             String?   @map("source_pdf")
-  extractedAt           DateTime? @map("extracted_at") @db.Timestamptz
-  verifiedAgainstCbicAt DateTime? @map("verified_against_cbic_at") @db.Timestamptz
+  chapter                String    @id
+  section                String
+  title                  String
+  notes                  Json      @default("[]")
+  chapterSubheadingNotes Json      @default("[]") @map("chapter_subheading_notes")
+  supplementaryNotes     Json      @default("[]") @map("supplementary_notes")
+  exportLicensingNotes   Json      @default("[]") @map("export_licensing_notes")
+  definitions            Json      @default("[]")
+  extractionWarnings     Json      @default("[]") @map("extraction_warnings")
+  notesSources           Json      @default("{}") @map("notes_sources")
+  sourcePdf              String?   @map("source_pdf")
+  extractedAt            DateTime? @map("extracted_at") @db.Timestamptz
+  verifiedAgainstWcoAt   DateTime? @map("verified_against_wco_at") @db.Timestamptz
 
   sectionRef           Section            @relation(fields: [section], references: [section])
   headings             Heading[]
@@ -183,15 +189,35 @@ model Heading {
 }
 
 model Subheading {
-  subheading String @id
-  heading    String
-  title      String
-  notes      Json   @default("[]")
+  subheading        String  @id
+  heading           String
+  title             String
+  notes             Json    @default("[]")
+  indiaSpecific     Boolean @default(false) @map("india_specific")
+  wco2022Match      Boolean @default(true) @map("wco_2022_match")
+  indiaSpecificNote String? @map("india_specific_note")
 
-  headingRef Heading @relation(fields: [heading], references: [heading])
+  headingRef  Heading      @relation(fields: [heading], references: [heading])
+  tariffLines TariffLine[]
 
   @@index([heading], name: "idx_subheadings_heading")
   @@map("subheadings")
+}
+
+model TariffLine {
+  code            String                       @id
+  subheading      String
+  description     String
+  unit            String?
+  exportPolicy    String?                      @map("export_policy")
+  policyCondition String?                      @map("policy_condition")
+  embedding       Unsupported("vector(1536)")?
+
+  subheadingRef Subheading @relation(fields: [subheading], references: [subheading])
+
+  @@index([subheading], name: "idx_tl_subheading")
+  @@index([exportPolicy], name: "idx_tl_export_policy")
+  @@map("tariff_lines")
 }
 
 model ChapterExclusion {

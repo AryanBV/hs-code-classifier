@@ -1,0 +1,209 @@
+{
+  "chapter": "45",
+  "section": "IX",
+  "title": "CORK AND ARTICLES OF CORK",
+  "source_pdf": "Chapter 45 Cork And Articles Of Cork.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '45011000'). Normalized to NNNN.NN.NN format (e.g., '4501.10.00') per project schema. 6-digit subheading numbers in PDF (e.g., '450390', '450410') normalized to NNNN.NN (e.g., '4503.90', '4504.10').",
+    "PDF table-chrome headers ('Main Notes', 'Sl.No. Notes Notification Date Notification No', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Headings 4501, 4503, 4504 appear in the PDF as a heading row followed by tariff lines without explicit 6-digit subheading rows for the '.10' and '.90' subheadings (only the 8-digit tariff lines '45011000', '45019000', '45031000', '45049000' are listed). Subheadings 4501.10, 4501.90, 4503.10, 4504.90 have been synthesized from their tariff lines (single tariff line with suffix '00'), with subheading title set to the tariff line description. This matches the precedent established in chapter-09.json for single-tariff-line subheadings.",
+    "Heading 4502 has no subheading row in the PDF; the only tariff line '45020000' is attached as subheading 4502.00 / tariff line 4502.00.00 with the heading description preserved verbatim.",
+    "Heading 4504 description in the PDF reads 'Agglomerated cork (with or without a binding substance) and' — the trailing 'and' appears to be a truncation artifact in the source PDF (the official ITC(HS) heading text continues 'and articles of agglomerated cork'). Preserved verbatim as it appears in the source PDF.",
+    "Tariff line 45049000 'other' (lowercase) preserved verbatim from PDF; other 'Other' entries use title case in source.",
+    "Heading 4501 description in PDF reads 'Natural cork, raw or simply prepared; waste cork; crushed,' — verbatim, including the trailing comma which appears to be a truncation artifact (the full official heading is 'Natural cork, raw or simply prepared; waste cork; crushed, granulated or ground cork').",
+    "Subheading 4503.90 appears in the PDF as a 6-digit row '450390 Other' with two tariff lines '45039010 Shuttlecock cork bottom' and '45039090 Other' beneath it. Subheading 4504.10 appears as '450410 Blocks, plates, sheets and strip; tiles of any shape; solid cylinders, including discs' with three tariff lines beneath.",
+    "Export Policy column shows 'Free' for all tariff lines in this chapter. Policy Condition column is empty for all rows."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover : (a) footwear or parts of footwear of Chapter 64; (b) headgear or parts of headgear of Chapter 65; or (c) articles of Chapter 95 (for example, toys, games, sports requisites)"
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "footwear or parts of footwear",
+      "redirects_to_chapter": "64",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) footwear or parts of footwear of Chapter 64; (b) headgear or parts of headgear of Chapter 65; or (c) articles of Chapter 95 (for example, toys, games, sports requisites)"
+    },
+    {
+      "excluded_product_text": "headgear or parts of headgear",
+      "redirects_to_chapter": "65",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) footwear or parts of footwear of Chapter 64; (b) headgear or parts of headgear of Chapter 65; or (c) articles of Chapter 95 (for example, toys, games, sports requisites)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 95 (for example, toys, games, sports requisites)",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) footwear or parts of footwear of Chapter 64; (b) headgear or parts of headgear of Chapter 65; or (c) articles of Chapter 95 (for example, toys, games, sports requisites)"
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "4501",
+      "title": "Natural cork, raw or simply prepared; waste cork; crushed,",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4501.10",
+          "title": "Natural cork, raw or simply prepared",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4501.10.00",
+              "description": "Natural cork, raw or simply prepared",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4501.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4501.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4502",
+      "title": "Natural cork, debacked or roughly squared, or in rectangular (including square) blocks, plates, sheets or strip (including sharpedged blanks for corks or stoppers).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4502.00",
+          "title": "Natural cork, debacked or roughly squared, or in rectangular (including square) blocks, plates, sheets or strip (including sharpedged blanks for corks or stoppers).",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4502.00.00",
+              "description": "Natural cork, debacked or roughly squared, or in rectangular (including square) blocks, plates, sheets or strip (including sharpedged blanks for corks or stoppers).",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "4503",
+      "title": "Articles of natural cork.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4503.10",
+          "title": "Corks and stoppers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4503.10.00",
+              "description": "Corks and stoppers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4503.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4503.90.10",
+              "description": "Shuttlecock cork bottom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4503.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4504",
+      "title": "Agglomerated cork (with or without a binding substance) and",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4504.10",
+          "title": "Blocks, plates, sheets and strip; tiles of any shape; solid cylinders, including discs",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4504.10.10",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4504.10.20",
+              "description": "Slabs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4504.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4504.90",
+          "title": "other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4504.90.00",
+              "description": "other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

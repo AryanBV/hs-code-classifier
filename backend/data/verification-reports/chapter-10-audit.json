@@ -1,0 +1,150 @@
+{
+  "chapter": "10",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings_count": 0,
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "1001.11.00",
+        "in_pdf": true,
+        "pdf_description": "10011100 Durum wheat : -- Seed Free 1. Export will be allowed subject 13.05.2022 to submission of following",
+        "json_description": "Durum wheat : -- Seed",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1002.10.00",
+        "in_pdf": true,
+        "pdf_description": "10021000 Seed Free A license to carry on the business 10029000 Other of a dealer in seeds issued under 1003 Barley. Free",
+        "json_description": "Seed",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1005.10.00",
+        "in_pdf": true,
+        "pdf_description": "10051000 Seed are treated with chemical insecticides and cannot be used for food or feed purposes.",
+        "json_description": "Seed",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1006.10.10",
+        "in_pdf": true,
+        "pdf_description": "10061010 Flint corn (Zea mays var. Free chemically treated and is not fit for indurata) human consumption; and 2.",
+        "json_description": "Of seed quality",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1006.30.20",
+        "in_pdf": true,
+        "pdf_description": "10063020 Basmati rice 2. Certificate of Inspection by Export Inspection Council / Export Inspection",
+        "json_description": "Basmati rice",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1007.90.00",
+        "in_pdf": true,
+        "pdf_description": "10079000 Switzerland permitted subject to 1008 issuance of certificate of Inspection by Export",
+        "json_description": "Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1008.21.40",
+        "in_pdf": true,
+        "pdf_description": "10082140 Jawar Free 10082150 10082160 Bajra Free 10082170 Ragi Free 10082180 Barnyard (Echinochloa",
+        "json_description": "Barnyard (Echinochloa esculenta (L.)",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1008.21.99",
+        "in_pdf": true,
+        "pdf_description": "10082199 100829 Proso (Panicum miliaceum Free 10082910 (L.)) Foxtail (Setariaitalica (L.)) Free Kodo (Paspalum Free scro",
+        "json_description": "Other:----Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1008.29.60",
+        "in_pdf": true,
+        "pdf_description": "10082960 esculenta (L.)) 10082970 Proso (Panicum miliaceum Free 10082980 (L.)) 10082991 Foxtail (Setariaitalica (L.)) Fr",
+        "json_description": "Foxtail (Setariaitalica (L.))",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1008.30.90",
+        "in_pdf": true,
+        "pdf_description": "10083090 10084000 Little (Panicum Free 10085000 sumatrense (L.)) 10086000 Other:----Amaranth Free (Amaranthus (L.)) Othe",
+        "json_description": "Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      }
+    ],
+    "hierarchy_errors": [],
+    "missed_codes": [],
+    "extra_codes": [],
+    "subheading_checks": [
+      {
+        "subheading": "1001.11",
+        "title": "Durum wheat : -- Seed",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1002.90",
+        "title": "Other",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1005.10",
+        "title": "Seed",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1006.40",
+        "title": "Broken rice",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1008.29",
+        "title": "Millet : -- Other",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      }
+    ],
+    "note_mismatches": [],
+    "count_check": {
+      "json_h": 8,
+      "pdf_h_estimate": 8,
+      "json_sh": 26,
+      "pdf_sh_estimate": 26,
+      "json_tl": 59,
+      "pdf_tl_estimate": 59
+    }
+  },
+  "fix_needed": null
+}

@@ -1,0 +1,199 @@
+{
+  "chapter": "98",
+  "section": "XXI",
+  "title": "PROJECT IMPORTS; LABORATORY CHEMICALS; PASSENGERS' BAGGAGE, PERSONAL IMPORTATIONS BY AIR OR POST; SHIP STORES",
+  "source_pdf": "Chapter 98 Project Imports; Laboratory Chemicals; Passengers Baggage, Personal Implementations By Air Or Post; Ship Stores.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "Section attribution anomaly: PDF page 1 lists 'Section XXI, WORKS OF ART, COLLECTORS' PIECES AND ANTIQUES' immediately above 'Chapter 98 Project Imports; Laboratory Chemicals; Passengers Baggage, Personal Implementations By Air Or Post; Ship Stores'. Section XXI is the Harmonized System section that normally covers Chapter 97 (Works of art, collectors' pieces and antiques). Chapter 98 is an India-specific (non-HS) chapter for project imports, laboratory chemicals, baggage, postal/air imports and ship stores, and is not part of the international HS nomenclature. The section header in the PDF is preserved verbatim as 'XXI'; consumers should treat Chapter 98 as an Indian national chapter sitting under Section XXI per the source document, not as a Harmonized System Works-of-Art chapter.",
+    "Chapter title in source PDF filename and page header reads 'Personal Implementations By Air Or Post' — this is an OCR/typo artifact of the canonical Indian customs term 'Personal Importations By Air Or Post' (i.e. heading 9804 'All dutiable articles intended for personal use, imported by post or air'). The 'title' field uses the canonical 'PERSONAL IMPORTATIONS' form; source_pdf field preserves the filename verbatim with 'IMPLEMENTATIONS'.",
+    "PDF source uses 8-digit codes without dots (e.g., '98010011'). Normalized to NNNN.NN.NN format (e.g., '9801.00.11') per project schema. Subheading numbers in PDF (e.g., '980100') normalized to NNNN.NN (e.g., '9801.00').",
+    "PDF table-chrome headers ('Main Notes', 'Sl.No. Notes Notification No Notification Date', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Main Note 3 contains the OCR artifact '?laboratory chemicals?' where the '?' characters replace typographic quotation marks. Preserved verbatim per extraction rules; the intended text is 'laboratory chemicals' enclosed in quotation marks.",
+    "Heading 9801 has a single subheading row '980100' in the PDF whose description is a near-verbatim repeat of the heading 9801 description (capitalization of '(1) Industrial plant' vs '(1) industrial plant' differs slightly). Captured as subheading 9801.00 with its own description, then 9 tariff lines (9801.00.11 through 9801.00.30) hang under it.",
+    "Heading 9802 has no explicit heading description row in the PDF; only the tariff line 98020000 ('Laboratory Chemicals') appears. Heading title is reconstructed from the chapter's Main Note 3 referring to 'Heading 9802 ... laboratory chemicals'. Tariff line 9802.00.00 is preserved verbatim.",
+    "Heading 9803 has no explicit heading description row in the PDF; only the tariff line 98030000 ('All dutiable articles, imported by a passenger or a member of a crew in his baggage') appears. Tariff line 9803.00.00 is preserved verbatim and the heading title is taken from the tariff-line description (single-line heading).",
+    "Heading 9804 has an explicit heading description row in the PDF in title case: 'All Dutiable Articles, Intended For Personal Use, Imported By Post Or Air, And Exempted From Any Prohibition In Respect Of The Imports Thereof Under The Foreign Trade (Development and' — the trailing 'and' indicates the description continues but the PDF cuts off mid-sentence. Captured verbatim with truncation noted; the canonical full title in ITC(HS) ends with 'Foreign Trade (Development and Regulation) Act, 1992 (22 of 1992) but excluding articles falling under heading 9803'.",
+    "Heading 9805 description verbatim: 'The Following Articles Of Stores On Board Of A Vessel Or Aircraft On Which Duty Is Leviable Under The Customs Act, 1962 (52 Of 1962) Namely:'. Two tariff lines (9805.10.00, 9805.90.00) follow directly without an explicit subheading row.",
+    "Heading 9808 appears in the PDF only via a single tariff-line row 98089299 with no explicit heading description, no subheading 9808.92 description, and no other tariff lines visible in this Schedule 2 PDF. The tariff line description reads '--- Other: ---- Other' (a two-line dash-indented description). Captured as code 9808.92.99 under reconstructed subheading 9808.92 (title null) under heading 9808 (title null). Headings 9806 and 9807 are not present in this PDF.",
+    "Export Policy column: tariff lines 9801.00.11 through 9805.90.00 show 'Free'. Tariff line 9808.92.99 shows blank Export Policy and blank Policy Condition.",
+    "Notification Date and Notification No columns of the Main Notes table are entirely blank in the source PDF for all 7 notes. Captured as null in the policy_conditions where applicable; no policy_conditions entries are derived from the Main Notes since they are legal notes (chapter_notes), not export policy conditions."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter is to be taken to apply to all goods which satisfy the conditions prescribed therein, even though they may be covered by a more specific heading elsewhere in this Schedule."
+    },
+    {
+      "number": "2",
+      "text": "Heading 9801 is to be taken to apply to all goods which are imported in accordance with the regulations made under section 157 of the Customs Act, 1962 (52 of 1962) and expressions used in this heading shall have the meaning assigned to them in the said regulations."
+    },
+    {
+      "number": "3",
+      "text": "For the purpose of Heading 9802, ?laboratory chemicals? means all chemicals, organic or inorganic, whether or not chemically defined, imported and intended only for own use (i.e. other than purposes like trading, further sale etc.) in packings not exceeding 500 gms or 500 millilitres and which can be identified with reference to the purity, markings or other features to show them to be meant for use solely as laboratory chemicals."
+    },
+    {
+      "number": "4",
+      "text": "Headings 9803 and 9804 are taken not to apply to : (a) motor vehicles; (b) alcoholic beverages; and (c) tobacco and manufactured products thereof."
+    },
+    {
+      "number": "5",
+      "text": "Heading 9803 is to be taken not to apply to articles imported by a passenger or a member of a crew under an import licence or a Customs Clearance Permit either for his own use or on behalf of others."
+    },
+    {
+      "number": "6",
+      "text": "Heading 9804 is to be taken not to apply to articles imported under an import licence or a Customs Clearance Permit."
+    },
+    {
+      "number": "7",
+      "text": "Heading 9804 is to be taken not to apply to printed books."
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "motor vehicles",
+      "redirects_to_chapter": "87",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 4",
+      "source_note_text": "Headings 9803 and 9804 are taken not to apply to : (a) motor vehicles; (b) alcoholic beverages; and (c) tobacco and manufactured products thereof."
+    },
+    {
+      "excluded_product_text": "alcoholic beverages",
+      "redirects_to_chapter": "22",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 4",
+      "source_note_text": "Headings 9803 and 9804 are taken not to apply to : (a) motor vehicles; (b) alcoholic beverages; and (c) tobacco and manufactured products thereof."
+    },
+    {
+      "excluded_product_text": "tobacco and manufactured products thereof",
+      "redirects_to_chapter": "24",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 4",
+      "source_note_text": "Headings 9803 and 9804 are taken not to apply to : (a) motor vehicles; (b) alcoholic beverages; and (c) tobacco and manufactured products thereof."
+    },
+    {
+      "excluded_product_text": "articles imported by a passenger or a member of a crew under an import licence or a Customs Clearance Permit either for his own use or on behalf of others (excluded from heading 9803)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 5",
+      "source_note_text": "Heading 9803 is to be taken not to apply to articles imported by a passenger or a member of a crew under an import licence or a Customs Clearance Permit either for his own use or on behalf of others."
+    },
+    {
+      "excluded_product_text": "articles imported under an import licence or a Customs Clearance Permit (excluded from heading 9804)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 6",
+      "source_note_text": "Heading 9804 is to be taken not to apply to articles imported under an import licence or a Customs Clearance Permit."
+    },
+    {
+      "excluded_product_text": "printed books (excluded from heading 9804)",
+      "redirects_to_chapter": "49",
+      "redirects_to_heading": "4901",
+      "source_note_number": "Note 7",
+      "source_note_text": "Heading 9804 is to be taken not to apply to printed books."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "9801",
+      "title": "All items of machinery including prime movers, instruments, apparatus and appliances, control gear and transmission equipment, auxiliary equipment (including those required for research and development purposes, testing and quality control), as well as all components (whether finished or not) or raw materials for the manufacture of the aforesaid items and their components, required for the initial setting up of a unit, or the substantial expansion of an existing unit, of a specified: (1) Industrial plant, (2) Irrigation project, (3) Power project, other than solar power plant or solar power project, (4) Mining project, (5) Project for the exploration for oil or other minerals, and (6) Such other projects, other than solar power plant or solar power project, as the central government may, having regard to the economic development of the country notify in the official gazette in this behalf; and spare parts, other raw materials (including semi-finished material) or consumable stores not exceeding 10% of the value of the goods specified above provided that such spare parts, raw materials or consumable stores are essential for the maintenance of the plant or project mentioned in (1) to (6) above.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9801.00",
+          "title": "All items of machinery including prime movers, instruments, apparatus and appliances, control gear and transmission equipment, auxiliary equipment (including those required for research and development purposes, testing and quality control), as well as all components (whether finished or not) or raw materials for the manufacture of the aforesaid items and their components, required for the initial setting up of a unit, or the substantial expansion of an existing unit, of a specified: (1) industrial plant, (2) irrigation project, (3) Power project, other than solar power plant or solar power project, (4) mining project, (5) project for the exploration for oil or other minerals, and (6) such other projects, other than solar power plant or solar power project, as the Central Government may, having regard to the economic development of the country notify in the Official Gazette in this behalf; and spare parts, other raw materials (including semi- finished materials of consumable stores) not exceeding 10% of the value of the goods specified above, provided that such spare parts, raw materials or consumable stores are essential for the maintenance of the plant or project mentioned in (1) to (6) above:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9801.00.11",
+              "description": "Machinery: ----For industrial plant project",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9801.00.12",
+              "description": "Machinery: ----For irrigation plant",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9801.00.13",
+              "description": "For power project, other than solar power plant or solar power project",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9801.00.14",
+              "description": "Machinery: ----For mining project",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9801.00.15",
+              "description": "Machinery: ----Project for exploration of oil or other minerals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9801.00.19",
+              "description": "For other projects, other than solar power plant or solar power project",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9801.00.20",
+              "description": "Machinery: ----Components (whether finished or not) or raw materials for the manufacture of aforesaid items and their components required for the initial setting up of a unit or the substantial expansion of a unit",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9801.00.30",
+              "description": "Machinery: ----Spare parts and other raw materials (including semi-finished materials) or consumable stores for the maintenance of plant or project",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "9802",
+      "title": "Laboratory Chemicals",
+      "heading_notes": [],
+      "subheadings": []
+    },
+    {
+      "heading": "9803",
+      "title": "All dutiable articles, imported by a passenger or a member of a crew in his baggage",
+      "heading_notes": [],
+      "subheadings": []
+    },
+    {
+      "heading": "9804",
+      "title": "All Dutiable Articles, Intended For Personal Use, Imported By Post Or Air, And Exempted From Any Prohibition In Respect Of The Imports Thereof Under The Foreign Trade (Development and",
+      "heading_notes": [],
+      "subheadings": []
+    },
+    {
+      "heading": "9805",
+      "title": "The Following Articles Of Stores On Board Of A Vessel Or Aircraft On Which Duty Is Leviable Under The Customs Act, 1962 (52 Of 1962) Namely:",
+      "heading_notes": [],
+      "subheadings": []
+    }
+  ]
+}

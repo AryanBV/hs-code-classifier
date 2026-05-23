@@ -1,0 +1,904 @@
+{
+  "chapter": "69",
+  "title": "CERAMIC PRODUCTS",
+  "section": "XIII",
+  "source_pdf": "Chapter 69 Ceramic Products.pdf",
+  "extracted_at": "2026-05-21",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '69010010') and 6-digit subheading codes without dots (e.g., '690210'). Normalized to NNNN.NN.NN format (e.g., '6901.00.10') and NNNN.NN format (e.g., '6902.10') per project schema. The PDF actually does NOT render 6-digit subheading rows for heading 6901, 6904, 6905, 6906; reconstructed implicit subheading wrappers where required to preserve the 7-node-type structure.",
+    "PDF table-chrome headers ('Main Notes', 'Product Description and Export Policy', 'Sl.No. Notes Notification Date Notification No', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "The 'Main Notes' table appears directly under 'Chapter 69 Ceramic Products.' and contains 2 chapter notes (Sl.No. 1 — definition / scope of fired ceramic products; Sl.No. 2 — exclusions). These are captured as chapter_notes. The PDF does NOT contain any Section XIII section_notes table for this chapter file (Section XIII section notes — if any — are not present in this chapter PDF and would need to be sourced from Chapter 68 or 70 PDFs); section_notes is therefore an empty array here.",
+    "Chapter Note 1 in the source PDF concatenates three sub-clauses (a), (b) and (c) into a single Sl.No. 1 row without separate (a)/(b)/(c) line breaks. Preserved verbatim as a single note text. Sub-clause (b) defines the firing threshold (800C, i.e., 800°C — degree symbol missing in OCR, preserved verbatim).",
+    "Chapter Note 2 in the source PDF concatenates thirteen exclusion sub-clauses (a)–(m) into a single Sl.No. 2 row. Each sub-clause has been further extracted into a separate entry in exclusion_clauses with its redirect target.",
+    "Chapter Note 2(ij) (jewellery / clocks split) uses the orthography '(ij)' in the source PDF, not '(i)' followed by '(j)'. This is the standard ITC(HS) convention for sub-clauses where 'i' alone might be confused with the digit 1; preserved verbatim.",
+    "The PDF source for Chapter 69 does NOT contain the Harmonized System sub-heading note distinguishing 'porcelain or china' (HS Subheading Note 1 of Chapter 69) — the ITC(HS) 2022 Schedule 2 Export Policy PDF for this chapter renders only Notes 1 and 2 in its Main Notes table. The HS sub-heading definition of porcelain/china is implied throughout headings 6909, 6910, 6911, 6913, 6914 where 'Of porcelain or china' is used as a split criterion, but its formal text is absent from this source file. subheading_notes is therefore an empty array.",
+    "Heading 6908 (Glazed ceramic flags and paving, hearth or wall tiles; glazed ceramic mosaic cubes and the like, whether or not on a backing) is ABSENT from the source PDF for ITC(HS) 2022. In the 2017 HS revision, heading 6907 absorbed glazed and unglazed tiles (formerly split between 6907 and 6908) and heading 6908 was deleted. The PDF jumps directly from heading 6907 to heading 6909, consistent with the HS 2017 deletion of 6908. Not an extraction error.",
+    "Heading 6907 subheadings 6907.30 (Mosaic cubes and the like) and 6907.40 (Finishing ceramics) are referenced in the descriptions of 6907.21, 6907.22, 6907.23 (which read 'other than those of subheadings 6907.30 and 6907.40'). The source PDF presents 6907.30 and 6907.40 as single 8-digit lines (6907.30.00, 6907.40.00) with no 6-digit subheading wrapper rendered — preserved by reconstructing implicit subheading wrappers '6907.30' and '6907.40'.",
+    "Heading 6906 'Ceramic pipes, conduits, guttering and pipe fittings' is rendered with a single 8-digit code '6906.00.00' and NO heading-level description row in the PDF (the description sits on the 8-digit line). Reconstructed heading 6906 title from the 8-digit description and reconstructed subheading wrapper '6906.00' to preserve schema.",
+    "Heading 6907 subheading 6907.21 description in the PDF reads 'Flags and paving, hearth or wall tiles, other than those of subheadings 6907.30 and 6907.40 : -- Of a water absorption coefficient by weight not exceeding 0.5 percent'. Carry-through across page break — preserved verbatim. The reference to 6907.40 is rendered '6907 40' (with a space, no dot) in one position in the PDF for tariff line 6907.30.00 — normalized to '6907.40' in description text only.",
+    "Heading 6909 description in the source PDF reads 'Ceramic wares for laboratory, chemical or other technical uses; ceramic troughs, tubs and similar receptacles of a kind used in agriculture; ceramic pots, jars and similar articles of a kind used for the conveyance or packing of goods.' All three product families fall in heading 6909.",
+    "Subheading 6909.19 description 'Ceramic wares for laboratory, chemical or other technical uses : -- Other' carries through the laboratory-ware family; the PDF splits this further into 6909.19.10 (Ceramic filter candle) and 6909.19.90 (Other). The 6909.90.00 line covers troughs, tubs, agricultural receptacles, pots, jars and packing articles.",
+    "Heading 6911 subheading 6911.10 'Tableware and kitchenware' splits each into 'Of bone china and soft porcelain' vs 'Other' for both tableware and kitchenware, giving four 8-digit lines: 6911.10.11, 6911.10.19, 6911.10.21, 6911.10.29. The PDF uses '----' (four dashes) to denote this 4th-tier split — preserved in descriptions as 'Tableware: ----Of bone china and soft porcelain', etc.",
+    "Heading 6914 subheading 6914.90 'Other:' splits into 6914.90.10 'Armour for ballistic protection' and 6914.90.90 'Other'. This is the Ch.69 ↔ defence-equipment boundary: ceramic body armour plates remain in Ch.69 (not Ch.93 'Arms and ammunition'), per the PDF source.",
+    "Critical Ch.69 ↔ Ch.87 boundary: Chapter 69 Note 2 does NOT list Section XVII (vehicles) as an exclusion. However, Section XVII Note 2(a) (in Chapter 86–89 PDFs) excludes from Section XVII 'joints, washers or the like of any material … or other articles of vulcanised rubber other than hard rubber (heading 4016)' and other Note 2(b)–(l) parts categories — meaning ceramic 'parts of general use' or ceramic specialty parts may fall in Ch.69 rather than Ch.87. The classic confusing query 'ceramic brake pads for trucks' is ambiguous: friction material for brakes mounted-and-cut is heading 6813 (Ch.68 Friction material) if it meets the friction-material test, OR a vehicle part of heading 8708 if it is a finished, identifiable brake-pad assembly for a vehicle. The CHAPTER 69 PDF does NOT redirect such items to Ch.87 — they would fall to Ch.68 (friction material 6813) or Ch.87 depending on the analyst's reading of GIR 1 + Section XVII Note 3. Flagged for the LLM brain.",
+    "Critical Ch.69 ↔ Ch.85 boundary: Chapter 69 Note 2(f) explicitly excludes 'electrical insulators (heading 8546) or fittings of insulating material of heading 8547'. This is the primary export-policy boundary for ceramic electrical insulators — they go to Ch.85, NOT Ch.69. Captured as exclusion clauses 2(f)-i and 2(f)-ii.",
+    "Critical Ch.69 ↔ Ch.90 boundary: Chapter 69 Note 2(g) excludes 'artificial teeth (heading 9021)'. Dental ceramics for prosthetic teeth go to Ch.90, NOT Ch.69 (even though they are fired ceramic articles).",
+    "Critical Ch.69 ↔ Ch.71 boundary: Chapter 69 Note 2(c) excludes 'articles of Chapter 71 (for example, imitation jewellery)'. Ceramic beads, ceramic imitation jewellery → Ch.71.",
+    "Critical Ch.69 ↔ Ch.28 boundary: Chapter 69 Note 2(a) excludes 'products of heading 2844' (radioactive chemical elements / isotopes). Ceramic-form radioactive nuclear fuel articles go to Ch.28, NOT Ch.69.",
+    "Critical Ch.69 ↔ Ch.68 boundary: Chapter 69 Note 2(b) excludes 'articles of heading 6804' (millstones, grindstones, grinding wheels). Ceramic abrasive wheels for cutting/grinding → Ch.68 heading 6804, NOT Ch.69.",
+    "Critical Ch.69 ↔ Ch.81 boundary: Chapter 69 Note 2(d) excludes 'cermets of heading 8113'. Cermets (ceramic-metal composites) → Ch.81, NOT Ch.69 — even though they contain ceramic.",
+    "Critical Ch.69 ↔ Ch.82 boundary: Chapter 69 Note 2(e) excludes 'articles of Chapter 82'. Ceramic-tipped or ceramic-bladed tools, knives, blades fall to Ch.82 by their essential character as tools, NOT to Ch.69.",
+    "Critical Ch.69 ↔ Ch.91, Ch.94, Ch.95, Ch.97 boundaries: Note 2(h)/(ij)/(k)/(m) exclude clocks/clock cases (Ch.91), furniture/luminaires/lighting fittings/prefabricated buildings (Ch.94), toys/games/sports requisites (Ch.95), and works of art (Ch.97). A 'ceramic lamp base / table lamp' → Ch.94 (lighting fitting), NOT Ch.69. A 'ceramic figurine for play' could be Ch.95 (toy), NOT 6913 (ornamental statuette). A 'ceramic art piece by named artist' → Ch.97 (works of art), NOT 6913.",
+    "Critical Ch.69 ↔ Ch.96 boundary: Note 2(l) excludes 'articles of heading 9606 (for example, buttons) or of heading 9614 (for example, smoking pipes)'. Ceramic buttons → 9606 (Ch.96). Ceramic smoking pipes → 9614 (Ch.96).",
+    "Heading 6914 tariff line 6914.10.00 'Of porcelain or china' covers ALL 'other ceramic articles' of porcelain/china not falling in headings 6904–6913 — this is the residual basket-heading for porcelain ceramics. Tariff line 6914.90.10 (Armour for ballistic protection) is the ONLY explicit non-porcelain 8-digit code in heading 6914 besides the catch-all 6914.90.90.",
+    "Export Policy column for every 8-digit tariff line in this chapter is 'Free'. No tariff lines are Restricted, Prohibited, STE, or have any Policy Condition reference in this chapter PDF. policy_conditions therefore is an empty array.",
+    "Notification Date and Notification No columns in the Main Notes table are empty for both Note 1 and Note 2 — null preserved.",
+    "Unit-of-measure column is NOT shown in this chapter's PDF — unit field set to null for all tariff lines.",
+    "Heading 6908 absence verified (see warning above). No other gaps in tariff-line numbering observed within rendered headings."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter applies only to ceramic products which have been fired after shaping: (a) headings 6904 to 6914 apply only to such products other than those classifiable in headings 6901 to 6903; (b) articles heated to temperatures less than 800C for purposes such as curing of resins, accelerating hydration reactions, or for the removal of water or other volatile components, are not considered to be fired. Such articles are excluded from Chapter 69; and (c) Ceramic articles are obtained by firing inorganic, non-metallic materials which have been prepared and shaped previously at, in general, room temperature. Raw materials comprise, inter alia, clays, siliceous materials including fused silica, materials with a high melting point, such as oxides, carbides, nitrides, graphite, or other carbon, and in some cases binders such as refractory clays or phosphates."
+    },
+    {
+      "number": "2",
+      "text": "This Chapter does not cover : (a) products of heading 2844; (b) articles of heading 6804; (c) articles of Chapter 71 (for example, imitation jewellery); (d) cermets of heading 8113; (e) articles of Chapter 82; (f) electrical insulators (heading 8546) or fittings of insulating material of heading 8547; (g) artificial teeth (heading 9021); (h) articles of Chapter 91 (for example, clocks and clock cases); (ij) articles of Chapter 94 (for example, furniture, luminaires and lighting fittings, prefabricated buildings); (k) articles of Chapter 95 (for example, toys, games and sports requisites); (l) articles of heading 9606 (for example, buttons) or of heading 9614 (for example, smoking pipes); or (m) articles of Chapter 97 (for example, works of art)."
+    }
+  ],
+  "section_notes": [],
+  "subheading_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "products of heading 2844 (radioactive chemical elements and radioactive isotopes, and their compounds; mixtures and residues containing these products)",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": "2844",
+      "source_note_number": "Note 2(a)",
+      "source_note_text": "(a) products of heading 2844"
+    },
+    {
+      "excluded_product_text": "articles of heading 6804 (millstones, grindstones, grinding wheels and the like, without frameworks, for grinding, sharpening, polishing, trueing or cutting)",
+      "redirects_to_chapter": "68",
+      "redirects_to_heading": "6804",
+      "source_note_number": "Note 2(b)",
+      "source_note_text": "(b) articles of heading 6804"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 71 (for example, imitation jewellery)",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(c)",
+      "source_note_text": "(c) articles of Chapter 71 (for example, imitation jewellery)"
+    },
+    {
+      "excluded_product_text": "cermets of heading 8113 (cermets and articles thereof, including waste and scrap)",
+      "redirects_to_chapter": "81",
+      "redirects_to_heading": "8113",
+      "source_note_number": "Note 2(d)",
+      "source_note_text": "(d) cermets of heading 8113"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 82 (tools, implements, cutlery, spoons and forks, of base metal — including ceramic-bladed knives and ceramic-tipped tools)",
+      "redirects_to_chapter": "82",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(e)",
+      "source_note_text": "(e) articles of Chapter 82"
+    },
+    {
+      "excluded_product_text": "electrical insulators (heading 8546)",
+      "redirects_to_chapter": "85",
+      "redirects_to_heading": "8546",
+      "source_note_number": "Note 2(f)",
+      "source_note_text": "(f) electrical insulators (heading 8546) or fittings of insulating material of heading 8547"
+    },
+    {
+      "excluded_product_text": "fittings of insulating material of heading 8547 (insulating fittings for electrical machines, appliances or equipment, being fittings wholly of insulating material apart from any minor components of metal incorporated during moulding solely for purposes of assembly)",
+      "redirects_to_chapter": "85",
+      "redirects_to_heading": "8547",
+      "source_note_number": "Note 2(f)",
+      "source_note_text": "(f) electrical insulators (heading 8546) or fittings of insulating material of heading 8547"
+    },
+    {
+      "excluded_product_text": "artificial teeth (heading 9021) — i.e., dental ceramic prostheses",
+      "redirects_to_chapter": "90",
+      "redirects_to_heading": "9021",
+      "source_note_number": "Note 2(g)",
+      "source_note_text": "(g) artificial teeth (heading 9021)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 91 (for example, clocks and clock cases) — i.e., ceramic clock cases, ceramic-bodied wall clocks",
+      "redirects_to_chapter": "91",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(h)",
+      "source_note_text": "(h) articles of Chapter 91 (for example, clocks and clock cases)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 94 (for example, furniture, luminaires and lighting fittings, prefabricated buildings) — i.e., ceramic table lamps, ceramic lamp bases used as lighting fittings, ceramic furniture",
+      "redirects_to_chapter": "94",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(ij)",
+      "source_note_text": "(ij) articles of Chapter 94 (for example, furniture, luminaires and lighting fittings, prefabricated buildings)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 95 (for example, toys, games and sports requisites) — i.e., ceramic toys, ceramic chess pieces, ceramic sports equipment",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(k)",
+      "source_note_text": "(k) articles of Chapter 95 (for example, toys, games and sports requisites)"
+    },
+    {
+      "excluded_product_text": "articles of heading 9606 (for example, buttons) — i.e., ceramic buttons, ceramic button blanks",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": "9606",
+      "source_note_number": "Note 2(l)",
+      "source_note_text": "(l) articles of heading 9606 (for example, buttons) or of heading 9614 (for example, smoking pipes)"
+    },
+    {
+      "excluded_product_text": "articles of heading 9614 (for example, smoking pipes) — i.e., ceramic tobacco pipes, ceramic hookah bowls used as smoking pipes",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": "9614",
+      "source_note_number": "Note 2(l)",
+      "source_note_text": "(l) articles of heading 9606 (for example, buttons) or of heading 9614 (for example, smoking pipes)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 97 (for example, works of art) — i.e., original sculptures and statuary of ceramic by named artists, antiques over 100 years old, museum-grade ceramic art",
+      "redirects_to_chapter": "97",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(m)",
+      "source_note_text": "(m) articles of Chapter 97 (for example, works of art)"
+    },
+    {
+      "excluded_product_text": "articles NOT fired after shaping — including ceramic articles heated to less than 800°C for resin curing, hydration acceleration, or volatile removal — are excluded from Chapter 69 by Note 1(b). Such unfired or low-temperature-cured articles typically fall to Chapter 38 (miscellaneous chemical products) or back to the raw clay/material chapter (e.g., Ch.25 for unfired kaolin/clays).",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "(b) articles heated to temperatures less than 800C for purposes such as curing of resins, accelerating hydration reactions, or for the removal of water or other volatile components, are not considered to be fired. Such articles are excluded from Chapter 69"
+    }
+  ],
+  "headings": [
+    {
+      "heading": "6901",
+      "title": "Bricks, blocks, tiles and other ceramic goods of siliceous fossil meals (for example, kieselguhr, tripolite or diatomite) or of similar siliceous earths.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6901.00",
+          "title": "Bricks, blocks, tiles and other ceramic goods of siliceous fossil meals (for example, kieselguhr, tripolite or diatomite) or of similar siliceous earths",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6901.00.10",
+              "description": "Bricks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6901.00.20",
+              "description": "Blocks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6901.00.30",
+              "description": "Tiles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6901.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6902",
+      "title": "Refractory bricks, blocks, tiles and similar refractory ceramic constructional goods, other than those of siliceous fossil meals or similar siliceous earths.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6902.10",
+          "title": "Containing by weight, singly or together, more than 50 percent of the elements Mg, Ca or Cr, expressed as MgO, CaO or Cr2O3",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6902.10.10",
+              "description": "Magnesite bricks and shapes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6902.10.20",
+              "description": "Chrome magnesite bricks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6902.10.30",
+              "description": "Magnesite chrome bricks and shapes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6902.10.40",
+              "description": "Magnesite carbon bricks and shapes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6902.10.50",
+              "description": "Direct bonded basic bricks and shapes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6902.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6902.20",
+          "title": "Containing by weight more than 50 percent of alumina (Al2O3), of silica (SiO2) or of a mixture or compound of these products",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6902.20.10",
+              "description": "Silica bricks and shapes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6902.20.20",
+              "description": "High alumina bricks and shapes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6902.20.30",
+              "description": "Alumina carbon bricks and shapes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6902.20.40",
+              "description": "Silicon Carbide bricks and shapes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6902.20.50",
+              "description": "Mullite bricks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6902.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6902.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6902.90.10",
+              "description": "Fire clay bricks and shapes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6902.90.20",
+              "description": "Graphite bricks and shapes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6902.90.30",
+              "description": "Vermiculite insulation bricks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6902.90.40",
+              "description": "Clay graphite stopper heads",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6902.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6903",
+      "title": "OTHER REFRACTORY CERAMIC GOODS (FOR EXAMPLE, RETORTS, CRUCIBLES, MUFFLES, NOZZLES, PLUGS, SUPPORTS, CUPELS, TUBES, PIPES, SHEATHS, RODS AND SLIDING GATES), OTHER THAN THOSE OF SILICEOUS FOSSIL MEALS OR OF SIMILAR SILICEOUS EARTHS",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6903.10",
+          "title": "Containing by weight more than 50% of free carbon",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6903.10.00",
+              "description": "Containing by weight more than 50% of free carbon",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6903.20",
+          "title": "Containing by weight more than 50 percent of alumina (Al2O3) or of a mixture or compound of alumina and of silica (SiO2)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6903.20.10",
+              "description": "Silicon carbide crucibles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6903.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6903.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6903.90.10",
+              "description": "Zircon or zircon-mullite refractories",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6903.90.20",
+              "description": "Basalt tiles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6903.90.30",
+              "description": "Ceramic fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6903.90.40",
+              "description": "Monolithics or castables (fire-clay, basic, silica, high alumina, insulating)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6903.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6904",
+      "title": "Ceramic building bricks, flooring blocks, support or filler tiles and the like.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6904.10",
+          "title": "Building bricks",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6904.10.00",
+              "description": "Building bricks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6904.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6904.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6905",
+      "title": "Roofing tiles, chimney-pots, cowls, chimney liners, architectural ornaments and other ceramic constructional goods.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6905.10",
+          "title": "Roofing tiles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6905.10.00",
+              "description": "Roofing tiles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6905.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6905.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6906",
+      "title": "Ceramic pipes, conduits, guttering and pipe fittings.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6906.00",
+          "title": "Ceramic pipes, conduits, guttering and pipe fittings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6906.00.00",
+              "description": "Ceramic pipes, conduits, guttering and pipe fittings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6907",
+      "title": "Ceramic flags and paving, hearth or wall tiles; ceramic mosaic ceramics.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6907.21",
+          "title": "Flags and paving, hearth or wall tiles, other than those of subheadings 6907.30 and 6907.40 : -- Of a water absorption coefficient by weight not exceeding 0.5 percent",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6907.21.00",
+              "description": "Flags and paving, hearth or wall tiles, other than those of subheadings 6907.30 and 6907.40 : -- Of a water absorption coefficient by weight not exceeding 0.5 percent",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6907.22",
+          "title": "Flags and paving, hearth or wall tiles, other than those of subheadings 6907.30 and 6907.40 : -- Of a water absorption coefficient by weight exceeding 0.5 percent but not exceeding 10 percent",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6907.22.00",
+              "description": "Flags and paving, hearth or wall tiles, other than those of subheadings 6907.30 and 6907.40 : -- Of a water absorption coefficient by weight exceeding 0.5 percent but not exceeding 10 percent",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6907.23",
+          "title": "Flags and paving, hearth or wall tiles, other than those of subheadings 6907.30 and 6907.40 : -- Of a water absorption coefficient by weight exceeding 10 percent",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6907.23.00",
+              "description": "Flags and paving, hearth or wall tiles, other than those of subheadings 6907.30 and 6907.40 : -- Of a water absorption coefficient by weight exceeding 10 percent",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6907.30",
+          "title": "Mosaic cubes and the like, other than those of sub-heading 6907.40",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6907.30.00",
+              "description": "Mosaic cubes and the like, other than those of sub-heading 6907.40",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6907.40",
+          "title": "Finishing ceramics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6907.40.00",
+              "description": "Finishing ceramics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6909",
+      "title": "Ceramic wares for laboratory, chemical or other technical uses; ceramic troughs, tubs and similar receptacles of a kind used in agriculture; ceramic pots, jars and similar articles of a kind used for the conveyance or packing of goods.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6909.11",
+          "title": "Ceramic wares for laboratory, chemical or other technical uses : -- Of porcelain or china",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6909.11.00",
+              "description": "Ceramic wares for laboratory, chemical or other technical uses : -- Of porcelain or china",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6909.12",
+          "title": "Ceramic wares for laboratory, chemical or other technical uses : -- Articles having a hardness equivalent to 9 or more on the Mohs",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6909.12.00",
+              "description": "Ceramic wares for laboratory, chemical or other technical uses : -- Articles having a hardness equivalent to 9 or more on the Mohs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6909.19",
+          "title": "Ceramic wares for laboratory, chemical or other technical uses : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6909.19.10",
+              "description": "Ceramic filter candle",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6909.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6909.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6909.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6910",
+      "title": "Ceramic sinks, wash basins, wash basin pedestals, baths, bidets, water closet pans, flushing cisterns, urinals and similar sanitary fixtures.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6910.10",
+          "title": "Of porcelain or china",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6910.10.00",
+              "description": "Of porcelain or china",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6910.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6910.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6911",
+      "title": "Tableware, kitchenware, other household articles and toilet articles, of porcelain or china.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6911.10",
+          "title": "Tableware and kitchenware",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6911.10.11",
+              "description": "Tableware: ----Of bone china and soft porcelain",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6911.10.19",
+              "description": "Tableware: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6911.10.21",
+              "description": "Kitchenware: ----Of bone china and soft porcelain",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6911.10.29",
+              "description": "Kitchenware: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6911.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6911.90.10",
+              "description": "Toilet articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6911.90.20",
+              "description": "Water filters of a capacity not exceeding 40 litres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6911.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6912",
+      "title": "Ceramic tableware, kitchenware, other household articles and toilet articles, other than of porcelain or china.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6912.00",
+          "title": "Ceramic tableware, kitchenware, other household articles and toilet articles, other than of porcelain or china :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6912.00.10",
+              "description": "Tableware",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6912.00.20",
+              "description": "Kitchenware",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6912.00.30",
+              "description": "Toilet articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6912.00.40",
+              "description": "Clay articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6912.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6913",
+      "title": "Statuettes and other ornamental ceramic articles.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6913.10",
+          "title": "Of porcelain or china",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6913.10.00",
+              "description": "Of porcelain or china",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6913.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6913.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6914",
+      "title": "Other ceramic articles.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6914.10",
+          "title": "Of porcelain or china",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6914.10.00",
+              "description": "Of porcelain or china",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6914.90",
+          "title": "Other:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6914.90.10",
+              "description": "Armour for ballistic protection",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6914.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "policy_conditions": []
+}

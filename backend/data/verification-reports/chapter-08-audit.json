@@ -1,0 +1,150 @@
+{
+  "chapter": "08",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings_count": 0,
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "0801.11.00",
+        "in_pdf": true,
+        "pdf_description": "08011100 Coconuts : -- Free Desiccated 080112 Coconuts : -- In the inner shell (endocarp) 08011210 Fresh Fre",
+        "json_description": "Coconuts : -- Desiccated",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0801.32.20",
+        "in_pdf": true,
+        "pdf_description": "08013220 Cashew kernel, broken Free 08013290 0802 Cashew kernel, whole Free 08021100 08021200 Other Free 08022100 Other ",
+        "json_description": "Cashew kernel, whole",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0802.52.00",
+        "in_pdf": true,
+        "pdf_description": "08025200 Hazelnuts or filberts Free (Corylus spp.) : -- In shell Hazelnuts or filberts Free (Corylus spp.) : -- shelled",
+        "json_description": "Pistachios : --Shelled",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0803.10.90",
+        "in_pdf": true,
+        "pdf_description": "08031090 Other Free 080390 Other- - Pine nuts, in Free shell Other- - Pine nuts, Free shelled Other- - O",
+        "json_description": "Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0804.50.10",
+        "in_pdf": true,
+        "pdf_description": "08045010 dates) Hard (chhohara or kharek) Other Figs Fresh Other Pineapples Avocados",
+        "json_description": "Guavas fresh or dried",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0804.50.90",
+        "in_pdf": true,
+        "pdf_description": "08045090 0805 Mallika Free 08051000 Other Free 08052100 Guavas, mangoes and Free mangosteens:--- Mangoes, s",
+        "json_description": "Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0807.11.00",
+        "in_pdf": true,
+        "pdf_description": "08071100 papaws (papayas), Free fresh. Free 080719 Free 08071910 Melons (including 08071990 watermelons) : -- Free 08072",
+        "json_description": "Melons (including watermelons) : -- Watermelons",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0809.40.00",
+        "in_pdf": true,
+        "pdf_description": "08094000 Peaches, including Free 0810 nectarines 08101000 Plums and sloes Free 08102000 Other fruit, fresh. 08103000 Str",
+        "json_description": "Plums and sloes",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0810.90.50",
+        "in_pdf": true,
+        "pdf_description": "08109050 08109060 Bore Free 08109090 Lichi Free 0811 Other Free 081110 08111010 Fruit and nuts, 08111020",
+        "json_description": "Bore",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0812.10.00",
+        "in_pdf": true,
+        "pdf_description": "08121000 FRUIT AND NUTS 081290 PROVISIONALLY 08129010 PRESERVED, BUT 08129090 UNSUITABLE IN THAT STATE FOR 0813 IMMEDIAT",
+        "json_description": "Cherries",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      }
+    ],
+    "hierarchy_errors": [],
+    "missed_codes": [],
+    "extra_codes": [],
+    "subheading_checks": [
+      {
+        "subheading": "0801.11",
+        "title": "Coconuts : -- Desiccated",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0802.42",
+        "title": "Chestnuts (Castanea spp.) : -- Shelled",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0804.30",
+        "title": "Pineapples",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0807.20",
+        "title": "Papaws (papayas)",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0810.60",
+        "title": "Durians",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      }
+    ],
+    "note_mismatches": [],
+    "count_check": {
+      "json_h": 14,
+      "pdf_h_estimate": 14,
+      "json_sh": 70,
+      "pdf_sh_estimate": 70,
+      "json_tl": 114,
+      "pdf_tl_estimate": 114
+    }
+  },
+  "fix_needed": null
+}

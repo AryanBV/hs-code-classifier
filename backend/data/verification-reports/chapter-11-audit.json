@@ -1,0 +1,150 @@
+{
+  "chapter": "11",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings_count": 0,
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "1101.00.00",
+        "in_pdf": true,
+        "pdf_description": "11010000 Wheat or meslin However, export of Wheat Flour (Atta) 39/2015-20 14.10.2022 flour. Prohibited will be allowed a",
+        "json_description": "Wheat or meslin flour.",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1102.90.21",
+        "in_pdf": true,
+        "pdf_description": "11029021 Maize (corn) flour Free 11029022 Free 11029029 Other 11029090 Free 1103 Rye flour Free 110311",
+        "json_description": "Rice flour:---- Brown rice flour",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1103.11.10",
+        "in_pdf": true,
+        "pdf_description": "11031110 Rice flour:---- Brown Free 11031120 rice flour 11031300 11031900 Rice flour:---- White rice flour Rice flour:--",
+        "json_description": "Groat",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1103.20.00",
+        "in_pdf": true,
+        "pdf_description": "11032000 Pellets Free 1104 Cereal grains 11041200 otherwise worked 11041900 (for example, hulled, 11042200 rolled, flake",
+        "json_description": "Pellets",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1104.23.00",
+        "in_pdf": true,
+        "pdf_description": "11042300 pearled, sliced or 11042900 kibbled), except rice of heading 10.06; germ of cereals, whole, rolled, flaked or g",
+        "json_description": "Other worked grains (for example, hulled, pearled, sliced or kibbled) : -- Of maize (corn)",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1105.20.00",
+        "in_pdf": true,
+        "pdf_description": "11052000 Flour, meal, powder, 1106 flakes, granules and pellets of potatoes. 110610 11061010 Flour, meal and Free 110620",
+        "json_description": "Flakes, granules and pellets",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1106.20.20",
+        "in_pdf": true,
+        "pdf_description": "11062020 Of manioc (cassava) Free 11062090 Of other roots and Free 110630 tubers 11063010 11063020 Of the products of 11",
+        "json_description": "Of manioc (cassava)",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1106.30.30",
+        "in_pdf": true,
+        "pdf_description": "11063030 Chapter 8 11063090 1107 Of tamarind Free 11071000 11072000 Of singoda Free 1108 11081100 Mango flour Free 11081",
+        "json_description": "Mango flour",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1108.11.00",
+        "in_pdf": true,
+        "pdf_description": "11081100 Mango flour Free 11081200 Other Free 11081300 Malt, whether or not roasted. 11081400 Not roasted Free Roasted",
+        "json_description": "Starches : -- Wheat starch",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1108.19.10",
+        "in_pdf": true,
+        "pdf_description": "11081910 Sago Free 11081990 Other Free 11082000 Inulin Free Wheat gluten, 11090000 whether or not dried",
+        "json_description": "Sago",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      }
+    ],
+    "hierarchy_errors": [],
+    "missed_codes": [],
+    "extra_codes": [],
+    "subheading_checks": [
+      {
+        "subheading": "1101.00",
+        "title": "Wheat or meslin flour.",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1103.19",
+        "title": "Groats and meal : -- Of other cereals",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1104.23",
+        "title": "Other worked grains (for example, hulled, pearled, sliced or kibbled) : -- Of maize (corn)",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1106.20",
+        "title": "Of sago or of roots or tubers of heading 07.14",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1108.12",
+        "title": "Starches : -- Maize (corn) starch",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      }
+    ],
+    "note_mismatches": [],
+    "count_check": {
+      "json_h": 9,
+      "pdf_h_estimate": 9,
+      "json_sh": 27,
+      "pdf_sh_estimate": 27,
+      "json_tl": 38,
+      "pdf_tl_estimate": 38
+    }
+  },
+  "fix_needed": null
+}

@@ -1,0 +1,161 @@
+{
+  "chapter": "53",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings_count": 0,
+  "soft_warnings_count": 0,
+  "wco_patched_notes_skipped": true,
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "53101099",
+        "in_pdf": true,
+        "pdf_context_near_code": "f jute containing 50percent or more by weight jute Free 53101093 Other: ---- Jute swim fabrics Free 53101099 Other: ---- Other Free 531090 Other 53109010 Bleached Free 53109020 Decorative Fabrics Free",
+        "json_description": "Other: ---- Other",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "53092920",
+        "in_pdf": true,
+        "pdf_context_near_code": "leached Free 530929 Containing less than 85 percent by weight of flax : -- Other 53092910 Dyed Free 53092920 Printed Free 53092990 Other Free 5310 Woven fabrics of jute or of other textile bast fibres",
+        "json_description": "Printed",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "53050040",
+        "in_pdf": true,
+        "pdf_context_near_code": " waste of these fibres (including yarn waste and garneted stock): Free 53050030 Coir bristles fibre 53050040 Curled or machine twisted coir fibre Free 53050050 Coir pith Free 53050090 Of Abaca Free 53",
+        "json_description": "Coir pith",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "53101093",
+        "in_pdf": true,
+        "pdf_context_near_code": "3101092 Other: ---- Stranded woven fabrics of jute containing 50percent or more by weight jute Free 53101093 Other: ---- Jute swim fabrics Free 53101099 Other: ---- Other Free 531090 Other 53109010 Bl",
+        "json_description": "Other: ---- Jute swim fabrics",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "53021000",
+        "in_pdf": true,
+        "pdf_context_near_code": " scutched 5302 Flax, broken, scutched, hackled or otherwise processed, but not spun : -- Other Free 53021000 Flax tow and waste Free 53029000 True hemp (Cannabis sativa L.), raw or processed but not s",
+        "json_description": "True hemp, raw or retted",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "53012900",
+        "in_pdf": true,
+        "pdf_context_near_code": "te (including yarn waste and Free 53011000 garnetted stock). Free 53012100 Flax, raw or retted Free 53012900 Flax, broken, scutched, hackled or otherwise processed, but not spun : -- broken or Free 53",
+        "json_description": "Flax, broken, scutched, hackled or otherwise processed, but not spun : -- Other",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "53101019",
+        "in_pdf": true,
+        "pdf_context_near_code": ": ---- Hessian fabrics Free 53101014 Containing 100percent by weight of jute: ---- Jute canvas Free 53101019 Containing 100percent by weight of jute: ---- Other Free 53101091 Other: ---- Woven blended",
+        "json_description": "Containing 100percent by weight of jute: ---- Other",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "53050090",
+        "in_pdf": true,
+        "pdf_context_near_code": "0030 Coir bristles fibre 53050040 Curled or machine twisted coir fibre Free 53050050 Coir pith Free 53050090 Of Abaca Free 5306 Of others Free 530610 Flax yarn. 53061010 Single 53061090 Put up for ret",
+        "json_description": "Of others",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "53109091",
+        "in_pdf": true,
+        "pdf_context_near_code": "3101099 Other: ---- Other Free 531090 Other 53109010 Bleached Free 53109020 Decorative Fabrics Free 53109091 Other: ---- Bleached Free 53109092 Other: ---- Dyed Free 53109093 Other: ---- Printed Free ",
+        "json_description": "Other: ---- Bleached",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "53062090",
+        "in_pdf": true,
+        "pdf_context_near_code": ". 53061010 Single 53061090 Put up for retail sale 530620 Other 53062010 Multiple (folded) or cabled 53062090 Put up for retail sale 5307 Other Yarn of jute or of other textile bast fibres of heading 5",
+        "json_description": "Other",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      }
+    ],
+    "subheading_spot_check": [
+      {
+        "subheading": "530129",
+        "in_pdf_standalone": true,
+        "any_child_in_pdf": true,
+        "accepted": true,
+        "json_description": "Flax, broken, scutched, hackled or otherwise processed, but not spun : -- Other",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": []
+      },
+      {
+        "subheading": "530390",
+        "in_pdf_standalone": true,
+        "any_child_in_pdf": true,
+        "accepted": true,
+        "json_description": "Other",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": []
+      },
+      {
+        "subheading": "530130",
+        "in_pdf_standalone": true,
+        "any_child_in_pdf": true,
+        "accepted": true,
+        "json_description": "Flax tow and waste",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": []
+      },
+      {
+        "subheading": "530720",
+        "in_pdf_standalone": true,
+        "any_child_in_pdf": true,
+        "accepted": true,
+        "json_description": "Multiple (folded) or cabled",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": []
+      },
+      {
+        "subheading": "530500",
+        "in_pdf_standalone": true,
+        "any_child_in_pdf": true,
+        "accepted": true,
+        "json_description": "Coconut, abaca (Manila hemp or Musa textilis Nee), ramie and other vegetable textile fibres, not elsewhere specified or included, raw or processed but not spun; tow, noils and waste of these fibres (i",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": []
+      }
+    ],
+    "hierarchy_errors": [],
+    "hierarchy_errors_total": 0,
+    "missed_codes": [],
+    "extra_codes": [],
+    "note_mismatches": [],
+    "count_check": {
+      "headings_in_json": 10,
+      "subheadings_in_json": 23,
+      "tariff_lines_in_json": 64
+    },
+    "notes_count": 1
+  },
+  "warnings": []
+}

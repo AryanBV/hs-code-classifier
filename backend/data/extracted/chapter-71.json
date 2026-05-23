@@ -1,0 +1,1806 @@
+{
+  "chapter": "71",
+  "title": "NATURAL OR CULTURED PEARLS, PRECIOUS OR SEMI-PRECIOUS STONES, PRECIOUS METALS, METALS CLAD WITH PRECIOUS METAL AND ARTICLES THEREOF; IMITATION JEWELLERY; COIN",
+  "section": "XIV",
+  "source_pdf": "Chapter 71 Natural Or Cultured Pearls, Precious Or Semi-Precious Stones, Precious Metals, Metals Clad With Precious Metal And Articles Thereof; Imitation Jewellery; Coin.pdf",
+  "extracted_at": "2026-05-21",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '71011010') and 6-digit subheading codes without dots (e.g., '710110'). Normalized to NNNN.NN.NN format (e.g., '7101.10.10') and NNNN.NN format (e.g., '7101.10') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'Sub-Heading Notes', 'Supplementary Notes', 'Policy Condition', 'Sl.No. Notes Notification Date Notification No', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "Section XIV has only one chapter (Chapter 71). The PDF header line 'Section XIV, NATURAL OR CULTURED PEARLS, PRECIOUS OR SEMI-PRECIOUS STONES, PRECIOUS METALS, METALS CLAD WITH PRECIOUS METAL AND ARTICLES THEREOF; IMITATION JEWELLERY; COIN' is a section descriptor only. Per WCO HS nomenclature, Section XIV has no separate section notes — all notes 1-11 in this PDF are Chapter 71 chapter notes. section_notes is therefore an empty array.",
+    "PDF source presents chapter notes in non-numerical order (Sl.No. column order: 1, 10, 11, 2, 3, 4, 5, 6, 7, 8, 9). This is an alphabetic-string sort artifact of the source. Notes have been re-ordered numerically (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11) in the chapter_notes array to reflect their true legal sequence.",
+    "Note 4 in the PDF contains stray quotation-mark artifacts around defined terms — rendered as triple-quote escapes (e.g., '\"\"\"precious metal\"\"\"', '\"\"\"platinum\"\"\"', '\"\"\"precious orsemi-preciousstones\"\"\"'). These are OCR/encoding artifacts. Captured verbatim with the original spacing/punctuation preserved (e.g., 'precious orsemi-preciousstones' with no spaces).",
+    "Note 9 and Note 11 also contain stray triple-quote artifacts around defined terms ('\"\"\"articles of jewellery\"\"\"', '\"\"\"imitation jewellery\"\"\"'). Preserved verbatim.",
+    "Note 3 has internal spacing/word-concatenation artifacts from the PDF: 'precious or semi-preciousstones(natural,synthetic or reconstructed)', 'Chapter 82 with a working part of precious or semi-preciousstones(natural,synthetic or reconstructed)', 'collectors? pieces(heading 9705) or antiques'. Stray '?' in 'collectors?' is an apostrophe OCR artifact (intended 'collectors''). All preserved verbatim.",
+    "Note 8 in the PDF starts with a stray duplicate '8' prefix ('8 Subject to Note 1 (a) to Section VI...'). Preserved verbatim — the duplicated digit is a PDF table-formatting artifact, not part of the legal text.",
+    "Note 11 references heading '9612.5' which is a non-standard rendering. The standard ITC(HS) heading is 9612 (with subheading 9612.20). Preserved verbatim as printed; classification engine should treat the reference as pointing to heading 9612.",
+    "Supplementary Note 1 in the PDF defines 'Diamonds' for the purposes of heading 7104 (laboratory-grown / synthetic diamonds: HPHT, CVD, and reconstituted). Captured as a chapter_notes entry numbered 'Supp-1' since the JSON schema does not have a separate supplementary_notes array and these notes have legal interpretive force for heading 7104.",
+    "Policy Condition 1 of the Chapter applies to multiple tariff lines under headings 7102 and 7103 (Kimberley Process Certificate requirement for rough diamonds). Policy Condition 2 of the Chapter (export authorization from Department of Atomic Energy for SCOMET Category-0 nuclear materials) is referenced on certain 7103 tariff lines. Both are captured in policy_conditions and referenced from individual tariff lines via descriptive notation in the warnings here, though the schema's tariff_line objects do not carry per-line policy markers — policy applicability is described in the policy_conditions[].applies_to_tariff_lines field.",
+    "Heading 7100 does not exist in ITC(HS) — Section XIV begins at 7101. No gap warning needed.",
+    "Heading 7107 in the ITC(HS) 2022 schedule covers 'Base metals clad with silver, not further worked than semi-manufactured.' In the PDF, the heading 7107 row header is absent and only the single 8-digit tariff line '71070000' (Base metals clad with silver, not further worked than semimanufactured) is present. A synthetic heading 7107 / subheading 7107.00 entry has been reconstructed from this single tariff line to maintain hierarchy consistency. Same treatment applied for heading 7109 (single tariff '71090000'), heading 7111 (single tariff '71110000'). Original PDF text preserved verbatim in the tariff line description.",
+    "Heading 7112 is rendered in the PDF in ALL-CAPS as the heading title: 'WASTE AND SCRAP OF PRECIOUS METAL OR OF METAL CLAD WITH PRECIOUS METAL; OTHER WASTE AND SCRAP CONTAINING PRECIOUS METAL OR PRECIOUS METAL COMPOUNDS, OF A KIND USED PRINCIPALLY FOR THE RECOVERY OF PRECIOUS METAL OTHER THAN GOODS OF HEADING 8549'. This is a stylistic choice in the source PDF (other headings are in title case). Preserved verbatim. The cross-reference to heading 8549 (waste/scrap of primary cells/batteries) is part of the legal heading text.",
+    "Multiple 8-digit tariff lines under headings 7106, 7108, 7110 have NO Export Policy value in the PDF (the Export Policy column is blank for codes such as 7106.91.20, 7106.92.21, 7106.92.29, 7108.12.10, 7108.12.90, 7108.13.10, 7108.13.90, 7110.11.11, 7110.11.19, 7110.11.21, 7110.11.29, 7110.19.10, 7110.19.90). Per project schema, export_policy is NOT a tariff_line field — the unit field is preserved as null. These blank-policy lines are flagged here for downstream review since gold/silver/platinum export is subject to special RBI/customs controls outside this PDF's scope.",
+    "Subheading 710110 has tariff lines 7101.10.10 (Unworked) and 7101.10.20 (Worked). Subheading 710121/710122 are presented as two 8-digit codes (7101.21.00 Cultured pearls — Unworked; 7101.22.00 Cultured pearls — Worked) without an intervening 6-digit subheading row — reconstructed as subheadings 7101.21 and 7101.22 each containing a single tariff line. Same approach for other single-line subheadings (e.g., 7102.10, 7102.21, 7102.29, 7102.31, 7102.39 etc.).",
+    "Subheading 710391 'Otherwise worked : -- Rubies, sapphires and emeralds' has three tariff lines (7103.91.10 Ruby, 7103.91.20 Sapphire, 7103.91.30 Emeralds). PDF renders the subheading code as '710391' — normalized to '7103.91'.",
+    "Tariff line 7103.10.71 'Tourmaline' appears within the 'Tourmaline and Zoisite mineralogical species' subgroup at the 8-digit level. Preserved verbatim from PDF (code '71031071').",
+    "Subheading 7110.11 contains four tariff lines (7110.11.11, 7110.11.19, 7110.11.21, 7110.11.29) split across two sub-categories ('Unwrought form' and 'In powder form'). All four codes have blank Export Policy in the PDF. Captured verbatim.",
+    "Heading 7115 description in PDF: 'Other articles of precious metal or of metal clad with precious metal' — appears WITHOUT a trailing period in the source. Preserved verbatim.",
+    "Unit-of-measure column is NOT shown in this chapter's PDF — unit field set to null for all tariff lines.",
+    "Several tariff lines (e.g., 7106.91.20, 7106.92.21, 7106.92.29, all of 7108.12/7108.13, all of 7110.11/7110.19, 7117.19, 7117.90) appear with blank Export Policy column in the PDF source. Preserved as captured; downstream policy enforcement should consult Schedule 2 master notifications and RBI/DGFT circulars for gold/silver/platinum exports."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "Subject to Note 1 (a) to Section VI and except as provided below, all articles consisting wholly or partly: (a) of natural or cultured pearls or of precious or of semi-precious stones (natural, synthetic or reconstructed); or (b) of precious metal or of metal clad with precious metal, are to be classified in this Chapter."
+    },
+    {
+      "number": "2",
+      "text": "(A) Headings 7113, 7114 and 7112.5 do not cover articles in which precious metal or metal clad with precious metal is present as minor constituents only, such as minor fittings or minor ornamentation (for example, monograms, ferrules and rims) and paragraph (b) of the foregoing Note does not apply to such articles. (B) Heading 7116 does not cover articles containing precious metal or metal clad with precious metal (other than as minor constituents)."
+    },
+    {
+      "number": "3",
+      "text": "This Chapter does not cover: (a) amalgams of precious metal, or colloidal precious metal (heading 2843); (b) sterile surgical suture materials, dental fillings or other goods of Chapter 30; (c) goods of Chapter 32 (for example, lusters); (d) supported catalysts (heading 3815.12.5); (e) articles of heading 4202 or 4203 referred to in Note 2 (B) to Chapter 42; (f) articles of heading 4303 or 4304; (g) goods of Section XI (textiles and textile articles); (h) footwear, headgear or other articles of Chapter 64 or 65; (ij) umbrellas, walking-sticks or other articles of Chapter 66; (k) abrasive goods of heading 6804 or 6805 or Chapter 82, containing dust or powder of precious or semi-precious stones (natural orsynthetic); articles of Chapter 82 with a working part of precious or semi-preciousstones(natural,synthetic or reconstructed); machinery, mechanical appliances or electrical goods, or parts thereof, of Section XVI. However, articles and parts thereof, wholly of precious or semi-precious stones (natural, synthetic or reconstructed) remain classified in this Chapter, except unmounted worked sapphires and diamonds for styli (heading 8522); (l) articles of Chapter 90, 91 or 92 (scientific instruments, clocks and watches, musical instruments); (m) arms or parts thereof (Chapter 93); (n) articles covered by Note 2 to Chapter 95; (o) articles classified in Chapter 96 by virtue of Note 4 to that Chapter; or (p) original sculptures or statutory (heading 9703), collectors? pieces(heading 9705) or antiques of an age exceeding one hundred years(heading 9706), other than natural or cultured pearls or precious or semi-precious stones."
+    },
+    {
+      "number": "4",
+      "text": "(A) The expression \"\"\"precious metal\"\"\" means silver, gold and platinum. (B)The expression \"\"\"platinum\"\"\" means platinum, iridium, osmium, palladium,rhodiumand ruthenium. (C) The expression \"\"\"precious orsemi-preciousstones\"\"\" does not include any of the substances specified in Note 2 (b) to Chapter 96."
+    },
+    {
+      "number": "5",
+      "text": "For the purposes of this Chapter, any alloy(including a sintered mixture and an inter-metallic compound) containing precious metal is to be treated as an alloy of precious metal if any one precious metal constitutes as much as 2% by weight, of the alloy. Alloys of precious metal are to be classified according to the following rules: (a) an alloy containing 2% or more, by weight, of platinum is to be treated as an alloy of platinum; (b) an alloy containing 2% or more, byweight, of gold but not platinum, or lessthan 2% by weight, of platinum, is to be treated as an alloy of gold; (c) other alloys containing 2% or more, by weight, of silver are to be treated as alloys of silver."
+    },
+    {
+      "number": "6",
+      "text": "Except where the context otherwise requires, any reference in this Schedule to precious metal or to any particular precious metal includes a reference to alloys treated as alloys of precious metal or of the particular metal in accordance with the rules in Note 5 above, but not to metal clad with precious metal or to base metal or non-metals plated with precious metal."
+    },
+    {
+      "number": "7",
+      "text": "Throughout this Schedule, the expression metal clad with precious metal means material made with a base of metal upon one or more surfaces of which there is affixed by soldering, brazing, welding, hot rolling or similar mechanical means a covering of precious metal. Except where the context otherwise requires, the expression also covers base metal inlaid with precious metal."
+    },
+    {
+      "number": "8",
+      "text": "8 Subject to Note 1 (a) to Section VI, goods answering to a description in heading 7112 are to be classified in that heading and in no other heading of this Schedule."
+    },
+    {
+      "number": "9",
+      "text": "For the purposes of heading 7113, the expression \"\"\"articles of jewellery\"\"\" means: (a) any small objects of personal adornment (for example, rings, bracelets, necklaces, brooches, ear-rings, watch-chains, fobs, pendants, tie-pins, cuff-links, dress-studs, religious or other medals and insignia); and (b) articles of personal use of a kind normally carried in the pocket, in the handbag or on the person (for example,cigar or cigarette cases, snuff boxes, cachou or pill boxes, powder boxes, chain purses or prayer beads). These articles may be combined or set, for example, with natural or cultured pearls, precious or semi-preciousstones,synthetic or reconstructed precious orsemipreciousstones, tortoise shell, mother of-pearl, ivory, natural or reconstituted amber, jet or coral."
+    },
+    {
+      "number": "10",
+      "text": "For the purposes of heading 7114, the expression \"articles of goldsmiths or silversmiths wares\" includes such articles as ornaments, table-ware, toilet-ware,smokersrequisites and other articles of household, office or religious use."
+    },
+    {
+      "number": "11",
+      "text": "For the purposes of heading 7117, the expression \"\"\"imitation jewellery\"\"\" means articles of jewellery within the meaning of paragraph (a) of Note 9 above (but not including buttons or other articles of heading 9606, or dress-combs, hair-slides or the like, or hairpins, of heading 9612.5), not incorporating natural or cultured pearls, precious or semi-precious stones (natural, synthetic or reconstructed) nor (except as plating or as minor constituents) precious metal or metal clad with precious metal."
+    },
+    {
+      "number": "Supp-1",
+      "text": "For the purposes of heading 7104, Diamonds means- (a) chemically produced stones which have essentially the same chemical composition and crystal structure as a particular natural diamond and are produced using various methods including High Pressure High Temperature method (HPHT) and Chemical Vapour Deposition method (CVD); or (b) stones obtained artificially by various means, e.g., agglomerating, pressing or fusing together (usually with the aid of a blow pipe) fragments of natural diamonds which have generally been reduced to a powder."
+    }
+  ],
+  "section_notes": [],
+  "subheading_notes": [
+    {
+      "number": "1",
+      "text": "For the purposes of sub-headings 7106 10, 7108 11, 7110 11, 7110 21, 7110 31 and 7110 41, the expressions \"powder\" and \"in powder form\" mean products of which 90% or more by weight passes through a sieve having a mesh aperture of 0.5 mm."
+    },
+    {
+      "number": "2",
+      "text": "Notwithstanding the provisions of Chapter Note 4(B), for the purposes of sub-headings 7110 11 and 7110 19, the expression \"platinum\" does not include iridium, osmium, palladium,rhodiumor rutheniu."
+    },
+    {
+      "number": "3",
+      "text": "For the classification of alloysin the sub-headings of heading 7110, each alloy isto be classified with that metal, platinum, palladium, rhodium, iridium, osmium or ruthenium which predominates by weight over each other of these metals."
+    }
+  ],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "amalgams of precious metal, or colloidal precious metal",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": "2843",
+      "source_note_number": "Note 3(a)",
+      "source_note_text": "This Chapter does not cover: (a) amalgams of precious metal, or colloidal precious metal (heading 2843)"
+    },
+    {
+      "excluded_product_text": "sterile surgical suture materials, dental fillings or other goods of Chapter 30",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(b)",
+      "source_note_text": "(b) sterile surgical suture materials, dental fillings or other goods of Chapter 30"
+    },
+    {
+      "excluded_product_text": "goods of Chapter 32 (for example, lusters)",
+      "redirects_to_chapter": "32",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(c)",
+      "source_note_text": "(c) goods of Chapter 32 (for example, lusters)"
+    },
+    {
+      "excluded_product_text": "supported catalysts",
+      "redirects_to_chapter": "38",
+      "redirects_to_heading": "3815",
+      "source_note_number": "Note 3(d)",
+      "source_note_text": "(d) supported catalysts (heading 3815.12.5)"
+    },
+    {
+      "excluded_product_text": "articles of heading 4202 or 4203 referred to in Note 2 (B) to Chapter 42 (e.g., handbags, trunks, luggage, gloves where parts of precious metal/pearls/stones do not give essential character)",
+      "redirects_to_chapter": "42",
+      "redirects_to_heading": "4202",
+      "source_note_number": "Note 3(e)",
+      "source_note_text": "(e) articles of heading 4202 or 4203 referred to in Note 2 (B) to Chapter 42"
+    },
+    {
+      "excluded_product_text": "articles of heading 4303 or 4304 (articles of furskin or artificial fur)",
+      "redirects_to_chapter": "43",
+      "redirects_to_heading": "4303",
+      "source_note_number": "Note 3(f)",
+      "source_note_text": "(f) articles of heading 4303 or 4304"
+    },
+    {
+      "excluded_product_text": "goods of Section XI (textiles and textile articles)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(g)",
+      "source_note_text": "(g) goods of Section XI (textiles and textile articles)"
+    },
+    {
+      "excluded_product_text": "footwear, headgear or other articles of Chapter 64 or 65",
+      "redirects_to_chapter": "64",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(h)",
+      "source_note_text": "(h) footwear, headgear or other articles of Chapter 64 or 65"
+    },
+    {
+      "excluded_product_text": "umbrellas, walking-sticks or other articles of Chapter 66",
+      "redirects_to_chapter": "66",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(ij)",
+      "source_note_text": "(ij) umbrellas, walking-sticks or other articles of Chapter 66"
+    },
+    {
+      "excluded_product_text": "abrasive goods of heading 6804 or 6805 or Chapter 82, containing dust or powder of precious or semi-precious stones (natural or synthetic)",
+      "redirects_to_chapter": "68",
+      "redirects_to_heading": "6804",
+      "source_note_number": "Note 3(k)",
+      "source_note_text": "(k) abrasive goods of heading 6804 or 6805 or Chapter 82, containing dust or powder of precious or semi-precious stones (natural orsynthetic)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 82 with a working part of precious or semi-precious stones (natural, synthetic or reconstructed) — i.e., tools, implements, cutlery with a working edge of precious/semi-precious stone material",
+      "redirects_to_chapter": "82",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(k)",
+      "source_note_text": "articles of Chapter 82 with a working part of precious or semi-preciousstones(natural,synthetic or reconstructed)"
+    },
+    {
+      "excluded_product_text": "machinery, mechanical appliances or electrical goods, or parts thereof, of Section XVI",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(k)",
+      "source_note_text": "machinery, mechanical appliances or electrical goods, or parts thereof, of Section XVI"
+    },
+    {
+      "excluded_product_text": "unmounted worked sapphires and diamonds for styli (phonograph/turntable needles)",
+      "redirects_to_chapter": "85",
+      "redirects_to_heading": "8522",
+      "source_note_number": "Note 3(k)",
+      "source_note_text": "However, articles and parts thereof, wholly of precious or semi-precious stones (natural, synthetic or reconstructed) remain classified in this Chapter, except unmounted worked sapphires and diamonds for styli (heading 8522)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 90, 91 or 92 (scientific instruments, clocks and watches, musical instruments)",
+      "redirects_to_chapter": "90",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(l)",
+      "source_note_text": "(l) articles of Chapter 90, 91 or 92 (scientific instruments, clocks and watches, musical instruments)"
+    },
+    {
+      "excluded_product_text": "arms or parts thereof",
+      "redirects_to_chapter": "93",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(m)",
+      "source_note_text": "(m) arms or parts thereof (Chapter 93)"
+    },
+    {
+      "excluded_product_text": "articles covered by Note 2 to Chapter 95 (toys, games, sports requisites — even when containing minor precious metal or stone elements)",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(n)",
+      "source_note_text": "(n) articles covered by Note 2 to Chapter 95"
+    },
+    {
+      "excluded_product_text": "articles classified in Chapter 96 by virtue of Note 4 to that Chapter (e.g., articles of carving material, smoking pipes, certain personal articles)",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(o)",
+      "source_note_text": "(o) articles classified in Chapter 96 by virtue of Note 4 to that Chapter"
+    },
+    {
+      "excluded_product_text": "original sculptures or statuary, other than natural or cultured pearls or precious or semi-precious stones",
+      "redirects_to_chapter": "97",
+      "redirects_to_heading": "9703",
+      "source_note_number": "Note 3(p)",
+      "source_note_text": "(p) original sculptures or statutory (heading 9703), collectors? pieces(heading 9705) or antiques of an age exceeding one hundred years(heading 9706), other than natural or cultured pearls or precious or semi-precious stones"
+    },
+    {
+      "excluded_product_text": "collectors' pieces, other than natural or cultured pearls or precious or semi-precious stones",
+      "redirects_to_chapter": "97",
+      "redirects_to_heading": "9705",
+      "source_note_number": "Note 3(p)",
+      "source_note_text": "collectors? pieces(heading 9705)"
+    },
+    {
+      "excluded_product_text": "antiques of an age exceeding one hundred years, other than natural or cultured pearls or precious or semi-precious stones",
+      "redirects_to_chapter": "97",
+      "redirects_to_heading": "9706",
+      "source_note_number": "Note 3(p)",
+      "source_note_text": "antiques of an age exceeding one hundred years(heading 9706), other than natural or cultured pearls or precious or semi-precious stones"
+    },
+    {
+      "excluded_product_text": "articles of headings 7113, 7114 or 7115 (jewellery, goldsmiths/silversmiths wares, other articles of precious metal) where precious metal or metal clad with precious metal is present only as minor constituents (minor fittings, monograms, ferrules, rims) — such articles are NOT classified in those headings; classify by primary material",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(A)",
+      "source_note_text": "(A) Headings 7113, 7114 and 7112.5 do not cover articles in which precious metal or metal clad with precious metal is present as minor constituents only, such as minor fittings or minor ornamentation (for example, monograms, ferrules and rims) and paragraph (b) of the foregoing Note does not apply to such articles."
+    },
+    {
+      "excluded_product_text": "articles containing precious metal or metal clad with precious metal (other than as minor constituents) — excluded from heading 7116 (articles of pearls/stones); such articles fall under 7113/7114/7115 instead",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": "7113",
+      "source_note_number": "Note 2(B)",
+      "source_note_text": "(B) Heading 7116 does not cover articles containing precious metal or metal clad with precious metal (other than as minor constituents)."
+    },
+    {
+      "excluded_product_text": "buttons or other articles of heading 9606 — excluded from heading 7117 (imitation jewellery)",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": "9606",
+      "source_note_number": "Note 11",
+      "source_note_text": "(but not including buttons or other articles of heading 9606, ... of heading 9612.5)"
+    },
+    {
+      "excluded_product_text": "dress-combs, hair-slides or the like, or hairpins — excluded from heading 7117 (imitation jewellery)",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": "9612",
+      "source_note_number": "Note 11",
+      "source_note_text": "or dress-combs, hair-slides or the like, or hairpins, of heading 9612.5"
+    }
+  ],
+  "headings": [
+    {
+      "heading": "7101",
+      "title": "Pearls, natural or cultured, whether or not worked or graded but not strung, mounted or set; pearls, natural or cultured, temporarily strung for convenience of transport.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7101.10",
+          "title": "Natural pearls",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7101.10.10",
+              "description": "Unworked",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7101.10.20",
+              "description": "Worked",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7101.21",
+          "title": "Cultured pearls : -- Unworked",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7101.21.00",
+              "description": "Cultured pearls : -- Unworked",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7101.22",
+          "title": "Cultured pearls : -- Worked",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7101.22.00",
+              "description": "Cultured pearls : -- Worked",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7102",
+      "title": "Diamonds, whether or not worked, but not mounted or set.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7102.10",
+          "title": "Unsorted",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7102.10.00",
+              "description": "Unsorted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            }
+          ]
+        },
+        {
+          "subheading": "7102.21",
+          "title": "Industrial : -- Unworked or simply sawn, cleaved or bruted",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7102.21.10",
+              "description": "Sorted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "7102.21.20",
+              "description": "Unsorted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            }
+          ]
+        },
+        {
+          "subheading": "7102.29",
+          "title": "Industrial : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7102.29.10",
+              "description": "Crushed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "7102.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            }
+          ]
+        },
+        {
+          "subheading": "7102.31",
+          "title": "Non-industrial : -- Unworked or simply sawn, cleaved or bruted",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7102.31.00",
+              "description": "Non-industrial : -- Unworked or simply sawn, cleaved or bruted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            }
+          ]
+        },
+        {
+          "subheading": "7102.39",
+          "title": "Non-industrial : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7102.39.10",
+              "description": "Diamond, cut or otherwise worked but not mounted or set",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "7102.39.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7103",
+      "title": "Precious stones (other than diamonds) and semi-precious stones, whether or not worked or graded but not strung, mounted or set; ungraded precious stones (other than diamonds) and semiprecious stones, temporarily strung for convenience of transport.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7103.10",
+          "title": "Unworked or simply sawn or roughly shaped",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7103.10.31",
+              "description": "Precious or semi-precious stones of \"Beryl\" and \"Chrysoberyl\" mineralogical species: ----Emerald",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.10.32",
+              "description": "Precious or semi-precious stones of \"Beryl\" and \"Chrysoberyl\" mineralogical species: ---- Yellow/golden/pink/red/green beryl",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter."
+            },
+            {
+              "code": "7103.10.33",
+              "description": "Precious or semi-precious stones of \"Beryl\" and \"Chrysoberyl\" mineralogical species: ---- Chrysoberyl (including chrysoberyl cat s eye)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter."
+            },
+            {
+              "code": "7103.10.34",
+              "description": "Precious or semi-precious stones of \"Beryl\" and \"Chrysoberyl\" mineralogical species: ---- Alexandrite (including alexandrite cat s eye)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.10.39",
+              "description": "Precious or semi-precious stones of \"Beryl\" and \"Chrysoberyl\" mineralogical species: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.10.41",
+              "description": "Precious or semi-precious stones of \"Corundum\" and \"Feldspar \" mineralogical species: ---- Ruby",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.10.42",
+              "description": "Precious or semi-precious stones of \"Corundum\" and \"Feldspar \" mineralogical species: ---- Sapphire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.10.43",
+              "description": "Precious or semi-precious stones of \"Corundum\" and \"Feldspar \" mineralogical species: ---- Moonstone",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.10.49",
+              "description": "Precious or semi-precious stones of \"Corundum\" and \"Feldspar \" mineralogical species: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.10.51",
+              "description": "Precious or semi-precious stones of \"Garnet\" and \"Lazurite\" mineralogical species: ---- Garnet",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.10.52",
+              "description": "Precious or semi-precious stones of \"Garnet\" and \"Lazurite\" mineralogical species: ---- Lapis-lazuli",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.10.59",
+              "description": "Precious or semi-precious stones of \"Garnet\" and \"Lazurite\" mineralogical species: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.10.61",
+              "description": "Precious or semi-precious stones of \"Prehnite\" and \"Quartz\" mineralogical species: ---- Prehnite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.10.62",
+              "description": "Precious or semi-precious stones of \"Prehnite\" and \"Quartz\" mineralogical species: ---- Agate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.10.63",
+              "description": "Precious or semi-precious stones of \"Prehnite\" and \"Quartz\" mineralogical species: ---- Aventurine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.10.64",
+              "description": "Precious or semi-precious stones of \"Prehnite\" and \"Quartz\" mineralogical species: ---- Chalcedony",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.10.69",
+              "description": "Precious or semi-precious stones of \"Tourmaline\" and \"Zoisite\" mineralogical species: ---- Tourmaline",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.10.71",
+              "description": "Tourmaline",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.10.72",
+              "description": "Precious or semi-precious stones of \"Tourmaline\" and \"Zoisite\" mineralogical species: ---- Tanzanite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.10.79",
+              "description": "Precious or semi-precious stones of \"Tourmaline\" and \"Zoisite\" mineralogical species: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7103.91",
+          "title": "Otherwise worked : -- Rubies, sapphires and emeralds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7103.91.10",
+              "description": "Ruby",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.91.20",
+              "description": "Sapphire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.91.30",
+              "description": "Emeralds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7103.99",
+          "title": "Otherwise worked : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7103.99.11",
+              "description": "Precious or semi-precious stones of \"Beryl\" and \"Chrysoberyl\" mineralogical species, other than \"Emerald\":---- Yellow/golden/pink/red/green beryl",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter."
+            },
+            {
+              "code": "7103.99.12",
+              "description": "Precious or semi-precious stones of \"Beryl\" and \"Chrysoberyl\" mineralogical species, other than \"Emerald\": ---- Chrysoberyl (including chrysoberyl cat s eye)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter."
+            },
+            {
+              "code": "7103.99.13",
+              "description": "Precious or semi-precious stones of \"Beryl\" and \"Chrysoberyl\" mineralogical species, other than \"Emerald\": ---- Alexandrite (including alexandrite cat s eye)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.99.19",
+              "description": "Precious or semi-precious stones of \"Beryl\" and \"Chrysoberyl\" mineralogical species, other than \"Emerald\": ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.99.21",
+              "description": "Precious or semi-precious stones of \"Corundum\" and \"Feldspar\" mineralogical species, other than \"Ruby\"and \"Sapphire\": ---- Moonstone",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.99.29",
+              "description": "Precious or semi-precious stones of \"Corundum\" and \"Feldspar\" mineralogical species, other than \"Ruby\"and \"Sapphire\": ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.99.31",
+              "description": "Precious or semi-precious stones of \"Garnet\" and \"Lazurite\" mineralogical species: ---- Garnet",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.99.32",
+              "description": "Precious or semi-precious stones of \"Garnet\" and \"Lazurite\" mineralogical species: ---- Lapis-lazuli",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.99.39",
+              "description": "Precious or semi-precious stones of \"Garnet\" and \"Lazurite\" mineralogical species: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.99.41",
+              "description": "Precious or semi-precious stones of \"Prehnite\" and \"Quartz\" mineralogical species: ---- Prehnite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.99.42",
+              "description": "Precious or semi-precious stones of \"Prehnite\" and \"Quartz\" mineralogical species: ---- Agate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.99.43",
+              "description": "Precious or semi-precious stones of \"Prehnite\" and \"Quartz\" mineralogical species: ---- Aventurine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.99.44",
+              "description": "Precious or semi-precious stones of \"Prehnite\" and \"Quartz\" mineralogical species: ---- Chalcedony",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.99.49",
+              "description": "Precious or semi-precious stones of \"Prehnite\" and \"Quartz\" mineralogical species: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.99.51",
+              "description": "Precious or semi-precious stones of \"Tourmaline\" and \"Zoisite\" mineralogical species: ---- Tourmaline",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.99.52",
+              "description": "Precious or semi-precious stones of \"Tourmaline\" and \"Zoisite\" mineralogical species:-- Tanzanite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.99.59",
+              "description": "Precious or semi-precious stones of \"Tourmaline\" and \"Zoisite\" mineralogical species: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7103.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7104",
+      "title": "Synthetic or reconstructed precious or semi-precious stones, whether or not worked or graded but not strung, mounted or set; ungraded synthetic or reconstructed precious or semi-precious stones, temporarily strung for convenience of transport.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7104.10",
+          "title": "Piezo-electric quartz",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7104.10.00",
+              "description": "Piezo-electric quartz",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7104.21",
+          "title": "Diamonds: -- Unworked or simply sawn or roughly shaped",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7104.21.10",
+              "description": "Industrial",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7104.21.20",
+              "description": "Non-industrial",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7104.29",
+          "title": "Other, unworked or simply sawn or roughly shaped: -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7104.29.00",
+              "description": "Other, unworked or simply sawn or roughly shaped: - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7104.91",
+          "title": "Diamonds: -- Otherwise worked",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7104.91.10",
+              "description": "Industrial",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7104.91.20",
+              "description": "Non-industrial",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7104.99",
+          "title": "Other: -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7104.99.00",
+              "description": "Other: - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7105",
+      "title": "Dust and powder of natural or synthetic precious or semi- semiprecious stones.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7105.10",
+          "title": "Of Diamonds:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7105.10.10",
+              "description": "Of heading 7102",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7105.10.20",
+              "description": "Of heading 7104",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7105.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7105.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7106",
+      "title": "Silver (including silver plated with gold or platinum), unwrought or in semi-manufactured forms, or in powder form.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7106.10",
+          "title": "Powder",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7106.10.00",
+              "description": "Powder",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7106.91",
+          "title": "Other :-- Unwrought:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7106.91.10",
+              "description": "Grains",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7106.91.20",
+              "description": "Containing 99.9 per cent. or more by weight of silver",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            },
+            {
+              "code": "7106.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7106.92",
+          "title": "Other : -- Semi-manufactured",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7106.92.10",
+              "description": "Sheets, plates, strips, tubes and pipes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7106.92.21",
+              "description": "Bar: Containing 99.9 percent or more by weight of silver",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            },
+            {
+              "code": "7106.92.29",
+              "description": "Bar---- Other",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            },
+            {
+              "code": "7106.92.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7107",
+      "title": "Base metals clad with silver, not further worked than semi-manufactured.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7107.00",
+          "title": "Base metals clad with silver, not further worked than semi-manufactured.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7107.00.00",
+              "description": "Base metals clad with silver, not further worked than semimanufactured.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7108",
+      "title": "Gold (including gold plated with platinum) unwrought or in semi-manufactured forms, or in powder form.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7108.11",
+          "title": "Non-monetary : -- Powder",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7108.11.00",
+              "description": "Non-monetary : -- Powder",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7108.12",
+          "title": "Non-monetary : -- Other unwrought forms",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7108.12.10",
+              "description": "Containing 99.5 per cent. or more by weight of gold",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            },
+            {
+              "code": "7108.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7108.13",
+          "title": "Non-monetary : -- Other semi-manufactured forms",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7108.13.10",
+              "description": "Containing 99.5 per cent. or more by weight of gold",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            },
+            {
+              "code": "7108.13.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7108.20",
+          "title": "Monetary",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7108.20.00",
+              "description": "Monetary",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7109",
+      "title": "Base metals or silver, clad with gold, not further worked than semi-manufactured.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7109.00",
+          "title": "Base metals or silver, clad with gold, not further worked than semi-manufactured.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7109.00.00",
+              "description": "Base metals or silver, clad with gold, not further worked than semi-manufactured.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7110",
+      "title": "Platinum, unwrought or in semi-manufactured forms, or in powder form.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7110.11",
+          "title": "Platinum : -- Unwrought or in powder form",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7110.11.11",
+              "description": "Unwrought form --- Containing 99.0 per cent or more by weight of platinum",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            },
+            {
+              "code": "7110.11.19",
+              "description": "Unwrought form: --- Other",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            },
+            {
+              "code": "7110.11.21",
+              "description": "In powder form: --- Containing 99.0 per cent or more by weight of platinum",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            },
+            {
+              "code": "7110.11.29",
+              "description": "In powder form: --- other",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7110.19",
+          "title": "Platinum : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7110.19.10",
+              "description": "Containing 99.0 per cent. or more by weight of platinum",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            },
+            {
+              "code": "7110.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7110.21",
+          "title": "Palladium : -- Unwrought or in powder form",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7110.21.00",
+              "description": "Palladium : -- Unwrought or in powder form",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7110.29",
+          "title": "Palladium : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7110.29.00",
+              "description": "Palladium : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7110.31",
+          "title": "Rhodium : -- Unwrought or in powder form",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7110.31.00",
+              "description": "Rhodium : -- Unwrought or in powder form",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7110.39",
+          "title": "Rhodium : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7110.39.00",
+              "description": "Rhodium : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7110.41",
+          "title": "Iridium, osmium and ruthenium : -- Unwrought or in powder form",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7110.41.00",
+              "description": "Iridium, osmium and ruthenium : -- Unwrought or in powder form",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7110.49",
+          "title": "Iridium, osmium and ruthenium : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7110.49.00",
+              "description": "Iridium, osmium and ruthenium : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7111",
+      "title": "Base metals, silver or gold, clad with platinum, not further worked than semi-manufactured.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7111.00",
+          "title": "Base metals, silver or gold, clad with platinum, not further worked than semi-manufactured.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7111.00.00",
+              "description": "Base metals, silver or gold, clad with platinum, not further worked than semi-manufactured.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7112",
+      "title": "WASTE AND SCRAP OF PRECIOUS METAL OR OF METAL CLAD WITH PRECIOUS METAL; OTHER WASTE AND SCRAP CONTAINING PRECIOUS METAL OR PRECIOUS METAL COMPOUNDS, OF A KIND USED PRINCIPALLY FOR THE RECOVERY OF PRECIOUS METAL OTHER THAN GOODS OF HEADING 8549",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7112.30",
+          "title": "Ash containing precious metal or precious metal compounds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7112.30.00",
+              "description": "Ash containing precious metal or precious metal compounds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7112.91",
+          "title": "Other : -- Of gold, including metal clad with gold but excluding sweepings containing other precious metals",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7112.91.00",
+              "description": "Other : -- Of gold, including metal clad with gold but excluding sweepings containing other precious metals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7112.92",
+          "title": "Other : -- Of platinum, including metal clad with platinum but excluding sweepings containing other precious metals",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7112.92.00",
+              "description": "Other : -- Of platinum, including metal clad with platinum but excluding sweepings containing other precious metals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7112.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7112.99.10",
+              "description": "Of silver, including metal clad with silver but excluding sweepings containing other precious metals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7112.99.20",
+              "description": "Sweepings containing gold or silver",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7112.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7113",
+      "title": "Articles of jewellery and parts thereof, of precious metal or of metal clad with precious metal.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7113.11",
+          "title": "Of precious metal whether or not plated or clad with precious metal : -- Of silver, whether or not plated or clad with other precious metal",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7113.11.10",
+              "description": "Jewellery with filigree work",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7113.11.41",
+              "description": "Other Jewellery: ----Unstudded",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7113.11.42",
+              "description": "Other Jewellery: ----Studded with pearls",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7113.11.43",
+              "description": "Other Jewellery: ----Studded with diamonds of heading 7102",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7113.11.44",
+              "description": "Other Jewellery: ----Studded with diamonds of heading 7104",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7113.11.45",
+              "description": "Other Jewellery: ----Studded with other precious and semi-precious stones",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7113.11.49",
+              "description": "Other Jewellery: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7113.11.90",
+              "description": "Parts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7113.19",
+          "title": "Of precious metal whether or not plated or clad with precious metal : -- Of other precious metal, whether or not plated or clad with precious metal",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7113.19.11",
+              "description": "Of gold: ----Unstudded",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7113.19.12",
+              "description": "Of gold: ----Studded with pearls",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7113.19.13",
+              "description": "Of gold: ----Studded with diamonds of heading 7102",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7113.19.14",
+              "description": "Of gold: ----Studded with diamonds of heading 7104",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7113.19.15",
+              "description": "Of gold :----Studded with other precious and semi-precious stones",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7113.19.19",
+              "description": "Of gold :----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7113.19.21",
+              "description": "Of platinum :----Unstudded",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7113.19.22",
+              "description": "Of platinum :----Studded with pearls",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7113.19.23",
+              "description": "Of platinum :----Studded with diamonds of heading 7102",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7113.19.24",
+              "description": "Of platinum :----Studded with diamonds of heading 7104",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7113.19.25",
+              "description": "Of platinum :----Studded with other precious and semi-precious stones",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7113.19.29",
+              "description": "Of platinum :----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7113.19.60",
+              "description": "Parts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7113.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7113.20",
+          "title": "Of base metal clad with precious metal",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7113.20.00",
+              "description": "Of base metal clad with precious metal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7114",
+      "title": "Articles of goldsmiths or silversmiths wares and parts thereof, of precious metal or of metal clad with precious metal.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7114.11",
+          "title": "Of precious metal whether or not plated or clad with precious metal : -- Of silver, whether or not plated or clad with other precious metal",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7114.11.10",
+              "description": "Articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7114.11.20",
+              "description": "Parts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7114.19",
+          "title": "Of precious metal whether or not plated or clad with precious metal : -- Of other precious metal, whether or not plated or clad with precious metal",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7114.19.10",
+              "description": "Articles of gold",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7114.19.20",
+              "description": "Articles of platinum",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7114.19.30",
+              "description": "Parts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7114.20",
+          "title": "Of base metal clad with precious metal :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7114.20.10",
+              "description": "Articles clad with gold",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7114.20.20",
+              "description": "Other articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7114.20.30",
+              "description": "Parts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7115",
+      "title": "Other articles of precious metal or of metal clad with precious metal",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7115.10",
+          "title": "Catalysts in the form Of wire cloth or grill, Of platinum",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7115.10.00",
+              "description": "Catalysts in the form Of wire cloth or grill, Of platinum",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7115.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7115.90.10",
+              "description": "Laboratory and industrial articles of precious metal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7115.90.20",
+              "description": "Spinnerets made mainly of gold",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7115.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7116",
+      "title": "Articles of natural or cultured pearls, precious or semi-precious stones (natural, synthetic or reconstructed).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7116.10",
+          "title": "Of natural or cultured pearls",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7116.10.00",
+              "description": "Of natural or cultured pearls",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7116.20",
+          "title": "Of precious or semi-precious stones (natural, synthetic or reconstructed)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7116.20.00",
+              "description": "Of precious or semi-precious stones (natural, synthetic or reconstructed)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7117",
+      "title": "Imitation jewellery.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7117.11",
+          "title": "Of base metal, whether or not plated with precious metal : -- Cuff-links and studs",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7117.11.00",
+              "description": "Of base metal, whether or not plated with precious metal : -- Cuff-links and studs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7117.19",
+          "title": "Of base metal, whether or not plated with precious metal : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7117.19.10",
+              "description": "Bangles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7117.19.20",
+              "description": "German silver jewellery",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7117.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7117.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7117.90.10",
+              "description": "Jewellery studded with imitation pearls or imitation or synthetic stones",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7117.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7118",
+      "title": "Coin.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7118.10",
+          "title": "Coin (Other than gold Coin), not being legal tender",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7118.10.00",
+              "description": "Coin (Other than gold Coin), not being legal tender",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7118.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7118.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "policy_conditions": [
+    {
+      "scope": "Chapter-level — Policy Condition 1 of the Chapter",
+      "condition_number": "1",
+      "text": "No export of rough diamond shall be permitted unless accompanied by Kimberley Process (KP) Certificate as specified by Gem &Jewellery EPC (GJEPC).",
+      "notification_no": null,
+      "notification_date": null,
+      "applies_to_tariff_lines": "Applies to rough/unworked diamonds under heading 7102 and certain rough/unworked stones under heading 7103. Tariff lines explicitly marked 'Subject to Policy Condition 1 of the Chapter' in the PDF: 7102.10.00 (Diamonds — Unsorted), 7102.21.10 (Industrial Unworked/sawn/cleaved/bruted — Sorted), 7102.21.20 (Industrial Unworked/sawn/cleaved/bruted — Unsorted), 7102.29.10 (Industrial Other — Crushed), 7102.29.90 (Industrial Other — Other), 7102.31.00 (Non-industrial Unworked or simply sawn/cleaved/bruted), 7102.39.10 (Non-industrial — Diamond, cut or otherwise worked but not mounted or set), 7102.39.90 (Non-industrial Other — Other)."
+    },
+    {
+      "scope": "Chapter-level — Policy Condition 2 of the Chapter",
+      "condition_number": "2",
+      "text": "Export authorization from Department of Atomic Energy would be required for export of items in Category-0(Nuclear materials, nuclear-related other materials, equipment and technology) of SCOMET.",
+      "notification_no": null,
+      "notification_date": null,
+      "applies_to_tariff_lines": "Applies to specific precious/semi-precious stone tariff lines under heading 7103 explicitly marked 'Subject to Policy Condition 2 of the Chapter' in the PDF. These include several beryl/chrysoberyl tariff lines under subheading 7103.10 (e.g., 7103.10.32 Yellow/golden/pink/red/green beryl, 7103.10.33 Chrysoberyl) and corresponding 'otherwise worked' lines under subheading 7103.99 (e.g., 7103.99.11 Yellow/golden/pink/red/green beryl, 7103.99.12 Chrysoberyl). Stones such as beryllium-bearing minerals can have nuclear-material implications which triggers SCOMET Category-0 control."
+    }
+  ]
+}

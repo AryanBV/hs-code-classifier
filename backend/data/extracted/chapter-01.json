@@ -1,0 +1,730 @@
+{
+  "chapter": "01",
+  "section": "I",
+  "title": "LIVE ANIMALS",
+  "source_pdf": "Chapter 01 Live Animals.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 6-digit subheading codes without dots (e.g., '010121') and 8-digit tariff line codes without dots (e.g., '01012100'). Normalized to NNNN.NN (subheading) and NNNN.NN.NN (tariff line) per project schema.",
+    "PDF Export Licensing Notes (page 3) contain '?' characters in place of typographic quote marks: 'The term ?Cattle? covers cows, oxen, bulls and calves'. The intended text is 'Cattle' enclosed in quotation marks. Preserved verbatim as '?Cattle?' to flag the OCR/encoding artifact.",
+    "PDF page 2 displays Policy Condition #3 (exotic birds) twice in succession — appears to be a duplicate row in the source PDF. Only one instance is captured in policy_conditions to avoid redundancy.",
+    "PDF table-chrome headers ('Main Notes', 'Policy Condition', 'Export Licensing Notes', 'Product Description and Export Policy', 'Sl.No. Notes Notification No Notification Date', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as repeating table headers and EXCLUDED from chapter_notes / section_notes / heading_notes per extraction rules.",
+    "Section I title in PDF reads 'Section I, LIVE ANIMALS; ANIMAL PRODUCTS' — captured at top-level 'section' field as 'I'. Section I-level notes (2 notes about young of genus/species and 'dried' products) are placed in section_notes.",
+    "Several subheadings in the PDF have no explicit 6-digit subheading row but appear directly as 8-digit tariff lines (e.g., 01031000, 01042000, 01051100, 01059400, 01061100, 01062000, 01069000). For these, a synthetic subheading row is created (e.g., 0103.10, 0104.20, 0105.11, 0106.11) with one tariff line ending in '.00' (e.g., 0103.10.00, 0104.20.00) — this mirrors the convention used in chapter-09.json for single-tariff-line subheadings.",
+    "Unit column is not present in the source PDF for Chapter 01 — the PDF table columns are 'Itc(hs) Code', 'Description', 'Export Policy', 'Policy Condition'. All tariff_lines therefore have unit: null.",
+    "Heading 0102 tariff line 01022990 description reads 'Other, including calves' — verbatim, the comma is in the source.",
+    "Heading 0105 description spans two lines in PDF: 'Live poultry, that is to say, fowls of the species Gallus domesticus, ducks, geese, turkeys and guinea fowls.' — joined into a single string.",
+    "Heading 0106 tariff line 01061200 description spans three lines in PDF: 'Mammals: -- Whales, dolphins and porpoises (mammals of the order Cetacea); manatees and dugongs (mammals of the order Sirenia); seals, sea lions and walruses (mammals of the suborder Pinnipedia)' — joined into a single string.",
+    "Heading 0106 includes the HS 2017+ split for insects (010641 Bees, 010649 Other) and the HS 2022 mammal subheadings (010611–010620, 010631–010639). All present in PDF and captured verbatim.",
+    "Export Licensing Note 3 ('Germplasm of cattle is classified in heading 0511') is a chapter-redirection clause — captured both in export_licensing_notes and as an exclusion_clause."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter covers all live animals except : (a) fish and crustaceans, molluscs and other aquatic invertebrates, of heading 0301, 0306, 0307 or 0308; (b) cultures of micro-organisms and other products of heading 3002; and (c) animals of heading 9508."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "Any reference in this Section to a particular genus or species of an animal, except where the context otherwise requires, includes a reference to the young of that genus or species."
+    },
+    {
+      "number": "2",
+      "text": "Except where the context otherwise requires, throughout this Schedule, any reference to \"dried\" products also covers products which have been dehydrated, evaporated or freeze-dried."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [
+    {
+      "number": "1",
+      "text": "The term ?Cattle? covers cows, oxen, bulls and calves"
+    },
+    {
+      "number": "2",
+      "text": "Export of wild animals and their products as defined in Wild Life (Protection) Act, 1972 including their part prohibited."
+    },
+    {
+      "number": "3",
+      "text": "Germplasm of cattle is classified in heading 0511"
+    }
+  ],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "fish and crustaceans, molluscs and other aquatic invertebrates",
+      "redirects_to_chapter": "03",
+      "redirects_to_heading": "0301",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter covers all live animals except : (a) fish and crustaceans, molluscs and other aquatic invertebrates, of heading 0301, 0306, 0307 or 0308; (b) cultures of micro-organisms and other products of heading 3002; and (c) animals of heading 9508."
+    },
+    {
+      "excluded_product_text": "fish and crustaceans, molluscs and other aquatic invertebrates",
+      "redirects_to_chapter": "03",
+      "redirects_to_heading": "0306",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter covers all live animals except : (a) fish and crustaceans, molluscs and other aquatic invertebrates, of heading 0301, 0306, 0307 or 0308; (b) cultures of micro-organisms and other products of heading 3002; and (c) animals of heading 9508."
+    },
+    {
+      "excluded_product_text": "fish and crustaceans, molluscs and other aquatic invertebrates",
+      "redirects_to_chapter": "03",
+      "redirects_to_heading": "0307",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter covers all live animals except : (a) fish and crustaceans, molluscs and other aquatic invertebrates, of heading 0301, 0306, 0307 or 0308; (b) cultures of micro-organisms and other products of heading 3002; and (c) animals of heading 9508."
+    },
+    {
+      "excluded_product_text": "fish and crustaceans, molluscs and other aquatic invertebrates",
+      "redirects_to_chapter": "03",
+      "redirects_to_heading": "0308",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter covers all live animals except : (a) fish and crustaceans, molluscs and other aquatic invertebrates, of heading 0301, 0306, 0307 or 0308; (b) cultures of micro-organisms and other products of heading 3002; and (c) animals of heading 9508."
+    },
+    {
+      "excluded_product_text": "cultures of micro-organisms and other products of heading 3002",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": "3002",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter covers all live animals except : (a) fish and crustaceans, molluscs and other aquatic invertebrates, of heading 0301, 0306, 0307 or 0308; (b) cultures of micro-organisms and other products of heading 3002; and (c) animals of heading 9508."
+    },
+    {
+      "excluded_product_text": "animals of heading 9508",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": "9508",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter covers all live animals except : (a) fish and crustaceans, molluscs and other aquatic invertebrates, of heading 0301, 0306, 0307 or 0308; (b) cultures of micro-organisms and other products of heading 3002; and (c) animals of heading 9508."
+    },
+    {
+      "excluded_product_text": "Germplasm of cattle",
+      "redirects_to_chapter": "05",
+      "redirects_to_heading": "0511",
+      "source_note_number": "Export Licensing Note 3",
+      "source_note_text": "Germplasm of cattle is classified in heading 0511"
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "0101",
+      "title": "Live horses, asses, mules and hinnies.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0101.21",
+          "title": "Horses : -- Pure-bred breeding animals",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0101.21.00",
+              "description": "Horses : -- Pure-bred breeding animals",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0101.29",
+          "title": "Horses : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0101.29.10",
+              "description": "Horses for Polo",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "0101.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0101.30",
+          "title": "Asses",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0101.30.10",
+              "description": "Pure-bred breeding animals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0101.30.20",
+              "description": "Livestock",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0101.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0101.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0101.90.30",
+              "description": "Mules and hinnies as livestock",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0101.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0102",
+      "title": "Live bovine animals.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0102.21",
+          "title": "Cattle : -- Pure-bred breeding animals",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0102.21.10",
+              "description": "Bulls",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            },
+            {
+              "code": "0102.21.20",
+              "description": "Cows",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0102.29",
+          "title": "Cattle : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0102.29.10",
+              "description": "Bulls",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            },
+            {
+              "code": "0102.29.90",
+              "description": "Other, including calves",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0102.31",
+          "title": "Buffalo : -- Pure-bred breeding animals",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0102.31.00",
+              "description": "Buffalo : -- Pure-bred breeding animals",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0102.39",
+          "title": "Buffalo : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0102.39.00",
+              "description": "Buffalo : -- Other",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0102.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0102.90.10",
+              "description": "Pure-bred breeding animals",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            },
+            {
+              "code": "0102.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0103",
+      "title": "Live swine.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0103.10",
+          "title": "Pure-bred breeding animals",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0103.10.00",
+              "description": "Pure-bred breeding animals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0103.91",
+          "title": "Other : -- Weighing less than 50 kg",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0103.91.00",
+              "description": "Other : -- Weighing less than 50 kg",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0103.92",
+          "title": "Other : -- Weighing 50 kg or more",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0103.92.00",
+              "description": "Other : -- Weighing 50 kg or more",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0104",
+      "title": "Live sheep and goats.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0104.10",
+          "title": "Sheep",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0104.10.10",
+              "description": "Sheep including lamb for breeding purpose",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0104.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0104.20",
+          "title": "Goats",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0104.20.00",
+              "description": "Goats",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0105",
+      "title": "Live poultry, that is to say, fowls of the species Gallus domesticus, ducks, geese, turkeys and guinea fowls.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0105.11",
+          "title": "Weighing not more than 185 g : -- Fowls of the species Gallus domesticus",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0105.11.00",
+              "description": "Weighing not more than 185 g : -- Fowls of the species Gallus domesticus",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0105.12",
+          "title": "Weighing not more than 185 g : -- Turkeys",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0105.12.00",
+              "description": "Weighing not more than 185 g : -- Turkeys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0105.13",
+          "title": "Weighing not more than 185 g : -- Ducks",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0105.13.00",
+              "description": "Weighing not more than 185 g : -- Ducks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0105.14",
+          "title": "Weighing not more than 185 g : -- Geese",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0105.14.00",
+              "description": "Weighing not more than 185 g : -- Geese",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0105.15",
+          "title": "Weighing not more than 185 g : -- Guinea fowls",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0105.15.00",
+              "description": "Weighing not more than 185 g : -- Guinea fowls",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0105.94",
+          "title": "Other : -- Fowls of the species Gallus domesticus",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0105.94.00",
+              "description": "Other : -- Fowls of the species Gallus domesticus",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0105.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0105.99.00",
+              "description": "Other : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0106",
+      "title": "Other live animals.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0106.11",
+          "title": "Mammals: -- Primates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0106.11.00",
+              "description": "Mammals: -- Primates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0106.12",
+          "title": "Mammals: -- Whales, dolphins and porpoises (mammals of the order Cetacea); manatees and dugongs (mammals of the order Sirenia); seals, sea lions and walruses (mammals of the suborder Pinnipedia)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0106.12.00",
+              "description": "Mammals: -- Whales, dolphins and porpoises (mammals of the order Cetacea); manatees and dugongs (mammals of the order Sirenia); seals, sea lions and walruses (mammals of the suborder Pinnipedia)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0106.13",
+          "title": "Mammals: -- Camels and other camelids (Camelidae)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0106.13.00",
+              "description": "Mammals: -- Camels and other camelids (Camelidae)",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0106.14",
+          "title": "Mammals: -- Rabbits and hares",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0106.14.00",
+              "description": "Mammals: -- Rabbits and hares",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0106.19",
+          "title": "Mammals: -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0106.19.00",
+              "description": "Mammals: -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0106.20",
+          "title": "Reptiles (including snakes and turtles)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0106.20.00",
+              "description": "Reptiles (including snakes and turtles)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0106.31",
+          "title": "Birds: -- Birds of prey",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0106.31.00",
+              "description": "Birds: -- Birds of prey",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0106.32",
+          "title": "Birds: -- Psittaciformes (including parrots, parakeets, macaws and cockatoos)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0106.32.00",
+              "description": "Birds: -- Psittaciformes (including parrots, parakeets, macaws and cockatoos)",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Subject to Policy Condition 3 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0106.33",
+          "title": "Birds: -- Ostriches; emus (Dromaius novaehollandiae)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0106.33.00",
+              "description": "Birds: -- Ostriches; emus (Dromaius novaehollandiae)",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Subject to Policy Condition 3 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0106.39",
+          "title": "Birds: -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0106.39.00",
+              "description": "Birds: -- Other",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Subject to Policy Condition 3 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0106.41",
+          "title": "Insects : -- Bees",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0106.41.10",
+              "description": "Pureline Stock",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0106.41.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0106.49",
+          "title": "Insects : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0106.49.10",
+              "description": "Pureline Stock",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0106.49.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0106.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0106.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

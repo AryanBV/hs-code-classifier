@@ -1,0 +1,1551 @@
+{
+  "chapter": "70",
+  "title": "GLASS AND GLASSWARE",
+  "section": "XIII",
+  "source_pdf": "Chapter 70 Glass And Glassware.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '70010010') and 6-digit subheading codes without dots (e.g., '700100'). Normalized to NNNN.NN.NN format (e.g., '7001.00.10') and NNNN.NN format (e.g., '7001.00') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'Sub-Heading Notes', 'Product Description and Export Policy', 'Sl.No. Notes Notification Date Notification No', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "Chapter 70 has 5 chapter notes (Sl.No. 1 through 5) and 1 sub-heading note (Sl.No. 1) in the 'Main Notes' / 'Sub-Heading Notes' tables. All captured verbatim. Section XIII section_notes are NOT present in this chapter PDF (would need to be sourced from Chapter 68 PDF or the section header) — section_notes is therefore an empty array.",
+    "Chapter Note 1 contains 10 exclusion sub-clauses (a)–(ij). The PDF concatenates them all into a single Sl.No. 1 row. Each sub-clause has been further extracted into a separate entry in exclusion_clauses with its redirect target. The PDF source uses '(ij)' as the 10th sub-clause label (the standard ITC(HS) convention to avoid confusion between 'i' and digit '1') — preserved verbatim.",
+    "Chapter Note 1 sub-clause (d) text in PDF shows '88;\"\"\"\"\"' (stray escape characters / OCR artefact at the end). The intended text is '...for vehicles of Chapters 86 to 88;' — extracted as the intended legal text, with the OCR artefact removed and flagged. Same artefact appears at the end of sub-clause (e): '88;\"\"\"\"\"'. Both preserved as intended legal text in exclusion_clauses with the OCR artefact noted here.",
+    "Chapter Note 2 text in PDF contains escape artefacts '\"\"\"\"\"worked\"\"\"\"\"' and '\"\"\"\"\"absorbent, reflecting or non-reflecting layer\"\"\"\"\"'. The intended legal text uses single double-quotes around the term: 'worked' and 'absorbent, reflecting or non-reflecting layer'. Preserved verbatim from PDF in chapter_notes (with the multi-quote OCR artefacts intact since the legal text wraps the term in quotation marks).",
+    "Chapter Note 4 (glass wool definition) text shows 'fall in heading 6806' redirect — captured as cross-reference but NOT as an exclusion_clause because it is a residual fallback definition, not a chapter-wide exclusion. (Mineral wools that DO meet the silica/alkaline/boric criteria fall in heading 7019; those that don't fall in 6806.)",
+    "Chapter Note 5 ('glass' includes fused quartz and other fused silica) is a Schedule-wide definitional note appearing in Chapter 70's main notes table. It is a scope-extending definition (NOT an exclusion) — captured in chapter_notes only.",
+    "Sub-Heading Note 1 defines 'lead crystal' for tariff items 7013 22 00, 7013 33 00, 7013 41 00 and 7013 91 00 as glass having minimum 24% lead monoxide (PbO) by weight. Note that the four referenced tariff items use HS 2007+ split-level codes — see warning about heading 7013 below.",
+    "Heading 7006 (Glass of heading 70.03, 70.04 or 70.05, bent, edge-worked, engraved, drilled, enamelled or otherwise worked, but not framed or fitted with other materials) is ABSENT from the source PDF tariff table — the table jumps directly from heading 7005 to heading 7007. However, heading 7006 IS referenced in Chapter Note 3 ('The products referred to in heading 7006 remain classified in that heading whether or not they have the character of articles.'). This is a documented omission in the ITC(HS) 2022 Schedule 2 Export Policy PDF rendering; the heading exists in the HS classification but no Schedule 2 Export Policy line items render. Flagged for the LLM brain — items falling under 7006 are not in this Schedule 2 export-policy file.",
+    "Heading 7012 (Glass inners for vacuum flasks or for other vacuum vessels) was DELETED in the HS 2007 revision. The PDF correctly omits 7012 — the table jumps from 7011 directly to 7013. Not an extraction error.",
+    "Heading 7013 in the source PDF uses HS 2022 split-level subheading codes that diverge from the older 6-digit pattern. The PDF renders 8-digit codes 7013.22.00, 7013.28.00, 7013.33.00, 7013.37.00, 7013.41.00, 7013.42.00, 7013.49.00, 7013.91.00, 7013.99.00 with NO 6-digit subheading wrapper rows. Reconstructed implicit subheading wrappers (7013.10, 7013.22, 7013.28, 7013.33, 7013.37, 7013.41, 7013.42, 7013.49, 7013.91, 7013.99) to preserve the 7-node-type structure. Sub-Heading Note 1 (lead crystal definition) is explicit about which tariff items it applies to (22 00, 33 00, 41 00, 91 00).",
+    "Heading 7019 was substantially restructured in HS 2022. The PDF renders new 8-digit codes 7019.11, 7019.12, 7019.13, 7019.14, 7019.15, 7019.19 (slivers/rovings/yarn family) and 7019.61–7019.66 (mechanically bonded fabrics) and 7019.71–7019.73 (chemically bonded fabrics) and 7019.80 (glass wool and articles) and 7019.90 (other). Older codes 7019.31, 7019.32, 7019.39 (Thin sheets/voiles, webs, mats, mattresses, boards and similar nonwoven products) and 7019.40 (Woven fabrics of rovings) and 7019.51, 7019.52, 7019.59 (Other woven fabrics) absent from PDF — replaced by the HS 2022 6x-7x series. Reconstructed implicit subheading wrappers to preserve schema.",
+    "Heading 7020 'Other articles of glass' uses a 4-tier split in PDF (e.g., 7020.00.11 'Glass shells, glass globes and glass founts: ----Globes for lamps and lanterns'). The '----' (four dashes) indicates a sub-sub-item within the 8-digit code. PDF renders the codes as 7020.00.11, 7020.00.12, 7020.00.19 (glass shells/globes/founts family); 7020.00.21, 7020.00.29 (glass chimneys family). Note: the PDF lists '70200021' and '70200029' both labelled 'Glass chimneys: ----For lamps and lanterns' / 'Glass chimneys: ----Other', followed by '70200090' also labelled 'Glass chimneys: ----Other'. The third 'Glass chimneys: ----Other' at 7020.00.90 is the residual catch-all 'Other' for the heading and likely has the broader heading-level meaning — preserved verbatim from PDF but flagged: the description 'Glass chimneys: ----Other' at 7020.00.90 may be an OCR/labelling defect; in standard ITC(HS) usage, 7020.00.90 is the chapter residual 'Other articles of glass'. Preserved PDF text verbatim per extraction rules.",
+    "Glass type definitions decisive for heading 7003–7005 classification are captured verbatim: 'worked' (Note 2(a) — not regarded as worked by reason of process before annealing), 'cutting to shape does not affect classification of glass in sheets' (Note 2(b)), 'absorbent, reflecting or non-reflecting layer' (Note 2(c) — microscopically thin coating of metal or chemical compound that absorbs infra-red light or improves reflecting qualities while retaining transparency/translucency, or prevents light reflection on the surface). Note 5 extends 'glass' Schedule-wide to include fused quartz and other fused silica.",
+    "Chapter Note 4 'glass wool' definition for heading 7019: mineral wools with silica (SiO2) content not less than 60% by weight; OR silica content less than 60% but with alkaline oxide (K2O or Na2O) content exceeding 5% by weight OR boric oxide (B2O3) content exceeding 2%. Mineral wools NOT meeting these specifications fall in heading 6806 (Slag wool, rock wool and similar mineral wools).",
+    "Critical Ch.70 ↔ Ch.32 boundary: Chapter Note 1(a) excludes 'goods of heading 3207 (for example, vitrifiable enamels and glazes, glass frit, other glass in the form of powder, granules or flakes)'. Glass frit, glass powder, glass granules, glass flakes → Ch.32 heading 3207, NOT Ch.70. Note that this is the boundary item often confused with heading 7001 'glass in the mass' / 'enamel glass in the mass' (7001.00.20) — 7001 covers cullet, waste, scrap, and glass in the mass; 3207 covers powder, granules, flakes specifically.",
+    "Critical Ch.70 ↔ Ch.71 boundary: Chapter Note 1(b) excludes 'articles of Chapter 71 (for example, imitation jewellery)'. Glass beads strung as imitation jewellery → Ch.71. Loose glass beads not strung → 7018.10.20 in Ch.70.",
+    "Critical Ch.70 ↔ Ch.85 boundary: Chapter Note 1(c) excludes 'optical fibre cables of heading 8544, electrical insulators (heading 8546) or fittings of insulating material of heading 8547'. Glass electrical insulators → 8546 (Ch.85), NOT Ch.70. Glass optical fibre cables (bundled, ready for installation) → 8544 (Ch.85), NOT 7019. NOTE: unbundled glass optical fibres → 9001 (Ch.90 — see Note 1(f)).",
+    "Critical Ch.70 ↔ Ch.86–88 boundary: Chapter Note 1(d) excludes 'front windscreens (windshields), rear windows and other windows, framed, for vehicles of Chapters 86 to 88'. Note 1(e) further excludes such windscreens 'whether or not framed, incorporating heating devices or other electrical or electronic devices, for vehicles of Chapters 86 to 88'. A laminated automotive windshield FRAMED → 8708 (Ch.87). A laminated automotive windshield UNFRAMED → 7007.21.00 (Ch.70). A heated windshield (electrical defroster) → 8708 (Ch.87) regardless of framing.",
+    "Critical Ch.70 ↔ Ch.90 boundary: Chapter Note 1(f) excludes 'optical fibres, optically worked optical elements, hypodermic syringes, artificial eyes, thermometers, barometers, hydrometers or other articles of Chapter 90'. Optically worked optical glass elements (lenses, prisms, mirrors finished for optical use) → Ch.90. Heading 7014.00.20 'Optical elements' covers signalling/non-optically-worked elements ONLY.",
+    "Critical Ch.70 ↔ Ch.94 boundary: Chapter Note 1(g) excludes 'luminaires and lighting fittings, illuminated signs, illuminated name-plates and the like, having a permanently fixed light source, or parts thereof of heading 9405'. A glass lampshade WITH a permanently-fixed light source → Ch.94. A glass lampshade WITHOUT a light source (bare glass shell/globe) → 7020 (Ch.70). A glass lantern globe → 7020.00.11. The 'permanently fixed light source' is the dispositive criterion.",
+    "Critical Ch.70 ↔ Ch.95 boundary: Chapter Note 1(h) excludes 'toys, games, sports requisites, Christmas tree ornaments or other articles of Chapter 95 (excluding glass eyes without mechanisms for dolls or for other articles of Chapter 95)'. Christmas tree glass ornaments → Ch.95. Glass marbles intended as toys → Ch.95. BUT glass eyes for dolls (without mechanisms) → 7018 in Ch.70 (NOT Ch.95) — this is the only explicit carve-back into Ch.70.",
+    "Critical Ch.70 ↔ Ch.96 boundary: Chapter Note 1(ij) excludes 'buttons, fitted vacuum flasks, scent or similar sprays or other articles of Chapter 96'. Glass buttons → 9606 (Ch.96). Fitted vacuum flasks (complete consumer products with body, stopper, casing) → 9617 (Ch.96). Bare glass inners for vacuum flasks were formerly 7012 but that heading is DELETED — see warning above.",
+    "Heading 7013 'Glassware of a kind used for table, kitchen, toilet, office, indoor decoration or similar purposes' EXPLICITLY excludes glassware of heading 70.10 (containers for conveyance/packing — bottles, jars, etc.) and 70.18 (glass beads, imitation pearls, lamp-worked statuettes/ornaments). This is the bottles-vs-tableware boundary, captured in the heading title.",
+    "Heading 7014 'Signalling glassware and optical elements of glass (other than those of heading 70.15), not optically worked' — the 'not optically worked' qualifier is decisive. Optically worked (i.e., finished by grinding/polishing for optical use) glass → Ch.90. Unworked or merely shaped → 7014.",
+    "Heading 7015 covers clock/watch glasses, glasses for spectacles (corrective and non-corrective), curved/bent/hollowed glass for these uses, and hollow glass spheres for manufacture of such glasses. The 'not optically worked' qualifier applies (per the heading title). Tariff line 7015.10.10 'Ophthalmic rough blanks' and 7015.90.20 'Glass for sun glasses' are the key boundary items vs. Ch.90 (finished spectacles in 9004).",
+    "Heading 7018 includes the carve-back from Note 1(h): glass eyes (without mechanisms) for dolls remain in 7018 even though they go into toys. Tariff line 7018.10.10 'Bangles' is India-specific (glass bangles are a major Indian export product).",
+    "Heading 7019 'Glass fibres (including glass wool) and articles thereof (for example, yarn, rovings, woven fabrics)' — HS 2022 structure with subheadings 11–19 (slivers/rovings/yarn/chopped strands and mats), 61–66 (mechanically bonded fabrics), 71–73 (chemically bonded fabrics), 80 (glass wool and articles of glass wool), 90 (other). The 'glass wool' definition in Note 4 is decisive — mineral wools NOT meeting silica/alkali/boric specs fall in 6806 (Ch.68) instead.",
+    "Tariff line 7008.00.10 'Glazed glass, double walled' and 7008.00.20 'Glazed glass, multiple walled' use the term 'glazed glass' — interpreted as 'sealed glazing units' (insulated glass units, IGUs) per the heading title 'Multiple-walled insulating units of glass'. Not to be confused with ceramic 'glazing'.",
+    "Heading 7009 'Glass mirrors, whether or not framed, including rear-view mirrors.' includes vehicle rear-view mirrors (7009.10) — does NOT redirect to Ch.87. Note that automotive windshields and windows ARE redirected to Ch.86–88 by Note 1(d)/(e) BUT rear-view mirrors are NOT — they stay in Ch.70 heading 7009.",
+    "Export Policy column for every 8-digit tariff line in this chapter is 'Free'. No tariff lines are Restricted, Prohibited, STE, or have any Policy Condition reference in this chapter PDF.",
+    "Notification Date and Notification No columns in the Main Notes / Sub-Heading Notes tables are empty for all notes — null preserved.",
+    "Unit-of-measure column is NOT shown in this chapter's PDF — unit field set to null for all tariff lines.",
+    "Heading 7010 6-digit subheadings 7010.10 (Ampoules), 7010.20 (Stoppers, lids and other closures), 7010.90 (Other) are rendered in the PDF directly as 8-digit codes 7010.10.00, 7010.20.00, 7010.90.00 with no separate 6-digit wrapper rows. Reconstructed implicit subheading wrappers. NOTE: HS 2022 heading 7010 introduced new subheadings 7010.10, 7010.20, 7010.90 replacing the older 7010.10/7010.20/7010.90 structure with sub-splits — the Schedule 2 PDF uses the simpler structure.",
+    "Heading 7011 'Glass envelopes (including bulbs and tubes), open, and glass parts thereof, without fittings, for electric lamps and light sources, cathode-ray tubes or the like' — Note: 'open' glass envelopes only; sealed bulbs with filaments fitted → Ch.85 heading 8539.",
+    "Heading 7020 'Other articles of glass' is the residual / basket heading. Items not falling in 7001–7019 fall here. The Indian Schedule splits the 8-digit codes by family (glass shells/globes/founts vs glass chimneys) — see warning above about 7020.00.90 description.",
+    "Total tariff lines (8-digit codes) captured: 88. Total subheadings (6-digit + 4-tier reconstructed): 41. Total headings: 19 (7001, 7002, 7003, 7004, 7005, 7007, 7008, 7009, 7010, 7011, 7013, 7014, 7015, 7016, 7017, 7018, 7019, 7020 — 18 numerical, plus 7006 referenced in Note 3 but absent from tariff = 19 referenced)."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover : (a) goods of heading 3207 (for example, vitrifiable enamels and glazes, glassfrit, other glassin the form of powder, granules or flakes) ; (b) articles of Chapter 71 (for example, imitation jewellery) ; (c) optical fibre cables of heading 8544, electrical insulators(heading 8546) or fittings of insulating material of heading 8547 ; (d)front windscreens (windshields), rear windows and other windows, framed, for vehicles of Chapters 86 to 88; (e) front windscreens (windshields), rear windows and other windows, whether or not framed, incorporating heating devices or other electrical or electronic devices, for vehicles of Chapters 86 to 88; (f) optical fibres, optically worked optical elements, hypodermic syringes, artificial eyes, thermometers, barometers, hydrometers or other articles of Chapter 90 ; (g) luminaires and lighting fittings, illuminated signs, illuminated name-plates and the like, having a permanently fixed light source, or parts thereof of heading 9405; (h)toys, games, sports requisites, Christmas tree ornaments or other articles of Chapter 95 (excluding glass eyes without mechanisms for dolls or for other articles of Chapter 95); or (ij) buttons, fitted vacuum flasks, scent or similar sprays or other articles of Chapter 96."
+    },
+    {
+      "number": "2",
+      "text": "For the purposes of headings 7003, 7004 and 7005 : (a) glass is not regarded as \"worked\" by reason of any process it has undergone before annealing; (b) cutting to shape does not affect the classification of glass in sheets ; (c) the expression \"absorbent, reflecting or non-reflecting layer\" means a microscopically thin coating of metal or of a chemical compound (for example, metal oxide) which absorbs, for example, infra-red light or improves the reflecting qualities of the glass while still allowing it to retain a degree of transparency or translucency; or which prevents light from being reflected on the surface of the glass."
+    },
+    {
+      "number": "3",
+      "text": "The products referred to in heading 7006 remain classified in that heading whether or not they have the character of articles."
+    },
+    {
+      "number": "4",
+      "text": "For the purposes of heading 7019, the expression \"glass wool\" means : (a) mineral wools with a silica (SiO2) content not less than 60% by weight ; (b) mineral wools with a silica (SiO2) content less than 60% but with an alkaline oxide (K2O or Na2O) content exceeding 5% by weight or a boric oxide (B2O3) content exceeding 2% by weight . Mineral wools which do not comply with the above specifications fall in heading 6806."
+    },
+    {
+      "number": "5",
+      "text": "Throughout this Schedule, the expression \"glass\" includes fused quartz and other fused silica."
+    }
+  ],
+  "subheading_notes": [
+    {
+      "number": "1",
+      "text": "For the purposes of tariff items 7013 22 00, 7013 33 00, 7013 41 00 and 7013 91 00, the expression \"lead crystal\" means only glass having a minimum lead monoxide (PbO) content by weight of 24%."
+    }
+  ],
+  "section_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "goods of heading 3207 (for example, vitrifiable enamels and glazes, glassfrit, other glassin the form of powder, granules or flakes)",
+      "redirects_to_chapter": "32",
+      "redirects_to_heading": "3207",
+      "source_note_number": "Note 1 (a)",
+      "source_note_text": "(a) goods of heading 3207 (for example, vitrifiable enamels and glazes, glassfrit, other glassin the form of powder, granules or flakes)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 71 (for example, imitation jewellery)",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1 (b)",
+      "source_note_text": "(b) articles of Chapter 71 (for example, imitation jewellery)"
+    },
+    {
+      "excluded_product_text": "optical fibre cables of heading 8544",
+      "redirects_to_chapter": "85",
+      "redirects_to_heading": "8544",
+      "source_note_number": "Note 1 (c)",
+      "source_note_text": "(c) optical fibre cables of heading 8544, electrical insulators(heading 8546) or fittings of insulating material of heading 8547"
+    },
+    {
+      "excluded_product_text": "electrical insulators (heading 8546)",
+      "redirects_to_chapter": "85",
+      "redirects_to_heading": "8546",
+      "source_note_number": "Note 1 (c)",
+      "source_note_text": "(c) optical fibre cables of heading 8544, electrical insulators(heading 8546) or fittings of insulating material of heading 8547"
+    },
+    {
+      "excluded_product_text": "fittings of insulating material of heading 8547",
+      "redirects_to_chapter": "85",
+      "redirects_to_heading": "8547",
+      "source_note_number": "Note 1 (c)",
+      "source_note_text": "(c) optical fibre cables of heading 8544, electrical insulators(heading 8546) or fittings of insulating material of heading 8547"
+    },
+    {
+      "excluded_product_text": "front windscreens (windshields), rear windows and other windows, framed, for vehicles of Chapters 86 to 88",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1 (d)",
+      "source_note_text": "(d)front windscreens (windshields), rear windows and other windows, framed, for vehicles of Chapters 86 to 88;"
+    },
+    {
+      "excluded_product_text": "front windscreens (windshields), rear windows and other windows, whether or not framed, incorporating heating devices or other electrical or electronic devices, for vehicles of Chapters 86 to 88",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1 (e)",
+      "source_note_text": "(e) front windscreens (windshields), rear windows and other windows, whether or not framed, incorporating heating devices or other electrical or electronic devices, for vehicles of Chapters 86 to 88;"
+    },
+    {
+      "excluded_product_text": "optical fibres, optically worked optical elements, hypodermic syringes, artificial eyes, thermometers, barometers, hydrometers or other articles of Chapter 90",
+      "redirects_to_chapter": "90",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1 (f)",
+      "source_note_text": "(f) optical fibres, optically worked optical elements, hypodermic syringes, artificial eyes, thermometers, barometers, hydrometers or other articles of Chapter 90"
+    },
+    {
+      "excluded_product_text": "luminaires and lighting fittings, illuminated signs, illuminated name-plates and the like, having a permanently fixed light source, or parts thereof of heading 9405",
+      "redirects_to_chapter": "94",
+      "redirects_to_heading": "9405",
+      "source_note_number": "Note 1 (g)",
+      "source_note_text": "(g) luminaires and lighting fittings, illuminated signs, illuminated name-plates and the like, having a permanently fixed light source, or parts thereof of heading 9405"
+    },
+    {
+      "excluded_product_text": "toys, games, sports requisites, Christmas tree ornaments or other articles of Chapter 95 (excluding glass eyes without mechanisms for dolls or for other articles of Chapter 95)",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1 (h)",
+      "source_note_text": "(h)toys, games, sports requisites, Christmas tree ornaments or other articles of Chapter 95 (excluding glass eyes without mechanisms for dolls or for other articles of Chapter 95)"
+    },
+    {
+      "excluded_product_text": "buttons, fitted vacuum flasks, scent or similar sprays or other articles of Chapter 96",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1 (ij)",
+      "source_note_text": "(ij) buttons, fitted vacuum flasks, scent or similar sprays or other articles of Chapter 96."
+    },
+    {
+      "excluded_product_text": "Mineral wools which do not comply with the [glass wool heading 7019] specifications (i.e., silica content not less than 60% by weight; or silica less than 60% but alkaline oxide K2O/Na2O exceeding 5% or boric oxide B2O3 exceeding 2%)",
+      "redirects_to_chapter": "68",
+      "redirects_to_heading": "6806",
+      "source_note_number": "Note 4",
+      "source_note_text": "Mineral wools which do not comply with the above specifications fall in heading 6806."
+    }
+  ],
+  "headings": [
+    {
+      "heading": "7001",
+      "title": "CULLET AND OTHER WASTE AND SCRAP OF GLASS, EXCLUDING GLASS FROM CATHODE RAY TUBES OR OTHER ACTIVATED GLASS OF HEADING 8549; GLASS IN THE MASS",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7001.00",
+          "title": "Cullet and other waste and scrap of glass, excluding glass from cathode ray tubes or other activated glass of heading 8549; glass in the mass",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7001.00.10",
+              "description": "Cullet and other waste and scrap of glass",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7001.00.20",
+              "description": "Enamel glass in the mass",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7001.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7002",
+      "title": "Glass in balls (other than microspheres of heading 70.18), rods or tubes, unworked.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7002.10",
+          "title": "Balls",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7002.10.00",
+              "description": "Balls",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7002.20",
+          "title": "Rods",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7002.20.10",
+              "description": "Enamel glass rods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7002.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7002.31",
+          "title": "Tubes : -- Of fused quartz or other fused silica",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7002.31.00",
+              "description": "Tubes : -- Of fused quartz or other fused silica",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7002.32",
+          "title": "Tubes : -- Of other glass having a linear coefficient of expansion not exceeding 5 x 10-6 per Kelvin within a temperature range of 0 C to 300 C",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7002.32.00",
+              "description": "Tubes : -- Of other glass having a linear coefficient of expansion not exceeding 5 x 10-6 per Kelvin within a temperature range of 0 C to 300 C",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7002.39",
+          "title": "Tubes : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7002.39.00",
+              "description": "Tubes : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7003",
+      "title": "Cast glass and rolled glass, in sheets or profiles, whether or not having an absorbent, reflecting or non-reflecting layer, but not otherwise worked.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7003.12",
+          "title": "Non-wired sheets : -- Coloured throughout the mass (body tinted), opacified, flashed or having an absorbent, reflecting or non-reflecting layer",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7003.12.10",
+              "description": "Tinted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7003.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7003.19",
+          "title": "Non-wired sheets : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7003.19.10",
+              "description": "Tinted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7003.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7003.20",
+          "title": "Wired sheets",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7003.20.10",
+              "description": "Tinted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7003.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7003.30",
+          "title": "Profiles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7003.30.10",
+              "description": "Tinted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7003.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7004",
+      "title": "Drawn glass and blown glass, in sheets, whether or not having an absorbent, reflecting or non-reflecting layer, but not otherwise worked.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7004.20",
+          "title": "Glass, coloured throughout the mass (body tinted), opacified, flashed or having an absorbent, reflecting or non-reflecting layer",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7004.20.11",
+              "description": "Tinted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7004.20.19",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7004.20.91",
+              "description": "Other: ----Tinted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7004.20.99",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7004.90",
+          "title": "Other glass",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7004.90.11",
+              "description": "Window glass (sheet glass): ----Tinted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7004.90.19",
+              "description": "Window glass (sheet glass): ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7004.90.91",
+              "description": "Other: ----Tinted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7004.90.99",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7005",
+      "title": "Float glass and surface ground or polished glass, in sheets, whether or not having an absorbent, reflecting or non-reflecting layer, but not otherwise worked.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7005.10",
+          "title": "Non-wired glass, having an absorbent, reflecting or non-reflecting layer",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7005.10.10",
+              "description": "Tinted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7005.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7005.21",
+          "title": "Other non-wired glass : -- Coloured throughout the mass (body tinted), opacified, flashed or merely surface ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7005.21.10",
+              "description": "Tinted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7005.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7005.29",
+          "title": "Other non-wired glass : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7005.29.10",
+              "description": "Tinted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7005.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7005.30",
+          "title": "Wired glass",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7005.30.10",
+              "description": "Tinted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7005.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7007",
+      "title": "Safety glass, consisting of toughened (tempered) or laminated glass.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7007.11",
+          "title": "Toughened (tempered) safety glass : -- Of size and shape suitable for incorporation in vehicles, aircraft, spacecraft or vessels",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7007.11.00",
+              "description": "Toughened (tempered) safety glass : -- Of size and shape suitable for incorporation in vehicles, aircraft, spacecraft or vessels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7007.19",
+          "title": "Toughened (tempered) safety glass : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7007.19.00",
+              "description": "Toughened (tempered) safety glass : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7007.21",
+          "title": "Laminated safety glass : -- Of size and shape suitable for incorporation in vehicles, aircraft, spacecraft or vessels",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7007.21.10",
+              "description": "Bullet proof glass",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7007.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7007.29",
+          "title": "Laminated safety glass : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7007.29.00",
+              "description": "Laminated safety glass : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7008",
+      "title": "Multiple-walled insulating units of glass.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7008.00",
+          "title": "Multiple-walled insulating units of glass :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7008.00.10",
+              "description": "Glazed glass, double walled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7008.00.20",
+              "description": "Glazed glass, multiple walled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7008.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7009",
+      "title": "Glass mirrors, whether or not framed, including rear-view mirrors.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7009.10",
+          "title": "Rear-view mirrors for vehicles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7009.10.10",
+              "description": "Prismatic rear-view mirror for vehicles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7009.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7009.91",
+          "title": "Other : -- Unframed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7009.91.00",
+              "description": "Other : -- Unframed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7009.92",
+          "title": "other -- Framed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7009.92.00",
+              "description": "other -- Framed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7010",
+      "title": "Carboys, bottles, flasks, jars, pots, phials, ampoules and other containers, of glass, of a kind used for the conveyance or packing of goods; preserving jars of glass; stoppers, lids and other closures, of glass.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7010.10",
+          "title": "Ampoules",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7010.10.00",
+              "description": "Ampoules",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7010.20",
+          "title": "Stoppers, lids and other closures",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7010.20.00",
+              "description": "Stoppers, lids and other closures",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7010.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7010.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7011",
+      "title": "GLASS ENVELOPES (INCLUDING BULBS AND TUBES), OPEN, AND GLASS PARTS THEREOF, WITHOUT FITTINGS, FOR ELECTRIC LAMPS AND LIGHT SOURCES, CATHODERAY TUBES OR THE LIKE",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7011.10",
+          "title": "For electric lighting",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7011.10.10",
+              "description": "Glass envelopes for fluorescent lamps",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7011.10.20",
+              "description": "Glass envelopes for filament lamps",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7011.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7011.20",
+          "title": "For cathode-ray tubes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7011.20.00",
+              "description": "For cathode-ray tubes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7011.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7011.90.10",
+              "description": "Glass envelopes for electronic valves",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7011.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7013",
+      "title": "Glassware of a kind used for table, kitchen, toilet, office, indoor decoration or similar purposes (other than that of heading 70.10 or 70.18).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7013.10",
+          "title": "Of glass-ceramics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7013.10.00",
+              "description": "Of glass-ceramics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7013.22",
+          "title": "Stemware drinking glasses, other than of glass-ceramics : -- Of lead crystal",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7013.22.00",
+              "description": "Stemware drinking glasses, other than of glass-ceramics : -- Of lead crystal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7013.28",
+          "title": "Stemware drinking glasses, other than of glass-ceramics : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7013.28.00",
+              "description": "Stemware drinking glasses, other than of glass-ceramics : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7013.33",
+          "title": "Other drinking glasses, other than of glass ceramics : -- Of lead crystal",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7013.33.00",
+              "description": "Other drinking glasses, other than of glass ceramics : -- Of lead crystal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7013.37",
+          "title": "Other drinking glasses, other than of glass ceramics : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7013.37.00",
+              "description": "Other drinking glasses, other than of glass ceramics : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7013.41",
+          "title": "Glassware of a kind used for table (other than drinking glasses) or kitchen purposes, other than of glass-ceramics : -- Of lead crystal",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7013.41.00",
+              "description": "Glassware of a kind used for table (other than drinking glasses) or kitchen purposes, other than of glass-ceramics : -- Of lead crystal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7013.42",
+          "title": "Glassware of a kind used for table (other than drinking glasses) or kitchen purposes, other than of glass-ceramics : -- Of glass having a linear coefficient of expansion not exceeding 5 x 10-6 per Kelvin within a temperature range of 0 C to 300 C",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7013.42.00",
+              "description": "Glassware of a kind used for table (other than drinking glasses) or kitchen purposes, other than of glass-ceramics : -- Of glass having a linear coefficient of expansion not exceeding 5 x 10-6 per Kelvin within a temperature range of 0 C to 300 C",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7013.49",
+          "title": "Glassware of a kind used for table (other than drinking glasses) or kitchen purposes, other than of glass-ceramics : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7013.49.00",
+              "description": "Glassware of a kind used for table (other than drinking glasses) or kitchen purposes, other than of glass-ceramics : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7013.91",
+          "title": "Other glassware : -- Of lead crystal",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7013.91.00",
+              "description": "Other glassware : -- Of lead crystal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7013.99",
+          "title": "Other glassware : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7013.99.00",
+              "description": "Other glassware : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7014",
+      "title": "Signalling glassware and optical elements of glass (other than those of heading 70.15), not optically worked.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7014.00",
+          "title": "Signalling glassware and optical elements of glass (other than those of heading 7015), not optically worked :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7014.00.10",
+              "description": "Signalling glassware",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7014.00.20",
+              "description": "Optical elements",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7015",
+      "title": "Clock or watch glasses and similar glasses, glasses for noncorrective or corrective spectacles, curved, bent, hollowed or the like, not optically worked; hollow glass spheres and their segments, for the manufacture of such glasses.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7015.10",
+          "title": "Glasses for corrective spectacles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7015.10.10",
+              "description": "Ophthalmic rough blanks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7015.10.20",
+              "description": "Flint button",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7015.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7015.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7015.90.10",
+              "description": "Clock and watch glasses and similar glasses, curved, bent, hollowed and the like, glass spheres and segments of spheres for the manufacture of such glasses",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7015.90.20",
+              "description": "Glass for sun glasses",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7015.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7016",
+      "title": "Paving blocks, slabs, bricks, squares, tiles and other articles of pressed or moulded glass, whether or not wired, of a kind used for building or construction purposes; glass cubes and other glass smallwares, whether or not on a backing, for mosaics or similar decorative purposes; leaded lights and the like; multicellular or foam glass in blocks, panels, plates, shells or similar forms.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7016.10",
+          "title": "Glass cubes and other Glass smallwares, whether or not on a backing, for mosaics or similar decorative purposes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7016.10.00",
+              "description": "Glass cubes and other Glass smallwares, whether or not on a backing, for mosaics or similar decorative purposes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7016.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7016.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7017",
+      "title": "Laboratory, hygienic or pharmaceutical glassware, whether or not graduated or calibrated.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7017.10",
+          "title": "Of fused quartz or other fused silica",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7017.10.00",
+              "description": "Of fused quartz or other fused silica",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7017.20",
+          "title": "Of other glass having a linear coefficient of expansion not exceeding 5 x 10-6 per Kelvin within a temperature range of 0 C to 300 C",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7017.20.00",
+              "description": "Of other glass having a linear coefficient of expansion not exceeding 5 x 10-6 per Kelvin within a temperature range of 0 C to 300 C",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7017.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7017.90.10",
+              "description": "Graduated or calibrated laboratory glassware",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7017.90.20",
+              "description": "Pharmaceutical glassware",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7017.90.30",
+              "description": "Hygienic glassware",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7017.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7018",
+      "title": "Glass beads, imitation pearls, imitation precious or semi-precious stones and similar glass smallwares, and articles thereof other than imitation jewellery; glass eyes other than prosthetic articles; statuettes and other ornaments of lamp-worked glass, other than imitation jewellery; glass microspheres not exceeding 1 mm in diameter.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7018.10",
+          "title": "Glass beads, imitation pearls, imitation precious or semi-precious stones and similar glass smallwares",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7018.10.10",
+              "description": "Bangles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7018.10.20",
+              "description": "Beads",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7018.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7018.20",
+          "title": "Glass microspheres not exceeding 1 mm in diameter",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7018.20.00",
+              "description": "Glass microspheres not exceeding 1 mm in diameter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7018.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7018.90.10",
+              "description": "Glass Statues",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7018.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7019",
+      "title": "GLASS FIBRES (INCLUDING GLASS WOOL) AND ARTICLES THEREOF (FOR EXAMPLE, YARN, ROVINGS, WOVEN FABRICS)",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7019.11",
+          "title": "Slivers, rovings, yarn and chopped strands : -- Chopped strands, of a length of not more than 50 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7019.11.00",
+              "description": "Slivers, rovings, yarn and chopped strands : -- Chopped strands, of a length of not more than 50 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7019.12",
+          "title": "Slivers, rovings, yarn and chopped strands : -- Rovings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7019.12.00",
+              "description": "Slivers, rovings, yarn and chopped strands : -- Rovings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7019.13",
+          "title": "Slivers, rovings, yarn and chopped strands and mats thereof : - - Other yarn, slivers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7019.13.00",
+              "description": "Slivers, rovings, yarn and chopped strands and mats thereof: - - Other yarn, slivers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7019.14",
+          "title": "Slivers, rovings, yarn and chopped strands and mats thereof : - - Mechanically bonded mats",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7019.14.00",
+              "description": "Slivers, rovings, yarn and chopped strands and mats thereof: - - Mechanically bonded mats",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7019.15",
+          "title": "Slivers, rovings, yarn and chopped strands and mats thereof : - - Chemically bonded mats",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7019.15.00",
+              "description": "Slivers, rovings, yarn and chopped strands and mats thereof: - - Chemically bonded mats",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7019.19",
+          "title": "Slivers, rovings, yarn and chopped strands and mats thereof : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7019.19.00",
+              "description": "Slivers, rovings, yarn and chopped strands and mats thereof: -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7019.61",
+          "title": "Mechanically bonded fabrics : - - Closed woven fabrics of rovings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7019.61.00",
+              "description": "Mechanically bonded fabrics: - - Closed woven fabrics of rovings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7019.62",
+          "title": "Mechanically bonded fabrics : - - Other closed fabrics of rovings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7019.62.00",
+              "description": "Mechanically bonded fabrics: - - Other closed fabrics of rovings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7019.63",
+          "title": "Mechanically bonded fabrics : - - Closed woven fabrics, plain weave, of yarns, not coated or laminated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7019.63.00",
+              "description": "Mechanically bonded fabrics: - - Closed woven fabrics, plain weave, of yarns, not coated or laminated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7019.64",
+          "title": "Mechanically bonded fabrics : - - Closed woven fabrics, plain weave, of yarns, coated or laminated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7019.64.00",
+              "description": "Mechanically bonded fabrics: - - Closed woven fabrics, plain weave, of yarns, coated or laminated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7019.65",
+          "title": "Mechanically bonded fabrics : - - Open woven fabrics of a width not exceeding 30 cm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7019.65.00",
+              "description": "Mechanically bonded fabrics: - - Open woven fabrics of a width not exceeding 30 cm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7019.66",
+          "title": "Mechanically bonded fabrics : - - Open woven fabrics of a width exceeding 30 cm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7019.66.00",
+              "description": "Mechanically bonded fabrics: - - Open woven fabrics of a width exceeding 30 cm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7019.69",
+          "title": "Mechanically bonded fabrics : - - Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7019.69.00",
+              "description": "Mechanically bonded fabrics: - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7019.71",
+          "title": "Chemically bonded fabrics : - - Veils (thin sheets)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7019.71.00",
+              "description": "Chemically bonded fabrics: - - Veils (thin sheets)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7019.72",
+          "title": "Chemically bonded fabrics : - - Other closed fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7019.72.00",
+              "description": "Chemically bonded fabrics: - - Other closed fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7019.73",
+          "title": "Chemically bonded fabrics : - - Other open fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7019.73.00",
+              "description": "Chemically bonded fabrics: - - Other open fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7019.80",
+          "title": "Chemically bonded fabrics : - Glass wool and articles of glass wool",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7019.80.00",
+              "description": "Chemically bonded fabrics: - Glass wool and articles of glass wool",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7019.90",
+          "title": "Chemically bonded fabrics : - Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7019.90.00",
+              "description": "Chemically bonded fabrics: - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7020",
+      "title": "Other articles of glass.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7020.00",
+          "title": "Other articles of glass:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7020.00.11",
+              "description": "Glass shells, glass globes and glass founts: ----Globes for lamps and lanterns",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7020.00.12",
+              "description": "Glass shells, glass globes and glass founts: ----Founts for kerosene wick lamps",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7020.00.19",
+              "description": "Glass shells, glass globes and glass founts: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7020.00.21",
+              "description": "Glass chimneys: ----For lamps and lanterns",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7020.00.29",
+              "description": "Glass chimneys: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7020.00.90",
+              "description": "Glass chimneys: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

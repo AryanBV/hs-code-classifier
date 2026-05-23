@@ -1,0 +1,304 @@
+{
+  "chapter": "67",
+  "title": "PREPARED FEATHERS AND DOWN AND ARTICLES MADE OF FEATHERS OR OF DOWN; ARTIFICIAL FLOWERS; ARTICLES OF HUMAN HAIR",
+  "section": "XII",
+  "source_pdf": "Chapter 67 Prepared Feathers And Down And Articles Made Of Feathers Or Of Down; Artificial Flowers; Articles Of Human Hair.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '67010010'). Normalized to NNNN.NN.NN format (e.g., '6701.00.10') per project schema. 6-digit subheading numbers in PDF (e.g., '670100', '670300') normalized to NNNN.NN form (e.g., '6701.00', '6703.00').",
+    "PDF table-chrome headers ('Sl.No. Notes Notification Date Notification No', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Main Notes', 'Product Description and Export Policy') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Heading 6701 in the PDF has no formal subheading rows; the source shows the heading row '6701' followed by a 6-digit row '670100' (descriptor 'Skins and other parts of birds with their feathers or down, feathers, parts of feathers, down and' — truncated in source) with tariff lines '67010010' (Feather dusters) and '67010090' (Other). Modelled in JSON as a single subheading '6701.00' carrying the two tariff lines. The truncated subheading descriptor in the PDF is preserved verbatim.",
+    "Heading 6703 in the PDF likewise shows a heading row '6703' followed by a 6-digit row '670300' carrying tariff lines '67030010' and '67030020'. Modelled as a single subheading '6703.00'.",
+    "Heading 6704 contains an HS one-dash group 'Of synthetic textile materials' that breaks into subheadings '6704.11' (Complete wigs) and '6704.19' (Other). The PDF descriptions for these subheadings read 'Of synthetic textile materials : -- Complete wigs' and 'Of synthetic textile materials : -- Other' — preserved verbatim. Subheading 6704.19 carries two tariff lines (67041910 Hair nets, 67041990 Other) and subheading 6704.20 (Of human hair) carries three tariff lines (67042010 Wigs, 67042020 Hair nets, 67042090 Other). 6704.90 (Of other materials) has the single tariff line 67049000.",
+    "All tariff lines in Chapter 67 show Export Policy 'Free' with no Policy Condition entries. No Notification Date/Notification No values appear in the Main Notes table. No section notes, no export licensing notes, no policy_conditions section appears in the source PDF for this chapter.",
+    "Section XII header on PDF page 1 reads: 'Section XII, FOOTWEAR, HEADGEAR, UMBRELLAS, SUN UMBRELLAS, WALKING-STICKS, SEAT-STICKS, WHIPS, RIDING-CROPS AND PARTS THEREOF; PREPARED FEATHERS AND ARTICLES MADE THEREWITH; ARTIFICIAL FLOWERS; ARTICLES OF HUMAN HAIR.' No Section XII notes are printed in this chapter PDF.",
+    "Heading 6701 description ends '(other than goods of heading 05.05 and worked quills and scapes).' — the dotted form '05.05' is preserved verbatim from the PDF; this refers to heading 0505 of Chapter 5."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover : (a) filtering or straining cloth of human hair (heading 5911) ; (b) floral motifs of lace, of embroidery or other textile fabric (Section XI) ; (c) footwear (Chapter 64) ; (d) headgear or hair-nets (Chapter 65) ; (e) toys, sports requisites or carnival articles (Chapter 95) ; or (f) feather dusters, powder-puffs or hair sieves (Chapter 96)."
+    },
+    {
+      "number": "2",
+      "text": "Heading 6701 does not cover : (a) articles in which feathers or down constitute only filling or padding (for example, bedding of heading 9404); (b) articles of apparel or clothing accessories in which feathers or down constitute no more than mere trimming or padding; or (c) artificial flowers or foliage or parts thereof or made up articles of heading 6702."
+    },
+    {
+      "number": "3",
+      "text": "Heading 6702 does not cover : (a) articles of glass (Chapter 70) ; (b) artificial flowers, foliage or fruit of pottery, stone, metal, wood or other materials, obtained in one piece by moulding, forging, carving, stamping or other process, or consisting of parts assembled otherwise than by binding, glueing, fitting into one another or similar methods."
+    }
+  ],
+  "section_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "filtering or straining cloth of human hair",
+      "redirects_to_chapter": "59",
+      "redirects_to_heading": "5911",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) filtering or straining cloth of human hair (heading 5911) ; (b) floral motifs of lace, of embroidery or other textile fabric (Section XI) ; (c) footwear (Chapter 64) ; (d) headgear or hair-nets (Chapter 65) ; (e) toys, sports requisites or carnival articles (Chapter 95) ; or (f) feather dusters, powder-puffs or hair sieves (Chapter 96)."
+    },
+    {
+      "excluded_product_text": "floral motifs of lace, of embroidery or other textile fabric",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) filtering or straining cloth of human hair (heading 5911) ; (b) floral motifs of lace, of embroidery or other textile fabric (Section XI) ; (c) footwear (Chapter 64) ; (d) headgear or hair-nets (Chapter 65) ; (e) toys, sports requisites or carnival articles (Chapter 95) ; or (f) feather dusters, powder-puffs or hair sieves (Chapter 96)."
+    },
+    {
+      "excluded_product_text": "footwear",
+      "redirects_to_chapter": "64",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) filtering or straining cloth of human hair (heading 5911) ; (b) floral motifs of lace, of embroidery or other textile fabric (Section XI) ; (c) footwear (Chapter 64) ; (d) headgear or hair-nets (Chapter 65) ; (e) toys, sports requisites or carnival articles (Chapter 95) ; or (f) feather dusters, powder-puffs or hair sieves (Chapter 96)."
+    },
+    {
+      "excluded_product_text": "headgear or hair-nets",
+      "redirects_to_chapter": "65",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) filtering or straining cloth of human hair (heading 5911) ; (b) floral motifs of lace, of embroidery or other textile fabric (Section XI) ; (c) footwear (Chapter 64) ; (d) headgear or hair-nets (Chapter 65) ; (e) toys, sports requisites or carnival articles (Chapter 95) ; or (f) feather dusters, powder-puffs or hair sieves (Chapter 96)."
+    },
+    {
+      "excluded_product_text": "toys, sports requisites or carnival articles",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) filtering or straining cloth of human hair (heading 5911) ; (b) floral motifs of lace, of embroidery or other textile fabric (Section XI) ; (c) footwear (Chapter 64) ; (d) headgear or hair-nets (Chapter 65) ; (e) toys, sports requisites or carnival articles (Chapter 95) ; or (f) feather dusters, powder-puffs or hair sieves (Chapter 96)."
+    },
+    {
+      "excluded_product_text": "feather dusters, powder-puffs or hair sieves",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) filtering or straining cloth of human hair (heading 5911) ; (b) floral motifs of lace, of embroidery or other textile fabric (Section XI) ; (c) footwear (Chapter 64) ; (d) headgear or hair-nets (Chapter 65) ; (e) toys, sports requisites or carnival articles (Chapter 95) ; or (f) feather dusters, powder-puffs or hair sieves (Chapter 96)."
+    },
+    {
+      "excluded_product_text": "articles in which feathers or down constitute only filling or padding (for example, bedding)",
+      "redirects_to_chapter": "94",
+      "redirects_to_heading": "9404",
+      "source_note_number": "Note 2",
+      "source_note_text": "Heading 6701 does not cover : (a) articles in which feathers or down constitute only filling or padding (for example, bedding of heading 9404); (b) articles of apparel or clothing accessories in which feathers or down constitute no more than mere trimming or padding; or (c) artificial flowers or foliage or parts thereof or made up articles of heading 6702."
+    },
+    {
+      "excluded_product_text": "articles of apparel or clothing accessories in which feathers or down constitute no more than mere trimming or padding",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2",
+      "source_note_text": "Heading 6701 does not cover : (a) articles in which feathers or down constitute only filling or padding (for example, bedding of heading 9404); (b) articles of apparel or clothing accessories in which feathers or down constitute no more than mere trimming or padding; or (c) artificial flowers or foliage or parts thereof or made up articles of heading 6702."
+    },
+    {
+      "excluded_product_text": "artificial flowers or foliage or parts thereof or made up articles",
+      "redirects_to_chapter": "67",
+      "redirects_to_heading": "6702",
+      "source_note_number": "Note 2",
+      "source_note_text": "Heading 6701 does not cover : (a) articles in which feathers or down constitute only filling or padding (for example, bedding of heading 9404); (b) articles of apparel or clothing accessories in which feathers or down constitute no more than mere trimming or padding; or (c) artificial flowers or foliage or parts thereof or made up articles of heading 6702."
+    },
+    {
+      "excluded_product_text": "articles of glass",
+      "redirects_to_chapter": "70",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3",
+      "source_note_text": "Heading 6702 does not cover : (a) articles of glass (Chapter 70) ; (b) artificial flowers, foliage or fruit of pottery, stone, metal, wood or other materials, obtained in one piece by moulding, forging, carving, stamping or other process, or consisting of parts assembled otherwise than by binding, glueing, fitting into one another or similar methods."
+    },
+    {
+      "excluded_product_text": "artificial flowers, foliage or fruit of pottery, stone, metal, wood or other materials, obtained in one piece by moulding, forging, carving, stamping or other process, or consisting of parts assembled otherwise than by binding, glueing, fitting into one another or similar methods",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3",
+      "source_note_text": "Heading 6702 does not cover : (a) articles of glass (Chapter 70) ; (b) artificial flowers, foliage or fruit of pottery, stone, metal, wood or other materials, obtained in one piece by moulding, forging, carving, stamping or other process, or consisting of parts assembled otherwise than by binding, glueing, fitting into one another or similar methods."
+    }
+  ],
+  "headings": [
+    {
+      "heading": "6701",
+      "title": "Skins and other parts of birds with their feathers or down, feathers, parts of feathers, down and articles thereof (other than goods of heading 05.05 and worked quills and scapes).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6701.00",
+          "title": "Skins and other parts of birds with their feathers or down, feathers, parts of feathers, down and",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6701.00.10",
+              "description": "Feather dusters",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6701.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6702",
+      "title": "Artificial flowers, foliage and fruit and parts thereof; articles made of artificial flowers, foliage or fruit.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6702.10",
+          "title": "Of plastics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6702.10.10",
+              "description": "Decorative plants",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6702.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6702.90",
+          "title": "Of other materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6702.90.10",
+              "description": "Of jute",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6702.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6703",
+      "title": "Human hair, dressed, thinned, bleached or otherwise worked; wool or other animal hair or other textile materials, prepared for use in making wigs or the like.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6703.00",
+          "title": "Human hair, dressed, thinned, bleached or otherwise worked; wool or other animal hair or other textile materials, prepared for use in making wigs or the like :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6703.00.10",
+              "description": "Human hair, dressed, thinned, bleached or otherwise worked",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6703.00.20",
+              "description": "Wool or other animal hair or other textile materials, prepared for use in making wigs or the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6704",
+      "title": "Wigs, false beards, eyebrows and eyelashes, switches and the like, of human or animal hair or of textile materials; articles of human hair not elsewhere specified or included.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6704.11",
+          "title": "Of synthetic textile materials : -- Complete wigs",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6704.11.00",
+              "description": "Of synthetic textile materials : -- Complete wigs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6704.19",
+          "title": "Of synthetic textile materials : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6704.19.10",
+              "description": "Hair nets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6704.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6704.20",
+          "title": "Of human hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6704.20.10",
+              "description": "Wigs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6704.20.20",
+              "description": "Hair nets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6704.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6704.90",
+          "title": "Of other materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6704.90.00",
+              "description": "Of other materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "policy_conditions": []
+}

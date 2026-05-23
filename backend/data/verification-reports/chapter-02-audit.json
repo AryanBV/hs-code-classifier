@@ -1,0 +1,150 @@
+{
+  "chapter": "02",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings_count": 0,
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "0201.10.00",
+        "in_pdf": true,
+        "pdf_description": "02011000 Carcasses and half-carcasses Prohibited 02012000 Other cuts with bone in Prohibited 02013000 Boneless Prohibite",
+        "json_description": "Carcasses and half-carcasses",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0203.11.00",
+        "in_pdf": true,
+        "pdf_description": "02031100 buffalo (both male and female) 02031200 frozen is free subject to the 02031900",
+        "json_description": "Fresh or chilled : -- Carcasses and half-carcasses",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0204.21.00",
+        "in_pdf": true,
+        "pdf_description": "02042100 Meat of sheep or goats, fresh, chilled or frozen. 02042200 Carcasses and half-carcasses of Free Quality control",
+        "json_description": "Carcasses and half-carcasses",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0204.50.00",
+        "in_pdf": true,
+        "pdf_description": "02045000 required to be fulfilled. Exports shall 01.10.2024 02050000 also be subject to Policy Conditi",
+        "json_description": "Meat of goats",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0206.41.00",
+        "in_pdf": true,
+        "pdf_description": "02064100 Of swine, frozen : -- Livers Free 02064900 Of swine, frozen : -- Other Free 020680 Other, fresh or chilled 0206",
+        "json_description": "Of swine, frozen : -- Livers",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0207.12.00",
+        "in_pdf": true,
+        "pdf_description": "02071200 Policy Condition 8 of this Chapter. 02071300 02071400 Exports shall be subject to Policy 02072400",
+        "json_description": "Of fowls of the species Gallus domesticus : -- Not cut in pieces, frozen",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0207.41.00",
+        "in_pdf": true,
+        "pdf_description": "02074100 frozen 02074200 02074300 Of ducks : --Not cut in pieces, Free 02074400 fresh or chilled 02074500 02075100 Of du",
+        "json_description": "Of ducks : --Not cut in pieces, fresh or chilled",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0207.53.00",
+        "in_pdf": true,
+        "pdf_description": "02075300 02075400 Of ducks : --Fatty livers, fresh or Free 02075500 chilled 02076000 0208 Of ducks : --Other, fresh or F",
+        "json_description": "Of geese : -- Fatty livers, fresh or chilled",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0208.50.00",
+        "in_pdf": true,
+        "pdf_description": "02085000 order cetacea); of manatees and Subject to Policy Condition 1 of the 02086000 dugongs (mammals of the order Cha",
+        "json_description": "Of reptiles (including snakes and turtles)",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0210.12.00",
+        "in_pdf": true,
+        "pdf_description": "02101200 DRIED OR SMOKED; EDIBLE 02101900 FLOURS AND MEALS OF Subject to Policy Condition 1 of the MEAT OR MEAT OFFAL Ch",
+        "json_description": "Meat of swine : -- Bellies (streaky) and cuts thereof",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      }
+    ],
+    "hierarchy_errors": [],
+    "missed_codes": [],
+    "extra_codes": [],
+    "subheading_checks": [
+      {
+        "subheading": "0201.10",
+        "title": "Carcasses and half-carcasses",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0204.21",
+        "title": "Other meat of sheep, fresh or chilled : -- Carcasses and half-carcasses",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0206.30",
+        "title": "Of swine, fresh or chilled",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0207.41",
+        "title": "Of ducks : --Not cut in pieces, fresh or chilled",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0208.40",
+        "title": "Of whales, dolphines and porpoises (mammals of the order cetacea); of manatees and dugongs (mammals of the order Sirenia); of seals, sea lions and walruses (mammals of the sub-order Pinnipedia)",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      }
+    ],
+    "note_mismatches": [],
+    "count_check": {
+      "json_h": 10,
+      "pdf_h_estimate": 10,
+      "json_sh": 66,
+      "pdf_sh_estimate": 66,
+      "json_tl": 69,
+      "pdf_tl_estimate": 69
+    }
+  },
+  "fix_needed": null
+}

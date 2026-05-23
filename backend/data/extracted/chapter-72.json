@@ -1,0 +1,5298 @@
+{
+  "chapter": "72",
+  "title": "Iron And Steel",
+  "section": "XV",
+  "source_pdf": "Chapter 72 Iron And Steel.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "Source tariff codes were 8-digit no-dot format (e.g., 72011000); normalized to NNNN.NN.NN (72.01.10.00).",
+    "Section XV notes (1-7) and additional definitions (Notes 8, 9) appear in the source PDF before the Chapter 72 section. Section-level notes are recorded under section_notes; Note 9 (definitions of Bars/Rods, Profiles, Wire, Plates/Sheets/Strip/Foil, Tubes/Pipes) applies to 'Chapters 74 to 76 and 78 to 81' per its own text, NOT to Chapter 72 — but it is included verbatim as part of Section XV's scope.",
+    "Chapter Note 1 contains 16 critical sub-definitions (a)-(p) defining Pig Iron, Spiegeleisen, Ferro-alloys, Steel, Stainless steel, Other alloy steel, Remelting scrap ingots, Granules, Semi-finished products, Flat-rolled products, Bars and rods (hot-rolled coils), Other bars and rods, Angles/shapes/sections, Wire, Hollow drill bars — captured verbatim as one note.",
+    "Sub-Heading Notes contain 5 critical sub-definitions (a)-(e) defining Alloy pig iron, Non-alloy free-cutting steel, Silico-electrical steel, High speed steel, Silico-manganese steel — captured verbatim as one sub-heading note.",
+    "'Supplementary Notes' section appears after sub-heading notes; recorded as additional chapter notes with the prefix 'Supplementary Note N'. Supplementary Notes 2 and 3 duplicate Chapter Notes 2 and 3 verbatim — preserved as in source.",
+    "Source PDF uses non-standard quote escaping (e.g., \"\"\"\"flattened circles\"\"\"\", \"\"\"\"modified rectangles\"\"\"\", \"\"\"\"alloys\"\"\"\", \"\"\"\"parts of general use\"\"\"\", \"\"\"\"base metals\"\"\"\") with quadrupled quotes — preserved verbatim.",
+    "Source PDF contains many typos preserved verbatim: 'usefullymalleable', 'containingmore', 'Alloysin pigs,blocks,lumps orsimilar', 'elementsin', 'orsteel', 'ofsuccessivelysuperimposed', 'ten timesthe thickness', 'Productswhich do not conformto anyofthe', 'at(ij),(k) or(l)', 'including\"\"\"\"flattened circles\"\"\"\" and \"\"\"\"modified rectangles\"\"\"\"', 'Unlessthe context', 'areto', 'Pigironcontaining,byweight, oneormoreofthefollowingelementsinthe specifiedproportions', 'Alloysteels', 'productsin irregularly wound', 'process(reinforcing', 'orelectro', 'aplliances', 'crosssection'.",
+    "Source PDF column interleaving causes a few descriptions to be truncated mid-sentence in the schedule (e.g., heading 7218 sub-heading 7218.99 'Other : -- Other' lacks a description but expands into tariff lines 7218.99.10 'Billets' and 7218.99.90 'Other') — preserved as recorded.",
+    "Many subheading title rows in the schedule are repeated or empty because the only tariff line under them carries the descriptive text; faithfully preserved (title: '').",
+    "Subheading 7209.18 'In coils, not further worked than cold-rolled (cold-reduced) : -- Of a thickness of less than 0.5 mm' is present in the PDF but the sub-line 7209.18.90 description reads 'Other Not in coils, not further worked than cold-rolled (cold-reduced):' which is a parser artefact of overlapping headers — preserved verbatim.",
+    "Section XV Note 9 defining Bars/Rods, Profiles, Wire, Plates/Sheets/Strip/Foil, Tubes/Pipes is technically for Chapters 74-76 and 78-81; however Chapter 72 Note 1 provides the equivalent (more elaborate) definitions for iron and steel — both retained.",
+    "Units (kg, u, etc.) are not present in this Schedule 2 Export Policy PDF; unit field left null for all tariff lines.",
+    "Heading 7218 sub-heading 7218.99 title 'Other : -- Other' is duplicated structurally; merged into single subheading with both tariff lines (7218.99.10 Billets, 7218.99.90 Other).",
+    "Heading 7209 contains overlapping subheading codes (7209.15-7209.18 'In coils' and 7209.25-7209.28 'Not in coils') that are correctly preserved in numeric order, even though source PDF interleaves them.",
+    "Several headings (7224.90, 7225.19, 7226.19, 7226.20, 7227.90, etc.) have an interleaved 'titles only' subheading code (e.g., 722519, 722619) immediately followed by another with the same code containing tariff lines (e.g., 72251900); these are merged into one subheading per code.",
+    "Sub-heading 7221.00 reads 'Bars and rods, hot-rolled, in irregularly wound coils, ofstainless steel :' with no trailing tariff lines under a separate '7221' first level — preserved with subheading 7221.00 holding the bright bars tariff lines.",
+    "Heading 7218 sub-heading 7218.99 has tariff codes 7218.99.10 'Billets' and 7218.99.90 'Other' — these are non-alloy semi-finished product residuals despite the heading being for stainless steel; preserved verbatim as in source schedule."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "In this Chapter and, in the case of Notes (d), (e) and (f) throughout this Schedule, the following expressions have the meanings hereby assigned to them: (a) Pig Iron: Iron-carbon alloys not usefullymalleable, containingmore than 2% by weight of carbon and which may contain by weight one or more other elements within the following limits: - not more than 10% of chromium - not more than 6% of manganese - not more than 3% of phosphorus - not more than 8% of silicon - a total of not more than 10% of other elements. (b) Spiegeleisen: Iron-carbon alloys containing by weight more than 6% but not more than 30% of manganese and otherwise conforming to the specification at (a) above. (c) Ferro-alloys: Alloysin pigs, blocks, lumps orsimilar primary forms, in forms obtained by continuous casting and also in granular or powder forms, whether or not agglomerated, commonly used as an additive in the manufacture of other alloys or as de-oxidants, de-sulphurising agents or for similar uses in ferrous metallurgy and generally not usefully malleable, containing by weight 4% or more of the element iron and one or more of the following: - more than 10% of chromium - more than 30% of manganese - more than 3% of phosphorus - more than 8% of silicon - a total of more than 10% of other elements, excluding carbon, subject to a maximum content of 10% in the case of copper. (d) Steel : Ferrous materials other than those of heading 7203 which (with the exception of certain types produced in the form of castings) are usefully malleable and which contain by weight 2% or less of carbon. However, chromium steels may contain higher proportions of carbon. (e) Stainless steel: Alloy steels containing, by weight, 1.2% or less of carbon and 10.5% or more of chromium, with or without other elements. (f) Other alloy steel : Steels not complying with the definition of stainless steel and containing by weight one or more of the following elementsin the proportion shown: - 0.3% or more of aluminum - 0.0008% or more of boron - 0.3% or more of chromium - 0.3% or more of cobalt - 0.4% or more of copper - 0.4% or more of lead - 1.65% or more of manganese - 0.08% or more of molybdenum - 0.3% or more of nickel - 0.06% or more of niobium - 0.6% or more of silicon - 0.05% or more of titanium - 0.3% or more of tungsten (wolfram) - 0.1% or more of vanadium - 0.05% or more of zirconium - 0.1% or more of other elements(except sulphur, phosphorus, carbon and nitrogen), taken separately. (g) Remelting scrap ingots of iron and steel: Products roughly cast in the form of ingots without feeder-heads or hot tops, or of pigs, having obvioussurface faults and not complying with the chemical composition of pig iron, spiegeleisen or ferro-alloys. (h) Granules: Products of which less than 90% by weight passes through a sieve with a mesh aperture of 1 mm and of which 90% or more by weight passes through a sieve with a mesh aperture of 5 mm. (ij) Semi-finished products: Continuous cast products of solid section, whether or not subjected to primary hot-rolling; and other products of solid section, which have not been further worked than subjected to primary hot-rolling or roughly shaped by forging, including blanks for angles,shapes or sections.These products are not presented in coils. (k) Flat-rolled products : Rolled products of solid rectangular (other than square) cross-section, which do not conform to the definition at (ij) above in the form of: - coils ofsuccessivelysuperimposed layers, or - straight lengths, which if of a thickness less than 4.75 mm, are of width measuring at least ten timesthe thickness or if of a thickness of 4.75 mm or more are of a width which exceeds 150 mm and measures at least twice the thickness. Flat-rolled products include those with patterns in relief derived directly from rolling (for example, grooves, ribs, chequers, tears, buttons and lozenges) and those, which have been perforated, corrugated or polished, provided that they do not thereby assume the character of articles or products of other headings. Flat-rolled products of a shape other than rectangular or square, of any size, are to be classified as products of a width of 600 mm or more, provided that they do not assume the character of articles or products of other headings. (l) Bars and rods, hot-rolled, in irregularly wound coils: Hot-rolled productsin irregularly wound coils, which have a solid cross-section in the shape of circles,segments of circles, ovals, rectangles(including squares), triangles, or other convex polygons (including \"\"\"\"flattened circles\"\"\"\" and \"\"\"\"modified rectangles\"\"\"\", of which two opposite sides are convex arcs, the other two sides being straight, of equal length and parallel). These products may have indentations, ribs, grooves or other deformations produced during the rolling process(reinforcing bars and rods). (m) Other bars and rods: Productswhich do not conformto anyofthe definitions at(ij),(k) or(l) above or to the definition of wire,which have a uniform solid cross-section along their whole length in the shape of circles, segments of circles, ovals, rectangles (including squares), triangles or other convex polygons (including\"\"\"\"flattened circles\"\"\"\" and \"\"\"\"modified rectangles\"\"\"\", of which two opposite sides are convex arcs, the other two sides being straight, of equal length and parallel). The products may: - have indentations, ribs, grooves or other deformations produced during the rolling process (reinforcing bars and rods); - be twisted after rolling. (n) Angles, shapes and sections: Products having a uniformsolid cross-section along their whole length which do not conform to any of the definitions at (ij), (k), (l) or (m) above or to the definition of wire.Chapter 72 does not include products of heading 7301 or 7302. (o) Wire: Cold-formed products in coils, of any uniform solid cross-section along their whole length, which do not conform to the definition of flat-rolled products. (p) Hollow drill bars and rods: Hollow bars and rods of any cross-section, suitable for drills, of which the greatest external dimension of the cross-section exceeds 15 mm but does not exceed 52 mm, and of which the greatest internal dimension does not exceed one half of the greatest external dimension. Hollow bars and rods of iron orsteel not conforming to this definition are to be classified in heading 7304."
+    },
+    {
+      "number": "2",
+      "text": "Ferrous metals clad with another ferrous metal are to be classified as products of the ferrous metal predominating by weight."
+    },
+    {
+      "number": "3",
+      "text": "Iron or steel products obtained by electrolytic deposition, by pressure casting or by sintering are to be classified, according to their form, their composition and their appearance, in the headings of this Chapter appropriate to similar hot-rolled products."
+    },
+    {
+      "number": "Sub-heading 1",
+      "text": "In this Chapter, the following expressions have the meanings hereby assigned to them: (a) Alloy pig iron: Pigironcontaining,byweight, oneormoreofthefollowingelementsinthe specifiedproportions: - more than 0.2% of chromium - more than 0.3% of copper - more than 0.3% of nickel - more than 0.1% of any of the following elements: aluminium,molybdenum, titanium, tungsten (wolfram), vanadium. (b) Non-alloy free-cutting steel: Non-alloy steel containing, by weight, one or more of the following elementsin the specified proportions: - 0.08% or more of sulphur - 0.1% or more of lead - more than 0.05% of selenium - more than 0.01% of tellurium - more than 0.05% of bismuth. (c) Silicon-electricalsteel: Alloy steels containing, by weight, at least 0.6% but not more than 6% of silicon and not more than 0.08% of carbon. Theymay also contain by weight not more than 1% of aluminium but no other element in a proportion that would give the steel the characteristics of another alloy steel. (d) High speed steel: Alloy steels containing, with or without other elements, at least two of the three elements molybdenum, tungsten and vanadium with a combined content by weight of 7% or more, 0.6% or more of carbon and 3 to 6% of chromium. (e) Silico-manganese steel: Alloy steels containing by weight: - not more than 0.7% of carbon - 0.5% or more but not more than 1.9% of manganese; and - 0.6% or more but not more than 2.3% ofsilicon, but no other element in a proportion that would give the steel the characteristics of another alloy steel."
+    },
+    {
+      "number": "Sub-heading 2",
+      "text": "For the classification offerro-alloysin the sub-headings of heading 7202, the following rule should be observed: A ferro-alloy is considered as binary and classified under the relevant sub-heading (if it exists) if only one of the alloy elements exceeds the minimum percentage laid down in Chapter Note 1(c); by analogy, it is considered respectively as ternary or quaternary if two or three alloy elements exceed the minimum percentage. For the application of this rule the unspecified \"\"other elements\"\" referred to in Chapter Note 1(c) must each exceed 10% by weight."
+    },
+    {
+      "number": "Supplementary Note 1",
+      "text": "Skelp means hot-rolled narrow strip of width not exceeding 600 mm with rolled (square, slightly round or bevelled) edge."
+    },
+    {
+      "number": "Supplementary Note 2",
+      "text": "Ferrous metals clad with another ferrous metal are to be classified as products of the ferrous metal predominating by weight."
+    },
+    {
+      "number": "Supplementary Note 3",
+      "text": "Iron or steel products obtained by electrolytic deposition, by pressure casting by sintering are to be classified, according to their form, their composition and their appearance, in the headings of this Chapter appropriate to similar hot-rolled products."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "This Section does not cover : (a) prepared paints, inks or other products with a basis of metallic flakes or powder (headings 3207 to 3210, 3212, 3213 or 3215); (b) ferro-cerium or other pyrophoric alloys(heading 3606); (c) headgear or parts thereof of heading 6506 or 6507; (d) umbrella frames or other articles of heading 6603; (e) goods of Chapter 71 (for example, precious metal alloys, base metal clad with precious metal, imitation jewellery); (f) articles of Section XVI (machinery, mechanical a pliances and electrical goods); (g) assembled railway or tramway track (heading 8608) or other articles of Section XVII (vehicles, ships and boats, aircraft); (h) instruments or apparatus of Section XVIII, including clock or watch springs; (ij) lead shot prepared for ammunition (heading 9306) or other articles of Section XIX (arms and ammunition); (k) articles of Chapter 94 (for example, furniture, mattress supports, luminaires and lighting fittings, illuminated signs, prefabricated buildings); (l) articles of Chapter 95 (for example, toys, games, sports requisites); (m) hand sieves, buttons, pens, pencil-holders, pen nibs, monopods, bipods, tripods and similar articles or other articles of Chapter 96 (miscellaneous manufactured articles); or\"\"\"\" (n) articles of Chapter 97 (for example, works of art)."
+    },
+    {
+      "number": "2",
+      "text": "Throughout this Schedule, the expression \"\"\"\"parts of general use\"\"\"\" means : (a) articles of heading 7307, 7312, 7315, 7317 or 7318 and similar articles of other base metal, other than articles specially designed for use exclusively in implants in medical, surgical, dental or veterinary sciences (heading 9021); (b) springs and leaves for springs, of base metal, other than clock or watch springs (heading 9114); and (c) articles of headings 8301, 8302, 8308, 8310 and frames and mirrors, of base metal, of heading 8306. In Chapters 73 to 76 and 78 to 82 (but not in heading 7315) references to parts of goods do not include references to parts of general use as defined above. Subject to the preceding paragraph and to Note 1 to Chapter 83, the articles of Chapter 82 or 83 are excluded from Chapters 72 to 76 and 78 to 81."
+    },
+    {
+      "number": "3",
+      "text": "Throughout this Schedule, the expression \"\"base metals\"\" means : iron and steel, copper, nickel, aluminium, lead, zinc, tin, tungsten (wolfram), molybdenum, tantalum, magnesium, cobalt, bismuth, cadmium, titanium, zirconium, antimony, manganese, beryllium, chromium, germanium, vanadium, gallium, hafnium, indium, niobium (columbium),rhenium and thallium."
+    },
+    {
+      "number": "4",
+      "text": "Throughout this Schedule, the term \"cermets\" means products containing a microscopic heterogenous combination of a metallic component and a ceramic component. The term \"cermets\" includes sintered metal carbides (metal carbides sintered with a metal)."
+    },
+    {
+      "number": "5",
+      "text": "Classification of alloys (other than ferro-alloys and master alloys as defined in Chapters 72 and 74) : (a) an alloy of base metals is to be classified as an alloy of the metal which predominates by weight over each of the other metals; (b) an alloy composed of base metals of this Section and of elements not falling within this Section is to be treated as an alloy of base metals of this Section if the total weight of such metals equals or exceeds the total weight of the other elements present; (c) in this Section, the term \"\"\"\"alloys\"\"\"\" includes sintered mixtures of metal powders, heterogeneous intimate mixtures obtained by melting (other than cermets) and intermetallic compounds."
+    },
+    {
+      "number": "6",
+      "text": "Unlessthe context otherwise requires, any reference in this Schedule to a base metal includes a reference to alloys which, by virtue of Note 5 above, are to be classified as alloys of that metal."
+    },
+    {
+      "number": "7",
+      "text": "Classification of composite articles: Except where the headings otherwise require, articles of base metal (including articles of mixed materials treated as articles of base metal under the General Interpretive Rules) containing two or more base metals areto be treated as articles of the base metal predominating by weight over each of the other metals. For this purpose: (a) iron and steel, or different kinds of iron or steel, are regarded as one and the same metal; (b) an alloy isregarded as being entirely composed of that metal as an alloy of which, by virtue of Note 5, it is classified; and (c) a cermet of heading 8113 is regarded as a single base metal."
+    },
+    {
+      "number": "8",
+      "text": "In this Section, the following expressions have the meanings hereby assigned to them : (a) waste and scrap: (i) all metal waste and scrap; (ii) metal goods definitely not usable as such because of breakage, cutting-up, wear or other reasons. (b) Powders: products of which 90% or more by weight passes through a sieve having a mesh aperture of 1 mm."
+    },
+    {
+      "number": "9",
+      "text": "For the purposes of Chapters 74 to 76 and 78 to 81, the following expressions shall have the meanings hereby assigned to them: (a) Bars and rods: Rolled, extruded, drawn or forged products, not in coils, which have a uniform solid cross-section along their whole length in the shape of circles, ovals, rectangles (including squares), equilateral triangles or regular convex polygons (including \"\"\"\"flattened circles\"\"\"\" and \"\"\"\"modified rectangles\"\"\"\", of which two opposite sides are convex arcs, the other two sides being straight, of equal length and parallel). Products with a rectangular (including square), triangular or polygonal cross-section may have corners rounded along their whole length. The thickness of such products which have a rectangular (including \"\"\"\"modified rectangular\"\"\"\") cross-section exceeds one-tenth of the width. The expression also covers cast or sintered products, of the same forms and dimensions, which have been subsequently worked after production (otherwise than by simple trimming or descaling), provided that they have not thereby assumed the character of articles or products of other headings. Wirebars and billets of Chapter 74 with their ends tapered or otherwise worked simply to facilitate their entry into machines for converting them into, for example, drawing stock (wire-rod) or tubes, are however to be taken to be unwrought copper of heading 7403. This provision applies mutatis mutandis to the products of Chapter 81. (b) Profiles: Rolled, extruded, drawn, forged or formed products, coiled or not, of a uniform cross-section along their whole length, which do not conform to any of the definitions of bars, rods, wire, plates, sheets, strip, foil, tubes or pipes. The expression also covers cast or sintered products, of the same forms, which have been subsequently worked after production (otherwise than by simple trimming or de-scaling), provided that they have not thereby assumed the character of articles or products of other headings. (c) Wire: Rolled, extruded or drawn products, in coils, which have a uniform solid cross-section along their whole length in the shape of circles, ovals, rectangles (including squares), equilateral triangles or regular convex polygons (including \"\"\"\"flattened circles\"\"\"\" and \"\"\"\"modified rectangles\"\"\"\", of which two opposite sides are convex arcs, the other two sides being straight, of equal length and parallel). Products with a rectangular (including square), triangular or polygonal cross-section may have corners rounded along their whole length. The thickness of such products which have a rectangular (including \"\"\"\"modified rectangular\"\"\"\") cross-section exceeds one-tenth of the width. (d) Plates, sheets, strip and foil: Flat-surfaced products (other than the unwrought products of heading 8001), coiled or not, of solid rectangular (other than square) cross-section with or without rounded corners (including \"\"\"\"modified rectangles\"\"\"\" of which two opposite sides are convex arcs, the other two sides being straight, of equal length and parallel) of a uniform thickness, which are: - of rectangular (including square) shape with a thickness not exceeding one-tenth of the width; - of a shape other than rectangular or square, of any size, provided that they do not assume the character of articles or products of other headings. Headings for plates, sheets, strip, and foil apply, inter alia, to plates, sheets, strip, and foil with patterns (for example, grooves, ribs, chequers, tears, buttons, lozenges) and to such products which have been perforated, corrugated, polished or coated, provided that they do not thereby assume the character of articles or products of other headings. (e) Tubes and pipes: Hollow products, coiled or not, which have a uniform cross-section with only one enclosed void along their whole length in the shape of circles, ovals, rectangles (including squares), equilateral triangles or regular convex polygons, and which have a uniform wall thickness. Products with a rectangular (including square), equilateral triangular or regular convex polygonal cross-section, which may have corners rounded along their whole length, are also to be considered as tubes and pipes provided the inner and outer crosssections are concentric and have the same form and orientation. Tubes and pipes of the foregoing cross-sections may be polished, coated, bent, threaded, drilled, waisted, expanded, cone-shaped or fitted with flanges, collars or rings."
+    }
+  ],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "prepared paints, inks or other products with a basis of metallic flakes or powder",
+      "redirects_to_chapter": "32",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(a)",
+      "source_note_text": "prepared paints, inks or other products with a basis of metallic flakes or powder (headings 3207 to 3210, 3212, 3213 or 3215)"
+    },
+    {
+      "excluded_product_text": "ferro-cerium or other pyrophoric alloys",
+      "redirects_to_chapter": "36",
+      "redirects_to_heading": "3606",
+      "source_note_number": "Section Note 1(b)",
+      "source_note_text": "ferro-cerium or other pyrophoric alloys(heading 3606)"
+    },
+    {
+      "excluded_product_text": "headgear or parts thereof",
+      "redirects_to_chapter": "65",
+      "redirects_to_heading": "6506",
+      "source_note_number": "Section Note 1(c)",
+      "source_note_text": "headgear or parts thereof of heading 6506 or 6507"
+    },
+    {
+      "excluded_product_text": "umbrella frames or other articles",
+      "redirects_to_chapter": "66",
+      "redirects_to_heading": "6603",
+      "source_note_number": "Section Note 1(d)",
+      "source_note_text": "umbrella frames or other articles of heading 6603"
+    },
+    {
+      "excluded_product_text": "goods of Chapter 71 (for example, precious metal alloys, base metal clad with precious metal, imitation jewellery)",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(e)",
+      "source_note_text": "goods of Chapter 71 (for example, precious metal alloys, base metal clad with precious metal, imitation jewellery)"
+    },
+    {
+      "excluded_product_text": "articles of Section XVI (machinery, mechanical appliances and electrical goods)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(f)",
+      "source_note_text": "articles of Section XVI (machinery, mechanical a pliances and electrical goods)"
+    },
+    {
+      "excluded_product_text": "assembled railway or tramway track",
+      "redirects_to_chapter": "86",
+      "redirects_to_heading": "8608",
+      "source_note_number": "Section Note 1(g)",
+      "source_note_text": "assembled railway or tramway track (heading 8608) or other articles of Section XVII (vehicles, ships and boats, aircraft)"
+    },
+    {
+      "excluded_product_text": "other articles of Section XVII (vehicles, ships and boats, aircraft)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(g)",
+      "source_note_text": "assembled railway or tramway track (heading 8608) or other articles of Section XVII (vehicles, ships and boats, aircraft)"
+    },
+    {
+      "excluded_product_text": "instruments or apparatus of Section XVIII, including clock or watch springs",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(h)",
+      "source_note_text": "instruments or apparatus of Section XVIII, including clock or watch springs"
+    },
+    {
+      "excluded_product_text": "lead shot prepared for ammunition",
+      "redirects_to_chapter": "93",
+      "redirects_to_heading": "9306",
+      "source_note_number": "Section Note 1(ij)",
+      "source_note_text": "lead shot prepared for ammunition (heading 9306) or other articles of Section XIX (arms and ammunition)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 94 (for example, furniture, mattress supports, luminaires and lighting fittings, illuminated signs, prefabricated buildings)",
+      "redirects_to_chapter": "94",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(k)",
+      "source_note_text": "articles of Chapter 94 (for example, furniture, mattress supports, luminaires and lighting fittings, illuminated signs, prefabricated buildings)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 95 (for example, toys, games, sports requisites)",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(l)",
+      "source_note_text": "articles of Chapter 95 (for example, toys, games, sports requisites)"
+    },
+    {
+      "excluded_product_text": "hand sieves, buttons, pens, pencil-holders, pen nibs, monopods, bipods, tripods and similar articles or other articles of Chapter 96",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(m)",
+      "source_note_text": "hand sieves, buttons, pens, pencil-holders, pen nibs, monopods, bipods, tripods and similar articles or other articles of Chapter 96 (miscellaneous manufactured articles)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 97 (for example, works of art)",
+      "redirects_to_chapter": "97",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(n)",
+      "source_note_text": "articles of Chapter 97 (for example, works of art)"
+    },
+    {
+      "excluded_product_text": "products of heading 7301 or 7302 (sheet piling; railway or tramway track construction material of iron or steel)",
+      "redirects_to_chapter": "73",
+      "redirects_to_heading": "7301",
+      "source_note_number": "Chapter Note 1(n)",
+      "source_note_text": "Chapter 72 does not include products of heading 7301 or 7302."
+    },
+    {
+      "excluded_product_text": "hollow bars and rods of iron or steel not conforming to the hollow drill bars definition (greatest external dim ≤15 mm or >52 mm, or internal >½ external)",
+      "redirects_to_chapter": "73",
+      "redirects_to_heading": "7304",
+      "source_note_number": "Chapter Note 1(p)",
+      "source_note_text": "Hollow bars and rods of iron orsteel not conforming to this definition are to be classified in heading 7304."
+    },
+    {
+      "excluded_product_text": "articles specially designed for use exclusively in implants in medical, surgical, dental or veterinary sciences",
+      "redirects_to_chapter": "90",
+      "redirects_to_heading": "9021",
+      "source_note_number": "Section Note 2(a)",
+      "source_note_text": "articles of heading 7307, 7312, 7315, 7317 or 7318 and similar articles of other base metal, other than articles specially designed for use exclusively in implants in medical, surgical, dental or veterinary sciences (heading 9021)"
+    },
+    {
+      "excluded_product_text": "clock or watch springs",
+      "redirects_to_chapter": "91",
+      "redirects_to_heading": "9114",
+      "source_note_number": "Section Note 2(b)",
+      "source_note_text": "springs and leaves for springs, of base metal, other than clock or watch springs (heading 9114)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 82 or 83 (tools, cutlery; miscellaneous articles of base metal) are excluded from Chapters 72 to 76 and 78 to 81",
+      "redirects_to_chapter": "82",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 2",
+      "source_note_text": "Subject to the preceding paragraph and to Note 1 to Chapter 83, the articles of Chapter 82 or 83 are excluded from Chapters 72 to 76 and 78 to 81."
+    }
+  ],
+  "headings": [
+    {
+      "heading": "7201",
+      "title": "Pig iron and spiegeleisen in pigs, blocks or other primary forms.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7201.10",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7201.10.00",
+              "description": "Non-alloy pig iron containing by weight 05 percent or less of phosphorus",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7201.20",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7201.20.00",
+              "description": "Non-alloy pig iron containing by weight more than 05 percent of phosphorus",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7201.50",
+          "title": "Alloy pig iron; spiegeleisen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7201.50.10",
+              "description": "Cast iron",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7201.50.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7202",
+      "title": "Ferro-alloys.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7202.11",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7202.11.00",
+              "description": "Ferro-manganese : -- Containing by weight more than 2 percent of carbon",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7202.19",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7202.19.00",
+              "description": "Ferro-manganese : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7202.21",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7202.21.00",
+              "description": "Ferro-silicon : -- Containing by weight more than 55 percent of silicon",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7202.29",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7202.29.00",
+              "description": "Ferro-silicon : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7202.30",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7202.30.00",
+              "description": "Ferro-silico-manganese",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7202.41",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7202.41.00",
+              "description": "Ferro-chromium : -- Containing by weight more than 4 percent of carbon",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7202.49",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7202.49.00",
+              "description": "Ferro-chromium : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7202.50",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7202.50.00",
+              "description": "Ferro-silico-chromium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7202.60",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7202.60.00",
+              "description": "Ferro-nickel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7202.70",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7202.70.00",
+              "description": "Ferro-molybdenum",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7202.80",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7202.80.00",
+              "description": "Ferro-tungsten and ferro-silico-tungsten",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7202.91",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7202.91.00",
+              "description": "Other : -- Ferro-titanium and ferro-silico-titanium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7202.92",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7202.92.00",
+              "description": "Other : -- Ferro-vanadium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7202.93",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7202.93.00",
+              "description": "Other : -- Ferro-niobium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7202.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7202.99.11",
+              "description": "Ferro-phosphorus, Ferro-selenium, Ferro-cobalt, Ferro-columbium, Ferro-zirconium, Ferro-tantalum: ---- Ferro-phosphorus",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7202.99.12",
+              "description": "Ferro-phosphorus, Ferro-selenium, Ferro-cobalt, Ferro-columbium, Ferro-zirconium, Ferro-tantalum: ---- Ferro-selenium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7202.99.13",
+              "description": "Ferro-phosphorus, Ferro-selenium, Ferro-cobalt, Ferro-columbium, Ferro-zirconium, Ferro-tantalum: ---- Ferro-cobalt",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7202.99.14",
+              "description": "Ferro-phosphorus, Ferro-selenium, Ferro-cobalt, Ferro-columbium, Ferro-zirconium, Ferro-tantalum: ---- Ferro-columbium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7202.99.15",
+              "description": "Ferro-phosphorus, Ferro-selenium, Ferro-cobalt, Ferro-columbium, Ferro-zirconium, Ferro-tantalum: ---- Ferro-zirconium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7202.99.16",
+              "description": "Ferro-phosphorus, Ferro-selenium, Ferro-cobalt, Ferro-columbium, Ferro-zirconium, Ferro-tantalum: ---- Ferro-tantalum",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7202.99.21",
+              "description": "Ferro-silico-zirconium, Ferro-silico-magnesium: ---- Ferro-silico-zirconium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7202.99.22",
+              "description": "Ferro-silico-zirconium, Ferro-silico-magnesium: ---- Ferro-silico-magnesium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7202.99.31",
+              "description": "Ferro-boron, Charge-chrome: ---- Ferro-boron",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7202.99.32",
+              "description": "Ferro-boron, Charge-chrome: ---- Charge-chrome",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7202.99.90",
+              "description": "Ferro-boron, Charge-chrome: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7203",
+      "title": "Ferrous products obtained by direct reduction of iron ore and other spongy ferrous products, in lumps, pellets or similar forms; iron having a minimum purity by weight of 99.94 percent, in lumps, pellets or similar forms.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7203.10",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7203.10.00",
+              "description": "Ferrous products obtained by direct reduction of iron ore",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7203.90",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7203.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7204",
+      "title": "Ferrous waste and scrap; remelting scrap ingots of iron or steel.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7204.10",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7204.10.00",
+              "description": "Waste and scrap of cast iron",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7204.21",
+          "title": "Waste and scrap of alloy steel : -- Of stainless steel",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7204.21.10",
+              "description": "Empty or discharged cartridges of all bores and sizes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7204.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7204.29",
+          "title": "Waste and scrap of alloy steel : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7204.29.10",
+              "description": "Empty or discharged cartridges of all bores and sizes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7204.29.20",
+              "description": "Of high speed steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7204.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7204.30",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7204.30.00",
+              "description": "Waste and scrap of tinned iron or steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7204.41",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7204.41.00",
+              "description": "Other waste and scrap : -- Turnings, shavings, chips, milling waste, sawdust, filings, trimmings and stampings, whether or not in bundles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7204.49",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7204.49.00",
+              "description": "Other waste and scrap : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7204.50",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7204.50.00",
+              "description": "Remelting scrap ingots",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7205",
+      "title": "Granules and powders, of pig iron, spiegeleisen, iron or steel.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7205.10",
+          "title": "Granules",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7205.10.11",
+              "description": "Of iron: ---- Shot and angular grit",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7205.10.12",
+              "description": "Of iron: ---- Wire pellets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7205.10.19",
+              "description": "Of iron: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7205.10.21",
+              "description": "Of alloy steel: ---- Shot and angular grit",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7205.10.22",
+              "description": "Of alloy steel: ---- Wire pellets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7205.10.29",
+              "description": "Of alloy steel: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7205.10.90",
+              "description": "Of alloy steel: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7205.21",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7205.21.00",
+              "description": "Powders : -- Of alloy steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7205.29",
+          "title": "Powders : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7205.29.10",
+              "description": "Of iron",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7205.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7206",
+      "title": "Iron and non-alloy steel in ingots or other primary forms (excluding iron of heading 72.03).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7206.10",
+          "title": "Ingots",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7206.10.10",
+              "description": "Of iron",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7206.10.20",
+              "description": "Of high carbon steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7206.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7206.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7206.90.11",
+              "description": "Powders: ---- Puddled bars and pilings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7206.90.12",
+              "description": "Powders: ---- Blocks, lumps and similar forms",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7206.90.19",
+              "description": "Powders: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7206.90.91",
+              "description": "Other : ---- Puddled bars and pilings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7206.90.92",
+              "description": "Other : ---- Blocks, lumps and similar forms",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7206.90.99",
+              "description": "Other : ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7207",
+      "title": "Semi-finished products of iron or non-alloy steel.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7207.11",
+          "title": "Containing by weight less than 0.25 percent of carbon : -- Of rectangular (including square) cross-section, the width measuring less than twice the thickness",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7207.11.10",
+              "description": "Electrical quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7207.11.20",
+              "description": "Forging quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7207.11.30",
+              "description": "Seamless steel tube quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7207.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7207.12",
+          "title": "Containing by weight less than 0.25 percent of carbon :- Containing by weight less than 0.25 percent of carbon : -- Other, of rectangular (other than square) cross-section",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7207.12.10",
+              "description": "Electrical quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7207.12.20",
+              "description": "Forging quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7207.12.30",
+              "description": "Seamless steel tube quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7207.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7207.19",
+          "title": "Containing by weight less than 0.25 percent of carbon : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7207.19.10",
+              "description": "Forged blanks of non-alloy steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7207.19.20",
+              "description": "Mild steel billets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7207.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7207.20",
+          "title": "Containing by weight 0.25 percent or more of carbon",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7207.20.10",
+              "description": "Forging quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7207.20.20",
+              "description": "Spring steel quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7207.20.30",
+              "description": "Seamless steel tube quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7207.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7208",
+      "title": "Flat-rolled products of iron or non-alloy steel, of a width of 600 mm or more, hot-rolled, not clad, plated or coated.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7208.10",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7208.10.00",
+              "description": "In coils, not further worked than hot-rolled, with patterns in relief",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7208.25",
+          "title": "Other, in coils, not further worked than hot-rolled, pickled : -- Of a thickness of 4.75 mm or more",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7208.25.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.25.20",
+              "description": "Universal plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.25.30",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.25.40",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.25.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7208.26",
+          "title": "Other, in coils, not further worked than hot-rolled, pickled : -- Of a thickness of 3 mm or more but less than 4.75 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7208.26.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.26.20",
+              "description": "Universal plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.26.30",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.26.40",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.26.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7208.27",
+          "title": "Other, in coils, not further worked than hot-rolled, pickled :s -- Of a thickness of less than 3 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7208.27.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.27.20",
+              "description": "Universal plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.27.30",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.27.40",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.27.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7208.36",
+          "title": "Other, in coils, not further worked than hot-rolled : -- Of a thickness exceeding 10 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7208.36.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.36.20",
+              "description": "Universal plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.36.30",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.36.40",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.36.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7208.37",
+          "title": "Other, in coils, not further worked than hot-rolled : -- Of a thickness of 4.75 mm or more but not exceeding 10 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7208.37.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.37.20",
+              "description": "Universal plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.37.30",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.37.40",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.37.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7208.38",
+          "title": "Other, in coils, not further worked than hot-rolled : -- Of a thickness of 3 mm or more but less than 4.75 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7208.38.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.38.20",
+              "description": "Universal plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.38.30",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.38.40",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.38.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7208.39",
+          "title": "Other, in coils, not further worked than hot-rolled : -- Of a thickness of less than 3 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7208.39.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.39.20",
+              "description": "Universal plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.39.30",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.39.40",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.39.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7208.40",
+          "title": "Not in coils, not further worked than hot-rolled, with patterns in relief",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7208.40.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.40.20",
+              "description": "Universal plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.40.30",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.40.40",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7208.51",
+          "title": "Other, not in coils, not further worked than hot-rolled : -- Of a thickness exceeding 10 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7208.51.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.51.20",
+              "description": "Universal plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.51.30",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.51.40",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.51.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7208.52",
+          "title": "Other, not in coils, not further worked than hot-rolled : -- Of a thickness of 4.75 mm or more but not exceeding 10 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7208.52.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.52.20",
+              "description": "Universal plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.52.30",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.52.40",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.52.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7208.53",
+          "title": "Other, not in coils, not further worked than hot-rolled : -- Of a thickness of 3 mm or more but less than 4.75 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7208.53.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.53.20",
+              "description": "Universal plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.53.30",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.53.40",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.53.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7208.54",
+          "title": "Other, not in coils, not further worked than hot-rolled : -- Of a thickness of less than 3 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7208.54.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.54.20",
+              "description": "Universal plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.54.30",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.54.40",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7208.54.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7208.90",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7208.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7209",
+      "title": "Flat-rolled products of iron or non-alloy steel, of a width of 600 mm or more, cold-rolled (cold-reduced), not clad, plated or coated.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7209.15",
+          "title": "In coils, not further worked than cold-rolled (cold-reduced) : -- Of a thickness of 3 mm or more",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7209.15.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.15.20",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.15.30",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.15.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7209.16",
+          "title": "In coils, not further worked than cold-rolled (cold-reduced) : -- Of a thickness exceeding 1 mm but less than 3 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7209.16.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.16.20",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.16.30",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.16.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7209.17",
+          "title": "In coils, not further worked than cold-rolled (cold-reduced) : -- Of a thickness of 0.5 mm or more but not exceeding 1 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7209.17.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.17.20",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.17.30",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.17.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7209.18",
+          "title": "In coils, not further worked than cold-rolled (cold-reduced) : -- Of a thickness of less than 0.5 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7209.18.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.18.20",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.18.30",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.18.90",
+              "description": "Other Not in coils, not further worked than cold-rolled (cold-reduced):",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7209.25",
+          "title": "Not in coils, not further worked than cold-rolled (cold-reduced) : -- Of a thickness of 3 mm or more",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7209.25.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.25.20",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.25.30",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.25.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7209.26",
+          "title": "Not in coils, not further worked than cold-rolled (cold-reduced) : -- Of a thickness exceeding 1 mm but less than 3 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7209.26.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.26.20",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.26.30",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.26.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7209.27",
+          "title": "Not in coils, not further worked than cold-rolled (cold-reduced) : -- Of a thickness of 0.5 mm or more but not exceeding 1 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7209.27.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.27.20",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.27.30",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.27.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7209.28",
+          "title": "Not in coils, not further worked than cold-rolled (cold-reduced) : -- Of a thickness of less than 0.5 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7209.28.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.28.20",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.28.30",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7209.28.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7209.90",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7209.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7210",
+      "title": "Flat-rolled products of iron or non-alloy steel, of a width of 600 mm or more, clad, plated or coated.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7210.11",
+          "title": "Plated or coated with tin : -- Of a thickness of 0.5 mm or more",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7210.11.10",
+              "description": "OTS/MR Type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7210.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7210.12",
+          "title": "Plated or coated with tin : -- Of a thickness of less than 0.5 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7210.12.10",
+              "description": "OTS/MR Type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7210.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7210.20",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7210.20.00",
+              "description": "Plated or coated with lead, including terne-plate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7210.30",
+          "title": "Electrolytically plated or coated with zinc",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7210.30.10",
+              "description": "Corrugated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7210.30.91",
+              "description": "Other:----Galvannealed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7210.30.99",
+              "description": "Other:----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7210.41",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7210.41.00",
+              "description": "Otherwise plated or coated with zinc : -- Corrugated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7210.49",
+          "title": "Otherwise plated or coated with zinc : Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7210.49.10",
+              "description": "Galvannealed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7210.49.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7210.50",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7210.50.00",
+              "description": "Plated or coated with chromium oxides or with chromium and chromium oxides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7210.61",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7210.61.00",
+              "description": "Plated or coated with aluminium : -- Plated or coated with aluminium-zinc alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7210.69",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7210.69.00",
+              "description": "Plated or coated with aluminium : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7210.70",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7210.70.00",
+              "description": "Painted, varnished or coated with plastics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7210.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7210.90.10",
+              "description": "Lacquered",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7210.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7211",
+      "title": "Flat-rolled products of iron or non-alloy steel, of a width of less than 600 mm, not clad, plated or coated.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7211.13",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7211.13.00",
+              "description": "Not further worked than hot-rolled : -- Rolled on four faces or in a closed box pass, of a width exceeding 150 mm and a thickness of not less than 4 mm, not in coils and without patterns in relief",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7211.14",
+          "title": "Not further worked than hot-rolled : -- Other, of a thickness of 4.75 mm or more",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7211.14.10",
+              "description": "Flats",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.14.20",
+              "description": "Universal plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.14.30",
+              "description": "Hoops",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.14.40",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.14.50",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.14.60",
+              "description": "Skelp",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.14.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7211.19",
+          "title": "Not further worked than hot-rolled : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7211.19.10",
+              "description": "Flats",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.19.20",
+              "description": "Universal plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.19.30",
+              "description": "Hoops",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.19.40",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.19.50",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.19.60",
+              "description": "Skelp",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7211.23",
+          "title": "Not further worked than cold-rolled (cold-reduced) : -- Containing by weight less than 0.25 percent of carbon",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7211.23.10",
+              "description": "Flats",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.23.20",
+              "description": "Universal plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.23.30",
+              "description": "Hoops",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.23.40",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.23.50",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.23.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7211.29",
+          "title": "Not further worked than cold-rolled (cold-reduced) : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7211.29.10",
+              "description": "Flats",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.29.20",
+              "description": "Universal plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.29.30",
+              "description": "Hoops",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.29.40",
+              "description": "Sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.29.50",
+              "description": "Strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.29.60",
+              "description": "Skelp",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7211.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7211.90.11",
+              "description": "Universal plates: ---- Of boiler quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.90.12",
+              "description": "Universal plates: ---- Of high tensile quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.90.13",
+              "description": "Universal plates: ----Of ship building quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7211.90.90",
+              "description": "Universal plates: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7212",
+      "title": "Flat-rolled products of iron or non-alloy steel, of a width of less than 600 mm, clad, plated or coated.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7212.10",
+          "title": "Plated or coated with tin",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7212.10.10",
+              "description": "OTS/MR Type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7212.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7212.20",
+          "title": "Electrolytically plated or coated with zinc",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7212.20.10",
+              "description": "Corrugated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7212.20.91",
+              "description": "Other:----Galvannealed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7212.20.99",
+              "description": "Other:----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7212.30",
+          "title": "Otherwise plated or coated with zinc",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7212.30.10",
+              "description": "Corrugated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7212.30.91",
+              "description": "Other:----Galvannealed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7212.30.99",
+              "description": "Other:----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7212.40",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7212.40.00",
+              "description": "Painted, varnished or coated with plastics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7212.50",
+          "title": "Otherwise plated or coated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7212.50.10",
+              "description": "Plated or coated with lead",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7212.50.20",
+              "description": "Lacquered",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7212.50.30",
+              "description": "plated or coated with aluminium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7212.50.40",
+              "description": "plated or coated with aluminium-zinc alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7212.50.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7212.60",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7212.60.00",
+              "description": "Clad",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7213",
+      "title": "Bars and rods, hot-rolled, in irregularly wound coils, of iron or non-alloy steel.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7213.10",
+          "title": "Containing indentations, ribs, grooves or other deformations produced during the rolling process",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7213.10.10",
+              "description": "Of free cutting steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7213.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7213.20",
+          "title": "Other, of free-cutting steel",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7213.20.10",
+              "description": "Electrode quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7213.20.20",
+              "description": "Cold heading quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7213.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7213.91",
+          "title": "Other : -- Of circular cross-section measuring less than 14 mm in diameter",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7213.91.10",
+              "description": "Electrode quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7213.91.20",
+              "description": "Cold heading quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7213.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7213.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7213.99.10",
+              "description": "Electrode quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7213.99.20",
+              "description": "Cold heading quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7213.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7214",
+      "title": "Other bars and rods of iron or non-alloy steel, not further worked than forged, hot-rolled, hot-drawn or hot-extruded, but including those twisted after rolling.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7214.10",
+          "title": "Forged",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7214.10.10",
+              "description": "Spring steel quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7214.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7214.20",
+          "title": "Containing indentations, ribs, grooves or other deformations produced during the rolling process or twisted after rolling",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7214.20.10",
+              "description": "Spring steel quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7214.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7214.30",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7214.30.00",
+              "description": "Other, of free-cutting steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7214.91",
+          "title": "Other : -- Of rectangular (other than square) cross-section",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7214.91.10",
+              "description": "Mild steel bright bar",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7214.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7214.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7214.99.10",
+              "description": "Of spring steel quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7214.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7215",
+      "title": "Other bars and rods of iron or non-alloy steel.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7215.10",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7215.10.00",
+              "description": "of free-cutting steel, not further worked than cold-formed or cold- finished",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7215.50",
+          "title": "Other, not further worked than cold-formed or cold-finished",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7215.50.10",
+              "description": "Mild steel bright bar",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7215.50.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7215.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7215.90.10",
+              "description": "Plated or coated with zinc",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7215.90.20",
+              "description": "Plated or coated with other base metals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7215.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7216",
+      "title": "Angles, shapes and sections of iron or non-alloy steel.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7216.10",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7216.10.00",
+              "description": "U, I or H sections, not further worked than hot-rolled, hot-drawn or extruded, of a height of less than 80 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7216.21",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7216.21.00",
+              "description": "L or T sections, not further worked than hot-rolled, hot-drawn or extruded, of a height of less than 80 mm : -- L sections",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7216.22",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7216.22.00",
+              "description": "L or T sections, not further worked than hot-rolled, hot-drawn or extruded, of a height of less than 80 mm : -- T sections",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7216.31",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7216.31.00",
+              "description": "U, I or H sections, not further worked than hot-rolled, hot-drawn or extruded of a height of 80 mm or more : --U sections",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7216.32",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7216.32.00",
+              "description": "U, I or H sections, not further worked than hot-rolled, hot-drawn or extruded of a height of 80 mm or more : -- I sections",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7216.33",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7216.33.00",
+              "description": "U, I or H sections, not further worked than hot-rolled, hot-drawn or extruded of a height of 80 mm or more : -- H sections",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7216.40",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7216.40.00",
+              "description": "L or T sections, not further worked than hot-rolled, hot-drawn or extruded, of a height of 80 mm or more",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7216.50",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7216.50.00",
+              "description": "Other angles, shapes and sections, not further worked than hotrolled, hot-drawn or extruded",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7216.61",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7216.61.00",
+              "description": "Angles, shapes and sections, not further worked than cold-formed or cold-finished : -- Obtained from flat-rolled products",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7216.69",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7216.69.00",
+              "description": "Angles, shapes and sections, not further worked than cold-formed or cold-finished : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7216.91",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7216.91.00",
+              "description": "Other : -- Cold-formed or cold-finished from flat-rolled products",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7216.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7216.99.10",
+              "description": "Plated or coated with zinc",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7216.99.20",
+              "description": "Plated or coated with base metals other than zinc",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7216.99.30",
+              "description": "Slotted angles and slotted channels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7216.99.40",
+              "description": "Forged",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7216.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7217",
+      "title": "Wire of iron or non-alloy steel.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7217.10",
+          "title": "Not plated or coated, whether or not polished",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7217.10.10",
+              "description": "Of a thickness of 18 SWG and below",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7217.10.20",
+              "description": "Of a thickness above 18 SWG but upto 26 SWG",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7217.10.30",
+              "description": "Of a thickness above 26 SWG",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7217.20",
+          "title": "Plated or coated with zinc",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7217.20.10",
+              "description": "Of a thickness of 18 SWG and below",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7217.20.20",
+              "description": "Of a thickness above 18 SWG but upto 26 SWG",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7217.20.30",
+              "description": "Of a thickness above 26 SWG",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7217.30",
+          "title": "Plated or coated with other base metals",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7217.30.10",
+              "description": "Of a thickness of 18 SWG and below",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7217.30.20",
+              "description": "Of a thickness above 18 SWA but upto 26 SWG",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7217.30.30",
+              "description": "Of a thickness above 26 SWG",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7217.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7217.90.11",
+              "description": "Shaped and profiled wire: ---- Of cross section - half round",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7217.90.12",
+              "description": "Shaped and profiled wire: ---- Of cross section - flat and rectangular",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7217.90.13",
+              "description": "Shaped and profiled wire: ---- Of cross section - z shaped",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7217.90.19",
+              "description": "Shaped and profiled wire: ---- Of cross section - other shapes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7217.90.91",
+              "description": "Other: ---- High tensile quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7217.90.92",
+              "description": "Other: ---- Electrode quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7217.90.93",
+              "description": "Other: ---- Electric resistance wire (including electric resistance heating wire)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7217.90.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7218",
+      "title": "Stainless steel in ingots or other primary forms; semi-finished products of stainless steel.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7218.10",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7218.10.00",
+              "description": "Ingots and other primary forms",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7218.91",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7218.91.00",
+              "description": "Other : -- Of rectangular (other than square) cross-section",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7218.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7218.99.10",
+              "description": "Billets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7218.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7219",
+      "title": "Flat-rolled products of stainless steel, of a width of 600 mm or more.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7219.11",
+          "title": "Not further worked than hot-rolled, in coils : -- Of a thickness exceeding 10 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7219.11.11",
+              "description": "Chromium type: ---- Not exceeding 14 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.11.12",
+              "description": "Chromium type: ---- Exceeding 14 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.11.90",
+              "description": "Chromium type: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7219.12",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7219.12.00",
+              "description": "Not further worked than hot-rolled, in coils : -- Of a thickness of 4.75 mm or more but not exceeding 10 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7219.13",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7219.13.00",
+              "description": "Not further worked than hot-rolled, in coils : -- Of a thickness of 3 mm or more but less than 4.75 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7219.14",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7219.14.00",
+              "description": "Not further worked than hot-rolled, not in coils : -- Of a thickness of less than 3 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7219.21",
+          "title": "Not further worked than hot-rolled, not in coils : -- Of a thickness exceeding 10 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7219.21.11",
+              "description": "Not exceeding 14 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.21.12",
+              "description": "Exceeding 14 mm Universal plates of stainless steel/heat resisting steel, nickel chromium austenitic type:",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.21.21",
+              "description": "Not exceeding 14 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.21.22",
+              "description": "Exceeding 14 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.21.31",
+              "description": "Other Chromium type: ---- Not exceeding 14 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.21.32",
+              "description": "Other Chromium type: ---- Exceeding 14 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.21.41",
+              "description": "Other Nickel chromium austenitic type: ---- Not exceeding 14 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.21.42",
+              "description": "Other Nickel chromium austenitic type: ---- Exceeding 14 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.21.90",
+              "description": "Other Nickel chromium austenitic type: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7219.22",
+          "title": "Not further worked than hot-rolled, not in coils : -- Of a thickness of 4.75 mm or more but not exceeding 10 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7219.22.11",
+              "description": "Universal plates of stainless steel or heat resisting steel: ---- Chromium type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.22.12",
+              "description": "Universal plates of stainless steel or heat resisting steel: ---- Nickel chromium austenitic type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.22.19",
+              "description": "Universal plates of stainless steel or heat resisting steel: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.22.91",
+              "description": "Other: ---- Chromium type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.22.92",
+              "description": "Other: ---- Nickel chromium austenitic type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.22.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7219.23",
+          "title": "Not further worked than hot-rolled, not in coils : -- Of a thickness of 3 mm or more but less than 4.75 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7219.23.10",
+              "description": "Chromium type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.23.20",
+              "description": "Nickel chromium austenitic type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.23.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7219.24",
+          "title": "Not further worked than hot-rolled, not in coils : -- Of a thickness of less than 3 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7219.24.11",
+              "description": "Chromium type, of a thickness: ---- Below 0.35 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.24.12",
+              "description": "Chromium type, of a thickness: ---- 0.35 mm and above but below 0.56 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.24.13",
+              "description": "Chromium type, of a thickness: ---- 0.56 mm and above but below 0.90 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.24.19",
+              "description": "Chromium type, of a thickness: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.24.21",
+              "description": "Nickel chromium austenitic type, of a thickness: ---- Below 0.35 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.24.22",
+              "description": "Nickel chromium austenitic type, of a thickness: ---- 0.35 mm and above but below 0.56 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.24.23",
+              "description": "Nickel chromium austenitic type, of a thickness: ---- 0.56 mm and above but below 0.90 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.24.29",
+              "description": "Nickel chromium austenitic type, of a thickness: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.24.90",
+              "description": "Nickel chromium austenitic type, of a thickness: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7219.31",
+          "title": "Not further worked than cold-rolled (cold-reduced) : -- Of a thickness of 4.75 mm or more",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7219.31.11",
+              "description": "Chromium type: ---- Not exceeding 14 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.31.12",
+              "description": "Chromium type: ---- Exceeding 14 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.31.21",
+              "description": "Nickel chromium austenitic type: ---- Not exceeding 14 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.31.22",
+              "description": "Nickel chromium austenitic type: ---- Exceeding 14 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.31.90",
+              "description": "Nickel chromium austenitic type: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7219.32",
+          "title": "Not further worked than cold-rolled (cold-reduced) : -- Of a thickness of 3 mm or more but less than 4.75 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7219.32.10",
+              "description": "Chromium type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.32.20",
+              "description": "Nickel chromium austenitic type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.32.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7219.33",
+          "title": "Not further worked than cold-rolled (cold-reduced) : -- Of a thickness exceeding 1 mm but less than 3 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7219.33.10",
+              "description": "Chromium type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.33.20",
+              "description": "Nickel chromium austenitic type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.33.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7219.34",
+          "title": "Not further worked than cold-rolled (cold-reduced) : -- Of a thickness of 0.5 mm or more but not exceeding 1 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7219.34.10",
+              "description": "Chromium type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.34.20",
+              "description": "Nickel chromium austenitic type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.34.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7219.35",
+          "title": "Not further worked than cold-rolled (cold-reduced) : -- Of a thickness of less than 0.5 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7219.35.10",
+              "description": "Chromium type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.35.20",
+              "description": "Nickel chromium austenitic type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.35.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7219.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7219.90.11",
+              "description": "Sheets and plates: ---- Thickness more than 4.75 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.90.12",
+              "description": "Sheets and plates: ---- Thickness 3 mm to 4.75 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.90.13",
+              "description": "Sheets and plates: ---- Thickness less than 3 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7219.90.90",
+              "description": "Sheets and plates: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7220",
+      "title": "Flat-rolled products of stainless steel, of a width of less than 600 mm.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7220.11",
+          "title": "Not further worked than hot-rolled : -- Of a thickness of 4.75 mm or more",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7220.11.10",
+              "description": "Skelp for pipes and tubes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7220.11.21",
+              "description": "Strips for pipes and tubes (other than skelp): ---- Chromium type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7220.11.22",
+              "description": "Strips for pipes and tubes (other than skelp): ---- Nickel chromium austenitic type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7220.11.29",
+              "description": "Strips for pipes and tubes (other than skelp): ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7220.11.90",
+              "description": "Strips for pipes and tubes (other than skelp): ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7220.12",
+          "title": "Not further worked than hot-rolled : -- Of a thickness of less than 4.75 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7220.12.10",
+              "description": "Skelp for pipes and tubes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7220.12.21",
+              "description": "Strips for pipes and tubes (other than skelp): ---- Chromium type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7220.12.22",
+              "description": "Strips for pipes and tubes (other than skelp): ---- Nickel chromium austenitic type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7220.12.29",
+              "description": "Strips for pipes and tubes (other than skelp): ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7220.12.90",
+              "description": "Strips for pipes and tubes (other than skelp): ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7220.20",
+          "title": "Not further worked than cold-rolled (cold-reduced)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7220.20.10",
+              "description": "Strips for pipes and tubes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7220.20.21",
+              "description": "Strips for pipes and tubes (other than skelp): ---- Chromium type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7220.20.22",
+              "description": "Strips for pipes and tubes (other than skelp): ---- Nickel chromium austenitic type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7220.20.29",
+              "description": "Strips for pipes and tubes (other than skelp): ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7220.20.90",
+              "description": "Strips for pipes and tubes (other than skelp): ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7220.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7220.90.10",
+              "description": "Skelp (strips for pipes and tubes)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7220.90.21",
+              "description": "Strips for pipes and tubes (other than skelp): ---- Chromium type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7220.90.22",
+              "description": "Strips for pipes and tubes (other than skelp): ---- Nickel chromium austenitic type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7220.90.29",
+              "description": "Strips for pipes and tubes (other than skelp): ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7220.90.90",
+              "description": "Strips for pipes and tubes (other than skelp): ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7221",
+      "title": "Bars and rods, hot-rolled, in irregularly wound coils, of stainless steel.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7221.00",
+          "title": "Bars and rods, hot-rolled, in irregularly wound coils, of stainless steel :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7221.00.11",
+              "description": "Bright bars: ---- Chromium type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7221.00.12",
+              "description": "Bright bars: ---- Nickel chromium austenitic type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7221.00.19",
+              "description": "Bright bars: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7221.00.90",
+              "description": "Bright bars: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7222",
+      "title": "Other bars and rods of stainless steel; angles, shapes and sections of stainless steel.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7222.11",
+          "title": "Bars and rods, not further worked than hot-rolled, hot-drawn or extruded : -- Of circular cross-section",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7222.11.11",
+              "description": "Bright bars: ---- Chromium type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.11.12",
+              "description": "Bright bars: ---- Nickel chromium austenitic type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.11.19",
+              "description": "Bright bars: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.11.91",
+              "description": "Other: ---- Chromium type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.11.92",
+              "description": "Other: ---- Nickel chromium austenitic type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.11.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7222.19",
+          "title": "Bars and rods, not further worked than hot-rolled, hot-drawn or extruded : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7222.19.11",
+              "description": "Bright bars: ---- Chromium type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.19.12",
+              "description": "Bright bars: ---- Nickel chromium austenitic type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.19.19",
+              "description": "Bright bars: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.19.91",
+              "description": "Other: ---- Chromium type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.19.92",
+              "description": "Other: ---- Nickel chromium austenitic type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.19.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7222.20",
+          "title": "Bars and rods, not further worked than cold-formed or cold-finished",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7222.20.11",
+              "description": "Bright bars: ---- Chromium type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.20.12",
+              "description": "Bright bars: ---- Nickel chromium austenitic type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.20.19",
+              "description": "Bright bars: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.20.91",
+              "description": "Other: ---- Chromium type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.20.92",
+              "description": "Other: ---- Nickel chromium austenitic type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.20.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7222.30",
+          "title": "Other bars and rods",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7222.30.11",
+              "description": "Bright bars: ---- Chromium type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.30.12",
+              "description": "Bright bars: ---- Nickel chromium austenitic type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.30.19",
+              "description": "Bright bars: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.30.91",
+              "description": "Other: ---- Chromium type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.30.92",
+              "description": "Other: ---- Nickel chromium austenitic type",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.30.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7222.40",
+          "title": "Angles, shapes and sections",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7222.40.10",
+              "description": "Of thickness of 80 mm and above",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7222.40.20",
+              "description": "Of below 80 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7223",
+      "title": "Wire of stainless steel.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7223.00",
+          "title": "Wire of stainless steel :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7223.00.10",
+              "description": "Electrode quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7223.00.91",
+              "description": "Other: ---- Of thickness of above 1.5 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7223.00.92",
+              "description": "Other: ---- Of thickness of 0.46 mm and above but not exceeding 1.5 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7223.00.99",
+              "description": "Other: ---- Of thickness of below 0.46 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7224",
+      "title": "Other alloy steel in ingots or other primary forms; semi-finished products of other alloy steel.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7224.10",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7224.10.00",
+              "description": "Ingots and other primary forms",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7224.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7224.90.10",
+              "description": "Of tool steel quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7224.90.20",
+              "description": "Of die steel quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7224.90.30",
+              "description": "Of cobalt bearing high speed steel quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7224.90.40",
+              "description": "Forged blanks of alloy steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7224.90.91",
+              "description": "Other: ---- Billets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7224.90.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7225",
+      "title": "Flat-rolled products of other alloy steel, of a width of 600 mm or more.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7225.11",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7225.11.00",
+              "description": "Of silicon-electrical steel : -- Grain-oriented",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7225.19",
+          "title": "Of silicon-electrical steel :-- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7225.19.10",
+              "description": "Hot rolled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7225.19.20",
+              "description": "Cold rolled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7225.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7225.30",
+          "title": "Other, not further worked than hot-rolled, in coils",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7225.30.10",
+              "description": "Of spring steel quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7225.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7225.40",
+          "title": "Other, not further worked than hot-rolled, not in coils",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7225.40.11",
+              "description": "Of a thickness of above 4.75 mm: ---- Boiler quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7225.40.12",
+              "description": "Of a thickness of above 4.75 mm: ---- Pressure vessel quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7225.40.13",
+              "description": "Of a thickness of above 4.75 mm: ---- High tensile quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7225.40.19",
+              "description": "Of a thickness of above 4.75 mm: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7225.40.20",
+              "description": "Of a thickness of 3 mm and above but not exceeding 4.75 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7225.40.30",
+              "description": "Of a thickness of above 4.75 mm: ---- Of a thickness of below 3 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7225.50",
+          "title": "Other, not further worked than cold-rolled (cold-reduced)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7225.50.10",
+              "description": "Of a thickness of less than 3 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7225.50.20",
+              "description": "Of a thickness of 3 mm to 4.75 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7225.50.30",
+              "description": "Of a thickness of above 4.5 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7225.91",
+          "title": "Other:--Electrolytically plated or coatedwith zinc:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7225.91.10",
+              "description": "Galvannealed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7225.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7225.92",
+          "title": "Other : -- Otherwise plated or coated with zinc",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7225.92.10",
+              "description": "Galvannealed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7225.92.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7225.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7225.99.10",
+              "description": "plated or coated with aluminium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7225.99.20",
+              "description": "plated or coated with aluminium-zinc alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7225.99.30",
+              "description": "painted, coloured or coated with plastics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7225.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7226",
+      "title": "Flat-rolled products of other alloy steel, of a width of less than 600 mm.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7226.11",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7226.11.00",
+              "description": "Of silicon-electrical steel : -- Grain-oriented",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7226.19",
+          "title": "Of silicon-electrical steel :-- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7226.19.10",
+              "description": "Hot rolled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.19.20",
+              "description": "Cold rolled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7226.20",
+          "title": "Of high speed steel",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7226.20.11",
+              "description": "Hot-rolled: ---- In coils",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.20.12",
+              "description": "Hot-rolled: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.20.21",
+              "description": "Cold-rolled: ---- In coils",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.20.22",
+              "description": "Cold-rolled: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.20.30",
+              "description": "Cold-rolled: ---- Hoops and strips",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7226.91",
+          "title": "Other : -- Not further worked than hot-rolled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7226.91.10",
+              "description": "Of a thickness of below 3 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.91.20",
+              "description": "Of a thickness of 3 mm and above but not exceeding 4.75 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.91.30",
+              "description": "High tensile quality of a thickness of above 4.75 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7226.92",
+          "title": "Other : -- Not further worked than cold-rolled (cold-reduced)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7226.92.10",
+              "description": "Of a thickness of below 3 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.92.20",
+              "description": "Of a thickness of 3 mm and above but not exceeding 4.75 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.92.30",
+              "description": "Of a thickness of above 4.75 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7226.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7226.99.10",
+              "description": "Of a thickness of above 4.75 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.99.20",
+              "description": "Of a thickness of above 3 mm and but not exceeding 4.75 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.99.30",
+              "description": "Of a thickness of below 3 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.99.40",
+              "description": "Skelp (strips for pipes and tubes)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.99.51",
+              "description": "Hoops and strips: ---- Hot rolled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.99.52",
+              "description": "Hoops and strips: ---- Cold rolled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.99.53",
+              "description": "Hoops and strips: ---- Of spring steel, other than skelp",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.99.60",
+              "description": "Hoops and strips: ---- Skelps and strips for razor blades and saw blades",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.99.71",
+              "description": "plated or coated with zinc:----plain and corrugated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.99.72",
+              "description": "plated or coated with zinc:----electrolytically, plain and corrugated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.99.73",
+              "description": "plated or coated with zinc:----Galvannealed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.99.79",
+              "description": "plated or coated with zinc:----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.99.81",
+              "description": "Otherwise coated or plated:----with aluminium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.99.82",
+              "description": "Otherwise coated or plated:----with aluminium-zinc alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.99.83",
+              "description": "Otherwise coated or plated:----painted, coloured or coated with plastics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.99.89",
+              "description": "Otherwise coated or plated:----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7226.99.90",
+              "description": "Hoops and strips: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7227",
+      "title": "Bars and rods, hot-rolled, in irregularly wound coils, of other alloy steel.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7227.10",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7227.10.00",
+              "description": "Of high speed steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7227.20",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7227.20.00",
+              "description": "Of silico-manganese steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7227.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7227.90.10",
+              "description": "Valve spring steel quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7227.90.20",
+              "description": "Other spring steel quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7227.90.30",
+              "description": "Ball bearing quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7227.90.40",
+              "description": "Cold heading quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7227.90.50",
+              "description": "Lead-free cutting quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7227.90.60",
+              "description": "Sulphur free cutting quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7227.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7228",
+      "title": "Other bars and rods of other alloy steel; angles, shapes and sections, of other alloy steel; hollow drill bars and rods, of alloy or non-alloy steel.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7228.10",
+          "title": "Bars and rods, of high speed steel",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7228.10.10",
+              "description": "Bright bars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7228.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7228.20",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7228.20.00",
+              "description": "Bars and rods, of silico-manganese steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7228.30",
+          "title": "Other bars and rods, not further worked than hot-rolled, hot-drawn or extruded",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7228.30.11",
+              "description": "Bright bars: ---- Of alloy tool steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7228.30.19",
+              "description": "Bright bars: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7228.30.21",
+              "description": "Other: ---- Lead bearing steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7228.30.22",
+              "description": "Other: ---- Spring steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7228.30.23",
+              "description": "Other: ---- Sulphur bearing steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7228.30.24",
+              "description": "Other: ---- Tool and die steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7228.30.29",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7228.40",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7228.40.00",
+              "description": "Other bars and rods, not further worked than forged",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7228.50",
+          "title": "Other bars and rods, not further worked than cold-formed or cold-finished",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7228.50.10",
+              "description": "Of engine valves and cold heading steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7228.50.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7228.60",
+          "title": "Other bars and rods",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7228.60.11",
+              "description": "Bright bars: ---- Of alloy tool steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7228.60.12",
+              "description": "Bright bars: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7228.60.91",
+              "description": "Other: ---- Lead bearing steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7228.60.92",
+              "description": "Other: ---- Spring steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7228.60.93",
+              "description": "Other: ---- Sulphur bearing steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7228.60.94",
+              "description": "Other: ---- Tool and die steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7228.60.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7228.70",
+          "title": "Angles, shapes and sections",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7228.70.11",
+              "description": "Not further worked than hot-rolled, hot-drawn or extruded: ---- Of 80 mm or more",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7228.70.12",
+              "description": "Not further worked than hot-rolled, hot-drawn or extruded: ---- Of less than 80 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7228.70.21",
+              "description": "Not further worked than cold-formed or cold-finished: ---- Of 80 mm or more",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7228.70.22",
+              "description": "Not further worked than cold-formed or cold-finished: ---- Of less than 80 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7228.80",
+          "title": "Hollow drill bars and rods",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7228.80.10",
+              "description": "Of alloy steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7228.80.20",
+              "description": "Of non alloy steel, forged",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7228.80.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7229",
+      "title": "Wire of other alloy steel.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7229.20",
+          "title": "",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7229.20.00",
+              "description": "Of silico-manganese steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7229.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7229.90.11",
+              "description": "Tinned wire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.12",
+              "description": "Bronze coated wire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.13",
+              "description": "Trapezoidal wire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.14",
+              "description": "Half round wire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.15",
+              "description": "Crimped wire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.16",
+              "description": "Copper coated wire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.21",
+              "description": "Electrode quality, wire rope quality and ACSR quality, not insulated: ---- Electrode quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.22",
+              "description": "Electrode quality, wire rope quality and ACSR quality, not insulated: ---- Wire rope quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.23",
+              "description": "Electrode quality, wire rope quality and ACSR quality, not insulated: ---- ACSR quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.31",
+              "description": "Wire (excluding wire type lead), spring, high tensile, hardened and tempered wires, not insulated: ---- Wire (excluding wire type lead)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.32",
+              "description": "Wire (excluding wire type lead), spring, high tensile, hardened and tempered wires, not insulated: ---- Spring wire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.33",
+              "description": "Wire (excluding wire type lead), spring, high tensile, hardened and tempered wires, not insulated: ---- High tensile wire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.34",
+              "description": "Wire (excluding wire type lead), spring, high tensile, hardened and tempered wires, not insulated: ---- Hardened and tempered wire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.40",
+              "description": "Wire (excluding wire type lead), spring, high tensile, hardened and tempered wires, not insulated: ---- Other wire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.51",
+              "description": "Shaped and profiled wires of cross-section: ---- Half round",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.52",
+              "description": "Shaped and profiled wires of cross-section: ---- Flat and rectangular",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.53",
+              "description": "Shaped and profiled wires of cross-section: ---- L shape",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.54",
+              "description": "Shaped and profiled wires of cross-section: ---- Z shape",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.59",
+              "description": "Shaped and profiled wires of cross-section: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.60",
+              "description": "Shaped and profiled wires of cross-section: ---- Electric resistance wire (including electric resistance heating wire)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.70",
+              "description": "Shaped and profiled wires of cross-section: ---- Crimped wire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7229.90.90",
+              "description": "Shaped and profiled wires of cross-section: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "policy_conditions": []
+}

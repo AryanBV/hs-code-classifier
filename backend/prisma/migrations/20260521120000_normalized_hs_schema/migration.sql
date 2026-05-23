@@ -1,18 +1,26 @@
--- Phase 2f: Normalized HS schema (additive migration)
+-- Phase 2f: Normalized HS schema (full normalized hierarchy + rules-aware extras)
 --
--- Creates new tables alongside the existing hs_codes table.
--- The legacy hs_codes table is NOT modified or dropped by this migration —
--- that happens in a follow-up Phase 2g migration after the new tables are
--- populated and validated.
+-- Creates the full hierarchy alongside the legacy hs_codes table.
 --
--- Hierarchy:
+-- Hierarchy (FK-enforced):
 --   sections (Roman numeral, e.g. "II")
 --     -> chapters (2-digit, e.g. "09")
 --         -> headings (4-digit, e.g. "0901")
 --             -> subheadings (6-digit with dot, e.g. "0901.21")
+--                 -> tariff_lines (8-digit with dots, e.g. "0901.21.00")
 --
--- Tariff lines (10-digit) continue to live in hs_codes for now. Phase 2g
--- will add a subheading FK to hs_codes and drop the denormalized notes JSONB.
+-- Plus rules-aware sidecars:
+--   chapter_exclusions (structured "Chapter X does not cover Y" clauses, with FK redirect)
+--   policy_conditions (chapter-scoped or code-scoped export policy/licensing clauses)
+--
+-- Legacy `hs_codes` table is not touched by this migration. A follow-up
+-- step (after row-count validation) drops legacy tables: hs_codes,
+-- hs_code_hierarchy, product_synonyms, differentiators.
+
+-- ============================================================
+-- pgvector extension (for tariff_lines.embedding semantic search)
+-- ============================================================
+CREATE EXTENSION IF NOT EXISTS vector;
 
 -- ============================================================
 -- sections
@@ -26,16 +34,22 @@ CREATE TABLE "sections" (
 );
 
 -- ============================================================
--- chapters
+-- chapters — with rules-aware notes categories
 -- ============================================================
 CREATE TABLE "chapters" (
     "chapter" TEXT NOT NULL,
     "section" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "notes" JSONB NOT NULL DEFAULT '[]',
+    "chapter_subheading_notes" JSONB NOT NULL DEFAULT '[]',  -- chapter-wide subheading interpretation rules (Ch.29, 64, 88, 97)
+    "supplementary_notes" JSONB NOT NULL DEFAULT '[]',        -- India-specific tariff-item clarifications (Ch.29)
+    "export_licensing_notes" JSONB NOT NULL DEFAULT '[]',     -- chapter-specific export policy clarifications
+    "definitions" JSONB NOT NULL DEFAULT '[]',                -- legally-decisive Ch.64 outer sole / upper / rubber / leather
+    "extraction_warnings" JSONB NOT NULL DEFAULT '[]',
+    "notes_sources" JSONB NOT NULL DEFAULT '{}',              -- e.g. { wco_patch_source, wco_patch_fetched_at }
     "source_pdf" TEXT,
     "extracted_at" TIMESTAMPTZ,
-    "verified_against_cbic_at" TIMESTAMPTZ,
+    "verified_against_wco_at" TIMESTAMPTZ,
 
     CONSTRAINT "chapters_pkey" PRIMARY KEY ("chapter")
 );
@@ -67,13 +81,16 @@ ALTER TABLE "headings"
     ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- ============================================================
--- subheadings
+-- subheadings — with WCO compliance flags
 -- ============================================================
 CREATE TABLE "subheadings" (
     "subheading" TEXT NOT NULL,
     "heading" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "notes" JSONB NOT NULL DEFAULT '[]',
+    "india_specific" BOOLEAN NOT NULL DEFAULT FALSE,         -- TRUE if this is an India national subdivision not in WCO HS 2022
+    "wco_2022_match" BOOLEAN NOT NULL DEFAULT TRUE,           -- FALSE if 6-digit code doesn't appear in WCO HS 2022 global list
+    "india_specific_note" TEXT,                               -- explanation when india_specific=TRUE
 
     CONSTRAINT "subheadings_pkey" PRIMARY KEY ("subheading")
 );
@@ -141,3 +158,51 @@ ALTER TABLE "policy_conditions"
     ADD CONSTRAINT "pc_chapter_fkey"
     FOREIGN KEY ("chapter") REFERENCES "chapters"("chapter")
     ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- ============================================================
+-- tariff_lines — the 8-digit leaf level (replaces legacy hs_codes)
+-- ============================================================
+CREATE TABLE "tariff_lines" (
+    "code" TEXT NOT NULL,                                     -- "NNNN.NN.NN" with dots
+    "subheading" TEXT NOT NULL,                               -- FK to subheadings
+    "description" TEXT NOT NULL,
+    "unit" TEXT,                                              -- "kg" | "u" | "l" | null
+    "export_policy" TEXT,                                     -- "Free" | "Restricted" | "Prohibited" | null
+    "policy_condition" TEXT,                                  -- free-form India export-policy condition text
+    "embedding" vector(1536),                                 -- pgvector for semantic search (populated later)
+
+    CONSTRAINT "tariff_lines_pkey" PRIMARY KEY ("code")
+);
+
+CREATE INDEX "idx_tl_subheading" ON "tariff_lines"("subheading");
+CREATE INDEX "idx_tl_export_policy" ON "tariff_lines"("export_policy");
+CREATE INDEX "idx_tl_description_fts" ON "tariff_lines"
+    USING GIN (to_tsvector('english', "description"));
+
+ALTER TABLE "tariff_lines"
+    ADD CONSTRAINT "tariff_lines_subheading_fkey"
+    FOREIGN KEY ("subheading") REFERENCES "subheadings"("subheading")
+    ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- pgvector HNSW index will be created post-load (requires data to be present)
+-- See backend/scripts/create-hnsw-index.ts after the load step.
+
+-- ============================================================
+-- code prefix consistency constraints (defence-in-depth)
+-- ============================================================
+ALTER TABLE "headings"
+    ADD CONSTRAINT "headings_prefix_chk" CHECK (LEFT("heading", 2) = "chapter");
+
+ALTER TABLE "subheadings"
+    ADD CONSTRAINT "subheadings_prefix_chk" CHECK (LEFT("subheading", 4) = "heading");
+
+ALTER TABLE "tariff_lines"
+    ADD CONSTRAINT "tariff_lines_prefix_chk" CHECK (LEFT("code", 7) = "subheading");
+
+-- ============================================================
+-- Format-validation constraints (length + dot positions)
+-- ============================================================
+ALTER TABLE "chapters" ADD CONSTRAINT "chapters_format_chk" CHECK ("chapter" ~ '^\d{2}$');
+ALTER TABLE "headings" ADD CONSTRAINT "headings_format_chk" CHECK ("heading" ~ '^\d{4}$');
+ALTER TABLE "subheadings" ADD CONSTRAINT "subheadings_format_chk" CHECK ("subheading" ~ '^\d{4}\.\d{2}$');
+ALTER TABLE "tariff_lines" ADD CONSTRAINT "tariff_lines_format_chk" CHECK ("code" ~ '^\d{4}\.\d{2}\.\d{2}$');

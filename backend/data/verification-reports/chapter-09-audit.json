@@ -1,0 +1,150 @@
+{
+  "chapter": "09",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings_count": 0,
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "0901.11.11",
+        "in_pdf": true,
+        "pdf_description": "09011111 proportion. Free 09011112 Coffee, not roasted : --Not decaffeinated Free 09011113 Arabica plantation: ---- A Gr",
+        "json_description": "Arabica plantation: ---- A Grade",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0901.11.42",
+        "in_pdf": true,
+        "pdf_description": "09011142 Rob cherry: ---- PB Grade Free 09011143 Rob cherry: ---- C Grade Free 09011144 Rob cherry: ---- B/B/B Grade Fre",
+        "json_description": "Rob cherry: ---- PB Grade",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0902.10.10",
+        "in_pdf": true,
+        "pdf_description": "09021010 09021020 Green tea (not fermented) in immediate packings of a content not exceeding 3 kg 09021030 09021090 Cont",
+        "json_description": "Contents not exceeding 25 g.",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0902.40.20",
+        "in_pdf": true,
+        "pdf_description": "09024020 09024030 Other black tea (fermented) and other partly 09024040 fermented tea 09024050 09024060 Content exceedin",
+        "json_description": "Black Tea, leaf in bulk",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0904.11.80",
+        "in_pdf": true,
+        "pdf_description": "09041180 Pepper other than green, frozen Free Subject to Policy 32/2015-20 04.10.2017 09041190 Other Free Condition 1 of",
+        "json_description": "Pepper other than green, frozen",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0906.19.90",
+        "in_pdf": true,
+        "pdf_description": "09061990 Cinnamon tree flowers Free Subject to Policy 32/2015-20 04.10.2017 09062000 Condition 1 of the 0907 Other",
+        "json_description": "other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0908.31.30",
+        "in_pdf": true,
+        "pdf_description": "09083130 Condition 1 of the 09083140 Large ( amomum) Free Chapter 32/2015-20 04.10.2017 09083150 090831",
+        "json_description": "Small, coorg green",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0909.31.29",
+        "in_pdf": true,
+        "pdf_description": "09093129 Cumin, other than black: ---- Of seed quality Free 32/2015-20 04.10.2017 09093200 Subject to Policy 090961 Cum",
+        "json_description": "Cumin, other than black: ---- Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0910.11.10",
+        "in_pdf": true,
+        "pdf_description": "09101110 09101120 Ginger : -- Neither crushed nor ground 09101130 09101190 Fresh Free Subject to Policy 32/2015-20 04.10",
+        "json_description": "Fresh",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0910.99.11",
+        "in_pdf": true,
+        "pdf_description": "09109911 Condition 1 of the 09109912 Other Free Chapter 32/2015-20 04.10.2017",
+        "json_description": "Seed: ---- Celery",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      }
+    ],
+    "hierarchy_errors": [],
+    "missed_codes": [],
+    "extra_codes": [],
+    "subheading_checks": [
+      {
+        "subheading": "0901.11",
+        "title": "Coffee, not roasted : --Not decaffeinated",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0902.30",
+        "title": "Black tea (fermented) and partly fermented tea, in immediate packings of a content not exceeding 3 kg",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0905.20",
+        "title": "Crushed or ground",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0908.21",
+        "title": "Mace : --Neither crushed nor ground",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0909.61",
+        "title": "Seeds of anise, badian, caraway or fennel; juniper berries : --Neither crushed nor ground",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      }
+    ],
+    "note_mismatches": [],
+    "count_check": {
+      "json_h": 10,
+      "pdf_h_estimate": 10,
+      "json_sh": 39,
+      "pdf_sh_estimate": 39,
+      "json_tl": 142,
+      "pdf_tl_estimate": 142
+    }
+  },
+  "fix_needed": null
+}

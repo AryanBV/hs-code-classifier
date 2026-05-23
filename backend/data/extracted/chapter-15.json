@@ -1,0 +1,1594 @@
+{
+  "chapter": "15",
+  "section": "III",
+  "title": "ANIMAL OR VEGETABLE FATS AND OILS AND THEIR CLEAVAGE PRODUCTS; PREPARED EDIBLE FATS; ANIMAL OR VEGETABLE WAXES",
+  "source_pdf": "Chapter 15 Animal Or Vegetable Fats And Oils And Their Cleavage Products; Prepared Edible Fats; Animal Or Vegetable Waxes.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '15011000'). Normalized to NNNN.NN.NN format (e.g., '1501.10.00') per project schema. Subheading numbers in PDF (e.g., '150210') normalized to NNNN.NN (e.g., '1502.10').",
+    "PDF table-chrome headers ('Sl.No. Notes Notification Date Notification No', 'Main Notes', 'Sub-Heading Notes', 'Policy Condition', 'Export Licensing Notes', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Product Description and Export Policy') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Section III ('ANIMAL, VEGETABLE OR MICROBIAL FATS AND OILS AND THEIR CLEAVAGE PRODUCTS; PREPARED EDIBLE FATS; ANIMAL OR VEGETABLE WAXES') appears as a section header above the Chapter 15 title; no separate Section Notes table is printed in the PDF (Section III contains only Chapter 15). section_notes captured as empty array.",
+    "PDF contains '?' characters in place of typographic quote marks in the Export Licensing Notes and tariff line 1505.00.90 policy condition (e.g., '?Shipment Clearance Certificate?', '?Health Certificate?', 'as Organic?'). These are OCR/encoding artifacts from the source PDF — preserved verbatim as they appear in the source.",
+    "Chapter Note 1 lists exclusions as inline sub-items (a) through (f). Each is captured as a separate exclusion_clause entry in exclusion_clauses array.",
+    "Heading 1505 in PDF is rendered as a single line containing both the heading row and an additional subheading row '150500' with description identical to heading title. Subheading '1505.00' captured with the printed title 'Wool grease and fatty substances derived therefrom (including lanolin)'.",
+    "Tariff line 1502.10.90 policy condition spans multiple sub-clauses including '(i) Export permitted only from APEDA registered integrated meat plants...' — captured verbatim, including the sentence about Buffalo Tallow being free.",
+    "Tariff line 1505.00.90 has TWO Notification Nos listed ('104(RE-2013)/2009-2014' and '37/2015-20') with TWO Notification Dates ('31.12.2014' and '25.10.2017'). Both pairs preserved in the policy_conditions array.",
+    "Heading 1511 ('Palm oil...') has no '151110' subheading printed in the PDF — code '15111000' (Crude oil) appears directly under heading 1511. Tariff line 1511.10.00 reconstructed under subheading 1511.10 per HS structural convention.",
+    "Heading 1512 — subheading '151220' is missing in PDF; only '151221' and '151229' appear under heading 1512. Per HS structure, 1512.21 falls under the parent '1512.2x Cotton-seed oil and its fractions' grouping but printed PDF goes directly from '151219' to '15122100' (1512.21.00) — preserved as-is.",
+    "Heading 1515 — no subheading line printed for '151510' (Linseed oil), '151520' (Olive residue oil — not present in this chapter), '151540' (Castor oil and its fractions), '151550' (Sesame), '151560' (Microbial), '151590' (Other). Subheadings reconstructed where parent codes appear (1515.11/1515.19 under Linseed parent; 1515.21/1515.29 under Maize parent; 1515.30 Castor; 1515.50 Sesame; 1515.60 Microbial; 1515.90 Other) using the codes printed in the PDF.",
+    "Heading 1518 — PDF does not print a '151800' subheading line. Tariff lines '15180011' through '15180040' belong logically to subheading '1518.00'. Reconstructed under subheading '1518.00' with the heading title.",
+    "Heading 1520 — only single tariff line '15200000' printed (Glycerol, crude). Captured under reconstructed subheading '1520.00' with heading title.",
+    "Heading 1522 — subheading '152200' printed with description 'Degras: residues resulting from the treatment of fatty substances or animal or vegetable waxes :' — title preserved verbatim including trailing colon.",
+    "Tariff line 1515.90.20 description in PDF ends with trailing comma ('neem seed oil, karanj oil, silk cotton seed oil,') — preserved verbatim.",
+    "Heading 1517 in PDF reads 'MARGARINE; EDIBLE MIXTURES OR PREPARATIONS OF ANIMAL, VEGETABLE OR MICROBIAL FATS OR OILS OR OF FRACTIONS OF DIFFERENT FATS OR OILS OF THIS CHAPTER, OTHER THAN EDIBLE FATS AND OILS OR THEIR FRACTIONS OF HEADING 1516' — note 'OTHER THAN EDIBLE' is correct per HS 2022 (heading 1516 covers hydrogenated; 1517 covers mixtures/margarine).",
+    "Heading 1517, subheading '151710' (Margarine, excluding liquid margarine) — note that tariff line 1517.10.20 ('Of vegetable origin') is not separately listed; instead three sub-codes 1517.10.21/22/29 appear directly. Preserved as printed.",
+    "Subheading 1517.90 — PDF skips intermediate '1517.90.20' line; tariff lines jump from 1517.90.10 (Sal fat) to 1517.90.30 (Imitation lard of animal origin). Preserved as printed.",
+    "No 'unit' column appears in the source PDF (Indian ITC-HS Schedule 2 Export Policy format only has Code/Description/Export Policy/Policy Condition columns). All unit fields set to null.",
+    "Export Policy and Notification details preserved in policy_conditions array (one entry per tariff line with a policy condition) and export_licensing_notes array."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover : (a) pig fat or poultry fat of heading 0209; (b) cocoa butter, fat or oil (heading 1804); (c) edible preparations containing by weight more than 15% of the products of heading 0405 (generally Chapter 21); (d) greaves (heading 2301) or residues of headings 2304 to 2306; (e) fatty acids, prepared waxes, medicaments, paints, varnishes, soap, perfumery, cosmetic or toilet preparations, sulphonated oils or other goods of Section VI; or (f) factice derived from oils (heading 4002)."
+    },
+    {
+      "number": "2",
+      "text": "Heading 1509 does not apply to oils obtained from olives by solvent extraction (heading 1510)."
+    },
+    {
+      "number": "3",
+      "text": "Heading 1518 does not cover fats or oils or their fractions, merely denatured, which are to be classified in the heading appropriate to the corresponding undenatured fats and oils and their fractions."
+    },
+    {
+      "number": "4",
+      "text": "Soap-stocks, oil foots and dregs,stearin pitch, glycerol pitch and wool grease residuesfall in heading 1522."
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [
+    {
+      "number": "1",
+      "text": "For the purposes of sub-heading 1509 30, virgin olive oil has a free acidity expressed as oleic acid not exceeding 2.0 g/ 100 g and can be distinguished from the other virgin olive oil categories according to the characteristics indicated in the Codex Alimentarius Standard 33-1981."
+    },
+    {
+      "number": "2",
+      "text": "For the purposes of sub-headings 1514 11 and 1514 19, the expression \"low erucic acid rape or colza oil\" means the fixed oil which has an erucic acid content of less than 2% by weight."
+    }
+  ],
+  "supplementary_notes": [],
+  "export_licensing_notes": [
+    {
+      "number": "1",
+      "text": "(i) Export of oils produced out of minor forest produce, as per table given below, even if edible; IT HS Code Item Description 15159010 Fixed Vegetable oils viz. Neutralised and Bleached Morwah Oil/fat, 15159020 Fixed vegetable oils viz. Dhup oil, Neemseed oil 15159030 Fixed vegetable oils viz. Nigerseed oil. 15159040 Fixed vegetable oils viz. Neutralised and Bleached Mango kernel 15179010 Sal Fat (Processed or Refined). 15219020 Shellac wax, whether or not coloured. 15219010 Beewax (ii) Export of organic edible oils from Custom EDI ports have been exempted from all quantitative ceilings irrespective of any existing or future restriction/ prohibition on export of their basic product (non-organic), with due certification as Organic? under the NPOP by Agricultural &Processed Food Products Export Development Authority (APEDA), New Delhi. [Notification No. 03/2015-2020 dated 19.04.2017] (iii) Export of edible oils (other than those mentioned in Note 1 above, is permitted in branded consumer packs of upto 5 Kgs, subject to a Minimum Export Price of USD 900 per MT."
+    }
+  ],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "pig fat or poultry fat of heading 0209",
+      "redirects_to_chapter": "02",
+      "redirects_to_heading": "0209",
+      "source_note_number": "Note 1 (a)",
+      "source_note_text": "This Chapter does not cover : (a) pig fat or poultry fat of heading 0209; (b) cocoa butter, fat or oil (heading 1804); (c) edible preparations containing by weight more than 15% of the products of heading 0405 (generally Chapter 21); (d) greaves (heading 2301) or residues of headings 2304 to 2306; (e) fatty acids, prepared waxes, medicaments, paints, varnishes, soap, perfumery, cosmetic or toilet preparations, sulphonated oils or other goods of Section VI; or (f) factice derived from oils (heading 4002)."
+    },
+    {
+      "excluded_product_text": "cocoa butter, fat or oil",
+      "redirects_to_chapter": "18",
+      "redirects_to_heading": "1804",
+      "source_note_number": "Note 1 (b)",
+      "source_note_text": "This Chapter does not cover : (a) pig fat or poultry fat of heading 0209; (b) cocoa butter, fat or oil (heading 1804); (c) edible preparations containing by weight more than 15% of the products of heading 0405 (generally Chapter 21); (d) greaves (heading 2301) or residues of headings 2304 to 2306; (e) fatty acids, prepared waxes, medicaments, paints, varnishes, soap, perfumery, cosmetic or toilet preparations, sulphonated oils or other goods of Section VI; or (f) factice derived from oils (heading 4002)."
+    },
+    {
+      "excluded_product_text": "edible preparations containing by weight more than 15% of the products of heading 0405",
+      "redirects_to_chapter": "21",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1 (c)",
+      "source_note_text": "This Chapter does not cover : (a) pig fat or poultry fat of heading 0209; (b) cocoa butter, fat or oil (heading 1804); (c) edible preparations containing by weight more than 15% of the products of heading 0405 (generally Chapter 21); (d) greaves (heading 2301) or residues of headings 2304 to 2306; (e) fatty acids, prepared waxes, medicaments, paints, varnishes, soap, perfumery, cosmetic or toilet preparations, sulphonated oils or other goods of Section VI; or (f) factice derived from oils (heading 4002)."
+    },
+    {
+      "excluded_product_text": "greaves",
+      "redirects_to_chapter": "23",
+      "redirects_to_heading": "2301",
+      "source_note_number": "Note 1 (d)",
+      "source_note_text": "This Chapter does not cover : (a) pig fat or poultry fat of heading 0209; (b) cocoa butter, fat or oil (heading 1804); (c) edible preparations containing by weight more than 15% of the products of heading 0405 (generally Chapter 21); (d) greaves (heading 2301) or residues of headings 2304 to 2306; (e) fatty acids, prepared waxes, medicaments, paints, varnishes, soap, perfumery, cosmetic or toilet preparations, sulphonated oils or other goods of Section VI; or (f) factice derived from oils (heading 4002)."
+    },
+    {
+      "excluded_product_text": "residues of headings 2304 to 2306",
+      "redirects_to_chapter": "23",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1 (d)",
+      "source_note_text": "This Chapter does not cover : (a) pig fat or poultry fat of heading 0209; (b) cocoa butter, fat or oil (heading 1804); (c) edible preparations containing by weight more than 15% of the products of heading 0405 (generally Chapter 21); (d) greaves (heading 2301) or residues of headings 2304 to 2306; (e) fatty acids, prepared waxes, medicaments, paints, varnishes, soap, perfumery, cosmetic or toilet preparations, sulphonated oils or other goods of Section VI; or (f) factice derived from oils (heading 4002)."
+    },
+    {
+      "excluded_product_text": "fatty acids, prepared waxes, medicaments, paints, varnishes, soap, perfumery, cosmetic or toilet preparations, sulphonated oils or other goods of Section VI",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1 (e)",
+      "source_note_text": "This Chapter does not cover : (a) pig fat or poultry fat of heading 0209; (b) cocoa butter, fat or oil (heading 1804); (c) edible preparations containing by weight more than 15% of the products of heading 0405 (generally Chapter 21); (d) greaves (heading 2301) or residues of headings 2304 to 2306; (e) fatty acids, prepared waxes, medicaments, paints, varnishes, soap, perfumery, cosmetic or toilet preparations, sulphonated oils or other goods of Section VI; or (f) factice derived from oils (heading 4002)."
+    },
+    {
+      "excluded_product_text": "factice derived from oils",
+      "redirects_to_chapter": "40",
+      "redirects_to_heading": "4002",
+      "source_note_number": "Note 1 (f)",
+      "source_note_text": "This Chapter does not cover : (a) pig fat or poultry fat of heading 0209; (b) cocoa butter, fat or oil (heading 1804); (c) edible preparations containing by weight more than 15% of the products of heading 0405 (generally Chapter 21); (d) greaves (heading 2301) or residues of headings 2304 to 2306; (e) fatty acids, prepared waxes, medicaments, paints, varnishes, soap, perfumery, cosmetic or toilet preparations, sulphonated oils or other goods of Section VI; or (f) factice derived from oils (heading 4002)."
+    },
+    {
+      "excluded_product_text": "oils obtained from olives by solvent extraction",
+      "redirects_to_chapter": "15",
+      "redirects_to_heading": "1510",
+      "source_note_number": "Note 2",
+      "source_note_text": "Heading 1509 does not apply to oils obtained from olives by solvent extraction (heading 1510)."
+    },
+    {
+      "excluded_product_text": "fats or oils or their fractions, merely denatured (excluded from heading 1518; classified in heading appropriate to the corresponding undenatured fats and oils and their fractions)",
+      "redirects_to_chapter": "15",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3",
+      "source_note_text": "Heading 1518 does not cover fats or oils or their fractions, merely denatured, which are to be classified in the heading appropriate to the corresponding undenatured fats and oils and their fractions."
+    },
+    {
+      "excluded_product_text": "Soap-stocks, oil foots and dregs, stearin pitch, glycerol pitch and wool grease residues",
+      "redirects_to_chapter": "15",
+      "redirects_to_heading": "1522",
+      "source_note_number": "Note 4",
+      "source_note_text": "Soap-stocks, oil foots and dregs,stearin pitch, glycerol pitch and wool grease residuesfall in heading 1522."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "1501",
+      "title": "Pig fat (including lard) and poultry fat, other than that of heading 02.09 or 15.03.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1501.10",
+          "title": "Lard",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1501.10.00",
+              "description": "Lard",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Subject to Policy Condition 01 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1501.20",
+          "title": "Other pig fat",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1501.20.00",
+              "description": "Other pig fat",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Subject to Policy Condition 01 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1501.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1501.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Subject to Policy Condition 01 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1502",
+      "title": "Fats of bovine animals, sheep or goats, other than those of heading 15.03.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1502.10",
+          "title": "Tallow",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1502.10.10",
+              "description": "Mutton tallow",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Subject to Policy Condition 01 of the Chapter."
+            },
+            {
+              "code": "1502.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "1. Subject to Policy Condition 01 of the Chapter. 2. However, Export of Buffalo Tallow is free subject to following condition:- (i) Export permitted only from APEDA registered integrated meat plants having rendering facilities subject to compulsory pre-shipment bio- chemical test by laboratories approved by APEDA."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1502.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1502.90.10",
+              "description": "Unrendered fats",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Subject to Policy Condition 01 of the Chapter."
+            },
+            {
+              "code": "1502.90.20",
+              "description": "Rendered fats or solvent extraction fats",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Subject to Policy Condition 01 of the Chapter."
+            },
+            {
+              "code": "1502.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Subject to Policy Condition 01 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1503",
+      "title": "Lard Stearin, Lard Oil, Oleostearin, Oleo-Oil and Tallow Oil, not emulsified or mixed or otherwise prepared",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1503.00",
+          "title": "Lard Stearin, Lard Oil, Oleostearin, Oleo-Oil and Tallow Oil, not emulsified or mixed or otherwise prepared",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1503.00.00",
+              "description": "Lard Stearin, Lard Oil, Oleostearin, Oleo-Oil and Tallow Oil, not emulsified or mixed or otherwise prepared",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Subject to Policy Condition 01 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1504",
+      "title": "Fats and oils and their fractions, of fish or marine mammals, whether or not refined, but not chemically modified.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1504.10",
+          "title": "Fish-liver oils and their fractions",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1504.10.10",
+              "description": "Cod liver oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1504.10.91",
+              "description": "Other: ---- Squid liver oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1504.10.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1504.20",
+          "title": "Fats and oils and their fractions, of fish, other than liver oils",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1504.20.10",
+              "description": "Fish body oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1504.20.20",
+              "description": "Fish lipid oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1504.20.30",
+              "description": "Sperm oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1504.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1504.30",
+          "title": "Fats and oils and their fractions, of marine mammals",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1504.30.00",
+              "description": "Fats and oils and their fractions, of marine mammals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1505",
+      "title": "Wool grease and fatty substances derived therefrom (including lanolin).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1505.00",
+          "title": "Wool grease and fatty substances derived therefrom (including lanolin)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1505.00.10",
+              "description": "Wool alcohol (including lanolin alcohol)",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Subject to Policy Condition 01 of the Chapter."
+            },
+            {
+              "code": "1505.00.20",
+              "description": "Wool grease, crude",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Subject to Policy Condition 01 of the Chapter."
+            },
+            {
+              "code": "1505.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "1. Subject to Policy Condition 01 of the Chapter 2. Export of Lanolin is free subject to following condition i.e. export allowed freely but export to European Union allowed subject to the following conditions : (i) A ?Shipment Clearance Certificate? is to be issued consignment-wise by the CAPEXIL indicating details of the name and address of the exporter, address of the registered plant, IEC No. of the exporter, Plant approval number, nature of export product, quantity, invoice number and date, port of loading (name of the port) and destination (ii) After the shipment is made, the exporter shall also provide a ?Health Certificate? consignment-wise to the buyer giving details of the product with HS Code, packaging, its origin, destination, vessel name, date of departure, health requirements, etc. This Health Certificate would be issued jointly by CAPEXIL and Regional Animal Quarantine Officer, Department of Animal Husbandary, Dairying and Fisheries, Ministry of Agriculture and Farmers Welfare, Government of India."
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "1506",
+      "title": "Other animal fats and oils and their fractions, whether or not refined, but not chemically modified.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1506.00",
+          "title": "Other animal fats and oils and their fractions, whether or not refined, but not chemically modified",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1506.00.10",
+              "description": "Neats Foot oil and fats from bone or waste",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Subject to Policy Condition 01 of the Chapter."
+            },
+            {
+              "code": "1506.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Subject to Policy Condition 01 of the Chapter."
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "1507",
+      "title": "Soya-bean oil and its fractions, whether or not refined, but not chemically modified.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1507.10",
+          "title": "Crude oil, whether or not degummed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1507.10.00",
+              "description": "Crude oil, whether or not degummed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1507.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1507.90.10",
+              "description": "Edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1507.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1508",
+      "title": "Ground-nut oil and its fractions, whether or not refined, but not chemically modified.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1508.10",
+          "title": "Crude oil",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1508.10.00",
+              "description": "Crude oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1508.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1508.90.10",
+              "description": "Deodorized (Salad Oil)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1508.90.91",
+              "description": "Other: ---- Edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1508.90.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1509",
+      "title": "Olive oil and its fractions, whether or not refined, but not chemically modified.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1509.20",
+          "title": "Extra virgin olive oil",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1509.20.00",
+              "description": "Extra virgin olive oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1509.30",
+          "title": "Virgin olive oil",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1509.30.00",
+              "description": "Virgin olive oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1509.40",
+          "title": "Other virgin olive oils",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1509.40.00",
+              "description": "Other virgin olive oils",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1509.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1509.90.10",
+              "description": "Edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1509.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1510",
+      "title": "OTHER OILS AND THEIR FRACTIONS, OBTAINED SOLELY FROM OLIVES, WHETHER OR NOT REFINED, BUT NOT CHEMICALLY MODIFIED, INCLUDING BLENDS OF THESE OILS OR FRACTIONS WITH OILS OR FRACTIONS OF HEADING 1509",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1510.10",
+          "title": "Crude olive pomace oil",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1510.10.00",
+              "description": "Crude olive pomace oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1510.90",
+          "title": "Other:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1510.90.10",
+              "description": "Refined olive pomace oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1510.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1511",
+      "title": "Palm oil and its fractions, whether or not refined, but not chemically modified.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1511.10",
+          "title": "Crude oil",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1511.10.00",
+              "description": "Crude oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1511.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1511.90.10",
+              "description": "Refined bleached deodorised palm oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1511.90.20",
+              "description": "Refined bleached deodorised palmolein",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1511.90.30",
+              "description": "Refined bleached deodorised palm stearin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1511.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1512",
+      "title": "Sunflower-seed, safflower or cotton-seed oil and fractions thereof, whether or not refined, but not chemically modified.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1512.11",
+          "title": "Sunflower-seed or safflower oil and fractions thereof : -- Crude oil",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1512.11.10",
+              "description": "Sunflower seed oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1512.11.20",
+              "description": "Safflower seed oil (kardi seed oil)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1512.19",
+          "title": "Sunflower-seed or safflower oil and fractions thereof : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1512.19.10",
+              "description": "Sunflower oil, edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1512.19.20",
+              "description": "Sunflower oil, non-edible grade (other than crude oil)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1512.19.30",
+              "description": "Safflower oil, edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1512.19.40",
+              "description": "Safflower oil, non - edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1512.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1512.21",
+          "title": "Cotton-seed oil and its fractions : -- Crude oil, whether or not gossypol has been removed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1512.21.00",
+              "description": "Cotton-seed oil and its fractions : -- Crude oil, whether or not gossypol has been removed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1512.29",
+          "title": "Cotton-seed oil and its fractions : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1512.29.10",
+              "description": "Edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1512.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1513",
+      "title": "Coconut (copra), palm kernel or babassu oil and fractions thereof, whether or not refined, but not chemically modified.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1513.11",
+          "title": "Coconut (copra) oil and its fractions : -- Crude oil",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1513.11.00",
+              "description": "Coconut (copra) oil and its fractions : -- Crude oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1513.19",
+          "title": "Coconut (copra) oil and its fractions : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1513.19.00",
+              "description": "Coconut (copra) oil and its fractions : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1513.21",
+          "title": "Palm kernel or babassu oil and fractions thereof : -- Crude oil",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1513.21.10",
+              "description": "Palm kernel oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1513.21.20",
+              "description": "Babassu oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1513.29",
+          "title": "Palm kernel or babassu oil and fractions thereof : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1513.29.10",
+              "description": "Palm kernel oil and its fractions",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1513.29.20",
+              "description": "Babassu oil and fractions edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1513.29.30",
+              "description": "Babassu oil and fractions, other than edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1513.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1514",
+      "title": "Rape, colza or mustard oil and fractions thereof, whether or not refined, but not chemically modified.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1514.11",
+          "title": "Low erucic acid rape or colza oil and its fractions : -- Crude oil",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1514.11.10",
+              "description": "Colza oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1514.11.20",
+              "description": "Rape oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1514.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1514.19",
+          "title": "Low erucic acid rape or colza oil and its fractions : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1514.19.10",
+              "description": "Refined colza oil of edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1514.19.20",
+              "description": "Refined rapeseed oil of edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1514.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1514.91",
+          "title": "Other : -- Crude oil",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1514.91.10",
+              "description": "Colza oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1514.91.20",
+              "description": "Mustard oil",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "However, Export of mustard oil under branded consumer packs of upto 5 Kgs will continue to be permitted with a Minimum Export Price (MEP) of USD 900 per MT."
+            },
+            {
+              "code": "1514.91.90",
+              "description": "Rapeseed oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1514.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1514.99.10",
+              "description": "Refined colza oil of edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1514.99.20",
+              "description": "Refined mustard oil of edible grade",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "However, Export of mustard oil under branded consumer packs of upto 5 Kgs will continue to be permitted with a Minimum Export Price (MEP) of USD 900 per MT."
+            },
+            {
+              "code": "1514.99.30",
+              "description": "Refined rapeseed oil of edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1514.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1515",
+      "title": "OTHER FIXED VEGETABLE OR MICROBIAL FATS AND OILS (INCLUDING JOJOBA OIL) AND THEIR FRACTIONS, WHETHER OR NOT REFINED, BUT NOT CHEMICALLY MODIFIED",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1515.11",
+          "title": "Linseed oil and its fractions : -- Crude oil",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1515.11.00",
+              "description": "Linseed oil and its fractions : -- Crude oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1515.19",
+          "title": "Linseed oil and its fractions : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1515.19.10",
+              "description": "Edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1515.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1515.21",
+          "title": "Maize (corn) oil and its fractions : -- Crude oil",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1515.21.00",
+              "description": "Maize (corn) oil and its fractions : -- Crude oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1515.29",
+          "title": "Maize (corn) oil and its fractions : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1515.29.10",
+              "description": "Edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1515.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1515.30",
+          "title": "Castor oil and its fractions",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1515.30.10",
+              "description": "Edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1515.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1515.50",
+          "title": "Sesame oil and its fractions",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1515.50.10",
+              "description": "Crude oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1515.50.91",
+              "description": "Other: ---- Edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1515.50.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1515.60",
+          "title": "Microbial fats and oils and their fractions",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1515.60.00",
+              "description": "Microbial fats and oils and their fractions",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1515.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1515.90.10",
+              "description": "Fixed vegetable oils, namely the following: chul moogra oil, mawra oil, kokam oil, tabacco seed oil, sal oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1515.90.20",
+              "description": "Fixed vegetable oils, namely the following: neem seed oil, karanj oil, silk cotton seed oil,",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1515.90.30",
+              "description": "Fixed vegetable oils, namely the following : cardamom oil, chillies/ capsicum oil, turmeric oil, ajwain seed oil, niger seed oil, garlic oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1515.90.40",
+              "description": "Fixed vegetable oils of edible grade namely the following: mango kernel oil, mahua oil, rice bran oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1515.90.91",
+              "description": "Other: ---- Edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1515.90.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1516",
+      "title": "ANIMAL, VEGETABLE OR MICROBIAL FATS AND OILS ANDTHEIR FRACTIONS, PARTLY OR WHOLLY HYDROGENATED, INTER-ESTERIFIED, REESTERIFIED OR ELAIDINISED, WHETHER OR NOT REFINED, BUT NOT FURTHER PREPARED",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1516.10",
+          "title": "Animal fats and oils and their fractions",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1516.10.00",
+              "description": "Animal fats and oils and their fractions",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1516.20",
+          "title": "Vegetable fats and oils and their fractions",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1516.20.11",
+              "description": "Cotton seed oil: ---- Edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1516.20.19",
+              "description": "Cotton seed oil: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1516.20.21",
+              "description": "Groundnut oil: ---- Edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1516.20.29",
+              "description": "Groundnut oil: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1516.20.31",
+              "description": "Hydrogenated castor oil (opal wax): ---- Edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1516.20.39",
+              "description": "Hydrogenated castor oil (opal wax): ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1516.20.91",
+              "description": "Other: ---- Edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1516.20.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1516.30",
+          "title": "Microbial fats and oils and their fractions",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1516.30.00",
+              "description": "Microbial fats and oils and their fractions",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1517",
+      "title": "MARGARINE; EDIBLE MIXTURES OR PREPARATIONS OF ANIMAL, VEGETABLE OR MICROBIAL FATS OR OILS OR OF FRACTIONS OF DIFFERENT FATS OR OILS OF THIS CHAPTER, OTHER THAN EDIBLE FATS AND OILS OR THEIR FRACTIONS OF HEADING 1516",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1517.10",
+          "title": "Margarine, excluding liquid margarine",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1517.10.10",
+              "description": "Of animal origin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1517.10.21",
+              "description": "Of vegetable origin: ---- Edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1517.10.22",
+              "description": "Of vegetable origin: ---- Linoxyn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1517.10.29",
+              "description": "Of vegetable origin: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1517.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1517.90.10",
+              "description": "Sal fat (processed or refined)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1517.90.30",
+              "description": "Imitation lard of animal origin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1517.90.40",
+              "description": "Imitation lard of vegetable origin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1517.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1518",
+      "title": "ANIMAL, VEGETABLE OR MICROBIAL FATS AND OILS AND THEIR FRACTIONS, BOILED, OXIDISED, DEHYDRATED, SULPHURISED, BLOWN, POLYMERISED BY HEAT IN VACUUM OR IN INERT GAS OR OTHERWISE CHEMICALLY MODIFIED, EXCLUDING THOSE OF HEADING 1516; INEDIBLE MIXTURES OR PREPARATIONS OF ANIMAL, VEGETABLE OR MICROBIAL FATS OR OILS OR OF FRACTIONS OF DIFFERENT FATS OR OILS OF THIS CHAPTER, NOT ELSEWHERE SPECIFIED OR INCLUDED",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1518.00",
+          "title": "ANIMAL, VEGETABLE OR MICROBIAL FATS AND OILS AND THEIR FRACTIONS, BOILED, OXIDISED, DEHYDRATED, SULPHURISED, BLOWN, POLYMERISED BY HEAT IN VACUUM OR IN INERT GAS OR OTHERWISE CHEMICALLY MODIFIED, EXCLUDING THOSE OF HEADING 1516; INEDIBLE MIXTURES OR PREPARATIONS OF ANIMAL, VEGETABLE OR MICROBIAL FATS OR OILS OR OF FRACTIONS OF DIFFERENT FATS OR OILS OF THIS CHAPTER, NOT ELSEWHERE SPECIFIED OR INCLUDED",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1518.00.11",
+              "description": "Lin seed oil: ---- Edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1518.00.19",
+              "description": "Lin seed oil: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1518.00.21",
+              "description": "Castor oil, dehydrated: ---- Edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1518.00.29",
+              "description": "Castor oil, dehydrated: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1518.00.31",
+              "description": "Other vegetable oil and its fats: ---- Edible grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1518.00.39",
+              "description": "Other vegetable oil and its fats: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1518.00.40",
+              "description": "Other vegetable oil and its fats: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1520",
+      "title": "Glycerol, crude; glycerol waters and glycerol lyes.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1520.00",
+          "title": "Glycerol, crude; glycerol waters and glycerol lyes.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1520.00.00",
+              "description": "Glycerol, crude; glycerol waters and glycerol lyes.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "1521",
+      "title": "Vegetable waxes (other than triglycerides), beeswax, other insect waxes and spermaceti, whether or not refined or coloured.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1521.10",
+          "title": "Vegetable waxes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1521.10.11",
+              "description": "Carnauba Waxes: ---- Edible wax for waxing fresh fruits and vegetables",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1521.10.19",
+              "description": "Carnauba Waxes: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1521.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1521.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1521.90.10",
+              "description": "Beewax whether or not coloured",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1521.90.20",
+              "description": "Shellac wax whether or not coloured",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1521.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1522",
+      "title": "Degras; residues resulting from the treatment of fatty substances or animal or vegetable waxes.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1522.00",
+          "title": "Degras: residues resulting from the treatment of fatty substances or animal or vegetable waxes :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1522.00.10",
+              "description": "Degras",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1522.00.20",
+              "description": "Soap stocks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1522.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

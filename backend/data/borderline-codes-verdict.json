@@ -1,0 +1,93 @@
+{
+  "verified_at": "2026-05-23",
+  "method": "pdftotext -layout extraction of Indian Schedule-2 chapter PDFs, then grep for both NNNN.NN and NNNNNN code formats with surrounding context",
+  "notes": "Indian Schedule-2 PDFs use 8-digit ITC-HS codes without dots (e.g. '29313300'). The Indian tariff is largely aligned with WCO HS 2017 with India-specific 8-digit tariff lines; it has NOT adopted several HS 2022 subheading splits. Column wrap in pdftotext output sometimes shifts descriptions, but the presence/absence of the 8-digit code itself is unambiguous.",
+  "set_a_ours_only": [
+    {
+      "code": "2931.33",
+      "verdict": "REAL_IN_PDF",
+      "pdf_evidence": "29313300  Phosphorothioic acid, S2 (diethyl amino) ethyl] O, O-        Free\n29314100  Diethyl ester",
+      "decision": "keep_as_india_specific",
+      "reasoning": "8-digit code 29313300 appears in Chapter 29 PDF as a real tariff line with 'Free' policy. The pdftotext column-wrap jumbles the description (text 'Phosphorothioic acid...' belongs to a neighboring row), but the code itself is unambiguously present in the Indian schedule. India retains 2931.33 as an organophosphorus subheading; legitimate India-specific entry."
+    },
+    {
+      "code": "2937.31",
+      "verdict": "REAL_IN_PDF",
+      "pdf_evidence": "29373100  Steroidal hormones, their derivatives and structural          Free\n          analogues: ---- Epinephrine",
+      "decision": "keep_as_india_specific",
+      "reasoning": "8-digit code 29373100 with description 'Epinephrine' is explicitly present as a real row. This is a standard ITC-HS catecholamine hormone tariff line."
+    },
+    {
+      "code": "3002.10",
+      "verdict": "REAL_IN_PDF",
+      "pdf_evidence": "3002      HUMAN BLOOD; ANIMAL BLOOD                     Agriculture and Farmers                               24.02.2022\n300210    PREPARED FORTHERAPEUTIC,                      Welfare, Government of\n30021020  PROPHYLACTIC OR DIAGNOSTIC                    India.\n          USES; ANTISERA, OTHER BLOOD\n          FRACTIONS AND IMMUNOLOGICAL\n          PRODUCTS, WHETHER OR NOT\n          MODIFIED OR OBTAINED BY MEANS",
+      "decision": "keep_as_india_specific",
+      "reasoning": "Subheading 300210 is explicitly present as a row in the Indian PDF (alongside its child 8-digit codes 30021020, 30021091, etc.). India retains the legacy HS 2017 subheading 3002.10 'Antisera and other blood fractions...' even though WCO HS 2022 split it into 3002.12-3002.15. Genuine India-specific retention."
+    },
+    {
+      "code": "3301.22",
+      "verdict": "REAL_IN_PDF",
+      "pdf_evidence": "330122    Essential oils other\n          than those of citrus\n33012400  fruit:--Of jasmin:",
+      "decision": "keep_as_india_specific",
+      "reasoning": "Subheading 330122 appears as a row in Chapter 33, mapped to '--Of jasmin' (column wrap interleaves with the 8-digit child 33012400). India uses 3301.22 as the 'Of jasmin' subheading per its tariff structure. Real Indian entry, regardless of how the WCO HS 2022 numbering compares."
+    },
+    {
+      "code": "4401.10",
+      "verdict": "REAL_IN_PDF",
+      "pdf_evidence": "44011000       Coniferous                                 faggots or in similar\n                                                          forms; Wood in chips or\n440111         Fuel wood, in logs, in",
+      "decision": "keep_as_india_specific",
+      "reasoning": "8-digit code 44011000 'Coniferous' is explicitly present in Chapter 44 PDF as a fuel-wood tariff line. India retains the legacy HS 2017 subheading 4401.10 'Fuel wood' even though WCO HS 2022 split it into 4401.11 (Coniferous) and 4401.12 (Non-coniferous). Real Indian row."
+    }
+  ],
+  "set_b_wco_only": [
+    {
+      "code": "1211.50",
+      "verdict": "NOT_IN_INDIAN_PDF",
+      "pdf_evidence": "not found. Codes present under 1211: 12112000, 12113000, 12114000, 12116000, 121190 (with 12119011..12119090 children). No 1211.50 or 12115xxxx anywhere in the chapter.",
+      "decision": "leave_out",
+      "reasoning": "WCO HS 2022 added 1211.50 'Ephedra' as a new subheading. The Indian Schedule-2 PDF has not been updated to include it — it jumps from 1211.40 (Poppy straw) to 1211.60 (Bark of African cherry) under 121190. Extractor did not miss anything; India simply lags behind HS 2022."
+    },
+    {
+      "code": "2712.20",
+      "verdict": "NOT_IN_INDIAN_PDF",
+      "pdf_evidence": "not found. Codes present under 2712: 271210, 27121010, 27121090, 271290, 27129010..27129090. No 2712.20 or 27122xxx anywhere in Chapter 27.",
+      "decision": "leave_out",
+      "reasoning": "WCO HS 2022 split paraffin wax into 2712.20 (<0.75% oil) and 2712.90 (Other). Indian PDF still uses pre-2022 structure with only 2712.10 (Petroleum jelly) and 2712.90 (Other). Not a missed extraction; the code is genuinely absent from India's tariff."
+    },
+    {
+      "code": "3006.92",
+      "verdict": "NOT_IN_INDIAN_PDF",
+      "pdf_evidence": "not found. Codes present under 3006: 300610, 30061010, 30061020, 30063000, 30064000, 30065000, 300660, 30066010..30, 30067000, 30069100 (Based on hormones), 30069300 (Based on other products of heading 2937). No 3006.92 or 30069200 anywhere.",
+      "decision": "leave_out",
+      "reasoning": "WCO HS 2022 added 3006.92 'Waste pharmaceuticals'. The Indian PDF lists 3006.91 and 3006.93 but skips 3006.92 entirely. Not an extractor bug — the Indian tariff has not adopted this HS 2022 subheading."
+    },
+    {
+      "code": "4402.90",
+      "verdict": "NOT_IN_INDIAN_PDF",
+      "pdf_evidence": "not found. Codes present under 4402: 44021000 (Of bamboo), 440220 (Of shell or nut), 44022010 (Of coconut shell), 44022090 (Other). No 4402.90 or 44029xxx anywhere in Chapter 44.",
+      "decision": "leave_out",
+      "reasoning": "WCO HS 2022 has 4402.10 (bamboo), 4402.20 (shell/nut), 4402.90 (Other) for wood charcoal. Indian PDF stops at 4402.20 — no 'Other' 4402.90 catch-all. Not a missed row; India's tariff simply lacks this subheading."
+    },
+    {
+      "code": "4802.40",
+      "verdict": "NOT_IN_INDIAN_PDF",
+      "pdf_evidence": "not found. Codes present under 4802: 480210 (48021010, 48021020), 480220 (48022010, 48022090), then jumps to 480254..480269. No 4802.40 or 48024xxxx anywhere.",
+      "decision": "leave_out",
+      "reasoning": "WCO HS has 4802.40 'Wallpaper base'. The Indian PDF's 4802 series skips directly from 4802.20 (Hand-made paper) to 4802.54 (weighing less than 40 g/m²). Wallpaper base 4802.40 is not present as a row. Extractor did not miss it."
+    },
+    {
+      "code": "5516.24",
+      "verdict": "NOT_IN_INDIAN_PDF",
+      "pdf_evidence": "not found. Codes present under 5516: 551611, 55161110, 55161120, 55161200, 55161300, 551614, 55161410, 55161420, 55161490, 551621, 55162110, 55162120, 55162200, 55162300, 551631..551634, 551641..551644, 551691..551694. No 5516.24 or 551624xx anywhere.",
+      "decision": "leave_out",
+      "reasoning": "WCO HS has 5516.24 'Printed' under the '85% or more artificial staple fibres' group. The Indian PDF's structure for this group lists 5516.11/.12/.13/.14 (unbleached, bleached, dyed, of different colours) but lacks a 5516.24 'Printed' row. Likely a difference in how India numbered the printed variant. Not an extractor bug."
+    }
+  ],
+  "summary": {
+    "set_a_real_in_pdf": 5,
+    "set_a_phantom": 0,
+    "set_b_in_pdf_missed": 0,
+    "set_b_not_in_pdf": 6,
+    "pattern": "Set A: every code our extractor produced that is absent from WCO HS 2022 IS present in the Indian Schedule-2 PDF — these are India-specific retentions of pre-HS-2022 subheadings (3002.10, 4401.10) or India-specific tariff lines (2931.33, 2937.31, 3301.22). Zero phantoms. Set B: every code WCO HS 2022 added that is absent from our extraction is also absent from the Indian PDF — India's tariff has not yet adopted the 2022 splits (1211.50 Ephedra, 2712.20 paraffin-wax-low-oil, 3006.92 waste-pharma, 4402.90 other-charcoal, 4802.40 wallpaper-base, 5516.24 printed). Extractor is faithful to source; the gap is between India's tariff and WCO HS 2022, not between our extraction and India's tariff."
+  }
+}

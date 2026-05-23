@@ -1,0 +1,575 @@
+{
+  "chapter": "35",
+  "section": "VI",
+  "title": "ALBUMINOIDAL SUBSTANCES; MODIFIED STARCHES; GLUES; ENZYMES",
+  "source_pdf": "Chapter 35 Albuminoidal Substances; Modified Starches; Glues; Enzymes.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '35011000') and 6-digit subheading codes without dots (e.g., '350110'). Normalized to NNNN.NN.NN format (e.g., '3501.10.00') and NNNN.NN format (e.g., '3501.10') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'SI.No. Notes Notification No Notification Date' / 'SI.No. Notes Notification Date Notification No', 'Policy Condition', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "PDF contains '?' characters in place of typographic punctuation in several notes (e.g., '31 (RE ? 2012)/2009-2014', '?Health Certificate?', '?Shipment Clearance Certificate?'). These are OCR/encoding artifacts from the source PDF — preserved verbatim as they appear in the source.",
+    "Section VI 'Main Notes' (4 notes) are attributed to section_notes (Section VI, Products of the Chemical or Allied Industries), not chapter_notes — matching the precedent established by Chapters 28/30/31/32/34/36.",
+    "Chapter 35 has only two chapter notes in the PDF. Note 1 is a comprehensive exclusion list; Note 2 is a definitional note for the term 'dextrins' (heading 3505) — captured under chapter_notes verbatim.",
+    "Chapter 35 has no sub-heading notes in the PDF (the 'Sub-Heading Notes' section header is absent).",
+    "PDF lists heading 3501 with 8-digit codes 3501.10.00 (Casein) and 3501.90.00 (Other) — there is no explicit 6-digit subheading row labeled '3501.10' or '3501.90' in the PDF. Subheading rows are reconstructed from the 8-digit code structure per project schema.",
+    "Heading 3503 in the PDF has a 6-digit subheading row '350300' (3503.00) with title repeated from heading title — preserved verbatim. The PDF presents this single national subheading containing four 8-digit tariff lines (3503.00.10, 3503.00.20, 3503.00.30, 3503.00.90).",
+    "Heading 3504 in the PDF has a 6-digit subheading row '350400' (3504.00) with the same title as heading 3504 — preserved verbatim. Four 8-digit tariff lines under it: 3504.00.10 (Peptones), 3504.00.91 (Isolated Soya protein), 3504.00.99 (Others).",
+    "Heading 3505 PDF lists 6-digit subheadings 3505.10 (Dextrins and other modified starches) and 3505.20 (Glues). Subheading 3505.10 has two 8-digit tariff lines (3505.10.10, 3505.10.90). Subheading 3505.20 has one 8-digit tariff line (3505.20.00).",
+    "Heading 3506 PDF lists 6-digit subheadings 3506.10 (products suitable for use as glues or adhesives, put up for retail sale ... not exceeding a net weight of 1 kg), 3506.91 (Adhesives based on polymers of headings 39.01 to 39.13 or on rubber) and 3506.99 (Other). Subheading 3506.10 has one 8-digit tariff line (3506.10.00). Subheading 3506.91 has two (3506.91.10, 3506.91.90). Subheading 3506.99 has three (3506.99.10, 3506.99.91, 3506.99.99).",
+    "Heading 3507 PDF lists 6-digit subheadings 3507.10 (Rennet and concentrates thereof) and 3507.90 (Other). Subheading 3507.10 has four 8-digit tariff lines (3507.10.11, 3507.10.19, 3507.10.91, 3507.10.99) split across 'Microbial rennet' (3507.10.11/19) and 'Other' i.e. animal-source rennet (3507.10.91/99). Subheading 3507.90 has multiple lines: 3507.90.10 (Industrial enzymes — textile assistant), 3507.90.20 (Pancretin pure), 3507.90.30 (Pepsin), 3507.90.40 (Pectin esterases pure), 3507.90.50 (Pectolytic enzyme), 3507.90.61 (Streptokinase), 3507.90.62 (Amylases enzymes), 3507.90.69 (Other enzymes of microbial origin — Other), 3507.90.71 (Papain), 3507.90.79 (Enzymes for pharmaceutical use — Other), 3507.90.91 (Enzymatic preparations containing food stuffs), 3507.90.99 (Other — Other).",
+    "PDF column header for 3501 / 3502 export policy uses 'Free' verbatim — Export Policy column is not part of the tariff line description field and is captured separately by downstream tooling, not in this JSON.",
+    "Policy Condition column references 'Subject to Policy Condition 1 of the Chapter' (enzymes — Restricted Export Authorisation for Taq Polymerase / Reverse transcriptase) and 'Subject to Policy Condition 2 of the Chapter' (animal by-products — CAPEXIL Shipment Clearance / Health Certificate for EU exports). Both captured under policy_conditions.",
+    "Heading 3503 tariff line 3503.00.10 (Isinglass) has empty Policy Condition column in the PDF — preserved verbatim (no policy condition applies).",
+    "Tariff line code 3504.00.91 description in the PDF reads 'Other: ---- Isolated Soya protein' and 3504.00.99 reads 'Other: ---- Others' (note plural 'Others'). Preserved verbatim.",
+    "Several enzyme tariff lines (3507.10.11/.19, 3507.10.91/.99, 3507.90.10/.40/.50, 3507.90.61/.62/.69, 3507.90.71, 3507.90.91/.99) reference only Policy Condition 1; tariff lines 3507.90.20 (Pancretin), 3507.90.30 (Pepsin), 3507.90.79 (Enzymes for pharma — Other) reference 'Policy Condition 1 & 2 of the Chapter'."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover: (a) yeasts (heading 2102); (b) blood fractions (other than blood albumin not prepared for therapeutic or prophylactic uses), medicaments or other products of Chapter 30; (c) enzymatic preparations for pre-tanning (heading 3202); (d) enzymatic soaking or washing preparations or other products of Chapter 34; (e) hardened proteins (heading 3913); or (f) gelatin products of the printing industry (Chapter 49)."
+    },
+    {
+      "number": "2",
+      "text": "For the purposes of heading 3505, the term \"dextrins\" means starch degradation products with a reducing sugar content, expressed as dextrose on the dry substance, not exceeding 10%. Such products with a reducing sugar content exceeding 10% fall in heading 1702."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "(A) Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 are to be classified in those headings and in no other heading of this Schedule. (B) Subject to paragraph (A) above, goods answering to a description in heading 2843, 2846 or 2852 are to be classified in those headings and in no other heading of this Section."
+    },
+    {
+      "number": "2",
+      "text": "Subject to Note 1 above, goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale are to be classified in those headings and in no other heading of this Schedule."
+    },
+    {
+      "number": "3",
+      "text": "Goods put up in sets consisting of two or more separate constituents,some or all of which fall in this Section and are intended to be mixed together to obtain a product of Section VI or VII, are to be classified in the heading appropriate to that product, provided that the constituents are: (a) having regard to the manner in which they are put up, clearly identifiable as being intended to be used together without first being repacked; (b) presented together; and (c) identifiable, whether by their nature or by the relative proportions in which they are present, as being complementary one to another."
+    },
+    {
+      "number": "4",
+      "text": "Where a product answers to a description in one or more of the headings in Section VI by virtue of being described by name or function and also to heading 3827, then it is classifiable in a heading that references the product by name or function and not under heading 3827."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "yeasts",
+      "redirects_to_chapter": "21",
+      "redirects_to_heading": "2102",
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover: (a) yeasts (heading 2102)"
+    },
+    {
+      "excluded_product_text": "blood fractions (other than blood albumin not prepared for therapeutic or prophylactic uses), medicaments or other products of Chapter 30",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "(b) blood fractions (other than blood albumin not prepared for therapeutic or prophylactic uses), medicaments or other products of Chapter 30"
+    },
+    {
+      "excluded_product_text": "enzymatic preparations for pre-tanning",
+      "redirects_to_chapter": "32",
+      "redirects_to_heading": "3202",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "(c) enzymatic preparations for pre-tanning (heading 3202)"
+    },
+    {
+      "excluded_product_text": "enzymatic soaking or washing preparations or other products of Chapter 34",
+      "redirects_to_chapter": "34",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(d)",
+      "source_note_text": "(d) enzymatic soaking or washing preparations or other products of Chapter 34"
+    },
+    {
+      "excluded_product_text": "hardened proteins",
+      "redirects_to_chapter": "39",
+      "redirects_to_heading": "3913",
+      "source_note_number": "Note 1(e)",
+      "source_note_text": "(e) hardened proteins (heading 3913)"
+    },
+    {
+      "excluded_product_text": "gelatin products of the printing industry",
+      "redirects_to_chapter": "49",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(f)",
+      "source_note_text": "(f) gelatin products of the printing industry (Chapter 49)"
+    },
+    {
+      "excluded_product_text": "starch degradation products with a reducing sugar content exceeding 10% (i.e., products not meeting the 'dextrins' definition for heading 3505)",
+      "redirects_to_chapter": "17",
+      "redirects_to_heading": "1702",
+      "source_note_number": "Note 2",
+      "source_note_text": "For the purposes of heading 3505, the term \"dextrins\" means starch degradation products with a reducing sugar content, expressed as dextrose on the dry substance, not exceeding 10%. Such products with a reducing sugar content exceeding 10% fall in heading 1702."
+    },
+    {
+      "excluded_product_text": "Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 — must be classified in those headings and not elsewhere",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": "2844",
+      "source_note_number": "Section VI Note 1(A)",
+      "source_note_text": "(A) Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 are to be classified in those headings and in no other heading of this Schedule."
+    },
+    {
+      "excluded_product_text": "Goods answering to a description in heading 2843, 2846 or 2852 — must be classified in those headings and not elsewhere in Section VI",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": "2843",
+      "source_note_number": "Section VI Note 1(B)",
+      "source_note_text": "(B) Subject to paragraph (A) above, goods answering to a description in heading 2843, 2846 or 2852 are to be classified in those headings and in no other heading of this Section."
+    },
+    {
+      "excluded_product_text": "Goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale — classified in those headings only",
+      "redirects_to_chapter": "35",
+      "redirects_to_heading": "3506",
+      "source_note_number": "Section VI Note 2",
+      "source_note_text": "Subject to Note 1 above, goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale are to be classified in those headings and in no other heading of this Schedule."
+    },
+    {
+      "excluded_product_text": "products described both in a Section VI heading by name or function and in heading 3827 — classified by name/function, not under 3827",
+      "redirects_to_chapter": "38",
+      "redirects_to_heading": "3827",
+      "source_note_number": "Section VI Note 4",
+      "source_note_text": "Where a product answers to a description in one or more of the headings in Section VI by virtue of being described by name or function and also to heading 3827, then it is classifiable in a heading that references the product by name or function and not under heading 3827."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "3501",
+      "title": "Casein, caseinates and other casein derivatives; casein glues.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3501.10",
+          "title": "Casein",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3501.10.00",
+              "description": "Casein",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "31 (RE ? 2012)/2009- 04.02.2013"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3501.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3501.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "31 (RE ? 2012)/2009- 04.02.2013"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3502",
+      "title": "Albumins (including concentrates of two or more whey proteins, containing by weight more than 80 percent whey proteins, calculated on the dry matter), albuminates and other albumin derivatives.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3502.11",
+          "title": "Egg albumin : -- Dried",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3502.11.00",
+              "description": "Egg albumin : -- Dried",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3502.19",
+          "title": "Egg albumin : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3502.19.00",
+              "description": "Egg albumin : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3502.20",
+          "title": "Milk albumin, including concentrates of two or more whey proteins",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3502.20.00",
+              "description": "Milk albumin, including concentrates of two or more whey proteins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3502.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3502.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3503",
+      "title": "Gelatin (including gelatin in rectangular (including square) sheets, whether or not surface-worked or coloured) and gelatin derivatives; isinglass; other glues of animal origin, excluding casein glues of heading 35.01.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3503.00",
+          "title": "Gelatin [including gelatin in rectangular (including square) sheets, whether or not surface-worked or coloured] and gelatin derivatives; isinglass; other glues of animal origin, excluding casein glues of heading 3501:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3503.00.10",
+              "description": "Isinglass",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3503.00.20",
+              "description": "Gelatin, edible grade and not elsewhere specified or included",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 2 of 55/2015-2020 30.03.2020 the Chapter."
+            },
+            {
+              "code": "3503.00.30",
+              "description": "Glues derived from bones, hides and similar items; fish glues",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 2 of 34/2015-20 13.01.2017 the Chapter. Subject to Policy Notification No."
+            },
+            {
+              "code": "3503.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 2 of 34/2015-20 13.01.2017 the Chapter."
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "3504",
+      "title": "Peptones and their derivatives; other protein substances and their derivatives, not elsewhere specified or included; hide powder, whether or not chromed.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3504.00",
+          "title": "Peptones and their derivatives; other protein substances and their derivatives, not elsewhere specified or included; hide powder, whether or not chromed:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3504.00.10",
+              "description": "Peptones",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 2 of 34/2015-20 13.01.2017 the Chapter."
+            },
+            {
+              "code": "3504.00.91",
+              "description": "Other: ---- Isolated Soya protein",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3504.00.99",
+              "description": "Other: ---- Others",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3505",
+      "title": "Dextrins and other modified starches (for example, pregelatinised or esterified starches); glues based on starches, or on dextrins or other modified starches.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3505.10",
+          "title": "Dextrins and other modified starches",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3505.10.10",
+              "description": "Esterified starches",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3505.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3505.20",
+          "title": "Glues",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3505.20.00",
+              "description": "Glues",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3506",
+      "title": "Prepared glues and other prepared adhesives, not elsewhere specified or included; products suitable for use as glues or adhesives, put up for retail sale as glues or adhesives, not exceeding a net weight of 1 kg.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3506.10",
+          "title": "products suitable for use as glues or adhesives, put up for retail sale as glues or adhesives, not exceeding a net weight of 1 kg",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3506.10.00",
+              "description": "products suitable for use as glues or adhesives, put up for retail sale as glues or adhesives, not exceeding a net weight of 1 kg",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3506.91",
+          "title": "Other : -- Adhesives based on polymers of headings 39.01 to 39.13 or on rubber",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3506.91.10",
+              "description": "Based on latex, Phenol Formaldyhde (PF), Urea Formaldehyde (UF) and Polyvinyl Alcohol (PVA)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3506.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3506.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3506.99.10",
+              "description": "Synthetic glue with phenol urea or cresol (with formaldehyde) as the main component",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3506.99.91",
+              "description": "Prepared glues and other prepared adhesives not elsewhere specified or included: ---- Based on starch, gum, latex, PF, UF and PVA",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3506.99.99",
+              "description": "Prepared glues and other prepared adhesives not elsewhere specified or included: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3507",
+      "title": "Enzymes; prepared enzymes not elsewhere specified or included.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3507.10",
+          "title": "Rennet and concentrates thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3507.10.11",
+              "description": "Microbial rennet: ---- Animal rennet",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of the Chapter Subject to Policy"
+            },
+            {
+              "code": "3507.10.19",
+              "description": "Microbial rennet: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of the Chapter Subject to Policy"
+            },
+            {
+              "code": "3507.10.91",
+              "description": "Other: ---- Animal rennet",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of the Chapter Subject to Policy"
+            },
+            {
+              "code": "3507.10.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3507.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3507.90.10",
+              "description": "Industrial enzymes (textile assistant)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter Subject to Policy"
+            },
+            {
+              "code": "3507.90.20",
+              "description": "Pancretin pure (excluding medicament)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 &2 of 34/2015-20 13.01.2017 the Chapter. Subject to Policy Notification No."
+            },
+            {
+              "code": "3507.90.30",
+              "description": "Pepsin (excluding medicament)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 &2 of 34/2015-20 13.01.2017 the Chapter. Subject to Policy"
+            },
+            {
+              "code": "3507.90.40",
+              "description": "Pectin esterases pure",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of the Chapter Subject to Policy"
+            },
+            {
+              "code": "3507.90.50",
+              "description": "Pectolytic enzyme (pectimase)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of the Chapter"
+            },
+            {
+              "code": "3507.90.61",
+              "description": "Other enzymes of microbial origin: ---- Streptokinase",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of the Chapter"
+            },
+            {
+              "code": "3507.90.62",
+              "description": "Other enzymes of microbial origin: ---- Amylases enzymes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of the Chapter"
+            },
+            {
+              "code": "3507.90.69",
+              "description": "Other enzymes of microbial origin: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of the Chapter"
+            },
+            {
+              "code": "3507.90.71",
+              "description": "Enzymes for pharmaceutical use, other than streptokinase: ---- Papain, pure, of pharmaceutical grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of"
+            },
+            {
+              "code": "3507.90.79",
+              "description": "Enzymes for pharmaceutical use, other than streptokinase: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy 34/2015-20 13.01.2017"
+            },
+            {
+              "code": "3507.90.91",
+              "description": "Other: ---- Enzymatic preparations containing food stuffs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of the Chapter Subject to Policy"
+            },
+            {
+              "code": "3507.90.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

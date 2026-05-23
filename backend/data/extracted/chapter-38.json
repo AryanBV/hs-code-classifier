@@ -1,0 +1,2805 @@
+{
+  "chapter": "38",
+  "section": "VI",
+  "title": "MISCELLANEOUS CHEMICAL PRODUCTS",
+  "source_pdf": "Chapter 38 Miscellaneous Chemical Products..pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '38011000') and 6-digit subheading codes without dots (e.g., '380290'). Normalized to NNNN.NN.NN format (e.g., '3801.10.00') and NNNN.NN format (e.g., '3802.90') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'Sl.No. Notes Notification Date Notification No', 'Sl.No. Notes Notification No Notification Date', 'Sub-Heading Notes', 'Supplementary Notes', 'Policy Condition', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "Section VI 'Main Notes' (4 notes) on PDF page 1 are attributed to section_notes (Section VI, Products of the Chemical or Allied Industries), not chapter_notes. The chapter title 'Chapter 38 Miscellaneous Chemical Products.' appears at the bottom of PDF page 1 with a trailing period in the source.",
+    "PDF contains '?' characters in place of typographic apostrophe/quote marks in chapter Note 1 ('Dippel?s oil') and elsewhere. Preserved verbatim as they appear in the source.",
+    "PDF contains double quote marks doubled (e.g., '\"\"certified reference materials\"\"', '\"\"municipal waste\"\"', '\"\"other wastes\"\"', '\"waste organic solvents\"') in chapter notes — preserved verbatim as they appear in the source.",
+    "Supplementary Notes section on PDF pages 5-7 shows rows numbered 1, 10, 2, 3, 4, 5, 6, 7, 8, 9 — the natural row sequence in the PDF. Only 10 supplementary notes are present in this section. However, tariff lines reference Supplementary Notes 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 (e.g., codes 3808.92.60, 3808.92.70, 3808.93.61, 3808.93.71, 3808.93.41, 3808.93.42, 3808.94.20, 3808.99.11, 3808.99.12). Supplementary Notes 11-16 are not present in the PDF's Supplementary Notes table — captured only the 10 supplementary notes that physically appear in the source.",
+    "Heading 3808 in the PDF: subheading 3808.52, 3808.59, 3808.61, 3808.62, 3808.69 tariff lines (3808.52.00, 3808.59.00, 3808.61.00, 3808.62.00, 3808.69.00) appear with the prefix 'Goods specified in Subheading Note 1 to this Chapter :' or 'Goods specified in Subheading Note 2 to this Chapter :'. Preserved verbatim with the colon and dash indicators.",
+    "Tariff line 3808.91.93 description 'Containing bromomethane (methyl bromide) or bromochloromethane' appears under subheading 3808.91 (Insecticides) without an explicit '--- Other:' parent indicator in the PDF row — preserved verbatim. The '-' character in the Policy Condition column on this and other tariff lines is preserved as a dash indicator (no policy condition).",
+    "Tariff lines under subheading 3808.91 use a 5-tier hyphen indicator pattern in the PDF: '---' for parent group and '----' for sub-items. The descriptions preserve these dash patterns verbatim (e.g., '--- Other:\\n---- Containing bromomethane (methyl bromide) or bromochloromethane'). Multi-line descriptions joined with newlines preserved as single-line strings.",
+    "Heading 3813 in the PDF is rendered in ALL CAPS: 'PREPARATIONS AND CHARGES FOR FIRE-EXTINGUISHERS: CHARGED FIRE-EXTINGUISHING GRENADES' — preserved verbatim. Heading 3817, 3819, 3822, 3827 also rendered in ALL CAPS in the source.",
+    "Heading 3805 tariff line 3805.10.10 (Wood turpentine oil and spirit of turpentine) has a very long Policy Condition column text spanning multiple PDF rows about Restricted Export Authorisation requirements (certificate of origin issued by Principal Chief Conservator of Forests, etc.). The Export Policy 'Restricted' and the multi-row Policy Condition text are not part of the tariff line description field; they are captured separately and not in this extraction (description preserved verbatim).",
+    "Heading 3822 has Notification No '39/2015-2020' and Notification Date '14.10.2021' shown at the heading row level in the PDF. Tariff line 3826.00.00 (Biodiesel) shows Notification No '62/2015-20' and Notification Date '22.03.2023' with Export Policy 'Restricted' and detailed policy condition text. These notification references are noted but not stored in the standard 7-node schema fields.",
+    "Heading 3811 description in PDF reads 'Anti-knock preparations, oxidation inhibitors, gum inhibitors, viscosity improvers, anti-corrosive preparations and other prepared additives, for mineral oils (including gasoline) or for other liquids used for the same purposes as mineral oils.' — verbatim including trailing period.",
+    "Subheading 3808.91 has tariff codes 3808.91.11 through 3808.91.99 (Insecticides) with various pesticide products. Codes 3808.91.21-3808.91.37 cover specific named insecticides (Diaginal, Methyl bromide, Dimethoate, Melathion, Endosulphan, Quinal phos, Isoproturon, Fenthion, Cipermethrin, Allethrin, Synthetic pyrethrum). Codes 3808.91.41/42/51/52/61/62 reference Supplementary Notes 1-8 (some not present in source). Codes 3808.91.91/92/93/99 are 'Other' category sub-classifications.",
+    "Tariff line code 3816.00.00 description in PDF reads 'refractory cements, mortars, concretes and similar compositions, including dolomite ramming mix, other than products of heading 3801' — preserved verbatim with lowercase 'r' in 'refractory'.",
+    "Tariff line 3823.11 is shown as a parent code without dots ('382311') with description 'Industrial monocarboxylic fatty acids; acid oils from refining :-- Stearic acid :' followed immediately by tariff line 3823.11.00 ('38231100') with the same description. This duplicate row appears in the PDF — preserved verbatim. The parent code 3823.11 is captured as the subheading.",
+    "Subheading 3824.40 ('Prepared additives for cements, mortars or concretes') is shown without 6-digit code prefix mistake in PDF (rendered as '382440'). Subheadings 3824.50, 3824.60, 3824.81 onwards are normalized to NNNN.NN format.",
+    "Heading 3824 in the PDF spans many tariff lines including subheadings 3824.10, 3824.30, 3824.40, 3824.50, 3824.60, 3824.81 through 3824.99. Subheadings 3824.81-3824.89 reference Subheading Note 3 of the Chapter (covering various halogenated/restricted substances). Code 3824.99 covers 'Other -- Other' with sub-classifications 3824.91.00 (oligomers methylphosphonate), 3824.92.00 (polyglycol esters), 3824.99.00 (Other -- Other).",
+    "Subheading 3824.88 description 'Goods specified in Sub-heading Note 3 to this Chapter:-- Containing tetra-, penta-, hexa-, hepta- or octabromo-diphenyl ethers\"' has a trailing stray double-quote character in the PDF — preserved verbatim.",
+    "Code 38256900 description 'Other wastes from chemical or allied industries : -- Other' spans across page break in PDF (ends with '--' on one page and continues 'Other' on next). Concatenated verbatim.",
+    "Heading 3827 (Mixtures containing halogenated derivatives of methane, ethane or propane, not elsewhere specified or included) in the PDF has all tariff lines marked 'Restricted' with Policy Condition referencing either 'Policy Condition 1 of the Chapter' or 'Policy Condition 2 of the Chapter'. These export policy/policy condition entries are not part of the description field.",
+    "Code 3827.62.00 description includes 'unsaturated fluorinated derivatives of acyclic hydrocarbons (HFOs)b' — the trailing 'b' character appears as an OCR artifact in the source PDF, preserved verbatim.",
+    "Subheading 3808.92 row 3808.92.10 (Maneb) in PDF is described as 'Maneb' (single word). Sub-subheading 3808.92.60 references 'Supplementary Note 5' and 3808.92.70 references 'Supplementary Note 6' — these notes are present in the source Supplementary Notes section (rows 5 and 6).",
+    "Heading 3823 subheading 3823.19 ('Industrial monocarboxylic fatty acids; acid oils from refining :-- Other') is shown in the PDF without a top-level subheading title row before the tariff lines — only individual tariff line 3823.19.00 appears. Captured under subheading 3823.19.",
+    "Code 3829 (and any potentially valid heading codes between 3826 and 3827 such as 3828) are not present in the source PDF — Chapter 38 in this PDF ends at heading 3827. No codes from 3828, 3829 etc."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover: (a) separate chemically defined elements or compounds with the exception of the following : (1) artificial graphite (heading 3801); (2)insecticides,rodenticides,fungicides, herbicides, anti-sproutingpro-ducts and plant-growth regulators, disinfectants and similar products, put up as described in heading 3808; (3) products put up as chargesfor fire-extinguishers or put up in fire-extinguishing grenades (heading 3813); (4) certified reference materials specified in Note 2 below; (5) products specified in Note 3 (a) or 3 (c) below; (b) mixtures of chemicals with foodstuffs or othersubstances with nutritive value, of a kind used in the preparation of human foodstuffs(generally, heading 2106); (c) products of heading 2404; (d) slag, ash and residues(including sludges, other than sewage sludge), containing metals, arsenic or their mixtures and meeting the requirements of Note 3 (a) or 3(b) to Chapter 26 (heading 2620); (e) medicaments (Heading 3003 or 3004); (f) spent catalysts of a kind used for the extraction of base metals or for the manufacture of chemical compounds of base metals (heading 2620), spent catalysts of a kind used principally for the recovery of precious metal (heading 7112) or catalysts consisting of metals or metal alloys in the form of, for example, finely divided powder or woven gauze (Section XIV or XV)."
+    },
+    {
+      "number": "2",
+      "text": "(A) For the purpose of heading 3822, the expression \"\"certified reference materials\"\" means reference materials which are accompanied by a certificate which indicates the values of the certified properties, the methods used to determine these values and the degree of certainty associated with each value and which are suitable for analytical, calibrating or referencing purposes. (B) With the exception of the products of Chapter 28 or 29, for the classification of certified reference materials, heading 3822 shall take precedence over any other heading in the Schedule."
+    },
+    {
+      "number": "3",
+      "text": "Heading 3824 includesthe following goods which are not to be classified in any other heading of this Schedule: (a) cultured crystals(other than optical elements) weighing not lessthan 2.5 g each, of magnesium oxide or of the halides of the alkali or alkaline-earth metals; (b) fusel oil; Dippel?s oil; (c) ink removers put up in packings for retail sale; (d) Stencil correctors, other correcting fluids and correction tapes (other than those of heading 9612), put up in packings for retail sale; and; (e) ceramic firing testers, fusible (for example, seger cones)."
+    },
+    {
+      "number": "4",
+      "text": "Throughout the Schedule, \"\"municipal waste\"\" means waste of a kind collected from households, hotels, restaurants, hospitals, shops, offices, etc., road and pavement sweepings, as well as construction and demolition waste. Municipal waste generally contains a large variety of materials such as plastics, rubber, wood, paper, textiles, glass, metals, food materials, broken furniture and other damaged or discarded articles. The term \"\"municipal waste\"\", however, does not cover: (a) individual materials or articles segregated from the waste, for example wastes of plastics, rubber, wood, paper, textiles, glass or metals, electrical and electronic waste and scrap (including spent batteries) which fall in their appropriate headings of the Nomenclature; (b) industrial waste; (c) waste pharmaceuticals, as defined in Note 4(k) to Chapter 30; or (d) clinical waste, as defined in Note 6(a) below."
+    },
+    {
+      "number": "5",
+      "text": "For the purposes of heading 3825, \"sewage sludge\" meanssludge arising fromurban effluent treatment plant and includes pre-treatment waste, scourings and unstabilised sludge. Stablised sludge when suitable for use as fertiliser is excluded (Chapter 31)."
+    },
+    {
+      "number": "6",
+      "text": "For the purposes of heading 3825, the expression \"\"other wastes\"\" applies to: (a) clinical waste, that is, contaminted waste arising from medical research, diagnosis, treatment or other medical, surgical, dental or veterinary procedures, which often contain pathogens and pharmaceutical substances and require special disposal procedures (for example, soiled dressings, used gloves and used syringes); (b) waste organic solvents; (c) wastes of metal pickling liquors, hydraulic fluids, brake fluids and anti-freezing fluids; and (d) other wastes from chemical or allied industries. The expression \"\"other wastes\"\" does not, however, cover wastes which contain mainly petroleum oils or oils obtained frombituminous minerals(heading 2710)."
+    },
+    {
+      "number": "7",
+      "text": "For the purposes of heading 3826, the term \"biodiesel\" means mono-alkyl esters of fatty acids of a kind used as a fuel, derived from animal or vegetable or microbial fats and oils whether or not used."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "(A) Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 are to be classified in those headings and in no other heading of this Schedule. (B) Subject to paragraph (A) above, goods answering to a description in heading 2843, 2846 or 2852 are to be classified in those headings and in no other heading of this Section."
+    },
+    {
+      "number": "2",
+      "text": "Subject to Note 1 above, goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale are to be classified in those headings and in no other heading of this Schedule."
+    },
+    {
+      "number": "3",
+      "text": "Goods put up in sets consisting of two or more separate constituents,some or all of which fall in this Section and are intended to be mixed together to obtain a product of Section VI or VII, are to be classified in the heading appropriate to that product, provided that the constituents are: (a) having regard to the manner in which they are put up, clearly identifiable as being intended to be used together without first being repacked; (b) presented together; and (c) identifiable, whether by their nature or by the relative proportions in which they are present, as being complementary one to another."
+    },
+    {
+      "number": "4",
+      "text": "Where a product answers to a description in one or more of the headings in Section VI by virtue of being described by name or function and also to heading 3827, then it is classifiable in a heading that references the product by name or function and not under heading 3827."
+    }
+  ],
+  "chapter_subheading_notes": [
+    {
+      "number": "1",
+      "text": "Sub-headings 3808 52 and 3808 59 cover only goods of heading 3808, containing one or more of the following substances: alachlor (ISO); aldicarb (ISO); aldrin (ISO); azinphos-methyl (ISO); binapacryl (ISO); camphechlor (ISO) (toxaphene); captafol (ISO); carbofuran (ISO); chlordane (ISO); chlordimeform (ISO); chlorobenzilate (ISO); DDT (ISO) (clofenotane (INN), 1,1,1-trichloro2,2-bis (pchlorophenyl) ethane); dieldrin (ISO, INN); 4,6- dinitro-o-cresol (DNOC (ISO)) or its salts; dinoseb (ISO), its salts or its esters; endosulfan (ISO); ethylene dibromide (ISO) (1,2-dibromoethane); ethylene dichloride (ISO) (1,2- dichloroethane); fluoroacetamide (ISO); heptachlor (ISO); hexachlorobenzene (ISO); 1,2,3,4,5,6-hexachlorocyclohexane (HCH (ISO)), including lindane (ISO, INN); mercury compounds; methamidophos (ISO); monocrotophos (ISO); oxirane (ethylene oxide); parathion (ISO); parathion-methyl (ISO) (methyl-parathion); pentachlorophenol (ISO), its salts or its esters; perfluorooctane sulphonic acid and its salts; perfluorooctane sulphonamides; perfluorooctane sulphonyl fluoride; phosphamidon (ISO); 2,4,5-T (ISO) (2,4,5- trichlorophenoxyacetic acid), its salts or its esters; tributyltin compounds; trichlorfon (ISO)."
+    },
+    {
+      "number": "2",
+      "text": "Sub-headings 3808 61 to 3808 69 cover only goods of heading 3808, containing alphacypermethrin (ISO), bendiocarb (ISO), bifenthrin (ISO), chlorfenapyr (ISO), cyfluthrin (ISO), deltamethrin (INN, ISO), etofenprox (INN), fenitrothion (ISO), lambda-cyhalothrin (ISO), malathion (ISO), pirimiphosmethyl (ISO) or propoxur (ISO)."
+    },
+    {
+      "number": "3",
+      "text": "Sub-headings 3824 81 to 3824 89 cover only mixtures and preparations containing one or more of the following substances: oxirane (ethylene oxide); polybrominated biphenyls (PBBs); polychlorinated biphenyls (PCBs); polychlorinated terphenyls (PCTs); tris (2,3- dibromopropyl) phosphate; aldrin (ISO); camphechlor (ISO) (toxaphene); chlordane (ISO); chlordecone (ISO); DDT (ISO) (clofenotane (INN); 1,1,1-trichloro-2,2-bis (p-c hlorophenyl)ethane); dieldrin (ISO, INN); endosulfan (ISO); endrin (ISO); heptachlor (ISO); mirex (ISO); 1,2,3,4,5,6- hexachlorocyclohexane (HCH (ISO)), including lindane (ISO, INN); pentachlorobenzene (ISO); hexachlorobenzene (ISO); perfluorooctane sulphonic acid, its salts; perfluorooctane sulphonamides; perfluorooctane sulphonyl fluoride; tetra-, penta-, hexa- , hepta- or octabromodiphenyl ethers; short-chain chlorinated paraffins. Short-chain chlorinated paraffins are mixtures of compounds, with a chlorination degree of more than 48% by weight, with the following molecular formula: CxH(2x-y+2)Cly, where x=10 - 13 and y= 1 -13."
+    },
+    {
+      "number": "4",
+      "text": "For the purposes of tariff items 3825 41 00 and 3825 49 00, \"waste organic solvents\"are wastescontaining mainly organic solvents, not fit for further use as presented as primary products, whether or notintended for recovery of solvents.;"
+    }
+  ],
+  "supplementary_notes": [
+    {
+      "number": "1",
+      "text": "Tariff item 3808 91 41 covers one of the following goods of sub-heading 3808 91:Acephate (ISO) conforming to IS-12915; Cartap Hydrochloride (ISO) conforming to IS-14159; Imidacloprid (ISO) conforming to IS-15443; Acetamiprid (ISO) conforming to IS-15981; Afidopyropen conforming to IS 18873; Alphacypermethrin conforming to IS 15616; Azadirachtin (Neem products) conforming to IS 14299; Beta cyfluthrin conforming to IS 14156; Carbosulfan conforming to IS 14940; Chlorpyriphos conforming to IS 8963; Chlorpyriphos methyl conforming to IS 15693; Cyfluthrin conforming to IS 14156; Cyphenothrin conforming to IS 15978; Deltamethrin (Decamethrin) conforming to IS 12005; Dicofol conforming to IS 5278; Diflubenzuron conforming to IS 14185; D-trans allethrin conforming to IS 13146; Ethion conforming to IS 10369; Ethofenprox (Etofenprox) conforming to IS 14249; Ethylene dichloride and Carbon tetrachloride mixture conforming to IS 634; Fenitrothion conforming to IS 5280; Fenpropathrin conforming to IS 15161; Fenvalerate conforming to IS 12003; Fipronil conforming to IS 18389; Fluvalinate conforming to IS 13097; Imiprothrin conforming to IS 16921; Indoxacarb conforming to IS 15984; Lambdacyhalothrin conforming to IS 14509; Malathion conforming to IS 1832; Methomyl conforming to IS 15614; Novaluron conforming to IS 17125; Oxydemeton- Methyl conforming to IS 8258; Phenthoate conforming to IS 8293; Phosalone conforming to IS 8488; Primiphos-methyl conforming to IS 13080; Profenophos conforming to IS 15238; Pyriproxyfen conforming to IS 16141; Spiromesifen conforming to IS 16674; Temephos conforming to IS 8701; Thiacloprid conforming to IS 16710; Thiodicarb conforming to IS 16956; Thiomethoxam conforming to IS 15983; Triazophos conforming to IS 14936; Zinc Phosphide conforming to IS 1251."
+    },
+    {
+      "number": "10",
+      "text": "Tariff item 3808 93 72 covers only mixtures and preparations of goods of sub-heading 3808 93 with content by mass greater than 90%, containing one or more of the following :Bispyribac sodium (ISO); Imazethapyr (ISO)."
+    },
+    {
+      "number": "2",
+      "text": "Tariff item 3808 91 42 covers one of the following goods of sub-heading 3808 91:\n(a) with content by mass greater than 90% : Chlorentraniliprole (ISO); Buprofezin (ISO); Flubendiamide (ISO); Emamectin Benzoate (ISO); Abamectin; Bendiocarb; Benfuracarb; Benzpyrimoxam; Broflanilide; Chlorfenopyr; Chlorfluazuron; Chromafenozide; Clothianidin; Cyantraniliprole; Cyclaniliprole; Cyenopyrafen; Cyflumetofen; Diafenthiuron; Dinotefuron; Etoxazole; Fenazaquin; Fenobucarb (BPMC); Fenpyroximate; Flonicamid; Flufenoxuron; Flufenzine; Flupyradifurone; Fluxametamide; Hexythiazox; Isocycloseram; Lufenuron; Metaflumizone; Metaldehyde; Methoxyfenazide; Metofluthrin; Milbemectin; Permethrin; Prallethrin; Propergite; Propoxur; Pymetrozin (FI); TIM; Pyrethrin (pyrethrum); Pyridaben; Pyridalyl; Pyrifluquinazon; Renofluthrin; S-bioallethrin; Spinetoram; Spinosad; Spirotetramat; Sulfoxaflor; Teflubenzuron; Tolfenpyrad; Transfluthrin; Triflumezopyrim.\n(b) with content by mass greater than 60% : Propetamphos; Tetraniliprole; Thiocyclam hydrogen oxalate."
+    },
+    {
+      "number": "3",
+      "text": "Tariff item 3808 91 51 covers only mixtures and preparations of goods of sub-heading 3808 91, containing one or more of the following:Acephate (ISO) conforming to IS-12916; Cartap Hydrochloride (ISO) conforming to IS-14183; Imidacloprid (ISO) conforming to IS-15335; Acetamiprid (ISO) conforming to IS-16328."
+    },
+    {
+      "number": "4",
+      "text": "Tariff item 3808 91 52 covers only mixtures and preparations of goods of sub-heading 3808 91 with content by mass greater than 90%, containing one or more of the following:Chlorentraniliprole (ISO); Buprofezin (ISO); Flubendiamide (ISO); Emamectin Benzoate (ISO)."
+    },
+    {
+      "number": "5",
+      "text": "Tariff item 3808 92 60 covers one of the following goods of sub-heading 3808 92: Carbendazim (ISO) conforming to IS-8445; Bitertanol conforming to IS 13330; Captan conforming to IS 14251; Carboxin conforming to IS 13110; Carpropamid conforming to IS 16706; Chlorothalonil conforming to IS 13132; Cuprous Oxide conforming to IS 1682; Cymoxanil conforming to IS 15600; Dithianon conforming to IS 12944; Dodine conforming to IS 13784; Edifenphos conforming to IS 8954; Hexaconazole conforming to IS 14549; Iprobenfos (Kitazin) conforming to IS 13788; Isoprothiolane conforming to IS 15163; Mancozeb conforming to IS 8707; Metalaxyl-M conforming to IS 13458; Penconazole conforming to IS 15234; Propiconazole conforming to IS 15241; Tebuconazole conforming to IS 15165; Thiophanate-Methyl conforming to IS 14551; Triadimefon conforming to IS 13328; Tricyclazole conforming to IS 15982; Validamycin conforming to IS 17200; Ziram conforming to IS 3900."
+    },
+    {
+      "number": "6",
+      "text": "Tariff item 3808 92 70 covers only mixtures and preparations of goods of sub-heading 3808 92, containing one or more of the following : Carbendazim (ISO) conforming to IS-8446."
+    },
+    {
+      "number": "7",
+      "text": "Tariff item 3808 93 61 covers one of the following goods of sub-heading 3808 93 : Pretilachlor (ISO) conforming to IS-15158; Glyphosate (ISO) conforming to IS-12502; 2,4-D amine salt conforming to IS 1827; 2,4- D- ethyl ester conforming to IS 7233; 2,4-D sodium salt conforming to IS 1488; Anilophos conforming to IS 13402; Atrazine conforming to IS 12932; Bensulfuron methyl conforming to IS 17847; Butachlor conforming to IS 9356; Chlorimuron ethyl conforming to IS 15619; Clomazone conforming to IS 15409; Diclofop-methyl conforming to IS 14938; Diuron conforming to IS 8702; Fenoxaprop-p-ethyl conforming to IS 15232; Fluchloralin conforming to IS 8958; Glufosinate ammonium conforming to IS 15166; MCPA, amine salt conforming to IS 8494; Methabenzthiazuron conforming to IS 11007; Metolachlor conforming to IS 15229; Metribuzin conforming to IS 13332; Metsulfuron methyl conforming to IS 15615; Oxadiargyl conforming to IS 16708; Oxyfluorfen conforming to IS 14934; Pendimethalin conforming to IS 12685; Propanil conforming to IS 8071; Sulfosulfuron conforming to IS 16212; Thiobencarb (Benthiocarb) conforming to IS 12768; Triallate conforming to IS 9357."
+    },
+    {
+      "number": "8",
+      "text": "Tariff item 3808 93 62 covers one of the following goods of sub-heading 3808 93:\n(a) with content by mass greater than 90% : Bispyribac sodium (ISO); Imazethapyr (ISO); 2,4-Dichlorophenoxy acetic acid; Ametryn; Azimsulfuron; Beflubutamid; Bentazone; Bixlozone; Carfentrazone ethyl; Chlorpropham; Cinmethylene; Clethodim; Clodinafoppropargyl; Cyhalofop-butyl; Dazomet; Dicamba; Diclosulam; Dimethenamid-P; Ethafluralin; Ethoxysulfuron; Florasulam; Florpyrauxifen benzyl; Florpyrauxifenbenzyl; Fluazifop-p-butyl; Flucetosulfuron; Flufenacet; Flumioxazin; Fluroxypyr meptyl; Fomesafen; Glyphosate potassium salt; Halauxifen-methyl; Haloxyfop-P-methyl; Haloxyfop-R-methyl; Helosulfuron methyl; Hexazinone; Imazamox; Indaziflam; Iodosulfuron methyl sodium; Ipfencarbazone; Mesosulfuron methyl; Mesotrione; Metamifop; Metamitron; Orthosulfamuron; Oxadiazon; Paraquat dichloride; Penoxsulam; Pinoxaden; Propaquizafop; Pyrazosulfuron ethyl; Pyribenzoxim; Pyriftalid; Pyrithiobac sodium; Pyroxsulfon; Pyroxsulam; Quizalofop ethyl; Quizalofop-P-tefuryl; Saflufenacil; Sodium acifluorfen; Sulfentrazone; Tembotrione; Topramezone; Triafamone; Triasulfuron; Triclopyr acid; Triclopyr butotyl ester; Trifloxysulfuron sodium; Trifluralin.\n(b) with content by mass greater than 60% : Indaziflam; Mesotrione.\n(c) with content by mass greater than 40% : Paraquat dichloride."
+    },
+    {
+      "number": "9",
+      "text": "Tariff item 3808 93 71 covers only mixtures and preparations of goods of sub-heading 3808 93, containing one or more of the following : Pretilachlor (ISO) conforming to IS-15160."
+    }
+  ],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "separate chemically defined elements or compounds (with the exceptions listed)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover: (a) separate chemically defined elements or compounds with the exception of the following : (1) artificial graphite (heading 3801); (2)insecticides,rodenticides,fungicides, herbicides, anti-sproutingpro-ducts and plant-growth regulators, disinfectants and similar products, put up as described in heading 3808; (3) products put up as chargesfor fire-extinguishers or put up in fire-extinguishing grenades (heading 3813); (4) certified reference materials specified in Note 2 below; (5) products specified in Note 3 (a) or 3 (c) below"
+    },
+    {
+      "excluded_product_text": "mixtures of chemicals with foodstuffs or other substances with nutritive value, of a kind used in the preparation of human foodstuffs",
+      "redirects_to_chapter": "21",
+      "redirects_to_heading": "2106",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "(b) mixtures of chemicals with foodstuffs or othersubstances with nutritive value, of a kind used in the preparation of human foodstuffs(generally, heading 2106)"
+    },
+    {
+      "excluded_product_text": "products of heading 2404",
+      "redirects_to_chapter": "24",
+      "redirects_to_heading": "2404",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "(c) products of heading 2404"
+    },
+    {
+      "excluded_product_text": "slag, ash and residues (including sludges, other than sewage sludge), containing metals, arsenic or their mixtures and meeting the requirements of Note 3(a) or 3(b) to Chapter 26",
+      "redirects_to_chapter": "26",
+      "redirects_to_heading": "2620",
+      "source_note_number": "Note 1(d)",
+      "source_note_text": "(d) slag, ash and residues(including sludges, other than sewage sludge), containing metals, arsenic or their mixtures and meeting the requirements of Note 3 (a) or 3(b) to Chapter 26 (heading 2620)"
+    },
+    {
+      "excluded_product_text": "medicaments",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": "3003",
+      "source_note_number": "Note 1(e)",
+      "source_note_text": "(e) medicaments (Heading 3003 or 3004)"
+    },
+    {
+      "excluded_product_text": "spent catalysts of a kind used for the extraction of base metals or for the manufacture of chemical compounds of base metals",
+      "redirects_to_chapter": "26",
+      "redirects_to_heading": "2620",
+      "source_note_number": "Note 1(f)",
+      "source_note_text": "(f) spent catalysts of a kind used for the extraction of base metals or for the manufacture of chemical compounds of base metals (heading 2620), spent catalysts of a kind used principally for the recovery of precious metal (heading 7112) or catalysts consisting of metals or metal alloys in the form of, for example, finely divided powder or woven gauze (Section XIV or XV)."
+    },
+    {
+      "excluded_product_text": "spent catalysts of a kind used principally for the recovery of precious metal",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": "7112",
+      "source_note_number": "Note 1(f)",
+      "source_note_text": "(f) spent catalysts of a kind used for the extraction of base metals or for the manufacture of chemical compounds of base metals (heading 2620), spent catalysts of a kind used principally for the recovery of precious metal (heading 7112) or catalysts consisting of metals or metal alloys in the form of, for example, finely divided powder or woven gauze (Section XIV or XV)."
+    },
+    {
+      "excluded_product_text": "catalysts consisting of metals or metal alloys in the form of, for example, finely divided powder or woven gauze",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(f)",
+      "source_note_text": "(f) spent catalysts of a kind used for the extraction of base metals or for the manufacture of chemical compounds of base metals (heading 2620), spent catalysts of a kind used principally for the recovery of precious metal (heading 7112) or catalysts consisting of metals or metal alloys in the form of, for example, finely divided powder or woven gauze (Section XIV or XV)."
+    },
+    {
+      "excluded_product_text": "Stablised sludge when suitable for use as fertiliser (excluded from heading 3825 'sewage sludge')",
+      "redirects_to_chapter": "31",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 5",
+      "source_note_text": "For the purposes of heading 3825, \"sewage sludge\" meanssludge arising fromurban effluent treatment plant and includes pre-treatment waste, scourings and unstabilised sludge. Stablised sludge when suitable for use as fertiliser is excluded (Chapter 31)."
+    },
+    {
+      "excluded_product_text": "wastes which contain mainly petroleum oils or oils obtained from bituminous minerals (excluded from heading 3825 'other wastes')",
+      "redirects_to_chapter": "27",
+      "redirects_to_heading": "2710",
+      "source_note_number": "Note 6",
+      "source_note_text": "For the purposes of heading 3825, the expression \"\"other wastes\"\" applies to: (a) clinical waste, ... (d) other wastes from chemical or allied industries. The expression \"\"other wastes\"\" does not, however, cover wastes which contain mainly petroleum oils or oils obtained frombituminous minerals(heading 2710)."
+    },
+    {
+      "excluded_product_text": "Where a product answers to a description in one or more of the headings in Section VI by virtue of being described by name or function and also to heading 3827, then it is classifiable in a heading that references the product by name or function and not under heading 3827 (i.e., heading 3827 is residual; named/functional headings take precedence)",
+      "redirects_to_chapter": "38",
+      "redirects_to_heading": "3827",
+      "source_note_number": "Section VI Note 4",
+      "source_note_text": "Where a product answers to a description in one or more of the headings in Section VI by virtue of being described by name or function and also to heading 3827, then it is classifiable in a heading that references the product by name or function and not under heading 3827."
+    },
+    {
+      "excluded_product_text": "Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 — must be classified in those headings and not elsewhere",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": "2844",
+      "source_note_number": "Section VI Note 1(A)",
+      "source_note_text": "(A) Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 are to be classified in those headings and in no other heading of this Schedule."
+    },
+    {
+      "excluded_product_text": "Goods answering to a description in heading 2843, 2846 or 2852 — must be classified in those headings and not elsewhere in Section VI",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": "2843",
+      "source_note_number": "Section VI Note 1(B)",
+      "source_note_text": "(B) Subject to paragraph (A) above, goods answering to a description in heading 2843, 2846 or 2852 are to be classified in those headings and in no other heading of this Section."
+    },
+    {
+      "excluded_product_text": "Goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale — classified in those headings only",
+      "redirects_to_chapter": "38",
+      "redirects_to_heading": "3808",
+      "source_note_number": "Section VI Note 2",
+      "source_note_text": "Subject to Note 1 above, goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale are to be classified in those headings and in no other heading of this Schedule."
+    },
+    {
+      "excluded_product_text": "products of Chapter 28 or 29 (excluded from heading 3822 precedence rule for certified reference materials)",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(B)",
+      "source_note_text": "(B) With the exception of the products of Chapter 28 or 29, for the classification of certified reference materials, heading 3822 shall take precedence over any other heading in the Schedule."
+    },
+    {
+      "excluded_product_text": "Stencil correctors, other correcting fluids and correction tapes (other than those of heading 9612), put up in packings for retail sale — note: heading 9612 correction tapes are excluded from 3824",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": "9612",
+      "source_note_number": "Note 3(d)",
+      "source_note_text": "(d) Stencil correctors, other correcting fluids and correction tapes (other than those of heading 9612), put up in packings for retail sale; and"
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "3801",
+      "title": "Artificial graphite; colloidal or semi-colloidal graphite; preparations based on graphite or other carbon in the form of pastes, blocks, plates or other semi-manufactures.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3801.10",
+          "title": "Artificial graphite",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3801.10.00",
+              "description": "Artificial graphite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3801.20",
+          "title": "Colloidal or semi-colloidal graphite",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3801.20.00",
+              "description": "Colloidal or semi-colloidal graphite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3801.30",
+          "title": "Carbonaceous pastes for electrodes and similar pastes for furnace linings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3801.30.00",
+              "description": "Carbonaceous pastes for electrodes and similar pastes for furnace linings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3801.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3801.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3802",
+      "title": "Activated carbon; activated natural mineral products; animal black, including spent animal black.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3802.10",
+          "title": "Activated carbon",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3802.10.00",
+              "description": "Activated carbon",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3802.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3802.90.11",
+              "description": "Activated natural mineral products: ---- Activated alumina",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3802.90.12",
+              "description": "Activated natural mineral products: ---- Activated bauxite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3802.90.19",
+              "description": "Activated natural mineral products: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3802.90.20",
+              "description": "Activated natural mineral products: ---- Animal black (for example, bone black and ivory black), including spent animal black",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3803",
+      "title": "Tall oil, whether or not refined.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3803.00",
+          "title": "Tall oil, whether or not refined.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3803.00.00",
+              "description": "Tall oil, whether or not refined.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "3804",
+      "title": "Residual lyes from the manufacture of wood pulp, whether or not concentrated, desugared or chemically treated, including lignin sulphonates, but excluding tall oil of heading 38.03.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3804.00",
+          "title": "Residual lyes from the manufacture of wood pulp, whether or not concentrated, desugared or chemically treated, including lignin sulphonates, but excluding tall oil of heading 3803:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3804.00.10",
+              "description": "Lignin sulphonates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3804.00.20",
+              "description": "Concentrated sulphate lye",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3804.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "3805",
+      "title": "Gum, wood or sulphate turpentine and other terpenic oils produced by the distillation or other treatment of coniferous woods; crude dipentene; sulphite turpentine and other crude para-cymene; pine oil containing alpha-terpineol as the main constituent.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3805.10",
+          "title": "Gum, wood or sulphate turpentine oils",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3805.10.10",
+              "description": "Wood turpentine oil and spirit of turpentine",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "subject to the following documentation: Applications for Restricted Export"
+            },
+            {
+              "code": "3805.10.20",
+              "description": "Gum turpentine oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3805.10.30",
+              "description": "Sulphate turpentine oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3805.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3805.90.10",
+              "description": "Terpenic oils produced by the distillation or other treatment of coniferous woods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3805.90.20",
+              "description": "Crude dipentene",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3805.90.30",
+              "description": "Sulphite turpentine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3805.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3806",
+      "title": "Rosin and resin acids, and derivatives thereof; rosin spirit and rosin oils; run gums.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3806.10",
+          "title": "Rosin and resin acids",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3806.10.10",
+              "description": "Gum rosin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3806.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3806.20",
+          "title": "Salts of rosin, of resin acids or of derivatives of rosin or resin acids, other than salts of rosin adducts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3806.20.00",
+              "description": "Salts of rosin, of resin acids or of derivatives of rosin or resin acids, other than salts of rosin adducts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3806.30",
+          "title": "Ester gums",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3806.30.00",
+              "description": "Ester gums",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3806.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3806.90.10",
+              "description": "Run gums",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3806.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3807",
+      "title": "Wood tar; wood tar oils; wood creosote; wood naphtha; vegetable pitch; brewers pitch and similar preparations based on rosin, resin acids or on vegetable pitch.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3807.00",
+          "title": "Wood tar; wood tar oils; wood creosote; wood naphtha; vegetable pitch; brewers pitch and similar preparations based on rosin, resin acids or on vegetable pitch:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3807.00.10",
+              "description": "Wood Tar",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3807.00.20",
+              "description": "Wood Tar oils, wood creosote, wood naphtha",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3807.00.30",
+              "description": "Vegetable pitch, brewers pitch and similar preparations based on rosin, resin acids or on vegetable pitch",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "3808",
+      "title": "Insecticides, rodenticides, fungicides, herbicides, anti-sprouting products and plant-growth regulators, disinfectants and similar products, put up in forms or packings for retail sale or as preparations or articles (for example, sulphur-treated bands, wicks and candles, and fly-papers).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3808.52",
+          "title": "Goods specified in Subheading Note 1 to this Chapter : -- DDT (ISO) (clofenotane (INN)), in packings of a net weight content not exceeding 300 g",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3808.52.00",
+              "description": "Goods specified in Subheading Note 1 to this Chapter : -- DDT (ISO) (clofenotane (INN)), in packings of a net weight content not exceeding 300 g",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3808.59",
+          "title": "Goods specified in Subheading Note 1 to this Chapter : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3808.59.00",
+              "description": "Goods specified in Subheading Note 1 to this Chapter : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3808.61",
+          "title": "Goods specified in Subheading Note 2 to this Chapter : -- In packings of a net weight content not exceeding 300 g",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3808.61.00",
+              "description": "Goods specified in Subheading Note 2 to this Chapter : -- In packings of a net weight content not exceeding 300 g",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3808.62",
+          "title": "Goods specified in Subheading Note 2 to this Chapter : -- In packings of a net weight content exceeding 300 g but not exceeding 7.5 kg",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3808.62.00",
+              "description": "Goods specified in Subheading Note 2 to this Chapter : -- In packings of a net weight content exceeding 300 g but not exceeding 7.5 kg",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3808.69",
+          "title": "Goods specified in Subheading Note 2 to this Chapter : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3808.69.00",
+              "description": "Goods specified in Subheading Note 2 to this Chapter : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3808.91",
+          "title": "Other : -- Insecticides",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3808.91.11",
+              "description": "Aluminium phosphate (for example phostoxin)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.12",
+              "description": "Calcium cyanide)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.13",
+              "description": "D.D.V.P. (Dimethyle-dichloro-vinyl-phosphate)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.21",
+              "description": "Diaginal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.22",
+              "description": "Methyl bromide",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.23",
+              "description": "Dimethoate, technical grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.24",
+              "description": "Melathion",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.31",
+              "description": "Endosulphan, technical grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.32",
+              "description": "Quinal phos",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.33",
+              "description": "Isoproturon",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.34",
+              "description": "Fenthion",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.35",
+              "description": "Cipermethrin, technical grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.36",
+              "description": "Allethrin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.37",
+              "description": "Synthetic pyrethrum",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.41",
+              "description": "Goods specified in Supplementary Note 1 and 2 to this Chapter: ---- Goods specified in Supplementary Note 1 to this Chapter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.42",
+              "description": "Goods specified in Supplementary Note 1 and 2 to this Chapter: ---- Goods specified in Supplementary Note 2 to this Chapter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.51",
+              "description": "Goods specified in Supplementary Note 3 and 4 to this Chapter: ---- Goods specified in Supplementary Note 3 to this Chapter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.52",
+              "description": "Goods specified in Supplementary Note 3 and 4 to this Chapter: ---- Goods specified in Supplementary Note 4 to this Chapter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.91",
+              "description": "Other ---- Repellants for insects such as flies, mosquito",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.92",
+              "description": "Other ---- Paper impregnated or coated with insecticides such as D.D.T coated paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.93",
+              "description": "Containing bromomethane (methyl bromide) or bromochloromethane",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.91.99",
+              "description": "Other ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3808.92",
+          "title": "Other : -- Fungicides",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3808.92.10",
+              "description": "Maneb",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.92.20",
+              "description": "Sodium penta chlorophenate (santrobrite)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.92.30",
+              "description": "Thiram (tetra methyl thiuram disulphide)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.92.40",
+              "description": "Zineb",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.92.50",
+              "description": "Copper oxychloride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.92.60",
+              "description": "Goods specified in Supplementary Note 5 to this Chapter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.92.70",
+              "description": "Goods specified in Supplementary Note 6 to this Chapter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.92.80",
+              "description": "Containing bromomethane (methyl bromide) or bromochloromethane",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.92.91",
+              "description": "--- Other:\n---- Containing bromomethane (methyl bromide) or bromochloromethane",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "-"
+            },
+            {
+              "code": "3808.92.99",
+              "description": "--- Other:\n---- Other",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3808.93",
+          "title": "Other : -- Herbicides, anti-sprouting products and plant-growth regulators",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3808.93.10",
+              "description": "Chloromethyl phenozy acetic acid (M.C.P.A)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.93.20",
+              "description": "2:4 Dichloro phenozy acetic acid and its esters",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.93.30",
+              "description": "Gibberellic acid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.93.41",
+              "description": "--- Plant growth regulators:\n---- Goods specified in Supplementary Note 12 to this Chapter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "-"
+            },
+            {
+              "code": "3808.93.42",
+              "description": "--- Plant growth regulators:\n---- Goods specified in Supplementary Note 13 to this Chapter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "-"
+            },
+            {
+              "code": "3808.93.49",
+              "description": "--- Plant growth regulators:\n---- Other:",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.93.50",
+              "description": "Weedicides and weed killing agents",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.93.61",
+              "description": "Goods specified in Supplementary Note 7 and 8 to this Chapter: ---- Goods specified in Supplementary Note 7 to this Chapter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.93.62",
+              "description": "Goods specified in Supplementary Note 7 and 8 to this Chapter: ---- Goods specified in Supplementary Note 8 to this Chapter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.93.71",
+              "description": "Goods specified in Supplementary Note 9 and10 to this Chapter: ---- Goods specified in Supplementary Note 9 to this Chapter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.93.72",
+              "description": "Goods specified in Supplementary Note 9 and10 to this Chapter: ---- Goods specified in Supplementary Note 10 to this Chapter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.93.91",
+              "description": "--- Other:\n---- Containing bromomethane (methyl bromide) or bromochloromethane",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "-"
+            },
+            {
+              "code": "3808.93.99",
+              "description": "--- Other:\n---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3808.94",
+          "title": "Other : -- Disinfectants",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3808.94.10",
+              "description": "Containing bromomethane (methyl bromide) or bromochloromethane",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.94.20",
+              "description": "Goods specified in Supplementary Note 14 to this Chapter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.94.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "-"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3808.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3808.99.11",
+              "description": "--- Goods specified in Supplementary Note 15 and 16 to this Chapter:\n---- Goods specified in Supplementary Note 15 to this Chapter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.99.12",
+              "description": "--- Goods specified in Supplementary Note 15 and 16 to this Chapter:\n---- Goods specified in Supplementary Note 16 to this Chapter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3808.99.91",
+              "description": "--- Other:\n---- Containing bromomethane (methyl bromide) or bromochloromethane",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "-"
+            },
+            {
+              "code": "3808.99.92",
+              "description": "--- Other:\n---- Pesticides, not elsewhere specified or included",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "-"
+            },
+            {
+              "code": "3808.99.99",
+              "description": "--- Other:\n---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3809",
+      "title": "Finishing agents, dye carriers to accelerate the dyeing or fixing of dyestuffs and other products and preparations (for example, dressings and mordants), of a kind used in the textile, paper, leather or like industries, not elsewhere specified or included.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3809.10",
+          "title": "With a basis of amylaceous substances",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3809.10.00",
+              "description": "With a basis of amylaceous substances",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3809.91",
+          "title": "Other : -- Of a kind used in the textile or like industries",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3809.91.10",
+              "description": "Textile assistant mordanting agents",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3809.91.20",
+              "description": "Textile assistants desizing agents",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3809.91.30",
+              "description": "Textile assistants dispersing agents",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3809.91.40",
+              "description": "Textile assistants emulsifying agents",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3809.91.50",
+              "description": "Textile assistants - hydro sulphite formaldehyde compound (Rongalite or formusul)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3809.91.60",
+              "description": "Textile assistants textile preservatives",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3809.91.70",
+              "description": "Textile assistants water proofing agents",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3809.91.80",
+              "description": "Prepared textile glazings, dressings and mordants",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3809.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3809.92",
+          "title": "Other : -- Of a kind used in the paper or like industries",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3809.92.00",
+              "description": "Other : -- Of a kind used in the paper or like industries",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3809.93",
+          "title": "Other : -- Of a kind used in the leather or like industries",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3809.93.10",
+              "description": "Fatty oil or pull up oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3809.93.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3810",
+      "title": "Pickling preparations for metal surfaces; fluxes and other auxiliary preparations for soldering, brazing or welding; auxiliary preparations for soldering, brazing or welding; soldering, brazing or welding powders and pastes consisting of metal and other materials; preparations of a kind used as cores or coatings for welding electrodes or rods.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3810.10",
+          "title": "Pickling preparations for metal surfaces; soldering, brazing or welding powders and pastes consisting of metal and other materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3810.10.10",
+              "description": "Pickling preparation and other soldering, brazing or welding powder or pastes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3810.10.20",
+              "description": "Thermite portion for welding (alumina thermic heat generators)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3810.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3810.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3810.90.10",
+              "description": "Preparation of a kind used as cores or coatings for welding electrodes and rods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3810.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3811",
+      "title": "Anti-knock preparations, oxidation inhibitors, gum inhibitors, viscosity improvers, anti-corrosive preparations and other prepared additives, for mineral oils (including gasoline) or for other liquids used for the same purposes as mineral oils.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3811.11",
+          "title": "Anti-knock preparations : -- Based on lead compounds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3811.11.00",
+              "description": "Anti-knock preparations : -- Based on lead compounds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3811.19",
+          "title": "Anti-knock preparations : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3811.19.00",
+              "description": "Anti-knock preparations : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3811.21",
+          "title": "Additives for lubricating oils : -- Containing petroleum oils or oils obtained from bituminous minerals",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3811.21.00",
+              "description": "Additives for lubricating oils : -- Containing petroleum oils or oils obtained from bituminous minerals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3811.29",
+          "title": "Additives for lubricating oils : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3811.29.00",
+              "description": "Additives for lubricating oils : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3811.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3811.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3812",
+      "title": "Prepared rubber accelerators; compound plasticisers for rubber or plastics, not elsewhere specified or included; anti-oxidising preparations and other compound stabilisers for rubber or plastics.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3812.10",
+          "title": "Prepared rubber accelerators",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3812.10.00",
+              "description": "Prepared rubber accelerators",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3812.20",
+          "title": "Compound plasticisers for rubber or plastics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3812.20.10",
+              "description": "Phthalate plasticizers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3812.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3812.31",
+          "title": "Anti-oxidising preparations and other compound stabilizers for rubber or plastics : -- Mixtures of oligomers of 2,2,4-trimethyl-1,2-dihydroquinoline (TMQ)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3812.31.00",
+              "description": "Anti-oxidising preparations and other compound stabilizers for rubber or plastics : -- Mixtures of oligomers of 2,2,4-trimethyl-1,2-dihydroquinoline (TMQ)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3812.39",
+          "title": "Anti-oxidising preparations and other compound stabilizers for rubber or plastics : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3812.39.10",
+              "description": "Anti-oxidants for rubber",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3812.39.20",
+              "description": "Softeners for rubber",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3812.39.30",
+              "description": "Vulcanizing agents for rubber",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3812.39.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3813",
+      "title": "PREPARATIONS AND CHARGES FOR FIRE-EXTINGUISHERS: CHARGED FIRE-EXTINGUISHING GRENADES",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3813.00",
+          "title": "Preparations and charges for fire-extinguishers; charged fire-extinguishing grenades",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3813.00.10",
+              "description": "Containing bromochlorodifluoromethane, bromotrifluoromethane or dibromotetrafluoroethanes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "-"
+            },
+            {
+              "code": "3813.00.20",
+              "description": "Containing methane, ethane or propane hydrobromofluorocarbons (HBFCs)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3813.00.30",
+              "description": "Containing methane, ethane or propane hydrochlorofluorocarbons (HCFCs)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3813.00.40",
+              "description": "Containing bromochloromethane",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "-"
+            },
+            {
+              "code": "3813.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "-"
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "3814",
+      "title": "Organic composite solvents and thinners, not elsewhere specified or included; prepared paint or varnish removers.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3814.00",
+          "title": "Organic composite solvents and thinners, not elsewhere specified or included; prepared paint or varnish removers :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3814.00.11",
+              "description": "--- Organic composite solvents and thinners, not elsewhere specified or included:\n---- Containing methane, ethane or propane chlorofluorocarbons (CFCs), whether not containing hydrochlorofluorocarbons (HCFCs)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "-"
+            },
+            {
+              "code": "3814.00.12",
+              "description": "--- Organic composite solvents and thinners, not elsewhere specified or included:\n---- Containing methane, ethane or propane hydrochlorofluorocarbons (HCFCs), but not containing chlorofluorocarbons (CFCs)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "-"
+            },
+            {
+              "code": "3814.00.13",
+              "description": "--- Organic composite solvents and thinners, not elsewhere specified or included:\n---- Containing carbon tetrachloride, bromochloromethane or 1,1,1-trichloroethane (methyl chloroform)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "-"
+            },
+            {
+              "code": "3814.00.19",
+              "description": "--- Organic composite solvents and thinners, not elsewhere specified or included:\n---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "-"
+            },
+            {
+              "code": "3814.00.21",
+              "description": "--- Prepared paint or varnish removers :\n---- Containing methane, ethane or propane chlorofluorocarbons (CFCs), whether not containing hydrochlorofluorocarbons (HCFCs)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3814.00.22",
+              "description": "--- Prepared paint or varnish removers :\n---- Containing methane, ethane or propane hydrochlorofluorocarbons (HCFCs), but not containing chlorofluorocarbons (CFCs)",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            },
+            {
+              "code": "3814.00.23",
+              "description": "--- Prepared paint or varnish removers :\n---- Containing carbon tetrachloride, bromochloromethane or 1,1,1-trichloroethane (methyl chloroform)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3814.00.29",
+              "description": "--- Prepared paint or varnish removers :\n---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "3815",
+      "title": "Reaction initiators, reaction accelerators and catalytic preparations, not elsewhere specified or included.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3815.11",
+          "title": "Supported catalysts : -- With nickel or nickel compounds as the active substance",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3815.11.00",
+              "description": "Supported catalysts : -- With nickel or nickel compounds as the active substance",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3815.12",
+          "title": "Supported catalysts : -- With precious metal or precious metal compounds as the active substance",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3815.12.10",
+              "description": "Platinum or palladium catalysts with a base of activated carbon",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3815.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3815.19",
+          "title": "Supported catalysts : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3815.19.00",
+              "description": "Supported catalysts : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3815.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3815.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3816",
+      "title": "refractory cements, mortars, concretes and similar compositions, including dolomite ramming mix, other than products of heading 3801",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3816.00",
+          "title": "refractory cements, mortars, concretes and similar compositions, including dolomite ramming mix, other than products of heading 3801",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3816.00.00",
+              "description": "refractory cements, mortars, concretes and similar compositions, including dolomite ramming mix, other than products of heading 3801",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "3817",
+      "title": "MIXED ALKYLBENZENES AND MIXED ALKYLNAPHTHALENES, OTHER THAN THOSE OF HEADING 2707 OR 2902",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3817.00",
+          "title": "Mixed alkylbenzenes and mixed alkylnaphthalenes, other than those of heading 27.07 or 29.02.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3817.00.11",
+              "description": "Mixed alkylbenzenes: ---- Linear alkylbenzenes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3817.00.19",
+              "description": "Mixed alkylbenzenes: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3817.00.20",
+              "description": "Mixed alkylbenzenes: ---- Mixed alkylnaphthalenes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "3818",
+      "title": "Chemical elements doped for use in electronics, in the form of discs, wafers or similar forms; chemical compounds doped for use in electronics.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3818.00",
+          "title": "Chemical elements doped for use in electronics, in the form of discs, wafers or similar forms; chemical compounds doped for use in electronics:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3818.00.10",
+              "description": "Undefused silicon wafers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3818.00.20",
+              "description": "Silicon carbide epitaxial thin film on substrate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3818.00.30",
+              "description": "Gallium nitride epitaxial thin film on substrate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3818.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3819",
+      "title": "HYDRAULIC BRAKE FLUIDS AND OTHER PREPARED LIQUIDS FOR HYDRAULIC TRANSMISSION, NOT CONTAINING OR CONTAINING LESS THAN 70% BY WEIGHT OF PETROLEUM OILS OR OILS OBTAINED FROM BITUMINOUS MINERALS",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3819.00",
+          "title": "Hydraulic brake fluids and other prepared liquids for hydraulic transmission, not containing or containing less than 70% by weight of petroleum oils or oils obtained from bituminous minerals",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3819.00.10",
+              "description": "Hydraulic brake fluids",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3819.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "3820",
+      "title": "Anti-freezing preparations and prepared de-icing fluids.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3820.00",
+          "title": "Anti-freezing preparations and prepared de-icing fluids.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3820.00.00",
+              "description": "Anti-freezing preparations and prepared de-icing fluids.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "3821",
+      "title": "Prepared culture media for the development or maintenance of human or animal cells.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3821.00",
+          "title": "Prepared culture media for the development or maintenance of human or animal cells.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3821.00.00",
+              "description": "Prepared culture media for the development or maintenance of human or animal cells.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "3822",
+      "title": "DIAGNOSTICS OR LABORATORY REAGENTS ON A BACKING, PREPARED DIAGNOSTIC OR LABORATORY REAGENTS WHETHER OR NOT ON A BACKING, WHETHER OR NOT PUT UP IN THE FORM OF KITS, OTHER THAN THOSE OF HEADING 3006; CERTIFIED REFERENCE MATERIALS",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3822.11",
+          "title": "Diagnostic or laboratory reagents on a backing, prepared diagnostic or laboratory reagents whether or not on a backing, whether or not put up in the form of kits: - - For malaria",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3822.11.00",
+              "description": "Diagnostic or laboratory reagents on a backing, prepared diagnostic or laboratory reagents whether or not on a backing, whether or not put up in the form of kits: - - For malaria",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3822.12",
+          "title": "Diagnostic or laboratory reagents on a backing, prepared diagnostic or laboratory reagents whether or not on a backing, whether or not put up in the form of kits: - - For Zika and other diseases transmitted by mosquitoes of the genus Aedes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3822.12.00",
+              "description": "Diagnostic or laboratory reagents on a backing, prepared diagnostic or laboratory reagents whether or not on a backing, whether or not put up in the form of kits: - - For Zika and other diseases transmitted by mosquitoes of the genus Aedes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3822.13",
+          "title": "Diagnostic or laboratory reagents on a backing, prepared diagnostic or laboratory reagents whether or not on a backing, whether or not put up in the form of kits: - - For blood-grouping",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3822.13.00",
+              "description": "Diagnostic or laboratory reagents on a backing, prepared diagnostic or laboratory reagents whether or not on a backing, whether or not put up in the form of kits: - - For blood-grouping",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3822.19",
+          "title": "Other:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3822.19.10",
+              "description": "Pregnancy test kit",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3822.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3822.90",
+          "title": "- Other:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3822.90.10",
+              "description": "Certified reference materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3822.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3823",
+      "title": "Industrial monocarboxylic fatty acids; acid oils from refining; industrial fatty alcohols.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3823.11",
+          "title": "Industrial monocarboxylic fatty acids; acid oils from refining :-- Stearic acid :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3823.11.00",
+              "description": "Industrial monocarboxylic fatty acids; acid oils from refining : -- Stearic acid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3823.12",
+          "title": "Industrial monocarboxylic fatty acids; acid oils from refining : -- Oleic acid",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3823.12.00",
+              "description": "Industrial monocarboxylic fatty acids; acid oils from refining : -- Oleic acid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3823.13",
+          "title": "Industrial monocarboxylic fatty acids; acid oils from refining : -- Tall oil fatty acids",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3823.13.00",
+              "description": "Industrial monocarboxylic fatty acids; acid oils from refining : -- Tall oil fatty acids",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3823.19",
+          "title": "Industrial monocarboxylic fatty acids; acid oils from refining : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3823.19.00",
+              "description": "Industrial monocarboxylic fatty acids; acid oils from refining : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3823.70",
+          "title": "Industrial fatty alcohols",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3823.70.10",
+              "description": "Cetyl alcohol",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3823.70.20",
+              "description": "Lauryl alcohol",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3823.70.30",
+              "description": "Oleyl alcohol",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3823.70.40",
+              "description": "Stearyl alcohol",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3823.70.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3824",
+      "title": "Prepared binders for foundry moulds or cores; chemical products and preparations of the chemical or allied industries (including those consisting of mixtures of natural products), not elsewhere specified or included.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3824.10",
+          "title": "Prepared binders for foundry moulds or cores",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3824.10.00",
+              "description": "Prepared binders for foundry moulds or cores",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3824.30",
+          "title": "Non-agglomerated metal carbides mixed together or with metallic binders",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3824.30.00",
+              "description": "Non-agglomerated metal carbides mixed together or with metallic binders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3824.40",
+          "title": "Prepared additives for cements, mortars or concretes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3824.40.10",
+              "description": "Damp proof or Water proof compounds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3824.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3824.50",
+          "title": "Non-refractory mortars and concretes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3824.50.10",
+              "description": "Concretes ready to use known as Ready-mix concrete (RMC)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3824.50.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3824.60",
+          "title": "Sorbitol other than that of subheading 2905.44",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3824.60.10",
+              "description": "In aqueous solution",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3824.60.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3824.81",
+          "title": "Goods specified in Subheading Note 3 to this Chapter : -- Containing oxirane (ethylene oxide)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3824.81.00",
+              "description": "Goods specified in Subheading Note 3 to this Chapter : -- Containing oxirane (ethylene oxide)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3824.82",
+          "title": "Goods specified in Subheading Note 3 to this Chapter : -- Containing polychlorinated biphenyls (PCBs), polychlorinated terphenyls (PCTs) or polybrominated biphenyls (PBBs)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3824.82.00",
+              "description": "Goods specified in Subheading Note 3 to this Chapter : -- Containing polychlorinated biphenyls (PCBs), polychlorinated terphenyls (PCTs) or polybrominated biphenyls (PBBs)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3824.83",
+          "title": "Goods specified in Subheading Note 3 to this Chapter : -- Containing tris(2,3-dibromopropyl) phosphate",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3824.83.00",
+              "description": "Goods specified in Subheading Note 3 to this Chapter : -- Containing tris(2,3-dibromopropyl) phosphate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3824.84",
+          "title": "Goods specified in Subheading Note 3 to this Chapter : -- Containing aldrin (ISO), camphechlor (ISO) (toxaphene), chlordane (ISO), chlordecone (ISO), DDT (ISO) (clofenotane (INN), 1,1,1-trichloro-2,2-bis(p-chlorophenyl)ethane, dieldrin (ISO, INN), endosulfan (ISO), endrin (ISO), heptachlor (ISO) or mirex (ISO)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3824.84.00",
+              "description": "Goods specified in Subheading Note 3 to this Chapter : -- Containing aldrin (ISO), camphechlor (ISO) (toxaphene), chlordane (ISO), chlordecone (ISO), DDT (ISO) (clofenotane (INN), 1,1,1-trichloro-2,2-bis(p-chlorophenyl)ethane, dieldrin (ISO, INN), endosulfan (ISO), endrin (ISO), heptachlor (ISO) or mirex (ISO)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3824.85",
+          "title": "Goods specified in Subheading Note 3 to this Chapter : -- Containing 1,2,3,4,5,6-hexachlorocyclohexane (HCH (ISO)), including lindane (ISO, INN)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3824.85.00",
+              "description": "Goods specified in Subheading Note 3 to this Chapter : -- Containing 1,2,3,4,5,6-hexachlorocyclohexane (HCH (ISO)), including lindane (ISO, INN)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3824.86",
+          "title": "Goods specified in Subheading Note 3 to this Chapter : -- Containing pentachlorobenzene (ISO) or hexachlorobenzene (ISO)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3824.86.00",
+              "description": "Goods specified in Subheading Note 3 to this Chapter : -- Containing pentachlorobenzene (ISO) or hexachlorobenzene (ISO)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3824.87",
+          "title": "Goods specified in Subheading Note 3 to this Chapter : -- Containing perfluorooctane sulphonic acid, its salts, perfluorooctane sulphonamides, or perfluorooctane sulphonyl fluoride",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3824.87.00",
+              "description": "Goods specified in Subheading Note 3 to this Chapter : -- Containing perfluorooctane sulphonic acid, its salts, perfluorooctane sulphonamides, or perfluorooctane sulphonyl fluoride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3824.88",
+          "title": "Goods specified in Sub-heading Note 3 to this Chapter:-- Containing tetra-, penta-, hexa-, hepta- or octabromo-diphenyl ethers\"",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3824.88.00",
+              "description": "Goods specified in Sub-heading Note 3 to this Chapter:-- Containing tetra-, penta-, hexa-, hepta- or octabromo-diphenyl ethers\"",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3824.89",
+          "title": "Containing short-chain chlorinated paraffins",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3824.89.00",
+              "description": "Containing short-chain chlorinated paraffins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3824.91",
+          "title": "Other -- Mixtures and preparations consisting mainly of (5-ethyl-2-methyl- 2-oxido-1,3,2-dioxaphosphinan-5-yl)methyl methyl methylphosphonate and bis[(5-ethyl-2-methyl-2-oxido-1,3,2- dioxaphosphinan-5-yl)methyl] methylphosphonate",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3824.91.00",
+              "description": "Other -- Mixtures and preparations consisting mainly of (5-ethyl-2-methyl- 2-oxido-1,3,2-dioxaphosphinan-5-yl)methyl methyl methylphosphonate and bis[(5-ethyl-2-methyl-2-oxido-1,3,2- dioxaphosphinan-5-yl)methyl] methylphosphonate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3824.92",
+          "title": "Polyglycol esters of methylphosphonic acid",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3824.92.00",
+              "description": "Polyglycol esters of methylphosphonic acid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3824.99",
+          "title": "Other -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3824.99.00",
+              "description": "Other -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3825",
+      "title": "Residual products of the chemical or allied industries, not elsewhere specified or included; municipal waste; sewage sludge; other wastes specified in Note 6 to this Chapter.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3825.10",
+          "title": "Municipal waste",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3825.10.00",
+              "description": "Municipal waste",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3825.20",
+          "title": "Sewage sludge",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3825.20.00",
+              "description": "Sewage sludge",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3825.30",
+          "title": "Clinical waste",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3825.30.00",
+              "description": "Clinical waste",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3825.41",
+          "title": "Waste organic solvents : -- Halogenated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3825.41.00",
+              "description": "Waste organic solvents : -- Halogenated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3825.49",
+          "title": "Waste organic solvents : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3825.49.00",
+              "description": "Waste organic solvents : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3825.50",
+          "title": "Wastes of metal pickling liquors, hydraulic fluids, brake fluids and anti-freeze fluids",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3825.50.00",
+              "description": "Wastes of metal pickling liquors, hydraulic fluids, brake fluids and anti-freeze fluids",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3825.61",
+          "title": "Other wastes from chemical or allied industries : -- Mainly containing organic constituents",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3825.61.00",
+              "description": "Other wastes from chemical or allied industries : -- Mainly containing organic constituents",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3825.69",
+          "title": "Other wastes from chemical or allied industries : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3825.69.00",
+              "description": "Other wastes from chemical or allied industries : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3825.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3825.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3826",
+      "title": "Biodiesel and mixtures thereof, not containing or containing less than 70 percent by weight of petroleum oils or oils obtained from bituminous minerals.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3826.00",
+          "title": "Biodiesel and mixtures thereof, not containing or containing less than 70 percent by weight of petroleum oils or oils obtained from bituminous minerals.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3826.00.00",
+              "description": "Biodiesel and mixtures thereof, not containing or containing less than 70 percent by weight of petroleum oils or oils obtained from bituminous minerals.",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Zones (SEZ)/ 62/2015-20 22.03.2023"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3827",
+      "title": "MIXTURES CONTAINING HALOGENATED DERIVATIVES OF METHANE, ETHANE OR PROPANE, NOT ELSEWHERE SPECIFIED OR INCLUDED",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3827.11",
+          "title": "Containing chlorofluorocarbons (CFCs), whether or not containing hydrochlorofluorocarbons (HCFCs), perfluorocarbons (PFCs) or hydrofluorocarbons (HFCs); containing hydrobromofluorocarbons (HBFCs); containing carbon tetrachloride; containing 1,1,1-trichloroethane (methyl chloroform): - - Containing chlorofluorocarbons (CFCs), whether or not containing hydrochlorofluorocarbons (HCFCs), perfluorocarbons (PFCs) or hydrofluorocarbons (HFCs)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3827.11.00",
+              "description": "Containing chlorofluorocarbons (CFCs), whether or not containing hydrochlorofluorocarbons (HCFCs), perfluorocarbons (PFCs) or hydrofluorocarbons (HFCs); containing hydrobromofluorocarbons (HBFCs); containing carbon tetrachloride; containing 1,1,1-trichloroethane (methyl chloroform): - - Containing chlorofluorocarbons (CFCs), whether or not containing hydrochlorofluorocarbons (HCFCs), perfluorocarbons (PFCs) or hydrofluorocarbons (HFCs)",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Condition 2 of the"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3827.12",
+          "title": "Containing chlorofluorocarbons (CFCs), whether or not containing hydrochlorofluorocarbons (HCFCs), perfluorocarbons (PFCs) or hydrofluorocarbons (HFCs); containing hydrobromofluorocarbons (HBFCs); containing carbon tetrachloride; containing 1,1,1-trichloroethane (methyl chloroform): - - Containing hydrobromofluorocarbons (HBFCs)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3827.12.00",
+              "description": "Containing chlorofluorocarbons (CFCs), whether or not containing hydrochlorofluorocarbons (HCFCs), perfluorocarbons (PFCs) or hydrofluorocarbons (HFCs); containing hydrobromofluorocarbons (HBFCs); containing carbon tetrachloride; containing 1,1,1-trichloroethane (methyl chloroform): - - Containing hydrobromofluorocarbons (HBFCs)",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Condition 2 of the"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3827.13",
+          "title": "Containing chlorofluorocarbons (CFCs), whether or not containing hydrochlorofluorocarbons (HCFCs), perfluorocarbons (PFCs) or hydrofluorocarbons (HFCs); containing hydrobromofluorocarbons (HBFCs); containing carbon tetrachloride; containing 1,1,1-trichloroethane (methyl chloroform): - - Containing carbon tetrachloride",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3827.13.00",
+              "description": "Containing chlorofluorocarbons (CFCs), whether or not containing hydrochlorofluorocarbons (HCFCs), perfluorocarbons (PFCs) or hydrofluorocarbons (HFCs); containing hydrobromofluorocarbons (HBFCs); containing carbon tetrachloride; containing 1,1,1-trichloroethane (methyl chloroform): - - Containing carbon tetrachloride",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Condition 2 of the"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3827.14",
+          "title": "Containing chlorofluorocarbons (CFCs), whether or not containing hydrochlorofluorocarbons (HCFCs), perfluorocarbons (PFCs) or hydrofluorocarbons (HFCs); containing hydrobromofluorocarbons (HBFCs); containing carbon tetrachloride; containing 1,1,1-trichloroethane (methyl chloroform): - - Containing 1,1,1-trichloroethane (methyl chloroform)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3827.14.00",
+              "description": "Containing chlorofluorocarbons (CFCs), whether or not containing hydrochlorofluorocarbons (HCFCs), perfluorocarbons (PFCs) or hydrofluorocarbons (HFCs); containing hydrobromofluorocarbons (HBFCs); containing carbon tetrachloride; containing 1,1,1-trichloroethane (methyl chloroform): - - Containing 1,1,1-trichloroethane (methyl chloroform)",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Condition 2 of the"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3827.20",
+          "title": "Containing chlorofluorocarbons (CFCs), whether or not containing hydrochlorofluorocarbons (HCFCs), perfluorocarbons (PFCs) or hydrofluorocarbons (HFCs); containing hydrobromofluorocarbons (HBFCs); containing carbon tetrachloride; containing 1,1,1-trichloroethane (methyl chloroform): - Containing bromochlorodifluoromethane (Halon-1211), bromotrifluoromethane (Halon1301) or dibromotetrafluoroethanes (Halon2402)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3827.20.00",
+              "description": "Containing chlorofluorocarbons (CFCs), whether or not containing hydrochlorofluorocarbons (HCFCs), perfluorocarbons (PFCs) or hydrofluorocarbons (HFCs); containing hydrobromofluorocarbons (HBFCs); containing carbon tetrachloride; containing 1,1,1-trichloroethane (methyl chloroform): - Containing bromochlorodifluoromethane (Halon-1211), bromotrifluoromethane (Halon1301) or dibromotetrafluoroethanes (Halon2402)",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Condition 2 of the"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3827.31",
+          "title": "Containing hydrochlorofluorocarbons (HCFCs), whether or not containing perfluorocarbons (PFCs) or hydrofluorocarbons (HFCs), but not containing chlorofluorocarbons (CFCs): - - Containing substances of sub-headings 2903 41 to 2903 48",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3827.31.00",
+              "description": "Containing hydrochlorofluorocarbons (HCFCs), whether or not containing perfluorocarbons (PFCs) or hydrofluorocarbons (HFCs), but not containing chlorofluorocarbons (CFCs): - - Containing substances of sub-headings 2903 41 to 2903 48",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Condition 2 of the"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3827.32",
+          "title": "Containing hydrochlorofluorocarbons (HCFCs), whether or not containing perfluorocarbons (PFCs) or hydrofluorocarbons (HFCs), but not containing chlorofluorocarbons (CFCs):",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3827.32.00",
+              "description": "Containing hydrochlorofluorocarbons (HCFCs), whether or not containing perfluorocarbons (PFCs) or hydrofluorocarbons (HFCs), but not containing chlorofluorocarbons (CFCs):",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Condition 2 of the"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3827.39",
+          "title": "Containing hydrochlorofluorocarbons (HCFCs), whether or not containing perfluorocarbons (PFCs) or hydrofluorocarbons (HFCs), but not containing chlorofluorocarbons (CFCs): - - Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3827.39.00",
+              "description": "Containing hydrochlorofluorocarbons (HCFCs), whether or not containing perfluorocarbons (PFCs) or hydrofluorocarbons (HFCs), but not containing chlorofluorocarbons (CFCs): - - Other",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Condition 2 of the"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3827.40",
+          "title": "Containing hydrochlorofluorocarbons (HCFCs), whether or not containing perfluorocarbons (PFCs) or hydrofluorocarbons (HFCs), but not containing chlorofluorocarbons (CFCs): - Containing methyl bromide (bromomethane) or bromochloromethane",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3827.40.00",
+              "description": "Containing hydrochlorofluorocarbons (HCFCs), whether or not containing perfluorocarbons (PFCs) or hydrofluorocarbons (HFCs), but not containing chlorofluorocarbons (CFCs): - Containing methyl bromide (bromomethane) or bromochloromethane",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Condition 2 of the"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3827.51",
+          "title": "Containing trifluoromethane (HFC-23) or perfluorocarbons (PFCs) but not containing chlorofluorocarbons (CFCs) or hydrochlorofluorocarbons (HCFCs): - - Containing trifluoromethane (HFC-23)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3827.51.00",
+              "description": "Containing trifluoromethane (HFC-23) or perfluorocarbons (PFCs) but not containing chlorofluorocarbons (CFCs) or hydrochlorofluorocarbons (HCFCs): - - Containing trifluoromethane (HFC-23)",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Condition 1 of the"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3827.59",
+          "title": "Containing trifluoromethane (HFC-23) or perfluorocarbons (PFCs) but not containing chlorofluorocarbons (CFCs) or hydrochlorofluorocarbons (HCFCs): - - Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3827.59.00",
+              "description": "Containing trifluoromethane (HFC-23) or perfluorocarbons (PFCs) but not containing chlorofluorocarbons (CFCs) or hydrochlorofluorocarbons (HCFCs): - - Other",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Condition 1 of the"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3827.61",
+          "title": "Containing other hydrofluorocarbons (HFCs) but not containing chlorofluorocarbons (CFCs) or hydrochlorofluorocarbons (HCFCs): - - Containing 15% or more by mass of 1,1,1- trifluoroethane (HFC-143a)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3827.61.00",
+              "description": "Containing other hydrofluorocarbons (HFCs) but not containing chlorofluorocarbons (CFCs) or hydrochlorofluorocarbons (HCFCs): - - Containing 15% or more by mass of 1,1,1- trifluoroethane (HFC-143a)",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Condition 1 of the"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3827.62",
+          "title": "Containing other hydrofluorocarbons (HFCs) but not containing chlorofluorocarbons (CFCs) or hydrochlorofluorocarbons (HCFCs): - - Other, not included in the sub-heading above, containing 55% or more by mass of pentafluoroethane (HFC-125) but not containing unsaturated fluorinated derivatives of acyclic hydrocarbons (HFOs)b",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3827.62.00",
+              "description": "Containing other hydrofluorocarbons (HFCs) but not containing chlorofluorocarbons (CFCs) or hydrochlorofluorocarbons (HCFCs): - - Other, not included in the sub-heading above, containing 55% or more by mass of pentafluoroethane (HFC-125) but not containing unsaturated fluorinated derivatives of acyclic hydrocarbons (HFOs)b",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Condition 1 of the"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3827.63",
+          "title": "Containing other hydrofluorocarbons (HFCs) but not containing chlorofluorocarbons (CFCs) or hydrochlorofluorocarbons (HCFCs): - - Other, not included in the sub-headings above, containing 40% or more by mass of pentafluoroethane (HFC-125)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3827.63.00",
+              "description": "Containing other hydrofluorocarbons (HFCs) but not containing chlorofluorocarbons (CFCs) or hydrochlorofluorocarbons (HCFCs): - - Other, not included in the sub-headings above, containing 40% or more by mass of pentafluoroethane (HFC-125)",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Condition 1 of the"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3827.64",
+          "title": "Containing other hydrofluorocarbons (HFCs) but not containing chlorofluorocarbons (CFCs) or hydrochlorofluorocarbons (HCFCs): -- Other, not included in the sub-headings above, containing 30% or more by mass of 1,1,1,2- tetrafluoroethane (HFC-134a) but not containing unsaturated fluorinated derivatives of acyclic hydrocarbons (HFOs)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3827.64.00",
+              "description": "Containing other hydrofluorocarbons (HFCs) but not containing chlorofluorocarbons (CFCs) or hydrochlorofluorocarbons (HCFCs): -- Other, not included in the sub-headings above, containing 30% or more by mass of 1,1,1,2- tetrafluoroethane (HFC-134a) but not containing unsaturated fluorinated derivatives of acyclic hydrocarbons (HFOs)",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Condition 1 of the"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3827.65",
+          "title": "Containing other hydrofluorocarbons (HFCs) but not containing chlorofluorocarbons (CFCs) or hydrochlorofluorocarbons (HCFCs): - - Other, not included in the sub-headings above, containing 20% or more by mass of difluoromethane (HFC-32) and 20% or more by mass of pentafluoroethane (HFC-125)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3827.65.00",
+              "description": "Containing other hydrofluorocarbons (HFCs) but not containing chlorofluorocarbons (CFCs) or hydrochlorofluorocarbons (HCFCs): - - Other, not included in the sub-headings above, containing 20% or more by mass of difluoromethane (HFC-32) and 20% or more by mass of pentafluoroethane (HFC-125)",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Condition 1 of the"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3827.68",
+          "title": "Containing other hydrofluorocarbons (HFCs) but not containing chlorofluorocarbons (CFCs) or hydrochlorofluorocarbons (HCFCs): - - Other, not included in the sub-headings above, containing substances of sub-headings 2903 41 to 2903 48",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3827.68.00",
+              "description": "Containing other hydrofluorocarbons (HFCs) but not containing chlorofluorocarbons (CFCs) or hydrochlorofluorocarbons (HCFCs): - - Other, not included in the sub-headings above, containing substances of sub-headings 2903 41 to 2903 48",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Condition 1 of the"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3827.69",
+          "title": "Containing other hydrofluorocarbons (HFCs) but not containing chlorofluorocarbons (CFCs) or hydrochlorofluorocarbons (HCFCs): - - Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3827.69.00",
+              "description": "Containing other hydrofluorocarbons (HFCs) but not containing chlorofluorocarbons (CFCs) or hydrochlorofluorocarbons (HCFCs): - - Other",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Condition 2 of the"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3827.90",
+          "title": "Containing other hydrofluorocarbons (HFCs) but not containing chlorofluorocarbons (CFCs) or hydrochlorofluorocarbons (HCFCs): - Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3827.90.00",
+              "description": "Containing other hydrofluorocarbons (HFCs) but not containing chlorofluorocarbons (CFCs) or hydrochlorofluorocarbons (HCFCs): - Other",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Condition 2 of the"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

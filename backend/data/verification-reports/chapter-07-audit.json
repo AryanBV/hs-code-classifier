@@ -1,0 +1,150 @@
+{
+  "chapter": "07",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings_count": 0,
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "0701.10.00",
+        "in_pdf": true,
+        "pdf_description": "07011000 Seed Free 07019000 Other Free 07020000 Tomatoes, fresh or chilled. 0703",
+        "json_description": "Seed",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0704.90.00",
+        "in_pdf": true,
+        "pdf_description": "07049000 - Cauliflowers and broccoli Brussels sprouts Other 0705 Lettuce (Lactuca sativa) and chicory (Cichorium Free 07",
+        "json_description": "Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0707.00.00",
+        "in_pdf": true,
+        "pdf_description": "07070000 Other Radish 0708 Salad beetroot Free 07081000 Other Free 07082000 Cucumbers and gherkins, fr",
+        "json_description": "Cucumbers and gherkins, fresh or chilled.",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0709.55.00",
+        "in_pdf": true,
+        "pdf_description": "07095500 Mushrooms and truffles : -- Mushrooms of the genus Free Agaricus Free 07095600 Fr",
+        "json_description": "Mushrooms and truffles:- - Matsutake (Tricholoma matsutake, Tricholoma magnivelare, Tricholoma anatolicum, Tricholoma dulciolens, Tricholoma caligatum)",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0709.93.30",
+        "in_pdf": true,
+        "pdf_description": "07099330 Pumpkins Free 07099340 Squash Free 07099350 Bitter gourd Free 07",
+        "json_description": "Bitter gourd",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0710.29.00",
+        "in_pdf": true,
+        "pdf_description": "07102900 Beans (Vigna spp., Phaseolus spp.) Free 07103000 Leguminous vegetables, shelled or unshelled : -- Free 07104000",
+        "json_description": "Leguminous vegetables, shelled or unshelled : -- Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0711.90.10",
+        "in_pdf": true,
+        "pdf_description": "07119010 Green pepper in brine Free 49/2015-20 02.03.2020 07119020 Free 07119090 Assorted canned vege",
+        "json_description": "Green pepper in brine",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0712.90.20",
+        "in_pdf": true,
+        "pdf_description": "07129020 (Tremella spp.) and truffles : -- Wood ears Free 07129030 (Auricularia spp.) Mushrooms, wood ears (Auricularia ",
+        "json_description": "Dehydrated garlic powder",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0713.20.90",
+        "in_pdf": true,
+        "pdf_description": "07132090 1 of the Chapter 22.11.2017",
+        "json_description": "Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0713.50.00",
+        "in_pdf": true,
+        "pdf_description": "07135000 Policy Condition 22.11.2017 07136000 1 of t",
+        "json_description": "Broad beans (Vicia faba var. major) and horse beans (Vicia faba var. equina, Vicia faba var. minor)",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      }
+    ],
+    "hierarchy_errors": [],
+    "missed_codes": [],
+    "extra_codes": [],
+    "subheading_checks": [
+      {
+        "subheading": "0701.10",
+        "title": "Seed",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0706.90",
+        "title": "Other",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0709.60",
+        "title": "Fruits of the genus Capsicum or of the genus Pimenta",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0711.20",
+        "title": "Olives",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0713.32",
+        "title": "Beans (Vigna spp., Phaseolus spp.):- Small red (Adzuki) beans (Phaseolus or Vigna angularis)",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      }
+    ],
+    "note_mismatches": [],
+    "count_check": {
+      "json_h": 14,
+      "pdf_h_estimate": 14,
+      "json_sh": 73,
+      "pdf_sh_estimate": 73,
+      "json_tl": 104,
+      "pdf_tl_estimate": 104
+    }
+  },
+  "fix_needed": null
+}

@@ -1,0 +1,4139 @@
+{
+  "chapter": "52",
+  "section": "XI",
+  "title": "Cotton.",
+  "source_pdf": "Chapter 52 Cotton.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '52010011') and 6-digit subheading codes without dots (e.g., '520111'). Normalized to NNNN.NN.NN format (e.g., '5201.00.11') and NNNN.NN format (e.g., '5201.00') per project schema. Where the PDF shows a 4-digit heading row followed directly by a 6-digit '520100' row and then 8-digit tariff lines '52010011'..'52010025', represented as subheading '5201.00' containing the tariff lines.",
+    "PDF table-chrome headers ('Sub-Heading Notes', 'Policy Condition', 'Sl.No. Notes Notification Date Notification No', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "Chapter 52 PDF does NOT contain Section XI Main Notes nor Chapter 52 'Main Notes' / chapter notes block. Only 'Sub-Heading Notes' (1 note re: denim) and 'Policy Condition' (1 condition re: Holy Quran) appear on the first page. chapter_notes array is therefore empty. The 15 Section XI Main Notes governing Chapters 50-63 are captured in companion extractions Ch.50 (Silk), Ch.51 (Wool — commit 7b5fb90), and Ch.62 (commit 70df5ae).",
+    "Sub-Heading Note 1 (re: 'denim') applies specifically to sub-headings 5209.42 and 5211.42 of this chapter. Captured in subheading_notes on both subheadings, AND in section_notes at chapter scope with applies_to noting the two subheadings. (section_notes used here for chapter-level sub-heading notes because no chapter-level sub_heading_notes field exists in schema — preserving the verbatim note text as a chapter-scoped note.)",
+    "Policy Condition Sl.No.1 (Holy Quran) is the same cross-chapter Section XI policy printed on Ch.51 and Ch.62 PDFs. Captured in policy_conditions. PDF spelling 'Restrcited' (intended 'Restricted') preserved verbatim.",
+    "Tariff lines under heading 5201 (Cotton, not carded or combed) and headings 5203 (Gauze), 5205, 5206, 5207 all carry populated Notification No '102 (RE-2013)/2009-14' (for 5201, 5203) or '103(RE-2013)/2009-2014' (for 5205, 5206, 5207) and Notification Date '08.12.2014'. These have been captured verbatim on each tariff line as 'notification_no' and 'notification_date' fields. Note format inconsistency: '102 (RE-2013)/2009-14' (with space, 2-digit year suffix) vs '103(RE-2013)/2009-2014' (no space, 4-digit year suffix) — preserved as printed.",
+    "Heading 5202 (Yarn waste / Garnetted stock / Other) — PDF shows tariff lines '52021000', '52029100', '52029900' directly under heading 5202 without intermediate 6-digit subheading rows. Reconstructed as subheadings '5202.10' (with single line 5202.10.00) and '5202.91' (5202.91.00) and '5202.99' (5202.99.00) per WCO convention. PDF descriptions: 'Yarn waste (including thread waste)' for 5202.10.00; 'Other : -- Garnetted stock' for 5202.91.00; 'Other : -- Other' for 5202.99.00.",
+    "Heading 5203 (Gauze, other than narrow fabrics of heading 58.06) — PDF shows a single tariff line '52030000'. Represented as subheading '5203.00' with line '5203.00.00'.",
+    "Heading 5205: 6-digit subheading code '520511' is followed by 8-digit lines 52051110/20/30/90; subheading '520515' has lines 52051510/20/30/90; '520526' has lines 52052610/20/90 (note: 52052610 has description 'Dyed' not 'Grey' — verbatim per PDF, suggesting either an intentional Indian-specific ordering or a typographic anomaly in the source); '520527' tariff lines start at 52052710 'Dyed'; '520528' has 52052810 'Dyed', 52052820 'Bleached', 52052890 with description 'Other Multiple (folded) or cabled yarn, of uncombed fibres:' which appears to be subheading-title text bleeding into the tariff line description — preserved verbatim.",
+    "Heading 5206: 6-digit subheading lines are present (520611, 520612, 520613, 520614, 520615, 520621, 520622, 520623, 520624, 520625) but each has only ONE 8-digit tariff line ending in '00' (52061100, 52061200, etc.). For subheadings 520614 and 520624 the 8-digit line description carries 'Single yarn... Measuring less than 192.31...' inheriting the subheading title text. Multiple/cabled subheadings 520631-520635 and 520641-520645 each have one '...00' tariff line. The PDF appears to drop tariff lines at 52064500 and resumes at the next heading 5207 — verified no further codes in source.",
+    "Heading 5207 (Cotton yarn put up for retail sale) has only two 8-digit lines (52071000, 52079000) without 6-digit subheading rows shown. Reconstructed as subheadings '5207.10' and '5207.90'.",
+    "Heading 5208 (Woven fabrics of cotton, containing 85percent or more by weight of cotton, weighing not more than 200 g/m2) — PDF uses '85percent' (no space) — preserved verbatim. Multi-line subheadings 520811 through 520859 represent the canonical Unbleached/Bleached/Dyed/Of yarns of different colours/Printed × Plain weave variations with Indian-specific tariff lines (Dhoti, Saree, Shirting fabrics, Casement, Cambrics, Mulls, Muslin, Voils, Lungi, Sarees of Handloom, Bedticking, Real Madras handkerchiefs of Handloom, Zari bordered sarees, etc.). Some descriptions carry typos verbatim ('Voils' vs 'Voils( excluding leno fabrics)' with stray space, 'Mull' vs 'Mulls', 'Bedticking, damask' vs 'Bedticking, domestic', 'Shetting' for 'Sheeting' in 52091270 — all preserved as in PDF source).",
+    "Heading 5209 — multiple Indian-specific lines including 10-digit-style codes '52091111', '52091112'... under subheading 520911 (Unbleached: Plain weave). These are NON-STANDARD 10-digit national tariff lines printed in the PDF (5 digits beyond the 6-digit subheading instead of the usual 2). Preserved verbatim. The subheading 520911 has codes 52091111..52091119, then 52091190 — i.e., a Handloom sub-section (52091111-52091119) and a general 'Other' (52091190). Per project schema, normalized as '5209.11.11', '5209.11.12', etc. (NNNN.NN.NN format used with last segment carrying the full 4-digit suffix) — these are anomalous 10-digit lines, captured with code formatted as 'NNNN.NN.NNNN' style with extra digits documented here.",
+    "Subheading 520911 (Unbleached: Plain weave) appears to have codes ending in '11' through '19' (52091111, 52091112, 52091113, 52091114, 52091119) plus 52091190. Encoded as '5209.11.11' etc. (per the project's NNNN.NN.NN canonical format — but these are actually 10-digit India national codes). Preserved verbatim from PDF. Same pattern applies for subheading 520831 (Lungi/Sarees-of-Handloom split: 52083110/52083121/52083129/52083130/52083140) and 520841 (52084110/52084121/52084129/52084130 etc).",
+    "Heading 5212 — PDF shows tariff lines 52121100, 52121200, 52121300, 52121400, 52121500, 52122100, 52122200, 52122300, 52122400, 52122500 directly under heading 5212 (no 6-digit subheading rows shown). Reconstructed as subheadings '5212.11', '5212.12', '5212.13', '5212.14', '5212.15' (under 'Weighing not more than 200 g/m2') and '5212.21', '5212.22', '5212.23', '5212.24', '5212.25' (under 'Weighing more than 200 g/m2') per WCO convention.",
+    "Subheading 520821 (Bleached: Plain weave, weighing not more than 100 g/m2) PDF flows tariff lines 52082110 (Dhoti), 52082120 (Saree), 52082130 (Casement), 52082140 (Shirting fabrics) — note the unusual order 'Casement' before 'Shirting fabrics' compared to 520811 (Unbleached). Preserved verbatim.",
+    "Subheading 520831 (Dyed: Plain weave, weighing not more than 100 g/m2) splits 52083121 'Sarees, of Handloom' and 52083129 'Other' under Saree — an India-specific Handloom sub-split inserted between Lungi (52083110) and Shirting fabrics (52083130). Same pattern in 520841 (52084121/52084129).",
+    "Subheading 520849 (Of yarns of different colours: Other fabrics) splits 52084921 'Real Madras handkerchiefs, of Handloom' and 52084929 'Other' under a sub-tier before 52084990 'Other' — India-specific Handloom carve-out. Preserved verbatim.",
+    "Subheading 520859 (Printed: Other fabrics) splits 52085910 'Zari bordered sarees' and 52085920 'Zari bordered sarees, of Handloom' — both have 'Zari bordered sarees' base description, the second adding 'of Handloom'. Preserved verbatim.",
+    "Subheading 521195 'Lungi of Handloom' (52095111) appears printed in Ch.52 under sub-heading 520951 (Printed: Plain weave) — first tariff line. Subsequent lines 52095120 (Saree), 52095130 (Shirting fabrics) etc. are standard. Preserved verbatim.",
+    "Subheading 521120 (Bleached) under heading 5211 — PDF shows it as a single 6-digit subheading '5211.20' (no 8-digit split below the suffix point) with 8-digit lines 52112010 through 52112099. This includes a 3-line subdivision 52112091 'Zari bordered sari', 52112092 'Dedsuti, Dosuti, ceretonnes and osamburge', 52112099 'Other' under an India-specific carve-out where the suffix changes from '...90' Other pattern to '...91/92/99'. Preserved verbatim.",
+    "Notification No values printed verbatim from PDF: '102 (RE-2013)/2009-14' (with space, on 5201 and 5203 lines) and '103(RE-2013)/2009-2014' (no space, on 5205, 5206, 5207 lines). Format inconsistency preserved as printed. Notification Date is '08.12.2014' on all lines that carry a notification. All other tariff lines (5202, 5208-5212) have BLANK Notification No and Notification Date columns — captured as null.",
+    "Unit-of-measure column is NOT shown in this chapter's PDF. unit field set to null for all tariff lines. Cotton products customarily use 'kg' or 'm2' but this is NOT in the source — left as null to avoid fabrication.",
+    "PDF contains the word 'percentby' (run-together, on heading 5206 description: '85percentby weight of cotton') and '85percent' (no space, on multiple headings). Preserved verbatim.",
+    "Subheading code 520526 PDF tariff lines are 52052610/20/90 — only 3 lines (Dyed/Bleached/Other), no Grey line; subheading 520527 likewise has 52052710/20/90 (Dyed/Bleached/Other) — Indian-specific carve-out skipping 'Grey' for the finer counts. Preserved verbatim.",
+    "Heading 5202 PDF tariff line '52021000' description is 'Yarn waste (including thread waste)' — appears to function as both subheading and tariff line title. Encoded as subheading 5202.10 → tariff line 5202.10.00 with the description repeated."
+  ],
+  "chapter_notes": [],
+  "section_notes": [
+    {
+      "number": "Sub-Heading Note 1",
+      "text": "For the purposes of sub-headings 5209 42 and 5211 42, the expression \"denim\" means fabrics of yarns of different colours, of 3 - thread or 4 - thread twill, including broken twill, warp faced, the warp yarns of which are of one and the same colour and the weft yarns of which are unbleached, bleached, dyed, grey or coloured a lighter shade of the colour of the warp yarns."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "5201",
+      "title": "Cotton, not carded or combed.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5201.00",
+          "title": "Cotton, not carded or combed :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5201.00.11",
+              "description": "Indian cotton: ---- Bengal deshi",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5201.00.12",
+              "description": "Indian cotton: ---- Indian cotton of staple lengths 20.5 mm (25/32\") and below (e. g. oomras, yellow picking, Assam comillas)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5201.00.13",
+              "description": "Indian cotton: ---- Indian cotton of staple length exceeding 20.5mm (26/32\") but not exceeding 24.5mm (30/32\")",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5201.00.14",
+              "description": "Indian cotton: ---- Indian cotton of staple length over 24.5 mm (31/32\") to 28 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5201.00.15",
+              "description": "Indian cotton: ---- Indian cotton of staple length 28.5 mm (14/32\") and above but below 34.5 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5201.00.19",
+              "description": "Indian cotton: ---- Indian cotton of all staple length 34.5 mm and above (112/32\")",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5201.00.21",
+              "description": "Other: ---- Of staple length not exceeding 20.0 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5201.00.22",
+              "description": "Other: ---- Of staple length exceeding 20.0 mm but not exceeding 24.5 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5201.00.23",
+              "description": "Other: ---- Of staple length exceeding 24.5 mm but not. exceeding 27.0 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5201.00.24",
+              "description": "Other : ---- Of staple length exceeding 27.0 mm but not exceeding 32.0 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5201.00.25",
+              "description": "Other : ---- Of staple length exceeding 32.0 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "5202",
+      "title": "Terry towelling and similar woven terry fabrics, other than narrow fabrics of heading 58.06; tufted textile fabrics, other than products of heading 57.03.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5202.10",
+          "title": "Yarn waste (including thread waste)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5202.10.00",
+              "description": "Yarn waste (including thread waste)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5202.91",
+          "title": "Other : -- Garnetted stock",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5202.91.00",
+              "description": "Other : -- Garnetted stock",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5202.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5202.99.00",
+              "description": "Other : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5203",
+      "title": "Cotton, carded or combed",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5203.00",
+          "title": "Gauze, other than narrow fabrics of heading 58.06.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5203.00.00",
+              "description": "Gauze, other than narrow fabrics of heading 58.06.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "5204",
+      "title": "Tulles and other net fabrics, not including woven, knitted or crocheted fabrics; lace in the piece, in strips or in motifs, other than fabrics of headings 60.02 to 60.06.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5204.11",
+          "title": "Not put up for retail sale : -- Containing 85 percent or more by weight of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5204.11.10",
+              "description": "Cotton thread, sewing, containing any synthetic staple fibre",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5204.11.20",
+              "description": "Cotton thread, darning",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5204.11.30",
+              "description": "Embroidery cotton thread",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5204.11.40",
+              "description": "Cotton sewing thread not containing any synthetic staple fibre",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5204.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5204.19",
+          "title": "Not put up for retail sale : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5204.19.00",
+              "description": "Not put up for retail sale : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5204.20",
+          "title": "Put up for retail sale",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5204.20.10",
+              "description": "Cotton thread, sewing, containing any synthetic staple fibre",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5204.20.20",
+              "description": "Cotton thread, darning",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5204.20.30",
+              "description": "Embroidery cotton thread",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5204.20.40",
+              "description": "Cotton sewing thread, not containing any synthetic staple fibre",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5204.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5205",
+      "title": "Cotton yarn (other than sewing thread), containing 85 percent or more by weight of cotton, not put up for retail sale.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5205.11",
+          "title": "Single yarn, of uncombed fibres : -- Measuring 714.29 decitex or more (not exceeding 14 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.11.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.11.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.11.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.12",
+          "title": "Single yarn, of uncombed fibres : --Measuring less than 714.29 decitex but not less than 232.56 decitex (exceeding 14 metric number but not exceeding 43 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.12.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.12.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.12.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.13",
+          "title": "Single yarn, of uncombed fibres : -- Measuring less than 232.56 decitex but not less than 192.31 decitex (exceeding 43 metric number but not exceeding 52 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.13.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.13.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.13.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.13.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.14",
+          "title": "Single yarn, of uncombed fibres : --Measuring less than 192.31 decitex but not less than 125 decitex (exceeding 52 metric number but not exceeding 80 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.14.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.14.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.14.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.14.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.15",
+          "title": "Single yarn, of uncombed fibres : -- Measuring less than 125 decitex (exceeding 80 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.15.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.15.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.15.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.15.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.21",
+          "title": "Single yarn, of combed fibres : -- Measuring 714.29 decitex or more (not exceeding 14 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.21.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.21.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.21.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.22",
+          "title": "Single yarn, of combed fibres : -- Measuring less than 714.29 decitex but not less than 232.56 decitex (exceeding 14 metric number but not exceeding 43 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.22.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.22.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.22.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.23",
+          "title": "Single yarn, of combed fibres : -- Measuring less than 232.56 decitex but not less than 192.31 decitex (exceeding 43 metric number but not exceeding 52 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.23.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.23.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.23.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.24",
+          "title": "Single yarn, of combed fibres : -- Measuring less than 192.31 decitex but not less than 125 decitex (exceeding 52 metric number but not exceeding 80 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.24.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.24.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.24.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.26",
+          "title": "Single yarn, of combed fibres : -- Measuring less than 125 decitex but not less than 106.38 decitex (exceeding 80 metric number but not exceeding 94 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.26.10",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.26.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.26.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.27",
+          "title": "Single yarn, of combed fibres : -- Measuring less than 106.38 decitex but not less than 83.33 decitex (exceeding 94 metric number but not exceeding 120 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.27.10",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.27.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.27.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.28",
+          "title": "Single yarn, of combed fibres : -- Measuring less than 83.33 decitex (exceeding 120 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.28.10",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.28.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.28.90",
+              "description": "Other Multiple (folded) or cabled yarn, of uncombed fibres:",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.31",
+          "title": "Multiple (folded) or cabled yarn, of uncombed fibres : -- Measuring per single yarn 714.29 decitex or more (not exceeding 14 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.31.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.31.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.31.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.31.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.32",
+          "title": "Multiple (folded) or cabled yarn, of uncombed fibres : -- Measuring per single yarn less than 714.29 decitex but not less than 232.56 decitex (exceeding 14 metric number but not exceeding 43 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.32.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.32.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.32.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.33",
+          "title": "Multiple (folded) or cabled yarn, of uncombed fibres : -- Measuring per single yarn less than 232.56 decitex but not less than 192.31 decitex (exceeding 43 metric number but not exceeding 52 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.33.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.33.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.33.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.33.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.34",
+          "title": "Multiple (folded) or cabled yarn, of uncombed fibres : -- Measuring per single yarn less than 192.31 decitex but not less than 125 decitex (exceeding 52 metric number but not exceeding 80 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.34.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.34.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.34.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.34.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.35",
+          "title": "Multiple (folded) or cabled yarn, of uncombed fibres : -- Measuring per single yarn less than 125 decitex (exceeding 80 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.35.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.35.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.41",
+          "title": "Multiple (folded) or cabled yarn, of combed fibres : -- Measuring per single yarn 714.29 decitex or more (not exceeding 14 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.41.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.41.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.41.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.41.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.42",
+          "title": "Multiple (folded) or cabled yarn, of combed fibres : -- Measuring per single yarn less than 714.29 decitex but not less than 232.56 decitex (exceeding 14 metric number but not exceeding 43 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.42.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.42.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.43",
+          "title": "Multiple (folded) or cabled yarn, of combed fibres : -- Measuring per single yarn less than 232.56 decitex but not less than 192.31 decitex (exceeding 43 metric number but not exceeding 52 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.43.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.43.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.43.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.44",
+          "title": "Multiple (folded) or cabled yarn, of combed fibres : -- Measuring per single yarn less than 192.31 decitex but not less than 125 decitex (exceeding 52 metric number but not exceeding 80 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.44.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.44.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.44.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.46",
+          "title": "Multiple (folded) or cabled yarn, of combed fibres : -- Measuring per single yarn less than 125 decitex but not less than 106.38 decitex (exceeding 80 metric number but not exceeding 94 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.46.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.46.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.46.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.46.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.47",
+          "title": "Multiple (folded) or cabled yarn, of combed fibres : -- Measuring per single yarn less than 106.38 decitex but not less than 83.33 decitex (exceeding 94 metric number but not exceeding 120 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.47.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.47.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.47.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.47.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5205.48",
+          "title": "Multiple (folded) or cabled yarn, of combed fibres : -- Measuring per single yarn less than 83.33 decitex (exceeding 120 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5205.48.10",
+              "description": "Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.48.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.48.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5205.48.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5206",
+      "title": "Cotton yarn (other than sewing thread), containing less than 85percentby weight of cotton, not put up for retail sale.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5206.11",
+          "title": "Single yarn, of uncombed fibres : --Measuring 714.29 decitex or more (not exceeding 14 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5206.11.00",
+              "description": "Single yarn, of uncombed fibres : --Measuring 714.29 decitex or more (not exceeding 14 metric number)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5206.12",
+          "title": "Single yarn, of uncombed fibres : -- Measuring less than 714.29 decitex but not less than 232.56 decitex (exceeding 14 metric number but not exceeding 43 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5206.12.00",
+              "description": "Single yarn, of uncombed fibres : -- Measuring less than 714.29 decitex but not less than 232.56 decitex (exceeding 14 metric number but not exceeding 43 metric number)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5206.13",
+          "title": "Single yarn, of uncombed fibres : -- Measuring less than 232.56 decitex but not less than 192.31 decitex (exceeding 43 metric number but not exceeding 52 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5206.13.00",
+              "description": "Single yarn, of uncombed fibres : -- Measuring less than 232.56 decitex but not less than 192.31 decitex (exceeding 43 metric number but not exceeding 52 metric number)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5206.14",
+          "title": "Single yarn, of uncombed fibres : -- Measuring less than 192.31 decitex but not less than 125 decitex (exceeding 52 metric number but not exceeding 80 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5206.14.00",
+              "description": "Single yarn, of uncombed fibres : -- Measuring less than 192.31 decitex but not less than 125 decitex (exceeding 52 metric number but not exceeding 80 metric number)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5206.15",
+          "title": "Single yarn, of uncombed fibres : -- Measuring less than 125 decitex (exceeding 80 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5206.15.00",
+              "description": "Single yarn, of uncombed fibres : -- Measuring less than 125 decitex (exceeding 80 metric number)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5206.21",
+          "title": "Single yarn, of combed fibres : -- Measuring 714.29 decitex or more (not exceeding 14 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5206.21.00",
+              "description": "Single yarn, of combed fibres : -- Measuring 714.29 decitex or more (not exceeding 14 metric number)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5206.22",
+          "title": "Single yarn, of combed fibres : -- Measuring less than 714.29 decitex but not less than 232.56 decitex (exceeding 14 metric number but not exceeding 43 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5206.22.00",
+              "description": "Single yarn, of combed fibres : -- Measuring less than 714.29 decitex but not less than 232.56 decitex (exceeding 14 metric number but not exceeding 43 metric number)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5206.23",
+          "title": "Single yarn, of combed fibres : -- Measuring less than 232.56 decitex but not less than 192.31 decitex (exceeding 43 metric number but not exceeding 52 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5206.23.00",
+              "description": "Single yarn, of combed fibres : -- Measuring less than 232.56 decitex but not less than 192.31 decitex (exceeding 43 metric number but not exceeding 52 metric number)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5206.24",
+          "title": "Single yarn, of combed fibres : -- Measuring less than 192.31 decitex but not less than 125 decitex (exceeding 52 metric number but not exceeding 80 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5206.24.00",
+              "description": "Single yarn, of combed fibres : -- Measuring less than 192.31 decitex but not less than 125 decitex (exceeding 52 metric number but not exceeding 80 metric number)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5206.25",
+          "title": "Single yarn, of combed fibres : -- Measuring less than 125 decitex (exceeding 80 metric number)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5206.25.00",
+              "description": "Single yarn, of combed fibres : -- Measuring less than 125 decitex (exceeding 80 metric number)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5206.31",
+          "title": "Multiple (folded) or cabled yarn, of uncombed fibres : -- Measuring per single yarn 714.29 decitex or more (not exceeding 14 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5206.31.00",
+              "description": "Multiple (folded) or cabled yarn, of uncombed fibres : -- Measuring per single yarn 714.29 decitex or more (not exceeding 14 metric number per single yarn)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5206.32",
+          "title": "Multiple (folded) or cabled yarn, of uncombed fibres : -- Measuring per single yarn less than 714.29 decitex but not less than 232.56 decitex (exceeding 14 metric number but not exceeding 43 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5206.32.00",
+              "description": "Multiple (folded) or cabled yarn, of uncombed fibres : -- Measuring per single yarn less than 714.29 decitex but not less than 232.56 decitex (exceeding 14 metric number but not exceeding 43 metric number per single yarn)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5206.33",
+          "title": "Multiple (folded) or cabled yarn, of uncombed fibres : -- Measuring per single yarn less than 232.56 decitex but not less than 192.31 decitex (exceeding 43 metric number but not exceeding 52 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5206.33.00",
+              "description": "Multiple (folded) or cabled yarn, of uncombed fibres : -- Measuring per single yarn less than 232.56 decitex but not less than 192.31 decitex (exceeding 43 metric number but not exceeding 52 metric number per single yarn)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5206.34",
+          "title": "Multiple (folded) or cabled yarn, of uncombed fibres : -- Measuring per single yarn less than 192.31 decitex but not less than 125 decitex (exceeding 52 metric number but not exceeding 80 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5206.34.00",
+              "description": "Multiple (folded) or cabled yarn, of uncombed fibres : -- Measuring per single yarn less than 192.31 decitex but not less than 125 decitex (exceeding 52 metric number but not exceeding 80 metric number per single yarn)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5206.35",
+          "title": "Multiple (folded) or cabled yarn, of uncombed fibres : -- Measuring per single yarn less than 125 decitex (exceeding 80 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5206.35.00",
+              "description": "Multiple (folded) or cabled yarn, of uncombed fibres : -- Measuring per single yarn less than 125 decitex (exceeding 80 metric number per single yarn)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5206.41",
+          "title": "Multiple (folded) or cabled yarn, of combed fibres : -- Measuring per single yarn 714.29 decitex or more (not exceeding 14 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5206.41.00",
+              "description": "Multiple (folded) or cabled yarn, of combed fibres : -- Measuring per single yarn 714.29 decitex or more (not exceeding 14 metric number per single yarn)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5206.42",
+          "title": "Multiple (folded) or cabled yarn, of combed fibres : -- Measuring per single yarn less than 714.29 decitex but not less han 232.56 decitex (exceeding 14 metric number but not exceeding 43 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5206.42.00",
+              "description": "Multiple (folded) or cabled yarn, of combed fibres : -- Measuring per single yarn less than 714.29 decitex but not less han 232.56 decitex (exceeding 14 metric number but not exceeding 43 metric number per single yarn)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5206.43",
+          "title": "Multiple (folded) or cabled yarn, of combed fibres : -- Measuring per single yarn less than 232.56 decitex but not less than 192.31 decitex (exceeding 43 metric number but not exceeding 52 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5206.43.00",
+              "description": "Multiple (folded) or cabled yarn, of combed fibres : -- Measuring per single yarn less than 232.56 decitex but not less than 192.31 decitex (exceeding 43 metric number but not exceeding 52 metric number per single yarn)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5206.44",
+          "title": "Multiple (folded) or cabled yarn, of combed fibres : -- Measuring per single yarn less than 192.31 decitex but not less than 125 decitex (exceeding 52 metric number but not exceeding 80 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5206.44.00",
+              "description": "Multiple (folded) or cabled yarn, of combed fibres : -- Measuring per single yarn less than 192.31 decitex but not less than 125 decitex (exceeding 52 metric number but not exceeding 80 metric number per single yarn)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5206.45",
+          "title": "Multiple (folded) or cabled yarn, of combed fibres : -- Measuring per single yarn less than 125 decitex (exceeding 80 metric number per single yarn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5206.45.00",
+              "description": "Multiple (folded) or cabled yarn, of combed fibres : -- Measuring per single yarn less than 125 decitex (exceeding 80 metric number per single yarn)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5207",
+      "title": "Cotton yarn (other than sewing thread) put up for retail sale.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5207.10",
+          "title": "Containing 85percent or more by weight of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5207.10.00",
+              "description": "Containing 85percent or more by weight of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5207.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5207.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5208",
+      "title": "Woven fabrics of cotton, containing 85percent or more by weight of cotton, weighing not more than 200 g/m2.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5208.11",
+          "title": "Unbleached : -- Plain weave, weighing not more than 100 g/m2",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5208.11.10",
+              "description": "Dhoti",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.11.20",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.11.30",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.11.40",
+              "description": "Casement",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5208.12",
+          "title": "Unbleached : -- Plain weave, weighing more than 100 g/m2",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5208.12.10",
+              "description": "Dhoti",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.12.20",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.12.30",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.12.40",
+              "description": "Casement",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.12.50",
+              "description": "Sheeting (takia, leopard fabrics, other than furnishing fabrics)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.12.60",
+              "description": "Voils",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5208.13",
+          "title": "Unbleached : -- 3-thread or 4-thread twill, including cross twill",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5208.13.10",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.13.20",
+              "description": "Dobby fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.13.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5208.19",
+          "title": "Unbleached : -- Other fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5208.19.10",
+              "description": "Dedsuti, dosuti fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5208.21",
+          "title": "Bleached : -- Plain weave, weighing not more than 100 g/m2",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5208.21.10",
+              "description": "Dhoti",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.21.20",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.21.30",
+              "description": "Casement",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.21.40",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.21.50",
+              "description": "Cambrics (including madapollam and jaconet)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.21.60",
+              "description": "Mulls (including limbric and willaya)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.21.70",
+              "description": "Muslin (including lawn, mulmul and organdi)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.21.80",
+              "description": "Voils (excluding leno fabrics)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5208.22",
+          "title": "Bleached : -- Plain weave, weighing more than 100 g/m2",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5208.22.10",
+              "description": "Dhoti",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.22.20",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.22.30",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.22.40",
+              "description": "Casement",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.22.50",
+              "description": "Cambrics (including madapollam and jaconet)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.22.60",
+              "description": "Long cloth (including calico)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.22.70",
+              "description": "Sheeting (takia and the like)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.22.80",
+              "description": "Voils (excluding leno fabrics)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.22.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5208.23",
+          "title": "Bleached : -- 3-thread or 4-thread twill, including cross twill",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5208.23.10",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.23.20",
+              "description": "Parmatta fabrics (including ilesia, pocketing, Italian twill)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.23.30",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.23.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5208.29",
+          "title": "Bleached : -- Other fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5208.29.10",
+              "description": "Dhoti and saree, zari bordered",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.29.20",
+              "description": "Dedsuti, Dosuti fabrics, ceretonnes and osamburge",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5208.31",
+          "title": "Dyed : -- Plain weave, weighing not more than 100 g/m2",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5208.31.10",
+              "description": "Lungi",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.31.21",
+              "description": "Sarees, of Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.31.29",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.31.30",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.31.40",
+              "description": "Casement",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.31.50",
+              "description": "Cambrics (including madapollam and jaconet)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.31.60",
+              "description": "Mull (including limbric and willaya)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.31.70",
+              "description": "Muslin (including lawn mulmul and organdy) of carded or combed yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.31.80",
+              "description": "Voils( excluding leno fabrics)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.31.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5208.32",
+          "title": "Dyed : -- Plain weave, weighing more than 100 g/m2",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5208.32.10",
+              "description": "Lungi",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.32.20",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.32.30",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.32.40",
+              "description": "Casement",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.32.50",
+              "description": "Bedticking, domestic",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.32.60",
+              "description": "Cambrics (including madapollam and jaconet), Longcloth (including calico) and voils (excluding leno fabrics)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.32.70",
+              "description": "Coating (including suiting)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.32.80",
+              "description": "Furnishing fabrics (excluding pile and chenille fabrics)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.32.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5208.33",
+          "title": "Dyed : -- 3-thread or 4-thread twill, including cross twill",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5208.33.10",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.33.20",
+              "description": "Coating (including suiting)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.33.30",
+              "description": "Shirting (including mazri)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.33.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5208.39",
+          "title": "Dyed : -- Other fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5208.39.10",
+              "description": "Zari bordered sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.39.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5208.41",
+          "title": "Of yarns of different colours : -- Plain weave, weighing not more than 100 g/m2",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5208.41.10",
+              "description": "Bleeding Madras",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.41.21",
+              "description": "Sarees, of Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.41.29",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.41.30",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.41.40",
+              "description": "Bed ticking, domestic",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.41.50",
+              "description": "Furnishing fabrics (excluding pile and chenille fabrics)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.41.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5208.42",
+          "title": "Of yarns of different colours : -- Plain weave, weighing more than 100 g/m2",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5208.42.10",
+              "description": "Bleeding Madras",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.42.20",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.42.30",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.42.40",
+              "description": "Casement",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.42.50",
+              "description": "Bed ticking, domestic",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.42.60",
+              "description": "Furnishing fabrics, other than pile and chenille fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.42.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5208.43",
+          "title": "Of yarns of different colours : -- 3-thread or 4-thread twill, including cross twill",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5208.43.10",
+              "description": "Bleeding Madras",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.43.20",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.43.30",
+              "description": "Bedticking, damask",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.43.40",
+              "description": "Flannelette",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.43.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5208.49",
+          "title": "Of yarns of different colours : -- Other fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5208.49.10",
+              "description": "Zari bordered sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.49.21",
+              "description": "Real Madras handkerchiefs, of Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.49.29",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.49.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5208.51",
+          "title": "Printed : -- Plain weave, weighing not more than 100 g/m2",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5208.51.10",
+              "description": "Lungi",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.51.20",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.51.30",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.51.40",
+              "description": "Casement",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.51.50",
+              "description": "Cambrics (including madapollam and jaconet)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.51.60",
+              "description": "Mull (including limbric and willaya)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.51.70",
+              "description": "Muslin (including lawn mulmul and organdi) of carded or combed yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.51.80",
+              "description": "Voils (excluding leno fabrics)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.51.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5208.52",
+          "title": "Printed : -- Plain weave, weighing more than 100 g/m2",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5208.52.10",
+              "description": "Lungi",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.52.20",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.52.30",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.52.40",
+              "description": "Casement",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.52.50",
+              "description": "Cambrics (including madapollam and jaconet)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.52.60",
+              "description": "Mull (including limbric and willaya)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.52.70",
+              "description": "Muslin (including lawn mulmul and organdi) of carded or combed yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.52.80",
+              "description": "Voils (excluding leno fabrics)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.52.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5208.59",
+          "title": "Printed : -- Other fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5208.59.10",
+              "description": "Zari bordered sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.59.20",
+              "description": "Zari bordered sarees, of Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5208.59.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5209",
+      "title": "Woven fabrics of cotton, containing 85percent or more by weight of cotton, weighing more than 200 g/m2.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5209.11",
+          "title": "Unbleached : -- Plain weave",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5209.11.11",
+              "description": "Handloom: ---- Dhoti",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.11.12",
+              "description": "Handloom: ---- Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.11.13",
+              "description": "Handloom: ---- Casement",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.11.14",
+              "description": "Handloom: ---- Sheeting (takia, leopardcloth and other than furnishing)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.11.19",
+              "description": "Handloom: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.11.90",
+              "description": "Handloom: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5209.12",
+          "title": "Unbleached : -- 3-thread or 4-thread twill, including cross twill",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5209.12.10",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.12.20",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.12.30",
+              "description": "Furnishing fabrics (excluding pile and chenille fabrics)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.12.40",
+              "description": "Seersucker",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.12.50",
+              "description": "Canvas, including duck - carded or combed yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.12.60",
+              "description": "Flannelette",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.12.70",
+              "description": "Shetting (takia, leopart cloth)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5209.19",
+          "title": "Unbleached : -- Other fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5209.19.00",
+              "description": "Unbleached : -- Other fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5209.21",
+          "title": "Bleached : -- Plain weave",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5209.21.10",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.21.20",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.21.30",
+              "description": "Furnishing fabrics (excluding pile and chinille fabrics)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.21.40",
+              "description": "Seersucker",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.21.50",
+              "description": "Canvas (including duck) of carded or combed yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.21.60",
+              "description": "Dhoti",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.21.70",
+              "description": "Flannellete",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.21.80",
+              "description": "Sheeting (takia, leopart cloth)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5209.22",
+          "title": "Bleached : -- 3-thread or 4-thread twill, including cross twill",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5209.22.10",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.22.20",
+              "description": "Furnishing fabrics (excluding pile and chenille fabrics)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.22.30",
+              "description": "Drill",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.22.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5209.29",
+          "title": "Bleached : -- Other fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5209.29.10",
+              "description": "Dhoti and saree, zari bordered",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.29.20",
+              "description": "Dedsuti, dosuti fabrics, ceretonnes and osamburge",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5209.31",
+          "title": "Dyed : -- Plain weave",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5209.31.10",
+              "description": "Lungi",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.31.20",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.31.30",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.31.40",
+              "description": "Furnishing fabrics (excluding pile and chenille fabrics)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.31.50",
+              "description": "Seersucker",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.31.60",
+              "description": "Bedticking, domestic (other than hand dyed)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.31.70",
+              "description": "Canvas (including duck), of carded or combed yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.31.80",
+              "description": "Flannelette",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.31.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5209.32",
+          "title": "Dyed : -- 3-thread or 4-thread twill, including cross twill",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5209.32.10",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.32.20",
+              "description": "Furnishing fabrics (excluding pile and chenille fabrics)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.32.30",
+              "description": "Drill",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.32.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5209.39",
+          "title": "Dyed : -- Other fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5209.39.10",
+              "description": "Zari bordered sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.39.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5209.41",
+          "title": "Of yarns of different colours : -- Plain weave",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5209.41.10",
+              "description": "Bleeding Madras",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.41.20",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.41.30",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.41.40",
+              "description": "Furnishing fabrics (excluding pile and chenille fabrics)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.41.50",
+              "description": "Seersucker",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.41.60",
+              "description": "Bedticking, domestic (other than hand dyed)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.41.70",
+              "description": "Flannelette",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.41.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5209.42",
+          "title": "Of yarns of different colours : -- Denim",
+          "subheading_notes": [
+            {
+              "number": "Sub-Heading Note 1",
+              "text": "For the purposes of sub-headings 5209 42 and 5211 42, the expression \"denim\" means fabrics of yarns of different colours, of 3 - thread or 4 - thread twill, including broken twill, warp faced, the warp yarns of which are of one and the same colour and the weft yarns of which are unbleached, bleached, dyed, grey or coloured a lighter shade of the colour of the warp yarns."
+            }
+          ],
+          "tariff_lines": [
+            {
+              "code": "5209.42.00",
+              "description": "Of yarns of different colours : -- Denim",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5209.43",
+          "title": "Of yarns of different colours : -- Other fabrics of 3-thread or 4-thread twill, including cross twill",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5209.43.10",
+              "description": "Bleeding Madras",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.43.20",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.43.30",
+              "description": "Furnishing fabrics (excluding pile and chenille fabrics)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.43.40",
+              "description": "Coating (including suiting)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.43.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5209.49",
+          "title": "Of yarns of different colours : -- Other fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5209.49.10",
+              "description": "Zari bordered sari",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.49.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5209.51",
+          "title": "Printed : -- Plain weave",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5209.51.11",
+              "description": "Lungi of Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.51.20",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.51.30",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.51.40",
+              "description": "Furnishing fabrics (excluding pile and chenille fabrics)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.51.50",
+              "description": "Seersucker",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.51.60",
+              "description": "Bedticking, domestic",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.51.70",
+              "description": "Flannelette",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.51.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5209.52",
+          "title": "Printed : -- 3-thread or 4-thread twill, including cross twill",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5209.52.10",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.52.20",
+              "description": "Furnishing fabrics (excluding pile and chenille fabrics)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.52.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5209.59",
+          "title": "Printed : -- Other fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5209.59.10",
+              "description": "Zari bordered saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5209.59.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5210",
+      "title": "Woven fabrics of cotton, containing less than 85percent by weight of cotton, mixed mainly or solely with man-made fibres, weighing not more than 200 g/m2.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5210.11",
+          "title": "Unbleached : -- Plain weave",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5210.11.10",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.11.20",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5210.19",
+          "title": "Unbleached : -- Other fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5210.19.00",
+              "description": "Unbleached : -- Other fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5210.21",
+          "title": "Bleached : -- Plain weave",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5210.21.10",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.21.20",
+              "description": "Poplin and broad fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.21.30",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.21.40",
+              "description": "Shirting (including mazri)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.21.50",
+              "description": "Voils",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5210.29",
+          "title": "Bleached : -- Other fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5210.29.10",
+              "description": "Dhoti and saree, zari bordered",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.29.20",
+              "description": "Dedsuti, dosuti, ceretonnes and osamburge",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5210.31",
+          "title": "Dyed : -- Plain weave",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5210.31.10",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.31.20",
+              "description": "Coating (including suitings)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.31.30",
+              "description": "Furnishing fabrics (excluding pile and chenille fabrics)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.31.40",
+              "description": "Poplin and broad fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.31.50",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.31.60",
+              "description": "Voils",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.31.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5210.32",
+          "title": "Dyed : -- 3-thread or 4-thread twill, including cross twill",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5210.32.10",
+              "description": "Crepe fabrics including crepe checks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.32.20",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.32.30",
+              "description": "Bedticking, damask",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.32.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5210.39",
+          "title": "Dyed : -- Other fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5210.39.10",
+              "description": "Zari bordered sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.39.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5210.41",
+          "title": "Of yarns of different colours : -- Plain weave",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5210.41.10",
+              "description": "Bleeding Madras",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.41.20",
+              "description": "Crepe fabrics (excluding crepe checks)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.41.30",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.41.40",
+              "description": "Suitings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.41.50",
+              "description": "Poplin and broad fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.41.60",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.41.70",
+              "description": "Voils",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.41.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5210.49",
+          "title": "Of yarns of different colours : -- Other fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5210.49.10",
+              "description": "Zari bordered saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.49.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5210.51",
+          "title": "Printed : -- Plain weave",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5210.51.10",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.51.20",
+              "description": "Casement",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.51.30",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.51.40",
+              "description": "Poplin and broad fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.51.50",
+              "description": "Voils",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.51.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5210.59",
+          "title": "Printed : -- Other fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5210.59.10",
+              "description": "Zari bordered saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5210.59.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5211",
+      "title": "Woven fabrics of cotton, containing less than 85percent by weight of cotton, mixed mainly or solely with man-made fibres, weighing more than 200 g/m2.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5211.11",
+          "title": "Unbleached : -- Plain weave",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5211.11.10",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.11.20",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5211.12",
+          "title": "Unbleached : -- 3-thread or 4-thread twill, including cross twill",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5211.12.10",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.12.20",
+              "description": "Twill, not elsewhere specified (including gaberdine)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.12.30",
+              "description": "Damask",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5211.19",
+          "title": "Unbleached : -- Other fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5211.19.00",
+              "description": "Unbleached : -- Other fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5211.20",
+          "title": "Bleached",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5211.20.10",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.20.20",
+              "description": "Canvas (including duck) of carded or combed yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.20.30",
+              "description": "Flannelette",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.20.40",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.20.50",
+              "description": "Crepe fabric including Crepe checks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.20.60",
+              "description": "Twill fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.20.91",
+              "description": "Zari bordered sari",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.20.92",
+              "description": "Dedsuti, Dosuti, ceretonnes and osamburge",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.20.99",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5211.31",
+          "title": "Dyed : -- Plain weave",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5211.31.10",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.31.20",
+              "description": "Canvas (including duck) of carded or combed yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.31.30",
+              "description": "Coating (including suitings)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.31.40",
+              "description": "Flannellete",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.31.50",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.31.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5211.32",
+          "title": "Dyed : -- 3-thread or 4-thread twill, including cross twill",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5211.32.10",
+              "description": "Crepe fabrics including crepe checks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.32.20",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.32.30",
+              "description": "Twill, not elsewhere specified (including gaberdine)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.32.40",
+              "description": "Trousers or pant fabrics (excluding jeans and crepe)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.32.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5211.39",
+          "title": "Dyed : -- Other fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5211.39.10",
+              "description": "Zari bordered sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.39.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5211.41",
+          "title": "Of yarns of different colours : -- Plain weave",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5211.41.10",
+              "description": "Bleeding Madras",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.41.20",
+              "description": "Check shirting (excluding crepe checks)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.41.30",
+              "description": "Shirting",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.41.40",
+              "description": "Suitings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.41.50",
+              "description": "Flannelette",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.41.60",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.41.70",
+              "description": "Parachute fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.41.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5211.42",
+          "title": "Of yarns of different colours : -- Denim",
+          "subheading_notes": [
+            {
+              "number": "Sub-Heading Note 1",
+              "text": "For the purposes of sub-headings 5209 42 and 5211 42, the expression \"denim\" means fabrics of yarns of different colours, of 3 - thread or 4 - thread twill, including broken twill, warp faced, the warp yarns of which are of one and the same colour and the weft yarns of which are unbleached, bleached, dyed, grey or coloured a lighter shade of the colour of the warp yarns."
+            }
+          ],
+          "tariff_lines": [
+            {
+              "code": "5211.42.00",
+              "description": "Of yarns of different colours : -- Denim",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5211.43",
+          "title": "Of yarns of different colours : -- Other fabrics of 3-thread or 4-thread twill, including cross twill",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5211.43.10",
+              "description": "Bleeding Madras",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.43.20",
+              "description": "Crepe fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.43.30",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.43.40",
+              "description": "Suitings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.43.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5211.49",
+          "title": "Of yarns of different colours : -- Other fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5211.49.10",
+              "description": "Zari bordered sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.49.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5211.51",
+          "title": "Printed : -- Plain weave",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5211.51.10",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.51.20",
+              "description": "Furnishing fabrics (excluding pile and chenille fabrics)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.51.30",
+              "description": "Flannelette",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.51.40",
+              "description": "Long cloth (chintz)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.51.50",
+              "description": "Saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.51.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5211.52",
+          "title": "Printed : -- 3-thread or 4-thread twill, including cross twill",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5211.52.10",
+              "description": "Crepe fabrics including crepe checks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.52.20",
+              "description": "Shirting fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.52.30",
+              "description": "Twill, not elsewhere specified (including gaberdine)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.52.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5211.59",
+          "title": "Printed : -- Other fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5211.59.10",
+              "description": "Zari bordered saree",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5211.59.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5212",
+      "title": "Other woven fabrics of cotton.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5212.11",
+          "title": "Weighing not more than 200 g/m2 : -- Unbleached",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5212.11.00",
+              "description": "Weighing not more than 200 g/m2 : -- Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5212.12",
+          "title": "Weighing not more than 200 g/m2 : -- Bleached",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5212.12.00",
+              "description": "Weighing not more than 200 g/m2 : -- Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5212.13",
+          "title": "Weighing not more than 200 g/m2 : -- Dyed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5212.13.00",
+              "description": "Weighing not more than 200 g/m2 : -- Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5212.14",
+          "title": "Weighing not more than 200 g/m2 : -- Of yarns of different colours",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5212.14.00",
+              "description": "Weighing not more than 200 g/m2 : -- Of yarns of different colours",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5212.15",
+          "title": "Printed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5212.15.00",
+              "description": "Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5212.21",
+          "title": "Weighing more than 200 g/m2 : -- Unbleached",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5212.21.00",
+              "description": "Weighing more than 200 g/m2 : -- Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5212.22",
+          "title": "Weighing more than 200 g/m2 : -- Bleached",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5212.22.00",
+              "description": "Weighing more than 200 g/m2 : -- Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5212.23",
+          "title": "Weighing more than 200 g/m2 : -- Dyed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5212.23.00",
+              "description": "Weighing more than 200 g/m2 : -- Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5212.24",
+          "title": "Weighing more than 200 g/m2 : -- Of yarns of different colours",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5212.24.00",
+              "description": "Weighing more than 200 g/m2 : -- Of yarns of different colours",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5212.25",
+          "title": "Weighing more than 200 g/m2 : -- Printed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5212.25.00",
+              "description": "Weighing more than 200 g/m2 : -- Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

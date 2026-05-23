@@ -257,3 +257,28 @@ tmpclaude-*
 # Large data artifacts
 backend/data/embedding-*.json
 backend/data/*-audit-results.json
+
+# ========================================
+# Phase 2 working artifacts (Feb 2026)
+# ========================================
+
+# Local-only DB backups (large, kept off git, restorable via JSON)
+backend/backups/
+
+# pdftotext working dumps (regenerable from PDFs)
+data/pdfs/*.txt
+data/pdfs/chapter-*-layout.txt
+data/pdfs/chapter-*-table.txt
+
+# Deferred CBIC artifacts (not part of canonical pipeline; user fetched separately)
+data/pdfs/cbic-content-*.json
+data/pdfs/cbic-menu.json
+data/pdfs/cbic-official-tariff.pdf
+
+# Top-level agent working scratch (per-agent helper scripts; canonical versions live in backend/scripts/)
+/tmp/
+/scripts/
+
+# Audit-A working files (intermediate; final audit verdict lives in backend/data/audit-A-*.json)
+backend/scripts/audit-a-*.py
+backend/data/audit-a-*.json

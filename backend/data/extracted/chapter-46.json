@@ -1,0 +1,280 @@
+{
+  "chapter": "46",
+  "section": "IX",
+  "title": "MANUFACTURES OF STRAW, OF ESPARTO OR OF OTHER PLAITING MATERIALS; BASKETWARE AND WICKERWORK",
+  "source_pdf": "Chapter 46 Manufactures Of Straw, Of Esparto Or Of Other Plaiting Materials; Basketware And Wickerwork.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '46012100'). Normalized to NNNN.NN.NN format (e.g., '4601.21.00') per project schema. Subheading numbers in PDF (e.g., '460219') normalized to NNNN.NN (e.g., '4602.19').",
+    "Section IX header in PDF reads 'Section IX, WOOD AND ARTICLES OF WOOD; CORKAND ARTICLES OF CORK; MANUFACTURES OF STRAW, OF ESPARTO OR OF OTHER PLAITINGMATERIALS; BASKETWARE AND WICKERWORK' — preserves the PDF's missing-space artifacts ('CORKAND', 'PLAITINGMATERIALS'). Canonical Section IX title (with proper spacing) is used in the section field reference; the verbatim PDF text is preserved in extraction warnings only.",
+    "Chapter title on PDF page 1 is rendered as 'Chapter 46 Manufactures Of Straw, Of Esparto Or Of Other Plaiting Materials; Basketware And Wickerwork.' (Title Case with trailing period). The title field uses the canonical ITC(HS) ALL-CAPS form without trailing period.",
+    "PDF table-chrome headers ('Sl.No. Notes Notification Date Notification No', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Main Notes', 'Product Description and Export Policy') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Notification Date and Notification No columns are empty for all three Main Notes in the source PDF — captured as null in chapter_notes metadata.",
+    "Heading 4601 description in PDF reads 'Plaits and similar products of plaiting materials, whether or not assembled into strips; plaiting materials, plaits and similar products of plaiting materials, bound together in parallel strands or woven, in sheet form, whether or not being finished articles (for example, mats, matting, screens).' — verbatim, including the trailing period.",
+    "Heading 4602 description in PDF reads 'Basketwork, wickerwork and other articles, made directly to shape from plaiting materials or made up from goods of heading 46.01; articles of loofah.' — verbatim, including the trailing period and the dotted form '46.01' for the cross-reference.",
+    "Subheading 4602.19 appears in the source PDF as a 6-digit header row (code '460219', description 'Of vegetable materials : -- Other') with no Export Policy entry of its own — it groups the four tariff lines 4602.19.11, 4602.19.19, 4602.19.90 (and is the parent subheading for these). Two distinct '-- Other' style tariff lines appear under it: '46021919' (Of palm leaves: ---- Other) and '46021990' (Of palm leaves: ---- Other) — both preserved verbatim from the source.",
+    "Codes 46012100, 46012200, 46012900, 46019200, 46019300, 46019400, 46019900, 46021100, 46021200, 46029000 are 8-digit codes where the subheading has only one tariff line (the '00' line) — each represented as a single tariff_line under its own subheading.",
+    "All 14 tariff lines have Export Policy = 'Free' and an empty Policy Condition column — no Policy Conditions entries are present in the chapter, so the policy_conditions array is empty.",
+    "No Export Licensing Notes section is present in the source PDF for Chapter 46.",
+    "No Section Notes are reproduced in the Chapter 46 PDF (Section IX section notes appear in the Chapter 44 PDF, not here) — section_notes array is empty for this chapter."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "In this Chapter, the expression \"plaiting materials\" means materials in a state or form suitable for plaiting, interlacing or similar processes; it includes straw, osier or willow, bamboos, rattan, rushes, reeds, strips of wood, strips of other vegetable material (for example, strips of bark, narrow leaves and raffia or other strips obtained from broad leaves), unspun natural textile fibres, monofilament and strip and the like of plastics and strips of paper, but not strips of leather or composition leather or of felt or non-wovens, human hair, horsehair, textile rovings or yarns, or monofilament and strip and the like of Chapter 54."
+    },
+    {
+      "number": "2",
+      "text": "This Chapter does not cover: (a) wall coverings of heading 4814; (b) twine, cordage, ropes or cables, plaited or not (heading 5607); (c) footwear or headgear or parts thereof of Chapter 64 or 65; (d) vehicles or bodies for vehicles of basketware (Chapter 87); or (e) articles of Chapter 94 (for example, furniture, luminaires and lighting fittings)."
+    },
+    {
+      "number": "3",
+      "text": "For the purposes of heading 4601, the expression \"plaiting materials, plaits and similar products of plaiting materials, bound together in parallel strands\" means plaiting materials, plaits and similar products of plaiting materials, placed side by side and bound together, in the form of sheets, whether or not the binding materials are of spun textile materials."
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "wall coverings of heading 4814",
+      "redirects_to_chapter": "48",
+      "redirects_to_heading": "4814",
+      "source_note_number": "Note 2(a)",
+      "source_note_text": "This Chapter does not cover: (a) wall coverings of heading 4814; (b) twine, cordage, ropes or cables, plaited or not (heading 5607); (c) footwear or headgear or parts thereof of Chapter 64 or 65; (d) vehicles or bodies for vehicles of basketware (Chapter 87); or (e) articles of Chapter 94 (for example, furniture, luminaires and lighting fittings)."
+    },
+    {
+      "excluded_product_text": "twine, cordage, ropes or cables, plaited or not",
+      "redirects_to_chapter": "56",
+      "redirects_to_heading": "5607",
+      "source_note_number": "Note 2(b)",
+      "source_note_text": "This Chapter does not cover: (a) wall coverings of heading 4814; (b) twine, cordage, ropes or cables, plaited or not (heading 5607); (c) footwear or headgear or parts thereof of Chapter 64 or 65; (d) vehicles or bodies for vehicles of basketware (Chapter 87); or (e) articles of Chapter 94 (for example, furniture, luminaires and lighting fittings)."
+    },
+    {
+      "excluded_product_text": "footwear or headgear or parts thereof of Chapter 64 or 65",
+      "redirects_to_chapter": "64",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(c)",
+      "source_note_text": "This Chapter does not cover: (a) wall coverings of heading 4814; (b) twine, cordage, ropes or cables, plaited or not (heading 5607); (c) footwear or headgear or parts thereof of Chapter 64 or 65; (d) vehicles or bodies for vehicles of basketware (Chapter 87); or (e) articles of Chapter 94 (for example, furniture, luminaires and lighting fittings)."
+    },
+    {
+      "excluded_product_text": "footwear or headgear or parts thereof of Chapter 64 or 65",
+      "redirects_to_chapter": "65",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(c)",
+      "source_note_text": "This Chapter does not cover: (a) wall coverings of heading 4814; (b) twine, cordage, ropes or cables, plaited or not (heading 5607); (c) footwear or headgear or parts thereof of Chapter 64 or 65; (d) vehicles or bodies for vehicles of basketware (Chapter 87); or (e) articles of Chapter 94 (for example, furniture, luminaires and lighting fittings)."
+    },
+    {
+      "excluded_product_text": "vehicles or bodies for vehicles of basketware",
+      "redirects_to_chapter": "87",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(d)",
+      "source_note_text": "This Chapter does not cover: (a) wall coverings of heading 4814; (b) twine, cordage, ropes or cables, plaited or not (heading 5607); (c) footwear or headgear or parts thereof of Chapter 64 or 65; (d) vehicles or bodies for vehicles of basketware (Chapter 87); or (e) articles of Chapter 94 (for example, furniture, luminaires and lighting fittings)."
+    },
+    {
+      "excluded_product_text": "articles of Chapter 94 (for example, furniture, luminaires and lighting fittings)",
+      "redirects_to_chapter": "94",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(e)",
+      "source_note_text": "This Chapter does not cover: (a) wall coverings of heading 4814; (b) twine, cordage, ropes or cables, plaited or not (heading 5607); (c) footwear or headgear or parts thereof of Chapter 64 or 65; (d) vehicles or bodies for vehicles of basketware (Chapter 87); or (e) articles of Chapter 94 (for example, furniture, luminaires and lighting fittings)."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "4601",
+      "title": "Plaits and similar products of plaiting materials, whether or not assembled into strips; plaiting materials, plaits and similar products of plaiting materials, bound together in parallel strands or woven, in sheet form, whether or not being finished articles (for example, mats, matting, screens).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4601.21",
+          "title": "Mats, matting and screens of vegetable materials : -- Of bamboo",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4601.21.00",
+              "description": "Mats, matting and screens of vegetable materials : -- Of bamboo",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4601.22",
+          "title": "Mats, matting and screens of vegetable materials : -- Of rattan",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4601.22.00",
+              "description": "Mats, matting and screens of vegetable materials : -- Of rattan",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4601.29",
+          "title": "Mats, matting and screens of vegetable materials : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4601.29.00",
+              "description": "Mats, matting and screens of vegetable materials : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4601.92",
+          "title": "Other : -- Of bamboo",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4601.92.00",
+              "description": "Other : -- Of bamboo",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4601.93",
+          "title": "Other : -- Of rattan",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4601.93.00",
+              "description": "Other : -- Of rattan",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4601.94",
+          "title": "Other : -- Of other vegetable materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4601.94.00",
+              "description": "Other : -- Of other vegetable materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4601.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4601.99.00",
+              "description": "Other : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4602",
+      "title": "Basketwork, wickerwork and other articles, made directly to shape from plaiting materials or made up from goods of heading 46.01; articles of loofah.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4602.11",
+          "title": "Of vegetable materials : -- Of bamboo",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4602.11.00",
+              "description": "Of vegetable materials : -- Of bamboo",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4602.12",
+          "title": "Of vegetable materials : -- Of rattan",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4602.12.00",
+              "description": "Of vegetable materials : -- Of rattan",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4602.19",
+          "title": "Of vegetable materials : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4602.19.11",
+              "description": "Of palm leaves: ---- Baskets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4602.19.19",
+              "description": "Of palm leaves: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4602.19.90",
+              "description": "Of palm leaves: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4602.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4602.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

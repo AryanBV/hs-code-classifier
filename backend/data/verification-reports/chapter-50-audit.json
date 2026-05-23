@@ -1,0 +1,161 @@
+{
+  "chapter": "50",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings_count": 0,
+  "soft_warnings_count": 0,
+  "wco_patched_notes_skipped": true,
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "50020020",
+        "in_pdf": true,
+        "pdf_context_near_code": "002 Raw silk (not thrown). Free 500200 Raw silk (not thrown) : Free 50020010 Mulberry raw silk Free 50020020 Mulberry dupion silk 50020030 Non-mulberry silk Free 5003 Silk waste (including cocoons uns",
+        "json_description": "Mulberry dupion silk",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "50030030",
+        "in_pdf": true,
+        "pdf_context_near_code": "itable for Free 50030010 reeling, yarn waste and garneted stock): Free 50030020 Mulberry silk waste 50030030 Tussar silk waste 50030040 Eri waste 50030090 Munga waste 5004 Other Silk yarn (other than ",
+        "json_description": "Eri waste",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "50030040",
+        "in_pdf": true,
+        "pdf_context_near_code": "eling, yarn waste and garneted stock): Free 50030020 Mulberry silk waste 50030030 Tussar silk waste 50030040 Eri waste 50030090 Munga waste 5004 Other Silk yarn (other than yarn spun from silk 500400 ",
+        "json_description": "Munga waste",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "50060019",
+        "in_pdf": true,
+        "pdf_context_near_code": "ther 50050022 Free 5006 Yarn spun from silk waste, not put up for Free 500600 retail sale. 50060011 50060019 Yarn spun from silk waste, not put up for retail sale : Containing 85percent or more by wei",
+        "json_description": "Other",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "50060031",
+        "in_pdf": true,
+        "pdf_context_near_code": "ilk waste containing Free 85percent or more by weight of silk: ---- Silk 50060029 embroidery thread 50060031 Yarn spun from silk waste containing Free 50060032 85percent or more by weight of silk: ---",
+        "json_description": "Spun from silk waste other than noil silk",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "50010000",
+        "in_pdf": true,
+        "pdf_context_near_code": "ription Export Policy Condition Policy Export of Pure races of Silk worms, silkworm seeds, and silk 50010000 Silk-worm cocoons suitable for reeling. Restricted worm cocoons are Restricted and may be e",
+        "json_description": "Silk-worm cocoons suitable for reeling.",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "50060021",
+        "in_pdf": true,
+        "pdf_context_near_code": "and yarn spun from silk waste, put up for retail sale; silk worm gut : Silk embroidery thread Other 50060021 Yarn spun from silk waste containing Free 85percent or more by weight of silk: ---- Silk 50",
+        "json_description": "Yarn spun from silk waste containing 85percent or more by weight of silk: ---- Silk embroidery thread",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "50079010",
+        "in_pdf": true,
+        "pdf_context_near_code": "ilk Free 500720 Silk embroidery thread Free 50072010 Other Free 50072090 500790 Other Free 50079000 50079010 Woven fabrics of silk or of silk waste. Fabrics of noil silk Free Other fabrics, containing",
+        "json_description": "of Handloom woven",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "50060032",
+        "in_pdf": true,
+        "pdf_context_near_code": "ht of silk: ---- Silk 50060029 embroidery thread 50060031 Yarn spun from silk waste containing Free 50060032 85percent or more by weight of silk: ---- 50060033 Other 50060039 50060090 Spun from silk w",
+        "json_description": "Yarn spun from noil silk",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "50060039",
+        "in_pdf": true,
+        "pdf_context_near_code": "n from silk waste containing Free 50060032 85percent or more by weight of silk: ---- 50060033 Other 50060039 50060090 Spun from silk waste other than noil silk Free 5007 50071000 Yarn spun from noil s",
+        "json_description": "Other",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      }
+    ],
+    "subheading_spot_check": [
+      {
+        "subheading": "500710",
+        "in_pdf_standalone": true,
+        "any_child_in_pdf": true,
+        "accepted": true,
+        "json_description": "Fabrics of noil silk",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": []
+      },
+      {
+        "subheading": "500400",
+        "in_pdf_standalone": true,
+        "any_child_in_pdf": true,
+        "accepted": true,
+        "json_description": "Silk yarn (other than yarn spun from silk waste) not put up for retail sale :",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": []
+      },
+      {
+        "subheading": "500720",
+        "in_pdf_standalone": true,
+        "any_child_in_pdf": true,
+        "accepted": true,
+        "json_description": "Other fabrics, containing 85 percent or more by weight of silk or of silk waste other than noil silk",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": []
+      },
+      {
+        "subheading": "500500",
+        "in_pdf_standalone": true,
+        "any_child_in_pdf": true,
+        "accepted": true,
+        "json_description": "Yarn spun from silk waste, not put up for retail sale :",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": []
+      },
+      {
+        "subheading": "500300",
+        "in_pdf_standalone": true,
+        "any_child_in_pdf": true,
+        "accepted": true,
+        "json_description": "Silk waste (including cocoons unsuitable for reeling, yarn waste and garneted stock):",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": []
+      }
+    ],
+    "hierarchy_errors": [],
+    "hierarchy_errors_total": 0,
+    "missed_codes": [],
+    "extra_codes": [],
+    "note_mismatches": [],
+    "count_check": {
+      "headings_in_json": 7,
+      "subheadings_in_json": 9,
+      "tariff_lines_in_json": 29
+    },
+    "notes_count": 0
+  },
+  "warnings": []
+}

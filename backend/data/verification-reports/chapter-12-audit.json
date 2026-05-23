@@ -1,0 +1,150 @@
+{
+  "chapter": "12",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings_count": 0,
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "1201.10.00",
+        "in_pdf": true,
+        "pdf_description": "12011000 not broken. Free 12019000 Free Seed 1202 Other 120230 Ground-nuts, not roasted",
+        "json_description": "Seed",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1204.00.90",
+        "in_pdf": true,
+        "pdf_description": "12040090 Subject to Policy 1205 Condition 1 of the 12051000 Chapter 12059000 1206",
+        "json_description": "Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1207.40.90",
+        "in_pdf": true,
+        "pdf_description": "12074090 Other Free 1. Export of items to 37/2015-20 39/2015-20 03.02.2016 European Union 38/2024-25 11.02.2016 count",
+        "json_description": "Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1207.99.90",
+        "in_pdf": true,
+        "pdf_description": "12079990 Mango kernel Free 1208 Niger seed Free 12081000 Kokam Free 12089000 1209 Other Free 120910",
+        "json_description": "Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1209.30.00",
+        "in_pdf": true,
+        "pdf_description": "12093000 120991 Seeds of forage plants : -- 12099110 Other 12099120 12099130 Australian lupin seeds 12099140 Other Free ",
+        "json_description": "Seeds of herbaceous plants cultivated principally for their flowers",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1210.20.00",
+        "in_pdf": true,
+        "pdf_description": "12102000 powdered or in the form of seeds of all forestry pellets; lupulin. species &Cashew 1211 seeds and plants is",
+        "json_description": "Hop cones, ground, powdered or in the form of pellets; lupulin",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1211.90.21",
+        "in_pdf": true,
+        "pdf_description": "12119021 Endocarp :----Jojoba seed 12119022 Subject to Policy 12119023 Seeds, Kernel, Aril, Fruit, Free Condition 2 of t",
+        "json_description": "Leaves, Leaf bud, Galls, flowers, Inflorescence, Spadix, Flower bud, Style and Stigma, Stamen and pods :----Belladona leaves",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1211.90.35",
+        "in_pdf": true,
+        "pdf_description": "12119035 Bark, husk and rind: ---- Free Subject to Policy 12119039 Arjuna (Terminalia arjuna) Condition 2 of the 1211904",
+        "json_description": "Bark, husk and rind: ---- Arjuna (Terminalia arjuna)",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1211.90.51",
+        "in_pdf": true,
+        "pdf_description": "12119051 Sarasaparilla roots Subject to Policy Roots, Root stalk, Bulb, Condition 2 of the Corn,Tuber, Stolon",
+        "json_description": "Whole Plant, Aerial Part, Stem, Shoot and Wood :---- Sandalwood chips and dust",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1212.29.10",
+        "in_pdf": true,
+        "pdf_description": "12122910 fresh, chilled, frozen or 12122990 dried, whether or not ground; stones and kernels and other vegetable product",
+        "json_description": "Seaweeds",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      }
+    ],
+    "hierarchy_errors": [],
+    "missed_codes": [],
+    "extra_codes": [],
+    "subheading_checks": [
+      {
+        "subheading": "1201.10",
+        "title": "Seed",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1206.00",
+        "title": "Sunflower seeds, whether or not broken:",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1207.99",
+        "title": "Other : -- Other",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1209.30",
+        "title": "Seeds of herbaceous plants cultivated principally for their flowers",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1212.21",
+        "title": "Other : -- Fit for human consumption",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      }
+    ],
+    "note_mismatches": [],
+    "count_check": {
+      "json_h": 14,
+      "pdf_h_estimate": 14,
+      "json_sh": 49,
+      "pdf_sh_estimate": 49,
+      "json_tl": 117,
+      "pdf_tl_estimate": 117
+    }
+  },
+  "fix_needed": null
+}

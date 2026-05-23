@@ -1,0 +1,409 @@
+{
+  "chapter": "06",
+  "section": "II",
+  "title": "LIVE TREES AND OTHER PLANTS; BULBS, ROOTS AND THE LIKE; CUT FLOWERS AND ORNAMENTAL FOLIAGE",
+  "source_pdf": "Chapter 06 Live Trees And Other Plants; Bulbs, Roots And The Like; Cut Flowers And Ornamental Foliage.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '06011000') and 6-digit subheading numbers without dots (e.g., '060120'). Normalized to NNNN.NN.NN and NNNN.NN format per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'Policy Condition', 'Export Licensing Notes', 'Product Description and Export Policy', 'Sl.No. Notes Notification Date Notification No', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Section II Main Note about 'pellets' appears on PDF page 1 above the Chapter 06 title and is attributed to section_notes (Section II, Vegetable Products), not chapter_notes. Chapter 06 itself has 2 Main Notes.",
+    "Chapter Note 1 in the source PDF reads: 'Subject to the second part of heading 0601, this Chapter covers only live trees and goods (including seedling vegetables) of a kind commonly supplied by nursery gardeners or florists for planting or for ornamental use; nevertheless it does not include potatoes, onions,shallots, garlic or other products of Chapter 7.' — the spacing artefacts ('neverthelessit', 'onions,shallots') are preserved verbatim as they appear in the source.",
+    "Source PDF spelling artifacts preserved verbatim: 'edible furit or nuts' (heading 0602.20 title — should be 'fruit'); 'Poliocy Condition' in column header for tariff line 0602.90.90 (should be 'Policy Condition'). These are typographical errors in the source ITC(HS) PDF.",
+    "Tariff line 0602.20.10 ('Edible fruit or nut trees, grafted or not') shows Export Policy 'Restricted' with Policy Condition text 'Exports of Cashew seeds and plants is restricted.' — captured in policy_conditions array. All other tariff lines in headings 0601–0602 show Export Policy 'Free' with 'Subject to Policy Condition 1 of the Chapter'; tariff lines in 0603 and 0604 show 'Free' with no Chapter policy condition. Tariff line 0602.90.90 references 'Policy Condition 2 of the Chapter'.",
+    "Export Licensing Notes section (3 entries) uses '??formulation?' rendering where the source PDF substitutes typographic quote marks with '?' characters — preserved verbatim. Intended text is 'formulation' enclosed in quotation marks.",
+    "Subheading 0601.10 in the source appears only as the 8-digit tariff line '06011000' (no separate 6-digit subheading row); rendered as subheading '0601.10' with single tariff line '0601.10.00'. Similarly for 0602.10 ('06021000'), 0602.30 ('06023000'), 0602.40 ('06024000'), 0604.20 ('06042000'), 0604.90 ('06049000'), and heading 0603 lines '06031100' through '06039000' which appear as 8-digit codes with no separate 6-digit subheading row — rendered as subheadings 0603.11, 0603.12, 0603.13, 0603.14, 0603.15, 0603.19, 0603.90 each with a single tariff line ending in '.00'.",
+    "Heading 0604 in the source PDF has only two tariff lines (0604.20.00 'Fresh' and 0604.90.00 'Other'). The HS 2022 nomenclature subheadings 0604.20 'Fresh' and 0604.90 'Other' are represented at the 8-digit tariff line level only in the ITC(HS) Schedule 2 source — preserved as in source."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "Subject to the second part of heading 0601, this Chapter covers only live trees and goods (including seedling vegetables) of a kind commonly supplied by nursery gardeners or florists for planting or for ornamental use; nevertheless it does not include potatoes, onions,shallots, garlic or other products of Chapter 7."
+    },
+    {
+      "number": "2",
+      "text": "Any reference in heading 0603 or 0604 to goods of any kind shall be construed as including a reference to bouquets, floral baskets, wreaths and similar articles made wholly or partly of goods of that kind, account not being taken of accessories of other materials. However, these headings do not include collages or similar decorative plaques of heading 9701."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "In this Section, the term \"pellets\" means products which have been agglomerated either directly by compression or by the addition of a binder in a proportion not exceeding 3 (percent) by weight."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "potatoes",
+      "redirects_to_chapter": "07",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "Subject to the second part of heading 0601, this Chapter covers only live trees and goods (including seedling vegetables) of a kind commonly supplied by nursery gardeners or florists for planting or for ornamental use; nevertheless it does not include potatoes, onions,shallots, garlic or other products of Chapter 7."
+    },
+    {
+      "excluded_product_text": "onions",
+      "redirects_to_chapter": "07",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "Subject to the second part of heading 0601, this Chapter covers only live trees and goods (including seedling vegetables) of a kind commonly supplied by nursery gardeners or florists for planting or for ornamental use; nevertheless it does not include potatoes, onions,shallots, garlic or other products of Chapter 7."
+    },
+    {
+      "excluded_product_text": "shallots",
+      "redirects_to_chapter": "07",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "Subject to the second part of heading 0601, this Chapter covers only live trees and goods (including seedling vegetables) of a kind commonly supplied by nursery gardeners or florists for planting or for ornamental use; nevertheless it does not include potatoes, onions,shallots, garlic or other products of Chapter 7."
+    },
+    {
+      "excluded_product_text": "garlic",
+      "redirects_to_chapter": "07",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "Subject to the second part of heading 0601, this Chapter covers only live trees and goods (including seedling vegetables) of a kind commonly supplied by nursery gardeners or florists for planting or for ornamental use; nevertheless it does not include potatoes, onions,shallots, garlic or other products of Chapter 7."
+    },
+    {
+      "excluded_product_text": "other products of Chapter 7",
+      "redirects_to_chapter": "07",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "Subject to the second part of heading 0601, this Chapter covers only live trees and goods (including seedling vegetables) of a kind commonly supplied by nursery gardeners or florists for planting or for ornamental use; nevertheless it does not include potatoes, onions,shallots, garlic or other products of Chapter 7."
+    },
+    {
+      "excluded_product_text": "collages or similar decorative plaques",
+      "redirects_to_chapter": "97",
+      "redirects_to_heading": "9701",
+      "source_note_number": "Note 2",
+      "source_note_text": "Any reference in heading 0603 or 0604 to goods of any kind shall be construed as including a reference to bouquets, floral baskets, wreaths and similar articles made wholly or partly of goods of that kind, account not being taken of accessories of other materials. However, these headings do not include collages or similar decorative plaques of heading 9701."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "0601",
+      "title": "Bulbs, tubers, tuberous roots, corms, crowns and rhizomes, dormant, in growth or in flower; chicory plants and roots other than roots of heading 12.12.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0601.10",
+          "title": "Bulbs, tubers, tuberous roots, corms, crowns and rhizomes, dormant",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0601.10.00",
+              "description": "Bulbs, tubers, tuberous roots, corms, crowns and rhizomes, dormant",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0601.20",
+          "title": "Bulbs, tubers, tuberous roots, corms, crowns and rhizomes, in growth or in flower; chicory plants and roots",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0601.20.10",
+              "description": "Bulbs, horticultural",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0601.20.21",
+              "description": "Chicory plants and roots: ---- Plants",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0601.20.22",
+              "description": "Chicory plants and roots: ---- Roots",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0601.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0602",
+      "title": "Other live plants (including their roots), cuttings and slips; mushroom spawn.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0602.10",
+          "title": "Unrooted cuttings and slips",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0602.10.00",
+              "description": "Unrooted cuttings and slips",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0602.20",
+          "title": "Trees, shrubs and bushes, grafted or not, of kinds which bear edible furit or nuts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0602.20.10",
+              "description": "Edible fruit or nut trees, grafted or not",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Exports of Cashew seeds and plants is restricted."
+            },
+            {
+              "code": "0602.20.20",
+              "description": "Cactus",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0602.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0602.30",
+          "title": "Rhododendrons and azaleas, grafted or not",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0602.30.00",
+              "description": "Rhododendrons and azaleas, grafted or not",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0602.40",
+          "title": "Roses, grafted or not",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0602.40.00",
+              "description": "Roses, grafted or not",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0602.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0602.90.10",
+              "description": "Mushroom spawn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0602.90.20",
+              "description": "Flowering plants (excluding roses and rhododendrons)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0602.90.30",
+              "description": "Tissue culture plant",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0602.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Poliocy Condition 2 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0603",
+      "title": "Cut flowers and flower buds of a kind suitable for bouquets or for ornamental purposes, fresh, dried, dyed, bleached, impregnated or otherwise prepared",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0603.11",
+          "title": "Fresh : -- Roses",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0603.11.00",
+              "description": "Fresh : -- Roses",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0603.12",
+          "title": "Fresh : -- Carnations",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0603.12.00",
+              "description": "Fresh : -- Carnations",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0603.13",
+          "title": "Fresh : -- Orchids",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0603.13.00",
+              "description": "Fresh : -- Orchids",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0603.14",
+          "title": "Fresh : --Chrysanthemums",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0603.14.00",
+              "description": "Fresh : --Chrysanthemums",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0603.15",
+          "title": "Fresh : --Lilies (Lilium spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0603.15.00",
+              "description": "Fresh : --Lilies (Lilium spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0603.19",
+          "title": "Fresh : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0603.19.00",
+              "description": "Fresh : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0603.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0603.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0604",
+      "title": "Foliage, branches and other parts of plants, without flowers or flower buds, and grasses, mosses and lichens, being goods of a kind suitable for bouquets or for ornamental purposes, fresh, dried, dyed, bleached, impregnated or otherwise prepared.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0604.20",
+          "title": "Fresh",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0604.20.00",
+              "description": "Fresh",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0604.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0604.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

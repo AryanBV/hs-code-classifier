@@ -1,0 +1,304 @@
+{
+  "chapter": "79",
+  "title": "Zinc And Articles Thereof",
+  "section": "XV",
+  "source_pdf": "Chapter 79 Zinc And Articles Thereof.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "Section XV main notes (Notes 1-9) are not duplicated here; they were captured in chapters 74, 75 and 82 as the Section XV-level notes apply across all base-metal chapters (Chapters 72-83).",
+    "Chapter 79 PDF contains only a single 'Sub-Heading Notes' table row (SI.No. 1) and no chapter-level notes; the sub-heading note is recorded under chapter_notes with the prefix 'Sub-heading 1' following the convention used in chapters 71-76.",
+    "The Notification Date and Notification No columns of the Sub-Heading Notes table are blank in source PDF; recorded as null.",
+    "Source PDF tariff codes are printed in 8-digit no-dot format (e.g., 79011100); normalized to NNNN.NN.NN (79.01.11.00) per project convention. 'code_raw' preserves the printed form.",
+    "Heading rows '7901', '7902', '7903', '7904', '7905', '7907' and 6-digit anchor rows '790120', '790200', '790400', '790500', '790700' appear as title-only rows in the schedule with no export policy column populated; treated as structural anchors and used to derive heading titles and subheading titles, not emitted as tariff lines.",
+    "Subheading anchors for headings 7902, 7903, 7905 and 7907 reuse the heading title with a trailing colon (e.g., '790200' = 'Zinc waste and scrap :'); under WCO HS the residual 6-digit code for these single-subheading headings is implicitly 'NNNN.00'. Captured as subheading 'NNNN.00' with the printed colon-suffixed text preserved as the subheading title.",
+    "Subheading 7904.00 covers all 7904 tariff lines (79040011, 79040012, 79040019, 79040021, 79040022, 79040029, 79040030) per the printed schedule which lacks an intermediate 6-digit grouping; tariff line descriptions are stored verbatim including '----' dash prefixes preserved from PDF (split into 'Bars and rods:' and 'Profiles:' sub-groups within the colon-prefixed printed description).",
+    "Heading 7906 ('Zinc tubes, pipes and tube or pipe fittings') is absent from this Indian ITC(HS) Schedule 2 PDF; the schedule jumps from 7905 to 7907. Preserved as printed — not invented.",
+    "No 'Policy Condition' values appear in the Chapter 79 schedule; all policy_condition fields are null.",
+    "No 'Unit' column is present in this Schedule 2 Export Policy PDF; unit field left null for all tariff lines.",
+    "All Section XV exclusion clauses (Section Note 1 (a)-(n) plus 'parts of general use' from Note 2) live in chapters 74/75/82 and are not duplicated here; Chapter 79 contributes no chapter-specific exclusion clauses (the sole sub-heading note defines terms only — Zinc not alloyed, Zinc alloys, Zinc dust — and does not exclude any product to another chapter)."
+  ],
+  "chapter_notes": [
+    {
+      "number": "Sub-heading 1",
+      "text": "In this Chapter, the following expressions have the meanings hereby assigned to them: (a) Zinc, not alloyed: Metal containing by weight at least 97.5% of Zinc. (b) Zinc alloys: Metallic substances in which zinc predominates by weight over each of the other elements, provided that the total content by weight of such other elements exceeds 2.5%. (c) Zinc dust: Dust obtained by condensation of zinc vapour, consisting of spherical particles which are finer than zinc powders. At least 80% by weight of the particles pass through a sieve with 63 micrometres (microns) mesh. It must contain at least 85% by weight of metallic zinc."
+    }
+  ],
+  "section_notes": [],
+  "exclusion_clauses": [],
+  "headings": [
+    {
+      "heading": "7901",
+      "title": "Unwrought zinc.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7901.11",
+          "title": "Zinc, not alloyed : -- Containing by weight 99.99 percent or more of zinc",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7901.11.00",
+              "code_raw": "79011100",
+              "description": "Zinc, not alloyed : -- Containing by weight 99.99 percent or more of zinc",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            }
+          ]
+        },
+        {
+          "subheading": "7901.12",
+          "title": "Zinc, not alloyed : -- Containing by weight less than 99.99 percent of zinc",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7901.12.00",
+              "code_raw": "79011200",
+              "description": "Zinc, not alloyed : -- Containing by weight less than 99.99 percent of zinc",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            }
+          ]
+        },
+        {
+          "subheading": "7901.20",
+          "title": "Zinc alloys",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7901.20.10",
+              "code_raw": "79012010",
+              "description": "Mozak or alloys of zinc and aluminium containing not less than 94 percent by weight of zinc",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            },
+            {
+              "code": "7901.20.90",
+              "code_raw": "79012090",
+              "description": "Other",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7902",
+      "title": "Zinc waste and scrap",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7902.00",
+          "title": "Zinc waste and scrap :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7902.00.10",
+              "code_raw": "79020010",
+              "description": "Zinc scrap, namely the following: Old zinc die cast scrap covered by ISRI Code word Saves; New zinc die cast scrap covered by ISRI Code word Scabs; New plated zinc die cast scrap covered by ISRI Code word Scope; Zinc die cast automotive grills covered by ISRI Code word Scoot; Old scrap zinc covered by ISRI Code word Score; New zinc clippings covered by ISRI Code word Screen; Crushed clean sorted fragmentizers die cast scrap, as produced from automobile fragmentizers covered by ISRI Code word Scribe; Unsorted zinc die cast scrap produced from automobile fragmentizers containing about 55 percent zinc-bearing scrap covered by ISRI code word Scroll",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            },
+            {
+              "code": "7902.00.90",
+              "code_raw": "79020090",
+              "description": "Other",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7903",
+      "title": "Zinc dust, powders and flakes.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7903.10",
+          "title": "Zinc dust",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7903.10.00",
+              "code_raw": "79031000",
+              "description": "Zinc dust",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            }
+          ]
+        },
+        {
+          "subheading": "7903.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7903.90.00",
+              "code_raw": "79039000",
+              "description": "Other",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7904",
+      "title": "Zinc bars, rods, profiles and wire.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7904.00",
+          "title": "Zinc bars, rods, profiles and wire :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7904.00.11",
+              "code_raw": "79040011",
+              "description": "Bars and rods: ----Hollow bars",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            },
+            {
+              "code": "7904.00.12",
+              "code_raw": "79040012",
+              "description": "Bars and rods: ----Rods, including wire rods",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            },
+            {
+              "code": "7904.00.19",
+              "code_raw": "79040019",
+              "description": "Bars and rods: ----Other",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            },
+            {
+              "code": "7904.00.21",
+              "code_raw": "79040021",
+              "description": "Profiles: ----Hollow",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            },
+            {
+              "code": "7904.00.22",
+              "code_raw": "79040022",
+              "description": "Profiles: ----Angles, shapes and sections",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            },
+            {
+              "code": "7904.00.29",
+              "code_raw": "79040029",
+              "description": "Profiles: ----Other",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            },
+            {
+              "code": "7904.00.30",
+              "code_raw": "79040030",
+              "description": "Profiles: ----Wire",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7905",
+      "title": "Zinc plates, sheets, strip and foil.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7905.00",
+          "title": "Zinc plates, sheets, strip and foil :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7905.00.10",
+              "code_raw": "79050010",
+              "description": "Calots",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            },
+            {
+              "code": "7905.00.20",
+              "code_raw": "79050020",
+              "description": "Plates",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            },
+            {
+              "code": "7905.00.30",
+              "code_raw": "79050030",
+              "description": "Sheets, strip and circles",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            },
+            {
+              "code": "7905.00.40",
+              "code_raw": "79050040",
+              "description": "Foil",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7907",
+      "title": "Other articles of zinc.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7907.00",
+          "title": "Other articles of zinc :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7907.00.10",
+              "code_raw": "79070010",
+              "description": "Sanitary fixtures",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            },
+            {
+              "code": "7907.00.90",
+              "code_raw": "79070090",
+              "description": "Other",
+              "export_policy": "Free",
+              "policy_condition": null,
+              "unit": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

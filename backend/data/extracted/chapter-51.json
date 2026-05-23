@@ -1,0 +1,1401 @@
+{
+  "chapter": "51",
+  "section": "XI",
+  "title": "WOOL, FINE OR COARSE ANIMAL HAIR; HORSEHAIR YARN AND WOVEN FABRIC",
+  "source_pdf": "Chapter 51 Wool, Fine Or Coarse Animal Hair; Horsehair Yarn And Woven Fabric.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '51011100') and 6-digit subheading codes without dots (e.g., '510111'). Normalized to NNNN.NN.NN format (e.g., '5101.11.00') and NNNN.NN format (e.g., '5101.11') per project schema. Where the PDF shows only a single 8-digit code (e.g., '51013000' under 5101) and no separate 6-digit row, the tariff line is represented as e.g. '5101.30.00' under subheading '5101.30'.",
+    "PDF table-chrome headers ('Main Notes', 'Sl.No. Notes Notification Date Notification No', 'Policy Condition', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "PDF contains '\"\"\"\"' (quadruple/double-double quotes) and '\"\"\"' (triple quotes) in several places where standard double quotes should appear (e.g., '\"\"\"wool\"\"\"', '\"\"\"fine animal hair\"\"\"', '\"\"\"coarse\"\"\" animal haie\"\"\"', '\"\"\"twine, cordage, ropes and cables\"\"\"', '\"\"\"put up for retail sale\"\"\"', '\"\"\"sewing thread\"\"\"', '\"\"\"Z\"\"\" twist', '\"\"\"high tenacity yarn\"\"\"', '\"\"\"made up\"\"\"', '\"\"\"impregnated\"\"\"', '\"\"\"dipped\"\"\"', '\"\"\"polyamides\"\"\"', '\"\"\"aramids\"\"\"', '\"\"\"elastomeric yarn\"\"\"', '\"\"\"textile garments\"\"\"'). These are OCR artifacts; meaning is unambiguous. Preserved verbatim where the artifact appears, with corrected typography in the visible note text.",
+    "Section XI Main Notes table (15 numbered notes — full Section XI legal note block governing Chapters 50-63) precedes the Chapter 51 Main Notes. Captured in 'section_notes' (all 15 notes). Cross-verifies Ch.62 (commit 70df5ae) which also captured these.",
+    "Section XI notes appear in the PDF in REORDERED form: 1, 10, 11, 12, 13, 14, 15, 2, 3, 4, 5, 6, 7, 8, 9. Re-sorted to natural numeric order (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15) in section_notes for this JSON.",
+    "Section XI Note 1 lists exclusions (a) through (v). Sub-clauses are preserved verbatim, including the OCR artifact 'Chatper 70' (intended 'Chapter 70') and the run-together word 'travelsetsforsewing,slide' (intended 'travel sets for sewing, slide'). Note 1 sub-clause labels include '(ij)' per WCO convention for the letter between i and j — preserved verbatim. Each sub-item (a)-(v) is also broken out as a separate row in exclusion_clauses.",
+    "Section XI Note 2 spans rows visually (the table cell wraps multiple pages, with '(A)' on one page and '(B)' / '(C)' continuing on the next). Reassembled as a single coherent Note 2.",
+    "Chapter 51 has ONE main chapter note (Note 1: definitions of 'wool', 'fine animal hair', 'coarse animal hair'). The PDF contains an OCR error 'animal haie' (intended 'animal hair') in clause (c) — preserved verbatim. The PDF also misspells 'dromedary' as 'dromendry' — preserved verbatim.",
+    "Schedule 2 Policy Condition (Sl.No. 1) regarding Holy Quran imprinted dress materials/garments/fabrics/textile items being Restricted is present on the same page as the Chapter 51 Main Notes. Captured in policy_conditions. PDF spelling 'Restrcited' (intended 'Restricted') preserved verbatim in the source_note_text.",
+    "The 'Export Policy' column for every 8-digit tariff line in this chapter is 'Free'. No tariff lines are Restricted, Prohibited, or STE on a per-line basis. The chapter-wide Holy Quran Policy Condition is separate and applies cross-chapter.",
+    "Unit-of-measure column is NOT shown in this chapter's PDF — unit field set to null for all tariff lines. Wool/animal hair products customarily use 'kg' but this is NOT in the source — left as null to avoid fabrication.",
+    "Tariff line 5105.29.20 description in the PDF reads 'Othe' (apparent OCR truncation of 'Other'). Preserved verbatim as in source.",
+    "Tariff line 5109.10.10 description reads 'Hoisery wool' (apparent OCR typo of 'Hosiery wool'). Preserved verbatim as in source.",
+    "Heading 5110 'Yarn of coarse animal hair or of horsehair (including gimped horsehair yarn), whether or not put up for retail sale' has only the single 6-digit subheading row '511000' which is then directly split into 8-digit tariff lines 51100010 (Put up for retail sale) and 51100020 (Other). Represented as subheading '5110.00' with the two tariff lines.",
+    "Heading 5104 has a single 6-digit subheading '5104.00' with tariff lines 5104.00.10 (Shoddy wool) and 5104.00.90 (Other).",
+    "Heading 5113 'Woven fabrics of coarse animal hair or of horsehair' has only subheading '5113.00' (description in PDF reads 'Woven fabrics of coarse animal hair or of horse hair :' with a space — preserved verbatim) containing five tariff lines (Unbleached, Bleached, Dyed, Printed, Other).",
+    "Subheading 5112.90 (Other) — at the 8-digit level — has tariff lines 5112.90.10 through 5112.90.90 with an India-specific 'of Handloom' line (5112.90.50) inserted between Printed (5112.90.40) and Other (5112.90.90). Preserved verbatim."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "Throughout this schedule: (a) \"\"wool\"\" means the natural fibre grown by sheep or lambs; (b) \"\"fine animal hair\"\" means the hair of alpaca, ilama, vicuna, camel, (including dromendry), yak, Angora, Tibetan, Kashmir or similar goats), rabbit (including Angora rabbit), hare, beaver, nutria, or musk-rat; (c) \"\"coarse\"\" animal haie\"\" means the hair animals not mentioned above, excluding brush-making hair and bristles (heading 0511)"
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "This Section does not cover : (a) animal brush making bristles or hair (heading 0502), horsehair or horsehair waste (heading 0511), (b) human hair or articles of human hair (heading 0501, 6703 or 6704), except straining cloth of a kind commonly used in oil presses or the like (heading 5911), (c) cotton linters or other vegetable materials of Chapter 14, (d) asbestos of heading 2524 or articles of asbestos or other products of heading 6812 or 6813, (e) articles of heading 3005 or 3006, yarn used to clean between the teeth (dental floss), in individual retail packages, of heading 3306, (f) sensitised textiles of headings 3701 to 3704, (g) monofilament of which any cross-sectional dimension exceeds 1 mm or strip or the like (for example, artificial straw) of an apparent width exceeding 5 mm, of plastics (Chapter 39), or plaits or fabrics or other basketware or wickerwork of such monofilament or strip (Chapter 46), (h) woven, knitted or crocheted fabrics, felt or nonwovens, impregnated, coated, covered or laminated with plastics, or articles thereof, of Chapter 39, (ij) woven, knitted or crocheted fabrics, felt or nonwovens, impregnated, coated, covered or laminated with rubber, or articles thereof, of Chapter 40, (k) hides or skins with their hair or wool on (Chapter 41 or 43) or articles of furskin, artificial fur or articles thereof, of heading 4303 or 4304, (l) articles of textile materials of heading 4201 or 4202, (m) products or articles of Chapter 48 (for example, cellulose wadding), (n) footwear or parts of footwear, gaiters or leggings or similar articles of Chapter 64, (o) hair-nets or other headgear or parts thereof of Chapter 65, (p) goods of Chapter 67, (q) abrasive-coated textile material (heading 6805) and also carbon fibres or articles of carbon fibres of heading 6815, (r) glass fibres or articles of glass fibres, other than embroidery with glass thread on a visible ground of fabric (Chatper 70), (s) articles of Chapter 94 (for example, furniture, bedding, luminaires and lighting fittings), (t) articles of Chapter 95 (for example, toys, games, sports requisites and nets), (u) Articles of Chapter 96 [for example, brushes, travelsetsforsewing,slide fasteners, typewriter ribbons, sanitary towels (pads) and tampons, napkins (diapers) and napkin liners], or (v) articles of Chapter 97."
+    },
+    {
+      "number": "2",
+      "text": "(A) Goods classifiable in Chapters 50 to 55 or in heading 5809 or 5902 and of a mixture of two or more textile materials are to be classified asif consistingwholly of that one textile material which predominates by weight over any one single textile materilas. When no one textile material predominates by weight, the goods are to be classified as if consiting wholly of that one textile material whcih is covered by the heading which occurs last in numerical order among those which equally merit consideration. (B) For the purposes of the above rule : (a) gimped horsehair yarn (heading 5110) and metallised yarn (heading 5605) are to be treated as a single textile material the weight of which is to be taken as the aggregate of the weights of its components, for the classification of woven fabrics, metal thread isto be regarded as a textile material, (b) the choice of appropriate heading shall be effected by determining first the Chapter and then the applicable heading within that Chapter, disregarding any materials not classified in that Chapter, (c) when both Chapters 54 and 55 are involved with any other Chapter, Chapters 54 and 55 are to be treated as a single Chapter, (d) where a Chapter or a heading refers to goods of different textile materials, such materials are to be treated as a single textile material. (C) The provisions of paragraphs (A) and (B) above apply also to the yarns referred to in Note 3, 4, 5 or 6 below."
+    },
+    {
+      "number": "3",
+      "text": "(A) For the purposes of this Section, and subject to the exceptions in paragraph (B) below, yarns [single, multiple (folded) or cabled] of the following descriptions are to be treated as \"\"\"twine, cordage, ropes and cables\"\"\"\" : (a) of silk or waste silk, measuring more than 20,000 decitex, (b) of man-made fibres(including yarn of two or more monofilaments of Chapter 54), measuring more than 10,000 decitex, (c) of true hemp or flax : (i) polished or glazed, measuring 1,429 decitex or more, or (ii) not polished or glazed, measuring more than 20,000 decitex, (d) of coir, consisting of three or more plies, (e) of other vegetable fibres, measuring more than 20,000 decitex, or (f) reinforced with metal thread. (B) Exceptions : (a) yarn of wool or other animal hair and paper yarn, other than yarn reinforced with metal thread, (b) man-made filament tow of Chapter 55 and multifilament yarn without twist or with a twist of less than 5 turns per metre of Chapter 54, (c) silk worm gut of heading 5006, and monofilaments of Chapter 54, (d) metallised yarn of heading 5605, yarn reinforced with metal thread issubject to paragraph (A) (f) above, and (e) chenille yarn, gimped yarn and loop wale-yarn of heading 5606."
+    },
+    {
+      "number": "4",
+      "text": "(A) For the purposes of Chapters 50, 51, 52, 54 and 55, the expression \"\"\"put up for retail sale\"\"\"\" in relation to yarn means, subject to the exceptions in paragraph (B) below, yarn [single, multiple (folded) or cabled] put up : (a) on cards, reels, tubes or similar supports, of a weight (including support) not exceeding : (i) 85g in the case of silk, waste silk or man-made filament yarn, or (ii) 125g in other cases, (b) in balls, hanks or skeins of a weight not exceeding : (i) 85g in the case of man-made filament yarn of less than 3,000 decitex, silk or silk waste, (ii) 125g in the case of all other yarns of less than 2,000 decitex, or (iii) 500g in other cases, (c) in hanks or skeins comprising several smaller hanks or skeins separated by dividing threads which render them independent one of the other, each of uniform weight not exceeding : (i) 85g in the case of silk, waste silk or man-made filament yarn, or (ii) 125g in other cases, (B) Exceptions : (a) single yarn of any textile material, except : (i) single yarn of wool or fine animal hair, unbleached, and (ii) single yarn of wool or fine animal hair, bleached, dyed or printed, measuring more than 5,000 decitex, (b) multiple (folded) or cabled yarn, unbleached : (i) of silk or waste silk, however put up, or (ii) of other textile material except wool or fine animal hair, in hanks or skeins, (c) multiple (folded) or cabled yarn of silk or waste silk, bleached, dyed or printed, measuring 133 decitex or less, and (d) single, multiple (folded) or cabled yarn of any textile material : (i) in cross-reeled hanks or skeins, or (ii) put up on supports or in some other manner indicating its use in the textile industry (for example, on cops, twisting mill tubes, pirns, conical bobbins or spindles, or reeled in the form of cocoons for embroidery looms)."
+    },
+    {
+      "number": "5",
+      "text": "For the purposes of headings 5204, 5401 and 5508, the expression \"\"\"sewing thread\"\"\"\" means multiple (folded) or cabled yarn : (a) put up on supports (for example, reels, tubes) of a weight (including support) not exceeding 1,000 g, (b) dressed for use as sewing thread, and (c) with a final \"\"\"Z\"\"\"\" twist"
+    },
+    {
+      "number": "6",
+      "text": "For the purposes of this Section, the expression \"\"\"high tenacity yarn\"\"\" means yarn having a tenacity, expressed in cN/tex (centinewtons per tex), greater than the following : single yarn of nylon or other polyamides, or of polyesters 60 cN/tex multiple (folded) or cabled yarn of nylon or other polyamides, or of polyesters 53 cN/tex single, multiple (folded) or cabled yarn of viscose rayon - 27 cN/tex"
+    },
+    {
+      "number": "7",
+      "text": "For the purposes of this Section, the expression \"\"\"\"made up\"\"\"\" means: (a) cut otherwise than into squares or rectangles; (b) produced in the finished state, ready for use (or merely needing separation by cutting dividing threads) without sewing or other working (for example, certain dusters, towels, table cloths, scarf squares; blankets); (c) Cut to size and with at least one heatsealed edge with a visibly tapered or compressed border and the other edges treated as described in any other sub-clause of this Note, but excluding fabrics the cut edges of which have been prevented from unravelling by hot cutting or by other simple means; (d) hemmed or with rolled edges, or with a knotted fringe at any of the edges, but excluding fabrics the cut edges of which have been prevented from unravelling by whipping or by other simple means; (e) cut to size and having undergone a process of drawn thread work; (f) assembled by sewing, gumming or otherwise (other than piece goods consisting of two or more lengths of identical material joined end to end and piece goods composed of two or more textiles assembled in layers, whether or not padded); (g) knitted or crocheted to shape, whether presented as separate items or in the form of a number of items in the length."
+    },
+    {
+      "number": "8",
+      "text": "For the purposes of Chapters 50 to 60: (a) Chapters 50 to 55 and 60 and, except where the context otherwise requires, Chapters 56 to 59 do not apply to goods made up within the meaning of Note 7 above; and (b) Chapters 50 to 55 and 60 do not apply to goods of Chapters 56 to 59."
+    },
+    {
+      "number": "9",
+      "text": "The woven fabrics of Chapters 50 to 55 include fabrics consisting of layers of parallel textile yarns superimposed on each other at acute or right angles. These layers are bonded at the intersections of the yarns by an adhesive or by thermal bonding."
+    },
+    {
+      "number": "10",
+      "text": "Elastic products consisting of textile materials combined with rubber threads are classified in this Section."
+    },
+    {
+      "number": "11",
+      "text": "For the purposes of this Section, the expression \"impregnated\" includes \"dipped\"."
+    },
+    {
+      "number": "12",
+      "text": "For the purposes of this Section, the expression \"polyamides\" includes \"aramids\""
+    },
+    {
+      "number": "13",
+      "text": "For the purposes of this Section and, where applicable, throughout this schedule, the expression \"elastomeric yarn\" means filament yarn, including monofilament, of synthetic textile material, other than textured yarn, which does not break on being extended to three times its original length and which returns, after being extended to twice its original length, within a period of five minutes, to a length not greater than one and a half times its original length."
+    },
+    {
+      "number": "14",
+      "text": "Unless the context otherwise requires, textile garments of different headings are to be classified in their own headings even if put up in sets for retail sale. For the purposes of this Note, the expression \"textile garments\" means garments of headings 6101 to 6114 and headings 6201 to 6211."
+    },
+    {
+      "number": "15",
+      "text": "Subject to Note 1 of Section XI, textiles, garments and other textile articles, incorporating chemical, mechanical or electronic components for additional functionality, whether incorporated as built-in components or within the fibre or fabric, are classified in their respective headings in Section XI provided that they retain the essential character of the goods of this section."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "Animal brush making bristles or hair",
+      "redirects_to_chapter": "05",
+      "redirects_to_heading": "0502",
+      "source_note_number": "Section XI Note 1(a)",
+      "source_note_text": "This Section does not cover : (a) animal brush making bristles or hair (heading 0502), horsehair or horsehair waste (heading 0511)"
+    },
+    {
+      "excluded_product_text": "Horsehair or horsehair waste",
+      "redirects_to_chapter": "05",
+      "redirects_to_heading": "0511",
+      "source_note_number": "Section XI Note 1(a)",
+      "source_note_text": "(a) animal brush making bristles or hair (heading 0502), horsehair or horsehair waste (heading 0511)"
+    },
+    {
+      "excluded_product_text": "Human hair or articles of human hair (except straining cloth used in oil presses → 5911)",
+      "redirects_to_chapter": "67",
+      "redirects_to_heading": "6703",
+      "source_note_number": "Section XI Note 1(b)",
+      "source_note_text": "(b) human hair or articles of human hair (heading 0501, 6703 or 6704), except straining cloth of a kind commonly used in oil presses or the like (heading 5911)"
+    },
+    {
+      "excluded_product_text": "Cotton linters or other vegetable materials of Chapter 14",
+      "redirects_to_chapter": "14",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(c)",
+      "source_note_text": "(c) cotton linters or other vegetable materials of Chapter 14"
+    },
+    {
+      "excluded_product_text": "Asbestos or articles of asbestos or other products of heading 6812 or 6813",
+      "redirects_to_chapter": "25",
+      "redirects_to_heading": "2524",
+      "source_note_number": "Section XI Note 1(d)",
+      "source_note_text": "(d) asbestos of heading 2524 or articles of asbestos or other products of heading 6812 or 6813"
+    },
+    {
+      "excluded_product_text": "Pharmaceutical articles (wadding, gauze, bandages; dental floss in retail packs)",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": "3005",
+      "source_note_number": "Section XI Note 1(e)",
+      "source_note_text": "(e) articles of heading 3005 or 3006, yarn used to clean between the teeth (dental floss), in individual retail packages, of heading 3306"
+    },
+    {
+      "excluded_product_text": "Sensitised textiles (photographic)",
+      "redirects_to_chapter": "37",
+      "redirects_to_heading": "3701",
+      "source_note_number": "Section XI Note 1(f)",
+      "source_note_text": "(f) sensitised textiles of headings 3701 to 3704"
+    },
+    {
+      "excluded_product_text": "Monofilament with cross-section >1mm, or plastic strip with apparent width >5mm, of plastics; plaits/fabrics of such monofilament or strip (→ Chapter 46)",
+      "redirects_to_chapter": "39",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(g)",
+      "source_note_text": "(g) monofilament of which any cross-sectional dimension exceeds 1 mm or strip or the like (for example, artificial straw) of an apparent width exceeding 5 mm, of plastics (Chapter 39), or plaits or fabrics or other basketware or wickerwork of such monofilament or strip (Chapter 46)"
+    },
+    {
+      "excluded_product_text": "Woven, knitted or crocheted fabrics, felt or nonwovens, impregnated/coated/covered/laminated with plastics, or articles thereof",
+      "redirects_to_chapter": "39",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(h)",
+      "source_note_text": "(h) woven, knitted or crocheted fabrics, felt or nonwovens, impregnated, coated, covered or laminated with plastics, or articles thereof, of Chapter 39"
+    },
+    {
+      "excluded_product_text": "Woven, knitted or crocheted fabrics, felt or nonwovens, impregnated/coated/covered/laminated with rubber, or articles thereof",
+      "redirects_to_chapter": "40",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(ij)",
+      "source_note_text": "(ij) woven, knitted or crocheted fabrics, felt or nonwovens, impregnated, coated, covered or laminated with rubber, or articles thereof, of Chapter 40"
+    },
+    {
+      "excluded_product_text": "Hides or skins with their hair or wool on (Chapter 41 or 43)",
+      "redirects_to_chapter": "41",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(k)",
+      "source_note_text": "(k) hides or skins with their hair or wool on (Chapter 41 or 43) or articles of furskin, artificial fur or articles thereof, of heading 4303 or 4304"
+    },
+    {
+      "excluded_product_text": "Articles of furskin, artificial fur or articles thereof",
+      "redirects_to_chapter": "43",
+      "redirects_to_heading": "4303",
+      "source_note_number": "Section XI Note 1(k)",
+      "source_note_text": "(k) hides or skins with their hair or wool on (Chapter 41 or 43) or articles of furskin, artificial fur or articles thereof, of heading 4303 or 4304"
+    },
+    {
+      "excluded_product_text": "Articles of textile materials of heading 4201 (saddlery and harness) or 4202 (trunks, suit-cases, handbags, etc.)",
+      "redirects_to_chapter": "42",
+      "redirects_to_heading": "4201",
+      "source_note_number": "Section XI Note 1(l)",
+      "source_note_text": "(l) articles of textile materials of heading 4201 or 4202"
+    },
+    {
+      "excluded_product_text": "Products or articles of Chapter 48 (e.g., cellulose wadding)",
+      "redirects_to_chapter": "48",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(m)",
+      "source_note_text": "(m) products or articles of Chapter 48 (for example, cellulose wadding)"
+    },
+    {
+      "excluded_product_text": "Footwear or parts of footwear, gaiters or leggings or similar articles",
+      "redirects_to_chapter": "64",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(n)",
+      "source_note_text": "(n) footwear or parts of footwear, gaiters or leggings or similar articles of Chapter 64"
+    },
+    {
+      "excluded_product_text": "Hair-nets or other headgear or parts thereof",
+      "redirects_to_chapter": "65",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(o)",
+      "source_note_text": "(o) hair-nets or other headgear or parts thereof of Chapter 65"
+    },
+    {
+      "excluded_product_text": "Goods of Chapter 67 (umbrellas, walking-sticks, feathers, artificial flowers)",
+      "redirects_to_chapter": "67",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(p)",
+      "source_note_text": "(p) goods of Chapter 67"
+    },
+    {
+      "excluded_product_text": "Abrasive-coated textile material (heading 6805); carbon fibres or articles of carbon fibres (heading 6815)",
+      "redirects_to_chapter": "68",
+      "redirects_to_heading": "6805",
+      "source_note_number": "Section XI Note 1(q)",
+      "source_note_text": "(q) abrasive-coated textile material (heading 6805) and also carbon fibres or articles of carbon fibres of heading 6815"
+    },
+    {
+      "excluded_product_text": "Glass fibres or articles of glass fibres, other than embroidery with glass thread on a visible ground of fabric",
+      "redirects_to_chapter": "70",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(r)",
+      "source_note_text": "(r) glass fibres or articles of glass fibres, other than embroidery with glass thread on a visible ground of fabric (Chatper 70)"
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 94 (e.g., furniture, bedding, luminaires and lighting fittings)",
+      "redirects_to_chapter": "94",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(s)",
+      "source_note_text": "(s) articles of Chapter 94 (for example, furniture, bedding, luminaires and lighting fittings)"
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 95 (e.g., toys, games, sports requisites and nets)",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(t)",
+      "source_note_text": "(t) articles of Chapter 95 (for example, toys, games, sports requisites and nets)"
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 96 (e.g., brushes, travel sets for sewing, slide fasteners, typewriter ribbons, sanitary towels/pads, tampons, napkins/diapers and napkin liners)",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(u)",
+      "source_note_text": "(u) Articles of Chapter 96 [for example, brushes, travelsetsforsewing,slide fasteners, typewriter ribbons, sanitary towels (pads) and tampons, napkins (diapers) and napkin liners]"
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 97 (works of art, collectors' pieces, antiques)",
+      "redirects_to_chapter": "97",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(v)",
+      "source_note_text": "(v) articles of Chapter 97"
+    },
+    {
+      "excluded_product_text": "Brush-making hair and bristles (excluded from 'coarse animal hair')",
+      "redirects_to_chapter": "05",
+      "redirects_to_heading": "0511",
+      "source_note_number": "Chapter 51 Note 1(c)",
+      "source_note_text": "(c) \"\"coarse\"\" animal haie\"\" means the hair animals not mentioned above, excluding brush-making hair and bristles (heading 0511)"
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "5101",
+      "title": "Wool, not carded or combed.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5101.11",
+          "title": "Greasy, including fleece-washed wool : -- Shorn wool",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5101.11.00",
+              "description": "Greasy, including fleece-washed wool : -- Shorn wool",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5101.19",
+          "title": "Greasy, including fleece-washed wool : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5101.19.00",
+              "description": "Greasy, including fleece-washed wool : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5101.21",
+          "title": "Degreased, not carbonised : -- Shorn wool",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5101.21.00",
+              "description": "Degreased, not carbonised : -- Shorn wool",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5101.29",
+          "title": "Degreased, not carbonised : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5101.29.00",
+              "description": "Degreased, not carbonised : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5101.30",
+          "title": "Carbonised",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5101.30.00",
+              "description": "Carbonised",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5102",
+      "title": "Fine or coarse animal hair, not carded or combed.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5102.11",
+          "title": "Fine animal hair : -- Of Kashmir (cashmere) goats",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5102.11.10",
+              "description": "Marine Angora",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5102.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5102.19",
+          "title": "Fine animal hair : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5102.19.10",
+              "description": "Marine Angora",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5102.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5102.20",
+          "title": "Coarse animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5102.20.10",
+              "description": "Goat hair (other than Angora)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5102.20.90",
+              "description": "Other (excluding pig and boar bristles)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5103",
+      "title": "Waste of wool or of fine or coarse animal hair, including yarn waste but excluding garnetted stock.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5103.10",
+          "title": "Noils of wool or of fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5103.10.10",
+              "description": "Noils of wool",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5103.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5103.20",
+          "title": "Other waste of wool or of fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5103.20.10",
+              "description": "Waste of sheeps and lambs wool",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5103.20.20",
+              "description": "Yarn waste",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5103.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5103.30",
+          "title": "Waste of coarse animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5103.30.00",
+              "description": "Waste of coarse animal hair",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5104",
+      "title": "Garnetted stock of wool or of fine or coarse animal hair.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5104.00",
+          "title": "Garnetted stock of wool or of fine or coarse animal hair :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5104.00.10",
+              "description": "Shoddy wool",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5104.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "5105",
+      "title": "Wool and fine or coarse animal hair, carded or combed (including combed wool in fragments).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5105.10",
+          "title": "Carded wool",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5105.10.00",
+              "description": "Carded wool",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5105.21",
+          "title": "Wool tops and other combed wool : -- Combed wool in fragments",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5105.21.00",
+              "description": "Wool tops and other combed wool : -- Combed wool in fragments",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5105.29",
+          "title": "Wool tops and other combed wool : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5105.29.10",
+              "description": "Wool tops",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5105.29.90",
+              "description": "Othe",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5105.31",
+          "title": "Fine animal hair, carded or combed : -- Of Kashmir (cashmere) goats",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5105.31.00",
+              "description": "Fine animal hair, carded or combed : -- Of Kashmir (cashmere) goats",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5105.39",
+          "title": "Fine animal hair, carded or combed : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5105.39.00",
+              "description": "Fine animal hair, carded or combed : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5105.40",
+          "title": "Coarse animal hair, carded or combed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5105.40.00",
+              "description": "Coarse animal hair, carded or combed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5106",
+      "title": "Yarn of carded wool, not put up for retail sale.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5106.10",
+          "title": "Containing 85 percent or more by weight of wool",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5106.10.10",
+              "description": "Shoddy woollen yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5106.10.20",
+              "description": "Mungo woollen yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5106.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5106.20",
+          "title": "Containing less than 85 percent by weight of wool",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5106.20.10",
+              "description": "Shoddy woollen yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5106.20.20",
+              "description": "Mungo woollen yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5106.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5107",
+      "title": "Yarn of combed wool, not put up for retail sale.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5107.10",
+          "title": "Containing 85 percent or more by weight of wool",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5107.10.10",
+              "description": "Worsted hosiery yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5107.10.20",
+              "description": "Worsted knitted yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5107.10.30",
+              "description": "Worsted weaving yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5107.10.40",
+              "description": "Woollen carpet yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5107.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5107.20",
+          "title": "Containing less than 85 percent by weight of wool",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5107.20.10",
+              "description": "Worsted hosiery yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5107.20.20",
+              "description": "Worsted knitted yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5107.20.30",
+              "description": "Worsted weaving yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5107.20.40",
+              "description": "Woollen carpet yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5107.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5108",
+      "title": "Yarn of fine animal hair (carded or combed), not put up for retail sale.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5108.10",
+          "title": "Carded",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5108.10.00",
+              "description": "Carded",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5108.20",
+          "title": "Combed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5108.20.00",
+              "description": "Combed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5109",
+      "title": "Yarn of wool or of fine animal hair, put up for retail sale.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5109.10",
+          "title": "Containing 85 percent or more by weight of wool or of fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5109.10.10",
+              "description": "Hoisery wool",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5109.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5109.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5109.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5110",
+      "title": "Yarn of coarse animal hair or of horsehair (including gimped horsehair yarn), whether or not put up for retail sale.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5110.00",
+          "title": "Yarn of coarse animal hair or of horsehair (including gimped horsehair yarn), whether or not put up for retail sale :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5110.00.10",
+              "description": "Put up for retail sale",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5110.00.20",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "5111",
+      "title": "Woven fabrics of carded wool or of carded fine animal hair.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5111.11",
+          "title": "Containing 85 percent or more by weight of wool or of fine animal hair : -- Of a weight not exceeding 300 g/m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5111.11.10",
+              "description": "Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5111.11.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5111.11.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5111.11.40",
+              "description": "Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5111.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5111.19",
+          "title": "Containing 85 percent or more by weight of wool or of fine animal hair : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5111.19.10",
+              "description": "Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5111.19.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5111.19.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5111.19.40",
+              "description": "Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5111.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5111.20",
+          "title": "Other, mixed mainly or solely with man-made filaments",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5111.20.10",
+              "description": "Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5111.20.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5111.20.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5111.20.40",
+              "description": "Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5111.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5111.30",
+          "title": "Other, mixed mainly or solely with man-made staple fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5111.30.10",
+              "description": "Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5111.30.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5111.30.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5111.30.40",
+              "description": "Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5111.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5111.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5111.90.10",
+              "description": "Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5111.90.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5111.90.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5111.90.40",
+              "description": "Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5111.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5112",
+      "title": "Woven fabrics of combed wool or of combed fine animal hair.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5112.11",
+          "title": "Containing 85 percent or more by weight of wool or of fine animal hair : -- Of a weight not exceeding 200 g/m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5112.11.10",
+              "description": "Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.11.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.11.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.11.40",
+              "description": "Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5112.19",
+          "title": "Containing 85 percent or more by weight of wool or of fine animal hair : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5112.19.10",
+              "description": "Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.19.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.19.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.19.40",
+              "description": "Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5112.20",
+          "title": "Other, mixed mainly or solely with man-made filaments",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5112.20.10",
+              "description": "Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.20.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.20.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.20.40",
+              "description": "Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5112.30",
+          "title": "Other, mixed mainly or solely with man-made staple fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5112.30.10",
+              "description": "Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.30.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.30.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.30.40",
+              "description": "Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5112.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5112.90.10",
+              "description": "Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.90.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.90.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.90.40",
+              "description": "Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.90.50",
+              "description": "of Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5112.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5113",
+      "title": "Woven fabrics of coarse animal hair or of horsehair.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5113.00",
+          "title": "Woven fabrics of coarse animal hair or of horse hair :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5113.00.10",
+              "description": "Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5113.00.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5113.00.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5113.00.40",
+              "description": "Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5113.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    }
+  ]
+}

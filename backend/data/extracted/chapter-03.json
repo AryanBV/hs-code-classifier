@@ -1,0 +1,4153 @@
+{
+  "chapter": "03",
+  "section": "I",
+  "title": "FISH AND CRUSTACEANS, MOLLUSCS AND OTHER AQUATIC INVERTEBRATES",
+  "source_pdf": "Chapter 03 Fish And Crustaceans, Molluscs And Other Aquatic Invertebrates.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '03011100'). Normalized to NNNN.NN.NN format (e.g., '0301.11.00') per project schema. 6-digit subheading numbers in PDF (e.g., '030289') normalized to NNNN.NN (e.g., '0302.89').",
+    "PDF contains '?' characters in place of typographic quote marks in some Export Licensing Notes (e.g., '?as tail?' and '?Marine Products?'). These are OCR/encoding artifacts from the source PDF — preserved verbatim as they appear in the source. The intended text is 'as tail' and 'Marine Products' enclosed in quotation marks.",
+    "Section I Main Notes (2 notes about 'young of that genus or species' and 'dried' products) appear on PDF page 1 above the Chapter 03 title and are attributed to section_notes (Section I, LIVE ANIMALS; ANIMAL PRODUCTS), not chapter_notes.",
+    "PDF table-chrome headers ('Main Notes', 'Sl.No. Notes Notification No Notification Date', 'Sl.No. Notes Notification Date Notification No', 'Export Licensing Notes', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Chapter 03 has one main chapter note (the exclusions covering mammals of heading 0106, meat of mammals of heading 0106/0208/0210, fish unfit for human consumption of Chapter 5, flours/meals/pellets unfit for human consumption of heading 2301, and caviar/caviar substitutes of heading 1604). The note text contains spacing artifacts from the PDF (e.g., 'includinglivers,roes andmilt') — preserved verbatim.",
+    "Many headings (0301, 0302, 0303 etc.) do NOT have explicit 6-digit subheading rows in the PDF — tariff lines appear directly under the heading. The schema infers and groups tariff lines by their first 6 digits to create subheading containers. Where the PDF DOES have an explicit subheading row (e.g., '030289', '030299', '030391', '030399', '030449', '030459', '030488', '030489', '030559', '030569', '030612', '030616', '030617', '030636', '030739', '030742', '030743', '030749', '030830', '030910', '030990'), that explicit row's description is used as the subheading title; otherwise an inferred title is constructed from the tariff-line descriptions.",
+    "Tariff line code 03011100 has description 'Ornamental fish : -- Freshwater'. WCO HS 2022 designates 0301.11 as 'Ornamental fish — Freshwater' and 0301.19 as 'Ornamental fish — Other'. The PDF shows code 03011100 directly with description 'Ornamental fish : -- Freshwater' and 03011900 with 'Ornamental fish : -- Other'. Preserved verbatim.",
+    "Heading 0302 tariff lines 03022400 and 03022900 reference 'subheadings 030291 to 030299' (without the dot/decimal form) — this is a typographical inconsistency in the source PDF. Other lines correctly reference '0302.91 to 0302.99'. Preserved verbatim.",
+    "Heading 0302 tariff line 03022900 description ends with ': - - Other' (with extra spacing) and references 'sub-headings 0302 91 to 0301 99' — the '0301 99' is clearly a typo in the source PDF for '0302.99'. Preserved verbatim.",
+    "Heading 0302 tariff line 03023300 description: 'Tunas (of the genus Thunnus), skipjack tuna (stripe-bellied bonito) (Katsuwonuspelamis), excluding edible fish offal of sub-headings 030291 to 030299: - - Skipjack tuna (stripe-bellied bonito) (Katsuwonuspelamis)'. The species name 'Katsuwonuspelamis' is missing a space (should be 'Katsuwonus pelamis'). Preserved verbatim.",
+    "Subheading 0302.91 — 'Livers, roes and milt' — appears in the PDF as TWO codes: '03029100' (with Export Policy 'Free') and '03029110' (no policy). Both preserved as separate tariff lines under subheading 0302.91.",
+    "Subheading 0302.92 — 'Shark fins' — appears in the PDF as TWO codes: '03029200' (Export Policy 'Prohibited', Notification No '110/2009-14') and '03029210' (no policy). Both preserved as separate tariff lines under subheading 0302.92.",
+    "Subheading 0302.99 in PDF appears as 6-digit code '030299' with description 'Livers, roes, milt, fish fins, heads, tails, maws and other edible fish offal : --Other' followed by 8-digit children '03029910' (Fish fins other than shark fins; heads, tails and maws) and '03029990' (Other edible fish offal).",
+    "Heading 0302 tariff line 03028930 (Pomfret) has a Policy Condition column entry: 'However, Exports of Fresh or Chilled or Frozen silver pomfrets of weight less than 300 gms is permitted only under Restricted Export Authorization.' Captured in policy_conditions.",
+    "Heading 0303 — subheading 0303.91 (Livers, roes and milt) is represented by 6-digit row '030391' and contains two 8-digit children: '03039110' (Egg or egg yolk of fish) and '03039190' (Other). Subheading 0303.92 (Shark fins) has only the 8-digit code '03039200' (Prohibited). Subheading 0303.99 (Other) is represented by 6-digit row '030399' with two children: '03039910' (Fish fins other than shark fins, heads, tails and maws) and '03039990' (Other edible fish offal).",
+    "Heading 0303 — the PDF skips numbering between 03035100 and 03035300 (no 03035200); preserved verbatim.",
+    "Heading 0303 — the PDF shows code 03035100 with full Herrings/anchovies/sardines/... family list and ends with '--Herrings (Clupea harengus, Clupea pallasii)'. This is the WCO HS 2022 standard.",
+    "Heading 0303 — the PDF shows '030359' (6-digit) with description 'Herrings ... excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Other', followed by 8-digit children '03035910' (Indian mackerels (Rastrelliger spp.)) and '03035990' (Other).",
+    "Heading 0303 — the PDF shows '030381' (6-digit) with description 'Other fish, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Dogfish and other sharks', followed by 8-digit children '03038110' (Dogfish) and '03038190' (Other sharks).",
+    "Heading 0303 — the PDF shows '030389' (6-digit) with description 'Other fish, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Other', followed by 8-digit children: 03038910 (Hilsa), 03038920 (Dara), 03038930 (Ribbon fish), 03038940 (Seer), 03038950 (Pomfret, white/silver/black; with policy condition note), 03038960 (Ghol), 03038970 (Threadfin), 03038980 (Croackers, groupers, flounders), 03038990 (Other).",
+    "Heading 0304 — subheading 0304.49 is represented by 6-digit row '030449' with children 03044910 (Hilsa), 03044930 (Seer), 03044940 (Tuna), 03044990 (Other). Note: PDF skips 03044920 (no entry). Preserved verbatim.",
+    "Heading 0304 — subheading 0304.59 is represented by 6-digit row '030459' with children 03045910 (Hilsa), 03045930 (Seer), 03045940 (Tuna), 03045990 (Other). Note: PDF skips 03045920.",
+    "Heading 0304 — subheading 0304.88 is represented by 6-digit row '030488' with description 'Frozen fillets of other fish : --Dogfish, other sharks, rays and skates (Rajidae)' and children 03048810 (Dog fish), 03048820 (Other sharks), 03048830 (Rays and skates (Rajidae)).",
+    "Heading 0304 — subheading 0304.89 is represented by 6-digit row '030489' with children 03048910 (Hilsa), 03048930 (Seer), 03048940 (Tuna), 03048990 (Other). Note: PDF skips 03048920.",
+    "Heading 0305 — subheading 0305.59 is represented by 6-digit row '030559' with children 03055910 (Mumbai Duck), 03055920 (Seer without head), 03055930 (Sprats), 03055990 (Other).",
+    "Heading 0305 — subheading 0305.69 is represented by 6-digit row '030569' with children 03056910 (Mumbai duck), 03056920 (Seer without head), 03056930 (Sprats), 03056990 (Other).",
+    "Heading 0306 — subheading 0306.12 represented by 6-digit row '030612' (Frozen : -- Lobsters (Homarus spp.)) with children 03061210 (Whole cooked) and 03061290 (Other), both with policy condition for Sand Lobster (Thenus orientalis).",
+    "Heading 0306 — subheading 0306.16 represented by 6-digit row '030616' (Frozen : -- Cold-water shrimps and prawns (Pandalus spp., Crangon cragon)) with children 03061610 (Accelerated Freeze Dried (AFD)) and 03061690 (Other).",
+    "Heading 0306 — subheading 0306.17 represented by 6-digit row '030617' (Frozen : -- Other shrimps and prawns) with children 03061711 (Scampi — AFD), 03061719 (Scampi — Other), 03061720 (Vannamei shrimp), 03061730 (Indian white shrimp), 03061740 (Black tiger shrimp), 03061750 (Flower shrimp), 03061790 (Other).",
+    "Heading 0306 — subheading 0306.36 represented by 6-digit row '030636' (Live, fresh or chilled: -- Other shrimps and prawns) with children 03063610 (Scampi), 03063620 (Vannamei), 03063630 (Indian white shrimp), 03063640 (Black tiger shrimp), 03063650 (Flower Shrimp), 03063660 (Artemia), 03063690 (Other).",
+    "Heading 0306 — code 03063100 description in PDF includes a multi-part policy condition spanning Panulirus polyphagus, Panulirus homarus, and Panulirus Ornatus sizing/processing rules. Captured verbatim in policy_conditions.",
+    "Heading 0307 — subheading 0307.39 represented by 6-digit row '030739' (Mussels (Mytilus spp., Perna spp.) : -- Other) with children 03073910 (Clams, clam meat (bivalves-Victorita, spp., Mertrix spp. and Katalysia spp.)) and 03073990 (Other).",
+    "Heading 0307 — subheading 0307.42 represented by 6-digit row '030742' (Cuttle fish and squid : -- Live, fresh or chilled) with children 03074210 (Cuttle fish) and 03074220 (Squid).",
+    "Heading 0307 — subheading 0307.43 represented by 6-digit row '030743' (Cuttle fish and squid : -- Frozen) with children 03074310 (Cuttle fish), 03074320 (Whole squids), 03074330 (Squid tubes), 03074390 (Other).",
+    "Heading 0307 — subheading 0307.49 represented by 6-digit row '030749' (Cuttle fish and squid : -- Other) with children 03074910 (Cuttle fish), 03074920 (Whole squids), 03074930 (Squid tubes), 03074940 (Dried squids), 03074990 (Other).",
+    "Heading 0308 — subheading 0308.30 represented by 6-digit row '030830' (Jellyfish (Rhopilema spp.)) with children 03083010 (Live, fresh or chilled), 03083020 (Dried, salted or frozen), 03083090 (Other). Subheading 0308.90 has the single 8-digit code 03089000 (Other).",
+    "Heading 0309 — subheading 0309.10 represented by 6-digit row '030910' (Of fish:) with children 03091010 (Fresh or chilled), 03091020 (Frozen), 03091030 (Salted, in brine, dried or smoked), 03091090 (Other). Subheading 0309.90 represented by '030990' (Other:) with children 03099011–03099090 covering crustaceans (fresh/chilled, frozen, salted/brine/dried/smoked categories) and molluscs (fresh/chilled, frozen, salted/brine/dried/smoked).",
+    "All tariff lines preserve their PDF descriptions verbatim, including the long Herrings/anchovies/sardines family lists for heading 0302 and 0303 lines and the long Tilapias/catfish/carp lists for tilapia-family lines. Many descriptions contain missing spaces between species names (e.g., 'anchoviespallasii', 'ypophthalmichthys', 'Katsuwonuspelamis', 'Litopenaeusvannamei', 'Fenneropenaeusindicus', 'Penaeussemisulcatus', 'Macrobachium', 'INBRINE', 'stripebellied') — these are OCR/source artifacts and are preserved verbatim.",
+    "Export Licensing Note 2 ('?as tail? means without head.') uses '?' as placeholder for typographic quote marks. The note refers to terminology used in the policy conditions for crustacean exports (e.g., 'as tail' weight specifications for lobsters/shrimps).",
+    "Policy Condition for tariff lines 03028930 and 03038950 (Pomfret) is identical: 'However, Exports of Fresh or Chilled or Frozen silver pomfrets of weight less than 300 gms is permitted only under Restricted Export Authorization.' Captured in policy_conditions.",
+    "Codes 03029200 and 03039200 (Shark fins) have Export Policy 'Prohibited' (not 'Free') with Notification No '110/2009-14'. Code 03057100 (Shark fins) also 'Prohibited' (no notification number shown). Code 03061100 / 03063100 (Rock lobster and other sea crawfish) have complex policy conditions on minimum weight/preparation."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover : (a) mammals of heading 0106; (b) meat of mammals of heading 0106 ( heading 0208 or 0210); (c) fish (includinglivers,roes andmilt thereof) or crustaceans,molluscs or other aquatic invertebrates, dead and unfit or unsuitable for human consumption by reason of either their species or their condition (Chapter 5); flours, meals or pellets of fish or of crustaceans, molluscs or other aquatic invertebrates, unfit for human consumption (heading 2301); or (d) caviar or caviar substitutes prepared from fish eggs (heading 1604)."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "Any reference in this Section to a particular genus or species of an animal, except where the context otherwise requires, includes a reference to the young of that genus or species."
+    },
+    {
+      "number": "2",
+      "text": "Except where the context otherwise requires, throughout this Schedule, any reference to \"dried\" products also covers products which have been dehydrated, evaporated or freeze-dried."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [
+    {
+      "number": "1",
+      "text": "A consignment/ lot is considered to be undersized if it contains specified species any piece of which has a weight less than that indicated against the species or has been processed out of or obtained from individual pieces of the species weighing less than the minimum weight indicated against the species."
+    },
+    {
+      "number": "2",
+      "text": "?as tail? means without head."
+    },
+    {
+      "number": "3",
+      "text": "Exports of all wild animals, animal articles including their products and derivatives excluding those for which ownership certificates have been granted and also those required for transactions for education, scientific research and management under Wild Life (Protection) Act, 1972 including their parts and products are Prohibited and not permitted to be exported. Exports wherever permissible shall be against a Restricted Export Authorisation Only."
+    },
+    {
+      "number": "4",
+      "text": "The term ?Marine Products? in this Chapter covers all the eight digit Exim Codes in the Chapter of the ITC(HS) Classification of Export and Import items. All marine species that have been included in the Schedules of the Wild Life (Protection) Act, 1972 are prohibited for exports and other species listed in CITES are subject to the provisions of the CITES. Exports wherever permissible shall be against a Restricted Export Authorisation Only."
+    }
+  ],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "mammals of heading 0106",
+      "redirects_to_chapter": "01",
+      "redirects_to_heading": "0106",
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover : (a) mammals of heading 0106; (b) meat of mammals of heading 0106 ( heading 0208 or 0210); (c) fish (includinglivers,roes andmilt thereof) or crustaceans,molluscs or other aquatic invertebrates, dead and unfit or unsuitable for human consumption by reason of either their species or their condition (Chapter 5); flours, meals or pellets of fish or of crustaceans, molluscs or other aquatic invertebrates, unfit for human consumption (heading 2301); or (d) caviar or caviar substitutes prepared from fish eggs (heading 1604)."
+    },
+    {
+      "excluded_product_text": "meat of mammals of heading 0106",
+      "redirects_to_chapter": "02",
+      "redirects_to_heading": "0208",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover : (a) mammals of heading 0106; (b) meat of mammals of heading 0106 ( heading 0208 or 0210); (c) fish (includinglivers,roes andmilt thereof) or crustaceans,molluscs or other aquatic invertebrates, dead and unfit or unsuitable for human consumption by reason of either their species or their condition (Chapter 5); flours, meals or pellets of fish or of crustaceans, molluscs or other aquatic invertebrates, unfit for human consumption (heading 2301); or (d) caviar or caviar substitutes prepared from fish eggs (heading 1604)."
+    },
+    {
+      "excluded_product_text": "meat of mammals of heading 0106 (alternative heading)",
+      "redirects_to_chapter": "02",
+      "redirects_to_heading": "0210",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover : (a) mammals of heading 0106; (b) meat of mammals of heading 0106 ( heading 0208 or 0210); (c) fish (includinglivers,roes andmilt thereof) or crustaceans,molluscs or other aquatic invertebrates, dead and unfit or unsuitable for human consumption by reason of either their species or their condition (Chapter 5); flours, meals or pellets of fish or of crustaceans, molluscs or other aquatic invertebrates, unfit for human consumption (heading 2301); or (d) caviar or caviar substitutes prepared from fish eggs (heading 1604)."
+    },
+    {
+      "excluded_product_text": "fish (including livers, roes and milt thereof) or crustaceans, molluscs or other aquatic invertebrates, dead and unfit or unsuitable for human consumption by reason of either their species or their condition",
+      "redirects_to_chapter": "05",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "This Chapter does not cover : (a) mammals of heading 0106; (b) meat of mammals of heading 0106 ( heading 0208 or 0210); (c) fish (includinglivers,roes andmilt thereof) or crustaceans,molluscs or other aquatic invertebrates, dead and unfit or unsuitable for human consumption by reason of either their species or their condition (Chapter 5); flours, meals or pellets of fish or of crustaceans, molluscs or other aquatic invertebrates, unfit for human consumption (heading 2301); or (d) caviar or caviar substitutes prepared from fish eggs (heading 1604)."
+    },
+    {
+      "excluded_product_text": "flours, meals or pellets of fish or of crustaceans, molluscs or other aquatic invertebrates, unfit for human consumption",
+      "redirects_to_chapter": "23",
+      "redirects_to_heading": "2301",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "This Chapter does not cover : (a) mammals of heading 0106; (b) meat of mammals of heading 0106 ( heading 0208 or 0210); (c) fish (includinglivers,roes andmilt thereof) or crustaceans,molluscs or other aquatic invertebrates, dead and unfit or unsuitable for human consumption by reason of either their species or their condition (Chapter 5); flours, meals or pellets of fish or of crustaceans, molluscs or other aquatic invertebrates, unfit for human consumption (heading 2301); or (d) caviar or caviar substitutes prepared from fish eggs (heading 1604)."
+    },
+    {
+      "excluded_product_text": "caviar or caviar substitutes prepared from fish eggs",
+      "redirects_to_chapter": "16",
+      "redirects_to_heading": "1604",
+      "source_note_number": "Note 1(d)",
+      "source_note_text": "This Chapter does not cover : (a) mammals of heading 0106; (b) meat of mammals of heading 0106 ( heading 0208 or 0210); (c) fish (includinglivers,roes andmilt thereof) or crustaceans,molluscs or other aquatic invertebrates, dead and unfit or unsuitable for human consumption by reason of either their species or their condition (Chapter 5); flours, meals or pellets of fish or of crustaceans, molluscs or other aquatic invertebrates, unfit for human consumption (heading 2301); or (d) caviar or caviar substitutes prepared from fish eggs (heading 1604)."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "0301",
+      "title": "Live fish.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0301.11",
+          "title": "Ornamental fish : -- Freshwater",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0301.11.00",
+              "description": "Ornamental fish : -- Freshwater",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0301.19",
+          "title": "Ornamental fish : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0301.19.00",
+              "description": "Ornamental fish : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0301.91",
+          "title": "Other live fish : -- Trout",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0301.91.00",
+              "description": "Other live fish : -- Trout (Salmo trutta, Oncorhynchus mykiss, Oncorhynchus clarki, Oncorhynchus aguabonita, Oncorhynchus gilae, Oncorhynchus apache and Oncorhynchus chrysogaster)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0301.92",
+          "title": "Other live fish : -- Eels",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0301.92.00",
+              "description": "Other live fish : -- Eels (Anguilla spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0301.93",
+          "title": "Other live fish : -- Carp",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0301.93.00",
+              "description": "Other live fish : -- Carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0301.94",
+          "title": "Other live fish : -- Atlantic and Pacific bluefin tunas",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0301.94.00",
+              "description": "Other live fish : -- Atlantic and Pacific bluefin tunas (Thunnus thynnus, Thunnus orientalis)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0301.95",
+          "title": "Other live fish : -- Southern bluefin tunas",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0301.95.00",
+              "description": "Other live fish : -- Southern bluefin tunas (Thunnus maccoyii)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0301.99",
+          "title": "Other live fish : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0301.99.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0302",
+      "title": "Fish, fresh or chilled, excluding fish fillets and other fish meat of heading 03.04.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0302.11",
+          "title": "Salmonidae, excluding edible fish offal of subheadings 0302.91 to 0302.99 : --Trout",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.11.00",
+              "description": "Salmonidae, excluding edible fish offal of subheadings 0302.91 to 0302.99 : --Trout (Salmo trutta, Oncorhynchus mykiss, Oncorhynchus clarki, Oncorhynchus aguabonita, Oncorhynchus gilae, Oncorhynchus apache and Oncorhynchus chrysogaster)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.13",
+          "title": "Salmonidae, excluding edible fish offal of subheadings 0302.91 to 0302.99 : --Pacific salmon",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.13.00",
+              "description": "Salmonidae, excluding edible fish offal of subheadings 0302.91 to 0302.99 : --Pacific salmon (Oncorhynchus nerka, Oncorhynchus gorbuscha, Oncorhynchus keta, Oncorhynchus tschawytscha, Oncorhynchus kisutch, Oncorhynchus masou and Oncorhynchus rhodurus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.14",
+          "title": "Salmonidae, excluding edible fish offal of subheadings 0302.91 to 0302.99 : --Atlantic salmon and Danube salmon",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.14.00",
+              "description": "Salmonidae, excluding edible fish offal of subheadings 0302.91 to 0302.99 : --Atlantic salmon (Salmo salar) and Danube salmon (Hucho hucho)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.19",
+          "title": "Salmonidae, excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.19.00",
+              "description": "Salmonidae, excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.21",
+          "title": "Flat fish (Pleuronectidae, Bothidae, Cynoglossidae, Soleidae, Scophthalmidae and Citharidae), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Halibut",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.21.00",
+              "description": "Flat fish (Pleuronectidae, Bothidae, Cynoglossidae, Soleidae, Scophthalmidae and Citharidae), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Halibut (Reinhardtius hippoglossoides, Hippoglossus hippoglossus, Hippoglossus stenolepis)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.22",
+          "title": "Flat fish (Pleuronectidae, Bothidae, Cynoglossidae, Soleidae, Scophthalmidae and Citharidae), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Plaice",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.22.00",
+              "description": "Flat fish (Pleuronectidae, Bothidae, Cynoglossidae, Soleidae, Scophthalmidae and Citharidae), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Plaice (Pleuronectes platessa)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.23",
+          "title": "Flat fish (Pleuronectidae, Bothidae, Cynoglossidae, Soleidae, Scophthalmidae and Citharidae), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Sole",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.23.00",
+              "description": "Flat fish (Pleuronectidae, Bothidae, Cynoglossidae, Soleidae, Scophthalmidae and Citharidae), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Sole (Solea spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.24",
+          "title": "Flat fish (Pleuronectidae, Bothidae, Cynoglossidae, Soleidae, Scophthalmidae and Citharidae), excluding edible fish offal of subheadings 030291 to 030299 : -- Turbots",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.24.00",
+              "description": "Flat fish (Pleuronectidae, Bothidae, Cynoglossidae, Soleidae, Scophthalmidae and Citharidae), excluding edible fish offal of subheadings 030291 to 030299 : -- Turbots (Psetta maxima)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.29",
+          "title": "Flat fish (Pleuronectidae, Bothidae, Cynoglossidae,Soleidae, Scophthalmidae and Citharidae), excluding edible fish offal of sub-headings 0302 91 to 0301 99: - - Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.29.00",
+              "description": "Flat fish (Pleuronectidae, Bothidae, Cynoglossidae,Soleidae, Scophthalmidae and Citharidae), excluding edible fish offal of sub-headings 0302 91 to 0301 99: - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.31",
+          "title": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito (Euthynnus (Katsuwonus) pelamis), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Albacore or longfinned tunas",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.31.00",
+              "description": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito (Euthynnus (Katsuwonus) pelamis), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Albacore or longfinned tunas (Thunnus alalunga)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.32",
+          "title": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito (Euthynnus (Katsuwonus) pelamis), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Yellowfin tunas",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.32.00",
+              "description": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito (Euthynnus (Katsuwonus) pelamis), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Yellowfin tunas (Thunnus albacares)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.33",
+          "title": "Tunas (of the genus Thunnus), skipjack tuna (stripe-bellied bonito) (Katsuwonuspelamis), excluding edible fish offal of sub-headings 030291 to 030299: - - Skipjack tuna",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.33.00",
+              "description": "Tunas (of the genus Thunnus), skipjack tuna (stripe-bellied bonito) (Katsuwonuspelamis), excluding edible fish offal of sub-headings 030291 to 030299: - - Skipjack tuna (stripe-bellied bonito) (Katsuwonuspelamis)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.34",
+          "title": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito (Euthynnus (Katsuwonus) pelamis), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Bigeye tunas",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.34.00",
+              "description": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito (Euthynnus (Katsuwonus) pelamis), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Bigeye tunas (Thunnus obesus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.35",
+          "title": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito (Euthynnus (Katsuwonus) pelamis), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Atlantic and Pacific bluefin tunas",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.35.00",
+              "description": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito (Euthynnus (Katsuwonus) pelamis), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Atlantic and Pacific bluefin tunas (Thunnus thynnus, Thunnus orientalis)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.36",
+          "title": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito (Euthynnus (Katsuwonus) pelamís), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Southern bluefin tunas",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.36.00",
+              "description": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito (Euthynnus (Katsuwonus) pelamís), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Southern bluefin tunas (Thunnus maccoyii)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.39",
+          "title": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito (Euthynnus (Katsuwonus) pelamis), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.39.00",
+              "description": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito (Euthynnus (Katsuwonus) pelamis), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.41",
+          "title": "Herrings, anchovies, sardines, sardinella, brisling or sprats, mackerel, Indian mackerels, seerfishes, jack and horse mackerel, jacks, crevalles, cobia, silver pomfrets, Pacific saury, scads, capelin, swordfish, Kawakawa, bonitos, marlins, sailfishes, spearfish, excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Herrings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.41.00",
+              "description": "Herrings (Clupea harengus, Clupea pallasii), anchoviespallasii), anchovies (Engraulis spp.), sardines (Sardina pilchardus, Sardinops spp.), sardinella (Sardinella spp.), brisling or sprats (Sprattus sprattus), mackerel (Scomber scombrus, Scomber australasicus, Scomber japonicus), Indian mackerels (Rastrelliger spp.), seerfishes (Scomberomorus spp.), jack and horse mackerel (Trachurus spp.),jacks, crevalles (Caranx spp.), cobia (Rachycentron canadum), silver pomfrets (Pampus spp.), Pacific saury (Cololabis saira), scads (Decapterus spp.), capelin (Mallotus villosus), swordfish (Xiphias gladius), Kawakawa (Euthynnus affinis), bonitos (Sarda spp.), marlins, sailfishes, spearfish (Istiophoridae), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Herrings (Clupea harengus, Clupea pallasii)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.42",
+          "title": "Herrings, anchovies, sardines, ..., excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Anchovies",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.42.00",
+              "description": "Herrings (Clupea harengus, Clupea pallasii), anchoviespallasii), anchovies (Engraulis spp.), sardines (Sardina pilchardus, Sardinops spp.), sardinella (Sardinella spp.), brisling or sprats (Sprattus sprattus), mackerel (Scomber scombrus, Scomber australasicus, Scomber japonicus), Indian mackerels (Rastrelliger spp.), seerfishes (Scomberomorus spp.), jack and horse mackerel (Trachurus spp.),jacks, crevalles (Caranx spp.), cobia (Rachycentron canadum), silver pomfrets (Pampus spp.), Pacific saury (Cololabis saira), scads (Decapterus spp.), capelin (Mallotus villosus), swordfish (Xiphias gladius), Kawakawa (Euthynnus affinis), bonitos (Sarda spp.), marlins, sailfishes, spearfish (Istiophoridae), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Anchovies (Engraulis spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.43",
+          "title": "Herrings, anchovies, sardines, ..., excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Sardines, sardinella, brisling or sprats",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.43.00",
+              "description": "Herrings (Clupea harengus, Clupea pallasii), anchoviespallasii), anchovies (Engraulis spp.), sardines (Sardina pilchardus, Sardinops spp.), sardinella (Sardinella spp.), brisling or sprats (Sprattus sprattus), mackerel (Scomber scombrus, Scomber australasicus, Scomber japonicus), Indian mackerels (Rastrelliger spp.), seerfishes (Scomberomorus spp.), jack and horse mackerel (Trachurus spp.),jacks, crevalles (Caranx spp.), cobia (Rachycentron canadum), silver pomfrets (Pampus spp.), Pacific saury (Cololabis saira), scads (Decapterus spp.), capelin (Mallotus villosus), swordfish (Xiphias gladius), Kawakawa (Euthynnus affinis), bonitos (Sarda spp.), marlins, sailfishes, spearfish (Istiophoridae), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Sardines (Sardina pilchardus, Sardinops spp.), sardinella (Sardinella spp.), brisling or sprats (Sprattus sprattus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.44",
+          "title": "Herrings, anchovies, sardines, ..., excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Mackerel",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.44.00",
+              "description": "Herrings (Clupea harengus, Clupea pallasii), anchoviespallasii), anchovies (Engraulis spp.), sardines (Sardina pilchardus, Sardinops spp.), sardinella (Sardinella spp.), brisling or sprats (Sprattus sprattus), mackerel (Scomber scombrus, Scomber australasicus, Scomber japonicus), Indian mackerels (Rastrelliger spp.), seerfishes (Scomberomorus spp.), jack and horse mackerel (Trachurus spp.),jacks, crevalles (Caranx spp.), cobia (Rachycentron canadum), silver pomfrets (Pampus spp.), Pacific saury (Cololabis saira), scads (Decapterus spp.), capelin (Mallotus villosus), swordfish (Xiphias gladius), Kawakawa (Euthynnus affinis), bonitos (Sarda spp.), marlins, sailfishes, spearfish (Istiophoridae), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Mackerel (Scomber scombrus, Scomber australasicus, Scomber japonicus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.45",
+          "title": "Herrings, anchovies, sardines, ..., excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Jack and horse mackerel",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.45.00",
+              "description": "Herrings (Clupea harengus, Clupea pallasii), anchoviespallasii), anchovies (Engraulis spp.), sardines (Sardina pilchardus, Sardinops spp.), sardinella (Sardinella spp.), brisling or sprats (Sprattus sprattus), mackerel (Scomber scombrus, Scomber australasicus, Scomber japonicus), Indian mackerels (Rastrelliger spp.), seerfishes (Scomberomorus spp.), jack and horse mackerel (Trachurus spp.),jacks, crevalles (Caranx spp.), cobia (Rachycentron canadum), silver pomfrets (Pampus spp.), Pacific saury (Cololabis saira), scads (Decapterus spp.), capelin (Mallotus villosus), swordfish (Xiphias gladius), Kawakawa (Euthynnus affinis), bonitos (Sarda spp.), marlins, sailfishes, spearfish (Istiophoridae), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Jack and horse mackerel (Trachurus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.46",
+          "title": "Herrings, anchovies, sardines, ..., excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Cobia",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.46.00",
+              "description": "Herrings (Clupea harengus, Clupea pallasii), anchoviespallasii), anchovies (Engraulis spp.), sardines (Sardina pilchardus, Sardinops spp.), sardinella (Sardinella spp.), brisling or sprats (Sprattus sprattus), mackerel (Scomber scombrus, Scomber australasicus, Scomber japonicus), Indian mackerels (Rastrelliger spp.), seerfishes (Scomberomorus spp.), jack and horse mackerel (Trachurus spp.),jacks, crevalles (Caranx spp.), cobia (Rachycentron canadum), silver pomfrets (Pampus spp.), Pacific saury (Cololabis saira), scads (Decapterus spp.), capelin (Mallotus villosus), swordfish (Xiphias gladius), Kawakawa (Euthynnus affinis), bonitos (Sarda spp.), marlins, sailfishes, spearfish (Istiophoridae), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Cobia (Rachycentron canadum)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.47",
+          "title": "Herrings, anchovies, sardines, ..., excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Swordfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.47.00",
+              "description": "Herrings (Clupea harengus, Clupea pallasii), anchoviespallasii), anchovies (Engraulis spp.), sardines (Sardina pilchardus, Sardinops spp.), sardinella (Sardinella spp.), brisling or sprats (Sprattus sprattus), mackerel (Scomber scombrus, Scomber australasicus, Scomber japonicus), Indian mackerels (Rastrelliger spp.), seerfishes (Scomberomorus spp.), jack and horse mackerel (Trachurus spp.),jacks, crevalles (Caranx spp.), cobia (Rachycentron canadum), silver pomfrets (Pampus spp.), Pacific saury (Cololabis saira), scads (Decapterus spp.), capelin (Mallotus villosus), swordfish (Xiphias gladius), Kawakawa (Euthynnus affinis), bonitos (Sarda spp.), marlins, sailfishes, spearfish (Istiophoridae), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Swordfish (Xiphias gladius)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.49",
+          "title": "Herrings, anchovies, sardines, ..., excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.49.00",
+              "description": "Herrings (Clupea harengus, Clupea pallasii), anchoviespallasii), anchovies (Engraulis spp.), sardines (Sardina pilchardus, Sardinops spp.), sardinella (Sardinella spp.), brisling or sprats (Sprattus sprattus), mackerel (Scomber scombrus, Scomber australasicus, Scomber japonicus), Indian mackerels (Rastrelliger spp.), seerfishes (Scomberomorus spp.), jack and horse mackerel (Trachurus spp.),jacks, crevalles (Caranx spp.), cobia (Rachycentron canadum), silver pomfrets (Pampus spp.), Pacific saury (Cololabis saira), scads (Decapterus spp.), capelin (Mallotus villosus), swordfish (Xiphias gladius), Kawakawa (Euthynnus affinis), bonitos (Sarda spp.), marlins, sailfishes, spearfish (Istiophoridae), excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.51",
+          "title": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Cod",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.51.00",
+              "description": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Cod (Gadus morhua, Gadus ogac, Gadus macrocephalus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.52",
+          "title": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Haddock",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.52.00",
+              "description": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Haddock (Melanogrammus aeglefinus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.53",
+          "title": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Coalfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.53.00",
+              "description": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Coalfish (Pollachius virens)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.54",
+          "title": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Hake",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.54.00",
+              "description": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Hake (Merluccius spp., Urophycis spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.55",
+          "title": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of sub-headings 0302 91 to 0302 99 : -- Alaska Pollock",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.55.00",
+              "description": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of sub-headings 0302 91 to 0302 99:- - Alaska Pollock (Theragra chalcogramma)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.56",
+          "title": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Blue whitings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.56.00",
+              "description": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Blue whitings (Micromesistius poutassou, Micromesistius australis)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.59",
+          "title": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.59.00",
+              "description": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of subheadings 0302.91 to 0302.99 : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.71",
+          "title": "Tilapias, catfish, carp, eels, Nile perch and snakeheads, excluding edible fish offal of sub-headings 0302 91 to 0302 99 : -- Tilapias",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.71.00",
+              "description": "Tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp.,Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.), eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.), excluding edible fish offal of subheadings 0302 91 to 0302 99:- - Tilapias (Oreochromis spp.),",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.72",
+          "title": "Tilapias, catfish, carp, eels, Nile perch and snakeheads, excluding edible fish offal of sub-headings 0302 91 to 0302 99 : -- Catfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.72.00",
+              "description": "Tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp.,Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.), eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.), excluding edible fish offal of subheadings 0302 91 to 0302 99:- - Catfish (Pangasius spp., Silurus spp., Clarias spp.,Ictalurus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.73",
+          "title": "Tilapias, catfish, carp, eels, Nile perch and snakeheads, excluding edible fish offal of subheadings 0302 91 to 0302 99 : -- Carp",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.73.00",
+              "description": "Tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp.,Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.), eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.), excluding edible fish offal of subheadings 0302 91 to 0302 99:- - Carp (Cyprinus spp., Carassius spp., Cteno-pharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.):",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.74",
+          "title": "Tilapias, catfish, carp, eels, Nile perch and snakeheads, excluding edible fish offal of subheadings 0302 91 to 0302 99 : -- Eels",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.74.00",
+              "description": "Tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp.,Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.), eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.), excluding edible fish offal of subheadings 0302 91 to 0302 99:- - Eels (Anguilla spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.79",
+          "title": "Tilapias, catfish, carp, eels, Nile perch and snakeheads, excluding edible fish offal of subheadings 0302 91 to 0302 99 : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.79.00",
+              "description": "Tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp.,Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.), eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.), excluding edible fish offal of subheadings 0302 91 to 0302 99:- - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.81",
+          "title": "Other fish, excluding edible fish offal of subheadings 0302.91 to 0302.99 : --Dogfish and other sharks",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.81.00",
+              "description": "Other fish, excluding edible fish offal of subheadings 0302.91 to 0302.99 : --Dogfish and other sharks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.82",
+          "title": "Other fish, excluding edible fish offal of subheadings 0302.91 to 0302.99 : --Rays and skates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.82.00",
+              "description": "Other fish, excluding edible fish offal of subheadings 0302.91 to 0302.99 : --Rays and skates (Rajidae)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.83",
+          "title": "Other fish, excluding edible fish offal of subheadings 0302.91 to 0302.99 : --Toothfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.83.00",
+              "description": "Other fish, excluding edible fish offal of subheadings 0302.91 to 0302.99 : --Toothfish (Dissostichus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.84",
+          "title": "Other fish, excluding edible fish offal of subheadings 0302.91 to 0302.99 : --Seabass",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.84.00",
+              "description": "Other fish, excluding edible fish offal of subheadings 0302.91 to 0302.99 : --Seabass (Dicentrarchus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.85",
+          "title": "Other fish, excluding edible fish offal of subheadings 0302.91 to 0302.99 : --Seabream",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.85.00",
+              "description": "Other fish, excluding edible fish offal of subheadings 0302.91 to 0302.99 : --Seabream (Sparidae)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.89",
+          "title": "Other fish, excluding edible fish offal of subheadings 0302.91 to 0302.99 : --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.89.10",
+              "description": "Hilsa ( Tenualosa ilisha)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0302.89.20",
+              "description": "Dara",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0302.89.30",
+              "description": "Pomfret",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "However, Exports of Fresh or Chilled or Frozen silver pomfrets of weight less than 300 gms is permitted only under Restricted Export Authorization."
+            },
+            {
+              "code": "0302.89.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.91",
+          "title": "Livers, roes and milt",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.91.00",
+              "description": "Livers, roes and milt",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0302.91.10",
+              "description": "Livers, roes and milt",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.92",
+          "title": "Shark fins",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.92.00",
+              "description": "Shark fins",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            },
+            {
+              "code": "0302.92.10",
+              "description": "Shark fins",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0302.99",
+          "title": "Livers, roes, milt, fish fins, heads, tails, maws and other edible fish offal : --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0302.99.10",
+              "description": "Fish fins other than shark fins; heads, tails and maws",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0302.99.90",
+              "description": "Other edible fish offal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0303",
+      "title": "Fish, frozen, excluding fish fillets and other fish meat of heading 03.04.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0303.11",
+          "title": "Salmonidae, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Sockeye salmon (red salmon)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.11.00",
+              "description": "Salmonidae, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Sockeye salmon (red salmon) (Oncorhynchus nerka)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.12",
+          "title": "Salmonidae, excluding edible fish offal of subheadings 0303.91 to 0303.99 -- Other Pacific salmon",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.12.00",
+              "description": "Salmonidae, excluding edible fish offal of subheadings 0303.91 to 0303.99 -- Other Pacific salmon (Oncorhynchus gorbuscha, Oncorhynchus keta, Oncorhynchus tschawytscha, Oncorhynchus kisutch, Oncorhynchus masou and Oncorhynchus rhodurus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.13",
+          "title": "Salmonidae, excluding edible fish offal of subheadings 0303.91 to 0303.99 --Atlantic salmon and Danube salmon",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.13.00",
+              "description": "Salmonidae, excluding edible fish offal of subheadings 0303.91 to 0303.99 --Atlantic salmon (Salmo salar) and Danube salmon (Hucho hucho)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.14",
+          "title": "Salmonidae, excluding edible fish offal of subheadings 0303.91 to 0303.99 -- Trout",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.14.00",
+              "description": "Salmonidae, excluding edible fish offal of subheadings 0303.91 to 0303.99 -- Trout (Salmo trutta, Oncorhynchus mykiss, Oncorhynchus clarki, Oncorhynchus aguabonita, Oncorhynchus gilae, Oncorhynchus apache and Oncorhynchus chrysogaster)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.19",
+          "title": "Salmonidae, excluding edible fish offal of subheadings 0303.91 to 0303.99 --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.19.00",
+              "description": "Salmonidae, excluding edible fish offal of subheadings 0303.91 to 0303.99 --Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.23",
+          "title": "Tilapias, catfish, carp, eels, Nile perch and snakeheads, excluding edible fish offal of subheadings 0303.91 to 0303.99 : -- Tilapias",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.23.00",
+              "description": "Tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.),eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.), excluding edible fish offal of subheadings 0303.91 to 0303.99 : -- Tilapias (Oreochromis spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.24",
+          "title": "Tilapias, catfish, carp, eels, Nile perch and snakeheads, excluding edible fish offal of subheadings 0303.91 to 0303.99 : -- Catfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.24.00",
+              "description": "Tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.),eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.), excluding edible fish offal of subheadings 0303.91 to 0303.99 : -- Catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.25",
+          "title": "Tilapias, catfish, carp, eels, Nile perch and snakeheads, excluding edible fish offal of subheadings 0303.91 to 0303.99 : -- Carp",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.25.00",
+              "description": "Tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.),eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.), excluding edible fish offal of subheadings 0303.91 to 0303.99 : -- Carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.26",
+          "title": "Tilapias, catfish, carp, eels, Nile perch and snakeheads, excluding edible fish offal of subheadings 0303.91 to 0303.99 : -- Eels",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.26.00",
+              "description": "Tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.),eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.), excluding edible fish offal of subheadings 0303.91 to 0303.99 : -- Eels (Anguilla spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.29",
+          "title": "Tilapias, catfish, carp, eels, Nile perch and snakeheads, excluding edible fish offal of subheadings 0303.91 to 0303.99 : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.29.00",
+              "description": "Tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.),eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.), excluding edible fish offal of subheadings 0303.91 to 0303.99 : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.31",
+          "title": "Flat fish, subheadings 0303.91 to 0303.99 : -- Halibut",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.31.00",
+              "description": "Flat fish (Pleuronectidae, Bothidae, Cynoglossidae, Soleidae, subheadings 0303.91 to 0303.99 : -- Halibut (Reinhardtius hippoglossoides, Hippoglossus hippoglossus, Hippoglossus stenolepis)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.32",
+          "title": "Flat fish, subheadings 0303.91 to 0303.99 : -- Plaice",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.32.00",
+              "description": "Flat fish (Pleuronectidae, Bothidae, Cynoglossidae, Soleidae, subheadings 0303.91 to 0303.99 : -- Plaice (Pleuronectes platessa)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.33",
+          "title": "Flat fish, subheadings 0303.91 to 0303.99 : -- Sole",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.33.00",
+              "description": "Flat fish (Pleuronectidae, Bothidae, Cynoglossidae, Soleidae, subheadings 0303.91 to 0303.99 : -- Sole (Solea spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.34",
+          "title": "Flat fish, subheadings 0303.91 to 0303.99 : -- Turbots",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.34.00",
+              "description": "Flat fish (Pleuronectidae, Bothidae, Cynoglossidae, Soleidae, subheadings 0303.91 to 0303.99 : -- Turbots (Psetta maxima)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.39",
+          "title": "Flat fish (Pleuronectidae, Bothidae, Cynoglossidae, Soleidae, Scophthalmidae and Citharidae), excluding edible fish offal of subheadings 0303 91 to 0303 99 :- - Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.39.00",
+              "description": "Flat fish (Pleuronectidae, Bothidae, Cynoglossidae, Soleidae, Scophthalmidae and Citharidae), excluding edible fish offal of subheadings 0303 91 to 0303 99:- - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.41",
+          "title": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Albacore or longfinned tunas",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.41.00",
+              "description": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito (Euthynnus (Katsuwonus) pelamis), excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Albacore or longfinned tunas (Thunnus alalunga)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.42",
+          "title": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Yellowfin tunas",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.42.00",
+              "description": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito (Euthynnus (Katsuwonus) pelamis), excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Yellowfin tunas (Thunnus albacares)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.43",
+          "title": "Tunas (of the genus Thunnus), skipjack tuna (stripebellied bonito), excluding edible fish offal of sub-headings 0303 91 to 0303 99 : -- Skipjack tuna",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.43.00",
+              "description": "Tunas (of the genus Thunnus), skipjack tuna (stripebellied bonito) (Katsuwonuspelamis), excluding edible fish offal of sub-headings 0303 91 to 0303 99:- - Skipjack tuna (stripe-bellied bonito) (Katsuwonuspelamis)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.44",
+          "title": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Bigeye tunas",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.44.00",
+              "description": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito (Euthynnus (Katsuwonus) pelamis), excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Bigeye tunas (Thunnus obesus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.45",
+          "title": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Atlantic and Pacific bluefin tunas",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.45.00",
+              "description": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito (Euthynnus (Katsuwonus) pelamis), excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Atlantic and Pacific bluefin tunas (Thunnus thynnus, Thunnus orientalis)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.46",
+          "title": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Southern bluefin tunas",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.46.00",
+              "description": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito (Euthynnus (Katsuwonus) pelamis), excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Southern bluefin tunas (Thunnus maccoyii)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.49",
+          "title": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.49.00",
+              "description": "Tunas (of the genus Thunnus), skipjack or stripe-bellied bonito (Euthynnus (Katsuwonus) pelamis), excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.51",
+          "title": "Herrings, anchovies, sardines, ..., excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Herrings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.51.00",
+              "description": "Herrings (Clupea harengus, Clupea pallasii), anchovies (Engraulis spp.), sardines (Sardina pilchardus, Sardinops spp.), sardinella (Sardinella spp.), brisling or sprats (Sprattus sprattus), mackerel (Scomber scombrus, Scomber australasicus, Scomber japonicus), Indian mackerels (Rastrelliger spp.), seerfishes (Scomberomorus spp), jack and horse mackerel (Trachurus spp.), jacks, crevalles (Caranx spp.), cobia (Rachycentron canadum), silver pomfrets (Pampus spp.), Pacific saury (Cololabis saira), scads (Decapterus spp.), capelin (Mallotus villosus), swordfish (Xiphias gladius), Kawakawa (Euthynnus affinis), bonitos (Sarda spp.), marlins, sailfishes, spearfish (Istiophoridae), excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Herrings (Clupea harengus, Clupea pallasii)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.53",
+          "title": "Herrings, anchovies, sardines, ..., excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Sardines, sardinella, brisling or sprats",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.53.00",
+              "description": "Herrings (Clupea harengus, Clupea pallasii), anchovies (Engraulis spp.), sardines (Sardina pilchardus, Sardinops spp.), sardinella (Sardinella spp.), brisling or sprats (Sprattus sprattus), mackerel (Scomber scombrus, Scomber australasicus, Scomber japonicus), Indian mackerels (Rastrelliger spp.), seerfishes (Scomberomorus spp), jack and horse mackerel (Trachurus spp.), jacks, crevalles (Caranx spp.), cobia (Rachycentron canadum), silver pomfrets (Pampus spp.), Pacific saury (Cololabis saira), scads (Decapterus spp.), capelin (Mallotus villosus), swordfish (Xiphias gladius), Kawakawa (Euthynnus affinis), bonitos (Sarda spp.), marlins, sailfishes, spearfish (Istiophoridae), excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Sardines (Sardina pilchardus, Sardinops spp.), sardinella (Sardinella spp.), brisling or sprats (Sprattus sprattus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.54",
+          "title": "Herrings, anchovies, sardines, ..., excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Mackerel",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.54.00",
+              "description": "Herrings (Clupea harengus, Clupea pallasii), anchovies (Engraulis spp.), sardines (Sardina pilchardus, Sardinops spp.), sardinella (Sardinella spp.), brisling or sprats (Sprattus sprattus), mackerel (Scomber scombrus, Scomber australasicus, Scomber japonicus), Indian mackerels (Rastrelliger spp.), seerfishes (Scomberomorus spp), jack and horse mackerel (Trachurus spp.), jacks, crevalles (Caranx spp.), cobia (Rachycentron canadum), silver pomfrets (Pampus spp.), Pacific saury (Cololabis saira), scads (Decapterus spp.), capelin (Mallotus villosus), swordfish (Xiphias gladius), Kawakawa (Euthynnus affinis), bonitos (Sarda spp.), marlins, sailfishes, spearfish (Istiophoridae), excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Mackerel (Scomber scombrus, Scomber australasicus, Scomber japonicus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.55",
+          "title": "Herrings, anchovies, sardines, ..., excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Jack and horse mackerel",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.55.00",
+              "description": "Herrings (Clupea harengus, Clupea pallasii), anchovies (Engraulis spp.), sardines (Sardina pilchardus, Sardinops spp.), sardinella (Sardinella spp.), brisling or sprats (Sprattus sprattus), mackerel (Scomber scombrus, Scomber australasicus, Scomber japonicus), Indian mackerels (Rastrelliger spp.), seerfishes (Scomberomorus spp), jack and horse mackerel (Trachurus spp.), jacks, crevalles (Caranx spp.), cobia (Rachycentron canadum), silver pomfrets (Pampus spp.), Pacific saury (Cololabis saira), scads (Decapterus spp.), capelin (Mallotus villosus), swordfish (Xiphias gladius), Kawakawa (Euthynnus affinis), bonitos (Sarda spp.), marlins, sailfishes, spearfish (Istiophoridae), excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Jack and horse mackerel (Trachurus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.56",
+          "title": "Herrings, anchovies, sardines, ..., excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Cobia",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.56.00",
+              "description": "Herrings (Clupea harengus, Clupea pallasii), anchovies (Engraulis spp.), sardines (Sardina pilchardus, Sardinops spp.), sardinella (Sardinella spp.), brisling or sprats (Sprattus sprattus), mackerel (Scomber scombrus, Scomber australasicus, Scomber japonicus), Indian mackerels (Rastrelliger spp.), seerfishes (Scomberomorus spp), jack and horse mackerel (Trachurus spp.), jacks, crevalles (Caranx spp.), cobia (Rachycentron canadum), silver pomfrets (Pampus spp.), Pacific saury (Cololabis saira), scads (Decapterus spp.), capelin (Mallotus villosus), swordfish (Xiphias gladius), Kawakawa (Euthynnus affinis), bonitos (Sarda spp.), marlins, sailfishes, spearfish (Istiophoridae), excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Cobia (Rachycentron canadum)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.57",
+          "title": "Herrings, anchovies, sardines, ..., excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Swordfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.57.00",
+              "description": "Herrings (Clupea harengus, Clupea pallasii), anchovies (Engraulis spp.), sardines (Sardina pilchardus, Sardinops spp.), sardinella (Sardinella spp.), brisling or sprats (Sprattus sprattus), mackerel (Scomber scombrus, Scomber australasicus, Scomber japonicus), Indian mackerels (Rastrelliger spp.), seerfishes (Scomberomorus spp), jack and horse mackerel (Trachurus spp.), jacks, crevalles (Caranx spp.), cobia (Rachycentron canadum), silver pomfrets (Pampus spp.), Pacific saury (Cololabis saira), scads (Decapterus spp.), capelin (Mallotus villosus), swordfish (Xiphias gladius), Kawakawa (Euthynnus affinis), bonitos (Sarda spp.), marlins, sailfishes, spearfish (Istiophoridae), excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Swordfish (Xiphias gladius)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.59",
+          "title": "Herrings, anchovies, sardines, ..., excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.59.10",
+              "description": "Indian mackerels (Rastrelliger spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0303.59.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.63",
+          "title": "Fish of the families Bregmacerotidae, ..., excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Cod",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.63.00",
+              "description": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Cod (Gadus morhua, Gadus ogac, Gadus macrocephalus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.64",
+          "title": "Fish of the families Bregmacerotidae, ..., excluding edible fish offal of subheadings 0303.91 to 0303.99 : -- Haddock",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.64.00",
+              "description": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of subheadings 0303.91 to 0303.99 : -- Haddock (Melanogrammus aeglefinus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.65",
+          "title": "Fish of the families Bregmacerotidae, ..., excluding edible fish offal of subheadings 0303.91 to 0303.99 : -- Coalfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.65.00",
+              "description": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of subheadings 0303.91 to 0303.99 : -- Coalfish (Pollachius virens)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.66",
+          "title": "Fish of the families Bregmacerotidae, ..., excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Hake",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.66.00",
+              "description": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Hake (Merluccius spp., Urophycis spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.67",
+          "title": "Fish of the families Bregmacerotidae, ..., excluding edible fish offal of sub-headings 0303 91 to 0303 99 : -- Alaska Pollock",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.67.00",
+              "description": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of sub-headings 0303 91 to 0303 99:- - Alaska Pollock (Theragra chalcogramma)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.68",
+          "title": "Fish of the families Bregmacerotidae, ..., excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Blue whitings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.68.00",
+              "description": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Blue whitings (Micromesistius poutassou, Micromesistius australis)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.69",
+          "title": "Fish of the families Bregmacerotidae, ..., excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.69.00",
+              "description": "Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.81",
+          "title": "Other fish, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Dogfish and other sharks",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.81.10",
+              "description": "Dogfish",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0303.81.90",
+              "description": "Other sharks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.82",
+          "title": "Other fish, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Rays and skates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.82.00",
+              "description": "Other fish, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Rays and skates (Rajidae)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.83",
+          "title": "Other fish, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Toothfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.83.00",
+              "description": "Other fish, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Toothfish (Dissostichus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.84",
+          "title": "Other fish, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Seabass",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.84.00",
+              "description": "Other fish, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Seabass (Dicentrarchus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.89",
+          "title": "Other fish, excluding edible fish offal of subheadings 0303.91 to 0303.99 : --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.89.10",
+              "description": "Hilsa (Tenualosa ilisha)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0303.89.20",
+              "description": "Dara",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0303.89.30",
+              "description": "Ribbon fish",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0303.89.40",
+              "description": "Seer",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0303.89.50",
+              "description": "Pomfret (white or silver or black)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "However, Exports of Fresh or Chilled or Frozen silver pomfrets of weight less than 300 gms is permitted only under Restricted Export Authorization."
+            },
+            {
+              "code": "0303.89.60",
+              "description": "Ghol",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0303.89.70",
+              "description": "Threadfin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0303.89.80",
+              "description": "Croackers, groupers, flounders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0303.89.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.91",
+          "title": "Livers, roes, milt, fish fins, heads, tails, maws and other edible fish offal : -- Livers, roes and milt",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.91.10",
+              "description": "Egg or egg yolk of fish",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0303.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.92",
+          "title": "Shark fins",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.92.00",
+              "description": "Shark fins",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0303.99",
+          "title": "Livers, roes, milt, fish fins, heads, tails, maws and other edible fish offal : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0303.99.10",
+              "description": "Fish fins other than shark fins, heads, tails and maws",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0303.99.90",
+              "description": "Other edible fish offal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0304",
+      "title": "Fish fillets and other fish meat (whether or not minced), fresh, chilled or frozen.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0304.31",
+          "title": "Fresh or chilled fillets of tilapias, catfish, carp, eels, Nile perch and snakeheads : -- Tilapias",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.31.00",
+              "description": "Fresh or chilled fillets of tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.), eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.) : -- Tilapias (Oreochromis spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.32",
+          "title": "Fresh or chilled fillets of tilapias, catfish, carp, eels, Nile perch and snakeheads : -- Catfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.32.00",
+              "description": "Fresh or chilled fillets of tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.), eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.) : -- Catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.33",
+          "title": "Fresh or chilled fillets of tilapias, catfish, carp, eels, Nile perch and snakeheads : -- Nile Perch",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.33.00",
+              "description": "Fresh or chilled fillets of tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.), eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.) : -- Nile Perch (Lates niloticus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.39",
+          "title": "Fresh or chilled fillets of tilapias, catfish, carp, eels, Nile perch and snakeheads : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.39.00",
+              "description": "Fresh or chilled fillets of tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.), eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.) : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.41",
+          "title": "Fresh or chilled fillets of other fish : --Pacific salmon, Atlantic salmon and Danube salmon",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.41.00",
+              "description": "Fresh or chilled fillets of other fish : --Pacific salmon (Oncorhynchus nerka, Oncorhynchus gorbuscha, Oncorhynchus keta, Oncorhynchus tschawytscha, Oncorhynchus kisutch, Oncorhynchus masou and Oncorhynchus rhodurus), Atlantic salmon (Salmo salar) and Danube salmon (Hucho hucho)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.42",
+          "title": "Fresh or chilled fillets of other fish : --Trout",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.42.00",
+              "description": "Fresh or chilled fillets of other fish : --Trout (Salmo trutta, Oncorhynchus mykiss, Oncorhynchus clarki, Oncorhynchus aguabonita, Oncorhynchus gilae, Oncorhynchus apache and Oncorhynchus chrysogaster)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.43",
+          "title": "Fresh or chilled fillets of other fish : -- Flat fish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.43.00",
+              "description": "Fresh or chilled fillets of other fish : -- Flat fish (Pleuronectidae, Bothidae, Cynoglossidae, Soleidae, Scophthalmidae and Citharidae)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.44",
+          "title": "Fresh or chilled fillets of other fish : -- Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.44.00",
+              "description": "Fresh or chilled fillets of other fish : -- Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.45",
+          "title": "Fresh or chilled fillets of other fish : -- Swordfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.45.00",
+              "description": "Fresh or chilled fillets of other fish : -- Swordfish (Xiphias gladius)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.46",
+          "title": "Fresh or chilled fillets of other fish : --Toothfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.46.00",
+              "description": "Fresh or chilled fillets of other fish : --Toothfish (Dissostichus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.47",
+          "title": "Fresh or chilled fillets of other fish : --Dogfish and other sharks",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.47.00",
+              "description": "Fresh or chilled fillets of other fish : --Dogfish and other sharks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.48",
+          "title": "Fresh or chilled fillets of other fish : --Rays and skates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.48.00",
+              "description": "Fresh or chilled fillets of other fish : --Rays and skates (Rajidae)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.49",
+          "title": "Fresh or chilled fillets of other fish : --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.49.10",
+              "description": "Hilsa (Tenualosa ilisha)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0304.49.30",
+              "description": "Seer",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0304.49.40",
+              "description": "Tuna",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0304.49.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.51",
+          "title": "Other, fresh or chilled : --Tilapias, catfish, carp, eels, Nile perch and snakeheads",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.51.00",
+              "description": "Other, fresh or chilled : --Tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, ypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.), eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.52",
+          "title": "Other, fresh or chilled : --Salmonidae",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.52.00",
+              "description": "Other, fresh or chilled : --Salmonidae",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.53",
+          "title": "Other, fresh or chilled : -- Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.53.00",
+              "description": "Other, fresh or chilled : -- Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.54",
+          "title": "Other, fresh or chilled : --Swordfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.54.00",
+              "description": "Other, fresh or chilled : --Swordfish (Xiphias gladius)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.55",
+          "title": "Other, fresh or chilled : --Toothfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.55.00",
+              "description": "Other, fresh or chilled : --Toothfish (Dissostichus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.56",
+          "title": "Other, fresh or chilled : --Dogfish and other sharks",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.56.00",
+              "description": "Other, fresh or chilled : --Dogfish and other sharks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.57",
+          "title": "Other, fresh or chilled : --Rays and skates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.57.00",
+              "description": "Other, fresh or chilled : --Rays and skates (Rajidae)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.59",
+          "title": "Other, fresh or chilled : --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.59.10",
+              "description": "Hilsa (Tenualosa ilisha)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0304.59.30",
+              "description": "Seer",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0304.59.40",
+              "description": "Tuna",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0304.59.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.61",
+          "title": "Frozen fillets of tilapias, catfish, carp, eels, Nile perch and snakeheads : --Tilapias",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.61.00",
+              "description": "Frozen fillets of tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.), eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.) : --Tilapias (Oreochromis spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.62",
+          "title": "Frozen fillets of tilapias, catfish, carp, eels, Nile perch and snakeheads : --Catfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.62.00",
+              "description": "Frozen fillets of tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.), eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.) : --Catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.63",
+          "title": "Frozen fillets of tilapias, catfish, carp, eels, Nile perch and snakeheads : --Nile Perch",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.63.00",
+              "description": "Frozen fillets of tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.), eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.) : --Nile Perch (Lates niloticus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.69",
+          "title": "Frozen fillets of tilapias, catfish, carp, eels, Nile perch and snakeheads : --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.69.00",
+              "description": "Frozen fillets of tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.), eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.) : --Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.71",
+          "title": "Frozen fillets of fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae : --Cod",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.71.00",
+              "description": "Frozen fillets of fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae : --Cod (Gadus morhua, Gadus ogac, Gadus macrocephalus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.72",
+          "title": "Frozen fillets of fish of the families Bregmacerotidae, ... : --Haddock",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.72.00",
+              "description": "Frozen fillets of fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae : --Haddock (Melanogrammus aeglefinus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.73",
+          "title": "Frozen fillets of fish of the families Bregmacerotidae, ... : --Coalfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.73.00",
+              "description": "Frozen fillets of fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae : --Coalfish (Pollachius virens)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.74",
+          "title": "Frozen fillets of fish of the families Bregmacerotidae, ... : --Hake",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.74.00",
+              "description": "Frozen fillets of fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae : --Hake (Merluccius spp., Urophycis spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.75",
+          "title": "Frozen fillets of fish of Bregmacerotidae, ... : -- Alaska Pollock",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.75.00",
+              "description": "Frozen fillets of fish of Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae:- - Alaska Pollock (Theragra chalcogramma)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.79",
+          "title": "Frozen fillets of fish of the families Bregmacerotidae, ... : --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.79.00",
+              "description": "Frozen fillets of fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae : --Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.81",
+          "title": "Frozen fillets of other fish : --Pacific salmon, Atlantic salmon and Danube salmon",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.81.00",
+              "description": "Frozen fillets of other fish : --Pacific salmon (Oncorhynchus nerka, Oncorhynchus gorbuscha, Oncorhynchus keta, Oncorhynchus tschawytscha, Oncorhynchus kisutch, Oncorhynchus masou and Oncorhynchus rhodurus), Atlantic salmon (Salmo salar) and Danube salmon (Hucho hucho)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.82",
+          "title": "Frozen fillets of other fish : -- Trout",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.82.00",
+              "description": "Frozen fillets of other fish : -- Trout (Salmo trutta, Oncorhynchus mykiss, Oncorhynchus clarki, Oncorhynchus aguabonita, Oncorhynchus gilae, Oncorhynchus apache and Oncorhynchus chrysogaster)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.83",
+          "title": "Frozen fillets of other fish : --Flat fish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.83.00",
+              "description": "Frozen fillets of other fish : --Flat fish (Pleuronectidae, Bothidae, Cynoglossidae, Soleidae,",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.84",
+          "title": "Frozen fillets of other fish : --Swordfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.84.00",
+              "description": "Frozen fillets of other fish : --Swordfish (Xiphias gladius)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.85",
+          "title": "Frozen fillets of other fish : --Toothfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.85.00",
+              "description": "Frozen fillets of other fish : --Toothfish (Dissostichus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.86",
+          "title": "Frozen fillets of other fish : --Herrings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.86.00",
+              "description": "Frozen fillets of other fish : --Herrings (Clupea harengus, Clupea pallasii)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.87",
+          "title": "Frozen fillets of other fish: - - Tunas, skipjack tuna",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.87.00",
+              "description": "Frozen fillets of other fish: - - Tunas (of the genus Thunnus), skipjack tuna (stripe-bellied bonito) (Katsuwonus pelamis)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.88",
+          "title": "Frozen fillets of other fish : --Dogfish, other sharks, rays and skates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.88.10",
+              "description": "Dog fish",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0304.88.20",
+              "description": "Other sharks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0304.88.30",
+              "description": "Rays and skates (Rajidae)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.89",
+          "title": "Frozen fillets of other fish : --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.89.10",
+              "description": "Hilsa (Tenualosa ilisha)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0304.89.30",
+              "description": "Seer",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0304.89.40",
+              "description": "Tuna",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0304.89.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.91",
+          "title": "Other, frozen : -- Swordfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.91.00",
+              "description": "Other, frozen : -- Swordfish (Xiphias gladius)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.92",
+          "title": "Other, frozen : -- Toothfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.92.00",
+              "description": "Other, frozen : -- Toothfish (Dissostichus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.93",
+          "title": "Other, frozen : -- Tilapias, catfish, carp, eels, Nile perch and snakeheads",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.93.00",
+              "description": "Other, frozen : -- Tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.), eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.94",
+          "title": "Other, frozen : -- Alaska Pollock",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.94.00",
+              "description": "Other, frozen:- - Alaska Pollock (Theragra chalcogramma)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.95",
+          "title": "Other, frozen :-- Fish of the families Bregmacerotidae, ..., other than Alaska Pollock",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.95.00",
+              "description": "Other, frozen:-- Fish of the families (Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae,) other than Alaska Pollock (Theragra chalcogramma)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.96",
+          "title": "Other, frozen : -- Dogfish and other sharks",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.96.00",
+              "description": "Other, frozen : -- Dogfish and other sharks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.97",
+          "title": "Other, frozen : -- Rays and skates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.97.00",
+              "description": "Other, frozen : -- Rays and skates (Rajidae)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0304.99",
+          "title": "Other, frozen : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0304.99.00",
+              "description": "Other, frozen : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0305",
+      "title": "FISH, DRIED, SALTED OR IN BRINE; SMOKED FISH, WHETHER OR NOT COOKED BEFORE OR DURING THE SMOKING PROCESS",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0305.20",
+          "title": "Livers, roes and milt of fish, dried, smoked, salted or in brine",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.20.00",
+              "description": "Livers, roes and milt of fish, dried, smoked, salted or in brine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.31",
+          "title": "Fish fillets, dried, salted or in brine, but not smoked : -- Tilapias, catfish, carp, eels, Nile perch and snakeheads",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.31.00",
+              "description": "Fish fillets, dried, salted or in brine, but not smoked : -- Tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni,Megalobrama spp.), eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.32",
+          "title": "Fish fillets, dried, salted or in brine, but not smoked : -- Fish of the families Bregmacerotidae, ...",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.32.00",
+              "description": "Fish fillets, dried, salted or in brine, but not smoked : -- Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Macrouridae, Melanonidae, Merlucciidae, Moridae and Muraenolepididae",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.39",
+          "title": "Fish fillets, dried, salted or in brine, but not smoked : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.39.00",
+              "description": "Fish fillets, dried, salted or in brine, but not smoked : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.41",
+          "title": "Smoked fish, including fillets, other than edible fish offal : -- Pacific salmon, Atlantic salmon and Danube salmon",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.41.00",
+              "description": "Smoked fish, including fillets, other than edible fish offal : -- Pacific salmon (Oncorhynchus nerka, Oncorhynchus gorbuscha, Oncorhynchus keta, Oncorhynchus tschawytscha, Oncorhynchus kisutch, Oncorhynchus masou and Oncorhynchus rhodurus), Atlantic salmon (Salmo salar) and Danube salmon (Hucho hucho)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.42",
+          "title": "Smoked fish, including fillets, other than edible fish offal : --Herrings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.42.00",
+              "description": "Smoked fish, including fillets, other than edible fish offal : --Herrings (Clupea harengus, Clupea pallasii)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.43",
+          "title": "Smoked fish, including fillets, other than edible fish offal : --Trout",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.43.00",
+              "description": "Smoked fish, including fillets, other than edible fish offal : --Trout (Salmo trutta, Oncorhynchus mykiss, Oncorhynchus clarki, Oncorhynchus aguabonita, Oncorhynchus gilae, Oncorhynchus apache and Oncorhynchus chrysogaster)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.44",
+          "title": "Smoked fish, including fillets, other than edible fish offal : -- Tilapias, catfish, carp, eels, Nile perch and snakeheads",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.44.00",
+              "description": "Smoked fish, including fillets, other than edible fish offal : -- Tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.), eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.49",
+          "title": "Smoked fish, including fillets, other than edible fish offal : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.49.00",
+              "description": "Smoked fish, including fillets, other than edible fish offal : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.51",
+          "title": "Dried fish, other than edible fish offal, whether or not salted but not smoked : --Cod",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.51.00",
+              "description": "Dried fish, other than edible fish offal, whether or not salted but not smoked : --Cod (Gadus morhua, Gadus ogac, Gadus macrocephalus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.52",
+          "title": "Dried fish, other than edible fish offal, whether or not salted but not smoked : --Tilapias, catfish, carp, eels, Nile perch and snakeheads",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.52.00",
+              "description": "Dried fish, other than edible fish offal, whether or not salted but not smoked : --Tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.), eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.53",
+          "title": "Dried fish, other than edible fish offal, whether or not salted but not smoked : --Fish of the families Bregmacerotidae, ..., other than cod",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.53.00",
+              "description": "Dried fish, other than edible fish offal, whether or not salted but not smoked : --Fish of the families Bregmacerotidae, Euclichthyidae, Gadidae, Muraenolepididae, other than cod (Gadus morhua, Gadus ogac,",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.54",
+          "title": "Dried fish, other than edible fish offal, whether or not salted but not smoked : -- Herrings, anchovies, sardines, ...",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.54.00",
+              "description": "Dried fish, other than edible fish offal, whether or not salted but not smoked : -- Herrings (Clupea harengus, Clupea pallasii), anchovies (Engraulis spp.), sardines (Sardina pilchardus, Sardinops spp.), sardinella (Sardinella spp.), brisling or sprats (Sprattus sprattus), mackerel (Scomber scombrus, Scomber australasicus, Scomber japonicus), Indian mackerels (Rastrelliger spp.), seerfishes (Scomberomorus spp.), jack and horse mackerel (Trachurus spp.), jacks, crevalles (Caranx spp.), cobia (Rachycentron canadum), silver pomfrets (Pampus spp.), Pacific saury (Cololabis saira), scads (Decapterus spp.), capelin (Mallotus villosus), swordfish (Xiphias gladius), Kawakawa (Euthynnus affinis), bonitos (Sarda spp.), marlins, sailfishes, spearfish (Istiophoridae)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.59",
+          "title": "Dried fish, other than edible fish offal, whether or not salted but not smoked : --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.59.10",
+              "description": "Mumbai Duck",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0305.59.20",
+              "description": "Seer without head",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0305.59.30",
+              "description": "Sprats",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0305.59.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.61",
+          "title": "Fish, salted but not dried or smoked and fish in brine, other than edible fish offal : --Herrings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.61.00",
+              "description": "Fish, salted but not dried or smoked and fish in brine, other than edible fish offal : --Herrings (Clupea harengus, Clupea pallasii)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.62",
+          "title": "Fish, salted but not dried or smoked and fish in brine, other than edible fish offal : --Cod",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.62.00",
+              "description": "Fish, salted but not dried or smoked and fish in brine, other than edible fish offal : --Cod (Gadus morhua, Gadus ogac, Gadus macrocephalus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.63",
+          "title": "Fish, salted but not dried or smoked and fish in brine, other than edible fish offal : --Anchovies",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.63.00",
+              "description": "Fish, salted but not dried or smoked and fish in brine, other than edible fish offal : --Anchovies (Engraulis spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.64",
+          "title": "Fish, salted but not dried or smoked and fish in brine, other than edible fish offal : --Tilapias, catfish, carp, eels, Nile perch and snakeheads",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.64.00",
+              "description": "Fish, salted but not dried or smoked and fish in brine, other than edible fish offal : --Tilapias (Oreochromis spp.), catfish (Pangasius spp., Silurus spp., Clarias spp., Ictalurus spp.), carp (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, Hypophthalmichthys spp., Cirrhinus spp., Mylopharyngodon piceus, Catla catla, Labeo spp., Osteochilus hasselti, Leptobarbus hoeveni, Megalobrama spp.), eels (Anguilla spp.), Nile perch (Lates niloticus) and snakeheads (Channa spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.69",
+          "title": "Fish, salted but not dried or smoked and fish in brine, other than edible fish offal : --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.69.10",
+              "description": "Mumbai duck",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0305.69.20",
+              "description": "Seer without head",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0305.69.30",
+              "description": "Sprats",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0305.69.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.71",
+          "title": "Fish fins, heads, tails, maws and other edible fish offal : --Shark fins",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.71.00",
+              "description": "Fish fins, heads, tails, maws and other edible fish offal:--Shark fins",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.72",
+          "title": "Fish fins, heads, tails, maws and other edible fish offal : -- Fish heads, tails and maws",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.72.00",
+              "description": "Fish fins, heads, tails, maws and other edible fish offal:-- Fish heads, tails and maws",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0305.79",
+          "title": "Fish fins, heads, tails, maws and other edible fish offal : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0305.79.00",
+              "description": "Fish fins, heads, tails, maws and other edible fish offal:-- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0306",
+      "title": "CRUSTACEANS, WHETHER IN SHELL OR NOT, LIVE, FRESH, CHILLED, FROZEN, DRIED, SALTED OR IN BRINE; SMOKED CRUSTACEANS, WHETHER IN SHELL OR NOT, WHETHER OR NOT COOKED BEFORE OR DURING THE SMOKING PROCESS; CRUSTACEANS, IN SHELL, COOKED BY STEAMING OR BY BOILING IN WATER, WHETHER OR NOT CHILLED, FROZEN, DRIED, SALTED OR INBRINE",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0306.11",
+          "title": "Frozen : -- Rock lobster and other sea crawfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0306.11.00",
+              "description": "Frozen : -- Rock lobster and other sea crawfish (Palinurus spp., Panulirus spp., Jasus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "(1) Panulirus polyphagus 300 gm as whole chilled live or frozen, 250 gm as whole cooked; 90 gm as tail (Prohibited, Not permitted to be exported) (2) Panulirus homarus 200gm as whole live, chilled or frozen, 170 gm as whole cooked, 50 gm as tail (Prohibited, Not permitted to be exported) (3) Panulirus Ornatus 500gm as whole live/chilled or frozen; 425 gm as whole cooked; 150gm as tail (Prohibited, Not permitted to be exported)"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0306.12",
+          "title": "Frozen : -- Lobsters (Homarus spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0306.12.10",
+              "description": "Whole cooked",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Sand Lobster: Thenus orientalis 150 gm as whole; 45 gm as tail (Prohibited , Not permitted to be exported)"
+            },
+            {
+              "code": "0306.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Sand Lobster: Thenus orientalis 150 gm as whole; 45 gm as tail (Prohibited , Not permitted to be exported)"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0306.14",
+          "title": "Frozen : -- Crabs",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0306.14.00",
+              "description": "Frozen : -- Crabs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0306.15",
+          "title": "Frozen : -- Norway lobsters",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0306.15.00",
+              "description": "Frozen : -- Norway lobsters (Nephrops norvegicus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0306.16",
+          "title": "Frozen : -- Cold-water shrimps and prawns (Pandalus spp., Crangon cragon)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0306.16.10",
+              "description": "Accelerated Freeze Dried(AFD)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0306.16.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0306.17",
+          "title": "Frozen : -- Other shrimps and prawns",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0306.17.11",
+              "description": "Scampi (Macrobrachium spp.): ---- Accelerated Freeze Dried(AFD)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0306.17.19",
+              "description": "Scampi (Macrobrachium spp.): ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0306.17.20",
+              "description": "Vannamei shrimp (Litopenaeusvannamei)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0306.17.30",
+              "description": "Indian white shrimp (Fenneropenaeusindicus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0306.17.40",
+              "description": "Black tiger shrimp (Penaeusmonodon)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0306.17.50",
+              "description": "Flower shrimp (Penaeussemisulcatus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0306.17.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0306.19",
+          "title": "Frozen : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0306.19.00",
+              "description": "Frozen :- -Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0306.31",
+          "title": "Live, fresh or chilled : --Rock lobster and other sea crawfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0306.31.00",
+              "description": "Live, fresh or chilled : --Rock lobster and other sea crawfish (Palinurus spp., Panulirus spp., Jasus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "1) Panulirus polyphagus 300 gm as whole chilled live or frozen, 250 gm as whole cooked; 90 gm as tail (Prohibited, Not permitted to be exported) (2) Panulirus homarus 200gm as whole live, chilled or frozen, 170 gm as whole cooked, 50 gm as tail (Prohibited, Not permitted to be exported) (3) Panulirus Ornatus 500gm as whole live/chilled or frozen; 425 gm as whole cooked; 150gm as tail (Prohibited, Not permitted to be exported)"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0306.32",
+          "title": "Live, fresh or chilled : --Lobsters",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0306.32.00",
+              "description": "Live, fresh or chilled : --Lobsters (Homarus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Sand Lobster: Thenus orientalis 150 gm as whole; 45 gm as tail (Prohibited , Not permitted to be exported)"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0306.33",
+          "title": "Live, fresh or chilled : --Crabs",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0306.33.00",
+              "description": "Live, fresh or chilled : --Crabs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0306.34",
+          "title": "Live, fresh or chilled : --Norway lobsters",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0306.34.00",
+              "description": "Live, fresh or chilled : --Norway lobsters (Nephrops norvegicus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0306.35",
+          "title": "Live, fresh or chilled : --Cold-water shrimps and prawns",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0306.35.00",
+              "description": "Live, fresh or chilled : --Cold-water shrimps and prawns (Pandalus spp., Crangon crangon)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0306.36",
+          "title": "Live, fresh or chilled : -- Other shrimps and prawns",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0306.36.10",
+              "description": "Scampi (Macrobachium spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0306.36.20",
+              "description": "Vannamei shrimp (Litopenaeusvannamei)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0306.36.30",
+              "description": "Indian white shrimp (Fenneropenaeus indicus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0306.36.40",
+              "description": "Black tiger shrimp (Penaeus monodon)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0306.36.50",
+              "description": "Flower Shrimp(Penaeus semisulcatus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0306.36.60",
+              "description": "Artemia",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0306.36.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0306.39",
+          "title": "Frozen :- -Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0306.39.00",
+              "description": "Frozen :- -Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0306.91",
+          "title": "Other : --Rock lobster and other sea crawfish",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0306.91.00",
+              "description": "Other : --Rock lobster and other sea crawfish (Palinurus spp., Panulirus spp., Jasus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0306.92",
+          "title": "Other : --Lobsters",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0306.92.00",
+              "description": "Other : --Lobsters (Homarus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0306.93",
+          "title": "Other : --Crabs",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0306.93.00",
+              "description": "Other : --Crabs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0306.94",
+          "title": "Other : --Norway lobsters",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0306.94.00",
+              "description": "Other : --Norway lobsters (Nephrops norvegicus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0306.95",
+          "title": "Other : --Shrimps and prawns",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0306.95.00",
+              "description": "Other : --Shrimps and prawns",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0306.99",
+          "title": "Other : --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0306.99.00",
+              "description": "Other:- -Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0307",
+      "title": "MOLLUSCS, WHETHER IN SHELL OR NOT, LIVE, FRESH, CHILLED, FROZEN, DRIED, SALTED OR IN BRINE; SMOKED MOLLUSCS, WHETHER IN SHELL OR NOT, WHETHER OR NOT COOKED BEFORE OR DURING THE SMOKING PROCESS",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0307.11",
+          "title": "Oysters : -- Live, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.11.00",
+              "description": "Oysters : -- Live, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.12",
+          "title": "Oysters : -- Frozen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.12.00",
+              "description": "Oysters : -- Frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.19",
+          "title": "Oysters : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.19.00",
+              "description": "Oysters : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.21",
+          "title": "Scallops, including queen Scallops, of the genera Pecten, Chlamys or Placopecten : -- Live, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.21.00",
+              "description": "Scallops, including queen Scallops, of the genera Pecten, Chlamys or Placopecten : -- Live, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.22",
+          "title": "Scallops, including queen Scallops, of the genera Pecten, Chlamys or Placopecten : -- Frozen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.22.00",
+              "description": "Scallops, including queen Scallops, of the genera Pecten, Chlamys or Placopecten : -- Frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.29",
+          "title": "Scallops, including queen Scallops, of the genera Pecten, Chlamys or Placopecten : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.29.00",
+              "description": "Scallops, including queen Scallops, of the genera Pecten, Chlamys or Placopecten : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.31",
+          "title": "Mussels (Mytilus spp., Perna spp.) : -- Live, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.31.00",
+              "description": "Mussels (Mytilus spp., Perna spp.) : -- Live, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.32",
+          "title": "Mussels (Mytilus spp., Perna spp.) : -- Frozen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.32.00",
+              "description": "Mussels (Mytilus spp., Perna spp.) : -- Frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.39",
+          "title": "Mussels (Mytilus spp., Perna spp.) : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.39.10",
+              "description": "Clams, clam meat (bivalves-Victorita, spp., Mertrix spp. and Katalysia spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0307.39.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.42",
+          "title": "Cuttle fish and squid : -- Live, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.42.10",
+              "description": "Cuttle fish",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0307.42.20",
+              "description": "Squid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.43",
+          "title": "Cuttle fish and squid : -- Frozen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.43.10",
+              "description": "Cuttle fish",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0307.43.20",
+              "description": "Whole squids",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0307.43.30",
+              "description": "Squid tubes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0307.43.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.49",
+          "title": "Cuttle fish and squid : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.49.10",
+              "description": "Cuttle fish",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0307.49.20",
+              "description": "Whole squids",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0307.49.30",
+              "description": "Squid tubes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0307.49.40",
+              "description": "Dried squids",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0307.49.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.51",
+          "title": "Octopus (Octopus spp.) : -- Live, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.51.00",
+              "description": "Octopus (Octopus spp.) : -- Live, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.52",
+          "title": "Octopus (Octopus spp.) : -- Frozen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.52.00",
+              "description": "Octopus (Octopus spp.) : -- Frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.59",
+          "title": "Octopus (Octopus spp.) : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.59.00",
+              "description": "Octopus (Octopus spp.) : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.60",
+          "title": "Snails, other than sea snails",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.60.00",
+              "description": "Snails, other than sea snails",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.71",
+          "title": "Clams, cockles and ark shells (families Arcidae, Arcticidae, Cardiidae, Donacidae, Hiatellidae, Mactridae, Mesodesmatidae, Myidae, Semelidae, Solecurtidae, Solenidae, Tridacnidae and Veneridae) : -- Live, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.71.00",
+              "description": "Clams, cockles and ark shells (families Arcidae, Arcticidae, Cardiidae, Donacidae, Hiatellidae, Mactridae, Mesodesmatidae, Myidae, Semelidae, Solecurtidae, Solenidae, Tridacnidae and Veneridae) : -- Live, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.72",
+          "title": "Clams, cockles and ark shells : -- Frozen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.72.00",
+              "description": "Clams, cockles and ark shells (families Arcidae, Arcticidae, Cardiidae, Donacidae, Hiatellidae, Mactridae, Mesodesmatidae, Myidae, Semelidae, Solecurtidae, Solenidae, Tridacnidae and Veneridae) : -- Frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.79",
+          "title": "Clams, cockles and ark shells : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.79.00",
+              "description": "Clams, cockles and ark shells (families Arcidae, Arcticidae, Cardiidae, Donacidae, Hiatellidae, Mactridae, Mesodesmatidae, Myidae, Semelidae, Solecurtidae, Solenidae, Tridacnidae and Veneridae) : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.81",
+          "title": "Abalone (Haliotis spp.) and stromboid conchs (Strombus spp.) : -- Live, fresh or chilled abalone",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.81.00",
+              "description": "Abalone (Haliotis spp.) and stromboid conchs (Strombus spp.) : -- Live, fresh or chilled abalone (Haliotis spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.82",
+          "title": "Abalone (Haliotis spp.) and stromboid conchs (Strombus spp.) : -- Live, fresh or chilled stromboid conchs",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.82.00",
+              "description": "Abalone (Haliotis spp.) and stromboid conchs (Strombus spp.) : -- Live, fresh or chilled stromboid conchs (Strombus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.83",
+          "title": "Abalone (Haliotis spp.) and stromboid conchs (Strombus spp.) : -- Frozen abalone",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.83.00",
+              "description": "Abalone (Haliotis spp.) and stromboid conchs (Strombus spp.) : -- Frozen abalone (Haliotis spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.84",
+          "title": "Abalone (Haliotis spp.) and stromboid conchs (Strombus spp.) : -- Frozen stromboid conchs",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.84.00",
+              "description": "Abalone (Haliotis spp.) and stromboid conchs (Strombus spp.) : -- Frozen stromboid conchs (Strombus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.87",
+          "title": "Abalone (Haliotis spp.) and stromboid conchs (Strombus spp.) : -- Other abalone",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.87.00",
+              "description": "Abalone (Haliotis spp.) and stromboid conchs (Strombus spp.) : -- Other abalone (Haliotis spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.88",
+          "title": "Abalone (Haliotis Spp.) and stromboid conchs (Strombus spp.) :- -Other stromboid conchs",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.88.00",
+              "description": "Abalone (Haliotis Spp.) and stromboid conchs (Strombus spp.):- -Other stromboid conchs (Strombus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.91",
+          "title": "Other -- Live, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.91.00",
+              "description": "Other- - Live,fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.92",
+          "title": "Other -- Frozen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.92.00",
+              "description": "Other- - Frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0307.99",
+          "title": "Other -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0307.99.00",
+              "description": "Other- - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0308",
+      "title": "AQUATIC INVERTEBRATES OTHER THAN CRUSTACEANS AND MOLLUSCS, LIVE, FRESH, CHILLED, FROZEN, DRIED, SALTED OR IN BRINE; SMOKED AQUATIC INVERTEBRATES OTHER THAN CRUSTACEANS AND MOLLUSCS, WHETHER OR NOT COOKED BEFORE OR DURING THE SMOKING PROCESS",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0308.11",
+          "title": "Sea cucumbers (Stichopus japonicus, Holothuroidea) : -- Live, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0308.11.00",
+              "description": "Sea cucumbers (Stichopus japonicus, Holothuroidea) : -- Live, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0308.12",
+          "title": "Sea cucumbers (Stichopus japonicus, Holothuroidea) : -- Frozen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0308.12.00",
+              "description": "Sea cucumbers (Stichopus japonicus, Holothuroidea) : -- Frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0308.19",
+          "title": "Sea cucumbers (Stichopus japonicus, Holothuroidea) : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0308.19.00",
+              "description": "Sea cucumbers (Stichopus japonicus, Holothuroidea) : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0308.21",
+          "title": "Sea urchins (Strongylocentrotus spp., Paracentrotus lividus, Loxechinus albus, Echinus esculentus) : -- Live, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0308.21.00",
+              "description": "Sea urchins (Strongylocentrotus spp., Paracentrotus lividus, Loxechinus albus, Echinus esculentus) : -- Live, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0308.22",
+          "title": "Sea urchins (Strongylocentrotus spp., Paracentrotus lividus, Loxechinus albus, Echinus esculentus) : -- Frozen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0308.22.00",
+              "description": "Sea urchins (Strongylocentrotus spp., Paracentrotus lividus, Loxechinus albus, Echinus esculentus) : -- Frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0308.29",
+          "title": "Sea urchins (Strongylocentrotus spp., Paracentrotus lividus, Loxechinus albus, Echinus esculentus) : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0308.29.00",
+              "description": "Sea urchins (Strongylocentrotus spp., Paracentrotus lividus, Loxechinus albus, Echinus esculentus) : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0308.30",
+          "title": "Jellyfish (Rhopilema spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0308.30.10",
+              "description": "Live, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0308.30.20",
+              "description": "Dried, salted or frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0308.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0308.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0308.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0309",
+      "title": "FLOURS, MEALS AND PELLETS OF FISH, CRUSTACEANS, MOLLUSCS AND OTHER AQUATIC INVERTEBRATES, FIT FOR HUMAN CONSUMPTION",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0309.10",
+          "title": "Of fish:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0309.10.10",
+              "description": "Fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.10.20",
+              "description": "Frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.10.30",
+              "description": "Salted, in brine, dried or smoked",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0309.90",
+          "title": "Other:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0309.90.11",
+              "description": "Of crustaceans, fresh or chilled: - - - - Vannamei shrimp (Litopenaeusvannamei)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.90.12",
+              "description": "Of crustaceans, fresh or chilled:- - - - Indian white shrimp (Fenneropenaeus indicus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.90.13",
+              "description": "Of crustaceans, fresh or chilled:- - - - Black tiger shrimp (Penaeus monodon)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.90.14",
+              "description": "Of crustaceans, fresh or chilled:- - - - Flower shrimp (Penaeus semisulcatus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.90.19",
+              "description": "Of crustaceans, fresh or chilled:- - - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.90.21",
+              "description": "Of crustaceans, frozen: - - - - Vannamei shrimp (Litopenaeusvannamei)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.90.22",
+              "description": "Of crustaceans, frozen: - - - - Indian white shrimp (Fenneropenaeus indicus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.90.23",
+              "description": "Of crustaceans, frozen: - - - - Black tiger shrimp (Penaeus monodon)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.90.24",
+              "description": "Of crustaceans, frozen: - - - - Flower shrimp (Penaeus semisulcatus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.90.29",
+              "description": "Of crustaceans, frozen: - - - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.90.31",
+              "description": "Of crustaceans, salted, in brine, dried or smoked: - - - - Vannamei shrimp (Litopenaeusvannamei)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.90.32",
+              "description": "Of crustaceans, salted, in brine, dried or smoked: - - - - Indian white shrimp (Fenneropenaeus indicus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.90.33",
+              "description": "Of crustaceans, salted, in brine, dried or smoked:- - - - Black tiger shrimp (Penaeus monodon)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.90.34",
+              "description": "Of crustaceans, salted, in brine, dried or smoked:----Flower shrimp (Penaeus semisulcatus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.90.39",
+              "description": "Of crustaceans, salted, in brine, dried or smoked: - - - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.90.40",
+              "description": "Of crustaceans, salted, in brine, dried or smoked: - - - Of crustaceans, other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.90.50",
+              "description": "Of crustaceans, salted, in brine, dried or smoked: - - - Of molluscs, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.90.60",
+              "description": "Of crustaceans, salted, in brine, dried or smoked:` - - - Of molluscs, frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.90.70",
+              "description": "Of crustaceans, salted, in brine, dried or smoked: - - - Of molluscs, salted, in brine, dried or smoked",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.90.80",
+              "description": "Of crustaceans, salted, in brine, dried or smoked: - - - Of molluscs, other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0309.90.90",
+              "description": "Of crustaceans, salted, in brine, dried or smoked: - - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

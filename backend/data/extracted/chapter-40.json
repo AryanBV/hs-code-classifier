@@ -1,0 +1,2145 @@
+{
+  "chapter": "40",
+  "section": "VII",
+  "title": "RUBBER AND ARTICLES THEREOF",
+  "source_pdf": "Chapter 40 Rubber And Articles Thereof.pdf",
+  "extracted_at": "2026-05-21",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '40011010') and 6-digit subheading codes without dots (e.g., '400110'). Normalized to NNNN.NN.NN format (e.g., '4001.10.10') and NNNN.NN format (e.g., '4001.10') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'Supplementary Notes', 'Policy Condition', 'Sl.No. Notes Notification Date Notification No', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "The PDF's first 'Main Notes' table appears under the heading 'Section VII, PLASTICS AND ARTICLES THEREOF; RUBBER AND ARTICLES THEREOF' and contains 2 Section VII notes (Sl.No. 1 'Goods put up in sets...' and Sl.No. 2 'Except for the goods of heading 3918 or 3919...'). These are captured as section_notes (Section VII applies to both Ch.39 and Ch.40).",
+    "The PDF's second 'Main Notes' table appears under the heading 'Chapter 40 Rubber And Articles Thereof.' and contains 9 chapter notes (Sl.No. 1-9). These are captured as chapter_notes.",
+    "The PDF also contains a 'Supplementary Notes' table with 2 supplementary notes (covering headings 4009/4010 weight calculation and tariff item 4008.21.10 application). These are captured as additional chapter_notes with a 'supplementary' flag-style number prefix.",
+    "Chapter Note 1 contains escaped double quote markers (\"\"rubber\"\") around the term 'rubber' in the source PDF — these are OCR artifacts representing typographic quotes. Preserved verbatim as a single pair of straight quotes around the defined term.",
+    "Chapter Note 4 contains the temperature notation '180C and 290C' — this is the PDF's rendering of '18°C and 29°C' (the degree symbol is missing in OCR). Preserved verbatim as it appears in the source.",
+    "Chapter Note 5 in the PDF is presented as a single Sl.No. 5 row but internally has parts (A) and (B). Both are part of Note 5 — preserved as a single concatenated note.",
+    "Chapter Notes contain numerous spacing artifacts from the PDF OCR (e.g., 'meansthe', 'colouringmatter,otherthanthose', 'plasticisers or extenders(exceptmineral oilinthe caseof oil-extendedrubber),fillers,reinforcing', 'surfaceactive agents(generally', 'orsimilar', 'shall be classified', 'ofgloves,'). Preserved verbatim — these are encoding/OCR artifacts in the source PDF, not deliberate orthography.",
+    "Policy Condition 1 (condom export) contains '?' characters in place of typographic quote marks (e.g., '?Made specially for Govt. of India?', '?Sold under Contraceptive Social Marketing Programme of Govt. of India?', '?Free supply?', '?Central Govt. supply- Not for sale?', '?Not for export outside India?'). These are OCR/encoding artifacts. Preserved verbatim.",
+    "The 'Notification Date' and 'Notification No' columns in the Main Notes, Supplementary Notes, and Policy Condition tables are empty for all 9 chapter notes, both supplementary notes, and the single policy condition — null preserved.",
+    "Several subheading-level codes (e.g., '400110', '400129', '400219', '400280', '400299', '400520', '400591', '400599', '400690', '400700', '400811', '400819', '400821', '400829', '401011', '401012', '401019', '401031', '401032', '401033', '401034', '401035', '401036', '401039', '401110', '401120', '401140', '401150', '401219', '401220', '401290', '401310', '401390', '401410', '401490', '401590', '401693', '401695', '401699', '401700') appear as 6-digit subheading rows in the PDF without an explicit Export Policy value. Normalized to NNNN.NN format. The policy is set on the underlying 8-digit tariff lines (all 'Free' in this chapter).",
+    "The 'Export Policy' column for every 8-digit tariff line in this chapter is 'Free'. No tariff lines are Restricted, Prohibited, or STE in this chapter PDF.",
+    "Tariff line 4014.10.10 (Rubber contraceptives, male — condoms) has Policy Condition reference 'Exports shall be subject to Policy Condition 1 of this Chapter'. Captured at tariff-line level and the full condition text is in policy_conditions.",
+    "Tariff lines 4015.12.00, 4015.19.00, 4015.90.10, 4015.90.20, 4015.90.30, 4015.90.91, 4015.90.99 list Notification No '47/2015-2020' dated '22.12.2020'. Notification metadata preserved on those tariff lines via a per-line notification annotation.",
+    "Unit-of-measure column is NOT shown in this chapter's PDF — unit field set to null for all tariff lines.",
+    "Heading 4011 subheading 4011.30 'Of a kind used on aircraft' has only one 8-digit tariff line (4011.30.00) and no subheading-level row was rendered in the PDF (the 8-digit code stands alone). Reconstructed subheading wrapper '4011.30' to preserve the 7-node-type structure.",
+    "Heading 4011 subheadings 4011.70 (agricultural/forestry), 4011.80 (construction/mining), and 4011.90 (Other) similarly have only single 8-digit tariff lines (4011.70.00, 4011.80.00, 4011.90.00). Reconstructed 6-digit subheading wrappers to preserve schema.",
+    "Heading 4015 tariff line numbering jumps directly from 4015.12 to 4015.19 (subheading 4015.11 'Surgical gloves' is absent from this PDF — likely deleted/omitted in the ITC(HS) 2022 schedule rendering of Ch.40). Per the PDF source, only 4015.12 and 4015.19 are present under the gloves subheading group.",
+    "Tariff line 4012.19.10 description 'For two wheelers' uses 'two wheelers' (no hyphen) as in source; description for tariff 4012.20.20 uses 'two wheelers, three wheelers' — preserved verbatim.",
+    "Tariff line 4008.21.20 description in the PDF reads 'For resoling or repairing or retreading rubber typres' (note the OCR typo 'typres' instead of 'tyres'). Preserved verbatim from source.",
+    "Subheading 4012.19 'Retreaded tyres : -- Other' contains only 2 tariff lines (4012.19.10, 4012.19.90). The subheading 4012.19.00 (six-digit 'Other' retreaded tyres) does not have its own 8-digit '00' line — broken into 'For two wheelers' / 'Other'.",
+    "Tariff lines under subheading 4015.90 use both 7-digit codes (e.g., '4015.90.10') and 8-digit codes (e.g., '4015.90.91', '4015.90.99'). Preserved as listed in the PDF; the 8-digit codes are the granular splits of the '90 Other' branch.",
+    "Critical Ch.39 ↔ Ch.40 boundary captured via Note 1 ('rubber' definition) and Note 4 ('synthetic rubber' technical definition involving vulcanisation behavior under sulphur). These definitions are the primary plastics-vs-rubber boundary established in Section VII."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "Except where the context otherwise requires, throughout this Schedule the expression \"rubber\" meansthe following products, whether or not vulcanised or hard: natural rubber, balata, gutta-percha, guayule, chicle and similar natural gums, synthetic rubber, factice derived from oils, and such substances reclaimed."
+    },
+    {
+      "number": "2",
+      "text": "This Chapter does not cover: (a) goods of Section XI (textiles and textile articles); (b) footwear or parts thereof of Chapter 64; (c) headgear or parts thereof (including bathing caps) of Chapter 65; (d) mechanical or electrical appliances or partsthereof of Section XVI (including electrical goods of all kinds), of hard rubber; (e) articles of Chapter 90, 92, 94 or 96; or (f) articles of Chapter 95 (other than sports gloves, mittens and mitts and articles of headings 4011 to 4013)."
+    },
+    {
+      "number": "3",
+      "text": "In headings 4001 to 4003 and 4005, the expression \"primary forms\" applies only to the following forms: (a) liquids and pastes (including latex, whether or not pre-vulcanised, and other dispersions and solutions); (b) blocks of irregular shape, lumps, bales, powders, granules, crumbs and similar bulk forms."
+    },
+    {
+      "number": "4",
+      "text": "In Note 1 to this Chapter and in heading 4002, the expression \"synthetic rubber\" applies to: (a) unsaturated synthetic substances which can be irreversibly transformed by vulcanisation with sulphur into non-thermoplastic substances which, at a temperature between 180C and 290C , will not break on being extended to three times their original length and will return, after being extended to twice their original length, within a period of five minutes, to a length not greater than one and a half times their original length. For the purposes of this test, substances necessary for the cross-linking, such as vulcanising activators or accelerators, may be added; the presence of substances as provided for by Note 5(B)(ii) and (iii) is also permitted. However, the presence of any substances not necessary for the cross-linking,such as extenders, plasticisers and fillers, is not permitted; (b) thioplasts (TM ); and (c) natural rubber modified by grafting or mixing with plastics, depolymerised natural rubber, mixtures of unsaturated synthetic substances with saturated synthetic high polymers provided that all the above-mentioned products comply with the requirements concerning vulcanisation, elongation and recovery in (a) above."
+    },
+    {
+      "number": "5",
+      "text": "(A) Headings 4001 and 4002 do not apply to any rubber or mixture of rubbers which has been compounded, before or after coagulation, with: (i) vulcanising agents, accelerators, retarders or activators (other than those added for the preparation of pre-vulcanised rubber latex); (ii)pigments or other colouringmatter,otherthanthose addedsolelyforthe purpose ofidentification; (iii)plasticisers or extenders(exceptmineral oilinthe caseof oil-extendedrubber),fillers,reinforcing agents, organic solvents or any other substances, except those permitted under (b); (B) the presence of the following substances in any rubber or mixture of rubbers shall not affect its classification in heading 4001 or 4002, as the case may be, provided that such rubber or mixture of rubbers retains its essential character as a raw material : (i) emulsifiers or anti-tack agents; (ii) small amounts of breakdown products of emulsifiers; (iii) very small amounts of the following: heat-sensitive agents(generally for obtaining thermosensitive rubber latexes), cationic surfaceactive agents(generally for obtaining electro-positive rubber latexes), anti-oxidants, coagulants, crumbling agents, freeze-resisting agents, peptisers, preservatives,stabilisers, viscosity-control agents, orsimilar special-purpose additives."
+    },
+    {
+      "number": "6",
+      "text": "For the purposes of heading 4004, the expression \"waste, parings and scrap\" means rubber waste, parings and scrap from the manufacture or working of rubber and rubber goods definitely not usable as such because of cutting-up, wear or other reasons."
+    },
+    {
+      "number": "7",
+      "text": "Thread wholly of vulcanized rubber, of which any cross-sectional dimension exceeds 5 mm., is to be classified as strip, rods or profile shapes, of heading 4008."
+    },
+    {
+      "number": "8",
+      "text": "Heading 4010 includes conveyor or transmission belts or belting of textile fabric impregnated, coated, covered or laminated with rubber or made from textile yarn or cord impregnated, coated, covered or sheathed with rubber."
+    },
+    {
+      "number": "9",
+      "text": "In headings 4001, 4002, 4003, 4005 and 4008, the expressions \"plates\", \"sheets\" and \"strip\" apply only to plates, sheets and strip and to blocks of regular geometric shape, uncut or simply cut to rectangular (including square) shape, whether or not having the character of articles and whether or not printed or otherwise surface-worked, but not otherwise cut to shape or further worked. In heading 4008, the expressions \"rods\" and \"profile shapes\" apply only to such products, whether or not cut to length or surface-worked but not otherwise worked."
+    },
+    {
+      "number": "Supplementary 1",
+      "text": "For the purposes of headings 4009 and 4010, while calculating the percentage of rubber compound contents, the weight of canvas, yarn, metallic wires, washers, rivets and the like, where such products, form integral part of ingredient of such rubber products, shall be taken into account, but the weight of metallic fitments and surface finishing necessary to make the belting and tubing suitable for particular end uses,shall be ignored."
+    },
+    {
+      "number": "Supplementary 2",
+      "text": "Tariff item 4008 21 10 shall also apply to \"plates\", \"sheets\", and \"strips\", whether or not cut to shape and surface-worked or further worked so as to render them fit for resoling or repairing or re-treading of rubber tyres."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "Goods put up in sets consisting of two or more separate constituents,some or all of which fall in this Section and are intended to be mixed together to obtain a product of Section VI or VII, are to be classified in the heading appropriate to that product, provided that the constituents are : (a) having regard to the manner in which they are put up, clearly identifiable as being intended to be used together without first being repacked; (b) presented together; and (c) identifiable, whether by their nature or by the relative proportionsin which they are present, as being complementary one to another."
+    },
+    {
+      "number": "2",
+      "text": "Except for the goods of heading 3918 or 3919, plastics, rubber, and articles thereof, printed with motifs, characters or pictorial representations, which are not merely subsidiary to the primary use of the goods, fall in Chapter 49."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "goods of Section XI (textiles and textile articles)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(a)",
+      "source_note_text": "This Chapter does not cover: (a) goods of Section XI (textiles and textile articles)"
+    },
+    {
+      "excluded_product_text": "footwear or parts thereof",
+      "redirects_to_chapter": "64",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(b)",
+      "source_note_text": "(b) footwear or parts thereof of Chapter 64"
+    },
+    {
+      "excluded_product_text": "headgear or parts thereof (including bathing caps)",
+      "redirects_to_chapter": "65",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(c)",
+      "source_note_text": "(c) headgear or parts thereof (including bathing caps) of Chapter 65"
+    },
+    {
+      "excluded_product_text": "mechanical or electrical appliances or parts thereof, of hard rubber",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(d)",
+      "source_note_text": "(d) mechanical or electrical appliances or partsthereof of Section XVI (including electrical goods of all kinds), of hard rubber"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 90, 92, 94 or 96",
+      "redirects_to_chapter": "90",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(e)",
+      "source_note_text": "(e) articles of Chapter 90,92,94 or 96"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 92 (musical instruments and parts/accessories thereof) — of hard rubber or rubber",
+      "redirects_to_chapter": "92",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(e)",
+      "source_note_text": "(e) articles of Chapter 90,92,94 or 96"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 94 (furniture, bedding, mattresses, lighting fittings) — of hard rubber or rubber",
+      "redirects_to_chapter": "94",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(e)",
+      "source_note_text": "(e) articles of Chapter 90,92,94 or 96"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 96 (miscellaneous manufactured articles) — of hard rubber or rubber",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(e)",
+      "source_note_text": "(e) articles of Chapter 90,92,94 or 96"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 95 (toys, games, sports requisites) — OTHER THAN sports gloves, mittens and mitts and articles of headings 4011 to 4013, which remain in Chapter 40",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(f)",
+      "source_note_text": "(f) articles of Chapter 95 (other than sports gloves, mittens and mitts and articles of headings 4011 to 4013)"
+    },
+    {
+      "excluded_product_text": "Sub-clause to Note 2(d): for hard rubber MECHANICAL/ELECTRICAL APPLIANCES or PARTS THEREOF, the appliance class redirects to Section XVI (Chapters 84-85). This is the key Section XVI Note 2 mirror — hard-rubber appliance parts go to Ch.84/85, NOT to Ch.40.",
+      "redirects_to_chapter": "84",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(d)",
+      "source_note_text": "(d) mechanical or electrical appliances or partsthereof of Section XVI (including electrical goods of all kinds), of hard rubber"
+    },
+    {
+      "excluded_product_text": "(printed rubber articles with motifs/characters/pictorial representations not merely subsidiary to the primary use) — per Section VII Note 2, fall in Chapter 49",
+      "redirects_to_chapter": "49",
+      "redirects_to_heading": null,
+      "source_note_number": "Section VII Note 2",
+      "source_note_text": "Except for the goods of heading 3918 or 3919, plastics, rubber, and articles thereof, printed with motifs, characters or pictorial representations, which are not merely subsidiary to the primary use of the goods, fall in Chapter 49."
+    },
+    {
+      "excluded_product_text": "Reverse-inclusion: thread wholly of vulcanized rubber whose cross-sectional dimension EXCEEDS 5 mm is NOT thread of heading 4007 but reclassified to heading 4008 as strip, rods or profile shapes (intra-chapter reroute, but important to capture).",
+      "redirects_to_chapter": "40",
+      "redirects_to_heading": "4008",
+      "source_note_number": "Note 7",
+      "source_note_text": "Thread wholly of vulcanized rubber, of which any cross-sectional dimension exceeds 5 mm., is to be classified as strip, rods or profile shapes, of heading 4008."
+    },
+    {
+      "excluded_product_text": "Reverse-inclusion to heading 4010: conveyor or transmission belts/belting of TEXTILE fabric (impregnated, coated, covered or laminated with rubber) OR made from textile yarn/cord impregnated/coated/covered/sheathed with rubber are INCLUDED in heading 4010 (not excluded to Section XI / Chapter 59).",
+      "redirects_to_chapter": "40",
+      "redirects_to_heading": "4010",
+      "source_note_number": "Note 8",
+      "source_note_text": "Heading 4010 includes conveyor or transmission belts or belting of textile fabric impregnated, coated, covered or laminated with rubber or made from textile yarn or cord impregnated, coated, covered or sheathed with rubber."
+    },
+    {
+      "excluded_product_text": "Rubber compounded with vulcanising agents, accelerators, retarders, activators (other than for pre-vulcanised rubber latex), pigments/colouring matter, plasticisers, extenders, fillers, reinforcing agents, organic solvents, etc. — falls OUT of headings 4001 and 4002 (and instead falls within heading 4005 'Compounded rubber, unvulcanised').",
+      "redirects_to_chapter": "40",
+      "redirects_to_heading": "4005",
+      "source_note_number": "Note 5(A)",
+      "source_note_text": "(A) Headings 4001 and 4002 do not apply to any rubber or mixture of rubbers which has been compounded, before or after coagulation, with: (i) vulcanising agents, accelerators, retarders or activators (other than those added for the preparation of pre-vulcanised rubber latex); (ii)pigments or other colouringmatter,otherthanthose addedsolelyforthe purpose ofidentification; (iii)plasticisers or extenders(exceptmineral oilinthe caseof oil-extendedrubber),fillers,reinforcing agents, organic solvents or any other substances, except those permitted under (b)"
+    },
+    {
+      "excluded_product_text": "Plastics/rubber sets put up for retail with components from multiple chapters of Section VI or VII — classified per Section VII Note 1 in the heading appropriate to the resulting product (NOT split across constituent chapters), provided sets meet the put-up / presented-together / complementary tests.",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Section VII Note 1",
+      "source_note_text": "Goods put up in sets consisting of two or more separate constituents,some or all of which fall in this Section and are intended to be mixed together to obtain a product of Section VI or VII, are to be classified in the heading appropriate to that product, provided that the constituents are : (a) having regard to the manner in which they are put up, clearly identifiable as being intended to be used together without first being repacked; (b) presented together; and (c) identifiable, whether by their nature or by the relative proportionsin which they are present, as being complementary one to another."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "4001",
+      "title": "Natural rubber, balata, gutta-percha, guayule, chicle and similar natural gums, in primary forms or in plates, sheets or strip.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4001.10",
+          "title": "Natural rubber latex, whether or not pre-vulcanised",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4001.10.10",
+              "description": "Prevulcanised",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4001.10.20",
+              "description": "Other than prevulcanised",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4001.21",
+          "title": "Natural rubber in other forms : -- Smoked sheets",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4001.21.00",
+              "description": "Natural rubber in other forms : -- Smoked sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4001.22",
+          "title": "Natural rubber in other forms : -- Technically specified natural rubber (TSNR)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4001.22.00",
+              "description": "Natural rubber in other forms : -- Technically specified natural rubber (TSNR)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4001.29",
+          "title": "Natural rubber in other forms : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4001.29.10",
+              "description": "Hevea",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4001.29.20",
+              "description": "Pale Crepe",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4001.29.30",
+              "description": "Estate Brown Crepe",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4001.29.40",
+              "description": "Oil extended natural rubber",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4001.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4001.30",
+          "title": "Balata, gutta-percha, guayule, chicle and similar natural gums",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4001.30.00",
+              "description": "Balata, gutta-percha, guayule, chicle and similar natural gums",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4002",
+      "title": "Synthetic rubber and factice derived from oils, in primary forms or in plates, sheets or strip; mixtures of any product of heading 40.01 with any product of this heading, in primary forms or in plates, sheets or strip.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4002.11",
+          "title": "Styrene-butadiene rubber (SBR); carboxylated styrene-butadiene rubber (XSBR) : -- Latex",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4002.11.00",
+              "description": "Styrene-butadiene rubber (SBR); carboxylated styrene-butadiene rubber (XSBR) : -- Latex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4002.19",
+          "title": "Styrene-butadiene rubber (SBR); carboxylated styrene-butadiene rubber (XSBR) : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4002.19.10",
+              "description": "Oil extended styrene butadiene rubber",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4002.19.20",
+              "description": "Styrene butadiene rubber with styrene content exceeding 50percent",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4002.19.30",
+              "description": "Styrene butadiene styrene oil bound copolymer",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4002.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4002.20",
+          "title": "Butadiene rubber (BR)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4002.20.00",
+              "description": "Butadiene rubber (BR)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4002.31",
+          "title": "Isobutene-isoprene (butyl) rubber (IIR); halo-isobutene-isoprene rubber (CIIR or BIIR) : -- Isobutene-isoprene (butyl) rubber (IIR)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4002.31.00",
+              "description": "Isobutene-isoprene (butyl) rubber (IIR); halo-isobutene-isoprene rubber (CIIR or BIIR) : -- Isobutene-isoprene (butyl) rubber (IIR)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4002.39",
+          "title": "Isobutene-isoprene (butyl) rubber (IIR); halo-isobutene-isoprene rubber (CIIR or BIIR) : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4002.39.00",
+              "description": "Isobutene-isoprene (butyl) rubber (IIR); halo-isobutene-isoprene rubber (CIIR or BIIR) : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4002.41",
+          "title": "Chloroprene (chlorobutadiene) rubber (CR) : -- Latex",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4002.41.00",
+              "description": "Chloroprene (chlorobutadiene) rubber (CR) : -- Latex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4002.49",
+          "title": "Chloroprene (chlorobutadiene) rubber (CR) : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4002.49.00",
+              "description": "Chloroprene (chlorobutadiene) rubber (CR) : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4002.51",
+          "title": "Acrylonitrile-butadiene rubber (NBR) : -- Latex",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4002.51.00",
+              "description": "Acrylonitrile-butadiene rubber (NBR) : -- Latex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4002.59",
+          "title": "Acrylonitrile-butadiene rubber (NBR) : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4002.59.00",
+              "description": "Acrylonitrile-butadiene rubber (NBR) : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4002.60",
+          "title": "Isoprene rubber (IR)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4002.60.00",
+              "description": "Isoprene rubber (IR)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4002.70",
+          "title": "Ethylene-propylene-non-conjugated diene rubber (EPDM)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4002.70.00",
+              "description": "Ethylene-propylene-non-conjugated diene rubber (EPDM)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4002.80",
+          "title": "Mixtures of any product of heading 40.01 with any product of this heading",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4002.80.10",
+              "description": "Latex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4002.80.20",
+              "description": "Chemically modified form of natural rubber including graft rubber",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4002.80.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4002.91",
+          "title": "Other : -- Latex",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4002.91.00",
+              "description": "Other : -- Latex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4002.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4002.99.10",
+              "description": "Factice (rubber substitute derived from oil)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4002.99.20",
+              "description": "Tread rubber compound, cushion compound, cushion gum and tread gum for resoling or repairing or retreading rubber tyres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4002.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4003",
+      "title": "Reclaimed rubber in primary forms or in plates, sheets or strip.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4003.00",
+          "title": "Reclaimed rubber in primary forms or in plates, sheets or strip.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4003.00.00",
+              "description": "Reclaimed rubber in primary forms or in plates, sheets or strip.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "4004",
+      "title": "Waste, parings and scrap of rubber (other than hard rubber) and powders and granules obtained therefrom.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4004.00",
+          "title": "Waste, parings and scrap of rubber (other than hard rubber) and powders and granules obtained therefrom.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4004.00.00",
+              "description": "Waste, parings and scrap of rubber (other than hard rubber) and powders and granules obtained therefrom.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "4005",
+      "title": "Compounded rubber, unvulcanised, in primary forms or in plates, sheets or strip.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4005.10",
+          "title": "Compounded with carbon black or silica",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4005.10.00",
+              "description": "Compounded with carbon black or silica",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4005.20",
+          "title": "Solutions; dispersions other than those of subheading 4005.10",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4005.20.10",
+              "description": "Can sealing compound",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4005.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4005.91",
+          "title": "Other : -- Plates, sheets and strip",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4005.91.10",
+              "description": "Hospital Sheeting",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4005.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4005.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4005.99.10",
+              "description": "Granules of unvulcanised natural or synthetic rubber, compounded, ready for vulcanisation",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4005.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4006",
+      "title": "Other forms (for example, rods, tubes and profile shapes) and articles (for example, discs and rings), of unvulcanised rubber.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4006.10",
+          "title": "Camel-back strips for retreading rubber tyres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4006.10.00",
+              "description": "Camel-back strips for retreading rubber tyres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4006.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4006.90.10",
+              "description": "Thread, not covered",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4006.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4007",
+      "title": "Vulcanised rubber thread and cord.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4007.00",
+          "title": "Vulcanised rubber thread and cord:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4007.00.10",
+              "description": "Thread, not covered",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4007.00.20",
+              "description": "Cord, not covered",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4007.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "4008",
+      "title": "Plates, sheets, strip, rods and profile shapes, of vulcanised rubber other than hard rubber.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4008.11",
+          "title": "Of cellular rubber : -- Plates, sheets and strip",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4008.11.10",
+              "description": "Of micro-cellular rubber",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4008.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4008.19",
+          "title": "Of cellular rubber : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4008.19.10",
+              "description": "Block of micro-cellular rubber but not of latex foam sponge, used in the manufacture of soles, heels or soles and heels combined, for footwear",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4008.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4008.21",
+          "title": "Of non-cellular rubber : -- Plates, sheets and strip",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4008.21.10",
+              "description": "Used in the manufacture of soles, heels, or soles and heels combined, for footwear",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4008.21.20",
+              "description": "For resoling or repairing or retreading rubber typres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4008.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4008.29",
+          "title": "Of non-cellular rubber : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4008.29.10",
+              "description": "Rubber sheets and Resin rubber sheets for soles and heels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4008.29.20",
+              "description": "Blocks used in the manufacture of soles , heels or soles and heels combined, for footwear",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4008.29.30",
+              "description": "Latex foam sponge",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4008.29.40",
+              "description": "Tread rubber and tread packing strip for resoling are repairing or retreading rubber tyres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4008.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4009",
+      "title": "Tubes, pipes and hoses, of vulcanised rubber other than hard rubber, with or without their fittings (for example, joints, elbows, flanges).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4009.11",
+          "title": "Not reinforced or otherwise combined with other materials : -- Without fittings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4009.11.00",
+              "description": "Not reinforced or otherwise combined with other materials : -- Without fittings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4009.12",
+          "title": "Not reinforced or otherwise combined with other materials : -- With fittings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4009.12.00",
+              "description": "Not reinforced or otherwise combined with other materials : -- With fittings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4009.21",
+          "title": "Reinforced or otherwise combined only with metal : -- Without fittings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4009.21.00",
+              "description": "Reinforced or otherwise combined only with metal : -- Without fittings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4009.22",
+          "title": "Reinforced or otherwise combined only with metal : -- With fittings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4009.22.00",
+              "description": "Reinforced or otherwise combined only with metal : -- With fittings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4009.31",
+          "title": "Reinforced or otherwise combined only with textile materials : -- Without fittings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4009.31.00",
+              "description": "Reinforced or otherwise combined only with textile materials : -- Without fittings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4009.32",
+          "title": "Reinforced or otherwise combined only with textile materials : -- With fittings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4009.32.00",
+              "description": "Reinforced or otherwise combined only with textile materials : -- With fittings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4009.41",
+          "title": "Reinforced or otherwise combined with other materials : -- Without fittings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4009.41.00",
+              "description": "Reinforced or otherwise combined with other materials : -- Without fittings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4009.42",
+          "title": "Reinforced or otherwise combined with other materials : -- With fittings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4009.42.00",
+              "description": "Reinforced or otherwise combined with other materials : -- With fittings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4010",
+      "title": "Conveyor or transmission belts or belting, of vulcanised rubber.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4010.11",
+          "title": "Conveyor belts or belting : -- Reinforced only with metal",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4010.11.10",
+              "description": "Where the rubber compound content is less than 25percent by weight",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4010.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4010.12",
+          "title": "Conveyor belts or belting : -- Reinforced only with textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4010.12.10",
+              "description": "Where the rubber compound content is less than 25percent by weight",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4010.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4010.19",
+          "title": "Conveyor belts or belting : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4010.19.10",
+              "description": "Where the rubber compound content is less than 25percent by weight",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4010.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4010.31",
+          "title": "Transmission belts or belting : -- Endless transmission belts of trapezoidal cross-section (V-belts), V-ribbed, of an outside circumference exceeding 60 cm but not exceeding 180 cm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4010.31.10",
+              "description": "Where the rubber compound content is less than 25percent by weight",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4010.31.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4010.32",
+          "title": "Transmission belts or belting : -- Endless transmission belts of trapezoidal cross-section (V-belts), other than V-ribbed, of an outside circumference exceeding 60 cm but not exceeding 180 cm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4010.32.10",
+              "description": "Where the rubber compound content is less than 25percent by weight",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4010.32.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4010.33",
+          "title": "Transmission belts or belting : -- Endless transmission belts of trapezoidal cross-section (V-belts), V-ribbed, of an outside circumference exceeding 180 cm but not exceeding 240 cm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4010.33.10",
+              "description": "Where the rubber compound content is less than 25percent by weight",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4010.33.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4010.34",
+          "title": "Transmission belts or belting : -- Endless transmission belts of trapezoidal cross-section (V-belts), other than V-ribbed, of an outside circumference exceeding 180 cm but not exceeding 240 cm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4010.34.10",
+              "description": "Where the rubber compound content is less than 25percent by weight",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4010.34.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4010.35",
+          "title": "Transmission belts or belting : -- Endless synchronous belts, of an outside circumference exceeding 60 cm but not exceeding 150 cm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4010.35.10",
+              "description": "Where the rubber compound content is less than 25percent by weight",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4010.35.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4010.36",
+          "title": "Transmission belts or belting : -- Endless synchronous belts, of an outside circumference exceeding 150 cm but not exceeding 198 cm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4010.36.10",
+              "description": "Where the rubber compound content is less than 25percent by weight",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4010.36.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4010.39",
+          "title": "Transmission belts or belting : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4010.39.11",
+              "description": "Endless flat belt",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4010.39.12",
+              "description": "Ply belting",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4010.39.19",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4010.39.91",
+              "description": "Other: ---- Endless flat belt",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4010.39.92",
+              "description": "Other: ---- Ply belting",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4010.39.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4011",
+      "title": "New pneumatic tyres, of rubber.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4011.10",
+          "title": "Of a kind used on motor cars (including station wagons and racing cars)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4011.10.10",
+              "description": "Radials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4011.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4011.20",
+          "title": "Of a kind used on buses or lorries",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4011.20.10",
+              "description": "Radials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4011.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4011.30",
+          "title": "Of a kind used on aircraft",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4011.30.00",
+              "description": "Of a kind used on aircraft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4011.40",
+          "title": "Of a kind used on motorcycles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4011.40.10",
+              "description": "For motor cycles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4011.40.20",
+              "description": "For motor scooters",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4011.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4011.50",
+          "title": "Of a kind used on bicycles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4011.50.10",
+              "description": "Multi-cellular polyurethane (MCP) tubeless tyre",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4011.50.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4011.70",
+          "title": "Of a kind used on agricultural or forestry vehicles and machines",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4011.70.00",
+              "description": "Of a kind used on agricultural or forestry vehicles and machines",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4011.80",
+          "title": "Of a kind used on construction, mining or industrial handling vehicles and machines",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4011.80.00",
+              "description": "of a kind used on construction, mining or industrial handling vehicles and machines",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4011.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4011.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4012",
+      "title": "Retreaded or used pneumatic tyres of rubber; solid or cushion tyres, tyre treads and tyre flaps, of rubber.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4012.11",
+          "title": "Retreaded tyres : -- Of a kind used on motor cars (including station wagons and racing cars)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4012.11.00",
+              "description": "Retreaded tyres : -- Of a kind used on motor cars (including station wagons and",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4012.12",
+          "title": "Retreaded tyres : -- Of a kind used on buses or lorries",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4012.12.00",
+              "description": "Retreaded tyres : -- Of a kind used on buses or lorries",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4012.13",
+          "title": "Retreaded tyres : -- Of a kind used on aircraft",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4012.13.00",
+              "description": "Retreaded tyres : -- Of a kind used on aircraft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4012.19",
+          "title": "Retreaded tyres : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4012.19.10",
+              "description": "For two wheelers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4012.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4012.20",
+          "title": "Used pneumatic tyres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4012.20.10",
+              "description": "For buses, lorries and earth moving equipment including light commercial vehicles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4012.20.20",
+              "description": "For passenger automobile vehicles, including two wheelers, three wheelers and personal type vehicles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4012.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4012.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4012.90.10",
+              "description": "Solid rubber tyres for motor vehicles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4012.90.20",
+              "description": "Solid Rubber tyres for other vehicles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4012.90.30",
+              "description": "Tyres with metal framework",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4012.90.41",
+              "description": "Tyre flaps: ---- Of a kind used in two-wheeled and three- wheeled motor vehicles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4012.90.49",
+              "description": "Tyre flaps: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4012.90.50",
+              "description": "Tyre flaps: ---- Tyre treads, interchangeable",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4012.90.90",
+              "description": "Tyre flaps: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4013",
+      "title": "Inner tubes, of rubber.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4013.10",
+          "title": "of a kind used on motor cars (including station wagons and racing cars), buses or lorries",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4013.10.10",
+              "description": "For motor car",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4013.10.20",
+              "description": "For Lorries and buses",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4013.20",
+          "title": "Of a kind used on bicycles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4013.20.00",
+              "description": "Of a kind used on bicycles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4013.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4013.90.10",
+              "description": "For aircraft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4013.90.20",
+              "description": "For motor cycle",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4013.90.30",
+              "description": "For off the road vehicles, not elsewhere specified or included",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4013.90.41",
+              "description": "For tractors: ---- Rear tyres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4013.90.49",
+              "description": "For tractors: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4013.90.50",
+              "description": "For tractors: ---- Of a kind used in tyres of cycle rickshaws and three-wheeled powered cycle-rickshaws",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4013.90.90",
+              "description": "For tractors: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4014",
+      "title": "Hygienic or pharmaceutical articles (including teats), of vulcanised rubber other than hard rubber, with or without fittings of hard rubber.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4014.10",
+          "title": "Sheath contraceptives",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4014.10.10",
+              "description": "Rubber contraceptives, male (condoms)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "subject to Policy Condition 1 of this Chapter"
+            },
+            {
+              "code": "4014.10.20",
+              "description": "Rubber contraceptives, female (diaphragms), such as cervical caps",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4014.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4014.90.10",
+              "description": "Hot water bottles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4014.90.20",
+              "description": "Ice bags",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4014.90.30",
+              "description": "Feeding bottle nipples",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4014.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4015",
+      "title": "Articles of apparel and clothing accessories (including gloves, mittens and mitts), for all purposes, of vulcanised rubber other than hard rubber.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4015.12",
+          "title": "Of a kind used for medical, surgical, dental or veterinary purposes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4015.12.00",
+              "description": "Of a kind used for medical, surgical, dental or veterinary purposes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "47/2015-2020 22.12.2020"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4015.19",
+          "title": "Gloves, mittens and mitts : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4015.19.00",
+              "description": "Gloves, mittens and mitts : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "47/2015-2020 22.12.2020"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4015.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4015.90.10",
+              "description": "Rubber apron",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "47/2015-2020 22.12.2020"
+            },
+            {
+              "code": "4015.90.20",
+              "description": "Labels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "47/2015-2020 22.12.2020"
+            },
+            {
+              "code": "4015.90.30",
+              "description": "Industrial gloves",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "47/2015-2020 22.12.2020"
+            },
+            {
+              "code": "4015.90.91",
+              "description": "Other: ---- Diving suits",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "47/2015-2020 22.12.2020"
+            },
+            {
+              "code": "4015.90.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "47/2015-2020 22.12.2020"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4016",
+      "title": "Other articles of vulcanised rubber other than hard rubber.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4016.10",
+          "title": "Of cellular rubber",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4016.10.00",
+              "description": "Of cellular rubber",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4016.91",
+          "title": "Other : -- Floor coverings and mats",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4016.91.00",
+              "description": "Other : -- Floor coverings and mats",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4016.92",
+          "title": "Other : -- Erasers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4016.92.00",
+              "description": "Other : -- Erasers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4016.93",
+          "title": "Other : -- Gaskets, washers and other seals",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4016.93.10",
+              "description": "Patches for puncture repair of self-vulcanizing rubber or a rubber backing",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4016.93.20",
+              "description": "Rubber ring (O-ring)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4016.93.30",
+              "description": "Rubber seals ( Oil seals and the like )",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4016.93.40",
+              "description": "Gaskets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4016.93.50",
+              "description": "Washers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4016.93.60",
+              "description": "Plugs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4016.93.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4016.94",
+          "title": "Other : -- Boat or dock fenders, whether or not inflatable",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4016.94.00",
+              "description": "Other : -- Boat or dock fenders, whether or not inflatable",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4016.95",
+          "title": "Other : -- Other inflatable articles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4016.95.10",
+              "description": "Air mattresses",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4016.95.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4016.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4016.99.10",
+              "description": "Rubber cots for textile industry",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4016.99.20",
+              "description": "Rubber bands",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4016.99.30",
+              "description": "Rubber threads",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4016.99.40",
+              "description": "Rubber blankets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4016.99.50",
+              "description": "Rubber cushions",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4016.99.60",
+              "description": "Rubber bushes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4016.99.70",
+              "description": "Ear plug",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4016.99.80",
+              "description": "Stoppers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4016.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4017",
+      "title": "Hard rubber (for example, ebonite) in all forms, including waste and scrap; articles of hard rubber.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4017.00",
+          "title": "Hard rubber (for example, ebonite) in all forms, including waste and scrap; articles of hard rubber:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4017.00.10",
+              "description": "Plates, sheets, rods and tubes of ebonite and vulcanite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4017.00.20",
+              "description": "Scrap, waste, and powder of hardened rubber (ebonite and vulcanite)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4017.00.30",
+              "description": "Printers rollers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4017.00.40",
+              "description": "Textile rollers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4017.00.50",
+              "description": "Typewriters and cyclostyling rollers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4017.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    }
+  ]
+}

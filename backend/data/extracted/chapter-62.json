@@ -1,0 +1,3128 @@
+{
+  "chapter": "62",
+  "section": "XI",
+  "title": "ARTICLES OF APPAREL AND CLOTHING ACCESSORIES, NOT KNITTED OR CROCHETED",
+  "source_pdf": "Chapter 62 Articles Of Apparel And Clothing Accessories, Not Knitted Or Crocheted.pdf",
+  "extracted_at": "2026-05-21",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '62012010') and 6-digit subheading codes without dots (e.g., '620120'). Normalized to NNNN.NN.NN format (e.g., '6201.20.10') and NNNN.NN format (e.g., '6201.20') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'Sl.No. Notes Notification Date Notification No', 'Supplementary Notes', 'Policy Condition', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "PDF contains '?' characters in place of typographic quote marks throughout the notes (e.g., '?suit?' for 'suit', '?babies? garments?', '?Lucknow Chikan craft?', '?ski overall?'). These are OCR/encoding artifacts from the source PDF — preserved verbatim and also corrected interpretively where the meaning is unambiguous.",
+    "PDF contains '\"\"\"\"' (quadruple/double-double quotes) in several places where standard double quotes should appear (e.g., '\"\"\"suit\"\"\"', '\"\"\"ensemble\"\"\"', '\"\"\"sewing thread\"\"\"', '\"\"\"made up\"\"\"', '\"\"\"high tenacity yarn\"\"\"', '\"\"\"twine, cordage, ropes and cables\"\"\"', '\"\"\"put up for retail sale\"\"\"', '\"\"\"Z\"\"\" twist', '\"\"\"Khadi\"\"\"'). These are OCR artifacts; meaning is unambiguous.",
+    "Section XI Main Notes table (15 numbered notes) precedes the Chapter 62 Main Notes. The Section XI notes are captured in 'section_notes' as they apply to Chapters 50-63 (all textile chapters). The Chapter 62 notes (10 numbered notes, in PDF order: 1, 10, 2, 3, 4, 5, 6, 7, 8, 9) are captured in 'chapter_notes' — re-sorted to natural numeric order (1,2,3,4,5,6,7,8,9,10) in this JSON.",
+    "Section XI Note 2 spans rows visually (the table cell for Note 2 wraps multiple pages, including '(A)' and '(B)' and '(C)' clauses). Reassembled as a single coherent Note 2.",
+    "Section XI Note 1 lists exclusions (a) through (v). Sub-clauses are preserved verbatim including the OCR artifact 'Chatper 70' (intended 'Chapter 70').",
+    "Note 1 sub-clause labels include both '(ij)' (per WCO convention for the letter between i and j) and standard letter ordering — preserved verbatim.",
+    "Chapter 62 Supplementary Notes (3 notes — Khadi definition, FR fibres, Lucknow Chikan craft GI) and Policy Condition (Holy Quran imprints — Restricted) are captured in 'subheading_notes' and 'policy_conditions' respectively per project schema convention.",
+    "The Policy Condition entry references exports of goods with description implying 'Dress materials/ready made garments fabrics/textile items with imprints of excerpts or verses of the Holy Quran' as Restricted, subject to Restricted Export Authorisation. No specific tariff line is named — applies cross-chapter to any textile item with such imprints.",
+    "Many 6-digit subheadings appear in the PDF as code rows without an Export Policy value (the policy is set on the underlying 8-digit tariff lines). Their description fields include the WCO subheading wording (e.g., '-- Of cotton', '-- Of silk: ---- Khadi'). Preserved verbatim, with dashes indicating WCO hierarchy depth.",
+    "The 'Export Policy' column for every 8-digit tariff line in this chapter is 'Free'. No tariff lines are Restricted, Prohibited, or STE on a per-line basis. The chapter-wide Holy Quran Policy Condition is separate.",
+    "Unit-of-measure column is NOT shown in this chapter's PDF — unit field set to null for all tariff lines.",
+    "Notification No '36/2015-20' dated '06.10.2020' is shown ONLY on tariff lines 6217.90.10 through 6217.90.90 (Parts of clothing accessories). These notifications are present in the source data but the policy column for those lines is 'Free' — captured as a per-tariff-line notification reference in the tariff_line metadata.",
+    "Subheading 6203.19 (Suits — Of other textile materials) is split into 6203.19.10 (Of cotton) and 6203.19.90 (Other) in the PDF — note the WCO ordering of 'Of other textile materials' subheading splitting into 'Of cotton' is unusual and preserved verbatim.",
+    "Subheading 6204.22 (Ensembles — Of cotton) at the 8-digit level has tariff lines 6204.22.10 'Blouses combined with skirts, trousers or shorts', 6204.22.20 'Of cotton : Embroidered with Lucknow Chikan Craft', and 6204.22.90 'Other'. Tariff line 6204.22.20 has a slightly different description prefix style ('Of cotton :') from siblings — preserved verbatim.",
+    "Heading 6210 covers garments made up of fabrics of heading 56.02, 56.03, 59.03, 59.06 or 59.07 (felt/nonwovens and impregnated/coated/laminated fabrics) — this is the heading that takes precedence over 6201-6204 for protective and coated garments (per Chapter Note 6).",
+    "Heading 6211 (Track suits, ski suits and swimwear; other garments) contains specific subheading 6211.42 'Other garments, womens or girls : -- Of cotton' with India-specific tariff splits for Kurta or Salwar with/without Dupatta (6211.42.11 / 6211.42.19) reflecting Indian traditional apparel.",
+    "Heading 6214 'Shawls, scarves, mufflers, mantillas, veils and the like' has India-specific tariff line splits for chadars (6214.90.21/22/29), odhani (6214.90.31/32/39) — Indian traditional articles — preserved verbatim.",
+    "Tariff line 6214.90.10 description 'Abrabroomal, cotton' contains an apparent OCR/typo error in the source PDF — likely intended 'Abrabroomal' (an Indian traditional article term). Preserved verbatim as in source.",
+    "The Ch.61↔Ch.62 boundary is foundational: Ch.61 covers KNITTED OR CROCHETED apparel; Ch.62 covers NOT KNITTED OR CROCHETED (i.e., WOVEN) apparel. Chapter Note 1 explicitly excludes knitted/crocheted articles (other than those of heading 6212, which can be knitted or crocheted by exception). Chapter Note 2(a) excludes worn clothing → 6309. Chapter Note 2(b) excludes orthopaedic appliances → 9021."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter applies only to made up articles of any textile fabric other than wadding, excluding knitted or crocheted (other than those of heading 6212)."
+    },
+    {
+      "number": "2",
+      "text": "This Chapter does not cover : (a) worn clothing or other worn articles of heading 6309; or (b) orthopaedic appliances, surgical belts, trusses or the like (heading 9021)."
+    },
+    {
+      "number": "3",
+      "text": "For the purposes of headings 6203 and 6204 : (a) the term \"suit\" means a set of garments composed of two or three pieces made up, in respect of their outersurface, in identical fabric and comprising : one suit coat or jacket the outer shell of which, exclusive of sleeves, consists of four or more panels, designed to cover the upper part of the body, possibly with a tailored waistcoat in addition whose front is made from the same fabric as the outer surface of the other components of the set and whose back is made from the same fabric as the lining of the suit coat or jacket; and one garment designed to cover the lower part of the body and consisting of trousers, breaches orshorts(other than swimwear), a skirt or a divided skirt, having neither braces nor bibs. All of the components of a \"suit\" must be of the same fabric construction, colour and composition; they must also be of the same style and of corresponding or compatible size. However, these components may have piping (a strip of fabric sewn into the seam) in a different fabric. If several separate components to cover the lower part of the body are presented together (for example, two pairs of trousers or trousers and shorts, or a skirt or divided skirt and trousers), the constituent lower partshall be one pair of trousers or, in the case of women's or girls'suits, the skirt or divided skirt, the other garments being considered separately. The term \"suit\" includes the following set of garments, whether or not they fulfil all the above conditions: (A) morning dress, comprising a plain jacket (cutaway) with rounded tails hanging well down at the back and striped trousers ; (B) evening dress(tailcoat), generally made of black fabric, the jacket of which is relatively short at the front, does not close and has narrow skirts cut in at the hips and hanging down behind ; (C) dinner jacket suits, in which the jacket is similar in style to an ordinary jacket (though perhaps revealing more of the shirt front), but has shiny silk or imitation silk lapels; (b) the term \"ensemble\" means a set of garments (other than suits and articles of heading 6207 or 6208) composed of several pieces made up in identical fabric, put up for retailsale, and comprising : one garment designed to cover the upper part of the body, with the exception of waistcoats which may also form a second upper garment, and one or two different garments, designed to cover the lower part of the body and consisting of trousers, bib and brace overalls, breeches,shorts(other than swimwear),skirt or a divided skirt. All of the components of an ensemble must be of the same fabric construction,style, colour and composition; they also must be of corresponding or compatible size. The term \"ensemble\" does not apply to track suits and ski suits, of heading 6211."
+    },
+    {
+      "number": "4",
+      "text": "Headings 6205 and 6206 do not cover garments with pockets below the waist, with a ribbed waistband or other means of tightening at the bottom of the garment. Heading 6205 does not cover sleeveless garments. \"Shirts\" and \"shirt-blouses\" are garments designed to cover the upper part of the body, having long or short sleeves and a full or partial opening starting at the neckline. \"Blouses\" are loose-fitting garments also designed to cover the upper part of the body but may be sleeveless and with or without an opening at the neckline. \"Shirts\", \"shirt-blouses\" and \"blouses\" may also have a collar."
+    },
+    {
+      "number": "5",
+      "text": "For the purposes of heading 6209 : (a) the expression \"babies' garments and clothing accessories\" means articles for young children of a body height not exceeding 86 cm; (b) articles which are, prima facie, classifiable both in heading 6209 and in other headings of this Chapter are to be classified in heading 6209."
+    },
+    {
+      "number": "6",
+      "text": "Garments which are, prima facie, classifiable both in heading 6210 and in other headings of this Chapter, excluding heading 6209, are to be classified in heading 6210."
+    },
+    {
+      "number": "7",
+      "text": "For the purposes of heading 6211, \"ski suits\" means garments or sets of garments which, by their general appearance and texture, are identifiable as intended to be worn principally for skiing (cross-country or alpine). They consist either of : (a) a \"ski overall\", that is, a one piece garment designed to cover the upper and the lower parts of the body; in addition to sleeves and a collar the ski overall may have pockets or footstraps; or (b) a \"ski ensemble\", that is, a set of garments composed of two or three pieces, put up for retail sale and comprising : one garment such as an anorak, wind-cheater, wind-jacket or similar article, closed by a slide fastener (zipper), possibly with a waistcoat in addition, and one pair of trousers whether or not extending above waistlevel, one pair of breeches or one bib and brace overall. The \"ski ensemble\" may also consist of an overallsimilar to the one mentioned in paragraph (a) above and a type of padded, sleeveless jacket worn over the overall. All the components of a \"ski ensemble\" must be made up in a fabric of the same texture, style and composition whether or not of the same colour; they also must be of corresponding or compatible size."
+    },
+    {
+      "number": "8",
+      "text": "Scarves and articles of the scarf type, square or approximately square, of which no side exceeds 60 cm are to be classified as handkerchiefs (heading 6213). Handkerchiefs of which any side exceeds 60 cm are to be classified in heading 6214."
+    },
+    {
+      "number": "9",
+      "text": "Garments of this Chapter designed for left over right closure at the front shall be regarded as men's or boys' garments, and those designed for right over left closure at the front as women's or girls' garments. These provisions do not apply where the cut of the garment clearly indicates that it is designed for one or other of the sexes. Garments which cannot be identified as either men's or boys' garments or as women's or girls' garments are to be classified in the headings covering women's or girls' garments."
+    },
+    {
+      "number": "10",
+      "text": "Articles of this Chapter may be made of metal thread."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "This Section does not cover : (a) animal brush making bristles or hair (heading 0502), horsehair or horsehair waste (heading 0511), (b) human hair or articles of human hair (heading 0501, 6703 or 6704), except straining cloth of a kind commonly used in oil presses or the like (heading 5911), (c) cotton linters or other vegetable materials of Chapter 14, (d) asbestos of heading 2524 or articles of asbestos or other products of heading 6812 or 6813, (e) articles of heading 3005 or 3006, yarn used to clean between the teeth (dental floss), in individual retail packages, of heading 3306, (f) sensitised textiles of headings 3701 to 3704, (g) monofilament of which any cross-sectional dimension exceeds 1 mm or strip or the like (for example, artificial straw) of an apparent width exceeding 5 mm, of plastics (Chapter 39), or plaits or fabrics or other basketware or wickerwork of such monofilament or strip (Chapter 46), (h) woven, knitted or crocheted fabrics, felt or nonwovens, impregnated, coated, covered or laminated with plastics, or articles thereof, of Chapter 39, (ij) woven, knitted or crocheted fabrics, felt or nonwovens, impregnated, coated, covered or laminated with rubber, or articles thereof, of Chapter 40, (k) hides or skins with their hair or wool on (Chapter 41 or 43) or articles of furskin, artificial fur or articles thereof, of heading 4303 or 4304, (l) articles of textile materials of heading 4201 or 4202, (m) products or articles of Chapter 48 (for example, cellulose wadding), (n) footwear or parts of footwear, gaiters or leggings or similar articles of Chapter 64, (o) hair-nets or other headgear or parts thereof of Chapter 65, (p) goods of Chapter 67, (q) abrasive-coated textile material (heading 6805) and also carbon fibres or articles of carbon fibres of heading 6815, (r) glass fibres or articles of glass fibres, other than embroidery with glass thread on a visible ground of fabric (Chatper 70), (s) articles of Chapter 94 (for example, furniture, bedding, luminaires and lighting fittings), (t) articles of Chapter 95 (for example, toys, games, sports requisites and nets), (u) Articles of Chapter 96 [for example, brushes, travelsetsforsewing,slide fasteners, typewriter ribbons, sanitary towels (pads) and tampons, napkins (diapers) and napkin liners], or (v) articles of Chapter 97."
+    },
+    {
+      "number": "2",
+      "text": "(A) Goods classifiable in Chapters 50 to 55 or in heading 5809 or 5902 and of a mixture of two or more textile materials are to be classified asif consistingwholly of that one textile material which predominates by weight over any one single textile materilas. When no one textile material predominates by weight, the goods are to be classified as if consiting wholly of that one textile material whcih is covered by the heading which occurs last in numerical order among those which equally merit consideration. (B) For the purposes of the above rule : (a) gimped horsehair yarn (heading 5110) and metallised yarn (heading 5605) are to be treated as a single textile material the weight of which is to be taken as the aggregate of the weights of its components, for the classification of woven fabrics, metal thread isto be regarded as a textile material, (b) the choice of appropriate heading shall be effected by determining first the Chapter and then the applicable heading within that Chapter, disregarding any materials not classified in that Chapter, (c) when both Chapters 54 and 55 are involved with any other Chapter, Chapters 54 and 55 are to be treated as a single Chapter, (d) where a Chapter or a heading refers to goods of different textile materials, such materials are to be treated as a single textile material. (C) The provisions of paragraphs (A) and (B) above apply also to the yarns referred to in Note 3, 4, 5 or 6 below."
+    },
+    {
+      "number": "3",
+      "text": "(A) For the purposes of this Section, and subject to the exceptions in paragraph (B) below, yarns [single, multiple (folded) or cabled] of the following descriptions are to be treated as \"twine, cordage, ropes and cables\" : (a) of silk or waste silk, measuring more than 20,000 decitex, (b) of man-made fibres(including yarn of two or more monofilaments of Chapter 54), measuring more than 10,000 decitex, (c) of true hemp or flax : (i) polished or glazed, measuring 1,429 decitex or more, or (ii) not polished or glazed, measuring more than 20,000 decitex, (d) of coir, consisting of three or more plies, (e) of other vegetable fibres, measuring more than 20,000 decitex, or (f) reinforced with metal thread. (B) Exceptions : (a) yarn of wool or other animal hair and paper yarn, other than yarn reinforced with metal thread, (b) man-made filament tow of Chapter 55 and multifilament yarn without twist or with a twist of less than 5 turns per metre of Chapter 54, (c) silk worm gut of heading 5006, and monofilaments of Chapter 54, (d) metallised yarn of heading 5605, yarn reinforced with metal thread issubject to paragraph (A) (f) above, and (e) chenille yarn, gimped yarn and loop wale-yarn of heading 5606."
+    },
+    {
+      "number": "4",
+      "text": "(A) For the purposes of Chapters 50, 51, 52, 54 and 55, the expression \"put up for retail sale\" in relation to yarn means, subject to the exceptions in paragraph (B) below, yarn [single, multiple (folded) or cabled] put up : (a) on cards, reels, tubes or similar supports, of a weight (including support) not exceeding : (i) 85g in the case of silk, waste silk or man-made filament yarn, or (ii) 125g in other cases, (b) in balls, hanks or skeins of a weight not exceeding : (i) 85g in the case of man-made filament yarn of less than 3,000 decitex, silk or silk waste, (ii) 125g in the case of all other yarns of less than 2,000 decitex, or (iii) 500g in other cases, (c) in hanks or skeins comprising several smaller hanks or skeins separated by dividing threads which render them independent one of the other, each of uniform weight not exceeding : (i) 85g in the case of silk, waste silk or man-made filament yarn, or (ii) 125g in other cases, (B) Exceptions : (a) single yarn of any textile material, except : (i) single yarn of wool or fine animal hair, unbleached, and (ii) single yarn of wool or fine animal hair, bleached, dyed or printed, measuring more than 5,000 decitex, (b) multiple (folded) or cabled yarn, unbleached : (i) of silk or waste silk, however put up, or (ii) of other textile material except wool or fine animal hair, in hanks or skeins, (c) multiple (folded) or cabled yarn of silk or waste silk, bleached, dyed or printed, measuring 133 decitex or less, and (d) single, multiple (folded) or cabled yarn of any textile material : (i) in cross-reeled hanks or skeins, or (ii) put up on supports or in some other manner indicating its use in the textile industry (for example, on cops, twisting mill tubes, pirns, conical bobbins or spindles, or reeled in the form of cocoons for embroidery looms)."
+    },
+    {
+      "number": "5",
+      "text": "For the purposes of headings 5204, 5401 and 5508, the expression \"sewing thread\" means multiple (folded) or cabled yarn : (a) put up on supports (for example, reels, tubes) of a weight (including support) not exceeding 1,000 g, (b) dressed for use as sewing thread, and (c) with a final \"Z\" twist."
+    },
+    {
+      "number": "6",
+      "text": "For the purposes of this Section, the expression \"high tenacity yarn\" means yarn having a tenacity, expressed in cN/tex (centinewtons per tex), greater than the following : single yarn of nylon or other polyamides, or of polyesters 60 cN/tex multiple (folded) or cabled yarn of nylon or other polyamides, or of polyesters 53 cN/tex single, multiple (folded) or cabled yarn of viscose rayon - 27 cN/tex"
+    },
+    {
+      "number": "7",
+      "text": "For the purposes of this Section, the expression \"made up\" means: (a) cut otherwise than into squares or rectangles; (b) produced in the finished state, ready for use (or merely needing separation by cutting dividing threads) without sewing or other working (for example, certain dusters, towels, table cloths, scarf squares; blankets); (c) Cut to size and with at least one heatsealed edge with a visibly tapered or compressed border and the other edges treated as described in any other sub-clause of this Note, but excluding fabrics the cut edges of which have been prevented from unravelling by hot cutting or by other simple means; (d) hemmed or with rolled edges, or with a knotted fringe at any of the edges, but excluding fabrics the cut edges of which have been prevented from unravelling by whipping or by other simple means; (e) cut to size and having undergone a process of drawn thread work; (f) assembled by sewing, gumming or otherwise (other than piece goods consisting of two or more lengths of identical material joined end to end and piece goods composed of two or more textiles assembled in layers, whether or not padded); (g) knitted or crocheted to shape, whether presented as separate items or in the form of a number of items in the length."
+    },
+    {
+      "number": "8",
+      "text": "For the purposes of Chapters 50 to 60: (a) Chapters 50 to 55 and 60 and, except where the context otherwise requires, Chapters 56 to 59 do not apply to goods made up within the meaning of Note 7 above; and (b) Chapters 50 to 55 and 60 do not apply to goods of Chapters 56 to 59."
+    },
+    {
+      "number": "9",
+      "text": "The woven fabrics of Chapters 50 to 55 include fabrics consisting of layers of parallel textile yarns superimposed on each other at acute or right angles. These layers are bonded at the intersections of the yarns by an adhesive or by thermal bonding."
+    },
+    {
+      "number": "10",
+      "text": "Elastic products consisting of textile materials combined with rubber threads are classified in this Section."
+    },
+    {
+      "number": "11",
+      "text": "For the purposes of this Section, the expression \"impregnated\" includes \"dipped\"."
+    },
+    {
+      "number": "12",
+      "text": "For the purposes of this Section, the expression \"polyamides\" includes \"aramids\""
+    },
+    {
+      "number": "13",
+      "text": "For the purposes of this Section and, where applicable, throughout this schedule, the expression \"elastomeric yarn\" means filament yarn, including monofilament, of synthetic textile material, other than textured yarn, which does not break on being extended to three times its original length and which returns, after being extended to twice its original length, within a period of five minutes, to a length not greater than one and a half times its original length."
+    },
+    {
+      "number": "14",
+      "text": "Unless the context otherwise requires, textile garments of different headings are to be classified in their own headings even if put up in sets for retail sale. For the purposes of this Note, the expression \"textile garments\" means garments of headings 6101 to 6114 and headings 6201 to 6211."
+    },
+    {
+      "number": "15",
+      "text": "Subject to Note 1 of Section XI, textiles, garments and other textile articles, incorporating chemical, mechanical or electronic components for additional functionality, whether incorporated as built-in components or within the fibre or fabric, are classified in their respective headings in Section XI provided that they retain the essential character of the goods of this section."
+    }
+  ],
+  "chapter_subheading_notes": [
+    {
+      "number": "Supplementary Note 1",
+      "text": "For the purpose of this Chapter, \"Khadi\" means, (a) the article of apparel or clothing accessories, made from any cloth woven on handlooms in India from cotton, silk or woollen yarn handspun in India or from a mixture of any two or all of such yarns; and (b) produced by a person certified or recognised by the Khadi Village Industries Commission established under section 4 of the Khadi and Village Industries Commission Act, 1956 (61 of 1956)."
+    },
+    {
+      "number": "Supplementary Note 2",
+      "text": "For the purpose of this chapter, inherent Fire Retardant (FR) fibres, as specified in IS 11871, IS 13501, IS 15742, IS 15742 A, are those in which the FR properties are naturally part of the polymer backbone and can never be worn away or washed out."
+    },
+    {
+      "number": "Supplementary Note 3",
+      "text": "(a) For the purpose of this chapter, \"Lucknow Chikan craft\" refers to a type of embroidery defined and recognized by the Geographical Indication (GI) Registry against the GI no. 119 under the Geographical Indication of Goods (Registration and Protection) Act, 1999. (b) Produced/Manufactured by a person certified/recognized and mentioned as a user in the Geographical Indication Registry against the said GI no. 119."
+    }
+  ],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "Knitted or crocheted articles of apparel and clothing accessories (other than those of heading 6212)",
+      "redirects_to_chapter": "61",
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1",
+      "source_note_text": "This Chapter applies only to made up articles of any textile fabric other than wadding, excluding knitted or crocheted (other than those of heading 6212)."
+    },
+    {
+      "excluded_product_text": "Wadding (textile articles of wadding)",
+      "redirects_to_chapter": "56",
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1",
+      "source_note_text": "This Chapter applies only to made up articles of any textile fabric other than wadding, excluding knitted or crocheted (other than those of heading 6212)."
+    },
+    {
+      "excluded_product_text": "Worn clothing or other worn articles",
+      "redirects_to_chapter": "63",
+      "redirects_to_heading": "6309",
+      "source_note_number": "Chapter Note 2(a)",
+      "source_note_text": "This Chapter does not cover : (a) worn clothing or other worn articles of heading 6309"
+    },
+    {
+      "excluded_product_text": "Orthopaedic appliances, surgical belts, trusses or the like",
+      "redirects_to_chapter": "90",
+      "redirects_to_heading": "9021",
+      "source_note_number": "Chapter Note 2(b)",
+      "source_note_text": "(b) orthopaedic appliances, surgical belts, trusses or the like (heading 9021)"
+    },
+    {
+      "excluded_product_text": "Animal brush making bristles or hair",
+      "redirects_to_chapter": "05",
+      "redirects_to_heading": "0502",
+      "source_note_number": "Section XI Note 1(a)",
+      "source_note_text": "This Section does not cover : (a) animal brush making bristles or hair (heading 0502), horsehair or horsehair waste (heading 0511)"
+    },
+    {
+      "excluded_product_text": "Horsehair or horsehair waste",
+      "redirects_to_chapter": "05",
+      "redirects_to_heading": "0511",
+      "source_note_number": "Section XI Note 1(a)",
+      "source_note_text": "(a) animal brush making bristles or hair (heading 0502), horsehair or horsehair waste (heading 0511)"
+    },
+    {
+      "excluded_product_text": "Human hair or articles of human hair",
+      "redirects_to_chapter": "67",
+      "redirects_to_heading": "6703",
+      "source_note_number": "Section XI Note 1(b)",
+      "source_note_text": "(b) human hair or articles of human hair (heading 0501, 6703 or 6704), except straining cloth of a kind commonly used in oil presses or the like (heading 5911)"
+    },
+    {
+      "excluded_product_text": "Cotton linters or other vegetable materials",
+      "redirects_to_chapter": "14",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(c)",
+      "source_note_text": "(c) cotton linters or other vegetable materials of Chapter 14"
+    },
+    {
+      "excluded_product_text": "Asbestos or articles of asbestos",
+      "redirects_to_chapter": "25",
+      "redirects_to_heading": "2524",
+      "source_note_number": "Section XI Note 1(d)",
+      "source_note_text": "(d) asbestos of heading 2524 or articles of asbestos or other products of heading 6812 or 6813"
+    },
+    {
+      "excluded_product_text": "Pharmaceutical articles (e.g., wadding, gauze, bandages); dental floss in retail packs",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": "3005",
+      "source_note_number": "Section XI Note 1(e)",
+      "source_note_text": "(e) articles of heading 3005 or 3006, yarn used to clean between the teeth (dental floss), in individual retail packages, of heading 3306"
+    },
+    {
+      "excluded_product_text": "Sensitised textiles (photographic)",
+      "redirects_to_chapter": "37",
+      "redirects_to_heading": "3701",
+      "source_note_number": "Section XI Note 1(f)",
+      "source_note_text": "(f) sensitised textiles of headings 3701 to 3704"
+    },
+    {
+      "excluded_product_text": "Monofilament with cross-section >1mm, or plastic strip with apparent width >5mm; plaits/fabrics of such monofilament",
+      "redirects_to_chapter": "39",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(g)",
+      "source_note_text": "(g) monofilament of which any cross-sectional dimension exceeds 1 mm or strip or the like (for example, artificial straw) of an apparent width exceeding 5 mm, of plastics (Chapter 39), or plaits or fabrics or other basketware or wickerwork of such monofilament or strip (Chapter 46)"
+    },
+    {
+      "excluded_product_text": "Woven, knitted or crocheted fabrics, felt or nonwovens, impregnated/coated/covered/laminated with plastics",
+      "redirects_to_chapter": "39",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(h)",
+      "source_note_text": "(h) woven, knitted or crocheted fabrics, felt or nonwovens, impregnated, coated, covered or laminated with plastics, or articles thereof, of Chapter 39"
+    },
+    {
+      "excluded_product_text": "Woven, knitted or crocheted fabrics, felt or nonwovens, impregnated/coated/covered/laminated with rubber",
+      "redirects_to_chapter": "40",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(ij)",
+      "source_note_text": "(ij) woven, knitted or crocheted fabrics, felt or nonwovens, impregnated, coated, covered or laminated with rubber, or articles thereof, of Chapter 40"
+    },
+    {
+      "excluded_product_text": "Hides or skins with their hair or wool on",
+      "redirects_to_chapter": "41",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(k)",
+      "source_note_text": "(k) hides or skins with their hair or wool on (Chapter 41 or 43) or articles of furskin, artificial fur or articles thereof, of heading 4303 or 4304"
+    },
+    {
+      "excluded_product_text": "Articles of furskin, artificial fur or articles thereof",
+      "redirects_to_chapter": "43",
+      "redirects_to_heading": "4303",
+      "source_note_number": "Section XI Note 1(k)",
+      "source_note_text": "(k) hides or skins with their hair or wool on (Chapter 41 or 43) or articles of furskin, artificial fur or articles thereof, of heading 4303 or 4304"
+    },
+    {
+      "excluded_product_text": "Articles of textile materials of heading 4201 (saddlery and harness) or 4202 (trunks, suit-cases, handbags, etc.)",
+      "redirects_to_chapter": "42",
+      "redirects_to_heading": "4201",
+      "source_note_number": "Section XI Note 1(l)",
+      "source_note_text": "(l) articles of textile materials of heading 4201 or 4202"
+    },
+    {
+      "excluded_product_text": "Products or articles of Chapter 48 (e.g., cellulose wadding)",
+      "redirects_to_chapter": "48",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(m)",
+      "source_note_text": "(m) products or articles of Chapter 48 (for example, cellulose wadding)"
+    },
+    {
+      "excluded_product_text": "Footwear or parts of footwear, gaiters or leggings or similar articles",
+      "redirects_to_chapter": "64",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(n)",
+      "source_note_text": "(n) footwear or parts of footwear, gaiters or leggings or similar articles of Chapter 64"
+    },
+    {
+      "excluded_product_text": "Hair-nets or other headgear or parts thereof",
+      "redirects_to_chapter": "65",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(o)",
+      "source_note_text": "(o) hair-nets or other headgear or parts thereof of Chapter 65"
+    },
+    {
+      "excluded_product_text": "Goods of Chapter 67 (umbrellas, walking-sticks, feathers, artificial flowers)",
+      "redirects_to_chapter": "67",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(p)",
+      "source_note_text": "(p) goods of Chapter 67"
+    },
+    {
+      "excluded_product_text": "Abrasive-coated textile material; carbon fibres or articles of carbon fibres",
+      "redirects_to_chapter": "68",
+      "redirects_to_heading": "6805",
+      "source_note_number": "Section XI Note 1(q)",
+      "source_note_text": "(q) abrasive-coated textile material (heading 6805) and also carbon fibres or articles of carbon fibres of heading 6815, of glass fibres or articles of glass fibres"
+    },
+    {
+      "excluded_product_text": "Glass fibres or articles of glass fibres, other than embroidery with glass thread on a visible ground of fabric",
+      "redirects_to_chapter": "70",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(r)",
+      "source_note_text": "(r) glass fibres or articles of glass fibres, other than embroidery with glass thread on a visible ground of fabric (Chatper 70)"
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 94 (e.g., furniture, bedding, luminaires and lighting fittings)",
+      "redirects_to_chapter": "94",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(s)",
+      "source_note_text": "(s) articles of Chapter 94 (for example, furniture, bedding, luminaires and lighting fittings)"
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 95 (e.g., toys, games, sports requisites and nets)",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(t)",
+      "source_note_text": "(t) articles of Chapter 95 (for example, toys, games, sports requisites and nets)"
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 96 (e.g., brushes, travel sets for sewing, slide fasteners, typewriter ribbons, sanitary towels/pads, tampons, napkins/diapers and napkin liners)",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(u)",
+      "source_note_text": "(u) Articles of Chapter 96 [for example, brushes, travelsetsforsewing,slide fasteners, typewriter ribbons, sanitary towels (pads) and tampons, napkins (diapers) and napkin liners]"
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 97 (works of art, collectors' pieces, antiques)",
+      "redirects_to_chapter": "97",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(v)",
+      "source_note_text": "(v) articles of Chapter 97"
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "6201",
+      "title": "MEN'S OR BOYS' OVERCOATS, CAR-COATS, CAPES, CLOAKS, ANORAKS (INCLUDING SKI-JACKETS), WIND-CHEATERS, WIND-JACKETS AND SIMILAR ARTICLES, OTHER THAN THOSE OF HEADING 6203",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6201.20",
+          "title": "Of wool or fine animal hair:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6201.20.10",
+              "description": "Overcoats, raincoats, car-coats, capes, cloaks and similar articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6201.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6201.30",
+          "title": "Of cotton:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6201.30.10",
+              "description": "Overcoats, raincoats, car-coats, capes, cloaks and similar articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6201.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6201.40",
+          "title": "Of man-made fibres:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6201.40.10",
+              "description": "Overcoats, raincoats, car-coats, capes, cloaks and similar articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6201.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6201.90",
+          "title": "Of other textile materials:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6201.90.10",
+              "description": "Overcoats, raincoats, car-coats, capes, cloaks and similar articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6201.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6202",
+      "title": "WOMEN'S OR GIRLS' OVERCOATS, CARCOATS, CAPES, CLOAKS, ANORAKS (INCLUDING SKI-JACKETS), WINDCHEATERS, WIND-JACKETS AND SIMILAR ARTICLES, OTHER THAN THOSE OF HEADING 6204",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6202.20",
+          "title": "Of wool or fine animal hair:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6202.20.10",
+              "description": "Overcoats, raincoats, car-coats, capes, cloaks and similar articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6202.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6202.30",
+          "title": "Of cotton:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6202.30.10",
+              "description": "Overcoats, raincoats, car-coats, capes, cloaks and similar articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6202.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6202.40",
+          "title": "Of man-made fibres:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6202.40.10",
+              "description": "Overcoats, raincoats, car-coats, capes, cloaks and similar articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6202.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6202.90",
+          "title": "Of other textile materials:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6202.90.10",
+              "description": "Overcoats, raincoats, car-coats, capes, cloaks and similar articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6202.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6203",
+      "title": "Mens or boys suits, ensembles, jackets, blazers, trousers, bib and brace overalls, breeches and shorts (other than swimwear).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6203.11",
+          "title": "Suits : -- Of wool or fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6203.11.00",
+              "description": "Suits : -- Of wool or fine animal hair",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6203.12",
+          "title": "Suits : -- Of synthetic fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6203.12.00",
+              "description": "Suits : -- Of synthetic fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6203.19",
+          "title": "Suits : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6203.19.10",
+              "description": "Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6203.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6203.22",
+          "title": "Ensembles : -- Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6203.22.00",
+              "description": "Ensembles : -- Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6203.23",
+          "title": "Ensembles : -- Of synthetic fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6203.23.00",
+              "description": "Ensembles : -- Of synthetic fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6203.29",
+          "title": "Ensembles : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6203.29.11",
+              "description": "Of silk: ---- Khadi",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6203.29.19",
+              "description": "Of silk: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6203.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6203.31",
+          "title": "Jackets and blazers : -- Of wool or fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6203.31.10",
+              "description": "Khadi",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6203.31.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6203.32",
+          "title": "Jackets and blazers : -- Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6203.32.10",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6203.32.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6203.33",
+          "title": "Jackets and blazers : -- Of synthetic fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6203.33.10",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6203.33.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6203.39",
+          "title": "Jackets and blazers : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6203.39.12",
+              "description": "Of silk: ---- Khadi",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6203.39.13",
+              "description": "Of silk: ---- embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6203.39.19",
+              "description": "Of silk: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6203.39.91",
+              "description": "Other ---- Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6203.39.99",
+              "description": "Other---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6203.41",
+          "title": "Trousers, bib and brace overalls, breeches and shorts : -- Of wool or fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6203.41.00",
+              "description": "Trousers, bib and brace overalls, breeches and shorts : -- Of wool or fine animal hair",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6203.42",
+          "title": "Trousers, bib and brace overalls, breeches and shorts : -- Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6203.42.10",
+              "description": "Trousers, bib and brace overalls, breeches and shorts: ---- Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6203.42.90",
+              "description": "Trousers, bib and brace overalls, breeches and shorts: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6203.43",
+          "title": "Trousers, bib and brace overalls, breeches and shorts : -- Of synthetic fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6203.43.00",
+              "description": "Trousers, bib and brace overalls, breeches and shorts : -- Of synthetic fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6203.49",
+          "title": "Trousers, bib and brace overalls, breeches and shorts : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6203.49.10",
+              "description": "Of silk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6203.49.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6204",
+      "title": "Womens or girls suits, ensembles, jackets, blazers, dresses, skirts, divided skirts, trousers, bib and brace overalls, breeches and shorts (other than swimwear).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6204.11",
+          "title": "Suits : -- Of wool or fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.11.00",
+              "description": "Suits : -- Of wool or fine animal hair",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.12",
+          "title": "Suits : -- Of cotton:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.12.10",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.13",
+          "title": "Suits : -- Of synthetic fibres:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.13.10",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.13.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.19",
+          "title": "Suits : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.19.11",
+              "description": "Of silk: ---- Sequinned or beaded with chattons or embroidered",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.19.12",
+              "description": "Of silk: ---- Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.19.19",
+              "description": "Of silk: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.19.91",
+              "description": "Of all other fibres: ---- Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.19.99",
+              "description": "Of all other fibres: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.21",
+          "title": "Ensembles : -- Of wool or fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.21.00",
+              "description": "Ensembles : -- Of wool or fine animal hair",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.22",
+          "title": "Ensembles : -- Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.22.10",
+              "description": "Blouses combined with skirts, trousers or shorts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.22.20",
+              "description": "Of cotton : Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.22.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.23",
+          "title": "Ensembles : -- Of synthetic fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.23.10",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.23.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.29",
+          "title": "Ensembles : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.29.12",
+              "description": "Khadi",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.29.13",
+              "description": "Of silk ---- embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.29.19",
+              "description": "Of silk ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.29.91",
+              "description": "Other ---- Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.29.99",
+              "description": "Other ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.31",
+          "title": "Jackets and blazers : -- Of wool or fine animal hair:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.31.10",
+              "description": "Jackets and blazers: ---- Khadi",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.31.90",
+              "description": "Jackets and blazers: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.32",
+          "title": "Jackets and blazers : -- Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.32.10",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.32.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.33",
+          "title": "Jackets and blazers : -- Of synthetic fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.33.10",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.33.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.39",
+          "title": "Jackets and blazers : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.39.12",
+              "description": "Of silk: ---- Khadi",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.39.13",
+              "description": "Of silk: ---- embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.39.19",
+              "description": "Of silk: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.39.91",
+              "description": "Other ---- Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.39.99",
+              "description": "Other---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.41",
+          "title": "Dresses : -- Of wool or fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.41.10",
+              "description": "House coats and like dresses",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.41.20",
+              "description": "Blazers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.41.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.42",
+          "title": "Dresses : -- Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.42.10",
+              "description": "House coats and the like dresses",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.42.20",
+              "description": "Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.42.30",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.42.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.43",
+          "title": "Dresses : -- Of synthetic fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.43.10",
+              "description": "House coats and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.43.20",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.43.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.44",
+          "title": "Dresses : -- Of artificial fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.44.10",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.44.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.49",
+          "title": "Dresses : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.49.11",
+              "description": "Of silk: ---- House coats and the like dresses",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.49.12",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.49.19",
+              "description": "Of silk: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.49.91",
+              "description": "Other: ---- Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.49.99",
+              "description": "Other---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.51",
+          "title": "Skirts and divided skirts : -- Of wool or fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.51.00",
+              "description": "Skirts and divided skirts : -- Of wool or fine animal hair",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.52",
+          "title": "Skirts and divided skirts : -- Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.52.10",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.52.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.53",
+          "title": "Skirts and divided skirts : -- Of synthetic fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.53.10",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.53.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.59",
+          "title": "Skirts and divided skirts : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.59.11",
+              "description": "of silk:---- Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.59.19",
+              "description": "of silk:---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.59.91",
+              "description": "Other: ---- Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.59.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.61",
+          "title": "Trousers, bib and brace overalls, breeches and shorts : -- Of wool or fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.61.10",
+              "description": "Trousers and shorts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.61.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.62",
+          "title": "Other Trousers, bib and brace overalls, breeches and shorts : -- Of cotton:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.62.10",
+              "description": "Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.62.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.63",
+          "title": "Trousers, bib and brace overalls, breeches and shorts : -- Of synthetic fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.63.00",
+              "description": "Trousers, bib and brace overalls, breeches and shorts : -- Of synthetic fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6204.69",
+          "title": "Trousers, bib and brace overalls, breeches and shorts : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6204.69.11",
+              "description": "Sequinned or beaded or embroidered",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.69.19",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6204.69.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6205",
+      "title": "Mens or boys shirts.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6205.20",
+          "title": "Of cotton:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6205.20.10",
+              "description": "Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6205.20.20",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6205.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6205.30",
+          "title": "Of man-made fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6205.30.10",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6205.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6205.90",
+          "title": "Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6205.90.11",
+              "description": "Khadi",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6205.90.12",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6205.90.19",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6205.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6206",
+      "title": "Womens or girls blouses, shirts and shirt-blouses.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6206.10",
+          "title": "Of silk or silk waste",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6206.10.10",
+              "description": "Of silk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6206.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6206.20",
+          "title": "Of wool or fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6206.20.00",
+              "description": "Of wool or fine animal hair",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6206.30",
+          "title": "Of cotton:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6206.30.10",
+              "description": "Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6206.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6206.40",
+          "title": "Of man-made fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6206.40.00",
+              "description": "Of man-made fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6206.90",
+          "title": "Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6206.90.00",
+              "description": "Of other textile materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6207",
+      "title": "Mens or boys singlets and other vests, underpants, briefs, nightshirts, pyjamas, bathrobes, dressing gowns and similar articles.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6207.11",
+          "title": "Underpants and briefs : -- Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6207.11.00",
+              "description": "Underpants and briefs: ---- Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6207.19",
+          "title": "Underpants and briefs : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6207.19.10",
+              "description": "Of synthetic fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6207.19.20",
+              "description": "Of wool",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6207.19.30",
+              "description": "Of silk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6207.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6207.21",
+          "title": "Nightshirts and pyjamas : -- Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6207.21.90",
+              "description": "Night shirts and pyjamas: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6207.22",
+          "title": "Nightshirts and pyjamas : -- Of man-made fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6207.22.00",
+              "description": "Nightshirts and pyjamas : -- Of man-made fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6207.29",
+          "title": "Nightshirts and pyjamas : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6207.29.00",
+              "description": "Nightshirts and pyjamas : -- Of other textile materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6207.91",
+          "title": "Other : -- Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6207.91.10",
+              "description": "Dressing gowns and bath robes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6207.91.20",
+              "description": "Under shirts other than hand printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6207.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6207.99",
+          "title": "Other : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6207.99.11",
+              "description": "Of silk: ---- Dressing gowns and bathrobes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6207.99.19",
+              "description": "Of silk: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6207.99.21",
+              "description": "Of wool: ---- Dressing gowns and bathrobes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6207.99.29",
+              "description": "Of wool: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6207.99.90",
+              "description": "Of wool: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6208",
+      "title": "Womens or girls singlets and other vests, slips, petticoats, briefs, panties, nightdresses, pyjamas, negligees, bathrobes, dressing gowns and similar articles.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6208.11",
+          "title": "Slips and petticoats : -- Of man-made fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6208.11.00",
+              "description": "Slips and petticoats : -- Of man-made fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6208.19",
+          "title": "Slips and petticoats : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6208.19.10",
+              "description": "Of cotton other than hand printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6208.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6208.21",
+          "title": "Nightdresses and pyjamas : -- Of cotton:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6208.21.10",
+              "description": "Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6208.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6208.22",
+          "title": "Nightdresses and pyjamas : -- Of man-made fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6208.22.00",
+              "description": "Nightdresses and pyjamas : -- Of man-made fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6208.29",
+          "title": "Nightdresses and pyjamas : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6208.29.10",
+              "description": "Of silk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6208.29.20",
+              "description": "Of wool",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6208.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6208.91",
+          "title": "Other : -- Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6208.91.10",
+              "description": "Dressing gowns and bathrobes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6208.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6208.92",
+          "title": "Other : -- Of man-made fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6208.92.10",
+              "description": "Dressing gowns and bathrobes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6208.92.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6208.99",
+          "title": "Other : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6208.99.10",
+              "description": "Dressing gowns and bathrobes of wool",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6208.99.20",
+              "description": "Dressing gowns and bathrobes of silk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6208.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6209",
+      "title": "Babies garments and clothing accessories.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6209.20",
+          "title": "Of cotton:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6209.20.10",
+              "description": "Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6209.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6209.30",
+          "title": "Of synthetic fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6209.30.00",
+              "description": "Of synthetic fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6209.90",
+          "title": "Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6209.90.10",
+              "description": "Of silk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6209.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6210",
+      "title": "Garments, made up of fabrics of heading 56.02, 56.03, 59.03, 59.06 or 59.07.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6210.10",
+          "title": "Of fabrics of heading 5602 or 5603",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6210.10.10",
+              "description": "Personal protective garments for surgical/medical use (felt or nonwoven) conforming to IS 17423",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6210.10.20",
+              "description": "Surgical gowns and drapes conforming to IS 17334",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6210.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6210.20",
+          "title": "Other garments, of the type described in heading 6201",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6210.20.10",
+              "description": "Outer garments, of rubberised textile fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6210.20.20",
+              "description": "Outer garments, of fabrics impregnated, coated, covered or laminated with preparations of cellulose derivatives and other artificial plastic materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6210.20.30",
+              "description": "Outer garments, of fabrics otherwise impregnated or coated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6210.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6210.30",
+          "title": "Other garments, of the type described in heading 6202",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6210.30.10",
+              "description": "Outer garments, of textiles impregnated, coated, covered or laminated with preparations of cellulose derivatives and other artificial plastic materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6210.30.20",
+              "description": "Outer garments, of rubberised textile fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6210.30.30",
+              "description": "Outer garments, of fabrics otherwise impregnated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6210.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6210.40",
+          "title": "Other mens or boys garments",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6210.40.10",
+              "description": "Bullet proof jacket, bomb disposal jacket and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6210.40.20",
+              "description": "NBC Warfare suits and the like (conforming to IS 17377)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6210.40.30",
+              "description": "High Visibility Warning Clothes and the like (Conforming to IS 15809)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6210.40.40",
+              "description": "High Altitude Clothes (Conforming to IS 5866)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6210.40.50",
+              "description": "Fighter Aircraft Clothing (Conforming to IS 11871)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6210.40.60",
+              "description": "Personal protective garments for surgical /medical use (felt or non-woven) piece, whichever is higher",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6210.40.70",
+              "description": "Surgical gowns and drapes conforming to IS 17334",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6210.40.80",
+              "description": "Clothing for special use such as FR, chemical (IS 15071,15758), electrical (IS 11871, IS piece, whichever is 16655) and industrial protection (IS 17466)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6210.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6210.50",
+          "title": "Other womens or girls garments",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6210.50.00",
+              "description": "Other womens or girls garments",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6211",
+      "title": "Track suits, ski suits and swimwear; other garments.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6211.11",
+          "title": "Swimwear : -- Mens or boys",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6211.11.00",
+              "description": "Swimwear : -- Mens or boys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6211.12",
+          "title": "Swimwear : -- Womens or girls",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6211.12.00",
+              "description": "Swimwear : -- Womens or girls",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6211.20",
+          "title": "Ski suits",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6211.20.00",
+              "description": "Ski suits",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6211.32",
+          "title": "Other garments, mens or boys : -- Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6211.32.00",
+              "description": "Other garments, mens or boys : -- Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6211.33",
+          "title": "Other garments, mens or boys : -- Of man-made fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6211.33.00",
+              "description": "Other garments, mens or boys : -- Of man-made fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6211.39",
+          "title": "Other garments, men's or boys' :-- Of other textile materials:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6211.39.11",
+              "description": "Other garments, mens or boys: ---- Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6211.39.19",
+              "description": "Other garments, mens or boys: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6211.39.90",
+              "description": "Other garments, mens or boys: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6211.42",
+          "title": "Other garments, womens or girls : -- Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6211.42.11",
+              "description": "Kurta or Salwar with or without Dupatta ---- Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6211.42.19",
+              "description": "Kurta or Salwar with or without Dupatta---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6211.42.91",
+              "description": "Other: ---- Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6211.42.99",
+              "description": "Other:---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6211.43",
+          "title": "Other garments, womens or girls : -- Of man-made fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6211.43.10",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6211.43.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6211.49",
+          "title": "Other garments, womens or girls : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6211.49.10",
+              "description": "Of wool or fine animal hair",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6211.49.21",
+              "description": "Khadi",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6211.49.22",
+              "description": "of silk: ---- Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6211.49.29",
+              "description": "of silk: --- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6211.49.91",
+              "description": "Other: ---- Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6211.49.99",
+              "description": "Other:---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6212",
+      "title": "Brassieres, girdles, corsets, braces, suspenders, garters and similar articles and parts thereof, whether or not knitted or crocheted.",
+      "heading_notes": [
+        {
+          "number": "Inclusion exception",
+          "text": "Heading 6212 is the sole heading in Chapter 62 that may cover knitted or crocheted articles (per Chapter Note 1). Brassieres, girdles, corsets etc. are classified here whether or not knitted or crocheted."
+        }
+      ],
+      "subheadings": [
+        {
+          "subheading": "6212.10",
+          "title": "Brassieres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6212.10.00",
+              "description": "Brassieres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6212.20",
+          "title": "Girdles and panty-girdles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6212.20.00",
+              "description": "Girdles and panty-girdles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6212.30",
+          "title": "Corselettes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6212.30.00",
+              "description": "Corselettes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6212.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6212.90.10",
+              "description": "Suspender belts, braces, suspender garters",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6212.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6213",
+      "title": "Handkerchiefs.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6213.20",
+          "title": "Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6213.20.00",
+              "description": "Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6213.90",
+          "title": "Of other textile materials :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6213.90.10",
+              "description": "Of man-made fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6213.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6214",
+      "title": "Shawls, scarves, mufflers, mantillas, veils and the like.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6214.10",
+          "title": "Of silk or silk waste",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6214.10.10",
+              "description": "Scarves of silk measuring 60 cms or less",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.10.20",
+              "description": "Shawls, scarves (exceeding 60 cms) and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.10.30",
+              "description": "of Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.10.40",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6214.20",
+          "title": "Of wool or fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6214.20.10",
+              "description": "Shawls",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.20.21",
+              "description": "Khadi",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.20.29",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.20.31",
+              "description": "Khadi",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.20.39",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6214.30",
+          "title": "Of synthetic fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6214.30.10",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6214.40",
+          "title": "Of artificial fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6214.40.10",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6214.90",
+          "title": "Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6214.90.10",
+              "description": "Abrabroomal, cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.90.21",
+              "description": "chadars, cotton: ---- Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.90.22",
+              "description": "chadars, cotton: ---- White bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.90.29",
+              "description": "chadars, cotton: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.90.31",
+              "description": "odhani, cotton: ---- Grey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.90.32",
+              "description": "odhani, cotton: ---- White bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.90.39",
+              "description": "odhani, cotton: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.90.41",
+              "description": "Scarves, cotton: ---- Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.90.49",
+              "description": "Scarves, cotton: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.90.51",
+              "description": "Shawls, mufflers and the like of cotton: ---- Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.90.59",
+              "description": "Shawls, mufflers and the like of cotton: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.90.61",
+              "description": "Shawls, mufflers and the like of man-made fibres: ---- Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.90.69",
+              "description": "Shawls, mufflers and the like of man-made fibres: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.90.91",
+              "description": "Other: ---- Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6214.90.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6215",
+      "title": "Ties, bow ties and cravats.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6215.10",
+          "title": "Of silk or silk waste:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6215.10.10",
+              "description": "Khadi",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6215.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6215.20",
+          "title": "Of man-made fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6215.20.00",
+              "description": "Of man-made fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6215.90",
+          "title": "Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6215.90.10",
+              "description": "Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6215.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6216",
+      "title": "Gloves, mittens and mitts.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6216.00",
+          "title": "Gloves, mittens and mitts :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6216.00.10",
+              "description": "Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6216.00.20",
+              "description": "of Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6216.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "6217",
+      "title": "Other made up clothing accessories; parts of garments or of Other made up clothing accessories; parts of garments or of clothing accessories, other than those of heading 62.12.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6217.10",
+          "title": "Accessories",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6217.10.10",
+              "description": "For articles of apparel, of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6217.10.20",
+              "description": "For articles of apparel, of synthetic fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6217.10.30",
+              "description": "For articles of apparel, of wool",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6217.10.40",
+              "description": "For articles of apparel, of silk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "36/2015-20  06.10.2020"
+            },
+            {
+              "code": "6217.10.50",
+              "description": "For articles of apparel, of regenerated fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "36/2015-20  06.10.2020"
+            },
+            {
+              "code": "6217.10.60",
+              "description": "For articles of apparel, of other fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "36/2015-20  06.10.2020"
+            },
+            {
+              "code": "6217.10.70",
+              "description": "Stockings, socks, sockettes and the like, of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "36/2015-20  06.10.2020"
+            },
+            {
+              "code": "6217.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "36/2015-20  06.10.2020"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6217.90",
+          "title": "Parts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6217.90.10",
+              "description": "Collar cuffs and the like of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6217.90.20",
+              "description": "Of silk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6217.90.30",
+              "description": "Of wool",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6217.90.40",
+              "description": "Separately presented removable linings for raincoats and other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6217.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

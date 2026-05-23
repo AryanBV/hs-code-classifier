@@ -1,0 +1,168 @@
+{
+  "chapter": "80",
+  "title": "TIN AND ARTICLES THEREOF",
+  "section": "XV",
+  "source_pdf": "Chapter 80 Tin And Articles Thereof.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "Schedule 2 Export Policy PDF for Chapter 80. PDF contains only Sub-Heading Notes (1 note) plus the tariff schedule. No Main (Chapter) Notes, no Section Notes, no Supplementary Notes are printed in this Chapter 80 PDF. Section XV Main/Section Notes were captured in prior Section XV chapter extractions (Ch.74/75/82) per task brief and are NOT duplicated here — section_notes left empty.",
+    "Sub-Heading Note 1 contains a definitional table 'OTHER ELEMENTS — Element / Limiting content % by weight: Bi BISMUTH 0.1, Cu COPPER 0.4'. The PDF renders this table inline as a token 'TABLE ? OTHER ELEMENTS Element Limiting content % by weight Bi BISMUTH 0.1 Cu COPPER 0.4' (the '?' is an OCR artifact for the table marker). Reproduced verbatim in the note text exactly as printed.",
+    "Sub-Heading Note 1 is the standard HS Chapter 80 Sub-heading Note defining 'Tin, not alloyed' (sub-heading 8001.10) and 'Tin alloys' (sub-heading 8001.20). It is the legal basis for distinguishing 8001.10 from 8001.20 — captured as a guidance reference but not as an exclusion_clause (it is a definitional note, not a redirect to another chapter).",
+    "PDF source uses 8-digit codes without dots (e.g., '80011010'). Normalized to NNNN.NN.NN format (e.g., '8001.10.10') per project schema. Subheading numbers in the PDF (e.g., '800110' or '800200') normalized to NNNN.NN form (e.g., '8001.10' / '8002.00').",
+    "Headings 8004 (Tin plates, sheets and strip), 8005 (Tin foil; tin powders and flakes — repealed) and 8006 (Tin tubes, pipes and tube or pipe fittings) are NOT present in this Indian ITC(HS) Chapter 80 PDF. The Indian ITC(HS) Schedule 2 for Chapter 80 contains only headings 8001, 8002, 8003 and 8007. Reproduced as printed — no synthesised headings added.",
+    "Heading 8002 has a single subheading wrapper '8002.00' (PDF row '800200' with title 'Tin waste and scrap :') carrying tariff lines 8002.00.10 and 8002.00.90 — modelled as subheading '8002.00' to retain valid NNNN.NN.NN structure.",
+    "Heading 8003 has a single subheading wrapper '8003.00' (PDF row '800300' with title 'Tin bars, rods, profiles and wire :') carrying tariff lines 8003.00.10 through 8003.00.40.",
+    "Heading 8007 has a single subheading wrapper '8007.00' (PDF row '800700' with title 'Other articles of tin :') carrying tariff lines 8007.00.10 and 8007.00.90.",
+    "Tariff line 8003.00.20 description in source PDF reads 'Bars,other than hollow bars and rods' (missing space after comma). Reproduced verbatim — source PDF artifact.",
+    "Unit (kg/u/etc.) information is not present in this PDF — all unit fields set to null.",
+    "Policy Condition column is empty for every tariff line in this chapter — all policy_condition fields set to null.",
+    "Export Policy for every tariff line in this chapter is 'Free' (no Restricted, Prohibited or STE items in Chapter 80).",
+    "PDF table-chrome headers ('Sub-Heading Notes', 'Sl.No. Notes Notification Date Notification No', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "No exclusion clauses are present at the Chapter 80 level (no Chapter Notes are printed in the source PDF). exclusion_clauses array is empty by design — any Section XV exclusions belong to the Section-level extraction already captured under Ch.74/75/82."
+  ],
+  "chapter_notes": [],
+  "section_notes": [],
+  "exclusion_clauses": [],
+  "sub_heading_notes": [
+    {
+      "number": "1",
+      "text": "In this Chapter, the following expressions have the meanings hereby assigned to them: (a) Tin, not alloyed: Metal containing by weight at least 99% of tin, provided that the content by weight of any bismuth or copper is less than the limit specified in the following Table: TABLE ? OTHER ELEMENTS Element Limiting content % by weight Bi BISMUTH 0.1 Cu COPPER 0.4 (b) Tin alloys: Metallic substances in which tin predominates by weight over each of the other elements, provided that: (i) the total content by weight of such other elements exceeds 1%; or (ii) the content by weight of either bismuth or copper is equal to or greater than the limit specified in the foregoing table",
+      "notification_date": null,
+      "notification_no": null
+    }
+  ],
+  "headings": [
+    {
+      "code": "8001",
+      "title": "Unwrought tin.",
+      "subheadings": [
+        {
+          "code": "8001.10",
+          "title": "Tin, not alloyed",
+          "tariff_lines": [
+            {
+              "code": "8001.10.10",
+              "description": "Blocks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8001.10.90",
+              "description": "Ingots, pigs, slabs and other primary forms of tin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8001.20",
+          "title": "Tin alloys",
+          "tariff_lines": [
+            {
+              "code": "8001.20.00",
+              "description": "Tin alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "8002",
+      "title": "Tin waste and scrap.",
+      "subheadings": [
+        {
+          "code": "8002.00",
+          "title": "Tin waste and scrap :",
+          "tariff_lines": [
+            {
+              "code": "8002.00.10",
+              "description": "Tin scrap, namely the following: Block tin covered by ISRI code word Ranch; High tin base babbit covered by ISRI code word Raves; Pewter covered by ISRI code word Ranks.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8002.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "8003",
+      "title": "Tin bars, rods, profiles and wire.",
+      "subheadings": [
+        {
+          "code": "8003.00",
+          "title": "Tin bars, rods, profiles and wire :",
+          "tariff_lines": [
+            {
+              "code": "8003.00.10",
+              "description": "Hollow bars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8003.00.20",
+              "description": "Bars,other than hollow bars and rods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8003.00.30",
+              "description": "Profiles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8003.00.40",
+              "description": "Wires",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "8007",
+      "title": "Other articles of tin.",
+      "subheadings": [
+        {
+          "code": "8007.00",
+          "title": "Other articles of tin :",
+          "tariff_lines": [
+            {
+              "code": "8007.00.10",
+              "description": "Blanks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8007.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

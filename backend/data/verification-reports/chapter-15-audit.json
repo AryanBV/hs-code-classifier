@@ -1,0 +1,150 @@
+{
+  "chapter": "15",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings_count": 0,
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "1501.10.00",
+        "in_pdf": true,
+        "pdf_description": "15011000 Lard Prohibited Subject to Policy 104(RE-2013)/2009-2014 31.12.2014 Condition 01 of the 10",
+        "json_description": "Lard",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1504.20.10",
+        "in_pdf": true,
+        "pdf_description": "15042010 Other: ---- Squid liver oil Free 01/2015-20 06.04.2018 15042020 15042030 Other: ---- Other Free 01/2",
+        "json_description": "Fish body oil",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1508.10.00",
+        "in_pdf": true,
+        "pdf_description": "15081000 Free 01/2015-20 06.04.2018 150890 Edible grade 15089010 15089091 Other 15089099 1509 Ground-nut oil and its 150",
+        "json_description": "Crude oil",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1511.10.00",
+        "in_pdf": true,
+        "pdf_description": "15111000 WHETHER OR NOT 151190 REFINED, BUT NOT CHEMICALLY MODIFIED, INCLUDING BLENDS OF THESE OILS OR FRACTIONS WITH OI",
+        "json_description": "Crude oil",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1512.29.10",
+        "in_pdf": true,
+        "pdf_description": "15122910 Cotton-seed oil and its Free 01/2015-20 06.04.2018 15122990 fractions : -- Crude oil, whether or not gossypol F",
+        "json_description": "Edible grade",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1514.19.10",
+        "in_pdf": true,
+        "pdf_description": "15141910 Other Free Rape, colza or mustard oil and fractions thereof, whether or not refined, but not chemically mod",
+        "json_description": "Refined colza oil of edible grade",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1515.19.90",
+        "in_pdf": true,
+        "pdf_description": "15151990 FRACTIONS, WHETHER 15152100 OR NOT REFINED, BUT 151529 NOT CHEMICALLY 15152910 MODIFIED 15152990 151530 Linseed",
+        "json_description": "Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1515.90.40",
+        "in_pdf": true,
+        "pdf_description": "15159040 Fixed vegetable oils viz. Neutralised and Bleached Mango kernel 1 15179010 Sal Fat (Processed or Refined). 1521",
+        "json_description": "Fixed vegetable oils of edible grade namely the following: mango kernel oil, mahua oil, rice bran oil",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1516.30.00",
+        "in_pdf": true,
+        "pdf_description": "15163000 Other: ---- Edible grade Free 01/2015-20 06.04.2018 1517 Other: ---- Other Free 151710 Microbial fats and oils ",
+        "json_description": "Microbial fats and oils and their fractions",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1518.00.31",
+        "in_pdf": true,
+        "pdf_description": "15180031 01/2015-20 06.04.2018 15180039 Castor oil, dehydrated: ---- Free 01/2015-20 06.04.2018 15180040 Edible grade 01",
+        "json_description": "Other vegetable oil and its fats: ---- Edible grade",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      }
+    ],
+    "hierarchy_errors": [],
+    "missed_codes": [],
+    "extra_codes": [],
+    "subheading_checks": [
+      {
+        "subheading": "1501.10",
+        "title": "Lard",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1506.00",
+        "title": "Other animal fats and oils and their fractions, whether or not refined, but not chemically modified",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1511.10",
+        "title": "Crude oil",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1514.11",
+        "title": "Low erucic acid rape or colza oil and its fractions : -- Crude oil",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1515.90",
+        "title": "Other",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      }
+    ],
+    "note_mismatches": [],
+    "count_check": {
+      "json_h": 21,
+      "pdf_h_estimate": 21,
+      "json_sh": 53,
+      "pdf_sh_estimate": 53,
+      "json_tl": 126,
+      "pdf_tl_estimate": 126
+    }
+  },
+  "fix_needed": null
+}

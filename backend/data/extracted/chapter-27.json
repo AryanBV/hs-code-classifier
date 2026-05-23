@@ -1,0 +1,1372 @@
+{
+  "chapter": "27",
+  "section": "V",
+  "title": "MINERAL FUELS, MINERAL OILS AND PRODUCTS OF THEIR DISTILLATION; BITUMINOUS SUBSTANCES; MINERAL WAXES",
+  "source_pdf": "Chapter 27 Mineral Fuels, Mineral Oils And Products Of Their Distillation; Bituminous Substances; Mineral Waxes.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "Source PDF uses no-dot tariff code format (NNNNNNNN). All codes have been normalized to NNNN.NN.NN by inserting dots after positions 4 and 6.",
+    "Source PDF contains OCR/typographic artifacts where some words run together (e.g. 'havinga' for 'having a', 'amoist' for 'a moist', 'preparations\"are' for 'preparations\" are', 'theASTM' for 'the ASTM'). Preserved verbatim.",
+    "Source PDF wraps quoted terms with multiple stray double-quote characters (e.g. '\"\"\"motor spirit\"\"\"', '\"\"\"waste oils\"\"\"'). These quote-cluster artifacts are preserved verbatim in chapter_notes / subheading_notes / supplementary_notes.",
+    "Source PDF contains '?' character substitutions where the original had hyphens or special characters (e.g. 'low?boiling' for 'low-boiling', '?Blended Aviation turbine fuel?' for '-Blended Aviation turbine fuel-'). Preserved verbatim.",
+    "Subheading 2710.91 Waste oils is not labelled with an explicit subheading-level row in the PDF; tariff items 2710.91.10, 2710.91.20, 2710.91.90 appear after subheading 2710.20 with descriptions starting '--- Containing polychlorinated biphenyls...' indicating the parent subheading 2710.91 Waste oils. Reconstructed accordingly.",
+    "Tariff item 2710.99.00 in PDF reads 'Waste oils : -- Other' which is the description for subheading 2710.99 (Other waste oils). Preserved verbatim as the description of the 8-digit tariff line 2710.99.00.",
+    "Heading 2701 in source PDF jumps from 2701.11.00 (Anthracite Coal) directly to subheading 2701.12 (Bituminous coal); there is no implied 2701.11 subheading row (8-digit code 2701.11.00 stands alone). Preserved as captured.",
+    "Heading 2709 has the row 'Petroleum oils and oils obtained from bituminous minerals, crude' repeated three times in PDF (heading 2709, subheading 270900, and a second 270900 row with Notification No 50/2015-2020 dated 11.11.2013). Captured as one heading + one subheading; the duplicate 270900 row is reflected in policy_conditions / tariff-line notification metadata on 2709.00.10 and 2709.00.90.",
+    "Tariff line 2710.12.31 description is split across two rows in the PDF; reassembled verbatim ('Solvent 60/80, solvent 50/120 and solvent 145/205 (petroleum hydrocarbon solvents) as specified under standard IS 1745: ---- Solvent 60/80').",
+    "Tariff line 2710.19.77 description is split across two rows in the PDF; reassembled verbatim ('Base oil and lubricating oil: ---- Turbine lubricating oil conforming to standard IS 1012').",
+    "Tariff line 2710.19.89 description is split across two rows in the PDF; reassembled verbatim ('Cutting oil, hydraulic oil, industrial white oil, jute batching oil, mineral oil for cosmetic industry, transformer oil: --- Other cutting oil, hydraulic oil, industrial white oil, jute batching oil, mineral oil for cosmetic industry, transformer oil, not conforming to any BIS standard').",
+    "Policy Condition reference markers in the PDF cite 'Policy Condition 1 of the Chapter' and 'Policy Condition 2 of the Chapter' with notification 44958 dated 01.04.2023. The serial number 44958 is preserved verbatim from the PDF (no notification-number format adjustment).",
+    "The PDF presents no Unit column. All tariff_lines have unit set to null.",
+    "Section V (MINERAL PRODUCTS) has no Section Notes printed in this chapter PDF; section_notes is an empty array.",
+    "Chapter 27 has no Chapter Heading Notes (heading_notes is empty for every heading); only Main Notes (chapter_notes), Sub-Heading Notes (subheading_notes) and Supplementary Notes are provided.",
+    "Supplementary Note 1 of the chapter is a long BIS-standards definition note covering multiple terms ('motor spirit', 'Special boiling point spirits', 'natural gasoline liquid (NGL)', 'superior kerosine oil (SKO)', 'aviation turbine fuel (ATF)', 'high speed diesel (HSD)', 'light diesel oil (LDO)', 'fuel oil', 'lubricating oil', 'jute batching oil', 'textile oil', 'petroleum jelly crude', and test definitions for Flash Point, Smoke Point, Final Boiling Point, Carbon Residue, Colour Comparision Test, and Blended Aviation turbine fuel). Captured as a single supplementary_note (number '1') with the full verbatim text spanning the multi-page note.",
+    "Tariff item 2712.90.10 description in PDF reads 'Micro-CrystallinePetroleum wax' (no space). Preserved verbatim.",
+    "Heading 2716 has only one 8-digit tariff line (2716.00.00 Electrical Energy); no subheading-level row is present in the PDF. Reconstructed with an implied subheading '2716.00' wrapping the single tariff line, with subheading description identical to the heading."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover: (a) separate chemically defined organic compounds other than pure methane and propane which are to be classified in heading 2711; (b) medicaments of heading 3003 or 3004; or (c) mixed unsaturated hydrocarbons of heading 3301, 3302 or 3805."
+    },
+    {
+      "number": "2",
+      "text": "Referencesin heading 2710 to \"petroleumoils and oils obtained from bituminous minerals\" include not only petroleumoils and oils obtained from bituminous minerals but also similar oils, as well asthose consisting mainly of mixed unsaturated hydrocarbons, obtained by any process, provided that theweight ofthe non-aromatic constituents exceedsthat of the aromatic constituents. However, the references do not include liquid synthetic polyolefins of which less than 60% by volume distils at 3000C, after conversion to 1,013 millibars when a reduced-pressure distillationmethod is used (Chapter 39)."
+    },
+    {
+      "number": "3",
+      "text": "For the purposes of heading 2710, \"\"\"waste oils\"\"\" means waste containing mainly petroleum oils and oils obtained from bituminous minerals (as described in Note 2 to this Chapter), whether or not mixed with water. These include: (a) such oils no longer fitfor use as primary products(for example, used lubricating oils, used hydraulic oils and used transformer oils); (b)sludge oils from the storage tanks of petroleum oils, mainly containing such oils and high concentration of additives (for example, chemicals) used in the manufacture of the primary products; and (c) such oils in the form of emulsions in water or mixtures with water, such as those resulting from oil spills,storage tankwashings, orfromthe use of cutting oilsfor machining operations."
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [
+    {
+      "number": "1",
+      "text": "For the purposes of sub-heading 2701 11 \"anthracite\" means coal having a volatile matter limit (on a dry, mineral-matter-free basis) not exceeding 14%."
+    },
+    {
+      "number": "2",
+      "text": "For the purposes of sub-heading 2701 12, \"bituminous coal\" means coal havinga volatile matter limit (on a dry, mineral-matter-free basis) exceeding 14% and a calorific value limit (on amoist, mineral-matter-free basis) equal to or greater than 5,833 kcal/kg."
+    },
+    {
+      "number": "3",
+      "text": "For the purposes of tariff items 2707 10 00, 2707 20 00, 2707 30 00 and 2707 40 00, the terms \"benzol\", \"(benzene)\", \"toluol\" (toluene)\", \"xylol\" (xylenes)\" and \"naphthalene\" apply to products which contain more than 50% by weight of benzene, toluene, xylenes or naphthalene, respectively."
+    },
+    {
+      "number": "4",
+      "text": "For the purposes of sub-heading 2710 12, \"light oils and preparations\"are those of which 90 % or more by volume (including losses) distil at 210 Caccording to the ISO 3405 method (equivalent to theASTM D 86 method)."
+    },
+    {
+      "number": "5",
+      "text": "For the purposes of the sub-headings of heading 2710, the term \"biodiesel\" means mono-alkyl esters of fatty acids of a kind used as a fuel, derived from animal, vegetable or microbial fats and oils whether or not used."
+    }
+  ],
+  "supplementary_notes": [
+    {
+      "number": "1",
+      "text": "In this Chapter, reference to any standard of the Bureau of Indian Standards refers to the last published version of that standard. Illustration : IS 1459 refers to IS 1459: 2018 and not to IS 1459: 1974 (a) \"\"\"motor spirit\"\"\" means any hydrocarbon oil (excluding crude mineral oil) which has its flash point below 250C and which either by itself or in admixture with any other substance, is suitable for use as fuel in spark ignition engines. \"\"\"Special boiling point spirits (tariff item Nos. 2710 12 11, 2710 12 12 and 2710 12 13)\"\"\" means light oils, as defined in Sub-heading Note 4, not containing any anti-knock preparations , and with a difference of not more than 600C between the temperatures at which 5% and 90% by volume ( including losses) distil; (b) \"\"\"natural gasoline liquid (NGL)\"\"\" is a low?boiling liquid petroleum product extracted from Natural Gas; (c) \"\"\"superior kerosine oil (SKO)\"\"\" means any hydrocarbon oil conforming to the Indian Standards Specification of Bureau of Indian Standards IS : 1459-1974 (Reaffirmed in the year 1996); (d) \"\"\"aviation turbine fuel (ATF)\"\"\" means any hydrocarbon oil conforming to the Indian Standards Specification of Bureau of Indian Standards IS : 1571:1992:2000; (e) \"\"\"high speed diesel (HSD)\"\"\" means any hydrocarbon oil conforming to the Indian Standards Specification of Bureau of Indian Standards IS: 1460:2005; (f) \"\"\"light diesel oil (LDO)\"\"\" means any hydrocarbon oil conforming to the Indian Standards Specification of Bureau of Indian Standards IS: 15770:2008; (g) \"\"\"fuel oil\"\"\" means any hydrocarbon oil conforming to the Indian Standards Specification of Bureau of Indian Standards IS:1593:1982 (Reaffirmed in the year 1997); (h) \"\"\"lubricating oil\"\"\" means any oil, which is ordinarily used, for lubrication, excluding any hydrocarbon oil, which has its flash point below 93.30 Centigrade; (i) \"\"\"jute batching oil\"\"\" and \"\"\"textile oil\"\"\" are hydrocarbon oils which have their flash point at or above 93.30C, and is ordinarily used for the batching of jute or other textile fibres; (j) the expression \"\"\"petroleum jelly crude\"\"\" (tariff item Nos. 2712 10 10) shall be taken to apply to petroleum jelly of a natural colour higher than 4.5 by the ASTM D 1500 method; (k) for the purposes of these additional notes, the tests prescribed have the meaning hereby assigned to them: (1) \"\"\"Flash Point\"\"\" shall be determined in accordance with the test prescribed in this behalf in the rules made under the Petroleum Act, 1934 (30 of 1934); (2) \"\"\"Smoke Point\"\"\" shall be determined in the apparatus known as the Smoke Point Lamp in the manner indicated in the Indian Standards Institution specification IS:1448 (p. 31)-1967 as for the time being in force; (3) \"\"\"Final Boiling Point\"\"\" shall be determined in the manner indicated in the Indian Standards Institution specification IS:1448 (p.18)-1967 as for the time being in force; (4) \"\"\"Carbon Residue\"\"\" shall be determined in the apparatus known as Ramsbottom Carbon Residue Apparatus in the manner indicated in the Indian Standards Institution specification IS:1448 (p.8)-1967 as for the time being in force; (5) \"\"\"Colour Comparision Test\"\"\" shall be done in the following manner, namely : (i) first prepare a five per cent. weight by volume solution of Potassium Iodine (analytical reagent quality) in distilled water; (ii) to this, add Iodine (analytical reagent quality) in requisite amount to prepare exactly 0.04 normal Iodine solution; (iii) thereafter, compare the colour of the mineral oil under test with the Iodine solution so prepared. (l) for the purposes of tariff item 2710 19 33, the term ?Blended Aviation turbine fuel? means any Aviation turbine fuel containing by weight 70% or more of Petroleum Oils or Oils obtained from Bituminous Minerals, blended with Synthesized Hydrocarbons conforming to Indian Standards Specification of Bureau of Indian Standards IS 17081:2019."
+    }
+  ],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "separate chemically defined organic compounds other than pure methane and propane",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": "2711",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover: (a) separate chemically defined organic compounds other than pure methane and propane which are to be classified in heading 2711; (b) medicaments of heading 3003 or 3004; or (c) mixed unsaturated hydrocarbons of heading 3301, 3302 or 3805."
+    },
+    {
+      "excluded_product_text": "medicaments of heading 3003 or 3004",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": "3003",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover: (a) separate chemically defined organic compounds other than pure methane and propane which are to be classified in heading 2711; (b) medicaments of heading 3003 or 3004; or (c) mixed unsaturated hydrocarbons of heading 3301, 3302 or 3805."
+    },
+    {
+      "excluded_product_text": "mixed unsaturated hydrocarbons of heading 3301, 3302 or 3805",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": "3301",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover: (a) separate chemically defined organic compounds other than pure methane and propane which are to be classified in heading 2711; (b) medicaments of heading 3003 or 3004; or (c) mixed unsaturated hydrocarbons of heading 3301, 3302 or 3805."
+    },
+    {
+      "excluded_product_text": "liquid synthetic polyolefins of which less than 60% by volume distils at 3000C, after conversion to 1,013 millibars when a reduced-pressure distillation method is used",
+      "redirects_to_chapter": "39",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2",
+      "source_note_text": "Referencesin heading 2710 to \"petroleumoils and oils obtained from bituminous minerals\" include not only petroleumoils and oils obtained from bituminous minerals but also similar oils, as well asthose consisting mainly of mixed unsaturated hydrocarbons, obtained by any process, provided that theweight ofthe non-aromatic constituents exceedsthat of the aromatic constituents. However, the references do not include liquid synthetic polyolefins of which less than 60% by volume distils at 3000C, after conversion to 1,013 millibars when a reduced-pressure distillationmethod is used (Chapter 39)."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "2701",
+      "title": "COAL; BRIQUETTES, OVOIDS AND SIMILAR SOLID FUELS MANUFACTURED FROM COAL",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2701.11",
+          "title": "Coal, whether or not pulverized, but not agglomerated: -- Anthracite Coal",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2701.11.00",
+              "description": "Coal, whether or not pulverized, but not agglomerated: -- Anthracite Coal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2701.12",
+          "title": "Bituminous coal :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2701.12.10",
+              "description": "Coking coal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2701.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2701.19",
+          "title": "Coal, whether or not pulverised, but not agglomerated : -- Other coal",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2701.19.10",
+              "description": "Coking coal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2701.19.20",
+              "description": "Steam coal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2701.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2701.20",
+          "title": "Briquettes, ovoids and similar solid fuels manufactured from coal",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2701.20.10",
+              "description": "Anthracite agglomerated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2701.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2702",
+      "title": "Lignite, whether or not agglomerated, excluding jet.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2702.10",
+          "title": "Lignite, whether or not pulverised, but not agglomerated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2702.10.00",
+              "description": "Lignite, whether or not pulverised, but not agglomerated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2702.20",
+          "title": "Agglomerated lignite",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2702.20.00",
+              "description": "Agglomerated lignite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2703",
+      "title": "PEAT (INCLUDING PEAT LITTER), WHETHER OR NOT AGGLOMERATED",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2703.00",
+          "title": "Peat (including peat litter), whether or not agglomerated.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2703.00.10",
+              "description": "Peat whether or not compressed into bales, but not agglomerated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2703.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2704",
+      "title": "Coke and semi-coke of coal, of lignite or of peat, whether or not agglomerated; retort carbon.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2704.00",
+          "title": "Coke and semi-coke of coal, of lignite or of peat, whether or not agglomerated; retort carbon :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2704.00.10",
+              "description": "Retort carbon (gas carbon)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2704.00.20",
+              "description": "Coke and semi-coke of lignite or of peat",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2704.00.30",
+              "description": "Hard coke of coal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2704.00.40",
+              "description": "Soft coke of coal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2704.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2705",
+      "title": "Coal gas, water gas, producer gas and similar gases, other than petroleum gases and other gaseous hydrocarbons",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2705.00",
+          "title": "Coal gas, water gas, producer gas and similar gases, other than petroleum gases and other gaseous hydrocarbons",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2705.00.00",
+              "description": "Coal gas, water gas, producer gas and similar gases, other than petroleum gases and other gaseous hydrocarbons",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2706",
+      "title": "Tar distilled from coal, from lignite or from peat, and other mineral tars, whether or not dehydrated or partially distilled, including reconstituted tars.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2706.00",
+          "title": "Tar distilled from coal, from lignite or from peat and other mineral tars, whether or not dehydrated or partially distilled, including reconstituted tars :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2706.00.10",
+              "description": "Coal tar",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2706.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2707",
+      "title": "Oils and other products of the distillation of high temperature coal tar; similar products in which the weight of the aromatic constituents exceeds that of the non-aromatic constituents.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2707.10",
+          "title": "Benzol (benzene)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2707.10.00",
+              "description": "Benzol (benzene)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2707.20",
+          "title": "Toluol (toluene)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2707.20.00",
+              "description": "Toluol (toluene)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2707.30",
+          "title": "Xylol (xylenes)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2707.30.00",
+              "description": "Xylol (xylenes)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2707.40",
+          "title": "Naphthalene",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2707.40.00",
+              "description": "Naphthalene",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2707.50",
+          "title": "Other aromatic hydrocarbon mixtures of which 65 percent or more by volume (including losses) distils at 250 C by the ISO 3405 method (equivalent to the ASTM D 86 method",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2707.50.00",
+              "description": "Other aromatic hydrocarbon mixtures of which 65 percent or more by volume (including losses) distils at 250 C by the ISO 3405 method (equivalent to the ASTM D 86 method",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2707.91",
+          "title": "Other : -- Creosote oils",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2707.91.00",
+              "description": "Other : -- Creosote oils",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2707.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2707.99.00",
+              "description": "Other : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2708",
+      "title": "Pitch and pitch coke, obtained from coal tar or from other mineral tars.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2708.10",
+          "title": "Pitch",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2708.10.10",
+              "description": "Obtained by blending with creosote oil or other coal tar distillates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2708.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2708.20",
+          "title": "Pitch coke",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2708.20.00",
+              "description": "Pitch coke",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2709",
+      "title": "PETROLEUM OILS AND OILS OBTAINED FROM BITUMINOUS MINERALS, CRUDE",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2709.00",
+          "title": "PETROLEUM OILS AND OILS OBTAINED FROM BITUMINOUS MINERALS, CRUDE",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2709.00.10",
+              "description": "PETROLEUM CRUDE",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Export is allowed through Indian Oil Corporation Limited (IOCL) only."
+            },
+            {
+              "code": "2709.00.90",
+              "description": "OTHER",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Export is allowed through Indian Oil Corporation Limited (IOCL) only."
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2710",
+      "title": "Petroleum oils and oils obtained from bituminous minerals, other than crude; preparations not elsewhere specified or included, containing by weight 70 percent or more of petroleum oils or of oils obtained from bituminous minerals, these oils being the basic constituents of the preparations; waste oils.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2710.12",
+          "title": "Petroleum oils and oils obtained from bituminous minerals (other than crude) and preparations not elsewhere specified or included, containing by weight 70 percent or more of petroleum oils or of oils obtained from bituminous minerals, these oils being the basic constituents of the preparations, other than those containing biodiesel and other than waste oils : --Light oils and preparations",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2710.12.21",
+              "description": "Naphtha ---- Light naphtha",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.12.22",
+              "description": "Naphtha ---- Heavy naphtha",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.12.29",
+              "description": "Naphtha ---- Full range naphtha",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.12.31",
+              "description": "Solvent 60/80, solvent 50/120 and solvent 145/205 (petroleum hydrocarbon solvents) as specified under standard IS 1745: ---- Solvent 60/80",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.12.32",
+              "description": "Solvent 60/80, solvent 50/120 and solvent 145/205 (petroleum hydrocarbon solvents) as specified under standard IS 1745: ---- Solvent 50/120",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.12.39",
+              "description": "Solvent 60/80, solvent 50/120 AND solvent 145/205 (petroleum hydrocarbon solvents) AS specified under standard IS 1745: ---- Solvent 145/205",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.12.41",
+              "description": "Motor gasoline conforming to standard IS 2796,IS 17021, IS 17586 or IS 17076: ----Motor gasoline conforming to standard IS 2796",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "2710.12.42",
+              "description": "Motor gasoline conforming to standard IS 2796,IS 17021, IS 17586 or IS 17076: ----E 20 fuel conforming to standard IS 17021",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "2710.12.43",
+              "description": "Motor gasoline conforming to standard IS 2796,IS 17021, IS 17586 orIS 17076: ---- E 12 fuel conforming to standard IS 17586",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "2710.12.44",
+              "description": "Motor gasoline conforming to standard IS 2796,IS 17021, IS 17586 orIS 17076: ---- E 15 fuel conforming to standard IS 17586",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "2710.12.49",
+              "description": "Motor gasoline conforming to standard IS 2796,IS 17021, IS 17586 or IS 17076: ----M15 fuel conforming to standard IS 17076",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "2710.12.50",
+              "description": "Aviation gasoline conforming to standard IS 1604",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2710.19",
+          "title": "Petroleum oils and oils obtained from bituminous minerals (other than crude) and preparations not elsewhere specified or included, containing by weight 70 percent or more of petroleum oils or of oils obtained from bituminous minerals, these oils being the basic constituents of the preparations, other than those containing biodiesel and other than waste oils : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2710.19.20",
+              "description": "Solvent 125/240 (petroleum hydrocarbon solvent) as specified under standard IS 1745",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.31",
+              "description": "Kerosene intermediate and oils obtained from kerosene intermediate: ---- Kerosene intermediate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.32",
+              "description": "Kerosene intermediate and oils obtained from kerosene intermediate: ---- Kerosene conforming to standard IS 1459",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.33",
+              "description": "Blended Aviation turbine fuel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.39",
+              "description": "Kerosene intermediate and oils obtained from kerosene intermediate: ---- Aviation turbine fuels, kerosene type conforming to standard IS 1571",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.41",
+              "description": "Gas oil and oils obtained from gas oil: ---- Gas oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "2710.19.42",
+              "description": "Gas oil and oils obtained from gas oil: ---- Vacuum gas oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.43",
+              "description": "Gas oil and oils obtained from gas oil: ---- Light diesel oil conforming to standard IS 15770",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.44",
+              "description": "Gas oil and oils obtained from gas oil: ---- Automotive diesel fuel, not containing biodiesel, conforming to standard IS 1460",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "2710.19.49",
+              "description": "Gas oil and oils obtained from gas oil: ---- High flash high speed diesel fuel conforming to standard IS 16861",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "2710.19.51",
+              "description": "Fuel oils conforming to standard IS 1593: ---- Grade LV",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.52",
+              "description": "Fuel oils conforming to standard IS 1593: ---- Grade MV1",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.53",
+              "description": "Fuel oils conforming to standard IS 1593: ---- Grade MV2",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.59",
+              "description": "Fuel oils conforming to standard IS 1593: ---- Grade HV",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.61",
+              "description": "Fuels (Class F) or marine fuels conforming to standard IS 16731: ---- Distillate oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.69",
+              "description": "Fuels (Class F) or marine fuels conforming to standard IS 16731: ---- Residual oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.71",
+              "description": "Base oil and lubricating oil: ---- Base oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.72",
+              "description": "Base oil and lubricating oil: ---- Engine oil (internal combustion engine crankcase oils) conforming to standard IS 13656",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.73",
+              "description": "Base oil and lubricating oil: ---- Engine oil conforming to standard IS 14234",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.74",
+              "description": "Base oil and lubricating oil: ---- Automotive gear oil conforming to standard IS 1118",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.75",
+              "description": "Base oil and lubricating oil: ---- Industrial gear oil conforming to standard IS 8406",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.76",
+              "description": "Base oil and lubricating oil: ---- General purpose machinery and spindle oils conforming to standard IS 493",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.77",
+              "description": "Base oil and lubricating oil: ---- Turbine lubricating oil conforming to standard IS 1012",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.78",
+              "description": "Base oil and lubricating oil: ---- Other lubricating oil, conforming to any other BIS standard",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.79",
+              "description": "Base oil and lubricating oil: ---- Other lubricating oil, not conforming to any BIS standard",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.81",
+              "description": "Cutting oil, hydraulic oil, industrial white oil, jute batching oil, mineral oil for cosmetic industry,B77 transformer oil: ---- Cutting oil conforming to standard IS 1115",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.82",
+              "description": "Cutting oil, hydraulic oil, industrial white oil, jute batching oil, mineral oil for cosmetic industry,B77 transformer oil: ---- Cutting oil (neat) conforming to standard IS 3065",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.83",
+              "description": "Cutting oil, hydraulic oil, industrial white oil, jute batching oil, mineral oil for cosmetic industry,B77 transformer oil: ---- Hydraulic oil conforming to standard IS 3098 or IS 11656",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.84",
+              "description": "Cutting oil, hydraulic oil, industrial white oil, jute batching oil, mineral oil for cosmetic industry,B77 transformer oil: ---- Industrial white oil conforming to standard IS 1083",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.85",
+              "description": "Cutting oil, hydraulic oil, industrial white oil, jute batching oil, mineral oil for cosmetic industry,B77 transformer oil: ---- Insulating oil for transformer and circuit-breaker (transformer and circuit-breaker oils) conforming to standard IS 335 or IS 12463",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.86",
+              "description": "Cutting oil, hydraulic oil, industrial white oil, jute batching oil, mineral oil for cosmetic industry,B77 transformer oil: ---- Mineral oil for cosmetic industry conforming to standard IS 7299",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.87",
+              "description": "Cutting oil, hydraulic oil, industrial white oil, jute batching oil, mineral oil for cosmetic industry,B77 transformer oil: ----Jute batching oil conforming to standard IS 1758",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.88",
+              "description": "Cutting oil, hydraulic oil, industrial white oil, jute batching oil, mineral oil for cosmetic industry,B77 transformer oil: ---- Other cutting oil, hydraulic oil, industrial white oil, jute batching oil, mineral oil for cosmetic industry, transformer oil conforming to any other BIS standard",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.89",
+              "description": "Cutting oil, hydraulic oil, industrial white oil, jute batching oil, mineral oil for cosmetic industry,B77 transformer oil: --- Other cutting oil, hydraulic oil, industrial white oil, jute batching oil, mineral oil for cosmetic industry, transformer oil, not conforming to any BIS standard",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2710.20",
+          "title": "Petroleum oils and oils obtained from bituminous minerals (other than crude) and preparations not elsewhere specified or included, containing by weight 70 % or more of petroleum oils or of oils obtained from bituminous minerals, these oils being the basic constituents of the preparations, containing biodiesel, other than waste oils:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2710.20.10",
+              "description": "Automotive diesel fuel, containing biodiesel, conforming to standard IS 1460",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Export is permitted under Restricted Export Authorization only for non- fuel purposes. However, export of Bio-fuel from Special Economic Zones (SEZ)/ Export Oriented Units (EoUs) are allowed for Fuel as well as Non- Fuel purposes without any restriction when produced using only imported feed stock."
+            },
+            {
+              "code": "2710.20.20",
+              "description": "Diesel fuel blend (B6 to B20) conforming to standard IS 16531",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Export is permitted under Restricted Export Authorization only for non- fuel purposes. However, export of Bio-fuel from Special Economic Zones (SEZ)/ Export Oriented Units (EoUs) are allowed for Fuel as well as Non- Fuel purposes without any restriction when produced using only imported feed stock."
+            },
+            {
+              "code": "2710.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Export is permitted under Restricted Export Authorization only for non- fuel purposes. However, export of Bio-fuel from Special Economic Zones (SEZ)/ Export Oriented Units (EoUs) are allowed for Fuel as well as Non- Fuel purposes without any restriction when produced using only imported feed stock."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2710.91",
+          "title": "Waste oils : -- Containing polychlorinated biphenyls (PCBs), polychlorinated terphenyls (PCTs) or polybrominated biphenyls (PBBs)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2710.91.10",
+              "description": "--- Containing polychlorinated biphenyls (PCBs) at a concentration level of 50 mg/kg or more",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.91.20",
+              "description": "Other, containing polychlorinated terphenyls (PCTs) or polybrominated biphenyls (PBBs), whether or not also containing polychlorinated biphenyls (PCBs) at a concentration level of less than 50 mg/kg",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2710.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2710.99",
+          "title": "Waste oils : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2710.99.00",
+              "description": "Waste oils : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2711",
+      "title": "Petroleum gases and other gaseous hydrocarbons.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2711.11",
+          "title": "Liquefied : -- Natural gas",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2711.11.00",
+              "description": "Liquefied : -- Natural gas",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2711.12",
+          "title": "Liquefied : -- Propane",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2711.12.00",
+              "description": "Liquefied : -- Propane",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2711.13",
+          "title": "Liquefied : -- Butanes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2711.13.00",
+              "description": "Liquefied : -- Butanes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2711.14",
+          "title": "Liquefied : -- Ethylene, propylene, butylene and butadiene",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2711.14.00",
+              "description": "Liquefied : -- Ethylene, propylene, butylene and butadiene",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2711.19",
+          "title": "Liquefied : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2711.19.10",
+              "description": "LPG (for non-automotive purposes) conforming to standard IS 4576",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "However, export of Liquefied Petroleum Gas (LPG) is allowed subject to obtaining NOC from Ministry of Petroleum &Natural Gas. The above condition would not be applicable for export of Liquefied Petroleum Gas (LPG) to Nepal &Bhutan by the Indian Oil Corporation Ltd."
+            },
+            {
+              "code": "2711.19.20",
+              "description": "LPG (for automotive purposes) conforming to standard IS 14861",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "However, export of Liquefied Petroleum Gas (LPG) is allowed subject to obtaining NOC from Ministry of Petroleum &Natural Gas. The above condition would not be applicable for export of Liquefied Petroleum Gas (LPG) to Nepal &Bhutan by the Indian Oil Corporation Ltd."
+            },
+            {
+              "code": "2711.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "However, export of Liquefied Petroleum Gas (LPG) is allowed subject to obtaining NOC from Ministry of Petroleum &Natural Gas. The above condition would not be applicable for export of Liquefied Petroleum Gas (LPG) to Nepal &Bhutan by the Indian Oil Corporation Ltd."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2711.21",
+          "title": "In gaseous state : -- Natural gas",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2711.21.00",
+              "description": "In gaseous state : -- Natural gas",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2711.29",
+          "title": "In gaseous state : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2711.29.00",
+              "description": "In gaseous state : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2712",
+      "title": "Petroleum jelly; paraffin wax, micro-crystalline petroleum wax, slack wax, ozokerite, lignite wax, peat wax, other mineral waxes, and similar products obtained by synthesis or by other processes, whether or not coloured.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2712.10",
+          "title": "Petroleum jelly",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2712.10.10",
+              "description": "Crude",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2712.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2712.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2712.90.10",
+              "description": "Micro-CrystallinePetroleum wax",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2712.90.20",
+              "description": "Lignite wax",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2712.90.30",
+              "description": "Slack wax",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2712.90.40",
+              "description": "Parafin wax containing by weight 0.75% or more of oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2712.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2713",
+      "title": "Petroleum coke, petroleum bitumen and other residues of petroleum oils or of oils obtained from bituminous minerals.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2713.11",
+          "title": "Petroleum coke : -- Not calcined",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2713.11.10",
+              "description": "Raw petroleum coke for anode making in aluminium industry conforming to standard IS 17049",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2713.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2713.12",
+          "title": "Petroleum coke : -- Calcined",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2713.12.10",
+              "description": "Calcined petroleum coke for anode making in aluminum industry conforming to standard IS 17049",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2713.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2713.20",
+          "title": "Petroleum bitumen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2713.20.00",
+              "description": "Petroleum bitumen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2713.90",
+          "title": "other residues of petroleum oils or of oils obtained from bituminous minerals",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2713.90.00",
+              "description": "other residues of petroleum oils or of oils obtained from bituminous minerals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2714",
+      "title": "Bitumen and asphalt, natural; bituminous or oil shale and tar sands; asphaltites and asphaltic rocks.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2714.10",
+          "title": "Bituminous or oil shale and tar sands",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2714.10.00",
+              "description": "Bituminous or oil shale and tar sands",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2714.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2714.90.10",
+              "description": "Asphalt, natural",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2714.90.20",
+              "description": "Bitumen, natural",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2714.90.30",
+              "description": "Gilsonete",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2714.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2715",
+      "title": "Bituminous mixtures based on natural asphalt, on natural bitumen, on petroleum bitumen, on mineral tar or on mineral tar pitch (for example, bituminous mastics, cut-backs).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2715.00",
+          "title": "Bituminous mixtures based on natural asphalt, on natural bitumen, on petroleum bitumen, on mineral tar or on mineral tar pitch (for example, bituminous mastics, cut backs) :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2715.00.10",
+              "description": "Cut back, bituminous or asphalt",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            },
+            {
+              "code": "2715.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2716",
+      "title": "Electrical Energy",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2716.00",
+          "title": "Electrical Energy",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2716.00.00",
+              "description": "Electrical Energy",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    }
+  ]
+}

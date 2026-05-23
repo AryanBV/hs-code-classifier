@@ -1,0 +1,582 @@
+{
+  "chapter": "31",
+  "section": "VI",
+  "title": "FERTILISERS",
+  "source_pdf": "Chapter 31 Fertilisers.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses codes without dots: 4-digit headings (e.g., '3101'), 6-digit subheadings (e.g., '310100', '310229', '310290', '310590') and 8-digit tariff lines (e.g., '31010010', '31022100'). Normalized to NNNN.NN format (e.g., '3101.00', '3102.29') and NNNN.NN.NN format (e.g., '3101.00.10') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'SI.No. Notes Notification Date Notification No', 'Sl.No. Notes Notification No Notification Date', 'Supplementary Notes', 'Policy Condition', 'Export Licensing Notes', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "Section VI 'Main Notes' (4 notes) appear in this Chapter 31 PDF (page 1, top table). These notes are attributed to section_notes (Section VI, Products of the Chemical or Allied Industries). They cross-validate the Section VI Main Notes already captured in Chapter 28 (commit 0a11063): the four note texts are verbatim identical to those captured for Ch.28.",
+    "Chapter 31 Main Notes table on PDF page 2 has 6 numbered notes. These are captured in chapter_notes.",
+    "PDF contains '?' characters in place of typographic quote marks in several notes (e.g., '?Shipment Clearance Certificate?', '?Health Certificate?'). These are OCR/encoding artifacts from the source PDF — preserved verbatim as they appear in the source.",
+    "Chapter title on PDF page 1 (below the Section VI Main Notes table) reads 'Chapter 31 Fertilisers.' The canonical ITC(HS) chapter title 'FERTILISERS' is used in the title field; source_pdf preserves the PDF filename.",
+    "Some words in the Main Notes are run together without spaces (e.g., 'potassiumchloride', 'lessthan', 'gypsumor', 'calciumnitrate', 'magnesiumnitrate', 'sub-paragraph', 'intermixturesthereof', 'potassiumsalts'). Preserved verbatim from PDF.",
+    "Heading 3101 has no HS-level 6-digit subheading split (the WCO HS code is 3101.00). The PDF lists a 6-digit row '310100' followed by 8-digit tariff lines '31010010', '31010091', '31010092', '31010099'. Captured as subheading '3101.00' with four tariff lines.",
+    "Heading 3103 has an unusual structure: the PDF lists 8-digit code '31031000' with a multi-item description ('Straight Phosphatic Fetilizers given below : 1.Single Super Phosphate (16% P2O5) Powdered 2.Single Super Phosphate (14% P2O5) Powdered 3.Single Super Phosphate (16% P2O5) Granulated') and no Export Policy. This row appears at the position where HS-6 subheading 3103.10 ('Superphosphates') would sit. The subsequent rows 31031100 and 31031900 are HS-6 splits ('-- Containing by weight 35 percent or more of diphosphorus pentoxide (P2O5)' and '-- Other'). Captured as: subheading '3103.10' (Superphosphates parent — title constructed from the 8-digit row '31031000' description, since no separate 6-digit row labelled '310310' is shown), containing tariff lines 3103.10.00 (the SSP descriptor row, preserved verbatim), 3103.11.00 (Superphosphates -- Containing 35% or more P2O5), 3103.19.00 (Superphosphates -- Other). NOTE: 3103.11 and 3103.19 are technically HS-6 subheadings under 3103.1 per WCO HS 2022 (the '-- ' double-dash indicates HS-6 split); however, the PDF lists them as 8-digit codes 31031100/31031900 with no further 8-digit split, so they are captured as both the HS-6 and the 8-digit tariff line collapsed into the tariff_line entry. 3103.90.00 'Other' is captured as a separate subheading 3103.90 with one tariff line.",
+    "Subheading row '310229' (PDF code, normalized to '3102.29') has title 'Ammonium sulphate; double salts and mixtures of ammonium sulphate and ammonium nitrate : -- Other' — the leading text repeats the heading description because of the way the PDF table is structured.",
+    "Subheading row '310290' (normalized to '3102.90') has title 'Other, including mixtures not specified in the foregoing subheadings'. It contains two tariff lines (3102.90.10, 3102.90.90).",
+    "Subheading row '310590' (normalized to '3105.90') has title 'Other' and contains two tariff lines (3105.90.10, 3105.90.90).",
+    "Tariff line 3102.10.10 description in PDF: 'Fertilizer grade, conforming to Standard IS 5406'. Tariff line 3102.10.90: 'Other'. Both carry an identical 'Export of Urea is permitted subject to...' policy_condition row text — captured as a structured Policy Condition entry (extracted as a chapter-level policy condition referenced by these tariff lines) with applies_to_tariff_lines noted.",
+    "Tariff lines 3104.20.00 (Potassium chloride), 3104.30.00 (Potassium sulphate), 3104.90.00 (Other), 3103.19.00 (Superphosphates -- Other), 3105.20.00 (NPK), 3105.30.00 (DAP), and 3105.90.10 carry extensive policy_condition text blocks describing free export with conditions or NOC routes. These are preserved verbatim in tariff_line policy_condition fields AND summarized as chapter-level policy_conditions entries with applies_to_tariff_lines references.",
+    "The 'Policy Condition' table on PDF page 3 lists two rows. Row 1 (Animal/vegetable fertilizers — Shipment/Health Certificate by CAPEXIL): applies to tariff lines under heading 3101 marked 'Subject to Policy Condition 1 of the Chapter'. Row 2 (Other N.P. Complex Fertilizers — NP(16-20-0), NP(20-20-0), NP(28-28-0), NP(23-23-0) — DOF NOC route): applies to tariff lines 3105.40.00, 3105.51.00, 3105.59.00 marked 'Subject to Policy Condition 2 of the Chapter'.",
+    "Export Licensing Notes table (PDF pages 4-7) is a single Sl.No. 1 row containing three lists: A. List of SSP Manufacturers / Units (~101 entries), B. List of DAP Manufacturers (~12 entries), C. List of NP / NPK Manufacturers (entry 1 only shown in PDF — 'M/s Gujarat State Fertilisers &Chemicals Ltd. 6th Floor, Meridien, West Tower, Windsor Place, New Delhi'). Captured verbatim as a single export_licensing_notes entry. Note: List C appears to be truncated at the end of page 6 of the PDF — only entry 1 is visible.",
+    "Units of measure (kg/u/etc) column is NOT shown in this chapter's PDF — unit field set to null for all tariff lines.",
+    "Notification Date and Notification No columns are largely empty across all note rows. The Product Description table shows '34/2015-20' and '13.01.2017' against the heading 3101 row only — captured at heading level (no other notification metadata in this PDF).",
+    "Subheading 3101.00 title is taken from the heading 3101 description (Animal or vegetable fertilisers...) since the 6-digit row '310100' description in the PDF matches the heading description nearly verbatim.",
+    "Tariff line 3101.00.91 description: 'Other: ---- Animal dung' — '----' is the standard ITC(HS) sub-tariff indicator from the WCO HS nomenclature.",
+    "[phantom-cleanup v2] Applied verdict from ours-only-verdict.json: removed 0 phantom subheadings, tagged 1 as india_specific."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover : (a) animal blood of heading 0511; (b) separate chemically defined compounds [other than those answering to the descriptions in Note 2(a), 3(a), 4(a) or 5 below]; or (c) cultured potassiumchloride crystals(other than optical elements) weighing not lessthan 2.5 g. each, of heading 3824; optical elements of potassiumchloride (heading 9001)."
+    },
+    {
+      "number": "2",
+      "text": "Heading 3102 applies only to the following goods, provided that they are not put up in the forms or packages described in heading 3105: (a) goods which answer to one or other of the descriptions given below: (i) sodium nitrate, whether or not pure; (ii) ammonium nitrate, whether or not pure; (iii) double salts, whether or not pure, of ammonium sulphate and ammonium nitrate; (iv) ammonium sulphate, whether or not pure; (v) double salts (whether or not pure) or mixtures of calcium nitrate and ammonium nitrate; (vi) double salts(whether or not pure) or mixtures of calciumnitrate and magnesiumnitrate; (vii) calcium cyanamide, whether or not pure or treated with oil; (viii) urea, whether or not pure; (b) fertilisers consisting of any of the goods described in (A) above mixed together; (c) fertilisers consisting of ammonium chloride or of any of the goods described in (A) or (B) above mixed with chalk, gypsumor other inorganic non-fertilising substances; (d) liquid fertilisers consisting of the goods ofsub-paragraph (A) (ii) or (viii) above, or of mixtures of those goods, in an aqueous or ammoniacal solution."
+    },
+    {
+      "number": "3",
+      "text": "Heading 3103 applies only to the following goods, provided that they are not put up in the forms or packages described in heading 3105: (a) goods which answer to one or other of the descriptions given below: (i) basic slag; (ii) natural phosphates of heading 2510, calcined or further heat-treated than for the removal of impurities; (iii) super phosphates(single, double or triple); (iv) calcium hydrogen orthophosphate containing not less than 0.2 per cent. by weight of fluorine calculated on the dry anhydrous product; (b) fertilisers consisting of any of the goods described in (A) above mixed together, but with no account being taken of the flourine content limit; (c) fertilisers consisting of any of the goods described in (A) or (B) above, but with no account being taken of the flourine content limit, mixed with chalk, gypsum or other inorganic nonfertilising substances."
+    },
+    {
+      "number": "4",
+      "text": "Heading 3104 applies only to the following goods, provided that they are not put up in the forms or packages described in heading 3105 : (a) goods which answer to one or other of the descriptions given below: (i) crude natural potassiumsalts (for example, carnallite, kainite and sylvite); (ii) potassium chloride, whether or not pure, except as provided in Note 1(C) above; (iii) potassium sulphate, whether or not pure; (iv) magnesium potassium sulphate, whether or not pure; (b) fertilisers consisting of any of the goods described in (A) above mixed together."
+    },
+    {
+      "number": "5",
+      "text": "Ammonium dihydrogen orthophosphate (monoammonium phosphate) and diammonium hydrogen orthophosphate (diammoniumphosphate) whether or not pure, and intermixturesthereof, are to be classified in heading 3105."
+    },
+    {
+      "number": "6",
+      "text": "For the purposes of heading 3105, the term \"other fertilisers\" applies only to products of a kind used as fertilisers and containing, as an essential constituent, at least one of the fertilising elements nitrogen, phosphorus or potassium."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "(A) Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 are to be classified in those headings and in no other heading of this Schedule. (B) Subject to paragraph (A) above, goods answering to a description in heading 2843, 2846 or 2852 are to be classified in those headings and in no other heading of this Section."
+    },
+    {
+      "number": "2",
+      "text": "Subject to Note 1 above, goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale are to be classified in those headings and in no other heading of this Schedule."
+    },
+    {
+      "number": "3",
+      "text": "Goods put up in sets consisting of two or more separate constituents,some or all of which fall in this Section and are intended to be mixed together to obtain a product of Section VI or VII, are to be classified in the heading appropriate to that product, provided that the constituents are: (a) having regard to the manner in which they are put up, clearly identifiable as being intended to be used together without first being repacked; (b) presented together; and (c) identifiable, whether by their nature or by the relative proportions in which they are present, as being complementary one to another."
+    },
+    {
+      "number": "4",
+      "text": "Where a product answers to a description in one or more of the headings in Section VI by virtue of being described by name or function and also to heading 3827, then it is classifiable in a heading that references the product by name or function and not under heading 3827."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [
+    {
+      "number": "1",
+      "text": "In this Chapter, reference to any standard of the Bureau of Indian Standards refers to the last published version of that standard. Illustration : IS 1459 refers to IS 1459: 2018 and not to IS 1459: 1974."
+    }
+  ],
+  "export_licensing_notes": [
+    {
+      "number": "1",
+      "text": "Manufacturers of SSP, DAP and NP / NPK who can freely export their own manufactures subject to the conditions mentioned in the chapter:- A List of SSP Manufacturers / Units 1. Arawali Phosphate Ltd, Jhamarkotra Road, Umra, Udaipur, Rajasthan 2. Arihant Fertilizers &Chemicals Ltd, Neemuch Tehsil, Neemuch, M.P. 3. Arihant Phosphates and Fertilisers Ltd, Nimbaheda, Chittorgarh, Rajasthan 4 Asha Phosphates Ltd, Jaggakhedi, Mandsaur, M.P. 5. Basant Agro Tech (India) Ltd, Barshi Takli Tehsil, Akola, Maharashtra 6. Bhilai Engineering Corporation Ltd, Gunjkheda, Pulgaon, Wardha, Maharashtra 7. Bhilai Engineering Corporation Ltd, Sirgiti Industrial Area, Bilaspur, Chattisgarh 8. Bohra Industries Ltd, Umra Village, Girva, Udaipur, Rajasthan 9. Chemtech Fertilisers Ltd, Kazipalli, IDA, Medak, Andhra Pradesh 10. Coimbatore Pioneer Fertilisers Ltd, Muthugoundanpudur, coimabore, TN 11. Dharamsi Morarji Chemical Co Ltd, Ambarnath Tehsil, Thane, Maharashtra 12. Dharamsi Morarji Chemical Co Ltd, Distt. Bilaspur, Chattisgarh 13. Dharamsi Morarji Chemical Co Ltd, Khemli, udaipur, Rajasthan 14. EID Parry (India) Ltd, Pinji Village, Ranipet, TN 15. Gayatri Spinners Ltd, Hamirgarh, Bhilwara, Rajasthan 16. Hind Lever Chemicals Ltd, Durgachak, Haldia, Midnapore, W.B. 17. Jairam Phosphate Ltd, Wadsa (Desalganj), Gadchiroli, Maharashtra 18. Jay Shree Chemicals &Fertilisers-1, Khardah, 24 Praganas (N), W.B. 19. Jay Shree Chemicals &Fertilisers-1I, Khardah, 24 Praganas (N), W.B. 20. Jubliant Organosys Ltd, Bharatiram, Gajraula, U.P. 21. Kashi Uravark Ltd, Industrial Area, Jagdishpur, Sultanpur, U.P. 22. Khaitan Chemicals &Fertilisers Ltd, Village Nirmani, Khargone, M.P. 23. Khaitan Fertilisers, Rampur, U.P. 24. Kothari Industrial Corp. Ltd, Ennore, T.N. 25. Krishna Industrial Corp. Ltd, Nidadavola, West Godavari, Distt. A.P. 26. Liberty Phosphate Ltd, Mewar Industrial Area, Udaipur, Rajasthan 27. Liberty Phosphate Ltd, Nandesari, Vadodara, Gujarat 28. Madhya Bharat Agro products Ltd, Sagar, M.P. 29. Madhya Pradesh Orgochem Ltd, Jawad Tehsil, Neemuch, M.P. 30. Mahadeo Fertilisers Ltd, Bindki, Fatepur, U.P. 31. Maharashtra Agro Industries Dev.Corpn. Ltd, Panvel Taluka, Rigad, Maharashtra 32. Mangalam Phosphates Ltd, Hamirgarh, Bhilwara, Rajasthan 33. Mardia Chemials Ltd, Sitagarh Sayala, Surendranagar, Gujarat 34. Mexican Phosphates Ltd, Ksasrawad Tehsil, Khargone, M.P. 35. Mukteshwar Fertilisers Ltd, Narayankhedi, Ujjain, M.P. 36. Narmada Agro Chemicals P.Ltd. Mangrol, Junagarh, Gujarat 37. Nirma Ltd, Moraiya Village, Bavala, Ahmedabad, Gujarat 38. Phosphate Co. Ltd, Rishra, Hoogly, W.B. 39. Pragati Fertilizers Ltd, IDA, Block-A. Vishakapatnam, A.P. 40. Prathyusha Chemicals &Fertilisers Ltd, IDA, Parawada, Vishakapatnam, A.P. 41. Prem Sakhi Fertilisers Ltd, Jhamar Kotra Road, Lakadwas, Udaipur, Rajasthan 42. Priyanka Fertilisers &Chemicals , Anakapalli (M), Vishakapatnam, A.P. 43. Rashi Fertilizers Ltd., Dindori Tehsil, Nasik, Maharashtra. 44. Rajlaxmi Agrotech India Ltd., Gundewadi Jalna Tehsil, Jalna. Maharashtra. 45. Rama Krishi Rasayan, Haveli Taluka, Pune, Maharashtra. 46 . Rama Phosphates Ltd., Dharampuri, Indore, M.P. 47. Rama Phosphates Ltd. Umra, Gurva Tehsil, Udaipur, Rajasthan. 48. Rewati Minerals &Chemicals Ltd., Banda, Tehsil, Sagar, M.P. 49. Sadhana Phosphate &chemicals Ltd., Gudli Village, Udaipur, Rajasthan. 50. Shiva Fertilizers Ltd., Loha, Taluka, Nanded, Maharashtra. 51. Shreeji Phosphate Ltd., Kallipura Village, Jhabua, M.P. 52. Shri Acids and Chemicals Ltd., Gajraula, U.P. 53. Shri Bhawani Mishra (P) Ltd., Wazirabad, Nanded Maharashtra 54. Shri Ganpati Fertilizers Ltd., Gauraji ka Nimbahera, Ambabari, Rajasthan. 55. Shrinivas Fertilizers Ltd, Gormachhia Village, Jhansi, UP 56. Shurvi Colour Chem Ltd., Madsri, Girva Tehsil, Udaipur, Rajasthan 57. Sona Phosphate Ltd, Sarigam, Sabero, Valsad, Gujarat 58. Subhodaya Chemicals Ltd, Gauripatnam, A.P. 59. Swastik Fertilizer &Chemicals Lt, Village Sandla, Dhar, M.P. 60. Tedco Granites Ltyd, Hamirgarh, Bhilwara Rajasthan 61. Teesta Agro Industries Ltd, Rajganj, Jalpaiguri, W.B. 62 The Andhra Sugars Ltd, Kovvur, West Godavari Distt, A.P. 63. The Bharat Fertilizer Industries Ltd, Wada Taluka, Thane, Maharashtra. 64. Tungabadra Fertilisers &Chemicals Company Ltd, Munirabad R.S. Koppal, Karnataka. 65. Narmada Bio-chem Pvt. Ltd., Ahmedabad 66. Prathyusha Chemicals and Fertilizers Ltd., Visakhapatnam 67. The Jay Shree Chemicals &Fertilisers Ltd., Kolkata 68. Asian Fertilizers Ltd., Forakhpur 69. Sai Fertilizers Pvt. Ltd., Kolkata 70. Jubilant Agri &Consumer Products, Gajraula 71. Chambal Fertilizers and Chemicals Ltd., Jasola 72. Basant Agro Tech (I) Ltd., Jalgaon 73. Basant Agro Tech (I) Ltd., Akola 74. Shiva Global Agro Industries Ltd., Nanded 75. Rama Phosphate Ltd., Indore 76. Rama Krishi Rasayan, Puna 77. Rama Phosphate Ltd., Udaipur 78. T.J. Agro Fertilizers Pvt. Ltd., Navsari 79. Varun Fertilizers Pvt. Ltd., Devas 80. Agri Green Fertilizers &Chemicals Pvt. Ltd., Kadapa 81. Progressive Fertichem (P) Ltd., Assam 82. Aarti Fertilizers, Vapi 83. R C Fertilizers Pvt. Ltd., Nashik 84. Suman Phosphates and Chemicals Ltd., Indore 85. KPR Fertilizers Ltd., Biccavolu 86. KPR Fertilizers Ltd., Koppal 87. Rajlaxmi Agrotech India Pvt. Ltd., Nanded 88. Indian Phosphaate Ltd., Udaipur 89. Adheeshaa Phosphate, Udaipur 90. Datta Agro Services Pvt. Ltd., Jalgaon 91. Madhyabharat Phosphate Pvt. Ltd., Raisen, M.P. 92. Madhyabharat Phosphate Pvt. Ltd., Jhabua, M.P. 93. Blue Phosphate Ltd., Udaipur 94. BEC Fertilizers Ltd. Bharuch 95. Patel Phoschem Ltd. Udaipur 96. Khaitan Chemicals &Fertilisers Ltd., Nimbahera (Raj.) 97. Khaitan Chemicals &Fertilisers Ltd., Fatehpur (U.P.) 98. Khaitan Chemicals &Fertilisers Ltd., Jhansi (U.P.) 99 Khaitan Chemicals &Fertilisers Ltd., Dahej (Guj.) 100. Khaitan Chemicals &Fertilisers Ltd., Rajnandgaon (Chhattisgarh) 101. M/s Greenstar Fertilizers Ltd. [earlier known as Sothern Petrochemical Industries Corporation (SPIC) Limited] B List of DAP Manufacturers 1. Gujarat State Fertilisers &Chemicals Ltd. 2. Zauri Industries Ltd. 3. M/s Greenstar Fertilizers Ltd. [earlier known as Sothern Petrochemical Industries Corporation (SPIC) Limited] 4. Oswal Chemicals &Fertilisers Ltd. 5. Madras Fertilisers Ltd., New Delhi-110016 6. M/s Hindalco Industries Limited (unit: birla copper) 7. Indian Farmers Fertilisers Coop. Ltd, New Delli-110019 8. Godavari Fertilisers &Chemical Ltd. 9. M/s Tata Chemicals Limited (Phosphate Business Division ), Bishop?s House, 51, Chowringee Road, Kolkata-700071. 10. Mangalore Chemicals and Fertilisers Ltd, Bhikaji Cama Place, New Delhi. 11. Paradeep Phosphates Ltd, Pandit Jawaharlal Nehru Marg, Bhubaneshwar- 751001 12. FACT, Cochin C. List of NP / NPK Manufacturers 1. M/s Gujarat State Fertilisers &Chemicals Ltd. 6th Floor, Meridien, West Tower, Windsor Place, New Delhi"
+    }
+  ],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "animal blood",
+      "redirects_to_chapter": "05",
+      "redirects_to_heading": "0511",
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover : (a) animal blood of heading 0511"
+    },
+    {
+      "excluded_product_text": "separate chemically defined compounds [other than those answering to the descriptions in Note 2(a), 3(a), 4(a) or 5 below]",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "(b) separate chemically defined compounds [other than those answering to the descriptions in Note 2(a), 3(a), 4(a) or 5 below]"
+    },
+    {
+      "excluded_product_text": "cultured potassiumchloride crystals (other than optical elements) weighing not lessthan 2.5 g. each",
+      "redirects_to_chapter": "38",
+      "redirects_to_heading": "3824",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "(c) cultured potassiumchloride crystals(other than optical elements) weighing not lessthan 2.5 g. each, of heading 3824"
+    },
+    {
+      "excluded_product_text": "optical elements of potassiumchloride",
+      "redirects_to_chapter": "90",
+      "redirects_to_heading": "9001",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "optical elements of potassiumchloride (heading 9001)"
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "3101",
+      "title": "Animal or vegetable fertilisers, whether or not mixed together or chemically treated; fertilisers produced by the mixing or chemical treatment of animal or vegetable products.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3101.00",
+          "title": "Animal or vegetable fertilisers, whether or not mixed together or chemically treated; fertilisers produced by the mixing or chemical treatment of animal or vegetable products",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3101.00.10",
+              "description": "Guano",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "3101.00.91",
+              "description": "Other: ---- Animal dung",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "3101.00.92",
+              "description": "Other: ---- Animal excreta",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "3101.00.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "3102",
+      "title": "Mineral or chemical fertilisers, nitrogenous.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3102.10",
+          "title": "Urea, whether or not in aqueous solution",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3102.10.10",
+              "description": "Fertilizer grade, conforming to Standard IS 5406",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of Urea is permitted subject to:- i) prior permission /no objection certificate (NOC) of the Department of fertilizers (DOF). ii) production of Declaration /certificate as at (1) before customs at the time of export."
+            },
+            {
+              "code": "3102.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of Urea is permitted subject to:- i) prior permission /no objection certificate (NOC) of the Department of fertilizers (DOF). ii) production of Declaration /certificate as at (1) before customs at the time of export."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3102.21",
+          "title": "Ammonium sulphate; double salts and mixtures of ammonium sulphate and ammonium nitrate : -- Ammonium sulphate",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3102.21.00",
+              "description": "Ammonium sulphate; double salts and mixtures of ammonium sulphate and ammonium nitrate : -- Ammonium sulphate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3102.29",
+          "title": "Ammonium sulphate; double salts and mixtures of ammonium sulphate and ammonium nitrate : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3102.29.10",
+              "description": "Ammonium sulphonitrate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3102.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3102.30",
+          "title": "Ammonium nitrate, whether or not in aqueous solution",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3102.30.00",
+              "description": "Ammonium nitrate, whether or not in aqueous solution",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3102.40",
+          "title": "Mixtures of ammonium nitrate with calcium carbonate or other inorganic non-fertilising substances",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3102.40.00",
+              "description": "Mixtures of ammonium nitrate with calcium carbonate or other inorganic non-fertilising substances",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3102.50",
+          "title": "Sodium nitrate",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3102.50.00",
+              "description": "Sodium nitrate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3102.60",
+          "title": "Double salts and mixtures of calcium nitrate and ammonium nitrate",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3102.60.00",
+              "description": "Double salts and mixtures of calcium nitrate and ammonium nitrate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3102.80",
+          "title": "Mixtures of urea and ammonium nitrate in aqueous or ammoniacal solution",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3102.80.00",
+              "description": "Mixtures of urea and ammonium nitrate in aqueous or ammoniacal solution",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3102.90",
+          "title": "Other, including mixtures not specified in the foregoing subheadings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3102.90.10",
+              "description": "Double salt or mixtures of calcium nitrate and magnesium nitrate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3102.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3103",
+      "title": "Mineral or chemical fertilisers, phosphatic.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3103.10",
+          "title": "- Straight Phosphatic Fertilizers (single super phosphate, named formulations)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3103.10.00",
+              "description": "Straight Phosphatic Fetilizers given below : 1.Single Super Phosphate (16% P2O5) Powdered 2.Single Super Phosphate (14% P2O5) Powdered 3.Single Super Phosphate (16% P2O5) Granulated",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            }
+          ],
+          "india_specific": true,
+          "wco_2022_match": false,
+          "india_specific_note": "WCO HS 2022 deleted 3103.10, but India retained the code at the national level to host a unique product category (Single Super Phosphate fertilizers) with its own policy notification. The row has a distinct description, not a duplicate of the heading caption."
+        },
+        {
+          "subheading": "3103.11",
+          "title": "Superphosphates : -- Containing by weight 35 percent or more of diphosphorus pentoxide (P2O5)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3103.11.00",
+              "description": "Superphosphates : -- Containing by weight 35 percent or more of diphosphorus pentoxide (P2O5)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3103.19",
+          "title": "Superphosphates : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3103.19.00",
+              "description": "Superphosphates : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "1. Exports of Straight Phosphatic Fetilizers given below : a.Single Super Phosphate (16% P2O5) Powdered b.Single Super Phosphate (14% P2O5) Powdered c.Single Super Phosphate (16% P2O5) Granulated is free subject to following condition i.e. Manufacturers of SSP as listed at Export Licensing Note 1 at List A below shall be allowed to export their own manufactured SSP subject to the following conditions : (i)Intimation to Department of Fertilizer about quantity of export along with a self-declaration and a certificate issued by statutory auditors that no concession/ has been claimed for intended export. (ii) Production of above declaration / certificate as at (i) above to Customs at the time of export. 2. Export of Other Straight Phosphatic Fertilizers of the specifications which do not meet the specified conditions for free exports. Export is permitted subject to:- (i) prior permission /no objection certificate (NOC) of the Deportment of fertilizers (DOF). (ii) production of Declaration /certificate as at (1) before customs at the time of export."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3103.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3103.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3104",
+      "title": "Mineral or chemical fertilisers, potassic.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3104.20",
+          "title": "Potassium chloride",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3104.20.00",
+              "description": "Potassium chloride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "A. Exports of Straight Potasic Fertilizers Potassium Chloride (Muriate of Potash) is permitted, with the prior permission of the Department of Fertilizer, by direct importers of MOP out of quantity of import made during last six months subject to the following conditions :- (i) They will not claim any concession for the quantity intended to be exported ; or They will return the concession if already claimed from the Government; and (ii) Furnish certificate from the statutory auditors to the Department of Fertilisers and Customs that the quantity intended to be exported has been imported in the last six months and no concession / subsidy has been claimed; and (iii) Export realisation in free foreign exchange only (iv) Production of Declaration/Certificate as above before Customs at the time of export. B. Export of Straight Potassic Fertilizers of the specifications which do not meet the specified conditions for free exports is permitted subject to:- 1. Prior permission /no objection certificate (NOC) of the Deportment of fertilizers (DOF). 2. Production of Declaration /certificate as at (1) before customs at the time of export."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3104.30",
+          "title": "Potassium sulphate",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3104.30.00",
+              "description": "Potassium sulphate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of All chemical fertilizers fortified with zinc or boron is Free wherein exports is permitted subject to:- (i). prior permission /no objection certificate (NOC) of the Department of fertilizers (DOF). (ii). production of Declaration /certificate as at (1) before customs at the time of export."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3104.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3104.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of All chemical fertilizers fortified with zinc or boron is Free wherein exports is permitted subject to:- (i). prior permission /no objection certificate (NOC) of the Department of fertilizers (DOF). (ii). production of Declaration /certificate as at (1) before customs at the time of export."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3105",
+      "title": "Mineral or chemical fertilisers containing two or three of the fertilising elements nitrogen, phosphorus and potassium; other fertilisers; goods of this Chapter in tablets or similar forms or in packages of a gross weight not exceeding 10 kg.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3105.10",
+          "title": "Goods of this Chapter in tablets or similar forms or in packages of a gross weight not exceeding 10 kg",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3105.10.00",
+              "description": "Goods of this Chapter in tablets or similar forms or in packages of a gross weight not exceeding 10 kg",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3105.20",
+          "title": "Mineral or chemical fertilisers containing the three fertilising elements nitrogen, phosphorus and potassium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3105.20.00",
+              "description": "Mineral or chemical fertilisers containing the three fertilising elements nitrogen, phosphorus and potassium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "A. N.P.K. Complex Fertilisers given below :- Nitrophosphate with Potash (15-15-15) N.P.K. (10-26-26) N.P.K. (12-32-16) N.P.K. (14-35-14) N.P.K. (14-28-14) N.P.K. (19-19-19) N.P.K. (17-17-17) N.P.K. (15-15-15) is free subject to following coniditon i.e. Manufacturers of NP and NPK as listed at Main Note 1 at List C above shall be allowed to export their own manufactured NP and NPK subject to the following conditions : (i) Intimation to Department of Fertilizer about quantity of export along with a self- declaration and a certificate issued by statutory auditors that no concession/ subsidy has been claimed for intended export. (ii) Production of above declaration/ certificate as at (i) above to Customs at the time of export. 2. Export of Other N.P.K. Complex Fertilizers of the specifications which do not meet the specified conditions for free exports is permitted subject to:- (i) prior permission /no objection certificate (NOC) of the Department of fertilizers (DOF). (ii) production of Declaration /certificate as at (1) before customs at the time of export"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3105.30",
+          "title": "Diammonium hydrogenorthophosphate (diammonium phosphate)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3105.30.00",
+              "description": "Diammonium hydrogenorthophosphate (diammonium phosphate)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "1. Export of N.P. Complex Fertilizers Diammonium Phosphate (DAP) (18-46-00) is free subject to following condition i.e. Manufacturers of DAP as listed at Main Note 1 at List B above shall be allowed, with the prior permission of the Department of Fertilizer, to export their own manufactured DAP subject to the following conditions : (i) Intimation to Department of Fertilizer about quantity of export along with a self- declaration and a certificate issued by statutory auditors that no concession/ subsidy has been claimed for intended export. (ii) Production of above declaration / certificate as at (i) above to Customs at the time of export. 2. Export of Other N.P. Complex Fertilizers of the specifications which do not meet the specified conditions for free exports is Free wherein Export is permitted subject to:- (i) prior permission /no objection certificate (NOC) of the Deportment of fertilizers (DOF). (ii)production of Declaration /certificate as at (1) before customs at the time of export."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3105.40",
+          "title": "Ammonium dihydrogenorthophosphate (monoammonium phosphate) and mixtures thereof with diammonium hydrogenorthophosphate (diammonium phosphate)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3105.40.00",
+              "description": "Ammonium dihydrogenorthophosphate (monoammonium phosphate) and mixtures thereof with diammonium hydrogenorthophosphate (diammonium phosphate)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3105.51",
+          "title": "Other mineral or chemical fertilisers containing the two fertilising elements nitrogen and phosphorus : -- Containing nitrates and phosphates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3105.51.00",
+              "description": "Other mineral or chemical fertilisers containing the two fertilising elements nitrogen and phosphorus : -- Containing nitrates and phosphates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3105.59",
+          "title": "Other mineral or chemical fertilisers containing the two fertilising elements nitrogen and phosphorus : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3105.59.00",
+              "description": "Other mineral or chemical fertilisers containing the two fertilising elements nitrogen and phosphorus : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3105.60",
+          "title": "Mineral or chemical fertilisers containing the two fertilising elements phosphorus and potassium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3105.60.00",
+              "description": "Mineral or chemical fertilisers containing the two fertilising elements phosphorus and potassium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3105.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3105.90.10",
+              "description": "Mineral or chemical fertilisers containing two fertilising elements namely nitrogen and potassium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of Micronutirent fertilizers and mixtures thereof containing NPK, excluding those specified in Schedule I , Part A 1 (f) of Fertilizers (Control) Order, 1985 is Free wherein export is permitted subject to:- 1. prior permission /no objection certificate (NOC) of the Department of fertilizers (DOF). 2. production of Declaration /certificate as at (1) before customs at the time of export."
+            },
+            {
+              "code": "3105.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

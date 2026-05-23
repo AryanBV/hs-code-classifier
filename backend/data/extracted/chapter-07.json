@@ -1,0 +1,1515 @@
+{
+  "chapter": "07",
+  "section": "II",
+  "title": "EDIBLE VEGETABLES AND CERTAIN ROOTS AND TUBERS",
+  "source_pdf": "Chapter 07 Edible Vegetables And Certain Roots And Tubers.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '07011000'). Normalized to NNNN.NN.NN format (e.g., '0701.10.00') per project schema. Subheading numbers in PDF (e.g., '070310') normalized to NNNN.NN (e.g., '0703.10').",
+    "PDF table-chrome headers ('Sl.No. Notes Notification Date Notification No', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Main Notes', 'Policy Condition', 'Export Licensing Notes', 'Product Description and Export Policy') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Section II Main Note about 'pellets' appears on PDF page 1 above the Chapter 07 title and is attributed to section_notes (Section II, Vegetable Products), not chapter_notes.",
+    "Heading 0703 description in PDF reads 'Onions, shallots, garlic, leeks and other alliaceous vegetables, fresh or chilled.' — verbatim including trailing period.",
+    "Heading 0704 description in PDF reads 'Cabbages, cauliflowers, kohlrabi, kale and similar edible brassicas, fresh or chilled.' — verbatim.",
+    "Heading 0711 description in PDF (heading-level row) reads 'VEGETABLES PROVISIONALLY PRESERVED, BUT UNSUITABLE IN THAT STATE FOR IMMEDIATE CONSUMPTION' — all-caps in source; preserved verbatim. The official ITC(HS) full title is 'Vegetables provisionally preserved (for example, by sulphur dioxide gas, in brine, in sulphur water or in other preservative solutions), but unsuitable in that state for immediate consumption.' but only the abbreviated form appears in this PDF — preserved as printed.",
+    "Tariff line code '0712.31.00' is rendered in the PDF as 'Mushrooms of the genus lgaricus' with a lowercase 'l' (likely OCR artifact for 'Agaricus'). Preserved verbatim from source.",
+    "Tariff line '0710.80.10' is rendered in the PDF as 'Terragon' (likely OCR artifact for 'Tarragon'). Preserved verbatim from source.",
+    "Subheading 0713.20 description in PDF reads 'Chickpeas (garbanzos):' (with trailing colon). Preserved verbatim.",
+    "Tariff line '0712.20.00' (Onions) has Notification No '49/2015-20' dated '02.03.2020' shown in the PDF — captured as inline metadata; export policy 'Free'.",
+    "Tariff line '0703.10.19' (Onions: Other) has Notification Date '28/2024-25' dated '13.09.2024' shown in the PDF — captured as inline metadata.",
+    "Policy Condition column: all tariff lines under heading 0713 (Dried leguminous vegetables) display 'Subject to Policy Condition 1 of the Chapter' with Notification No '38/2015-20' dated '22.11.2017'. Captured in the policy_conditions array.",
+    "Heading 0712 description in PDF reads 'Dried vegetables, whole, cut, sliced, broken or in powder, but not further prepared.' — verbatim.",
+    "Heading 0714 description in PDF reads 'Manioc, arrowroot, salep, Jerusalem artichokes, sweet potatoes and similar roots and tubers with high starch or inulin content, fresh, chilled, frozen or dried, whether or not sliced or in the form of pellets; sago pith.' — verbatim.",
+    "No 'Supplementary Notes' section is present in the Chapter 07 PDF — only Main Notes, Policy Condition, and Export Licensing Notes are present.",
+    "Subheading '0703.10' (Onions and shallots) covers tariff lines 0703.10.11, 0703.10.19, and 0703.10.20 in the PDF — '0703.10.20 Shallots' is grouped under the same subheading code '070310' per the source structure. Preserved as printed.",
+    "Heading 0702 in PDF appears as a single 8-digit code '07020000' with no separate 4-digit heading row — represented as heading 0702 with subheading 0702.00 containing tariff line 0702.00.00. Same pattern for 0707 (single tariff line 0707.00.00)."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover forage products of heading 1214."
+    },
+    {
+      "number": "2",
+      "text": "In headings 0709, 0710, 0711 and 0712, the word \"vegetables\" includes edible mushrooms, truffles, olives, capers, marrows, pumpkins, aubergines, sweet corn (Zea mays var. saccharata), fruits of the genus Capsicum or of the genus Pimenta, fennel, parsley, chervil, tarragon, cress and sweet marjoram (Majorana hortensis or Origanum majorana)."
+    },
+    {
+      "number": "3",
+      "text": "Heading 0712 covers all dried vegetables of the kinds falling in headings 0701 to 0711, other than: (a) dried leguminous vegetables,shelled (heading 0713); (b) sweet corn in the forms specified in headings 1102 to 1104; (c) flour, meal, powder, flakes, granules and pellets of potatoes (heading 1105); (d) flour, meal and powder of the dried leguminous vegetables of heading 0713 (heading 1106)."
+    },
+    {
+      "number": "4",
+      "text": "However, dried or crushed or ground fruits of the genus Capsicum or of the genus Pimenta are excluded from this Chapter (heading 0904)."
+    },
+    {
+      "number": "5",
+      "text": "Heading 0711 applies to vegetables which have been treated solely to ensure their provisional preservation during transport or storage prior to use (for example, by sulphur dioxide gas, in brine, in sulphur water or in other preservative solutions), provided they remain unsuitable for immediate consumption in that state."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "In this Section, the term \"pellets\" means products which have been agglomerated either directly by compression or by the addition of a binder in a proportion not exceeding 3 (percent) by weight."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "forage products",
+      "redirects_to_chapter": "12",
+      "redirects_to_heading": "1214",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover forage products of heading 1214."
+    },
+    {
+      "excluded_product_text": "dried leguminous vegetables, shelled",
+      "redirects_to_chapter": "07",
+      "redirects_to_heading": "0713",
+      "source_note_number": "Note 3(a)",
+      "source_note_text": "Heading 0712 covers all dried vegetables of the kinds falling in headings 0701 to 0711, other than: (a) dried leguminous vegetables,shelled (heading 0713); (b) sweet corn in the forms specified in headings 1102 to 1104; (c) flour, meal, powder, flakes, granules and pellets of potatoes (heading 1105); (d) flour, meal and powder of the dried leguminous vegetables of heading 0713 (heading 1106)."
+    },
+    {
+      "excluded_product_text": "sweet corn in the forms specified in headings 1102 to 1104",
+      "redirects_to_chapter": "11",
+      "redirects_to_heading": "1102",
+      "source_note_number": "Note 3(b)",
+      "source_note_text": "Heading 0712 covers all dried vegetables of the kinds falling in headings 0701 to 0711, other than: (a) dried leguminous vegetables,shelled (heading 0713); (b) sweet corn in the forms specified in headings 1102 to 1104; (c) flour, meal, powder, flakes, granules and pellets of potatoes (heading 1105); (d) flour, meal and powder of the dried leguminous vegetables of heading 0713 (heading 1106)."
+    },
+    {
+      "excluded_product_text": "flour, meal, powder, flakes, granules and pellets of potatoes",
+      "redirects_to_chapter": "11",
+      "redirects_to_heading": "1105",
+      "source_note_number": "Note 3(c)",
+      "source_note_text": "Heading 0712 covers all dried vegetables of the kinds falling in headings 0701 to 0711, other than: (a) dried leguminous vegetables,shelled (heading 0713); (b) sweet corn in the forms specified in headings 1102 to 1104; (c) flour, meal, powder, flakes, granules and pellets of potatoes (heading 1105); (d) flour, meal and powder of the dried leguminous vegetables of heading 0713 (heading 1106)."
+    },
+    {
+      "excluded_product_text": "flour, meal and powder of the dried leguminous vegetables of heading 0713",
+      "redirects_to_chapter": "11",
+      "redirects_to_heading": "1106",
+      "source_note_number": "Note 3(d)",
+      "source_note_text": "Heading 0712 covers all dried vegetables of the kinds falling in headings 0701 to 0711, other than: (a) dried leguminous vegetables,shelled (heading 0713); (b) sweet corn in the forms specified in headings 1102 to 1104; (c) flour, meal, powder, flakes, granules and pellets of potatoes (heading 1105); (d) flour, meal and powder of the dried leguminous vegetables of heading 0713 (heading 1106)."
+    },
+    {
+      "excluded_product_text": "dried or crushed or ground fruits of the genus Capsicum or of the genus Pimenta",
+      "redirects_to_chapter": "09",
+      "redirects_to_heading": "0904",
+      "source_note_number": "Note 4",
+      "source_note_text": "However, dried or crushed or ground fruits of the genus Capsicum or of the genus Pimenta are excluded from this Chapter (heading 0904)."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "0701",
+      "title": "Potatoes, fresh or chilled.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0701.10",
+          "title": "Seed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0701.10.00",
+              "description": "Seed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0701.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0701.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0702",
+      "title": "Tomatoes, fresh or chilled.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0702.00",
+          "title": "Tomatoes, fresh or chilled.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0702.00.00",
+              "description": "Tomatoes, fresh or chilled.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0703",
+      "title": "Onions, shallots, garlic, leeks and other alliaceous vegetables, fresh or chilled.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0703.10",
+          "title": "Onions and shallots",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0703.10.11",
+              "description": "Onions: ----Rose onion",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0703.10.19",
+              "description": "Onions: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0703.10.20",
+              "description": "Shallots",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0703.20",
+          "title": "Garlic",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0703.20.00",
+              "description": "Garlic",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0703.90",
+          "title": "Leeks and other alliaceous vegetables",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0703.90.00",
+              "description": "Leeks and other alliaceous vegetables",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0704",
+      "title": "Cabbages, cauliflowers, kohlrabi, kale and similar edible brassicas, fresh or chilled.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0704.10",
+          "title": "- Cauliflowers and broccoli",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0704.10.00",
+              "description": "- Cauliflowers and broccoli",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0704.20",
+          "title": "Brussels sprouts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0704.20.00",
+              "description": "Brussels sprouts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0704.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0704.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0705",
+      "title": "Lettuce (Lactuca sativa) and chicory (Cichorium spp.), fresh or chilled.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0705.11",
+          "title": "Lettuce : -- Cabbage lettuce (head lettuce)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0705.11.00",
+              "description": "Lettuce : -- Cabbage lettuce (head lettuce)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0705.19",
+          "title": "Lettuce : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0705.19.00",
+              "description": "Lettuce : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0705.21",
+          "title": "Chicory : --Witloof chicory (Cichorium intybus var. foliosum)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0705.21.00",
+              "description": "Chicory : --Witloof chicory (Cichorium intybus var. foliosum)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0705.29",
+          "title": "Chicory : --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0705.29.00",
+              "description": "Chicory : --Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0706",
+      "title": "Carrots, turnips, salad beetroot, salsify, celeriac, radishes and similar edible roots, fresh or chilled.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0706.10",
+          "title": "Carrots and turnips",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0706.10.00",
+              "description": "Carrots and turnips",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0706.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0706.90.10",
+              "description": "Horse radish",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0706.90.20",
+              "description": "Other Radish",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0706.90.30",
+              "description": "Salad beetroot",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0706.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0707",
+      "title": "Cucumbers and gherkins, fresh or chilled.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0707.00",
+          "title": "Cucumbers and gherkins, fresh or chilled.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0707.00.00",
+              "description": "Cucumbers and gherkins, fresh or chilled.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0708",
+      "title": "Leguminous vegetables, shelled or unshelled, fresh or chilled.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0708.10",
+          "title": "Peas (Pisum sativum)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0708.10.00",
+              "description": "Peas (Pisum sativum)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0708.20",
+          "title": "Beans (Vigna spp., Phaseolus spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0708.20.00",
+              "description": "Beans (Vigna spp., Phaseolus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0708.90",
+          "title": "Other leguminous vegetables",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0708.90.00",
+              "description": "Other leguminous vegetables",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0709",
+      "title": "Other vegetables, fresh or chilled.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0709.20",
+          "title": "Asparagus",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0709.20.00",
+              "description": "Asparagus",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0709.30",
+          "title": "Aubergines (egg-plants)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0709.30.00",
+              "description": "Aubergines (egg-plants)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0709.40",
+          "title": "Celery other than celeriac",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0709.40.00",
+              "description": "Celery other than celeriac",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0709.51",
+          "title": "Mushrooms and truffles : -- Mushrooms of the genus Agaricus",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0709.51.00",
+              "description": "Mushrooms and truffles : -- Mushrooms of the genus Agaricus",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0709.52",
+          "title": "Mushrooms and truffles:- - Mushrooms of the genus Boletus",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0709.52.00",
+              "description": "Mushrooms and truffles:- - Mushrooms of the genus Boletus",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0709.53",
+          "title": "Mushrooms and truffles:- - Mushrooms of the genus Cantharellus",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0709.53.00",
+              "description": "Mushrooms and truffles:- - Mushrooms of the genus Cantharellus",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0709.54",
+          "title": "Mushrooms and truffles:- - Shiitake (Lentinus edodes)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0709.54.00",
+              "description": "Mushrooms and truffles:- - Shiitake (Lentinus edodes)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0709.55",
+          "title": "Mushrooms and truffles:- - Matsutake (Tricholoma matsutake, Tricholoma magnivelare, Tricholoma anatolicum, Tricholoma dulciolens, Tricholoma caligatum)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0709.55.00",
+              "description": "Mushrooms and truffles:- - Matsutake (Tricholoma matsutake, Tricholoma magnivelare, Tricholoma anatolicum, Tricholoma dulciolens, Tricholoma caligatum)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0709.56",
+          "title": "Mushrooms and truffles:- - Truffles (Tuber spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0709.56.00",
+              "description": "Mushrooms and truffles:- - Truffles (Tuber spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0709.59",
+          "title": "Mushrooms and truffles : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0709.59.00",
+              "description": "Mushrooms and truffles : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0709.60",
+          "title": "Fruits of the genus Capsicum or of the genus Pimenta",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0709.60.10",
+              "description": "Green chilly",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0709.60.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0709.70",
+          "title": "Spinach, New Zealand spinach and orache spinach (garden spinach)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0709.70.00",
+              "description": "Spinach, New Zealand spinach and orache spinach (garden spinach)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0709.91",
+          "title": "Other : -- Globe artichokes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0709.91.00",
+              "description": "Other : -- Globe artichokes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0709.92",
+          "title": "Other : -- Olives",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0709.92.00",
+              "description": "Other : -- Olives",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0709.93",
+          "title": "Other: -- Pumpkins, squash and gourds (Cucurbita spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0709.93.10",
+              "description": "Pumpkins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0709.93.20",
+              "description": "Squash",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0709.93.30",
+              "description": "Bitter gourd",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0709.93.40",
+              "description": "Bottle gourd",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0709.93.50",
+              "description": "Snake gourd",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0709.93.60",
+              "description": "Coccinia (Kundru)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0709.93.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0709.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0709.99.10",
+              "description": "Green Pepper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0709.99.30",
+              "description": "Okra/lady finger (Bhindi)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0709.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0710",
+      "title": "Vegetables (uncooked or cooked by steaming or boiling in water), frozen.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0710.10",
+          "title": "Potatoes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0710.10.00",
+              "description": "Potatoes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0710.21",
+          "title": "Leguminous vegetables, shelled or unshelled : -- Peas (Pisum sativum)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0710.21.00",
+              "description": "Leguminous vegetables, shelled or unshelled : -- Peas (Pisum sativum)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0710.22",
+          "title": "Leguminous vegetables, shelled or unshelled : -- Beans (Vigna spp., Phaseolus spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0710.22.00",
+              "description": "Leguminous vegetables, shelled or unshelled : -- Beans (Vigna spp., Phaseolus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0710.29",
+          "title": "Leguminous vegetables, shelled or unshelled : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0710.29.00",
+              "description": "Leguminous vegetables, shelled or unshelled : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0710.30",
+          "title": "Spinach, New Zealand spinach and orache spinach (garden spinach)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0710.30.00",
+              "description": "Spinach, New Zealand spinach and orache spinach (garden spinach)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0710.40",
+          "title": "Sweet corn",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0710.40.00",
+              "description": "Sweet corn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0710.80",
+          "title": "Other vegetables",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0710.80.10",
+              "description": "Terragon",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0710.80.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0710.90",
+          "title": "Mixtures of vegetables",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0710.90.00",
+              "description": "Mixtures of vegetables",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0711",
+      "title": "VEGETABLES PROVISIONALLY PRESERVED, BUT UNSUITABLE IN THAT STATE FOR IMMEDIATE CONSUMPTION",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0711.20",
+          "title": "Olives",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0711.20.00",
+              "description": "Olives",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0711.40",
+          "title": "Cucumbers and gherkins",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0711.40.00",
+              "description": "Cucumbers and gherkins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0711.51",
+          "title": "Mushrooms and truffles : -- Mushrooms of the genus Agaricus",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0711.51.00",
+              "description": "Mushrooms and truffles : -- Mushrooms of the genus Agaricus",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0711.59",
+          "title": "Mushrooms and truffles : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0711.59.00",
+              "description": "Mushrooms and truffles : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0711.90",
+          "title": "Other vegetables; mixtures of vegetables",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0711.90.10",
+              "description": "Green pepper in brine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0711.90.20",
+              "description": "Assorted canned vegetables",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0711.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0712",
+      "title": "Dried vegetables, whole, cut, sliced, broken or in powder, but not further prepared.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0712.20",
+          "title": "Onions",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0712.20.00",
+              "description": "Onions",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0712.31",
+          "title": "Mushrooms, wood ears (Auricularia spp.), jelly fungi (Tremella spp.) and truffles : -- Mushrooms of the genus lgaricus",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0712.31.00",
+              "description": "Mushrooms, wood ears (Auricularia spp.), jelly fungi (Tremella spp.) and truffles : -- Mushrooms of the genus lgaricus",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0712.32",
+          "title": "Mushrooms, wood ears (Auricularia spp.), jelly fungi (Tremella spp.) and truffles : -- Wood ears (Auricularia spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0712.32.00",
+              "description": "Mushrooms, wood ears (Auricularia spp.), jelly fungi (Tremella spp.) and truffles : -- Wood ears (Auricularia spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0712.33",
+          "title": "Mushrooms, wood ears (Auricularia spp.), jelly fungi (Tremella spp.) and truffles : -- Jelly fungi (Tremella spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0712.33.00",
+              "description": "Mushrooms, wood ears (Auricularia spp.), jelly fungi (Tremella spp.) and truffles : -- Jelly fungi (Tremella spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0712.34",
+          "title": "Mushrooms, wood ears (Auricularia spp.), jelly fungi (Tremella spp.) and truffles : - - Shiitake (Lentinus edodes)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0712.34.00",
+              "description": "Mushrooms, wood ears (Auricularia spp.), jelly fungi (Tremella spp.) and truffles : - - Shiitake (Lentinus edodes)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0712.39",
+          "title": "Mushrooms, wood ears (Auricularia spp.), jelly fungi (Tremella spp.) and truffles : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0712.39.00",
+              "description": "Mushrooms, wood ears (Auricularia spp.), jelly fungi (Tremella spp.) and truffles : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0712.90",
+          "title": "Other vegetables; mixtures of vegetables",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0712.90.10",
+              "description": "Asparagus",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0712.90.20",
+              "description": "Dehydrated garlic powder",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0712.90.30",
+              "description": "Dehydrated garlic flakes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0712.90.40",
+              "description": "Dried garlic",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0712.90.50",
+              "description": "Marjoram, Oregano",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0712.90.60",
+              "description": "Potatoes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0712.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0713",
+      "title": "Dried leguminous vegetables, shelled, whether or not skinned or split.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0713.10",
+          "title": "Peas (Pisum sativum)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0713.10.10",
+              "description": "Yellow peas",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0713.10.20",
+              "description": "Green peas",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0713.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0713.20",
+          "title": "Chickpeas (garbanzos):",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0713.20.10",
+              "description": "Kabuli chana",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0713.20.20",
+              "description": "Bengal gram (desi chana)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0713.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0713.31",
+          "title": "Beans (Vigna spp., Phaseolus spp.) : -- Beans of the species Vigna mungo (L.) Hepper or Vigna radiata (L.) Wilczek",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0713.31.10",
+              "description": "Beans of the species Vigna mungo (L.) Hepper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0713.31.90",
+              "description": "Beans of the species Vigna radiata (L.) Wilczek",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0713.32",
+          "title": "Beans (Vigna spp., Phaseolus spp.):- Small red (Adzuki) beans (Phaseolus or Vigna angularis)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0713.32.00",
+              "description": "Beans (Vigna spp., Phaseolus spp.):- Small red (Adzuki) beans (Phaseolus or Vigna angularis)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0713.33",
+          "title": "Beans (Vigna spp., Phaseolus spp.):-- Kidney beans, including white pea beans (Phaseolus vulgaris)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0713.33.00",
+              "description": "Beans (Vigna spp., Phaseolus spp.):-- Kidney beans, including white pea beans (Phaseolus vulgaris)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0713.34",
+          "title": "Beans (Vigna spp., Phaseolus spp.):-- Bambara beans (Vigna subterranea or Voandzeia subterranea)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0713.34.00",
+              "description": "Beans (Vigna spp., Phaseolus spp.):-- Bambara beans (Vigna subterranea or Voandzeia subterranea)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0713.35",
+          "title": "Beans (Vigna spp., Phaseolus spp.):-- Cow peas (Vigna unguiculata)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0713.35.00",
+              "description": "Beans (Vigna spp., Phaseolus spp.):-- Cow peas (Vigna unguiculata)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0713.39",
+          "title": "Beans (Vigna spp., Phaseolus spp.):-- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0713.39.10",
+              "description": "Guar Seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0713.39.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0713.40",
+          "title": "Lentils",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0713.40.00",
+              "description": "Lentils",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0713.50",
+          "title": "Broad beans (Vicia faba var. major) and horse beans (Vicia faba var. equina, Vicia faba var. minor)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0713.50.00",
+              "description": "Broad beans (Vicia faba var. major) and horse beans (Vicia faba var. equina, Vicia faba var. minor)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0713.60",
+          "title": "Pigeon peas (Cajanus cajan)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0713.60.00",
+              "description": "Pigeon peas (Cajanus cajan)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0713.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0713.90.10",
+              "description": "Split",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0713.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0714",
+      "title": "Manioc, arrowroot, salep, Jerusalem artichokes, sweet potatoes and similar roots and tubers with high starch or inulin content, fresh, chilled, frozen or dried, whether or not sliced or in the form of pellets; sago pith.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0714.10",
+          "title": "Manioc (cassava)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0714.10.00",
+              "description": "Manioc (cassava)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0714.20",
+          "title": "Sweet potatoes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0714.20.00",
+              "description": "Sweet potatoes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0714.30",
+          "title": "Yams (Dioscorea spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0714.30.00",
+              "description": "Yams (Dioscorea spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0714.40",
+          "title": "Taro (Colocasia spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0714.40.00",
+              "description": "Taro (Colocasia spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0714.50",
+          "title": "Yautia (Xanthosoma spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0714.50.00",
+              "description": "Yautia (Xanthosoma spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0714.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0714.90.10",
+              "description": "Sago pith",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0714.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

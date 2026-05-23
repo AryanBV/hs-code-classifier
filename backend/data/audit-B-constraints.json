@@ -1,0 +1,170 @@
+{
+  "audited_at": "2026-05-23",
+  "project_id": "waowoznsvaosgcgiivzo",
+  "method": "Each test wrapped in PL/pgSQL EXCEPTION block inside BEGIN..ROLLBACK. Captured SQLSTATE + error message. Confirmed post-rollback row counts match pre-test snapshot exactly (chapters=97, headings=1232, subheadings=5613, tariff_lines=12460, chapter_exclusions=1153, policy_conditions=0). No real DB writes persisted.",
+  "tests": [
+    {
+      "id": 1,
+      "test": "chapters_format_chk single digit ('1')",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "error_code": "23514",
+      "error_constraint": "chapters_format_chk",
+      "verdict": "PASS"
+    },
+    {
+      "id": 2,
+      "test": "chapters_format_chk non-numeric ('abc')",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "error_code": "23514",
+      "error_constraint": "chapters_format_chk",
+      "verdict": "PASS"
+    },
+    {
+      "id": 3,
+      "test": "headings_format_chk 3 digits ('123')",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "error_code": "23514",
+      "error_constraint": "headings_format_chk",
+      "verdict": "PASS"
+    },
+    {
+      "id": 4,
+      "test": "subheadings_format_chk one digit after dot ('0101.1')",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "error_code": "23514",
+      "error_constraint": "subheadings_format_chk",
+      "verdict": "PASS"
+    },
+    {
+      "id": 5,
+      "test": "tariff_lines_format_chk 6 digits only ('0101.21')",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "error_code": "23514",
+      "error_constraint": "tariff_lines_format_chk",
+      "verdict": "PASS"
+    },
+    {
+      "id": 6,
+      "test": "headings_prefix_chk heading='9901' with chapter='01'",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "error_code": "23514",
+      "error_constraint": "headings_prefix_chk",
+      "verdict": "PASS"
+    },
+    {
+      "id": 7,
+      "test": "subheadings_prefix_chk subheading='9901.21' with heading='0101'",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "error_code": "23514",
+      "error_constraint": "subheadings_prefix_chk",
+      "verdict": "PASS"
+    },
+    {
+      "id": 8,
+      "test": "tariff_lines_prefix_chk code='9901.21.00' with subheading='0101.21'",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "error_code": "23514",
+      "error_constraint": "tariff_lines_prefix_chk",
+      "verdict": "PASS"
+    },
+    {
+      "id": 9,
+      "test": "headings_chapter_fkey heading='9901' under nonexistent chapter '99'",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "error_code": "23503",
+      "error_constraint": "headings_chapter_fkey",
+      "verdict": "PASS"
+    },
+    {
+      "id": 10,
+      "test": "subheadings_heading_fkey subheading='0199.99' under nonexistent heading '0199'",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "error_code": "23503",
+      "error_constraint": "subheadings_heading_fkey",
+      "verdict": "PASS"
+    },
+    {
+      "id": 11,
+      "test": "tariff_lines_subheading_fkey code='0101.99.99' under nonexistent subheading '0101.99'",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "error_code": "23503",
+      "error_constraint": "tariff_lines_subheading_fkey",
+      "verdict": "PASS"
+    },
+    {
+      "id": 12,
+      "test": "chapter_exclusions_redirect_ch_fkey redirects_to_chapter='99'",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "error_code": "23503",
+      "error_constraint": "chapter_exclusions_redirect_ch_fkey",
+      "verdict": "PASS"
+    },
+    {
+      "id": 13,
+      "test": "chapter_exclusions_redirect_hd_fkey redirects_to_heading='9999'",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "error_code": "23503",
+      "error_constraint": "chapter_exclusions_redirect_hd_fkey",
+      "verdict": "PASS"
+    },
+    {
+      "id": 14,
+      "test": "policy_conditions pc_chapter_or_code_chk BOTH chapter and code set",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "error_code": "23514",
+      "error_constraint": "pc_chapter_or_code_chk",
+      "verdict": "PASS"
+    },
+    {
+      "id": 15,
+      "test": "policy_conditions pc_chapter_or_code_chk NEITHER chapter nor code set",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "error_code": "23514",
+      "error_constraint": "pc_chapter_or_code_chk",
+      "verdict": "PASS"
+    },
+    {
+      "id": 16,
+      "test": "chapters PK duplicate chapter='01'",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "error_code": "23505",
+      "error_constraint": "chapters_pkey",
+      "verdict": "PASS"
+    },
+    {
+      "id": 17,
+      "test": "happy path full chain ch99 -> 9901 -> 9901.10 -> 9901.10.00 (then ROLLBACK)",
+      "expected": "PASS",
+      "actual": "PASS",
+      "error_code": null,
+      "error_constraint": null,
+      "verdict": "PASS",
+      "notes": "All 4 inserts succeeded inside transaction; ROLLBACK confirmed clean (ch99/hd9901 not present after rollback)."
+    }
+  ],
+  "summary": {
+    "total": 17,
+    "passed": 17,
+    "failed": 0,
+    "negative_tests": 16,
+    "happy_path_tests": 1
+  },
+  "verdict": "ALL_CONSTRAINTS_ENFORCED",
+  "failed_tests": []
+}

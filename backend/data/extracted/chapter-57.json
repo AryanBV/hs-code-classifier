@@ -1,0 +1,919 @@
+{
+  "chapter": "57",
+  "section": "XI",
+  "title": "CARPETS AND OTHER TEXTILE FLOOR COVERINGS",
+  "source_pdf": "Chapter 57 Carpets And Other Textile Floor Coverings.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '57011010'). Normalized to NNNN.NN.NN format (e.g., '5701.10.10') per project schema. Subheading numbers in PDF (e.g., '570110') normalized to NNNN.NN (e.g., '5701.10').",
+    "Section XI Main Notes (the 15 long notes about textile materials, mixtures, yarns, sewing thread, 'made up', etc.) appear at the start of the source PDF but were already captured during Chapter 51/54/62 extractions and are NOT duplicated here per project rule. Only Chapter 57 specific notes are included in this file.",
+    "PDF table-chrome headers ('SI.No. Notes Notification Date Notification No', 'SI.No. Notes Notification No Notification Date', 'Main Notes', 'Supplementary Notes', 'Policy Condition', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Chapter 57 Carpets And Other Textile Floor Coverings.') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Notification Date and Notification No columns in the source table are blank for every Chapter 57 row (Main Notes 1-2, Supplementary Note 1, Policy Condition 1). Captured as null.",
+    "Tariff line 5701.90.20 description in source PDF reads 'Of coir including geo textileOf silk:' — the trailing 'Of silk:' fragment appears to be a header/heading-stub for the following Hand-made / Other split (5701.90.31 / 5701.90.39). Preserved verbatim as it appears in the source.",
+    "Heading 5703 description in source PDF is rendered in ALL CAPS as 'CARPETS AND OTHER TEXTILE FLOOR COVERINGS (INCLUDING TURF), TUTFED, WHETHER OR NOT MADEUP'. Note the typos 'TUTFED' (should be 'TUFTED') and 'MADEUP' (should be 'MADE UP'). Preserved verbatim. All other heading titles are in title case.",
+    "Subheadings 5702.31 through 5702.99, 5703.21, 5703.29, 5703.31, 5703.39 appear in source as 6-digit codes (e.g., '570231') with descriptions that combine the parent subheading-group title and the sub-subheading text via ' : -- ' or ' : - - ' separators (e.g., 'Other, of pile construction, not made up : -- Of wool or fine animal hair'). Preserved verbatim.",
+    "Tariff line 5702.50.21 description reads 'Of man-made textile materials: ---- Carpets, Carpeting and rugs' — the parent subheading 5702.50 (a 6-digit subheading) has tariff lines split across two parent groups 'Of man-made textile materials' (5702.50.21/.22/.29) and 'Of other textile materials' (5702.50.31/.32/.33/.39). Both belong to subheading 5702.50. Preserved verbatim.",
+    "Tariff lines 5703.29.22 and 5703.29.29 in the source PDF show blank Export Policy and Policy Condition cells — captured as policy_condition: null and export_policy: null. The Supplementary Note 1 references these specific tariff lines (5703.29.22, 5703.39.31, 5703.39.32, 5703.39.33, 5703.39.39) for the 'Special Finishes' definition.",
+    "Heading 5705 in source PDF appears twice — once as the heading row ('5705 - Other carpets and other textile floor coverings, whether or not made up.') and once as a subheading-style row ('570500 - Other carpets and other textile floor coverings, whether or not made up:'). The second is the single subheading '5705.00' under heading 5705. All tariff lines (5705.00.11 through 5705.00.90) sit under this single subheading.",
+    "Tariff line 5705.00.49 and 5705.00.90 share the same description text 'Carpets, carpeting, rugs, mats and mattings: ---- Other' in the source. Preserved verbatim; these are two distinct 8-digit codes.",
+    "Tariff line 5704.10.00 description reads 'Tiles, having a maximum surface area of 0.3 m' — the unit symbol 'm²' (square meters) appears as 'm' in the source (OCR/encoding artifact dropping the superscript 2). Similar issue for subheading 5704.20 description 'Tiles, having a maximum surface area exceeding 0.3 m but not exceeding 1 m'. Preserved verbatim.",
+    "Supplementary Note 1 text contains a '?' character in place of typographic quote marks around 'Special Finishes' (an OCR/encoding artifact). Preserved verbatim — the intended text is 'Special Finishes' in quotation marks.",
+    "Policy Condition 1 text contains '\"\" ' (double-quote artifacts) around the Item description fragment ('Handmade Woolen Carpets including other floor coverings like Woolen Durries, Druggets, Gabbas, Namdhas and Shaggy'). Preserved verbatim as OCR artifacts from the source PDF — the intended text is the phrase enclosed in quotation marks."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "For the purposes of this Chapter, the term \"carpets and other textile floor coverings\" means floor coverings in which textile materials serve as the exposed surface of the article when in use and includes articles having the characteristics of textile floor coverings but intended for use for other purposes."
+    },
+    {
+      "number": "2",
+      "text": "This Chapter does not cover floor covering underlays."
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [
+    {
+      "number": "1",
+      "text": "For the purposes of tariff items 5703 29 22, 5703 39 31, 5703 39 32, 5703 39 33 and 5703 39 39, the term ?Special Finishes? means process of making the product with any one or more of the following properties such as fire resistant, fire retardant, chemical resistant, anti-static, dust resistant, anti-stain, anti-microbial, anti-odor, UV stabilized, heat resistant, etc."
+    }
+  ],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "floor covering underlays",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2",
+      "source_note_text": "This Chapter does not cover floor covering underlays."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "5701",
+      "title": "Carpets and other textile floor coverings, knotted, whether or not made up.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5701.10",
+          "title": "Of wool or fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5701.10.10",
+              "description": "Hand-made",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy"
+            },
+            {
+              "code": "5701.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5701.90",
+          "title": "Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5701.90.11",
+              "description": "Hand-made",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy"
+            },
+            {
+              "code": "5701.90.19",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "the Chapter"
+            },
+            {
+              "code": "5701.90.20",
+              "description": "Of coir including geo textileOf silk:",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5701.90.31",
+              "description": "Hand-made",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5701.90.39",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5701.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 01 of"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5702",
+      "title": "Carpets and other textile floor coverings, woven, not tufted or flocked, whether or not made up, including \"Kelem\", \"Schumacks\", \"Karamanie\" and similar hand-woven rugs.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5702.10",
+          "title": "'Kelem', 'Schumacks', 'Karamanie' and similar hand-woven rugs",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5702.10.00",
+              "description": "'Kelem', 'Schumacks', 'Karamanie' and similar hand-woven rugs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5702.20",
+          "title": "Floor coverings of coconut fibres (coir)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5702.20.10",
+              "description": "Coir matting, woven",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5702.20.20",
+              "description": "Coir carpets and other rugs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5702.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5702.31",
+          "title": "Other, of pile construction, not made up : -- Of wool or fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5702.31.10",
+              "description": "Carpets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5702.31.20",
+              "description": "Druggets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "the Chapter"
+            },
+            {
+              "code": "5702.31.30",
+              "description": "Mats and matting",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy"
+            },
+            {
+              "code": "5702.31.40",
+              "description": "Carpeting , floor rugs and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 01 of"
+            },
+            {
+              "code": "5702.31.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5702.32",
+          "title": "Other, of pile construction, not made up : -- Of man-made textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5702.32.10",
+              "description": "Carpets, carpeting and rugs and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy"
+            },
+            {
+              "code": "5702.32.20",
+              "description": "Mats and matting",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 01 of"
+            },
+            {
+              "code": "5702.32.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5702.39",
+          "title": "Other, of pile construction, not made up : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5702.39.10",
+              "description": "Carpets and other floor coverings other than durries of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy"
+            },
+            {
+              "code": "5702.39.20",
+              "description": "Carpets and other floor coverings, of silk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 01 of"
+            },
+            {
+              "code": "5702.39.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5702.41",
+          "title": "Other, of pile construction, made up : -- Of wool or fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5702.41.10",
+              "description": "Carpets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "the Chapter"
+            },
+            {
+              "code": "5702.41.20",
+              "description": "Druggets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5702.41.30",
+              "description": "Mats and matting",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy"
+            },
+            {
+              "code": "5702.41.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5702.42",
+          "title": "Other, of pile construction, made up : -- Of man-made textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5702.42.10",
+              "description": "Carpets, carpeting and rugs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5702.42.20",
+              "description": "Mats and mattings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy"
+            },
+            {
+              "code": "5702.42.30",
+              "description": "Carpets, rugs and mats of Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 01 of"
+            },
+            {
+              "code": "5702.42.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5702.49",
+          "title": "Other, of pile construction, made up : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5702.49.10",
+              "description": "Carpets and other floor coverings other than durries of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5702.49.20",
+              "description": "Carpets and other floor coverings, of silk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy"
+            },
+            {
+              "code": "5702.49.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5702.50",
+          "title": "Other, not of pile construction, not made up",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5702.50.21",
+              "description": "Of man-made textile materials: ---- Carpets, Carpeting and rugs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5702.50.22",
+              "description": "Of man-made textile materials: ---- Mats and matting",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy"
+            },
+            {
+              "code": "5702.50.29",
+              "description": "of other textile materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 01 of"
+            },
+            {
+              "code": "5702.50.31",
+              "description": "Of other textile materials ---- Carpets and other floor coverings, Of cotton other than durries",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "the Chapter"
+            },
+            {
+              "code": "5702.50.32",
+              "description": "Of other textile materials ---- Carpets and other floor coverings, of silk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5702.50.33",
+              "description": "Of other textile materials ---- Place mat and other similar goods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy"
+            },
+            {
+              "code": "5702.50.39",
+              "description": "Of other textile materials ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 01 of"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5702.91",
+          "title": "Other, not of pile construction, made up : -- Of wool or fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5702.91.10",
+              "description": "Carpets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5702.91.20",
+              "description": "Druggets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy"
+            },
+            {
+              "code": "5702.91.30",
+              "description": "Mats and matting",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 01 of"
+            },
+            {
+              "code": "5702.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5702.92",
+          "title": "Other, not of pile construction, made up : -- Of man-made textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5702.92.10",
+              "description": "Carpets, carpeting and rugs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy"
+            },
+            {
+              "code": "5702.92.20",
+              "description": "Mats and mattings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 01 of"
+            },
+            {
+              "code": "5702.92.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5702.99",
+          "title": "Other, not of pile construction, made up : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5702.99.10",
+              "description": "Carpets and other floor coverings, of cotton other than durries",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5702.99.20",
+              "description": "Carpets and other floor coverings, of silk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5702.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5703",
+      "title": "CARPETS AND OTHER TEXTILE FLOOR COVERINGS (INCLUDING TURF), TUTFED, WHETHER OR NOT MADEUP",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5703.10",
+          "title": "Of wool or fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5703.10.10",
+              "description": "Carpets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5703.10.20",
+              "description": "Mats and matting",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5703.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5703.21",
+          "title": "Of nylon or other polyamides: - - Turf",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5703.21.00",
+              "description": "Of nylon or other polyamides: - - Turf",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5703.29",
+          "title": "Of nylon or other polyamides: - - Other:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5703.29.10",
+              "description": "Of nylon or other polyamides: - - Carpets, carpeting and rugs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5703.29.21",
+              "description": "100% polyamide tufted velour, cut pile or loop pile carpet mats :---- With jute, rubber latex or PU foam backing",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5703.29.22",
+              "description": "100% polyamide tufted velour, cut pile or loop pile carpet mats :---- With ethylene vinyl acetate or vinyl acetate ethylene or latex coating and/or extruded polyvinyl chloride or thermoplastic polyolefin, with special finishes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5703.29.29",
+              "description": "100% polyamide tufted velour, cut pile or loop pile carpet mats :---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5703.29.90",
+              "description": "Of nylon or other polyamides: - - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5703.31",
+          "title": "Of other man-made textile materials: - - Turf",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5703.31.00",
+              "description": "Of other man-made textile materials: - - Turf",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5703.39",
+          "title": "Of other man-made textile materials: - - Other:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5703.39.10",
+              "description": "Of other man-made textile materials: - - - Carpets, carpeting and rugs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5703.39.20",
+              "description": "Of other man-made textile materials: - - - 100% polypropylene carpet mats with jute, rubber, latex or PU foam backing",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5703.39.31",
+              "description": "Tufted velour, cut pile or loop pile carpet mats with ethylene vinyl acetate or vinyl acetate ethylene or latex coating and/or extruded polyvinyl chloride or thermoplastic polyolefin, with special finishes:---- Of 100% polypropylene",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5703.39.32",
+              "description": "Tufted velour, cut pile or loop pile carpet mats with ethylene vinyl acetate or vinyl acetate ethylene or latex coating and/or extruded polyvinyl chloride or thermoplastic polyolefin, with special finishes:---- Of 100% polyester",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy"
+            },
+            {
+              "code": "5703.39.33",
+              "description": "Tufted velour, cut pile or loop pile carpet mats with ethylene vinyl acetate or vinyl acetate ethylene or latex coating and/or extruded polyvinyl chloride or thermoplastic polyolefin, with special finishes:---- Of 100% polyethylene",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 01 of"
+            },
+            {
+              "code": "5703.39.39",
+              "description": "Tufted velour, cut pile or loop pile carpet mats with ethylene vinyl acetate or vinyl acetate ethylene or latex coating and/or extruded polyvinyl chloride or thermoplastic polyolefin, with special finishes:---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "the Chapter"
+            },
+            {
+              "code": "5703.39.90",
+              "description": "Of other man-made textile materials: - - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5703.90",
+          "title": "Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5703.90.10",
+              "description": "Carpets and other floor coverings, of cotton, other than durries",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5703.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5704",
+      "title": "Carpets and other textile floor coverings, of felt, not tufted or flocked, whether or not made up.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5704.10",
+          "title": "Tiles, having a maximum surface area of 0.3 m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5704.10.00",
+              "description": "Tiles, having a maximum surface area of 0.3 m",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5704.20",
+          "title": "Tiles, having a maximum surface area exceeding 0.3 m but not exceeding 1 m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5704.20.10",
+              "description": "Cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5704.20.20",
+              "description": "Woollen, other than artware",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "the Chapter"
+            },
+            {
+              "code": "5704.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5704.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5704.90.10",
+              "description": "Cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "the Chapter"
+            },
+            {
+              "code": "5704.90.20",
+              "description": "Woollen, other than artware",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5704.90.90",
+              "description": "Others",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5705",
+      "title": "Other carpets and other textile floor coverings, whether or not made up.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5705.00",
+          "title": "Other carpets and other textile floor coverings, whether or not made up:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5705.00.11",
+              "description": "Carpets: ---- Of silk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5705.00.19",
+              "description": "Carpets: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5705.00.21",
+              "description": "Durries: ---- Durries cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5705.00.22",
+              "description": "Durries: ---- Durries of man-made fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 01 of"
+            },
+            {
+              "code": "5705.00.23",
+              "description": "Durries: ---- Durries of wool",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5705.00.24",
+              "description": "Durries: ---- Cotton Durries of Handloom (including Chindi Durries, Cotton, Chenille Durries, Rag Rug Durries, Printed Durries, Druggets)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5705.00.29",
+              "description": "Durries: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy"
+            },
+            {
+              "code": "5705.00.31",
+              "description": "Of jute: ---- Of blended jute",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 01 of"
+            },
+            {
+              "code": "5705.00.32",
+              "description": "Of jute: ---- of coir jute",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5705.00.39",
+              "description": "Of jute: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5705.00.41",
+              "description": "Carpets, carpeting, rugs, mats and mattings: ---- knitted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5705.00.42",
+              "description": "Carpets, carpeting, rugs, mats and mattings: ---- Mats and mattings including Bath Mats, where cotton predominates by weight, of Handloom, Cotton Rugs of Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5705.00.49",
+              "description": "Carpets, carpeting, rugs, mats and mattings: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "the Chapter"
+            },
+            {
+              "code": "5705.00.90",
+              "description": "Carpets, carpeting, rugs, mats and mattings: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,590 @@
+{
+  "chapter": "75",
+  "title": "Nickel And Articles Thereof",
+  "section": "XV",
+  "source_pdf": "Chapter 75 Nickel And Articles Thereof.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '75011000'). Normalized to NNNN.NN.NN format (e.g., '7501.10.00') per project schema. Subheading numbers in PDF (e.g., '750220') normalized to NNNN.NN form (e.g., '7502.20').",
+    "Chapter 75 PDF contains a 'Sub-Heading Notes' table ONLY (2 notes). No separate 'Main Notes' or 'Chapter Notes' table is present in the PDF — chapter-level definitional notes for nickel are placed in the Sub-Heading Notes table per ITC(HS) PDF layout. Note 1 (defining 'Nickel, not alloyed' and 'Nickel alloys') is structurally a CHAPTER note per WCO HS legal text — preserved in subheading_notes verbatim as the PDF presents it; classifier consumers should treat Note 1 as a chapter-level definition.",
+    "Section XV (Base Metals and Articles of Base Metal) header is shown on this PDF. The 9 Section XV main notes were captured verbatim in Chapter 74 extraction (commit cb201a2) and Chapter 82 — reproduced here for self-contained reference so classifier can resolve Section XV legal text from any single Chapter 75 query.",
+    "Sub-Heading Note 1 references a TABLE for nickel alloy element limits (Fe Iron 0.5, O Oxygen 0.4, Other elements * each 0.3). PDF renders the table inline as '... following Table: TABLE ? OTHER ELEMENTS Elements Limiting content % by weight Fe Iron 0.5 O Oxygen 0.4 Other elements, each 0.3 ...'. The '?' is a PDF artifact for a missing table-caption character. Reproduced verbatim.",
+    "Sub-Heading Note 1(b) PDF text reads 'Nickel alloys Metallic substancesin which nickel predominates' with a missing space between 'substances' and 'in' — preserved verbatim from PDF source ('Metallic substancesin').",
+    "Sub-Heading Note 2 contains quoting artifact '\"\"wire\"\"' (paired double-double quotes) — smart-quote encoding artifact from source PDF. Reproduced verbatim to preserve fidelity. The note clarifies that 'wire' under subheading 7508.10 (sic — PDF says 750810) applies only to products with no cross-sectional dimension exceeding 6 mm, notwithstanding Section XV Note 9(c) general wire definition.",
+    "Sub-Heading Note 2 references subheading '750810' (i.e., 7508.10 — 'Cloth, grill and netting, of nickel wire'). This is the operative narrow definition of wire for that specific subheading and overrides the general Section XV Note 9(c) wire definition for that line.",
+    "Heading 7503 (Nickel waste and scrap) — title in PDF is 'NICKEL WASTE AND SCRAP' in all caps; subheading row '750300' uses sentence case 'Nickel waste and scrap.' — both preserved verbatim.",
+    "Heading 7503 tariff line 7503.00.10 contains an extensive verbatim ISRI scrap code-word list (Aroma, Burly, Hitch, House, Ideal, Indian, Junto, Lemon, Lemur, Vaunt) describing various nickel and Monel scrap types. The description spans two PDF rows (the second row continues without an ITC code in the leftmost column) — reconstructed as a single continuous description for code 7503.00.10.",
+    "Heading 7504 (Nickel powders and flakes) and Heading 7503 subheading 7503.00 are direct 8-digit code entries without separate 6-digit subheading rows in the PDF. Heading 7504 PDF row '75040000' has description 'Nickel powders and flakes.' Modelled as subheading 7504.00 with single tariff line 7504.00.00.",
+    "Headings 7505, 7506, 7507 follow standard 6-digit subheading structure (e.g., 7505.11, 7505.12, 7505.21, 7505.22, 7506.10, 7506.20, 7507.11, 7507.12, 7507.20). All subheading rows have direct 8-digit codes (typically XX.XX.10/20) or single XX.XX.00 codes.",
+    "Heading 7505 subheading 7505.11 ('Bars, rods and profiles : -- Of nickel, not alloyed') has TWO 8-digit lines: 7505.11.10 (Hollow bars) and 7505.11.20 (Other bar rods and profiles). Similarly 7505.12 ('Bars, rods and profiles : -- Of nickel alloys') has 7505.12.10 (Hollow bars) and 7505.12.20 (Other bars; rods and profiles). The semi-colon punctuation in 7505.12.20 ('bars; rods') differs from 7505.11.20 ('bar rods') — both reproduced verbatim from PDF.",
+    "Heading 7508 subheading 7508.10 ('Cloth, grill and netting, of nickel wire') is a direct 8-digit code 7508.10.00. Subheading 7508.90 ('Other') has 4 tariff lines: 7508.90.10 (Electroplating anodes of nickel), 7508.90.20 (Blanks ordinarily used for manufacturing tubes and pipes of nickel), 7508.90.30 (Nickel screen), 7508.90.90 (Other articles of nickel and nickel alloy).",
+    "Unit (kg/u/etc.) information is not present in this PDF — all unit fields set to null.",
+    "Export Policy 'Free' applies to all 8-digit tariff lines per the PDF (not modelled in the JSON tariff_lines structure, consistent with prior chapter extractions). No policy conditions appear for any Chapter 75 tariff lines.",
+    "Heading 7502 subheading 7502.20 ('Nickel alloys') has 5 tariff lines: 7502.20.10 (Cupro-nickel containing more than 40 percent by weight of nickel), 7502.20.20 (Monel metal including K monel), 7502.20.30 (Nickel alloys containing more than 40 percent by weight of nickel), 7502.20.40 (Nickel alloys containing more than 10 percent but not more than 40 percent by weight of nickel), 7502.20.90 (Other). The PDF text '40percent' in 7502.20.40 (missing space between '40' and 'percent') preserved verbatim."
+  ],
+  "chapter_notes": [],
+  "subheading_notes": [
+    {
+      "number": "1",
+      "text": "In this Chapter the following expressions have the meanings hereby assigned to them: (a) Nickel, not alloyed Metal containing by weight at least 99% of nickel plus cobalt, provided that: (i) the cobalt content by weight does not exceed 1.5%; and (ii) the content by weight of any other element does not exceed the limit specified in the following Table: TABLE ? OTHER ELEMENTS Elements Limiting content % by weight Fe Iron 0.5 O Oxygen 0.4 Other elements, each 0.3 (b) Nickel alloys Metallic substancesin which nickel predominates by weight over each of the other elements provided that: (i) the content by weight of cobalt exceeds 1.5%, (ii) the content by weight of at least one of the other elements is greater than the limit specified in the foregoing table, or (iii) the total content by weight of elements other than nickel plus cobalt exceeds 1%."
+    },
+    {
+      "number": "2",
+      "text": "Notwithstanding the provisions of Note 9(c) to section XV, for the purposes of sub-heading 750810, the term \"\"wire\"\" applies only to products, whether or not in coils, of any cross-sectional shape, of which no cross-sectional dimension exceeds 6 mm."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "This Section does not cover : (a) prepared paints, inks or other products with a basis of metallic flakes or powder (headings 3207 to 3210, 3212, 3213 or 3215); (b) ferro-cerium or other pyrophoric alloys(heading 3606); (c) headgear or parts thereof of heading 6506 or 6507; (d) umbrella frames or other articles of heading 6603; (e) goods of Chapter 71 (for example, precious metal alloys, base metal clad with precious metal, imitation jewellery); (f) articles of Section XVI (machinery, mechanical a pliances and electrical goods); (g) assembled railway or tramway track (heading 8608) or other articles of Section XVII (vehicles, ships and boats, aircraft); (h) instruments or apparatus of Section XVIII, including clock or watch springs; (ij) lead shot prepared for ammunition (heading 9306) or other articles of Section XIX (arms and ammunition); (k) articles of Chapter 94 (for example, furniture, mattress supports, luminaires and lighting fittings, illuminated signs, prefabricated buildings); (l) articles of Chapter 95 (for example, toys, games, sports requisites); (m) hand sieves, buttons, pens, pencil-holders, pen nibs, monopods, bipods, tripods and similar articles or other articles of Chapter 96 (miscellaneous manufactured articles); or\"\"\"\" (n) articles of Chapter 97 (for example, works of art)."
+    },
+    {
+      "number": "2",
+      "text": "Throughout this Schedule, the expression \"\"\"\"parts of general use\"\"\"\" means : (a) articles of heading 7307, 7312, 7315, 7317 or 7318 and similar articles of other base metal, other than articles specially designed for use exclusively in implants in medical, surgical, dental or veterinary sciences (heading 9021); (b) springs and leaves for springs, of base metal, other than clock or watch springs (heading 9114); and (c) articles of headings 8301, 8302, 8308, 8310 and frames and mirrors, of base metal, of heading 8306. In Chapters 73 to 76 and 78 to 82 (but not in heading 7315) references to parts of goods do not include references to parts of general use as defined above. Subject to the preceding paragraph and to Note 1 to Chapter 83, the articles of Chapter 82 or 83 are excluded from Chapters 72 to 76 and 78 to 81."
+    },
+    {
+      "number": "3",
+      "text": "Throughout this Schedule, the expression \"\"base metals\"\" means : iron and steel, copper, nickel, aluminium, lead, zinc, tin, tungsten (wolfram), molybdenum, tantalum, magnesium, cobalt, bismuth, cadmium, titanium, zirconium, antimony, manganese, beryllium, chromium, germanium, vanadium, gallium, hafnium, indium, niobium (columbium),rhenium and thallium."
+    },
+    {
+      "number": "4",
+      "text": "Throughout this Schedule, the term \"cermets\" means products containing a microscopic heterogenous combination of a metallic component and a ceramic component. The term \"cermets\" includes sintered metal carbides (metal carbides sintered with a metal)."
+    },
+    {
+      "number": "5",
+      "text": "Classification of alloys (other than ferro-alloys and master alloys as defined in Chapters 72 and 74) : (a) an alloy of base metals is to be classified as an alloy of the metal which predominates by weight over each of the other metals; (b) an alloy composed of base metals of this Section and of elements not falling within this Section is to be treated as an alloy of base metals of this Section if the total weight of such metals equals or exceeds the total weight of the other elements present; (c) in this Section, the term \"\"\"\"alloys\"\"\"\" includes sintered mixtures of metal powders, heterogeneous intimate mixtures obtained by melting (other than cermets) and intermetallic compounds."
+    },
+    {
+      "number": "6",
+      "text": "Unlessthe context otherwise requires, any reference in this Schedule to a base metal includes a reference to alloys which, by virtue of Note 5 above, are to be classified as alloys of that metal."
+    },
+    {
+      "number": "7",
+      "text": "Classification of composite articles: Except where the headings otherwise require, articles of base metal (including articles of mixed materials treated as articles of base metal under the General Interpretive Rules) containing two or more base metals areto be treated as articles of the base metal predominating by weight over each of the other metals. For this purpose: (a) iron and steel, or different kinds of iron or steel, are regarded as one and the same metal; (b) an alloy isregarded as being entirely composed of that metal as an alloy of which, by virtue of Note 5, it is classified; and (c) a cermet of heading 8113 is regarded as a single base metal."
+    },
+    {
+      "number": "8",
+      "text": "In this Section, the following expressions have the meanings hereby assigned to them : (a) waste and scrap: (i) all metal waste and scrap; (ii) metal goods definitely not usable as such because of breakage, cutting-up, wear or other reasons. (b) Powders: products of which 90% or more by weight passes through a sieve having a mesh aperture of 1 mm."
+    },
+    {
+      "number": "9",
+      "text": "For the purposes of Chapters 74 to 76 and 78 to 81, the following expressions shall have the meanings hereby assigned to them: (a) Bars and rods: Rolled, extruded, drawn or forged products, not in coils, which have a uniform solid cross-section along their whole length in the shape of circles, ovals, rectangles (including squares), equilateral triangles or regular convex polygons (including \"\"\"\"flattened circles\"\"\"\" and \"\"\"\"modified rectangles\"\"\"\", of which two opposite sides are convex arcs, the other two sides being straight, of equal length and parallel). Products with a rectangular (including square), triangular or polygonal cross-section may have corners rounded along their whole length. The thickness of such products which have a rectangular (including \"\"\"\"modified rectangular\"\"\"\") cross-section exceeds one-tenth of the width. The expression also covers cast or sintered products, of the same forms and dimensions, which have been subsequently worked after production (otherwise than by simple trimming or descaling), provided that they have not thereby assumed the character of articles or products of other headings. Wirebars and billets of Chapter 74 with their ends tapered or otherwise worked simply to facilitate their entry into machines for converting them into, for example, drawing stock (wire-rod) or tubes, are however to be taken to be unwrought copper of heading 7403. This provision applies mutatis mutandis to the products of Chapter 81. (b) Profiles: Rolled, extruded, drawn, forged or formed products, coiled or not, of a uniform cross-section along their whole length, which do not conform to any of the definitions of bars, rods, wire, plates, sheets, strip, foil, tubes or pipes. The expression also covers cast or sintered products, of the same forms, which have been subsequently worked after production (otherwise than by simple trimming or de-scaling), provided that they have not thereby assumed the character of articles or products of other headings. (c) Wire: Rolled, extruded or drawn products, in coils, which have a uniform solid cross-section along their whole length in the shape of circles, ovals, rectangles (including squares), equilateral triangles or regular convex polygons (including \"\"\"\"flattened circles\"\"\"\" and \"\"\"\"modified rectangles\"\"\"\", of which two opposite sides are convex arcs, the other two sides being straight, of equal length and parallel). Products with a rectangular (including square), triangular or polygonal cross-section may have corners rounded along their whole length. The thickness of such products which have a rectangular (including \"\"\"\"modified rectangular\"\"\"\") cross-section exceeds one-tenth of the width. (d) Plates, sheets, strip and foil: Flat-surfaced products (other than the unwrought products of heading 8001), coiled or not, of solid rectangular (other than square) cross-section with or without rounded corners (including \"\"\"\"modified rectangles\"\"\"\" of which two opposite sides are convex arcs, the other two sides being straight, of equal length and parallel) of a uniform thickness, which are: - of rectangular (including square) shape with a thickness not exceeding one-tenth of the width; - of a shape other than rectangular or square, of any size, provided that they do not assume the character of articles or products of other headings. Headings for plates, sheets, strip, and foil apply, inter alia, to plates, sheets, strip, and foil with patterns (for example, grooves, ribs, chequers, tears, buttons, lozenges) and to such products which have been perforated, corrugated, polished or coated, provided that they do not thereby assume the character of articles or products of other headings. (e) Tubes and pipes: Hollow products, coiled or not, which have a uniform cross-section with only one enclosed void along their whole length in the shape of circles, ovals, rectangles (including squares), equilateral triangular or regular convex polygons, and which have a uniform wall thickness. Products with a rectangular (including square), equilateral triangular or regular convex polygonal cross-section, which may have corners rounded along their whole length, are also to be considered as tubes and pipes provided the inner and outer crosssections are concentric and have the same form and orientation. Tubes and pipes of the foregoing cross-sections may be polished, coated, bent, threaded, drilled, waisted, expanded, cone-shaped or fitted with flanges, collars or rings."
+    }
+  ],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "Prepared paints, inks or other products with a basis of metallic flakes or powder",
+      "redirects_to_chapter": "32",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(a)",
+      "source_note_text": "This Section does not cover : (a) prepared paints, inks or other products with a basis of metallic flakes or powder (headings 3207 to 3210, 3212, 3213 or 3215); ..."
+    },
+    {
+      "excluded_product_text": "Ferro-cerium or other pyrophoric alloys",
+      "redirects_to_chapter": "36",
+      "redirects_to_heading": "3606",
+      "source_note_number": "Section Note 1(b)",
+      "source_note_text": "(b) ferro-cerium or other pyrophoric alloys(heading 3606); ..."
+    },
+    {
+      "excluded_product_text": "Headgear or parts thereof of heading 6506 or 6507",
+      "redirects_to_chapter": "65",
+      "redirects_to_heading": "6506",
+      "source_note_number": "Section Note 1(c)",
+      "source_note_text": "(c) headgear or parts thereof of heading 6506 or 6507; ..."
+    },
+    {
+      "excluded_product_text": "Umbrella frames or other articles of heading 6603",
+      "redirects_to_chapter": "66",
+      "redirects_to_heading": "6603",
+      "source_note_number": "Section Note 1(d)",
+      "source_note_text": "(d) umbrella frames or other articles of heading 6603; ..."
+    },
+    {
+      "excluded_product_text": "Goods of Chapter 71 (for example, precious metal alloys, base metal clad with precious metal, imitation jewellery)",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(e)",
+      "source_note_text": "(e) goods of Chapter 71 (for example, precious metal alloys, base metal clad with precious metal, imitation jewellery); ..."
+    },
+    {
+      "excluded_product_text": "Articles of Section XVI (machinery, mechanical appliances and electrical goods)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(f)",
+      "source_note_text": "(f) articles of Section XVI (machinery, mechanical a pliances and electrical goods); ..."
+    },
+    {
+      "excluded_product_text": "Assembled railway or tramway track (heading 8608) or other articles of Section XVII (vehicles, ships and boats, aircraft)",
+      "redirects_to_chapter": "86",
+      "redirects_to_heading": "8608",
+      "source_note_number": "Section Note 1(g)",
+      "source_note_text": "(g) assembled railway or tramway track (heading 8608) or other articles of Section XVII (vehicles, ships and boats, aircraft); ..."
+    },
+    {
+      "excluded_product_text": "Instruments or apparatus of Section XVIII, including clock or watch springs",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(h)",
+      "source_note_text": "(h) instruments or apparatus of Section XVIII, including clock or watch springs; ..."
+    },
+    {
+      "excluded_product_text": "Lead shot prepared for ammunition (heading 9306) or other articles of Section XIX (arms and ammunition)",
+      "redirects_to_chapter": "93",
+      "redirects_to_heading": "9306",
+      "source_note_number": "Section Note 1(ij)",
+      "source_note_text": "(ij) lead shot prepared for ammunition (heading 9306) or other articles of Section XIX (arms and ammunition); ..."
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 94 (for example, furniture, mattress supports, luminaires and lighting fittings, illuminated signs, prefabricated buildings)",
+      "redirects_to_chapter": "94",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(k)",
+      "source_note_text": "(k) articles of Chapter 94 (for example, furniture, mattress supports, luminaires and lighting fittings, illuminated signs, prefabricated buildings); ..."
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 95 (for example, toys, games, sports requisites)",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(l)",
+      "source_note_text": "(l) articles of Chapter 95 (for example, toys, games, sports requisites); ..."
+    },
+    {
+      "excluded_product_text": "Hand sieves, buttons, pens, pencil-holders, pen nibs, monopods, bipods, tripods and similar articles or other articles of Chapter 96 (miscellaneous manufactured articles)",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(m)",
+      "source_note_text": "(m) hand sieves, buttons, pens, pencil-holders, pen nibs, monopods, bipods, tripods and similar articles or other articles of Chapter 96 (miscellaneous manufactured articles); ..."
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 97 (for example, works of art)",
+      "redirects_to_chapter": "97",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(n)",
+      "source_note_text": "(n) articles of Chapter 97 (for example, works of art)."
+    },
+    {
+      "excluded_product_text": "Parts of general use as defined in Section XV Note 2 — articles of heading 7307, 7312, 7315, 7317 or 7318 and similar articles of other base metal (i.e., tube fittings, stranded wire/ropes/cables, chains, nails/tacks/staples, screws/bolts/nuts of base metal) — excluded from Chapter 75",
+      "redirects_to_chapter": "73",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 2(a)",
+      "source_note_text": "Throughout this Schedule, the expression \"\"\"\"parts of general use\"\"\"\" means : (a) articles of heading 7307, 7312, 7315, 7317 or 7318 and similar articles of other base metal, other than articles specially designed for use exclusively in implants in medical, surgical, dental or veterinary sciences (heading 9021); ..."
+    },
+    {
+      "excluded_product_text": "Articles specially designed for use exclusively in implants in medical, surgical, dental or veterinary sciences",
+      "redirects_to_chapter": "90",
+      "redirects_to_heading": "9021",
+      "source_note_number": "Section Note 2(a)",
+      "source_note_text": "Throughout this Schedule, the expression \"\"\"\"parts of general use\"\"\"\" means : (a) articles of heading 7307, 7312, 7315, 7317 or 7318 and similar articles of other base metal, other than articles specially designed for use exclusively in implants in medical, surgical, dental or veterinary sciences (heading 9021); ..."
+    },
+    {
+      "excluded_product_text": "Springs and leaves for springs, of base metal, other than clock or watch springs (parts of general use — excluded from Chapter 75)",
+      "redirects_to_chapter": "73",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 2(b)",
+      "source_note_text": "(b) springs and leaves for springs, of base metal, other than clock or watch springs (heading 9114); ..."
+    },
+    {
+      "excluded_product_text": "Clock or watch springs",
+      "redirects_to_chapter": "91",
+      "redirects_to_heading": "9114",
+      "source_note_number": "Section Note 2(b)",
+      "source_note_text": "(b) springs and leaves for springs, of base metal, other than clock or watch springs (heading 9114); ..."
+    },
+    {
+      "excluded_product_text": "Articles of headings 8301, 8302, 8308, 8310 (padlocks, locks, mountings, fittings, hooks, eyes, sign-plates of base metal — parts of general use)",
+      "redirects_to_chapter": "83",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 2(c)",
+      "source_note_text": "(c) articles of headings 8301, 8302, 8308, 8310 and frames and mirrors, of base metal, of heading 8306. ..."
+    },
+    {
+      "excluded_product_text": "Frames and mirrors, of base metal, of heading 8306 (parts of general use)",
+      "redirects_to_chapter": "83",
+      "redirects_to_heading": "8306",
+      "source_note_number": "Section Note 2(c)",
+      "source_note_text": "(c) articles of headings 8301, 8302, 8308, 8310 and frames and mirrors, of base metal, of heading 8306. ..."
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 82 (tools, implements, cutlery, spoons and forks of base metal) — excluded from Chapters 72 to 76 and 78 to 81 (including this Chapter 75)",
+      "redirects_to_chapter": "82",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 2",
+      "source_note_text": "Subject to the preceding paragraph and to Note 1 to Chapter 83, the articles of Chapter 82 or 83 are excluded from Chapters 72 to 76 and 78 to 81."
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 83 (miscellaneous articles of base metal — padlocks, locks, mountings, safes, clasps, bells, statuettes, sign-plates, wire-and-rod for soldering, etc.) — excluded from Chapters 72 to 76 and 78 to 81 (including this Chapter 75)",
+      "redirects_to_chapter": "83",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 2",
+      "source_note_text": "Subject to the preceding paragraph and to Note 1 to Chapter 83, the articles of Chapter 82 or 83 are excluded from Chapters 72 to 76 and 78 to 81."
+    }
+  ],
+  "headings": [
+    {
+      "heading": "7501",
+      "title": "Nickel mattes, nickel oxide sinters and other intermediate products of nickel metallurgy.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7501.10",
+          "title": "Nickel mattes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7501.10.00",
+              "description": "Nickel mattes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7501.20",
+          "title": "Nickel oxide sinters and other intermediate products of nickel metallurgy",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7501.20.00",
+              "description": "Nickel oxide sinters and other intermediate products of nickel metallurgy",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7502",
+      "title": "Unwrought nickel.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7502.10",
+          "title": "Nickel, not alloyed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7502.10.00",
+              "description": "Nickel, not alloyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7502.20",
+          "title": "Nickel alloys",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7502.20.10",
+              "description": "Cupro-nickel containing more than 40 percent by weight of nickel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7502.20.20",
+              "description": "Monel metal including K monel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7502.20.30",
+              "description": "Nickel alloys containing more than 40 percent by weight of nickel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7502.20.40",
+              "description": "Nickel alloys containing more than 10 percent but not more than 40percent by weight of nickel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7502.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7503",
+      "title": "NICKEL WASTE AND SCRAP",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7503.00",
+          "title": "Nickel waste and scrap.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7503.00.10",
+              "description": "Nickel scrap, namely the following: New nickel scrap covered by ISRI code word Aroma; Old nickel scrap covered by ISRI code word Burly; New R-monel clippings solids covered by ISRI code word Hitch; New mixed monel solids and clippings covered by ISRI code word House; Old monel sheet and solids covered by ISRI code word Ideal; k-monel solids covered by ISRI code word Indian; Soldered monel sheet and solids covered by ISRI code word Junto; Monel castings covered by ISRI code word Lemon; Monel turnings covered by ISRI code word Lemur; Nickel scrap obtained by breaking up of ships, boats and other floating structures; Nickel-iron batteries to be sold free of crates, copper terminal connectors and excess liquid, must be free of nickel cadmium batteries covered by ISRI code word Vaunt",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7503.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7504",
+      "title": "Nickel powders and flakes.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7504.00",
+          "title": "Nickel powders and flakes.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7504.00.00",
+              "description": "Nickel powders and flakes.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7505",
+      "title": "Nickel bars, rods, profiles and wire.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7505.11",
+          "title": "Bars, rods and profiles : -- Of nickel, not alloyed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7505.11.10",
+              "description": "Hollow bars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7505.11.20",
+              "description": "Other bar rods and profiles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7505.12",
+          "title": "Bars, rods and profiles : -- Of nickel alloys",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7505.12.10",
+              "description": "Hollow bars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7505.12.20",
+              "description": "Other bars; rods and profiles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7505.21",
+          "title": "Wire : -- Of nickel, not alloyed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7505.21.00",
+              "description": "Wire : -- Of nickel, not alloyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7505.22",
+          "title": "Wire : -- Of nickel alloys",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7505.22.00",
+              "description": "Wire : -- Of nickel alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7506",
+      "title": "Nickel plates, sheets, strip and foil.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7506.10",
+          "title": "Of nickel, not alloyed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7506.10.00",
+              "description": "Of nickel, not alloyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7506.20",
+          "title": "Of nickel alloys",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7506.20.00",
+              "description": "Of nickel alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7507",
+      "title": "Nickel tubes, pipes and tube or pipe fittings (for example, couplings, elbows, sleeves).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7507.11",
+          "title": "Tubes and pipes : -- Of nickel, not alloyed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7507.11.00",
+              "description": "Tubes and pipes : -- Of nickel, not alloyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7507.12",
+          "title": "Tubes and pipes : -- Of nickel alloys",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7507.12.00",
+              "description": "Tubes and pipes : -- Of nickel alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7507.20",
+          "title": "Tube or pipe fittings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7507.20.00",
+              "description": "Tube or pipe fittings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7508",
+      "title": "Other articles of nickel.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7508.10",
+          "title": "Cloth, grill and netting, of nickel wire",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7508.10.00",
+              "description": "Cloth, grill and netting, of nickel wire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7508.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7508.90.10",
+              "description": "Electroplating anodes of nickel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7508.90.20",
+              "description": "Blanks ordinarily used for manufacturing tubes and pipes of nickel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7508.90.30",
+              "description": "Nickel screen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7508.90.90",
+              "description": "Other articles of nickel and nickel alloy",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

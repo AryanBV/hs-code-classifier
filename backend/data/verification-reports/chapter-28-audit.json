@@ -1,0 +1,95 @@
+{
+  "chapter": "28",
+  "verified_at": "2026-05-22",
+  "verdict": "MINOR",
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "2801.10.00",
+        "in_pdf": true,
+        "pdf_description": "Chlorine — exact",
+        "json_description": "Chlorine — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2807.00.10",
+        "in_pdf": true,
+        "pdf_description": "Sulphurc acid (source PDF has same typo) — exact",
+        "json_description": "Sulphurc acid (source PDF has same typo) — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2812.19.30",
+        "in_pdf": true,
+        "pdf_description": "Arsenic trichloride — exact",
+        "json_description": "Arsenic trichloride — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2822.00.20",
+        "in_pdf": true,
+        "pdf_description": "Cobalt hydroxides — exact",
+        "json_description": "Cobalt hydroxides — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2827.10.00",
+        "in_pdf": true,
+        "pdf_description": "Ammonium chloride — exact",
+        "json_description": "Ammonium chloride — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2829.19.90",
+        "in_pdf": true,
+        "pdf_description": "Other — exact",
+        "json_description": "Other — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2833.29.50",
+        "in_pdf": true,
+        "pdf_description": "Strontium sulphate — exact",
+        "json_description": "Strontium sulphate — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2836.30.00",
+        "in_pdf": true,
+        "pdf_description": "Sodium bicarbonate — exact",
+        "json_description": "Sodium bicarbonate — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2841.69.00",
+        "in_pdf": true,
+        "pdf_description": "Permanganates Other — exact",
+        "json_description": "Permanganates Other — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2844.43.00",
+        "in_pdf": true,
+        "pdf_description": "Radioactive elements — exact",
+        "json_description": "Radioactive elements — exact",
+        "match": "exact"
+      }
+    ],
+    "hierarchy_errors": [],
+    "missed_codes": [],
+    "extra_codes": [],
+    "note_mismatches": [],
+    "count_check": {
+      "json_h": 50,
+      "pdf_h_estimate": 50,
+      "json_sh": 180,
+      "pdf_sh_estimate": 180,
+      "json_tl": 334,
+      "pdf_tl_estimate": 334
+    }
+  },
+  "notes_field": "All 10 sampled codes verified. 8 chapter notes match. Hierarchy clean across 334 TLs. One minor OCR typo noted (also present in source PDF) — not a JSON extraction defect.",
+  "warnings": [
+    "JSON description 2807.00.10 = \"Sulphurc acid\" — typo for \"Sulphuric acid\". Verified PDF also shows \"Sulphurc acid\" so this is upstream source-data, not extraction OCR error."
+  ]
+}

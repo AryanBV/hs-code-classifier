@@ -1,0 +1,268 @@
+{
+  "chapter": "65",
+  "title": "HEADGEAR AND PARTS THEREOF",
+  "section": "XII",
+  "source_pdf": "Chapter 65 Headgear And Parts Thereof.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '65010010') and 6-digit subheading codes without dots (e.g., '650200'). Normalized to NNNN.NN.NN format (e.g., '6501.00.10') and NNNN.NN format (e.g., '6502.00') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'Sl.No. Notes Notification Date Notification No', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "PDF contains '?' character in place of typographic apostrophe in Note 1 ('dolls? hats'). This is an OCR/encoding artifact from the source PDF — preserved verbatim. The intended text is \"dolls' hats\" (with apostrophe).",
+    "Chapter title on PDF page 1 reads 'Chapter 65 Headgear And Parts Thereof.' (with trailing period). The canonical ITC(HS) chapter title 'HEADGEAR AND PARTS THEREOF' is used in the title field; source_pdf preserves the PDF filename.",
+    "Section XII header appears on PDF page 1: 'Section XII, FOOTWEAR, HEADGEAR, UMBRELLAS, SUN UMBRELLAS, WALKING-STICKS, SEAT-STICKS, WHIPS, RIDING-CROPS AND PARTS THEREOF; PREPARED FEATHERS AND ARTICLES MADE THEREWITH; ARTIFICIAL FLOWERS; ARTICLES OF HUMAN HAIR'. The PDF for Chapter 65 does NOT contain a separate Section XII notes table — Section XII has no legal notes published in this chapter PDF. section_notes array is empty.",
+    "The 'Main Notes' table on PDF page 1 contains 2 notes published directly under the 'Chapter 65 Headgear And Parts Thereof.' header — these are attributed to chapter_notes (Chapter 65), not section_notes.",
+    "Heading 6501 in the PDF shows 8-digit tariff lines (65010010, 65010090) directly under the heading row without a separate 6-digit subheading row. Tariff lines are attached to the implicit subheading 6501.00 per project schema (subheading description mirrors heading description verbatim).",
+    "Heading 6504 in the PDF is represented as the single tariff line '65040000' with description 'Hats and other headgear, plaited or made by assembling strips of any material, whether or not lined or trimmed.' No separate 6-digit subheading row appears in the source; tariff line is attached to subheading 6504.00 per project schema (subheading description mirrors heading description verbatim).",
+    "Heading 6507 in the PDF is represented as the single tariff line '65070000' with description 'Head-bands, linings, covers, hat foundations, hat frames, peaks and chinstraps, for headgear.' No separate 6-digit subheading row appears in the source; tariff line is attached to subheading 6507.00 per project schema (subheading description mirrors heading description verbatim).",
+    "Heading 6506 contains subheading 650610 ('Safety headgear') with three 8-digit tariff lines (65061010, 65061020, 65061090), followed by two single-tariff-line subheadings represented as 8-digit codes '65069100' (Other: Of rubber or of plastics) and '65069900' (Other: Of other materials). These are preserved as subheadings 6506.91 and 6506.99 each with a single .00 tariff line, per the pattern used in other extracted chapters.",
+    "Heading 6503 is absent from the PDF tariff table (the official WCO heading 6503 was deleted in earlier HS amendments). Headings flow 6501, 6502, 6504, 6505, 6506, 6507 — verbatim as listed in the source PDF.",
+    "Subheading 6502.00 description in PDF appears with trailing colon: 'Hat-shapes, plaited or made by assembling strips of any material, neither blocked to shape, nor with made brims, nor lined, nor trimmed:' — preserved verbatim including the trailing colon.",
+    "Subheading 6505.00 description in PDF appears without trailing period: 'Hats and other headgear, knitted or crocheted, or made up from lace, felt or other textile fabric, in the piece (but not in strips), whether or not lined or trimmed; hair-nets of any material, whether or not lined or trimmed' — preserved verbatim.",
+    "Tariff lines 6506.91.00 and 6506.99.00 carry descriptions with hyphen-prefix indicators ('Other : -- Of rubber or of plastics', 'Other : -- Of other materials') from the WCO HS nomenclature — preserved verbatim.",
+    "The 'Notification Date' and 'Notification No' columns of the Main Notes table are empty in the source PDF for both Note 1 and Note 2 — no notifications cited. Captured verbatim (no notification metadata).",
+    "The 'Policy Condition' column is empty for all tariff lines in this chapter. The 'Export Policy' column is 'Free' for all 13 tariff lines. No Policy Condition section, Sub-Heading Notes, or Export Licensing Notes are published in this chapter PDF — corresponding arrays/fields are empty/null.",
+    "Unit-of-measure column is NOT shown in this chapter's PDF — unit field set to null for all tariff lines."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover: (a) worn headgear of heading 6309; (b) asbestos headgear (heading 6812); or (c) dolls? hats, other toy hats or carnival articles of Chapter 95."
+    },
+    {
+      "number": "2",
+      "text": "Heading 6502 does not cover hat-shapes made by sewing, other than those obtained simply by sewing strips in spirals."
+    }
+  ],
+  "section_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "worn headgear",
+      "redirects_to_chapter": "63",
+      "redirects_to_heading": "6309",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover: (a) worn headgear of heading 6309; (b) asbestos headgear (heading 6812); or (c) dolls? hats, other toy hats or carnival articles of Chapter 95."
+    },
+    {
+      "excluded_product_text": "asbestos headgear",
+      "redirects_to_chapter": "68",
+      "redirects_to_heading": "6812",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover: (a) worn headgear of heading 6309; (b) asbestos headgear (heading 6812); or (c) dolls? hats, other toy hats or carnival articles of Chapter 95."
+    },
+    {
+      "excluded_product_text": "dolls? hats, other toy hats or carnival articles",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover: (a) worn headgear of heading 6309; (b) asbestos headgear (heading 6812); or (c) dolls? hats, other toy hats or carnival articles of Chapter 95."
+    },
+    {
+      "excluded_product_text": "hat-shapes made by sewing, other than those obtained simply by sewing strips in spirals",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2",
+      "source_note_text": "Heading 6502 does not cover hat-shapes made by sewing, other than those obtained simply by sewing strips in spirals."
+    }
+  ],
+  "headings": [
+    {
+      "heading": "6501",
+      "title": "Hat-forms, hat bodies and hoods of felt, neither blocked to shape nor with made brims; plateaux and manchons (including slit manchons), of felt.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6501.00",
+          "title": "Hat-forms, hat bodies and hoods of felt, neither blocked to shape nor with made brims; plateaux and manchons (including slit manchons), of felt.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6501.00.10",
+              "description": "Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6501.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6502",
+      "title": "Hat-shapes, plaited or made by assembling strips of any material, neither blocked to shape, nor with made brims, nor lined, nor trimmed.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6502.00",
+          "title": "Hat-shapes, plaited or made by assembling strips of any material, neither blocked to shape, nor with made brims, nor lined, nor trimmed:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6502.00.10",
+              "description": "Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6502.00.20",
+              "description": "Of wool",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6502.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6504",
+      "title": "Hats and other headgear, plaited or made by assembling strips of any material, whether or not lined or trimmed.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6504.00",
+          "title": "Hats and other headgear, plaited or made by assembling strips of any material, whether or not lined or trimmed.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6504.00.00",
+              "description": "Hats and other headgear, plaited or made by assembling strips of any material, whether or not lined or trimmed.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6505",
+      "title": "Hats and other headgear, knitted or crocheted, or made up from lace, felt or other textile fabric, in the piece (but not in strips), whether or not lined or trimmed; hair-nets of any material, whether or not lined or trimmed.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6505.00",
+          "title": "Hats and other headgear, knitted or crocheted, or made up from lace, felt or other textile fabric, in the piece (but not in strips), whether or not lined or trimmed; hair-nets of any material, whether or not lined or trimmed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6505.00.10",
+              "description": "Hair-nets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6505.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6506",
+      "title": "Other headgear, whether or not lined or trimmed.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6506.10",
+          "title": "Safety headgear",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6506.10.10",
+              "description": "Speed glass welding helmets or other helmets meant for industrial use",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6506.10.20",
+              "description": "Headgear for ballistic protection",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6506.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6506.91",
+          "title": "Other : -- Of rubber or of plastics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6506.91.00",
+              "description": "Other : -- Of rubber or of plastics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6506.99",
+          "title": "Other : -- Of other materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6506.99.00",
+              "description": "Other : -- Of other materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6507",
+      "title": "Head-bands, linings, covers, hat foundations, hat frames, peaks and chinstraps, for headgear.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6507.00",
+          "title": "Head-bands, linings, covers, hat foundations, hat frames, peaks and chinstraps, for headgear.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6507.00.00",
+              "description": "Head-bands, linings, covers, hat foundations, hat frames, peaks and chinstraps, for headgear.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "policy_conditions": [],
+  "export_licensing_notes": null
+}

@@ -1,0 +1,1375 @@
+{
+  "chapter": "96",
+  "section": "XX",
+  "title": "MISCELLANEOUS MANUFACTURED ARTICLES",
+  "source_pdf": "Chapter 96 Miscellaneous Manufactured Articles.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '96011000') and 6-digit subheading codes without dots (e.g., '960190'). Normalized to NNNN.NN.NN format (e.g., '9601.10.00') and NNNN.NN format (e.g., '9601.90') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'Sl.No. Notes Notification Date Notification No', 'Policy Condition', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "Note 2 in the PDF contains stray quotation-mark artifacts: 'In heading 9602, the expression \"\"\"\"vegetable or mineral carving material\"\"\"\" means...' — the quadrupled quotes are an OCR/encoding artifact from the source PDF. Preserved verbatim as they appear in the source.",
+    "Policy Condition row in source PDF contains a '?' character in place of a typographic quote mark (e.g., 'A Shipment Clearance Certificate?', 'Health Certificate?'). These are OCR/encoding artifacts from the source PDF — preserved verbatim as they appear in the source.",
+    "Heading 9619 description in PDF is rendered in ALL CAPS ('SANITARY TOWELS (PADS) AND TAMPONS, NAPKINS (DIAPERS), NAPKIN LINERS AND SIMILAR ARTICLES, OF ANY MATERIAL'). Preserved verbatim from the PDF.",
+    "PDF shows subheading-level rows (e.g., '960190', '960330', '960340', '960610', '960629', '960630', '960711', '960719', '960810', '960830', '960860', '960891', '960899', '960990', '961210', '961380', '961610', '961700', '961900') as separate rows above their tariff-line children, without their own Export Policy/Policy Condition values — these are subheading parent rows. Captured as subheadings with no tariff line entry of their own.",
+    "PDF shows heading-only rows (e.g., '960200', '960500') that mirror the heading description with a trailing colon. These are heading-level parent rows present in the PDF before single-subheading children. Captured as parent subheading entries where they group tariff lines (e.g., subheading '9602.00' groups tariff lines 9602.00.10 through 9602.00.90; subheading '9605.00' groups 9605.00.10/90).",
+    "Tariff line 96034010 description references 'sub-heading 9603 30' (with space, no dot) in the source PDF. Preserved verbatim — intended is sub-heading 9603.30.",
+    "Tariff lines 96170011, 96170012, 96170013, 96170019 use the spelling 'Vaccum' (sic) in the source PDF (instead of 'Vacuum'). Preserved verbatim.",
+    "Tariff line 96170011 description 'Vacuum flasks and other vacuum vessels, complete:- - - - Vacuum flasks having a capacity not exceeding 0.75 l' spans across page break between page 12 and 13. Concatenated verbatim from the PDF.",
+    "Unit-of-measure column (kg/u/etc) is NOT shown in this chapter's PDF — unit field set to null for all tariff lines.",
+    "Tariff lines with 'Subject to Policy Condition 1 of this Chapter' (notification 34/2015-20 dated 13.01.2017) are: 9601.90.30, 9601.90.40, 9601.90.90, 9602.00.30, 9606.30.10. The Policy Condition row appears once at chapter level (Sl.No. 1) and applies to multiple tariff lines via cross-reference.",
+    "Tariff line 9601.10.00 ('Worked ivory and articles of ivory') Export Policy is 'Prohibited' — only prohibited line in the chapter.",
+    "Heading 9619 in the PDF has only one subheading-level row ('961900') which expands into five tariff lines (9619.00.10, .20, .30, .40, .90). Captured as subheading '9619.00'.",
+    "Heading 9620 in the PDF has no separate subheading row — code '96200000' (Monopods, bipods, tripods and similar articles) appears as a single direct tariff line under the heading. Captured as subheading '9620.00' with one tariff line '9620.00.00'."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover : (a) pencils for cosmetic or toilet uses (Chapter 33); (b) articles of Chapter 66 (for example, parts of umbrellas or walking-sticks); (c) imitation Jewellery (heading 7117); (d) parts of general use, as defined in Note 2 of Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39); (e) cutlery or other articles of Chapter 82 with handles or other parts of carving or moulding materials; heading 9601 or 9602 applies, however, to separately presented handles or other parts of such articles; (f) articles of Chapter 90, for example, spectacle frames (heading 9003), mathematical drawing pens (heading 9017), brushes of a kind specialised for use in dentistry or for medical, surgical or veterinary purposes (heading 9018); (g) articles of Chapter 91 (for example, clock or watch cases); (h) musical instruments or parts or accessories thereof (Chapter 92); (ij) articles of Chapter 93 (arms and parts thereof); (k) articles of Chapter 94 (for example, furniture, luminaires and lighting fittings); (l) articles of Chapter 95 (toys, games, sports requisites); (m) works of art, collectors pieces or antiques (Chapter 97)."
+    },
+    {
+      "number": "2",
+      "text": "In heading 9602, the expression \"\"\"\"vegetable or mineral carving material\"\"\"\" means: (a) hard seeds, pips, hulls and nuts and similar vegetable materials of a kind used for carving (for example, corozo and dom); (b) amber, meerschaum, agglomerated amber and agglomerated meerschaum, jet and mineral substitutes for jet."
+    },
+    {
+      "number": "3",
+      "text": "In heading 9603, the expression \"prepared knots and tufts for broom or brush making\" applies only to unmounted knots and tufts of animal hair, vegetable fibre or other material, which are ready for incorporation without division in brooms or brushes, or which require only such further minor processes as trimming to shap at the top, to render them ready for such incorporation."
+    },
+    {
+      "number": "4",
+      "text": "Articles of this Chapter, other than those of headings 9601 to 9606 or 9615, remain classified in the Chapter whether or not composed wholly or partly of precious metal or metal clad with precious metal, of natural or cultured pearls, or precious or semi-precious stones (natural, synthetic or reconstructed). However, headings 9601 to 9606 and 9615 include articles in which natural or cultured pearls, precious or semi-precious stones (natural, synthetic or reconstructed), precious metal or metal clad with precious metal constitute only minor constituents"
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "pencils for cosmetic or toilet uses",
+      "redirects_to_chapter": "33",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover : (a) pencils for cosmetic or toilet uses (Chapter 33)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 66 (for example, parts of umbrellas or walking-sticks)",
+      "redirects_to_chapter": "66",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "(b) articles of Chapter 66 (for example, parts of umbrellas or walking-sticks)"
+    },
+    {
+      "excluded_product_text": "imitation Jewellery",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": "7117",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "(c) imitation Jewellery (heading 7117)"
+    },
+    {
+      "excluded_product_text": "parts of general use, as defined in Note 2 of Section XV, of base metal, or similar goods of plastics",
+      "redirects_to_chapter": "39",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(d)",
+      "source_note_text": "(d) parts of general use, as defined in Note 2 of Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39)"
+    },
+    {
+      "excluded_product_text": "cutlery or other articles of Chapter 82 with handles or other parts of carving or moulding materials; heading 9601 or 9602 applies, however, to separately presented handles or other parts of such articles",
+      "redirects_to_chapter": "82",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(e)",
+      "source_note_text": "(e) cutlery or other articles of Chapter 82 with handles or other parts of carving or moulding materials; heading 9601 or 9602 applies, however, to separately presented handles or other parts of such articles"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 90, for example, spectacle frames (heading 9003), mathematical drawing pens (heading 9017), brushes of a kind specialised for use in dentistry or for medical, surgical or veterinary purposes (heading 9018)",
+      "redirects_to_chapter": "90",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(f)",
+      "source_note_text": "(f) articles of Chapter 90, for example, spectacle frames (heading 9003), mathematical drawing pens (heading 9017), brushes of a kind specialised for use in dentistry or for medical, surgical or veterinary purposes (heading 9018)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 91 (for example, clock or watch cases)",
+      "redirects_to_chapter": "91",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(g)",
+      "source_note_text": "(g) articles of Chapter 91 (for example, clock or watch cases)"
+    },
+    {
+      "excluded_product_text": "musical instruments or parts or accessories thereof",
+      "redirects_to_chapter": "92",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(h)",
+      "source_note_text": "(h) musical instruments or parts or accessories thereof (Chapter 92)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 93 (arms and parts thereof)",
+      "redirects_to_chapter": "93",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(ij)",
+      "source_note_text": "(ij) articles of Chapter 93 (arms and parts thereof)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 94 (for example, furniture, luminaires and lighting fittings)",
+      "redirects_to_chapter": "94",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(k)",
+      "source_note_text": "(k) articles of Chapter 94 (for example, furniture, luminaires and lighting fittings)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 95 (toys, games, sports requisites)",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(l)",
+      "source_note_text": "(l) articles of Chapter 95 (toys, games, sports requisites)"
+    },
+    {
+      "excluded_product_text": "works of art, collectors pieces or antiques",
+      "redirects_to_chapter": "97",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(m)",
+      "source_note_text": "(m) works of art, collectors pieces or antiques (Chapter 97)"
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "9601",
+      "title": "Worked ivory, bone, tortoise-shell, horn, antlers, coral, motherof- pearl and other animal carving material, and articles of these materials (including articles obtained by moulding).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9601.10",
+          "title": "Worked ivory and articles of ivory",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9601.10.00",
+              "description": "Worked ivory and articles of ivory",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9601.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9601.90.10",
+              "description": "Worked tortoise-shell and articles thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9601.90.20",
+              "description": "Worked mother-of-pearl and articles thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9601.90.30",
+              "description": "Worked bone (excluding whale bone) and articles thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of 34/2015-20 13.01.2017 this Chapter"
+            },
+            {
+              "code": "9601.90.40",
+              "description": "Worked horn, coral and other animal carving material and articles thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of 34/2015-20 13.01.2017 this Chapter"
+            },
+            {
+              "code": "9601.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of 34/2015-20 13.01.2017 this Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9602",
+      "title": "Worked vegetable or mineral carving material and articles of these materials; moulded or carved articles of wax, of stearin, of natural gums or natural resins or of modelling pastes, and other moulded or carved articles, not elsewhere specified or included; worked, unhardened gelatin (except gelatin of heading 3503) and articles of unhardened gelatin.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9602.00",
+          "title": "Worked vegetable or mineral carving material and articles of these materials moulded or carved articles of wax, of stearin, of natural gums or natural resins or of modelling pastes, and other moulded or carved articles, not elsewhere specified or included; worked, unhardened gelatin (except gelatin of heading 3503) and articles of unhardened gelatin:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9602.00.10",
+              "description": "Worked vegetable carving material and articles thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9602.00.20",
+              "description": "Moulded or carved articles of wax, stearin, natural gums and resins and other moulded or carved articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9602.00.30",
+              "description": "Gelatin capsules, empty",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of 34/2015-20 13.01.2017 this Chapter"
+            },
+            {
+              "code": "9602.00.40",
+              "description": "Other articles of unhardened gelatin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9602.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "9603",
+      "title": "Brooms, brushes (including brushes constituting parts of machines, appliances or vehicles), hand-operated mechanical floor sweepers, not motorised, mops and feather dusters; prepared knots and tufts for broom or brush making; paint pads and rollers; squeegees (other than roller squeegees).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9603.10",
+          "title": "Brooms and brushes, consisting of twigs or other vegetable materials bound together, with or without handles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9603.10.00",
+              "description": "Brooms and brushes, consisting of twigs or other vegetable materials bound together, with or without handles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9603.21",
+          "title": "Tooth brushes, shaving brushes, hair brushes, nail brushes, eyelash brushes and other toilet brushes for use on the person, including such brushes constituting parts of appliances : -- Tooth brushes, including dental-plate brushes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9603.21.00",
+              "description": "Tooth brushes, shaving brushes, hair brushes, nail brushes, eyelash brushes and other toilet brushes for use on the person, including such brushes constituting parts of appliances : -- Tooth brushes, including dental-plate brushes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9603.29",
+          "title": "Tooth brushes, shaving brushes, hair brushes, nail brushes, eyelash brushes and other toilet brushes for use on the person, including such brushes constituting parts of appliances : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9603.29.00",
+              "description": "Tooth brushes, shaving brushes, hair brushes, nail brushes, eyelash brushes and other toilet brushes for use on the person, including such brushes constituting parts of appliances : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9603.30",
+          "title": "Artists brushes, writing brushes and similar brushes for the application of cosmetics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9603.30.10",
+              "description": "Artist brushes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9603.30.20",
+              "description": "Brushes for the application of cosmetics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9603.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9603.40",
+          "title": "Paint, distemper, varnish or similar brushes (other than brushes of subheading 9603.30); paint pads and rollers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9603.40.10",
+              "description": "Paint, distemper, varnish or similar brushes (other than brushes of sub-heading 9603 30)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9603.40.20",
+              "description": "Paint pads and rollers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9603.50",
+          "title": "Other brushes constituting parts of machines, appliances or vehicles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9603.50.00",
+              "description": "Other brushes constituting parts of machines, appliances or vehicles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9603.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9603.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9604",
+      "title": "Hand sieves and hand riddles",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9604.00",
+          "title": "Hand sieves and hand riddles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9604.00.00",
+              "description": "Hand sieves and hand riddles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "9605",
+      "title": "Travel sets for personal toilet, sewing or shoe or clothes cleaning.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9605.00",
+          "title": "Travel sets for personal toilet, sewing or shoe or clothes cleaning :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9605.00.10",
+              "description": "For personal toilet",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9605.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "9606",
+      "title": "Buttons, press-fasteners, snap-fasteners and press-studs, button moulds and other parts of these articles; button blanks.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9606.10",
+          "title": "Press-fasteners, snap-fasteners and press-studs and parts therefor",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9606.10.10",
+              "description": "Press-fasteners, snap-fasteners and press-studs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9606.10.20",
+              "description": "Parts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9606.21",
+          "title": "Buttons: ----Of plastics, not covered with textile material",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9606.21.00",
+              "description": "Buttons: ----Of plastics, not covered with textile material",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9606.22",
+          "title": "Buttons: ----Of base metals, not covered with textile material",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9606.22.00",
+              "description": "Buttons: ----Of base metals, not covered with textile material",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9606.29",
+          "title": "Buttons : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9606.29.10",
+              "description": "Button of coconut shell or wood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9606.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9606.30",
+          "title": "Button moulds and other parts of buttons; button blanks",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9606.30.10",
+              "description": "Button blanks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of 34/2015-20 13.01.2017 this Chapter"
+            },
+            {
+              "code": "9606.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9607",
+      "title": "Slide fasteners and parts thereof.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9607.11",
+          "title": "Slide fasteners : -- Fitted with chain scoops of base metal",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9607.11.10",
+              "description": "Zip fasteners",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9607.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9607.19",
+          "title": "Slide fasteners : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9607.19.10",
+              "description": "Zip fasteners",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9607.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9607.20",
+          "title": "Parts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9607.20.00",
+              "description": "Parts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9608",
+      "title": "Ball point pens; felt tipped and other porous-tipped pens and markers; fountain pens, stylograph pens and other pens; duplicating stylos; propelling or sliding pencils; pen-holders, pencil-holders and similar holders; parts (including caps and clips) of the foregoing articles, other than those of heading 9609.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9608.10",
+          "title": "Ball point pens",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9608.10.11",
+              "description": "With liquid ink (for rolling ball pen):---- High value ball point pens (US $ 100 and above c.i.f. per unit)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9608.10.12",
+              "description": "Ball point pens with body or cap of precious metal or rolled precious metal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9608.10.19",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9608.10.91",
+              "description": "Other: ----High value ball point pens (US $ 100 and above c.i.f. per unit)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9608.10.92",
+              "description": "Other: ----Ball point pens with body or cap of precious metal or rolled precious metal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9608.10.99",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9608.20",
+          "title": "Felt tipped and other porous-tipped pens and markers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9608.20.00",
+              "description": "Felt tipped and other porous-tipped pens and markers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9608.30",
+          "title": "Fountain pens, stylograph pens and other pens",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9608.30.11",
+              "description": "Fountain pens: ----High value ball point pens (US $ 100 and above c.i.f. per unit)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9608.30.12",
+              "description": "Fountain pens: ----With body or cap of precious metal or rolled precious metal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9608.30.19",
+              "description": "Fountain pens: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9608.30.21",
+              "description": "Stylograph pens: ----High value ball point pens (US $ 100 and above c.i.f. per unit)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9608.30.22",
+              "description": "Stylograph pens: ----With body or cap of precious metal or rolled precious metal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9608.30.29",
+              "description": "Stylograph pens: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9608.30.91",
+              "description": "Other: ----High value ball point pens (US $ 100 and above c.i.f. per unit)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9608.30.92",
+              "description": "Other: ----With body or cap of precious metal or rolled precious metal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9608.30.99",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9608.40",
+          "title": "Propelling or sliding pencils",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9608.40.00",
+              "description": "Propelling or sliding pencils",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9608.50",
+          "title": "Sets of articles from two or more of the foregoing sub-headings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9608.50.00",
+              "description": "Sets of articles from two or more of the foregoing sub-headings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9608.60",
+          "title": "Refills for ball point pens, comprising the ball point and ink- reservoir",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9608.60.10",
+              "description": "With liquid ink (For rolling ball-pen)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9608.60.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9608.91",
+          "title": "Other : -- Pen nibs and nib points",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9608.91.10",
+              "description": "Other: ----Nib points for pen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9608.91.20",
+              "description": "Other: ----Nibs of wool felt or plastics for use in the manufacture of porous tip pen or markers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9608.91.30",
+              "description": "Other: ----Other pen nibs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9608.91.91",
+              "description": "Other: ----Of metal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9608.91.99",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9608.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9608.99.10",
+              "description": "Other: ----Pen holders, pencil holders and similar holders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9608.99.90",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9609",
+      "title": "Pencils (other than pencils of heading 96.08), crayons, pencil leads, pastels, drawing charcoals, writing or drawing chalks and tailors chalks.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9609.10",
+          "title": "Pencils and crayons, with leads encased in a sheath",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9609.10.00",
+              "description": "Pencils and crayons, with leads encased in a sheath",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9609.20",
+          "title": "Pencil leads, black or coloured",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9609.20.00",
+              "description": "Pencil leads, black or coloured",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9609.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9609.90.10",
+              "description": "Slate pencils",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9609.90.20",
+              "description": "Other pencils",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9609.90.30",
+              "description": "Pastels, drawing charcoals and writing or drawing chalks and tailors chalks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9609.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9610",
+      "title": "Slates and Boards, with writing or drawing surfaces, whether or not framed",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9610.00",
+          "title": "Slates and Boards, with writing or drawing surfaces, whether or not framed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9610.00.00",
+              "description": "Slates and Boards, with writing or drawing surfaces, whether or not framed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "9611",
+      "title": "Date, sealing or numbering stamps, and the like (including devices for printing or embossing labels), designed for operating in the hand; hand-operated composing sticks and hand printing sets incorporating such composing sticks.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9611.00",
+          "title": "Date, sealing or numbering stamps, and the like (including devices for printing or embossing labels), designed for operating in the hand; hand-operated composing sticks and hand printing sets incorporating such composing sticks.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9611.00.00",
+              "description": "Date, sealing or numbering stamps, and the like (including devices for printing or embossing labels), designed for operating in the hand; hand-operated composing sticks and hand printing sets incorporating such composing sticks.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "9612",
+      "title": "Typewriter or similar ribbons, inked or otherwise prepared for giving impressions, whether or not on spools or in cartridges; ink-pads, whether or not inked, with or without boxes.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9612.10",
+          "title": "Ribbons",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9612.10.10",
+              "description": "Computer printer ribbon",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9612.10.20",
+              "description": "Ribbon for typewriters, other than electronic and similar machines",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9612.10.30",
+              "description": "Ribbon for electronic typewriter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9612.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9612.20",
+          "title": "Ink-pads",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9612.20.00",
+              "description": "Ink-pads",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9613",
+      "title": "Cigarette lighters and other lighters, whether or not mechanical or electrical, and parts thereof other than flints and wicks.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9613.10",
+          "title": "Pocket lighters, gas fuelled, non-refillable",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9613.10.00",
+              "description": "Pocket lighters, gas fuelled, non-refillable",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9613.20",
+          "title": "Pocket lighters, gas fuelled, refillable",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9613.20.00",
+              "description": "Pocket lighters, gas fuelled, refillable",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9613.80",
+          "title": "Other lighters",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9613.80.10",
+              "description": "Electronic",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9613.80.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9613.90",
+          "title": "Parts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9613.90.00",
+              "description": "Parts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9614",
+      "title": "Smoking pipes (including pipe bowls) and cigar or cigarette holders and parts thereof",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9614.00",
+          "title": "Smoking pipes (including pipe bowls) and cigar or cigarette holders and parts thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9614.00.00",
+              "description": "Smoking pipes (including pipe bowls) and cigar or cigarette holders and parts thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "9615",
+      "title": "Combs, hair-slides and the like; hairpins, curling pins, curling grips, hair-curlers and the like, other than those of heading 85.16, and parts thereof.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9615.11",
+          "title": "Combs, hair-slides and the like : -- Of hard rubber or plastics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9615.11.00",
+              "description": "Combs, hair-slides and the like : -- Of hard rubber or plastics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9615.19",
+          "title": "Combs, hair-slides and the like : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9615.19.00",
+              "description": "Combs, hair-slides and the like : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9615.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9615.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9616",
+      "title": "Scent sprays and similar toilet sprays, and mounts and heads therefor; powder-puffs and pads for the application of cosmetics or toilet preparations.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9616.10",
+          "title": "Scent sprays and similar toilet sprays, and mounts and heads therefor",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9616.10.10",
+              "description": "Scent sprays and similar toilet sprays",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9616.10.20",
+              "description": "Mounts and heads",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9616.20",
+          "title": "Powder-puffs and pads for the application of cosmetics or toilet preparations",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9616.20.00",
+              "description": "Powder-puffs and pads for the application of cosmetics or toilet preparations",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9617",
+      "title": "Vacuum flasks and other vacuum vessels, complete with cases; parts thereof other than glass inners.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9617.00",
+          "title": "Vacuum flasks and other vacuum vessels, complete; parts thereof other than glass inners:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9617.00.11",
+              "description": "Vacuum flasks and other vacuum vessels, complete:- - - - Vacuum flasks having a capacity not exceeding 0.75 l",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9617.00.12",
+              "description": "Vaccum flasks and other vessels, complete with case: ----Vacuum flasks having a capacity exceeding 0.75 l",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9617.00.13",
+              "description": "Vaccum flasks and other vessels, complete with case: ----Casserol and any other vacuum containers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9617.00.19",
+              "description": "Vaccum flasks and other vessels, complete with case: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9617.00.90",
+              "description": "Vaccum flasks and other vessels, complete with case: ----Parts (other than glass inners)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "9618",
+      "title": "Tailors dummies and other lay figures; automata and other animated displays, used for shop window dressing",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9618.00",
+          "title": "Tailors dummies and other lay figures; automata and other animated displays, used for shop window dressing",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9618.00.00",
+              "description": "Tailors dummies and other lay figures; automata and other animated displays, used for shop window dressing",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "9619",
+      "title": "SANITARY TOWELS (PADS) AND TAMPONS, NAPKINS (DIAPERS), NAPKIN LINERS AND SIMILAR ARTICLES, OF ANY MATERIAL",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9619.00",
+          "title": "Sanitary towels (pads) and tampons, napkins (diapers), napkin liners and similar articles, of any material:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9619.00.10",
+              "description": "Sanitary towels ( pads) or sanitary napkins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9619.00.20",
+              "description": "Tampons",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9619.00.30",
+              "description": "Napkins and napkin liners for babies",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9619.00.40",
+              "description": "Clinical diapers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9619.00.90",
+              "description": "Others",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9620",
+      "title": "Monopods, bipods, tripods and similar articles",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9620.00",
+          "title": "Monopods, bipods, tripods and similar articles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9620.00.00",
+              "description": "Monopods, bipods, tripods and similar articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

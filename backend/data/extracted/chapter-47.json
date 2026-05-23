@@ -1,0 +1,399 @@
+{
+  "chapter": "47",
+  "section": "X",
+  "title": "Pulp Of Wood Or Of Other Fibrous Cellulosic Material; Recovered (Waste And Scrap) Paper Or Paperboard",
+  "source_pdf": "Chapter 47 Pulp Of Wood Or Of Other Fibrous Cellulosic Material; Recovered (Waste And Scrap) Paper Or Paperboard.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "Tariff codes in source PDF use no-dot format (NNNNNNNN). All codes normalized to NNNN.NN.NN by inserting dots after positions 4 and 6.",
+    "ALL TARIFF LINES IN CHAPTER 47 ARE 'Prohibited' for export per Schedule 2 Export Policy, with the exception of the umbrella heading-level 8-digit codes 47030000 (4703.00.00), 47040000 (4704.00.00), and 47070000 (4707.00.00) which appear with blank Export Policy / Policy Condition columns in the source PDF (these umbrella rows have no leaf-level tariff effect on their own). Heading 4701, 4702, 4705, and all leaf-level 8-digit tariff lines under 4703, 4704, 4706, 4707 are marked Prohibited. Total prohibited tariff lines: 19.",
+    "Source PDF lists certain 8-digit codes that duplicate the 4-digit heading code (47030000 under heading 4703; 47040000 under heading 4704; 47060000 NOT present; 47070000 under heading 4707). These umbrella 8-digit codes are wrapped under a synthetic subheading '4703.00', '4704.00', '4707.00' (following the convention used for similar out-of-sequence Indian ITC(HS) policy-tariff rows in other extracted chapters, e.g. 8711.00 in chapter-87.json) so all tariff lines retain a valid NNNN.NN.NN structure. The umbrella rows are Indian ITC(HS) conventions, not standard HS subheadings.",
+    "Heading 4706 in the source PDF does NOT include an umbrella '47060000' row — heading 4706 goes directly from the heading-level row to subheading-level 8-digit codes (47061000 onwards). Preserved as-is.",
+    "Source PDF tariff line 47062000 description reads 'Pulps of fibres derived from recovered (waste and scrap) paper or' (description appears truncated mid-sentence in the PDF table cell, ending at 'or'). Preserved verbatim. The official HS 2022 description for subheading 4706.20 is 'Pulps of fibres derived from recovered (waste and scrap) paper or paperboard' but the PDF text is preserved exactly as rendered.",
+    "Source PDF tariff line 47063000 description reads 'other, of bamboo' (lowercase 'o', appears truncated — official HS 2022 reads 'Other, of bamboo'). Preserved verbatim.",
+    "Section X header appears in source PDF as 'Section X, PULP OF WOOD OR OF OTHER FIBROUS CELLULOSIC MATERIAL; RECOVERED (WASTE AND SCRAP) PAPER OR PAPERBOARD; PAPER AND PAPERBOARD AND ARTICLES THEREOF'. No separate Section X Notes table is present in this chapter PDF; only Chapter 47 Main Notes (1 note).",
+    "Per-tariff-line export_policy field added to capture 'Prohibited' markers from the Export Policy column. Tariff lines with blank Export Policy column store export_policy: null. Policy Condition column is blank for all rows in Chapter 47.",
+    "Notification Date and Notification No columns in the Main Notes table are blank for Note 1; preserved as null in note metadata.",
+    "Source PDF uses '20oC' rendering for '20 degrees Celsius' in Chapter Note 1; preserved verbatim.",
+    "[phantom-cleanup v2] Applied verdict from ours-only-verdict.json: removed 3 phantom subheadings, tagged 0 as india_specific."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "For the purposes of heading 4702, the expression \"chemical wood pulp, dissolving grades\" means chemical wood pulp having by weight an insoluble fraction of 92% or more for soda or sulphate wood pulp or of 88% or more for sulphite wood pulp after one hour in a caustic soda solution containing 18% sodium hydroxide (NaOH) at 20oC, and for sulphite wood pulp an ash content that does not exceed 0.15% by weight."
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "4701",
+      "title": "Mechanical wood pulp.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4701.00",
+          "title": "Mechanical wood pulp.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4701.00.00",
+              "description": "Mechanical wood pulp.",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "4702",
+      "title": "Chemical wood pulp, dissolving grades.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4702.00",
+          "title": "Chemical wood pulp, dissolving grades.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4702.00.00",
+              "description": "Chemical wood pulp, dissolving grades.",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "4703",
+      "title": "Chemical wood pulp, soda or sulphate, other than dissolving grades.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4703.11",
+          "title": "Unbleached : -- Coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4703.11.00",
+              "description": "Unbleached : -- Coniferous",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4703.19",
+          "title": "Unbleached : -- Non-coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4703.19.00",
+              "description": "Unbleached : -- Non-coniferous",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4703.21",
+          "title": "Semi-bleached or bleached : -- Coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4703.21.00",
+              "description": "Semi-bleached or bleached : -- Coniferous",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4703.29",
+          "title": "Semi-bleached or bleached : -- Non-coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4703.29.00",
+              "description": "Semi-bleached or bleached : -- Non-coniferous",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4704",
+      "title": "Chemical wood pulp, sulphite, other than dissolving grades.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4704.11",
+          "title": "Unbleached : -- Coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4704.11.00",
+              "description": "Unbleached : -- Coniferous",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4704.19",
+          "title": "Unbleached : -- Non-coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4704.19.00",
+              "description": "Unbleached : -- Non-coniferous",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4704.21",
+          "title": "Semi-bleached or bleached : -- Coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4704.21.00",
+              "description": "Semi-bleached or bleached : -- Coniferous",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4704.29",
+          "title": "Semi-bleached or bleached : -- Non-coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4704.29.00",
+              "description": "Semi-bleached or bleached : -- Non-coniferous",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4705",
+      "title": "Wood pulp obtained by a combination of mechanical and chemical pulping processes.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4705.00",
+          "title": "Wood pulp obtained by a combination of mechanical and chemical pulping processes.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4705.00.00",
+              "description": "Wood pulp obtained by a combination of mechanical and chemical pulping processes.",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "4706",
+      "title": "Pulps of fibres derived from recovered (waste and scrap) paper or paperboard or of other fibrous cellulosic material.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4706.10",
+          "title": "Cotton linters pulp",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4706.10.00",
+              "description": "Cotton linters pulp",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4706.20",
+          "title": "Pulps of fibres derived from recovered (waste and scrap) paper or",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4706.20.00",
+              "description": "Pulps of fibres derived from recovered (waste and scrap) paper or",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4706.30",
+          "title": "other, of bamboo",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4706.30.00",
+              "description": "other, of bamboo",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4706.91",
+          "title": "Other : -- Mechanical",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4706.91.00",
+              "description": "Other : -- Mechanical",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4706.92",
+          "title": "Other : -- Chemical",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4706.92.00",
+              "description": "Other : -- Chemical",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4706.93",
+          "title": "Other : -- Obtained by a combination of mechanical and chemical processes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4706.93.00",
+              "description": "Other : -- Obtained by a combination of mechanical and chemical processes",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4707",
+      "title": "Recovered (waste and scrap) paper or paperboard.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4707.10",
+          "title": "Unbleached kraft paper or paperboard or corrugated paper or paperboard",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4707.10.00",
+              "description": "Unbleached kraft paper or paperboard or corrugated paper or paperboard",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4707.20",
+          "title": "Other paper or paperboard made mainly of bleached chemical pulp, not coloured in the mass",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4707.20.00",
+              "description": "Other paper or paperboard made mainly of bleached chemical pulp, not coloured in the mass",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4707.30",
+          "title": "Paper or paperboard made mainly of mechanical pulp (for example, newspapers, journals and similar printed matter)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4707.30.00",
+              "description": "Paper or paperboard made mainly of mechanical pulp (for example, newspapers, journals and similar printed matter)",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4707.90",
+          "title": "Other, including unsorted waste and scrap",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4707.90.00",
+              "description": "Other, including unsorted waste and scrap",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

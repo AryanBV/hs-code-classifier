@@ -1,0 +1,145 @@
+{
+  "chapter": "45",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings_count": 0,
+  "soft_warnings_count": 0,
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "4501.10.00",
+        "in_pdf": true,
+        "pdf_context_near_code": "Free 45011000 Natural cork, raw or simply prepared Free 45019000 Other Free Natural cork, debacked",
+        "json_description": "Natural cork, raw or simply prepared",
+        "desc_significant_word_recall": 1,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "4501.90.00",
+        "in_pdf": true,
+        "pdf_context_near_code": "Free 45019000 Other Free Natural cork, debacked or roughly squared, or in rectangular (including square) blocks, 45020000 plates, sheets or strip (incl",
+        "json_description": "Other",
+        "desc_significant_word_recall": 1,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "4502.00.00",
+        "in_pdf": true,
+        "pdf_context_near_code": "ng square) blocks, 45020000 plates, sheets or strip (including sharpedged blanks for corks or stoppers). Free Articles of natural cork. 4503 Corks and stoppers Fr",
+        "json_description": "Natural cork, debacked or roughly squared, or in rectangular (including square) blocks, plates, sheets or strip (including sharpedged blanks for corks or stoppers).",
+        "desc_significant_word_recall": 1,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "4503.10.00",
+        "in_pdf": true,
+        "pdf_context_near_code": "Free 45031000 Other Free 450390 Shuttlecock cork bottom 45039010 Other Free",
+        "json_description": "Corks and stoppers",
+        "desc_significant_word_recall": 1,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "4503.90.10",
+        "in_pdf": true,
+        "pdf_context_near_code": "lecock cork bottom 45039010 Other Free 45039090 Agglomerated cork (with or without a binding substance) and Free 4504 Blocks, plates, sheets",
+        "json_description": "Shuttlecock cork bottom",
+        "desc_significant_word_recall": 1,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "4503.90.90",
+        "in_pdf": true,
+        "pdf_context_near_code": "Free 45039090 Agglomerated cork (with or without a binding substance) and Free 4504 Blocks, plates, sheets and strip; tiles of any shape; solid cylinders, including discs Free 450410 Sheets",
+        "json_description": "Other",
+        "desc_significant_word_recall": 1,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "4504.10.10",
+        "in_pdf": true,
+        "pdf_context_near_code": "Free 45041010 Slabs 45041020 Other 45041090 other 45049000",
+        "json_description": "Sheets",
+        "desc_significant_word_recall": 1,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "4504.10.20",
+        "in_pdf": true,
+        "pdf_context_near_code": "041010 Slabs 45041020 Other 45041090 other 45049000",
+        "json_description": "Slabs",
+        "desc_significant_word_recall": 1,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "4504.10.90",
+        "in_pdf": true,
+        "pdf_context_near_code": "041020 Other 45041090 other 45049000",
+        "json_description": "Other",
+        "desc_significant_word_recall": 1,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "4504.90.00",
+        "in_pdf": true,
+        "pdf_context_near_code": "041090 other 45049000",
+        "json_description": "other",
+        "desc_significant_word_recall": 1,
+        "missing_words": [],
+        "match": "exact"
+      }
+    ],
+    "subheading_spot_check": [
+      {
+        "subheading": "4501.90",
+        "in_pdf": true,
+        "title": "Other"
+      },
+      {
+        "subheading": "4502.00",
+        "in_pdf": true,
+        "title": "Natural cork, debacked or roughly squared, or in rectangular (including square) blocks, plates, sheets or strip (including sharpedged blanks for corks or stoppers)."
+      },
+      {
+        "subheading": "4503.90",
+        "in_pdf": true,
+        "title": "Other"
+      },
+      {
+        "subheading": "4501.10",
+        "in_pdf": true,
+        "title": "Natural cork, raw or simply prepared"
+      },
+      {
+        "subheading": "4504.10",
+        "in_pdf": true,
+        "title": "Blocks, plates, sheets and strip; tiles of any shape; solid cylinders, including discs"
+      }
+    ],
+    "hierarchy_errors": [],
+    "missed_codes": [],
+    "extra_codes": [],
+    "note_mismatches": [],
+    "count_check": {
+      "json_4digit": 4,
+      "json_6digit_unique": 7,
+      "json_8digit": 10,
+      "pdf_4digit_chapter": 3,
+      "pdf_6digit_chapter": 2,
+      "pdf_8digit_chapter": 10,
+      "counts_match_8digit": true
+    },
+    "notes_count": {
+      "json_chapter_notes": 1
+    }
+  },
+  "warnings": []
+}

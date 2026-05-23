@@ -1,0 +1,150 @@
+{
+  "chapter": "04",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings_count": 0,
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "0401.10.00",
+        "in_pdf": true,
+        "pdf_description": "04011000 Of a fat content, by Free weight, not exceeding 1 percent 04012000 Of a fat content, by Free weight, exceeding ",
+        "json_description": "Of a fat content, by weight, not exceeding 1 percent",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0402.10.20",
+        "in_pdf": true,
+        "pdf_description": "04021020 25(RE-2012)/2009-2014 22.11.2012 04021090 Milk food for babies Free 25(RE-2012)/2009-2014 22.11.2012 04022100 O",
+        "json_description": "Milk food for babies",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0402.29.90",
+        "in_pdf": true,
+        "pdf_description": "04022990 -- Not containing added 040291 sugar or other 04029110 sweetening matter 04029190 In powder, granules or other ",
+        "json_description": "Other Other:",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0402.99.90",
+        "in_pdf": true,
+        "pdf_description": "04029990 Condensed Milk Free 0403 Free Other Free 04032000 040390 YOGURT; 04039010 BUTTERMILK, 04039090 CURDLED",
+        "json_description": "Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0404.10.20",
+        "in_pdf": true,
+        "pdf_description": "04041020 whether or not Free 04041090 containing added sugar 04049000 or other sweetening Free 0405 matter, not elsewher",
+        "json_description": "Whey, dry, blocks and powdered",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0405.90.10",
+        "in_pdf": true,
+        "pdf_description": "04059010 04059020 Butter Oil Free 04059090 0406 Ghee Free 040610 Other Free 040610 Cheese and curd. 04061010 Fresh (unri",
+        "json_description": "Butter Oil",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0406.20.00",
+        "in_pdf": true,
+        "pdf_description": "04062000 04063000 Fresh (unripened or uncured) cheese, 04064000 including whey cheese, and curd : Mozzarella cheese Free",
+        "json_description": "Grated or powdered cheese, of all kinds",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0407.19.10",
+        "in_pdf": true,
+        "pdf_description": "04071910 fresh, preserved or Subject to Policy Condition 1 04071990 cooked. of the Chapter 04072100 04072900 Fertilised ",
+        "json_description": "Of ducks",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0408.11.00",
+        "in_pdf": true,
+        "pdf_description": "04081100 Egg yolks : -- Dried Free Subject to Policy Condition 1 04081900 of the Chapter 04089100 04089900 Egg yolks : -",
+        "json_description": "Egg yolks : -- Dried",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0410.10.10",
+        "in_pdf": true,
+        "pdf_description": "04101010 NOT ELSEWHERE 04101020 SPECIFIED OR 04101090 INCLUDED 041090 04109010 Insects: 04109020 Fresh, chilled or froze",
+        "json_description": "Fresh, chilled or frozen",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      }
+    ],
+    "hierarchy_errors": [],
+    "missed_codes": [],
+    "extra_codes": [],
+    "subheading_checks": [
+      {
+        "subheading": "0401.10",
+        "title": "Of a fat content, by weight, not exceeding 1 percent",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0402.29",
+        "title": "In powder, granules or other solid forms, of a fat content, by weight, exceeding 1.5 percent : -- Other",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0405.10",
+        "title": "Butter",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0406.40",
+        "title": "Blue-veined cheese and other cheese containing veins produced by Penicillium roqueforti",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0408.11",
+        "title": "Egg yolks : -- Dried",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      }
+    ],
+    "note_mismatches": [],
+    "count_check": {
+      "json_h": 10,
+      "pdf_h_estimate": 10,
+      "json_sh": 33,
+      "pdf_sh_estimate": 33,
+      "json_tl": 51,
+      "pdf_tl_estimate": 51
+    }
+  },
+  "fix_needed": null
+}

@@ -1,0 +1,48 @@
+{
+  "audited_at": "2026-05-23",
+  "wco_check": {
+    "ours_subheadings": 5613,
+    "wco_subheadings": 5394,
+    "expected_match": 5388,
+    "actual": 5388,
+    "india_specific_tagged": 7,
+    "wco_only_missing": 6,
+    "uncertified_ours_only": 218,
+    "verdict": "PASS"
+  },
+  "product_coverage": [
+    { "product": "basmati rice", "candidates_found": 3, "sample": "1006.30.20 Basmati rice (Free)" },
+    { "product": "cotton T-shirts (knitted)", "candidates_found": 1, "sample": "6109.10.00 T-shirts, singlets and other vests, knitted or crocheted — Of cotton" },
+    { "product": "stainless steel hex bolts M10", "candidates_found": 5, "sample": "7318.15.x Threaded articles: bolts (heading 7318 — screws, bolts, nuts of iron/steel)" },
+    { "product": "ceramic brake pads for trucks", "candidates_found": 2, "sample": "6813.20.10 Brake lining and pads" },
+    { "product": "honey natural", "candidates_found": 1, "sample": "0409.00.00 Natural Honey" },
+    { "product": "leather handbags", "candidates_found": 3, "sample": "4202.11.x Travel goods and bags of leather (heading 4202 covers handbags)" },
+    { "product": "mobile phone smartphones", "candidates_found": 2, "sample": "8517.13.00 Smartphones (Free)" },
+    { "product": "diesel engines", "candidates_found": 5, "sample": "8408.x diesel engines; 8409.99.4x parts of diesel engines" },
+    { "product": "frozen shrimp", "candidates_found": 4, "sample": "0309.90.21 Vannamei shrimp, frozen" },
+    { "product": "cumin seeds whole", "candidates_found": 2, "sample": "0909.31.11 Cumin black, of seed quality; 0909.31.21 Cumin other" },
+    { "product": "marble tiles polished", "candidates_found": 1, "sample": "6802.21.10 Marble blocks or tiles" },
+    { "product": "cement Portland grey", "candidates_found": 5, "sample": "2523.29.10 Ordinary portland cement, dry" },
+    { "product": "instant coffee freeze-dried", "candidates_found": 2, "sample": "2101.11.20 Instant coffee, not flavoured (Free)" },
+    { "product": "spectacles frames metal", "candidates_found": 2, "sample": "9003.19.00 Frames and mountings — Of other materials (Free)" },
+    { "product": "pharmaceutical paracetamol tablets", "candidates_found": 5, "sample": "2922.29.3x Para acetyl aminophenol (paracetamol) variants" },
+    { "product": "tractor parts agricultural", "candidates_found": 4, "sample": "4013.90.41 Rear tyres for tractors; 8708.10.10 Bumpers for tractors" },
+    { "product": "silk sarees woven", "candidates_found": 2, "sample": "5007.10.00 Fabrics of noil silk" },
+    { "product": "wooden furniture chairs", "candidates_found": 2, "sample": "9403.60.00 Other wooden furniture (Free)" },
+    { "product": "automobile bumper plastic", "candidates_found": 2, "sample": "8708.10.90 Bumpers and parts thereof — Other" },
+    { "product": "lithium ion batteries", "candidates_found": 1, "sample": "8507.60.00 Lithium-ion (Free)" }
+  ],
+  "products_with_zero_candidates": [],
+  "coverage_summary": {
+    "total_products": 20,
+    "with_candidates": 20,
+    "with_zero_candidates": 0,
+    "coverage_rate_pct": 100.0
+  },
+  "notes": [
+    "FTS (websearch_to_tsquery) failed for 5 of 20 products on first attempt because product descriptions are highly verbose with hyphens, dashes, parenthetical context, and Indian-English phrasing (e.g. 'T-shirt' is tokenized as 't' + 'shirt'; 'hex bolts' doesn't appear verbatim — codes are titled 'Threaded articles').",
+    "Switching to ILIKE substring or direct code-prefix lookup recovered candidates in every case.",
+    "Implication for the classifier: FTS alone is insufficient as a recall layer. Continue relying on embedding-based semantic search plus chapter-rule routing; FTS is best used as a supplementary recall signal, not the primary one."
+  ],
+  "verdict": "READY_FOR_PHASE_3"
+}

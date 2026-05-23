@@ -1,0 +1,1035 @@
+{
+  "chapter": "81",
+  "title": "OTHER BASE METALS; CERMETS; ARTICLES THEREOF",
+  "section": "XV",
+  "source_pdf": "Chapter 81 Other Base Metals; Cermets; Articles Thereof.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "OUTLIER CHAPTER: Source Schedule 2 Export Policy PDF for Chapter 81 contains only (a) one Policy Condition (Sl.No. 1 — SCOMET Category-0 nuclear materials export authorization) and (b) the Itc(hs) Code / Description / Export Policy / Policy Condition tariff schedule. The PDF does NOT print any Main (Chapter) Notes, Section Notes, Sub-Heading Notes, or Supplementary Notes for Chapter 81. Per project Phase-2c audit, this is one of 4 outlier chapters (Ch.50, 53, 64, 81) with sparse notes. Source PDF has empty chapter notes — to be patched from CBIC Schedule 1 in subsequent phase.",
+    "Section XV Main/Section Notes (governing Chapters 72-83) were captured in prior Section XV chapter extractions (Ch.74/75/82) per task brief and are NOT duplicated here — section_notes left empty.",
+    "PDF source uses 8-digit codes without dots (e.g., '81011000'). Normalized to NNNN.NN.NN format (e.g., '8101.10.00') per project schema. 6-digit subheading rows (e.g., '810199', '810295', '811231') normalized to NNNN.NN form (e.g., '8101.99', '8102.95', '8112.31').",
+    "Heading 8107 (Cadmium and articles thereof) is intentionally ABSENT from the WCO HS 2017+ structure (cadmium moved to subheading 8112.61/8112.69). Indian ITC(HS) 2022 Chapter 81 follows this — heading 8107 does not appear in the source PDF and is not synthesised here.",
+    "Heading 8109 (Zirconium) has NO printed heading-level header row in the source PDF (no '8109' row with title 'Zirconium and articles thereof, including waste and scrap.'). The PDF jumps directly from 8108 to 81092100 (Unwrought zirconium...). Heading title 'Zirconium and articles thereof, including waste and scrap.' is reconstructed from the standard WCO HS heading 81.09 text — flagged as a minor reconstruction (the heading number and full subheading tree are clearly present; only the heading row title line is missing from this PDF). All subheading and tariff-line data are verbatim from the PDF.",
+    "Heading 8111 has a single 6-digit subheading wrapper '811100' (Manganese and articlesthereof, including waste and scrap — note no space after 'articles' in source) carrying tariff lines 81110010 through 81110090. Modelled as subheading '8111.00' to retain valid NNNN.NN.NN structure. Source PDF rendering 'articlesthereof' preserved verbatim.",
+    "Heading 8113 has a single 6-digit subheading wrapper '811300' (Cermets and articles thereof, including waste and scrap :) carrying tariff lines 81130010 through 81130090. Modelled as subheading '8113.00' to retain valid NNNN.NN.NN structure.",
+    "Several subheadings under headings 8101-8112 contain only a single 8-digit tariff line in the PDF (e.g., 8101.10 → 81011000 'Powders'; 8101.94 → 81019400; 8102.10 → 81021000; etc.). For these, the 8-digit code is represented as a tariff line with code 'NNNN.NN.00' and the subheading title inherited from the tariff line description. This preserves the NNNN.NN.NN structural invariant while remaining true to the source.",
+    "Subheading 8101.99 (Other : -- Other) is a 6-digit subheading wrapper containing tariff lines 8101.99.10 (Tungsten filament) and 8101.99.90 (Other). PDF row '810199' with description 'Other : -- Other' captured verbatim as subheading title.",
+    "Subheading 8102.95 (Other : -- bars and rods, other than those obtained simply by sintering, profiles, plates, sheets, strip and foil) is a 6-digit subheading wrapper containing tariff lines 8102.95.10 (Hollow bars) and 8102.95.90 (Other).",
+    "Subheading 8103.20 (Unwrought tantalum, including bars and rods obtained simply by sintering; powders) is a 6-digit subheading wrapper containing tariff lines 8103.20.10 (Hollow bars) and 8103.20.90 (Other). Per WCO HS this subheading would normally be a single tariff line; Indian national subdivision splits it.",
+    "Subheading 8104.20 (Waste and scrap) is a 6-digit subheading wrapper containing tariff lines 8104.20.10 (long ISRI-coded magnesium scrap description) and 8104.20.90 (Other).",
+    "Subheading 8104.30 (Raspings, turnings and granules, graded according to size; powders) is a 6-digit subheading wrapper containing tariff lines 8104.30.10 (Raspings, turnings and granules graded according to size) and 8104.30.20 (Powders).",
+    "Subheading 8104.90 (Other) is a 6-digit subheading wrapper containing tariff lines 8104.90.10 (Other magnesium and magnesium base alloys, wrought), 8104.90.20 (Flakes), 8104.90.30 (Wire) and 8104.90.90 (Other).",
+    "Subheading 8105.20 (Cobalt mattes and other intermediate products of cobalt metallurgy; unwrought cobalt; powders) is a 6-digit subheading wrapper containing tariff lines 8105.20.10 (Cobalt mattes and other intermediate products of cobalt metallurgy), 8105.20.20 (Cobalt unwrought) and 8105.20.30 (Powders).",
+    "Subheading 8106.10 (Containing more than 99.99 % of bismuth, by weight:) is a 6-digit subheading wrapper containing tariff lines 8106.10.10 (Bismuth, unwrought), 8106.10.20 (Article of bismuth) and 8106.10.90 (Other). Source PDF preserves 'Article of bismuth' (singular) verbatim — likely intended 'Articles' but reproduced as printed.",
+    "Subheading 8106.90 (Other:) is a 6-digit subheading wrapper containing tariff lines 8106.90.10 (Waste and scrap of bismuth and bismuth alloys) and 8106.90.90 (Other).",
+    "Subheading 8108.90 (Other) is a 6-digit subheading wrapper containing tariff lines 8108.90.10 (Titanium, wrought) and 8108.90.90 (Other).",
+    "Subheading 8112.31 (Hafnium: -- Unwrought; waste and scrap; powders:) is a 6-digit subheading wrapper containing tariff lines 8112.31.10 (Hafnium: --- Unwrought), 8112.31.20 (Hafnium: --- Waste and scrap) and 8112.31.30 (Hafnium: --- Powders). Note the three-dash markers (---) in source indicate Indian national subdivisions below the WCO 6-digit subheading.",
+    "Subheading 8112.41 (Rhenium: -- Unwrought; waste and scrap; powders:) is a 6-digit subheading wrapper containing tariff lines 8112.41.10 (Rhenium: --- Unwrought), 8112.41.20 (Rhenium: --- Waste and scrap) and 8112.41.30 (Rhenium: --- Powders).",
+    "Subheading 8112.69 (Cadmium, Other) is a 6-digit subheading wrapper containing tariff lines 8112.69.10 (Cadmium, unwrought; Powders), 8112.69.20 (Cadmium, wrought) and 8112.69.90 (Other). Source PDF does not print a 6-digit '811269' row title separately; the 4 tariff lines (81126100 plus 81126910/20/90) fall under WCO subheading 8112.69 (cadmium other). Subheading title reconstructed as 'Cadmium, Other' from standard WCO HS — the 6-digit grouping is inferred from the tariff-line codes; subheading 8112.61 (Cadmium: -- Waste and scrap) appears separately as a single 8-digit line 81126100.",
+    "Subheading 8113.00 (Cermets and articles thereof, including waste and scrap :) is a 6-digit subheading wrapper containing tariff lines 8113.00.10 (Unwrought cermets), 8113.00.20 (Waste and scrap of cermets), 8113.00.30 (Articles of cermets) and 8113.00.90 (Other).",
+    "Per-tariff-line Policy Condition: Tariff lines 8112.12.00 (Beryllium : -- Unwrought; powders), 8112.13.00 (Beryllium : -- Waste and scrap) and 8112.19.00 (Beryllium : -- Other) are 'Subject to Policy Condition 1 of the Chapter' per the source PDF. Captured verbatim in the tariff-line policy_condition field. Policy Condition 1 (SCOMET Category-0 nuclear export authorization) applies to these beryllium items because beryllium is a nuclear-related material under SCOMET Category-0.",
+    "Unit (kg/u/etc.) information is not present in this PDF — all unit fields set to null. Section XV products customarily use 'kg' but this is NOT in the source — left as null to avoid fabrication.",
+    "Export Policy for every tariff line in this chapter is 'Free' (no Restricted, Prohibited or STE items in Chapter 81). The Policy Condition (SCOMET) overlays additional authorization requirements on beryllium items but does not change the base Export Policy of 'Free'.",
+    "PDF table-chrome headers ('Policy Condition', 'Sl.No. Notes Notification Date Notification No', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table headers and EXCLUDED from the structured data per extraction rules.",
+    "Policy Condition notification_date and notification_no columns are blank in the source PDF — captured as null.",
+    "exclusion_clauses array is empty — no Chapter Notes are printed in the source PDF, therefore no chapter-level exclusion clauses can be extracted. Section XV exclusions (e.g., articles of plastic, articles of textile, articles of precious metal) belong to the Section-level extraction already captured under Ch.74/75/82."
+  ],
+  "chapter_notes": [],
+  "section_notes": [],
+  "exclusion_clauses": [],
+  "policy_conditions": [
+    {
+      "scope": "Chapter 81 (printed at top of Chapter 81 Schedule 2 PDF; applies to beryllium tariff lines 8112.12.00, 8112.13.00, 8112.19.00 per their explicit Policy Condition column references; also applies generally to any Chapter 81 item falling under SCOMET Category-0)",
+      "condition_number": "1",
+      "text": "Export authorization from Department of Atomic Energy would be required for export of items in Category-0(Nuclear materials, nuclear-related other materials, equipment and technology) of SCOMET.",
+      "notification_no": null,
+      "notification_date": null,
+      "applies_to_tariff_lines": "Explicitly referenced by tariff lines 8112.12.00 (Beryllium, unwrought; powders), 8112.13.00 (Beryllium, waste and scrap) and 8112.19.00 (Beryllium, other) via 'Subject to Policy Condition 1 of the Chapter' in the Policy Condition column. By scope, applies to any other Chapter 81 item classified under SCOMET Category-0 (nuclear materials, nuclear-related other materials, equipment and technology) — including but not limited to certain hafnium, zirconium and beryllium items. Notification Date and Notification No columns are blank in the source PDF."
+    }
+  ],
+  "headings": [
+    {
+      "code": "8101",
+      "title": "Tungsten (wolfram) and articles thereof, including waste and scrap.",
+      "subheadings": [
+        {
+          "code": "8101.10",
+          "title": "Powders",
+          "tariff_lines": [
+            {
+              "code": "8101.10.00",
+              "description": "Powders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8101.94",
+          "title": "Other : -- Unwrought tungsten, including bars and rods obtained simply by sintering",
+          "tariff_lines": [
+            {
+              "code": "8101.94.00",
+              "description": "Other : -- Unwrought tungsten, including bars and rods obtained simply by sintering",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8101.96",
+          "title": "Other : -- Wire",
+          "tariff_lines": [
+            {
+              "code": "8101.96.00",
+              "description": "Other : -- Wire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8101.97",
+          "title": "Other : -- Waste and scrap",
+          "tariff_lines": [
+            {
+              "code": "8101.97.00",
+              "description": "Other : -- Waste and scrap",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8101.99",
+          "title": "Other : -- Other",
+          "tariff_lines": [
+            {
+              "code": "8101.99.10",
+              "description": "Tungsten filament",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8101.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "8102",
+      "title": "Molybdenum and articles thereof, including waste and scrap.",
+      "subheadings": [
+        {
+          "code": "8102.10",
+          "title": "Powders",
+          "tariff_lines": [
+            {
+              "code": "8102.10.00",
+              "description": "Powders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8102.94",
+          "title": "Other : -- Unwrought molybdenum, including bars and rods obtained simply by sintering",
+          "tariff_lines": [
+            {
+              "code": "8102.94.00",
+              "description": "Other : -- Unwrought molybdenum, including bars and rods obtained simply by sintering",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8102.95",
+          "title": "Other : -- bars and rods, other than those obtained simply by sintering, profiles, plates, sheets, strip and foil",
+          "tariff_lines": [
+            {
+              "code": "8102.95.10",
+              "description": "Hollow bars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8102.95.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8102.96",
+          "title": "Other : -- Wire",
+          "tariff_lines": [
+            {
+              "code": "8102.96.00",
+              "description": "Other : -- Wire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8102.97",
+          "title": "Other : -- Waste and scrap",
+          "tariff_lines": [
+            {
+              "code": "8102.97.00",
+              "description": "Other : -- Waste and scrap",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8102.99",
+          "title": "Other : -- Other",
+          "tariff_lines": [
+            {
+              "code": "8102.99.00",
+              "description": "Other : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "8103",
+      "title": "Tantalum and articles thereof, including waste and scrap.",
+      "subheadings": [
+        {
+          "code": "8103.20",
+          "title": "Unwrought tantalum, including bars and rods obtained simply by sintering; powders",
+          "tariff_lines": [
+            {
+              "code": "8103.20.10",
+              "description": "Hollow bars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8103.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8103.30",
+          "title": "Waste and scrap",
+          "tariff_lines": [
+            {
+              "code": "8103.30.00",
+              "description": "Waste and scrap",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8103.91",
+          "title": "Crucibles",
+          "tariff_lines": [
+            {
+              "code": "8103.91.00",
+              "description": "Crucibles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8103.99",
+          "title": "Other",
+          "tariff_lines": [
+            {
+              "code": "8103.99.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "8104",
+      "title": "Magnesium and articles thereof, including waste and scrap.",
+      "subheadings": [
+        {
+          "code": "8104.11",
+          "title": "Unwrought magnesium : -- Containing at least 99.8 percent by weight of magnesium",
+          "tariff_lines": [
+            {
+              "code": "8104.11.00",
+              "description": "Unwrought magnesium : -- Containing at least 99.8 percent by weight of magnesium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8104.19",
+          "title": "Unwrought magnesium : -- Other",
+          "tariff_lines": [
+            {
+              "code": "8104.19.00",
+              "description": "Unwrought magnesium : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8104.20",
+          "title": "Waste and scrap",
+          "tariff_lines": [
+            {
+              "code": "8104.20.10",
+              "description": "Magnesium scrap, namely the following: Magnesium clips covered by ISRI code word Wafer; Magnesium scrap covered by ISRI code word Walnut; Magnesium engraver plates covered by ISRI code word Wine; Magnesium dock boards covered by ISIR code word Wood; Magnesium turnings covered by ISRI code word World.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8104.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8104.30",
+          "title": "Raspings, turnings and granules, graded according to size; powders",
+          "tariff_lines": [
+            {
+              "code": "8104.30.10",
+              "description": "Raspings, turnings and granules graded according to size",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8104.30.20",
+              "description": "Powders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8104.90",
+          "title": "Other",
+          "tariff_lines": [
+            {
+              "code": "8104.90.10",
+              "description": "Other magnesium and magnesium base alloys, wrought",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8104.90.20",
+              "description": "Flakes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8104.90.30",
+              "description": "Wire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8104.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "8105",
+      "title": "Cobalt mattes and other intermediate products of cobalt metallurgy; cobalt and articles thereof, including waste and scrap.",
+      "subheadings": [
+        {
+          "code": "8105.20",
+          "title": "Cobalt mattes and other intermediate products of cobalt metallurgy; unwrought cobalt; powders",
+          "tariff_lines": [
+            {
+              "code": "8105.20.10",
+              "description": "Cobalt mattes and other intermediate products of cobalt metallurgy",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8105.20.20",
+              "description": "Cobalt unwrought",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8105.20.30",
+              "description": "Powders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8105.30",
+          "title": "Waste and scrap",
+          "tariff_lines": [
+            {
+              "code": "8105.30.00",
+              "description": "Waste and scrap",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8105.90",
+          "title": "Other",
+          "tariff_lines": [
+            {
+              "code": "8105.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "8106",
+      "title": "Bismuth and articles thereof, including waste and scrap.",
+      "subheadings": [
+        {
+          "code": "8106.10",
+          "title": "Containing more than 99.99 % of bismuth, by weight:",
+          "tariff_lines": [
+            {
+              "code": "8106.10.10",
+              "description": "Bismuth, unwrought",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8106.10.20",
+              "description": "Article of bismuth",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8106.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8106.90",
+          "title": "Other:",
+          "tariff_lines": [
+            {
+              "code": "8106.90.10",
+              "description": "Waste and scrap of bismuth and bismuth alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8106.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "8108",
+      "title": "Titanium and articles thereof, including waste and scrap.",
+      "subheadings": [
+        {
+          "code": "8108.20",
+          "title": "Unwrought titanium; powders",
+          "tariff_lines": [
+            {
+              "code": "8108.20.00",
+              "description": "Unwrought titanium; powders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8108.30",
+          "title": "Waste and scrap",
+          "tariff_lines": [
+            {
+              "code": "8108.30.00",
+              "description": "Waste and scrap",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8108.90",
+          "title": "Other",
+          "tariff_lines": [
+            {
+              "code": "8108.90.10",
+              "description": "Titanium, wrought",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8108.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "8109",
+      "title": "Zirconium and articles thereof, including waste and scrap.",
+      "subheadings": [
+        {
+          "code": "8109.21",
+          "title": "Unwrought zirconium; powders: - - Containing less than 1 part hafnium to 500 parts zirconium by weight",
+          "tariff_lines": [
+            {
+              "code": "8109.21.00",
+              "description": "Unwrought zirconium; powders: - - Containing less than 1 part hafnium to 500 parts zirconium by weight",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8109.29",
+          "title": "Unwrought zirconium; powders: - - Other",
+          "tariff_lines": [
+            {
+              "code": "8109.29.00",
+              "description": "Unwrought zirconium; powders: - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8109.31",
+          "title": "Waste and scrap: - - Containing less than 1 part hafnium to 500 parts zirconium by weight",
+          "tariff_lines": [
+            {
+              "code": "8109.31.00",
+              "description": "Waste and scrap: - - Containing less than 1 part hafnium to 500 parts zirconium by weight",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8109.39",
+          "title": "Waste and scrap: - - Other",
+          "tariff_lines": [
+            {
+              "code": "8109.39.00",
+              "description": "Waste and scrap: - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8109.91",
+          "title": "Other: - - Containing less than 1 part hafnium to 500 parts zirconium by weight",
+          "tariff_lines": [
+            {
+              "code": "8109.91.00",
+              "description": "Other: - - Containing less than 1 part hafnium to 500 parts zirconium by weight",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8109.99",
+          "title": "Other: - - Other",
+          "tariff_lines": [
+            {
+              "code": "8109.99.00",
+              "description": "Other: - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "8110",
+      "title": "Antimony and articles thereof, including waste and scrap.",
+      "subheadings": [
+        {
+          "code": "8110.10",
+          "title": "Unwrought antimony; powders",
+          "tariff_lines": [
+            {
+              "code": "8110.10.00",
+              "description": "Unwrought antimony; powders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8110.20",
+          "title": "Waste and scrap",
+          "tariff_lines": [
+            {
+              "code": "8110.20.00",
+              "description": "Waste and scrap",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8110.90",
+          "title": "Other",
+          "tariff_lines": [
+            {
+              "code": "8110.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "8111",
+      "title": "Manganese and articles thereof, including waste and scrap.",
+      "subheadings": [
+        {
+          "code": "8111.00",
+          "title": "Manganese and articlesthereof, including waste and scrap",
+          "tariff_lines": [
+            {
+              "code": "8111.00.10",
+              "description": "Unwrought manganese and manganese base alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8111.00.20",
+              "description": "Waste and scrap of manganese base alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8111.00.30",
+              "description": "Wrought manganese",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8111.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "8112",
+      "title": "BERYLLIUM, CHROMIUM, HAFNIUM, RHENIUM, THALLIUM, CADMIUM, GERMANIUM, VANADIUM, GALLIUM, INDIUM AND NIOBIUM (COLUMBIUM AND) AND ARTICLES OF THESE METALS, INCLUDING WASTE AND SCRAP;",
+      "subheadings": [
+        {
+          "code": "8112.12",
+          "title": "Beryllium : -- Unwrought; powders",
+          "tariff_lines": [
+            {
+              "code": "8112.12.00",
+              "description": "Beryllium : -- Unwrought; powders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            }
+          ]
+        },
+        {
+          "code": "8112.13",
+          "title": "Beryllium : -- Waste and scrap",
+          "tariff_lines": [
+            {
+              "code": "8112.13.00",
+              "description": "Beryllium : -- Waste and scrap",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            }
+          ]
+        },
+        {
+          "code": "8112.19",
+          "title": "Beryllium : -- Other",
+          "tariff_lines": [
+            {
+              "code": "8112.19.00",
+              "description": "Beryllium : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            }
+          ]
+        },
+        {
+          "code": "8112.21",
+          "title": "Chromium : -- Unwrought; powders",
+          "tariff_lines": [
+            {
+              "code": "8112.21.00",
+              "description": "Chromium : -- Unwrought; powders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8112.22",
+          "title": "Chromium : -- Waste and scrap",
+          "tariff_lines": [
+            {
+              "code": "8112.22.00",
+              "description": "Chromium : -- Waste and scrap",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8112.29",
+          "title": "Chromium : -- Other",
+          "tariff_lines": [
+            {
+              "code": "8112.29.00",
+              "description": "Chromium : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8112.31",
+          "title": "Hafnium: - - Unwrought; waste and scrap; powders:",
+          "tariff_lines": [
+            {
+              "code": "8112.31.10",
+              "description": "Hafnium: - - - Unwrought",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8112.31.20",
+              "description": "Hafnium: - - - Waste and scrap",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8112.31.30",
+              "description": "Hafnium: - - - Powders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8112.39",
+          "title": "Hafnium: - - Other",
+          "tariff_lines": [
+            {
+              "code": "8112.39.00",
+              "description": "Hafnium: - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8112.41",
+          "title": "Rhenium: - - Unwrought; waste and scrap; powders:",
+          "tariff_lines": [
+            {
+              "code": "8112.41.10",
+              "description": "Rhenium: - - - Unwrought",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8112.41.20",
+              "description": "Rhenium: - - - Waste and scrap",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8112.41.30",
+              "description": "Rhenium: - - - Powders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8112.49",
+          "title": "Rhenium: - - Other",
+          "tariff_lines": [
+            {
+              "code": "8112.49.00",
+              "description": "Rhenium: - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8112.51",
+          "title": "Thallium : -- Unwrought; powders",
+          "tariff_lines": [
+            {
+              "code": "8112.51.00",
+              "description": "Thallium : -- Unwrought; powders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8112.52",
+          "title": "Thallium : -- Waste and scrap",
+          "tariff_lines": [
+            {
+              "code": "8112.52.00",
+              "description": "Thallium : -- Waste and scrap",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8112.59",
+          "title": "Thallium : -- Other",
+          "tariff_lines": [
+            {
+              "code": "8112.59.00",
+              "description": "Thallium : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8112.61",
+          "title": "Cadmium: - - Waste and scrap",
+          "tariff_lines": [
+            {
+              "code": "8112.61.00",
+              "description": "Cadmium: - - Waste and scrap",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8112.69",
+          "title": "Cadmium, Other",
+          "tariff_lines": [
+            {
+              "code": "8112.69.10",
+              "description": "Cadmium, unwrought; Powders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8112.69.20",
+              "description": "Cadmium, wrought",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8112.69.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8112.92",
+          "title": "Other : -- Unwrought; waste and scrap; powders",
+          "tariff_lines": [
+            {
+              "code": "8112.92.00",
+              "description": "Other : -- Unwrought; waste and scrap; powders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "code": "8112.99",
+          "title": "Other : -- Other",
+          "tariff_lines": [
+            {
+              "code": "8112.99.00",
+              "description": "Other : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "8113",
+      "title": "Cermets and articles thereof, including waste and scrap.",
+      "subheadings": [
+        {
+          "code": "8113.00",
+          "title": "Cermets and articles thereof, including waste and scrap :",
+          "tariff_lines": [
+            {
+              "code": "8113.00.10",
+              "description": "Unwrought cermets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8113.00.20",
+              "description": "Waste and scrap of cermets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8113.00.30",
+              "description": "Articles of cermets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8113.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

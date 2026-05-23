@@ -1,0 +1,848 @@
+{
+  "chapter": "56",
+  "section": "XI",
+  "title": "Wadding, Felt And Nonwovens; Special Yarns; Twine, Cordage, Ropes And Cables And Articles Thereof",
+  "source_pdf": "Chapter 56 Wadding, Felt And Nonwovens; Special Yarns; Twine, Cordage, Ropes And Cables And Articles Thereof.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "Source PDF tariff codes use no-dot 8-digit format (NNNNNNNN). Normalized to NNNN.NN.NN by inserting dots after positions 4 and 6. Subheading codes in source (NNNNNN, 6 digits) normalized to NNNN.NN.",
+    "Section XI Main Notes (15 numbered notes covering the entire textiles section) appear on PDF pages 1-4 above the Chapter 56 title. These are Section XI section_notes already captured in earlier-extracted Section XI chapters (51, 54, 62) per project instructions; not duplicated here. The section_notes array is intentionally left empty.",
+    "Source PDF contains stray quote-encoding artifacts in Section XI Main Notes (e.g. '\"\"\"twine, cordage, ropes and cables\"\"\"', '\"\"\"made up\"\"\"', '\"\"\"Z\"\"\"', '\"\"\"sewing thread\"\"\"', '\"\"\"put up for retail sale\"\"\"', '\"\"\"high tenacity yarn\"\"\"') — not applicable to Chapter 56 content, noted for transparency.",
+    "Chapter 56 has its own 4 Chapter Notes appearing under the 'Main Notes' header on PDF page 5. Despite the table-chrome header reading 'Main Notes', these are the chapter-level legal notes for Chapter 56 (the only Chapter that follows on this page) and have been captured in chapter_notes.",
+    "PDF table-chrome headers ('SI.No.', 'Notes', 'Notification No.', 'Notification Date', 'Itc(hs) Code.', 'Description', 'Export Policy', 'Policy Condition', 'Product Description and Export Policy', 'Main Notes') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Note 1 sub-clause (c) in source PDF reads 'nonwovens (heading 6814).; (e)' with a stray period before the semicolon — preserved verbatim.",
+    "Heading 5605 description in source PDF references 'heading 54.04 or 54.05' (with dot separators) in the heading-level row, but the subheading 560500 row description uses '5404 or 5405' (no dots). Both forms preserved verbatim as they appear in the source.",
+    "Heading 5606 description in source PDF reads 'loop waleyarn.' (no space) at the heading-level row, and 'loop wale-yarn :' at the subheading 560600 row. Both forms preserved verbatim.",
+    "Heading 5609 description in source PDF references 'heading 54.04 or 54.05' (with dot separators) in the heading-level row, but the subheading 560900 row description uses '5404 or 5405' (no dots). Both forms preserved verbatim.",
+    "Subheading 5602.29 PDF source row description reads 'Other felt, not impregnated, coated, covered or laminated : -- Of other textile materials' — used verbatim. The leaf-level 8-digit tariff lines 5602.29.10/20/90 each carry their own '---' level description in source (e.g. 'Of machines other than cotton machinery'), preserved verbatim.",
+    "Subheading 5602.90 in source PDF has heading-level description 'Other' but NO 6-digit subheading row label of '5602.90 Other'; only the 8-digit tariff line 56029010 'of Rubberized Coir, needled felt' appears under it. The subheading was inferred from the 8-digit code prefix; subheading title set to 'Other' to mirror source heading-row text. Only one tariff line (5602.90.10) appears for this subheading in the source.",
+    "Subheading 5605 has only one 6-digit subheading code (5605.00) which is identical to the heading. Three 8-digit tariff lines appear (5605.00.10, 5605.00.20, 5605.00.90). Same single-subheading structure applies to 5606, 5609.",
+    "Subheading 5607.50 'Of other synthetic fibres' contains five 8-digit tariff lines (5607.50.10/20/30/40/90) — verbatim per source.",
+    "Subheading 5607.90 in source PDF appears as heading-row 'Other' with no separate 6-digit row label; three 8-digit tariff lines (5607.90.10/20/90) appear directly. Subheading inferred from 8-digit prefix; subheading title set to 'Other' per source heading-row text.",
+    "Subheading 5608.90 in source PDF appears as 'Other' with three 8-digit tariff lines (5608.90.10/20/90); subheading inferred from 8-digit prefix.",
+    "Export Policy column reads 'Free' for every 8-digit tariff line in Chapter 56. No 'Restricted' / 'Prohibited' / 'STE' / 'SCOMET' entries observed. Policy Condition column is empty across the chapter.",
+    "Notification Date and Notification No. columns are empty for all 4 Chapter 56 Chapter Notes in the source PDF — no notification metadata captured.",
+    "Source PDF unit column is not present in the rendered Schedule 2 (Export Policy) tables; all tariff line 'unit' fields set to null."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover: (a) wadding, felt or nonwovens, impregnated, coated or covered with substances or preparations (e.g., perfumes or cosmetics of Chapter 33, soaps or detergents of heading 3401, polishes, creams or similar preparations of heading 3405, fabric softeners of heading 3809) where the textile material is present merely as a carrying medium; (b) textile products of heading 5811; (c) natural or artificial abrasive powder or grain, on a backing of felt or non wovens (heading 6805); (d) agglomerated or reconstituted mica, on a backing of felt or nonwovens (heading 6814); (e) metal foil on a backing of felt or nonwovens (generally Section XIV or XV).; (f) Sanitary towels (pads) and tampons, napkins and napkin liners and similar articles of heading 9619."
+    },
+    {
+      "number": "2",
+      "text": "The term \"felt\" includes needleloom felt and fabrics consisting of a web of textile fibres the cohesion of which has been enhanced by a stitch-bonding process using fibres from the web itself."
+    },
+    {
+      "number": "3",
+      "text": "Headings 5602 and 5603 cover respectively felt and non wovens, impregnated, coated, covered or laminated with plastics or rubber whatever the nature of these materials (compact or cellular). Heading 5603 also includes nonwovens in which plastics or rubber forms the bonding substance. Headings 5602 and 5603 do not, however, cover: (a) felt impregnated, coated, covered or laminated with plastics or rubber, containing 50 per cent. or less by weight of textile material or felt completely embedded in plastics or rubber (Chapter 39 or 40); (b) nonwovens, either completely embedded in plastics or rubber, or entirely coated or covered on both sides with such materials, provided that such coating or covering can be seen with the naked eye with no account being taken of any resulting change of colour (Chapter 39 or 40); or (c) plates, sheets or strip of cellular plastics or cellular rubber combined with felt or non wovens, where the textile material is present merely for reinforcing purposes (Chapter 39 or 40)."
+    },
+    {
+      "number": "4",
+      "text": "Heading 5604 does not cover textile yarn, or strip or the like of heading 5404 or 5405, in which the impregnation, coating or covering cannot be seen with the naked eye (usually Chapters 50 to 55); for the purpose of this provision, no account should be taken of any resulting change of colour."
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "wadding, felt or nonwovens, impregnated, coated or covered with perfumes or cosmetics",
+      "redirects_to_chapter": "33",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover: (a) wadding, felt or nonwovens, impregnated, coated or covered with substances or preparations (e.g., perfumes or cosmetics of Chapter 33, soaps or detergents of heading 3401, polishes, creams or similar preparations of heading 3405, fabric softeners of heading 3809) where the textile material is present merely as a carrying medium"
+    },
+    {
+      "excluded_product_text": "wadding, felt or nonwovens, impregnated, coated or covered with soaps or detergents",
+      "redirects_to_chapter": "34",
+      "redirects_to_heading": "3401",
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover: (a) wadding, felt or nonwovens, impregnated, coated or covered with substances or preparations (e.g., perfumes or cosmetics of Chapter 33, soaps or detergents of heading 3401, polishes, creams or similar preparations of heading 3405, fabric softeners of heading 3809) where the textile material is present merely as a carrying medium"
+    },
+    {
+      "excluded_product_text": "wadding, felt or nonwovens, impregnated, coated or covered with polishes, creams or similar preparations",
+      "redirects_to_chapter": "34",
+      "redirects_to_heading": "3405",
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover: (a) wadding, felt or nonwovens, impregnated, coated or covered with substances or preparations (e.g., perfumes or cosmetics of Chapter 33, soaps or detergents of heading 3401, polishes, creams or similar preparations of heading 3405, fabric softeners of heading 3809) where the textile material is present merely as a carrying medium"
+    },
+    {
+      "excluded_product_text": "wadding, felt or nonwovens, impregnated, coated or covered with fabric softeners",
+      "redirects_to_chapter": "38",
+      "redirects_to_heading": "3809",
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover: (a) wadding, felt or nonwovens, impregnated, coated or covered with substances or preparations (e.g., perfumes or cosmetics of Chapter 33, soaps or detergents of heading 3401, polishes, creams or similar preparations of heading 3405, fabric softeners of heading 3809) where the textile material is present merely as a carrying medium"
+    },
+    {
+      "excluded_product_text": "textile products of heading 5811",
+      "redirects_to_chapter": "58",
+      "redirects_to_heading": "5811",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover: (b) textile products of heading 5811"
+    },
+    {
+      "excluded_product_text": "natural or artificial abrasive powder or grain, on a backing of felt or non wovens",
+      "redirects_to_chapter": "68",
+      "redirects_to_heading": "6805",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "This Chapter does not cover: (c) natural or artificial abrasive powder or grain, on a backing of felt or non wovens (heading 6805)"
+    },
+    {
+      "excluded_product_text": "agglomerated or reconstituted mica, on a backing of felt or nonwovens",
+      "redirects_to_chapter": "68",
+      "redirects_to_heading": "6814",
+      "source_note_number": "Note 1(d)",
+      "source_note_text": "This Chapter does not cover: (d) agglomerated or reconstituted mica, on a backing of felt or nonwovens (heading 6814)"
+    },
+    {
+      "excluded_product_text": "metal foil on a backing of felt or nonwovens",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(e)",
+      "source_note_text": "This Chapter does not cover: (e) metal foil on a backing of felt or nonwovens (generally Section XIV or XV)."
+    },
+    {
+      "excluded_product_text": "Sanitary towels (pads) and tampons, napkins and napkin liners and similar articles",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": "9619",
+      "source_note_number": "Note 1(f)",
+      "source_note_text": "This Chapter does not cover: (f) Sanitary towels (pads) and tampons, napkins and napkin liners and similar articles of heading 9619."
+    },
+    {
+      "excluded_product_text": "felt impregnated, coated, covered or laminated with plastics or rubber, containing 50 per cent. or less by weight of textile material",
+      "redirects_to_chapter": "39",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(a)",
+      "source_note_text": "Headings 5602 and 5603 do not, however, cover: (a) felt impregnated, coated, covered or laminated with plastics or rubber, containing 50 per cent. or less by weight of textile material or felt completely embedded in plastics or rubber (Chapter 39 or 40)"
+    },
+    {
+      "excluded_product_text": "felt completely embedded in plastics or rubber",
+      "redirects_to_chapter": "40",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(a)",
+      "source_note_text": "Headings 5602 and 5603 do not, however, cover: (a) felt impregnated, coated, covered or laminated with plastics or rubber, containing 50 per cent. or less by weight of textile material or felt completely embedded in plastics or rubber (Chapter 39 or 40)"
+    },
+    {
+      "excluded_product_text": "nonwovens completely embedded in plastics or rubber, or entirely coated or covered on both sides with such materials (visible to naked eye)",
+      "redirects_to_chapter": "39",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(b)",
+      "source_note_text": "Headings 5602 and 5603 do not, however, cover: (b) nonwovens, either completely embedded in plastics or rubber, or entirely coated or covered on both sides with such materials, provided that such coating or covering can be seen with the naked eye with no account being taken of any resulting change of colour (Chapter 39 or 40)"
+    },
+    {
+      "excluded_product_text": "nonwovens completely embedded in plastics or rubber, or entirely coated or covered on both sides with such materials (visible to naked eye)",
+      "redirects_to_chapter": "40",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(b)",
+      "source_note_text": "Headings 5602 and 5603 do not, however, cover: (b) nonwovens, either completely embedded in plastics or rubber, or entirely coated or covered on both sides with such materials, provided that such coating or covering can be seen with the naked eye with no account being taken of any resulting change of colour (Chapter 39 or 40)"
+    },
+    {
+      "excluded_product_text": "plates, sheets or strip of cellular plastics or cellular rubber combined with felt or non wovens, where the textile material is present merely for reinforcing purposes",
+      "redirects_to_chapter": "39",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(c)",
+      "source_note_text": "Headings 5602 and 5603 do not, however, cover: (c) plates, sheets or strip of cellular plastics or cellular rubber combined with felt or non wovens, where the textile material is present merely for reinforcing purposes (Chapter 39 or 40)."
+    },
+    {
+      "excluded_product_text": "plates, sheets or strip of cellular plastics or cellular rubber combined with felt or non wovens, where the textile material is present merely for reinforcing purposes",
+      "redirects_to_chapter": "40",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(c)",
+      "source_note_text": "Headings 5602 and 5603 do not, however, cover: (c) plates, sheets or strip of cellular plastics or cellular rubber combined with felt or non wovens, where the textile material is present merely for reinforcing purposes (Chapter 39 or 40)."
+    },
+    {
+      "excluded_product_text": "textile yarn, or strip or the like of heading 5404 or 5405, in which the impregnation, coating or covering cannot be seen with the naked eye (heading 5604 exclusion)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 4",
+      "source_note_text": "Heading 5604 does not cover textile yarn, or strip or the like of heading 5404 or 5405, in which the impregnation, coating or covering cannot be seen with the naked eye (usually Chapters 50 to 55); for the purpose of this provision, no account should be taken of any resulting change of colour."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "5601",
+      "title": "Wadding of textile materials and articles thereof; textile fibres, not exceeding 5 mm in length (flock), textile dust and mill neps.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5601.21",
+          "title": "Wadding of textile materials and articles thereof : -- Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5601.21.10",
+              "description": "Absorbent cotton wool",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5601.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5601.22",
+          "title": "Wadding of textile materials and articles thereof : -- Of man-made fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5601.22.00",
+              "description": "Wadding of textile materials and articles thereof : -- Of man-made fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5601.29",
+          "title": "Wadding of textile materials and articles thereof : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5601.29.00",
+              "description": "Wadding of textile materials and articles thereof : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5601.30",
+          "title": "Textile flock and dust and mill neps",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5601.30.00",
+              "description": "Textile flock and dust and mill neps",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5602",
+      "title": "Felt, whether or not impregnated, coated, covered or laminated.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5602.10",
+          "title": "Needleloom felt and stitch-bonded fibre fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5602.10.00",
+              "description": "Needleloom felt and stitch-bonded fibre fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5602.21",
+          "title": "Other felt, not impregnated, coated, covered or laminated : -- Of wool or fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5602.21.00",
+              "description": "Other felt, not impregnated, coated, covered or laminated : -- Of wool or fine animal hair",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5602.29",
+          "title": "Other felt, not impregnated, coated, covered or laminated : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5602.29.10",
+              "description": "Of machines other than cotton machinery",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5602.29.20",
+              "description": "Of jute (including blanded or union jute), other than for machinery",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5602.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5602.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5602.90.10",
+              "description": "of Rubberized Coir, needled felt",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5603",
+      "title": "Nonwovens, whether or not impregnated, coated, covered or laminated.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5603.11",
+          "title": "Of man-made filaments : -- Weighing not more than 25 g/m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5603.11.10",
+              "description": "Of man-made filaments : --- Crop covers, conforming to IS 16366",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5603.11.90",
+              "description": "Of man-made filaments : --- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5603.12",
+          "title": "Of man-made filaments : -- Weighing more than 25 g/m but not more than 70 g/m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5603.12.00",
+              "description": "Of man-made filaments : -- Weighing more than 25 g/m but not more than 70 g/m",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5603.13",
+          "title": "Of man-made filaments : --Weighing more than 70 g/m but not more than 150 g/m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5603.13.00",
+              "description": "Of man-made filaments : --Weighing more than 70 g/m but not more than 150 g/m",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5603.14",
+          "title": "Of man-made filaments : -- Weighing more than 150 g/m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5603.14.00",
+              "description": "Of man-made filaments : -- Weighing more than 150 g/m",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5603.91",
+          "title": "Other : -- Weighing not more than 25 g/m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5603.91.00",
+              "description": "Other : -- Weighing not more than 25 g/m",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5603.92",
+          "title": "Other : -- Weighing more than 25 g/m but not more than 70 g/m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5603.92.00",
+              "description": "Other : -- Weighing more than 25 g/m but not more than 70 g/m",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5603.93",
+          "title": "Other : -- Weighing more than 70 g/m but not more than 150 g/m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5603.93.10",
+              "description": "Mulch Mats, conforming to IS 17355",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5603.93.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5603.94",
+          "title": "Other : -- Weighing more than 150 g/m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5603.94.10",
+              "description": "Non-woven Geotextile and articles thereof, Conforming to IS 16391, IS 16392",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5603.94.20",
+              "description": "Mulch Mats, conforming to IS 17355",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5603.94.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5604",
+      "title": "Rubber thread and cord, textile covered; textile yarn, and strip and the like of heading 54.04 or 54.05, impregnated, coated, covered or sheathed with rubber or plastics.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5604.10",
+          "title": "Rubber thread and cord, textile covered",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5604.10.00",
+              "description": "Rubber thread and cord, textile covered",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5604.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5604.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5605",
+      "title": "Metallised yarn, whether or not gimped, being textile yarn, or strip or the like of heading 54.04 or 54.05, combined with metal in the form of thread, strip or powder or covered with metal.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5605.00",
+          "title": "Metallised yarn, whether or not gimped, being textile yarn, or strip or the like of heading 5404 or 5405, combined with metal in the form of thread, strip or powder or covered with metal :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5605.00.10",
+              "description": "Real zari thread (gold) and silver thread combined with textile thread",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5605.00.20",
+              "description": "Imitation zari thread",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5605.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "5606",
+      "title": "Gimped yarn, and strip and the like of heading 54.04 or 54.05, gimped (other than those of heading 56.05 and gimped horsehair yarn); chenille yarn (including flock chenille yarn); loop waleyarn.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5606.00",
+          "title": "Gimped yarn, and strip and the like of heading 5404 or 5405, gimped (other than those of heading 5605 and gimped horsehair yarn); chenille yarn (including flock chenille yarn); loop wale-yarn :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5606.00.10",
+              "description": "Trimmings, of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5606.00.20",
+              "description": "Trimmings, of man-made fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5606.00.30",
+              "description": "Trimmings, of zari",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5606.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5607",
+      "title": "Twine, cordage, ropes and cables, whether or not plaited or braided and whether or not impregnated, coated, covered or sheathed with rubber or plastics.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5607.21",
+          "title": "Of sisal or other textile fibres of the genus Agave : -- Binder or baler twine",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5607.21.00",
+              "description": "Of sisal or other textile fibres of the genus Agave : -- Binder or baler twine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5607.29",
+          "title": "Of sisal or other textile fibres of the genus Agave : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5607.29.00",
+              "description": "Of sisal or other textile fibres of the genus Agave : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5607.41",
+          "title": "Of polyethylene or polypropylene : -- Binder or baler twine",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5607.41.00",
+              "description": "Of polyethylene or polypropylene : -- Binder or baler twine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5607.49",
+          "title": "Of polyethylene or polypropylene : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5607.49.00",
+              "description": "Of polyethylene or polypropylene : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5607.50",
+          "title": "Of other synthetic fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5607.50.10",
+              "description": "Nylon fish net twine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5607.50.20",
+              "description": "Nylon tyre cord",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5607.50.30",
+              "description": "Viscose tyre cord",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5607.50.40",
+              "description": "Nylon rope",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5607.50.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5607.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5607.90.10",
+              "description": "Coir, cordage and ropes, other than of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5607.90.20",
+              "description": "Cordage, cable, ropes and twine, of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5607.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5608",
+      "title": "Knotted netting of twine, cordage or rope; made up fishing nets and other made up nets, of textile materials.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5608.11",
+          "title": "Of man-made textile materials : --Made up fishing nets",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5608.11.10",
+              "description": "Made up fishing nets of nylon",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5608.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5608.19",
+          "title": "Of man-made textile materials : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5608.19.00",
+              "description": "Of man-made textile materials : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5608.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5608.90.10",
+              "description": "Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5608.90.20",
+              "description": "Of jute",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5608.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5609",
+      "title": "Articles of yarn, strip or the like of heading 54.04 or 54.05, twine, cordage, rope or cables, not elsewhere specified or included.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5609.00",
+          "title": "Articles of yarn, strip or the like of heading 5404 or 5405, twine, cordage, rope or cables, not elsewhere specified or included:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5609.00.10",
+              "description": "Products of coir",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5609.00.20",
+              "description": "Articles made up of cotton yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5609.00.30",
+              "description": "Articles made up of jute",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5609.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    }
+  ]
+}

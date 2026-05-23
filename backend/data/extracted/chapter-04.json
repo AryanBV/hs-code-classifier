@@ -1,0 +1,837 @@
+{
+  "chapter": "04",
+  "section": "I",
+  "title": "DAIRY PRODUCE; BIRDS' EGGS; NATURAL HONEY; EDIBLE PRODUCTS OF ANIMAL ORIGIN, NOT ELSEWHERE SPECIFIED OR INCLUDED",
+  "source_pdf": "Chapter 04 Dairy Produce; Birds Eggs; Natural Honey; Edible Products Of Animal Origin, Not Elsewhere Specified Or Included.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '04011000'). Normalized to NNNN.NN.NN format (e.g., '0401.10.00') per project schema. Subheading numbers in PDF (e.g., '040210', '040229', '040410') normalized to NNNN.NN (e.g., '0402.10', '0402.29', '0404.10').",
+    "PDF table-chrome headers ('Sl.No. Notes Notification No Notification Date', 'Sl.No. Notes Notification Date Notification No', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Main Notes', 'Sub-Heading Notes', 'Supplementary Notes', 'Policy Condition', 'Export Licensing Notes', 'Product Description and Export Policy') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "PDF Chapter 04 Main Note 3 renders quote marks around 'butter' and 'dairy spreads' as quadruple-quote artifacts ('\"\"\"butter\"\"\"', '\"\"\"dairy spreads\"\"\"'). These are OCR/encoding artifacts from the source PDF — normalized to standard double-quoted form ('\"butter\"', '\"dairy spreads\"') in the captured text for readability.",
+    "Export Licensing Note 1 renders quote marks around 'milk' as '?milk?' (OCR artifact, same pattern as Chapter 09). Preserved verbatim as it appears in the source PDF — intended text is 'milk' in quotation marks.",
+    "Export Licensing Note 1 text in Chapter 04 PDF reads 'full cream milk of partially or completely skimmed milk' — preserved verbatim. Note that Chapter 04 Main Note 1 (the legal note) uses the canonical phrasing 'full cream milk or partially or completely skimmed milk' (with 'or' instead of 'of'); the Export Licensing Note retains the PDF's typo verbatim.",
+    "Heading 0403 description in PDF appears in ALL CAPS ('YOGURT; BUTTERMILK, CURDLED MILK AND CREAM, KEPHIR AND OTHER FERMENTED OR ACIDIFIED MILK AND CREAM, WHETHER OR NOT CONCENTRATED OR CONTAINING ADDED SUGAR OR OTHER SWEETENING MATTER OR FLAVOURED OR CONTAINING ADDED FRUIT, NUTS OR COCOA') as does heading 0410 ('INSECTS AND OTHER EDIBLE PRODUCTS OF ANIMAL ORIGIN, NOT ELSEWHERE SPECIFIED OR INCLUDED'). Preserved as a Title-Case rendering for consistency with other headings; the original ALL-CAPS form is the canonical Schedule presentation.",
+    "Section I (LIVE ANIMALS; ANIMAL PRODUCTS) Main Notes table on PDF page 1 contains two notes (Note 1: 'young of that genus or species'; Note 2: '\"dried\" products also covers products which have been dehydrated, evaporated or freeze-dried.'). Both are captured in the section_notes array.",
+    "Subheading 0406.10 appears duplicated in the source PDF (two rows for '040610 Fresh (unripened or uncured) cheese, including whey cheese, and curd :' followed by duplicate tariff lines '04061010 Mozzarella cheese' and '04061090 Other'). Deduplicated to a single subheading entry with two unique tariff lines.",
+    "Subheading 0410.10 ('Insects:') and 0410.90 ('Other:') are presented in the PDF under heading 0410 (INSECTS AND OTHER EDIBLE PRODUCTS OF ANIMAL ORIGIN, NOT ELSEWHERE SPECIFIED OR INCLUDED). Subheading codes are inferred from the 6-digit PDF rows '041010' and '041090'.",
+    "Tariff lines under headings 0407, 0408, 0409, 0410 display 'Subject to Policy Condition 1 of the Chapter' in the Policy Condition column. Captured in the policy_conditions array. Tariff line 04090000 (Natural Honey) has additional product-specific export conditions (Minimum Export Price of US$ 1400/MT till 31.12.2025, and conditions for export to USA/EU per Notification No. 27/2025-26 dated 22/08/2025) — captured in policy_conditions with applies_to_tariff_lines scoped to '0409.00.00'.",
+    "Tariff lines under heading 0402 ('Skimmed Milk', 'Milk food for babies', 'Other', etc.) show Notification No '25(RE-2012)/2009-2014' (and '2(RE-2012)/2009-2014' for 04021010) dated '08.06.2012' / '22.11.2012'. These appear in the policy_conditions array as the historical notifications regulating Milk Powder export (per Export Licensing Note 2).",
+    "Tariff line 04022990 description in the PDF reads 'Other Other:' (with trailing colon) — preserved verbatim. Heading 0408 tariff line 04089900 description reads 'Other -- Other' (double-dash, single space) — preserved verbatim.",
+    "Heading 0409 has no subheading row in the PDF — tariff line 04090000 'Natural Honey' is attached directly. Modeled as subheading 0409.00 with single tariff line 0409.00.00, consistent with the canonical chapter-09 pattern for heading 0903 ('Maté' / '09030000')."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "The expression milk means full cream milk or partially or completely skimmed milk"
+    },
+    {
+      "number": "2",
+      "text": "For the purposes of heading 0403, yogurt may be concentrated or flavoured and may contain added sugar or other sweetening matter, fruit, nuts, cocoa, chocolate, spices, coffee or coffee extracts, plants, parts of plants, cereals or bakers wares, provided that any added substance is not used for the purpose of replacing, in whole or in part, any milk constituent, and the product retains the essential character of yogurt."
+    },
+    {
+      "number": "3",
+      "text": "For the purposes of heading 0405 : (a) the term \"butter\" means natural butter, whey butter or recombined butter (fresh, salted or rancid, including canned butter) derived exclusively from milk, with a milkfat content of 80% or more but not more than 95% by weight, a maximum milk solids-not-fat content of 2% by weight and a maximum water content of 16% by weight. Butter does not contain added emulsifiers, but may contain sodium chloride, food colours, neutralising salts and cultures of harmless lacticacidproducing bacteria; (b) the expression \"dairy spreads\" means a spreadable emulsion of the water-in-oil type, containing milkfat as the only fat in the product, with a milkfat content of 39% or more but less than 80% by weight."
+    },
+    {
+      "number": "4",
+      "text": "Products obtained by the concentration of whey and with the addition of milk or milkfat are to be classified as cheese in heading 0406 provided that they have the three following characteristics : (a) a milkfat content, by weight of the dry matter, of 5 % or more; (b) a dry matter content, by weight, of at least 70 % but not exceeding 85 %; and (c) they are moulded or capable of being moulded."
+    },
+    {
+      "number": "5",
+      "text": "This Chapter does not cover: (a) non-living insects, unfit for human consumption (heading 0511); (b) products obtained from whey, containing by weight more than 95% lactose, expressed as anhydrous lactose, calculated on the dry matter (heading 1702); (c) products obtained from milk by replacing one or more of its natural constituents (for example, butyric fats) by another substance (for example, oleic fats) (heading 1901 or 2106); or (d) Albumins (including concentrates of two or more whey proteins, containing by weight more than 80% whey proteins, calculated on the dry matter) (heading 3502) or globulins (heading 3504)."
+    },
+    {
+      "number": "6",
+      "text": "For the purposes of heading 0410, the term \"insects\" means edible non-living insects, whole or in parts, fresh, chilled, frozen, dried, smoked, salted or in brine, as well as flours and meals of insects, fit for human consumption. However, it does not cover edible non-living insects otherwise prepared or preserved (generally Section IV)."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "Any reference in this Section to a particular genus or species of an animal, except where the context otherwise requires, includes a reference to the young of that genus or species."
+    },
+    {
+      "number": "2",
+      "text": "Except where the context otherwise requires, throughout this Schedule, any reference to \"dried\" products also covers products which have been dehydrated, evaporated or freeze-dried."
+    }
+  ],
+  "chapter_subheading_notes": [
+    {
+      "number": "1",
+      "text": "For the purposes of sub-heading 0404 10, the expression \"modified whey\" means products consisting of whey constituents, that is, whey from which all or part of the lactose, proteins or minerals have been removed, whey to which natural whey constituents have been added, and products obtained by mixing natural whey constituents."
+    },
+    {
+      "number": "2",
+      "text": "For the purposes of sub-heading 0405 10, the term \"butter\" does not include dehydrated butter or ghee (sub-heading 0405 90)."
+    }
+  ],
+  "supplementary_notes": [
+    {
+      "number": "1",
+      "text": "In this Chapter, \"wild animal\" means wild animal as defined in the Wild Life (Protection) Act, 1972 (53 of 1972)."
+    }
+  ],
+  "export_licensing_notes": [
+    {
+      "number": "1",
+      "text": "The expression ?milk? means full cream milk of partially or completely skimmed milk."
+    },
+    {
+      "number": "2",
+      "text": "Export of 1,600 MTs of Milk Powder per annum to Bhutan (as per Calendar year i.e. 1st January to 31st December) will be exempted from any export ban."
+    }
+  ],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "non-living insects, unfit for human consumption",
+      "redirects_to_chapter": "05",
+      "redirects_to_heading": "0511",
+      "source_note_number": "Note 5(a)",
+      "source_note_text": "This Chapter does not cover: (a) non-living insects, unfit for human consumption (heading 0511); (b) products obtained from whey, containing by weight more than 95% lactose, expressed as anhydrous lactose, calculated on the dry matter (heading 1702); (c) products obtained from milk by replacing one or more of its natural constituents (for example, butyric fats) by another substance (for example, oleic fats) (heading 1901 or 2106); or (d) Albumins (including concentrates of two or more whey proteins, containing by weight more than 80% whey proteins, calculated on the dry matter) (heading 3502) or globulins (heading 3504)."
+    },
+    {
+      "excluded_product_text": "products obtained from whey, containing by weight more than 95% lactose, expressed as anhydrous lactose, calculated on the dry matter",
+      "redirects_to_chapter": "17",
+      "redirects_to_heading": "1702",
+      "source_note_number": "Note 5(b)",
+      "source_note_text": "This Chapter does not cover: (a) non-living insects, unfit for human consumption (heading 0511); (b) products obtained from whey, containing by weight more than 95% lactose, expressed as anhydrous lactose, calculated on the dry matter (heading 1702); (c) products obtained from milk by replacing one or more of its natural constituents (for example, butyric fats) by another substance (for example, oleic fats) (heading 1901 or 2106); or (d) Albumins (including concentrates of two or more whey proteins, containing by weight more than 80% whey proteins, calculated on the dry matter) (heading 3502) or globulins (heading 3504)."
+    },
+    {
+      "excluded_product_text": "products obtained from milk by replacing one or more of its natural constituents (for example, butyric fats) by another substance (for example, oleic fats)",
+      "redirects_to_chapter": "19",
+      "redirects_to_heading": "1901",
+      "source_note_number": "Note 5(c)",
+      "source_note_text": "This Chapter does not cover: (a) non-living insects, unfit for human consumption (heading 0511); (b) products obtained from whey, containing by weight more than 95% lactose, expressed as anhydrous lactose, calculated on the dry matter (heading 1702); (c) products obtained from milk by replacing one or more of its natural constituents (for example, butyric fats) by another substance (for example, oleic fats) (heading 1901 or 2106); or (d) Albumins (including concentrates of two or more whey proteins, containing by weight more than 80% whey proteins, calculated on the dry matter) (heading 3502) or globulins (heading 3504)."
+    },
+    {
+      "excluded_product_text": "products obtained from milk by replacing one or more of its natural constituents (for example, butyric fats) by another substance (for example, oleic fats)",
+      "redirects_to_chapter": "21",
+      "redirects_to_heading": "2106",
+      "source_note_number": "Note 5(c)",
+      "source_note_text": "This Chapter does not cover: (a) non-living insects, unfit for human consumption (heading 0511); (b) products obtained from whey, containing by weight more than 95% lactose, expressed as anhydrous lactose, calculated on the dry matter (heading 1702); (c) products obtained from milk by replacing one or more of its natural constituents (for example, butyric fats) by another substance (for example, oleic fats) (heading 1901 or 2106); or (d) Albumins (including concentrates of two or more whey proteins, containing by weight more than 80% whey proteins, calculated on the dry matter) (heading 3502) or globulins (heading 3504)."
+    },
+    {
+      "excluded_product_text": "Albumins (including concentrates of two or more whey proteins, containing by weight more than 80% whey proteins, calculated on the dry matter)",
+      "redirects_to_chapter": "35",
+      "redirects_to_heading": "3502",
+      "source_note_number": "Note 5(d)",
+      "source_note_text": "This Chapter does not cover: (a) non-living insects, unfit for human consumption (heading 0511); (b) products obtained from whey, containing by weight more than 95% lactose, expressed as anhydrous lactose, calculated on the dry matter (heading 1702); (c) products obtained from milk by replacing one or more of its natural constituents (for example, butyric fats) by another substance (for example, oleic fats) (heading 1901 or 2106); or (d) Albumins (including concentrates of two or more whey proteins, containing by weight more than 80% whey proteins, calculated on the dry matter) (heading 3502) or globulins (heading 3504)."
+    },
+    {
+      "excluded_product_text": "globulins",
+      "redirects_to_chapter": "35",
+      "redirects_to_heading": "3504",
+      "source_note_number": "Note 5(d)",
+      "source_note_text": "This Chapter does not cover: (a) non-living insects, unfit for human consumption (heading 0511); (b) products obtained from whey, containing by weight more than 95% lactose, expressed as anhydrous lactose, calculated on the dry matter (heading 1702); (c) products obtained from milk by replacing one or more of its natural constituents (for example, butyric fats) by another substance (for example, oleic fats) (heading 1901 or 2106); or (d) Albumins (including concentrates of two or more whey proteins, containing by weight more than 80% whey proteins, calculated on the dry matter) (heading 3502) or globulins (heading 3504)."
+    },
+    {
+      "excluded_product_text": "edible non-living insects otherwise prepared or preserved",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 6",
+      "source_note_text": "For the purposes of heading 0410, the term \"insects\" means edible non-living insects, whole or in parts, fresh, chilled, frozen, dried, smoked, salted or in brine, as well as flours and meals of insects, fit for human consumption. However, it does not cover edible non-living insects otherwise prepared or preserved (generally Section IV)."
+    },
+    {
+      "excluded_product_text": "dehydrated butter or ghee",
+      "redirects_to_chapter": "04",
+      "redirects_to_heading": "0405",
+      "source_note_number": "Sub-Heading Note 2",
+      "source_note_text": "For the purposes of sub-heading 0405 10, the term \"butter\" does not include dehydrated butter or ghee (sub-heading 0405 90)."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "0401",
+      "title": "Milk and cream, not concentrated nor containing added sugar or other sweetening matter.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0401.10",
+          "title": "Of a fat content, by weight, not exceeding 1 percent",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0401.10.00",
+              "description": "Of a fat content, by weight, not exceeding 1 percent",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0401.20",
+          "title": "Of a fat content, by weight, exceeding 1 percent but not exceeding 6 percent",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0401.20.00",
+              "description": "Of a fat content, by weight, exceeding 1 percent but not exceeding 6 percent",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0401.40",
+          "title": "Of a fat content, by weight, exceeding 6 percent but not exceeding 10percent",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0401.40.00",
+              "description": "Of a fat content, by weight, exceeding 6 percent but not exceeding 10percent",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0401.50",
+          "title": "Of a fat content, by weight, exceeding 10 percent",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0401.50.00",
+              "description": "Of a fat content, by weight, exceeding 10 percent",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0402",
+      "title": "Milk and cream, concentrated or containing added sugar or other sweetening matter.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0402.10",
+          "title": "In powder, granules or other solid forms, of a fat content, by weight, not exceeding 1.5 percent",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0402.10.10",
+              "description": "Skimmed Milk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0402.10.20",
+              "description": "Milk food for babies",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0402.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0402.21",
+          "title": "In powder, granules or other solid forms, of a fat content, by weight, exceeding 1.5 percent : -- Not containing added sugar or other sweetening matter",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0402.21.00",
+              "description": "In powder, granules or other solid forms, of a fat content, by weight, exceeding 1.5 percent : -- Not containing added sugar or other sweetening matter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0402.29",
+          "title": "In powder, granules or other solid forms, of a fat content, by weight, exceeding 1.5 percent : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0402.29.10",
+              "description": "Whole milk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0402.29.20",
+              "description": "Milk for babies",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0402.29.90",
+              "description": "Other Other:",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0402.91",
+          "title": "Other : -- Not containing added sugar or other sweetening matter",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0402.91.10",
+              "description": "Condensed milk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0402.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0402.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0402.99.10",
+              "description": "Whole Milk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0402.99.20",
+              "description": "Condensed Milk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0402.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0403",
+      "title": "Yogurt; buttermilk, curdled milk and cream, kephir and other fermented or acidified milk and cream, whether or not concentrated or containing added sugar or other sweetening matter or flavoured or containing added fruit, nuts or cocoa.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0403.20",
+          "title": "Yogurt",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0403.20.00",
+              "description": "Yogurt",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0403.90",
+          "title": "Other :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0403.90.10",
+              "description": "Butter milk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0403.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0404",
+      "title": "Whey, whether or not concentrated or containing added sugar or other sweetening matter; products consisting of natural milk constituents, whether or not containing added sugar or other sweetening matter, not elsewhere specified or included.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0404.10",
+          "title": "Whey and modified whey, whether or not concentrated or containing added sugar or other sweetening matter",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0404.10.10",
+              "description": "Whey, concentrated, evaporated or condensed, liquid or semi-solid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0404.10.20",
+              "description": "Whey, dry, blocks and powdered",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0404.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0404.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0404.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0405",
+      "title": "Butter and other fats and oils derived from milk; dairy spreads.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0405.10",
+          "title": "Butter",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0405.10.00",
+              "description": "Butter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0405.20",
+          "title": "Dairy spreads",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0405.20.00",
+              "description": "Dairy spreads",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0405.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0405.90.10",
+              "description": "Butter Oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0405.90.20",
+              "description": "Ghee",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0405.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0406",
+      "title": "Cheese and curd.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0406.10",
+          "title": "Fresh (unripened or uncured) cheese, including whey cheese, and curd :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0406.10.10",
+              "description": "Mozzarella cheese",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0406.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0406.20",
+          "title": "Grated or powdered cheese, of all kinds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0406.20.00",
+              "description": "Grated or powdered cheese, of all kinds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0406.30",
+          "title": "Processed cheese, not grated or powdered",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0406.30.00",
+              "description": "Processed cheese, not grated or powdered",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0406.40",
+          "title": "Blue-veined cheese and other cheese containing veins produced by Penicillium roqueforti",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0406.40.00",
+              "description": "Blue-veined cheese and other cheese containing veins produced by Penicillium roqueforti",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0406.90",
+          "title": "Other cheese",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0406.90.00",
+              "description": "Other cheese",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0407",
+      "title": "Birds eggs, in shell, fresh, preserved or cooked.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0407.11",
+          "title": "Fertilised eggs for incubation : -- Of fowls of the species Gallus domesticus",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0407.11.00",
+              "description": "Fertilised eggs for incubation : -- Of fowls of the species Gallus domesticus",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0407.19",
+          "title": "Fertilised eggs for incubation : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0407.19.10",
+              "description": "Of ducks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0407.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0407.21",
+          "title": "Other fresh eggs : -- Of fowls of the species Gallus domesticus",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0407.21.00",
+              "description": "Other fresh eggs : -- Of fowls of the species Gallus domesticus",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0407.29",
+          "title": "Other fresh eggs : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0407.29.00",
+              "description": "Other fresh eggs : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0407.90",
+          "title": "Others",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0407.90.00",
+              "description": "Others",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0408",
+      "title": "Birds eggs, not in shell, and egg yolks, fresh, dried, cooked by steaming or by boiling in water, moulded, frozen or otherwise preserved, whether or not containing added sugar or other sweetening matter.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0408.11",
+          "title": "Egg yolks : -- Dried",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0408.11.00",
+              "description": "Egg yolks : -- Dried",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0408.19",
+          "title": "Egg yolks : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0408.19.00",
+              "description": "Egg yolks : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0408.91",
+          "title": "Other : -- Dried",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0408.91.00",
+              "description": "Other : -- Dried",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0408.99",
+          "title": "Other -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0408.99.00",
+              "description": "Other -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0409",
+      "title": "Natural honey.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0409.00",
+          "title": "Natural Honey",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0409.00.00",
+              "description": "Natural Honey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export is subject to a Minimum Export Price (MEP) of US Dollar 1400 FOB per Metric Ton, till 31.12.2025. Export of honey to USA and European Union (EU) shall be allowed subject to the following conditions: 1. Honey exported shall be wholly obtained Indian origin honey only, and; 2. No blending of Indian honey shall be permitted with honey originating from any other country."
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "0410",
+      "title": "Insects and other edible products of animal origin, not elsewhere specified or included.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0410.10",
+          "title": "Insects:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0410.10.10",
+              "description": "Fresh, chilled or frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0410.10.20",
+              "description": "Salted, in brine, dried or smoked",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0410.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0410.90",
+          "title": "Other:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0410.90.10",
+              "description": "Of wild animals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0410.90.20",
+              "description": "Turtle eggs and Salanganes nests (birds nests)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0410.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

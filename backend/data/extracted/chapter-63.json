@@ -1,0 +1,1443 @@
+{
+  "chapter": "63",
+  "section": "XI",
+  "title": "OTHER MADE UP TEXTILE ARTICLES; SETS; WORN CLOTHING AND WORN TEXTILE ARTICLES; RAGS",
+  "source_pdf": "Chapter 63 Other Made Up Textile Articles; Sets; Worn Clothing And Worn Textile Articles; Rags.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '63011000'). Normalized to NNNN.NN.NN format (e.g., '6301.10.00') per project schema. Subheading numbers in PDF (e.g., '630190') normalized to NNNN.NN (e.g., '6301.90').",
+    "Section XI Main Notes (Section Notes 1-15) appear in the PDF pages preceding Chapter 63 (pages 1-7). Per task scope, Section XI Main Notes are extracted once in Chapter 51/54/62 and are NOT duplicated here. The section_notes array in this file is therefore empty; refer to Chapter 51 (or earliest extracted Section XI chapter) for the canonical Section XI Main Notes.",
+    "Chapter 63 Main Notes table contains a duplicate 'SI.No. = 1' row: the first row 1 reads 'Sub-Chapter I applies only to made up articles, of any textile fabric.' and the second row 1 reads 'Goods with description implying \"Dress materials/ready made garments fabrics/textile items with imprints of excerpts or verses of the Holy Quran\" are Restricted, and are subject to Policy condition that Exports shall be permitted against a Restrcited Export Authorisation.' The second row 1 is treated as a Policy/Restriction note rather than a legal Chapter Note proper; it has been preserved in policy_conditions to keep the chapter_notes array sequential (1, 2, 3) per HS convention. Note the verbatim misspelling 'Restrcited' in the source.",
+    "Note 3 of Chapter 63 begins 'Heading 6309 applies only to the following goods : (a) articles of textile materials : (i) clothing and clothing accessories, and parts thereof ; (ii) blankets and travelling rugs; (iii) bed linen, table linen, toilet linen and kitchen linen ; (iv) furnishing articles, other than carpets of headings 5701 to 5705 and tapestries of heading 5805. (b) footwear and headgear of any material other than asbestos. In order to be classified in this heading, the articles mentioned above must comply with both of the following requirements : (i) they must show signs of appreciable wear, and (ii) they must be presented in bulk or in bales, sacks or similar packings.' — preserved verbatim including spacing.",
+    "Heading 6306 title is rendered in ALL CAPS in source PDF: 'TARPAULINS, AWNINGS AND SUNBLINDS; TENTS (INCLUDING TEMPORARY CANOPIES AND SIMILAR ARTICLES); SAILS FOR BOATS, SAILBOARDS OR LANDCRAFT; CAMPING GOODS' (note: PDF runs 'AWNINGS ANDSUNBLINDS' as one word — preserved verbatim). Other heading titles use title case.",
+    "Subheading 6305.32 appears twice in the PDF: first as parent six-digit row '630532' with description '--- Of man-made textile materials : -- Flexible intermediate bulk containers', and then as a tariff line '63053200' with the same description. The parent six-digit row is treated as the subheading; the 8-digit row is treated as the single tariff line under it (Of man-made textile materials : -- Flexible intermediate bulk containers).",
+    "Heading 6308 ('6308.00.00 Sets consisting of woven fabric and yarn...') and Heading 6309 ('6309.00.00 Worn clothing and other worn articles.') are single-line entries in the PDF — no subheading row appears; the 8-digit tariff line carries the full heading description. Modelled with one subheading (NNNN.00) and one tariff line (NNNN.00.00) for schema consistency, per the pattern used in Chapter 09 for heading 0903.",
+    "Tariff line 6307.90.91 description in PDF is split across two rows by the PDF table renderer: 'Textile face masks, without a replaceable filter or' (row 1) + 'mechanical parts, including surgical mask and' (row 2). The full description has been reassembled verbatim, with a trailing ' and' preserved from the source (no further continuation visible in the PDF).",
+    "Tariff lines 6307.90.11, 6307.90.12, 6307.90.13, 6307.90.19, 6307.90.20, 6307.90.91, 6307.90.92, and 6307.90.99 carry Notification No '36/2015-20' dated '06.10.2020' in the Policy Condition column. These notification references are captured in policy_conditions.",
+    "Subheading 6305.10 ('Of jute or of other textile bast fibres of heading 53.03') uses the dotted style '53.03' for the cross-referenced heading — preserved verbatim from source.",
+    "PDF table-chrome headers ('SI.No. Notes Notification Date Notification No', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Main Notes', 'Product Description and Export Policy') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "All tariff lines in Chapter 63 have Export Policy = 'Free' in the source PDF. No policy_conditions other than the Holy Quran imprint restriction (chapter-wide, treated as a chapter-level restriction) and Notification 36/2015-20 (on heading 6307 'Other' subheading 6307.90 tariff lines) are present in the source table.",
+    "Subheading 6302.91 in PDF is 'Other :-- Of cotton' (no space before '--'). Subheading 6302.99 is 'Other : -- Of other textile materials' — formatting normalized to source as displayed.",
+    "Subheading 6304.92 has a long set of tariff lines (6304.92.11 through 6304.92.99) covering Counterpanes, Napkins, Pillow cases, Table cloths, Terry towel, Towels, Mosquito nets, Cushion covers, and Other furnishing articles — all preserved as separate tariff lines per source."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "Sub-Chapter I applies only to made up articles, of any textile fabric."
+    },
+    {
+      "number": "2",
+      "text": "Sub-Chapter I does not cover : (a) goods of Chapters 56 to 62 ; or (b) worn clothing or other worn articles of heading 6309"
+    },
+    {
+      "number": "3",
+      "text": "Heading 6309 applies only to the following goods : (a) articles of textile materials : (i) clothing and clothing accessories, and parts thereof ; (ii) blankets and travelling rugs; (iii) bed linen, table linen, toilet linen and kitchen linen ; (iv) furnishing articles, other than carpets of headings 5701 to 5705 and tapestries of heading 5805. (b) footwear and headgear of any material other than asbestos. In order to be classified in this heading, the articles mentioned above must comply with both of the following requirements : (i) they must show signs of appreciable wear, and (ii) they must be presented in bulk or in bales, sacks or similar packings."
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "goods of Chapters 56 to 62",
+      "redirects_to_chapter": "56",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2",
+      "source_note_text": "Sub-Chapter I does not cover : (a) goods of Chapters 56 to 62 ; or (b) worn clothing or other worn articles of heading 6309"
+    },
+    {
+      "excluded_product_text": "goods of Chapters 56 to 62",
+      "redirects_to_chapter": "57",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2",
+      "source_note_text": "Sub-Chapter I does not cover : (a) goods of Chapters 56 to 62 ; or (b) worn clothing or other worn articles of heading 6309"
+    },
+    {
+      "excluded_product_text": "goods of Chapters 56 to 62",
+      "redirects_to_chapter": "58",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2",
+      "source_note_text": "Sub-Chapter I does not cover : (a) goods of Chapters 56 to 62 ; or (b) worn clothing or other worn articles of heading 6309"
+    },
+    {
+      "excluded_product_text": "goods of Chapters 56 to 62",
+      "redirects_to_chapter": "59",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2",
+      "source_note_text": "Sub-Chapter I does not cover : (a) goods of Chapters 56 to 62 ; or (b) worn clothing or other worn articles of heading 6309"
+    },
+    {
+      "excluded_product_text": "goods of Chapters 56 to 62",
+      "redirects_to_chapter": "60",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2",
+      "source_note_text": "Sub-Chapter I does not cover : (a) goods of Chapters 56 to 62 ; or (b) worn clothing or other worn articles of heading 6309"
+    },
+    {
+      "excluded_product_text": "goods of Chapters 56 to 62",
+      "redirects_to_chapter": "61",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2",
+      "source_note_text": "Sub-Chapter I does not cover : (a) goods of Chapters 56 to 62 ; or (b) worn clothing or other worn articles of heading 6309"
+    },
+    {
+      "excluded_product_text": "goods of Chapters 56 to 62",
+      "redirects_to_chapter": "62",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2",
+      "source_note_text": "Sub-Chapter I does not cover : (a) goods of Chapters 56 to 62 ; or (b) worn clothing or other worn articles of heading 6309"
+    },
+    {
+      "excluded_product_text": "worn clothing or other worn articles (when classified in heading 6309)",
+      "redirects_to_chapter": "63",
+      "redirects_to_heading": "6309",
+      "source_note_number": "Note 2",
+      "source_note_text": "Sub-Chapter I does not cover : (a) goods of Chapters 56 to 62 ; or (b) worn clothing or other worn articles of heading 6309"
+    },
+    {
+      "excluded_product_text": "carpets (when worn) — excluded from heading 6309 'furnishing articles'",
+      "redirects_to_chapter": "57",
+      "redirects_to_heading": "5701",
+      "source_note_number": "Note 3",
+      "source_note_text": "Heading 6309 applies only to the following goods : (a) articles of textile materials : (i) clothing and clothing accessories, and parts thereof ; (ii) blankets and travelling rugs; (iii) bed linen, table linen, toilet linen and kitchen linen ; (iv) furnishing articles, other than carpets of headings 5701 to 5705 and tapestries of heading 5805. (b) footwear and headgear of any material other than asbestos. In order to be classified in this heading, the articles mentioned above must comply with both of the following requirements : (i) they must show signs of appreciable wear, and (ii) they must be presented in bulk or in bales, sacks or similar packings."
+    },
+    {
+      "excluded_product_text": "carpets (when worn) — excluded from heading 6309 'furnishing articles'",
+      "redirects_to_chapter": "57",
+      "redirects_to_heading": "5702",
+      "source_note_number": "Note 3",
+      "source_note_text": "Heading 6309 applies only to the following goods : (a) articles of textile materials : (i) clothing and clothing accessories, and parts thereof ; (ii) blankets and travelling rugs; (iii) bed linen, table linen, toilet linen and kitchen linen ; (iv) furnishing articles, other than carpets of headings 5701 to 5705 and tapestries of heading 5805. (b) footwear and headgear of any material other than asbestos. In order to be classified in this heading, the articles mentioned above must comply with both of the following requirements : (i) they must show signs of appreciable wear, and (ii) they must be presented in bulk or in bales, sacks or similar packings."
+    },
+    {
+      "excluded_product_text": "carpets (when worn) — excluded from heading 6309 'furnishing articles'",
+      "redirects_to_chapter": "57",
+      "redirects_to_heading": "5703",
+      "source_note_number": "Note 3",
+      "source_note_text": "Heading 6309 applies only to the following goods : (a) articles of textile materials : (i) clothing and clothing accessories, and parts thereof ; (ii) blankets and travelling rugs; (iii) bed linen, table linen, toilet linen and kitchen linen ; (iv) furnishing articles, other than carpets of headings 5701 to 5705 and tapestries of heading 5805. (b) footwear and headgear of any material other than asbestos. In order to be classified in this heading, the articles mentioned above must comply with both of the following requirements : (i) they must show signs of appreciable wear, and (ii) they must be presented in bulk or in bales, sacks or similar packings."
+    },
+    {
+      "excluded_product_text": "carpets (when worn) — excluded from heading 6309 'furnishing articles'",
+      "redirects_to_chapter": "57",
+      "redirects_to_heading": "5704",
+      "source_note_number": "Note 3",
+      "source_note_text": "Heading 6309 applies only to the following goods : (a) articles of textile materials : (i) clothing and clothing accessories, and parts thereof ; (ii) blankets and travelling rugs; (iii) bed linen, table linen, toilet linen and kitchen linen ; (iv) furnishing articles, other than carpets of headings 5701 to 5705 and tapestries of heading 5805. (b) footwear and headgear of any material other than asbestos. In order to be classified in this heading, the articles mentioned above must comply with both of the following requirements : (i) they must show signs of appreciable wear, and (ii) they must be presented in bulk or in bales, sacks or similar packings."
+    },
+    {
+      "excluded_product_text": "carpets (when worn) — excluded from heading 6309 'furnishing articles'",
+      "redirects_to_chapter": "57",
+      "redirects_to_heading": "5705",
+      "source_note_number": "Note 3",
+      "source_note_text": "Heading 6309 applies only to the following goods : (a) articles of textile materials : (i) clothing and clothing accessories, and parts thereof ; (ii) blankets and travelling rugs; (iii) bed linen, table linen, toilet linen and kitchen linen ; (iv) furnishing articles, other than carpets of headings 5701 to 5705 and tapestries of heading 5805. (b) footwear and headgear of any material other than asbestos. In order to be classified in this heading, the articles mentioned above must comply with both of the following requirements : (i) they must show signs of appreciable wear, and (ii) they must be presented in bulk or in bales, sacks or similar packings."
+    },
+    {
+      "excluded_product_text": "tapestries (when worn) — excluded from heading 6309 'furnishing articles'",
+      "redirects_to_chapter": "58",
+      "redirects_to_heading": "5805",
+      "source_note_number": "Note 3",
+      "source_note_text": "Heading 6309 applies only to the following goods : (a) articles of textile materials : (i) clothing and clothing accessories, and parts thereof ; (ii) blankets and travelling rugs; (iii) bed linen, table linen, toilet linen and kitchen linen ; (iv) furnishing articles, other than carpets of headings 5701 to 5705 and tapestries of heading 5805. (b) footwear and headgear of any material other than asbestos. In order to be classified in this heading, the articles mentioned above must comply with both of the following requirements : (i) they must show signs of appreciable wear, and (ii) they must be presented in bulk or in bales, sacks or similar packings."
+    },
+    {
+      "excluded_product_text": "footwear or headgear of asbestos (excluded from heading 6309)",
+      "redirects_to_chapter": "68",
+      "redirects_to_heading": "6812",
+      "source_note_number": "Note 3",
+      "source_note_text": "Heading 6309 applies only to the following goods : (a) articles of textile materials : (i) clothing and clothing accessories, and parts thereof ; (ii) blankets and travelling rugs; (iii) bed linen, table linen, toilet linen and kitchen linen ; (iv) furnishing articles, other than carpets of headings 5701 to 5705 and tapestries of heading 5805. (b) footwear and headgear of any material other than asbestos. In order to be classified in this heading, the articles mentioned above must comply with both of the following requirements : (i) they must show signs of appreciable wear, and (ii) they must be presented in bulk or in bales, sacks or similar packings."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "6301",
+      "title": "Blankets and travelling rugs",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6301.10",
+          "title": "Electric blankets",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6301.10.00",
+              "description": "Electric blankets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6301.20",
+          "title": "Blankets (other than electric blankets) and travelling rugs, of wool or of fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6301.20.00",
+              "description": "Blankets (other than electric blankets) and travelling rugs, of wool or of fine animal hair",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6301.30",
+          "title": "Blankets (other than electric blankets) and travelling rugs, of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6301.30.00",
+              "description": "Blankets (other than electric blankets) and travelling rugs, of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6301.40",
+          "title": "Blankets (other than electric blankets) and travelling rugs, of synthetic fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6301.40.00",
+              "description": "Blankets (other than electric blankets) and travelling rugs, of synthetic fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6301.90",
+          "title": "Other blankets and travelling rugs",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6301.90.10",
+              "description": "Jute blankets including blankets of blended jute",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6301.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6302",
+      "title": "Bed linen, table linen, toilet linen and kitchen linen.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6302.10",
+          "title": "Bed linen, knitted or crocheted",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6302.10.10",
+              "description": "Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6302.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6302.21",
+          "title": "Other bed linen, printed :--Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6302.21.10",
+              "description": "Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6302.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6302.22",
+          "title": "Other bed linen, printed : -- Of man-made fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6302.22.00",
+              "description": "Other bed linen, printed : -- Of man-made fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6302.29",
+          "title": "Other bed linen, printed : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6302.29.00",
+              "description": "Other bed linen, printed : -- Of other textile materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6302.31",
+          "title": "Other bed linen : -- Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6302.31.00",
+              "description": "Other bed linen : -- Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6302.32",
+          "title": "Other bed linen : -- Of man-made fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6302.32.00",
+              "description": "Other bed linen : -- Of man-made fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6302.39",
+          "title": "Other bed linen : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6302.39.00",
+              "description": "Other bed linen : -- Of other textile materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6302.40",
+          "title": "Table linen, knitted or crocheted",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6302.40.10",
+              "description": "Of silk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6302.40.20",
+              "description": "Of wool or fine animal hair",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6302.40.30",
+              "description": "Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6302.40.40",
+              "description": "Of man-made fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6302.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6302.51",
+          "title": "Other table linen:--Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6302.51.10",
+              "description": "Other table linen: ---- Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6302.53",
+          "title": "Other table linen : -- Of man-made fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6302.53.00",
+              "description": "Other table linen : -- Of man-made fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6302.59",
+          "title": "Other table linen : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6302.59.00",
+              "description": "Other table linen : -- Of other textile materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6302.60",
+          "title": "Toilet linen and kitchen linen, of terry towelling or similar terry fabrics, of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6302.60.10",
+              "description": "Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6302.60.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6302.91",
+          "title": "Other :-- Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6302.91.10",
+              "description": "Other: ---- Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6302.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6302.93",
+          "title": "Other : -- Of man-made fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6302.93.00",
+              "description": "Other : -- Of man-made fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6302.99",
+          "title": "Other : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6302.99.00",
+              "description": "Other : -- Of other textile materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6303",
+      "title": "Curtains (including drapes) and interior blinds; curtain or bed valances.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6303.12",
+          "title": "Knitted or crocheted : -- Of synthetic fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6303.12.00",
+              "description": "Knitted or crocheted : -- Of synthetic fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6303.19",
+          "title": "Knitted or crocheted : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6303.19.00",
+              "description": "Knitted or crocheted : -- Of other textile materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6303.91",
+          "title": "Other : -- Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6303.91.00",
+              "description": "Other : -- Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6303.92",
+          "title": "Other : -- Of synthetic fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6303.92.00",
+              "description": "Other : -- Of synthetic fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6303.99",
+          "title": "Other : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6303.99.10",
+              "description": "Silk shower curtains",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6303.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6304",
+      "title": "Other furnishing articles, excluding those of heading 94.04.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6304.11",
+          "title": "Bedspreads : -- Knitted or crocheted",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6304.11.00",
+              "description": "Bedspreads : -- Knitted or crocheted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6304.19",
+          "title": "Bedspreads : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6304.19.10",
+              "description": "Bedsheets and bed covers, of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.19.20",
+              "description": "Bedspreads of silk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.19.30",
+              "description": "Bedsheets and bed covers of man-made fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.19.40",
+              "description": "Bedsheets and Bed Covers of cotton, Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6304.20",
+          "title": "Bed nets, specified in Sub- heading Note 1 to this Chapter",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6304.20.00",
+              "description": "Bed nets, specified in Sub- heading Note 1 to this Chapter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6304.91",
+          "title": "Other : -- Knitted or crocheted",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6304.91.10",
+              "description": "Silk belt",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.91.20",
+              "description": "Woollen cushion cover",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6304.92",
+          "title": "Other : -- Not knitted or crocheted, of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6304.92.11",
+              "description": "Counterpanes ---- Of Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.92.21",
+              "description": "Napkins ---- Of Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.92.29",
+              "description": "Napkins ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.92.31",
+              "description": "Pillow cases and pillow slips ---- Of Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.92.39",
+              "description": "Pillow cases and pillow slips ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.92.41",
+              "description": "Table cloth and Table Covers ---- of Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.92.49",
+              "description": "Table cloth and Table Covers ---- Others",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.92.50",
+              "description": "Terry towel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.92.60",
+              "description": "Towels, other than terry towel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.92.70",
+              "description": "Mosquito nets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.92.81",
+              "description": "Cushion covers ---- Of Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.92.89",
+              "description": "Cushion covers ---- Others",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.92.91",
+              "description": "Other furnishing articles ---- Of Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.92.99",
+              "description": "Other furnishing articles ---- Others",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6304.93",
+          "title": "Other : -- Not knitted or crocheted, of synthetic fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6304.93.00",
+              "description": "Other : -- Not knitted or crocheted, of synthetic fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6304.99",
+          "title": "Other : -- Not knitted or crocheted, of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6304.99.10",
+              "description": "Silk cushion covers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.99.91",
+              "description": "of silk, Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.99.92",
+              "description": "of wool, Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6304.99.99",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6305",
+      "title": "Sacks and bags, of a kind used for the packing of goods.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6305.10",
+          "title": "Of jute or of other textile bast fibres of heading 53.03",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6305.10.10",
+              "description": "Jute bagging for raw cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6305.10.20",
+              "description": "Jute corn (grains) sacks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6305.10.30",
+              "description": "Jute hessian bags",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6305.10.40",
+              "description": "Jute sacking bags",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6305.10.50",
+              "description": "Jute wool sacks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6305.10.60",
+              "description": "Plastic coated or paper cum polythene lined jute bags and sacks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6305.10.70",
+              "description": "Paper laminated hessian jute",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6305.10.80",
+              "description": "Jute soil savers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6305.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6305.20",
+          "title": "Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6305.20.00",
+              "description": "Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6305.32",
+          "title": "Of man-made textile materials : -- Flexible intermediate bulk containers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6305.32.00",
+              "description": "Of man-made textile materials : -- Flexible intermediate bulk containers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6305.33",
+          "title": "Of man-made textile materials : -- Other, of polyethylene or polypropylene strip or the like",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6305.33.00",
+              "description": "Of man-made textile materials : -- Other, of polyethylene or polypropylene strip or the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6305.39",
+          "title": "Of man-made textile materials : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6305.39.00",
+              "description": "Of man-made textile materials : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6305.90",
+          "title": "Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6305.90.00",
+              "description": "Of other textile materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6306",
+      "title": "TARPAULINS, AWNINGS ANDSUNBLINDS; TENTS (INCLUDING TEMPORARY CANOPIES AND SIMILAR ARTICLES); SAILS FOR BOATS, SAILBOARDS OR LANDCRAFT; CAMPING GOODS",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6306.12",
+          "title": "Tarpaulins, awnings and sunblinds : -- Of synthetic fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6306.12.00",
+              "description": "Tarpaulins, awnings and sunblinds : -- Of synthetic fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6306.19",
+          "title": "Tarpaulins, awnings and sunblinds : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6306.19.10",
+              "description": "Jute tarpaulins (including DW tarpaulin)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6306.19.20",
+              "description": "Blinds or awnings of coir",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6306.19.30",
+              "description": "Venetian or Austrian blinds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6306.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6306.22",
+          "title": "Tents (including temporary canopies and similar articles): -- Of synthetic fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6306.22.00",
+              "description": "Tents (including temporary canopies and similar articles): -- Of synthetic fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6306.29",
+          "title": "Tents (including temporary canopies and similar articles): -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6306.29.10",
+              "description": "Of jute",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6306.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6306.30",
+          "title": "Sails",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6306.30.00",
+              "description": "Sails",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6306.40",
+          "title": "Pneumatic Mattresses",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6306.40.00",
+              "description": "Pneumatic Mattresses",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6306.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6306.90.10",
+              "description": "Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6306.90.90",
+              "description": "Of other textile materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6307",
+      "title": "Other made up articles, including dress patterns.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6307.10",
+          "title": "Floor-cloths, dish-cloths, dusters and similar cleaning cloths",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6307.10.10",
+              "description": "Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6307.10.20",
+              "description": "Of man-made fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6307.10.30",
+              "description": "of Cotton, Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6307.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6307.20",
+          "title": "Life-jackets and life-belts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6307.20.10",
+              "description": "Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6307.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6307.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6307.90.11",
+              "description": "Dress materials hand printed: ---- Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6307.90.12",
+              "description": "Dress materials hand printed: ---- Of silk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6307.90.13",
+              "description": "Dress materials hand printed: ---- Of man-made fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6307.90.19",
+              "description": "Dress materials hand printed: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6307.90.20",
+              "description": "Dress materials hand printed: ---- Made up articles of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6307.90.91",
+              "description": "Textile face masks, without a replaceable filter or mechanical parts, including surgical mask and",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6307.90.92",
+              "description": "Armour for ballistic protection",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "36/2015-20  06.10.2020"
+            },
+            {
+              "code": "6307.90.99",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "6308",
+      "title": "Sets consisting of woven fabric and yarn, whether or not with accessories, for making up into rugs, tapestries, embroidered table cloths or serviettes, or similar textile articles, put up in packings for retail sale.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6308.00",
+          "title": "Sets consisting of woven fabric and yarn, whether or not with accessories, for making up into rugs, tapestries, embroidered table cloths or serviettes, or similar textile articles, put up in packings for retail sale.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6308.00.00",
+              "description": "Sets consisting of woven fabric and yarn, whether or not with accessories, for making up into rugs, tapestries, embroidered table cloths or serviettes, or similar textile articles, put up in packings for retail sale.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "6309",
+      "title": "Worn clothing and other worn articles.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6309.00",
+          "title": "Worn clothing and other worn articles.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6309.00.00",
+              "description": "Worn clothing and other worn articles.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "6310",
+      "title": "Used or new rags, scrap twine, cordage, rope and cables and worn out articles of twine, cordage, rope or cables, of textile materials.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6310.10",
+          "title": "Sorted",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6310.10.10",
+              "description": "Woolen rags",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6310.10.20",
+              "description": "Cotton rags",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6310.10.30",
+              "description": "Gunny cuttings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6310.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "6310.90",
+          "title": "Other:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6310.90.10",
+              "description": "Other: ---- Woolen rags",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6310.90.20",
+              "description": "Other: ---- Cotton rags",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6310.90.30",
+              "description": "Other: ---- Gunny cuttings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6310.90.40",
+              "description": "Other: ---- Synthetic rags",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6310.90.90",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

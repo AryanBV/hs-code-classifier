@@ -1,0 +1,672 @@
+{
+  "chapter": "11",
+  "section": "II",
+  "title": "PRODUCTS OF THE MILLING INDUSTRY; MALT; STARCHES; INULIN; WHEAT GLUTEN",
+  "source_pdf": "Chapter 11 Products Of The Milling Industry; Malt; Starches; Inulin; Wheat Gluten.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '11010000') and 6-digit subheading codes without dots (e.g., '110290'). Normalized to NNNN.NN.NN format (e.g., '1101.00.00') and NNNN.NN format (e.g., '1102.90') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'Sl.No. Notes Notification No Notification Date', 'Sl.No. Notes Notification Date Notification No', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "Chapter title on PDF page 1 (above the chapter Main Notes table) reads 'Chapter 11 Products Of The Milling Industry; Malt; Starches; Inulin; Wheat Gluten.' The canonical ITC(HS) chapter title 'PRODUCTS OF THE MILLING INDUSTRY; MALT; STARCHES; INULIN; WHEAT GLUTEN' is used in the title field; source_pdf preserves the PDF filename.",
+    "Section II 'Main Notes' (1 note on pellets) appears above the Chapter 11 title and is attributed to section_notes (Section II, Vegetable Products), not chapter_notes.",
+    "Chapter 11 Main Note 2 spans the PDF page break between page 1 and page 2 and contains an inline tabular description of cereal Starch content / Ash content / Rate of passage (sieve apertures 315 microns and 500 microns) for Wheat and rye, Barley, Oats, Maize (corn) and grain sorghum, Rice, Buckwheat. The five tabular columns (1)-(5) are rendered as inline text in the PDF and preserved verbatim. The Maize (corn) / grain sorghum row has an empty (5) column (preserved as '-').",
+    "Chapter 11 Main Note 3 PDF text contains '\"\"groats\"\"' and '\"\"meal\"\"' (double double-quotes) as OCR artifacts of typographic quotes. Preserved verbatim from source.",
+    "Heading 1101 in the PDF is represented only by the 8-digit tariff line '11010000' ('Wheat or meslin flour.') with no separate 4-digit heading row above it. Heading title is inferred from the tariff line description ('Wheat or meslin flour.') per WCO HS nomenclature. Subheading '1101.00' synthesized as the parent of '1101.00.00' (single-line heading).",
+    "Heading 1102 in the PDF reads 'CEREAL FLOURS OTHER THAN THAT OF WHEAT OR MESLIN' in ALL CAPS. Preserved verbatim.",
+    "Subheading 1102.90 'Other' contains tariff lines 1102.90.10 (Rye flour), 1102.90.21 (Rice flour: ---- Brown rice flour), 1102.90.22 (Rice flour: ---- White rice flour), 1102.90.29 (Rice flour: ---- Other), 1102.90.90 (Other). The 'Rice flour' group (.21/.22/.29) is a sub-group under 1102.90 — descriptions preserved verbatim including the ': ---- ' indicator.",
+    "Subheading 1103.11 'Groats and meal : -- Of wheat' contains two tariff lines: 1103.11.10 (Groat) and 1103.11.20 (Meal). Tariff line description 'Groat' (singular) is preserved verbatim from the PDF, even though the parent subheading uses plural 'Groats and meal'.",
+    "Heading 1104 description in the PDF spans multiple lines: 'Cereal grains otherwise worked (for example, hulled, rolled, flaked, pearled, sliced or kibbled), except rice of heading 10.06; germ of cereals, whole, rolled, flaked or ground.' — preserved verbatim including the heading reference '10.06' with internal dot.",
+    "Subheadings 1104.12, 1104.19 ('Rolled or flaked grains'), 1104.22, 1104.23, 1104.29 ('Other worked grains'), and 1104.30 ('Germ of cereals') in the PDF have descriptions repeated on each tariff line (no separate 6-digit subheading row). Subheadings synthesized as parents of the respective 8-digit tariff lines. Each tariff-line description in the PDF includes the sub-grouping prefix verbatim (e.g., 'Rolled or flaked grains : -- Of oats').",
+    "Heading 1106 description: 'Flour, meal and powder of the dried leguminous vegetables of heading 07.13, of sago or of roots or tubers of heading 07.14 or of the products of Chapter 8.' — preserved verbatim including the trailing period and the embedded heading references '07.13' and '07.14'.",
+    "Subheading 1106.10 'Of the dried leguminous vegetables of heading 0713' has only one tariff line in the PDF: 1106.10.10 (Guar Meal). The '90' / 'Other' tariff line is not present in the source — preserved verbatim.",
+    "Subheading 1106.30 'Of the products of Chapter 8' tariff line 1106.30.30 description in the PDF is 'Mango flour' (no sub-grouping ': ----' indicator) — preserved verbatim.",
+    "Subheading 1108.19 'Starches : -- Other' contains two tariff lines: 1108.19.10 (Sago) and 1108.19.90 (Other). Subheading description preserved verbatim.",
+    "Heading 1109 in the PDF is represented only by the 8-digit tariff line '11090000' ('Wheat gluten, whether or not dried') with no separate 4-digit heading row above it. Heading title is inferred from the tariff line description ('Wheat gluten, whether or not dried') per WCO HS nomenclature. Subheading '1109.00' synthesized as the parent of '1109.00.00' (single-line heading).",
+    "The 'Export Policy' column values ('Free', 'Prohibited') and 'Policy Condition' column values are not part of the tariff line description field; they are captured separately. The 'Unit' column (kg/u/etc) is NOT shown in this chapter's PDF — unit field set to null for all tariff lines.",
+    "Tariff line 1101.00.00 ('Wheat or meslin flour.') has Export Policy 'Prohibited' with an extensive Policy Condition citing Notification No 39/2015-20 dated 14.10.2022 — captured in the policy_conditions array. All other tariff lines in Chapter 11 have Export Policy 'Free' with no Policy Condition."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover : (a) roasted malt put up as coffee substitutes (heading 0901 or 2101); (b) prepared flours, groats, meals or starches of heading 1901; (c) corn flakes or other products of heading 1904; (d) vegetables, prepared or preserved, of heading 2001, 2004 or 2005; (e) pharmaceutical products (Chapter 30); or (f) starches having the character of perfumery, cosmetic or toilet preparations (Chapter 33)."
+    },
+    {
+      "number": "2",
+      "text": "(A) Productsfrom the milling of the cerealslisted in the table below fall in this Chapter if they have, by weight on the dry product : (a) a starch content(determined by themodified Ewers polarimetric method) exceeding that indicated in column (2); and (b) an ash content (after deduction of any added minerals) not exceeding that indicated in column (3). Otherwise, they fall in heading 2302. However, germ of cereals, whole, rolled, flaked or ground, is always classified in heading 1104. (B) Products falling in this Chapter under the above provisions shall be classified in heading 1101 or 1102 if the percentage passing through a woven metal wire cloth sieve with the aperture indicated in column (4) or (5) is not less, by weight, than that shown against the cereal concerned. Otherwise, they fall in heading 1103 or 1104. Cereal Starch content Ash content Rate of passage through a sieve with an aperture of 315 micrometres (microns) 500 micrometres (microns) (1) (2) (3) (4) (5) Wheat and rye 45% 2.5% 80% - Barley 45% 3% 80% - Oats 45% 5% 8 0% - Maize (corn) and 45% 2% - 90% grain soghum Rice 45% 1.6% 80% - Buckwheat 45% 4% 80% -"
+    },
+    {
+      "number": "3",
+      "text": "For the purposes of heading 1103, the terms \"\"groats\"\" and \"\"meal\"\" mean products obtained by the fragmentation of cereal grains, of which : (a) in the case of maize (corn) products, at least 95% by weight passes through a woven metal wire cloth sieve with an aperture of 2 mm; (b) in the case of other cereal products, at least 95% by weight passes through a woven metal wire cloth sieve with an aperture of 1.25 mm."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "In this Section, the term \"pellets\" means products which have been agglomerated either directly by compression or by the addition of a binder in a proportion not exceeding 3 (percent) by weight."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "roasted malt put up as coffee substitutes",
+      "redirects_to_chapter": "09",
+      "redirects_to_heading": "0901",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) roasted malt put up as coffee substitutes (heading 0901 or 2101); (b) prepared flours, groats, meals or starches of heading 1901; (c) corn flakes or other products of heading 1904; (d) vegetables, prepared or preserved, of heading 2001, 2004 or 2005; (e) pharmaceutical products (Chapter 30); or (f) starches having the character of perfumery, cosmetic or toilet preparations (Chapter 33)."
+    },
+    {
+      "excluded_product_text": "roasted malt put up as coffee substitutes",
+      "redirects_to_chapter": "21",
+      "redirects_to_heading": "2101",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) roasted malt put up as coffee substitutes (heading 0901 or 2101); (b) prepared flours, groats, meals or starches of heading 1901; (c) corn flakes or other products of heading 1904; (d) vegetables, prepared or preserved, of heading 2001, 2004 or 2005; (e) pharmaceutical products (Chapter 30); or (f) starches having the character of perfumery, cosmetic or toilet preparations (Chapter 33)."
+    },
+    {
+      "excluded_product_text": "prepared flours, groats, meals or starches",
+      "redirects_to_chapter": "19",
+      "redirects_to_heading": "1901",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) roasted malt put up as coffee substitutes (heading 0901 or 2101); (b) prepared flours, groats, meals or starches of heading 1901; (c) corn flakes or other products of heading 1904; (d) vegetables, prepared or preserved, of heading 2001, 2004 or 2005; (e) pharmaceutical products (Chapter 30); or (f) starches having the character of perfumery, cosmetic or toilet preparations (Chapter 33)."
+    },
+    {
+      "excluded_product_text": "corn flakes or other products of heading 1904",
+      "redirects_to_chapter": "19",
+      "redirects_to_heading": "1904",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) roasted malt put up as coffee substitutes (heading 0901 or 2101); (b) prepared flours, groats, meals or starches of heading 1901; (c) corn flakes or other products of heading 1904; (d) vegetables, prepared or preserved, of heading 2001, 2004 or 2005; (e) pharmaceutical products (Chapter 30); or (f) starches having the character of perfumery, cosmetic or toilet preparations (Chapter 33)."
+    },
+    {
+      "excluded_product_text": "vegetables, prepared or preserved",
+      "redirects_to_chapter": "20",
+      "redirects_to_heading": "2001",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) roasted malt put up as coffee substitutes (heading 0901 or 2101); (b) prepared flours, groats, meals or starches of heading 1901; (c) corn flakes or other products of heading 1904; (d) vegetables, prepared or preserved, of heading 2001, 2004 or 2005; (e) pharmaceutical products (Chapter 30); or (f) starches having the character of perfumery, cosmetic or toilet preparations (Chapter 33)."
+    },
+    {
+      "excluded_product_text": "vegetables, prepared or preserved",
+      "redirects_to_chapter": "20",
+      "redirects_to_heading": "2004",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) roasted malt put up as coffee substitutes (heading 0901 or 2101); (b) prepared flours, groats, meals or starches of heading 1901; (c) corn flakes or other products of heading 1904; (d) vegetables, prepared or preserved, of heading 2001, 2004 or 2005; (e) pharmaceutical products (Chapter 30); or (f) starches having the character of perfumery, cosmetic or toilet preparations (Chapter 33)."
+    },
+    {
+      "excluded_product_text": "vegetables, prepared or preserved",
+      "redirects_to_chapter": "20",
+      "redirects_to_heading": "2005",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) roasted malt put up as coffee substitutes (heading 0901 or 2101); (b) prepared flours, groats, meals or starches of heading 1901; (c) corn flakes or other products of heading 1904; (d) vegetables, prepared or preserved, of heading 2001, 2004 or 2005; (e) pharmaceutical products (Chapter 30); or (f) starches having the character of perfumery, cosmetic or toilet preparations (Chapter 33)."
+    },
+    {
+      "excluded_product_text": "pharmaceutical products",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) roasted malt put up as coffee substitutes (heading 0901 or 2101); (b) prepared flours, groats, meals or starches of heading 1901; (c) corn flakes or other products of heading 1904; (d) vegetables, prepared or preserved, of heading 2001, 2004 or 2005; (e) pharmaceutical products (Chapter 30); or (f) starches having the character of perfumery, cosmetic or toilet preparations (Chapter 33)."
+    },
+    {
+      "excluded_product_text": "starches having the character of perfumery, cosmetic or toilet preparations",
+      "redirects_to_chapter": "33",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover : (a) roasted malt put up as coffee substitutes (heading 0901 or 2101); (b) prepared flours, groats, meals or starches of heading 1901; (c) corn flakes or other products of heading 1904; (d) vegetables, prepared or preserved, of heading 2001, 2004 or 2005; (e) pharmaceutical products (Chapter 30); or (f) starches having the character of perfumery, cosmetic or toilet preparations (Chapter 33)."
+    },
+    {
+      "excluded_product_text": "products from the milling of cereals not meeting the starch/ash content thresholds in Note 2(A)",
+      "redirects_to_chapter": "23",
+      "redirects_to_heading": "2302",
+      "source_note_number": "Note 2",
+      "source_note_text": "(A) Productsfrom the milling of the cerealslisted in the table below fall in this Chapter if they have, by weight on the dry product : (a) a starch content(determined by themodified Ewers polarimetric method) exceeding that indicated in column (2); and (b) an ash content (after deduction of any added minerals) not exceeding that indicated in column (3). Otherwise, they fall in heading 2302. However, germ of cereals, whole, rolled, flaked or ground, is always classified in heading 1104. (B) Products falling in this Chapter under the above provisions shall be classified in heading 1101 or 1102 if the percentage passing through a woven metal wire cloth sieve with the aperture indicated in column (4) or (5) is not less, by weight, than that shown against the cereal concerned. Otherwise, they fall in heading 1103 or 1104. Cereal Starch content Ash content Rate of passage through a sieve with an aperture of 315 micrometres (microns) 500 micrometres (microns) (1) (2) (3) (4) (5) Wheat and rye 45% 2.5% 80% - Barley 45% 3% 80% - Oats 45% 5% 8 0% - Maize (corn) and 45% 2% - 90% grain soghum Rice 45% 1.6% 80% - Buckwheat 45% 4% 80% -"
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "1101",
+      "title": "Wheat or meslin flour.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1101.00",
+          "title": "Wheat or meslin flour.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1101.00.00",
+              "description": "Wheat or meslin flour.",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "However, export of Wheat Flour (Atta) will be allowed against Advance Authorisation, and by Export Oriented Units (EOUs) and units in SEZs. Procedural conditions to be followed by Advance Authorisation holders will be provided in the Handbook of Procedures. Export of Wheat Flour (Atta) by 100% Export Oriented Units (EOUs) and units in the SEZ will be subject to pre-import of wheat condition. The Wheat Flour (Atta) will have to be exported within 180 days from the date of import of the wheat consignment. The import shall be subject to actual user condition and transfer of imported raw material, for any purpose including job work, shall not be permitted. Procurement of domestic wheat for the purpose of export of wheat flour will not be allowed. Entire production of milling process has to be exported and no remnants of the milling process will be allowed to be retained in the Country, except the wastage approved by the Norms Committee. At the time of export, Bill of Entry for imported wheat will be produced before the Customs Authorities and only on verification of the same export will be allowed."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1102",
+      "title": "CEREAL FLOURS OTHER THAN THAT OF WHEAT OR MESLIN",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1102.20",
+          "title": "Maize (corn) flour",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1102.20.00",
+              "description": "Maize (corn) flour",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1102.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1102.90.10",
+              "description": "Rye flour",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1102.90.21",
+              "description": "Rice flour:---- Brown rice flour",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1102.90.22",
+              "description": "Rice flour:---- White rice flour",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1102.90.29",
+              "description": "Rice flour:---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1102.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1103",
+      "title": "Cereal groats, meal and pellets.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1103.11",
+          "title": "Groats and meal : -- Of wheat",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1103.11.10",
+              "description": "Groat",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1103.11.20",
+              "description": "Meal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1103.13",
+          "title": "Groats and meal : -- Of maize (corn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1103.13.00",
+              "description": "Groats and meal : -- Of maize (corn)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1103.19",
+          "title": "Groats and meal : -- Of other cereals",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1103.19.00",
+              "description": "Groats and meal : -- Of other cereals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1103.20",
+          "title": "Pellets",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1103.20.00",
+              "description": "Pellets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1104",
+      "title": "Cereal grains otherwise worked (for example, hulled, rolled, flaked, pearled, sliced or kibbled), except rice of heading 10.06; germ of cereals, whole, rolled, flaked or ground.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1104.12",
+          "title": "Rolled or flaked grains : -- Of oats",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1104.12.00",
+              "description": "Rolled or flaked grains : -- Of oats",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1104.19",
+          "title": "Rolled or flaked grains : -- Of other cereals",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1104.19.00",
+              "description": "Rolled or flaked grains : -- Of other cereals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1104.22",
+          "title": "Other worked grains (for example, hulled, pearled, sliced or kibbled) : -- Of oats",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1104.22.00",
+              "description": "Other worked grains (for example, hulled, pearled, sliced or kibbled) : -- Of oats",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1104.23",
+          "title": "Other worked grains (for example, hulled, pearled, sliced or kibbled) : -- Of maize (corn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1104.23.00",
+              "description": "Other worked grains (for example, hulled, pearled, sliced or kibbled) : -- Of maize (corn)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1104.29",
+          "title": "Other worked grains (for example, hulled, pearled, sliced or kibbled) : -- Of other cereals",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1104.29.00",
+              "description": "Other worked grains (for example, hulled, pearled, sliced or kibbled) : -- Of other cereals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1104.30",
+          "title": "Germ of cereals, whole, rolled, flaked or ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1104.30.00",
+              "description": "Germ of cereals, whole, rolled, flaked or ground",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1105",
+      "title": "Flour, meal, powder, flakes, granules and pellets of potatoes.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1105.10",
+          "title": "Flour, meal and powder",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1105.10.00",
+              "description": "Flour, meal and powder",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1105.20",
+          "title": "Flakes, granules and pellets",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1105.20.00",
+              "description": "Flakes, granules and pellets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1106",
+      "title": "Flour, meal and powder of the dried leguminous vegetables of heading 07.13, of sago or of roots or tubers of heading 07.14 or of the products of Chapter 8.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1106.10",
+          "title": "Of the dried leguminous vegetables of heading 0713",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1106.10.10",
+              "description": "Guar Meal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1106.20",
+          "title": "Of sago or of roots or tubers of heading 07.14",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1106.20.10",
+              "description": "Of sago",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1106.20.20",
+              "description": "Of manioc (cassava)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1106.20.90",
+              "description": "Of other roots and tubers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1106.30",
+          "title": "Of the products of Chapter 8",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1106.30.10",
+              "description": "Of tamarind",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1106.30.20",
+              "description": "Of singoda",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1106.30.30",
+              "description": "Mango flour",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1106.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1107",
+      "title": "Malt, whether or not roasted.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1107.10",
+          "title": "Not roasted",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1107.10.00",
+              "description": "Not roasted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1107.20",
+          "title": "Roasted",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1107.20.00",
+              "description": "Roasted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1108",
+      "title": "Starches; inulin.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1108.11",
+          "title": "Starches : -- Wheat starch",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1108.11.00",
+              "description": "Starches : -- Wheat starch",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1108.12",
+          "title": "Starches : -- Maize (corn) starch",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1108.12.00",
+              "description": "Starches : -- Maize (corn) starch",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1108.13",
+          "title": "Starches : -- Potato starch",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1108.13.00",
+              "description": "Starches : -- Potato starch",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1108.14",
+          "title": "Starches : -- Manioc (cassava) starch",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1108.14.00",
+              "description": "Starches : -- Manioc (cassava) starch",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1108.19",
+          "title": "Starches : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1108.19.10",
+              "description": "Sago",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1108.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1108.20",
+          "title": "Inulin",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1108.20.00",
+              "description": "Inulin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1109",
+      "title": "Wheat gluten, whether or not dried",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1109.00",
+          "title": "Wheat gluten, whether or not dried",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1109.00.00",
+              "description": "Wheat gluten, whether or not dried",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    }
+  ]
+}

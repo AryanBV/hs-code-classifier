@@ -1,0 +1,426 @@
+{
+  "chapter": "92",
+  "section": "XVIII",
+  "title": "MUSICAL INSTRUMENTS; PARTS AND ACCESSORIES OF SUCH ARTICLES",
+  "source_pdf": "Chapter 92 Musical Instruments; Parts And Accessories Of Such Articles.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '92011000'). Normalized to NNNN.NN.NN format (e.g., '9201.10.00') per project schema. Subheading numbers in PDF (e.g., '920590') normalized to NNNN.NN form (e.g., '9205.90').",
+    "Headings 9203 and 9204 are absent from this PDF. In the WCO Harmonized System, 9203 ('Keyboard pipe organs; harmoniums and similar keyboard instruments with free metal reeds') and 9204 ('Accordions and similar instruments; mouth organs') were deleted in HS 2007 — their goods were merged into heading 9205 ('Wind musical instruments') in the Indian ITC(HS) 2022 schedule. Heading 9205 description explicitly lists 'keyboard pipe organs, accordions' as examples. No data lost — this matches the source PDF.",
+    "Main Note 1 contains '?' character in 'collectors? pieces' — this is an OCR/encoding artifact from the source PDF in place of an apostrophe. The intended text is \"collectors' pieces\". Preserved verbatim.",
+    "Main Note 1 contains 'articles(heading 9620)' (missing space before parenthesis) — preserved verbatim as a source-document typographic artifact.",
+    "Policy Condition 1 begins with paired double-double quotes ('\"\"Export of Value added products...') and ends with paired double-double quotes ('...time to time.\"\"'). These are typographic/encoding artifacts from the source PDF. Preserved verbatim per extraction rules.",
+    "Policy Condition 1 text contains '&other' (missing space) in 'dolls &other handicrafts' — preserved verbatim as a source-document typographic artifact.",
+    "Notification Date and Notification No columns for both Main Notes and the Policy Condition row are empty in the source PDF — captured as null.",
+    "PDF table-chrome headers ('Sl.No. Notes Notification Date Notification No', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Main Notes', 'Policy Condition', 'Product Description and Export Policy') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Tariff line 9206.00.00 (PDF '92060000') sits directly under heading 9206 with no separate 6-digit subheading row. Modelled as subheading '9206.00' wrapping the single tariff line '9206.00.00'.",
+    "Heading 9205 has a mixed structure: subheading '9205.10' (Brass-wind instruments) contains a single tariff line '9205.10.00' (PDF '92051000'); subheading '9205.90' (Other) is shown as a 6-digit row '920590' with multiple 8-digit tariff lines (9205.90.10 Flutes, 9205.90.20 Clarinets, 9205.90.90 Other).",
+    "Heading 9209 has a mixed structure: 8-digit code '9209.30.00' (Musical instrument strings) sits directly under the heading with no 6-digit subheading row in the PDF — modelled as subheading '9209.30' wrapping the single tariff line. Subheading '9209.9' (Other) is implied by the four '9209.9x.00' tariff lines (9209.91, 9209.92, 9209.94, 9209.99) — each modelled as its own 6-digit subheading wrapping a single tariff line, matching the PDF's flat presentation.",
+    "Tariff lines under subheading 9209.9x carry the description prefix 'Other : -- ' in the PDF (e.g., '9209.91.00 Other : -- Parts and accessories for pianos'). Preserved verbatim including the umbrella 'Other :' label.",
+    "Export Policy is 'Free' for every tariff line in this chapter. Policy Condition 1 (Red Sanders restriction) is referenced on tariff lines under headings 9202, 9205, 9206, 9208, and on 9209.92.00 / 9209.94.00 / 9209.99.00; it is NOT referenced on heading 9201 (pianos), 9207 (electrically amplified instruments), 9209.30.00 (strings), or 9209.91.00 (parts/accessories for pianos) — preserved exactly per the source PDF policy_condition column.",
+    "Heading 9202 description in PDF reads 'Other string musical instruments (for example, guitars, violins, harps).' — verbatim, including the trailing period.",
+    "Heading 9209 description references '92.02' and '92.07' (with embedded periods, the Indian/HS dotted heading style) — preserved verbatim in tariff-line descriptions: '...the musical instruments of heading 92.02' and '...heading 92.07'.",
+    "Unit (kg/u/etc.) information is not present in this PDF — all unit fields set to null."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover: (a) parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39); (b) microphones, amplifiers, loud-speakers, head-phones, switches, stroboscopes or other accessory instruments, apparatus or equipment of Chapter 85 or 90, for use with but not incorporated in or housed in the same cabinet as instruments of this Chapter; (c) toy instruments or apparatus (heading 9503); (d) brushes for cleaning musical instruments (heading 9603), or monopods, bipods, tripods and similar articles(heading 9620); or (e) collectors? pieces or antiques (heading 9705 or 9706)."
+    },
+    {
+      "number": "2",
+      "text": "Bows and sticks and similar devices used in playing the musical instruments of heading 9202 or 9206 presented with such instruments in numbers normal thereto and clearly intended for use therewith, are to be classified in the same heading as the relative instruments. Cards, discs and rolls of heading 9209 presented with an instrument are to be treated as separate articles and not as forming a part of such instrument."
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "parts of general use, as defined in Note 2 to Section XV, of base metal",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover: (a) parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39); (b) microphones, amplifiers, loud-speakers, head-phones, switches, stroboscopes or other accessory instruments, apparatus or equipment of Chapter 85 or 90, for use with but not incorporated in or housed in the same cabinet as instruments of this Chapter; (c) toy instruments or apparatus (heading 9503); (d) brushes for cleaning musical instruments (heading 9603), or monopods, bipods, tripods and similar articles(heading 9620); or (e) collectors? pieces or antiques (heading 9705 or 9706). [redirect target was Section XV, modeled as null chapter FK]"
+    },
+    {
+      "excluded_product_text": "similar goods of plastics (parts of general use, of plastics)",
+      "redirects_to_chapter": "39",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover: (a) parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39); (b) microphones, amplifiers, loud-speakers, head-phones, switches, stroboscopes or other accessory instruments, apparatus or equipment of Chapter 85 or 90, for use with but not incorporated in or housed in the same cabinet as instruments of this Chapter; (c) toy instruments or apparatus (heading 9503); (d) brushes for cleaning musical instruments (heading 9603), or monopods, bipods, tripods and similar articles(heading 9620); or (e) collectors? pieces or antiques (heading 9705 or 9706)."
+    },
+    {
+      "excluded_product_text": "microphones, amplifiers, loud-speakers, head-phones, switches, stroboscopes or other accessory instruments, apparatus or equipment of Chapter 85 or 90, for use with but not incorporated in or housed in the same cabinet as instruments of this Chapter",
+      "redirects_to_chapter": "85",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover: (a) parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39); (b) microphones, amplifiers, loud-speakers, head-phones, switches, stroboscopes or other accessory instruments, apparatus or equipment of Chapter 85 or 90, for use with but not incorporated in or housed in the same cabinet as instruments of this Chapter; (c) toy instruments or apparatus (heading 9503); (d) brushes for cleaning musical instruments (heading 9603), or monopods, bipods, tripods and similar articles(heading 9620); or (e) collectors? pieces or antiques (heading 9705 or 9706)."
+    },
+    {
+      "excluded_product_text": "microphones, amplifiers, loud-speakers, head-phones, switches, stroboscopes or other accessory instruments, apparatus or equipment of Chapter 85 or 90, for use with but not incorporated in or housed in the same cabinet as instruments of this Chapter",
+      "redirects_to_chapter": "90",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover: (a) parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39); (b) microphones, amplifiers, loud-speakers, head-phones, switches, stroboscopes or other accessory instruments, apparatus or equipment of Chapter 85 or 90, for use with but not incorporated in or housed in the same cabinet as instruments of this Chapter; (c) toy instruments or apparatus (heading 9503); (d) brushes for cleaning musical instruments (heading 9603), or monopods, bipods, tripods and similar articles(heading 9620); or (e) collectors? pieces or antiques (heading 9705 or 9706)."
+    },
+    {
+      "excluded_product_text": "toy instruments or apparatus",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": "9503",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "This Chapter does not cover: (a) parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39); (b) microphones, amplifiers, loud-speakers, head-phones, switches, stroboscopes or other accessory instruments, apparatus or equipment of Chapter 85 or 90, for use with but not incorporated in or housed in the same cabinet as instruments of this Chapter; (c) toy instruments or apparatus (heading 9503); (d) brushes for cleaning musical instruments (heading 9603), or monopods, bipods, tripods and similar articles(heading 9620); or (e) collectors? pieces or antiques (heading 9705 or 9706)."
+    },
+    {
+      "excluded_product_text": "brushes for cleaning musical instruments",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": "9603",
+      "source_note_number": "Note 1(d)",
+      "source_note_text": "This Chapter does not cover: (a) parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39); (b) microphones, amplifiers, loud-speakers, head-phones, switches, stroboscopes or other accessory instruments, apparatus or equipment of Chapter 85 or 90, for use with but not incorporated in or housed in the same cabinet as instruments of this Chapter; (c) toy instruments or apparatus (heading 9503); (d) brushes for cleaning musical instruments (heading 9603), or monopods, bipods, tripods and similar articles(heading 9620); or (e) collectors? pieces or antiques (heading 9705 or 9706)."
+    },
+    {
+      "excluded_product_text": "monopods, bipods, tripods and similar articles",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": "9620",
+      "source_note_number": "Note 1(d)",
+      "source_note_text": "This Chapter does not cover: (a) parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39); (b) microphones, amplifiers, loud-speakers, head-phones, switches, stroboscopes or other accessory instruments, apparatus or equipment of Chapter 85 or 90, for use with but not incorporated in or housed in the same cabinet as instruments of this Chapter; (c) toy instruments or apparatus (heading 9503); (d) brushes for cleaning musical instruments (heading 9603), or monopods, bipods, tripods and similar articles(heading 9620); or (e) collectors? pieces or antiques (heading 9705 or 9706)."
+    },
+    {
+      "excluded_product_text": "collectors? pieces or antiques",
+      "redirects_to_chapter": "97",
+      "redirects_to_heading": "9705",
+      "source_note_number": "Note 1(e)",
+      "source_note_text": "This Chapter does not cover: (a) parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39); (b) microphones, amplifiers, loud-speakers, head-phones, switches, stroboscopes or other accessory instruments, apparatus or equipment of Chapter 85 or 90, for use with but not incorporated in or housed in the same cabinet as instruments of this Chapter; (c) toy instruments or apparatus (heading 9503); (d) brushes for cleaning musical instruments (heading 9603), or monopods, bipods, tripods and similar articles(heading 9620); or (e) collectors? pieces or antiques (heading 9705 or 9706)."
+    },
+    {
+      "excluded_product_text": "collectors? pieces or antiques",
+      "redirects_to_chapter": "97",
+      "redirects_to_heading": "9706",
+      "source_note_number": "Note 1(e)",
+      "source_note_text": "This Chapter does not cover: (a) parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39); (b) microphones, amplifiers, loud-speakers, head-phones, switches, stroboscopes or other accessory instruments, apparatus or equipment of Chapter 85 or 90, for use with but not incorporated in or housed in the same cabinet as instruments of this Chapter; (c) toy instruments or apparatus (heading 9503); (d) brushes for cleaning musical instruments (heading 9603), or monopods, bipods, tripods and similar articles(heading 9620); or (e) collectors? pieces or antiques (heading 9705 or 9706)."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "9201",
+      "title": "Pianos, including automatic pianos; harpsichords and other keyboard stringed instruments.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9201.10",
+          "title": "Upright pianos",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9201.10.00",
+              "description": "Upright pianos",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9201.20",
+          "title": "Grand pianos",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9201.20.00",
+              "description": "Grand pianos",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9201.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9201.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9202",
+      "title": "Other string musical instruments (for example, guitars, violins, harps).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9202.10",
+          "title": "Played with a bow",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9202.10.00",
+              "description": "Played with a bow",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of this Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9202.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9202.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of this Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9205",
+      "title": "Wind musical instruments (for example, keyboard pipe organs, accordions, clarinets, trumpets, bagpipes), other than fairground organs and mechanical street organs.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9205.10",
+          "title": "Brass-wind instruments",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9205.10.00",
+              "description": "Brass-wind instruments",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of this Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9205.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9205.90.10",
+              "description": "Flutes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9205.90.20",
+              "description": "Clarinets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9205.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of this Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9206",
+      "title": "Percussion musical instruments (for example, drums, xylophones, cymbols, castanets, maracas)",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9206.00",
+          "title": "Percussion musical instruments (for example, drums, xylophones, cymbols, castanets, maracas)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9206.00.00",
+              "description": "Percussion musical instruments (for example, drums, xylophones, cymbols, castanets, maracas)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of this Chapter"
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "9207",
+      "title": "Musical instruments, the sound of which is produced, or must be amplified, electrically (for example, organs, guitars, accordions).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9207.10",
+          "title": "Keyboard instruments, other than accordions",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9207.10.00",
+              "description": "Keyboard instruments, other than accordions",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9207.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9207.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9208",
+      "title": "Musical boxes, fairground organs, mechanical street organs, mechanical singing birds, musical saws and other musical instruments not falling within any other heading of this Chapter; decoy calls of all kinds; whistles, call horns and other mouthblown sound signalling instruments.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9208.10",
+          "title": "Musical boxes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9208.10.00",
+              "description": "Musical boxes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of this Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9208.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9208.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of this Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9209",
+      "title": "Parts (for example, mechanisms for musical boxes) and accessories (for example, cards, discs and rolls for mechanical instruments) of musical instruments; metronomes, tuning forks and pitch pipes of all kinds.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9209.30",
+          "title": "Musical instrument strings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9209.30.00",
+              "description": "Musical instrument strings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9209.91",
+          "title": "Other : -- Parts and accessories for pianos",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9209.91.00",
+              "description": "Other : -- Parts and accessories for pianos",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9209.92",
+          "title": "Other : -- Parts and accessories for the musical instruments of heading 92.02",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9209.92.00",
+              "description": "Other : -- Parts and accessories for the musical instruments of heading 92.02",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of this Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9209.94",
+          "title": "Other : -- Parts and accessories for the musical instruments of heading 92.07",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9209.94.00",
+              "description": "Other : -- Parts and accessories for the musical instruments of heading 92.07",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of this Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9209.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9209.99.00",
+              "description": "Other : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of this Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

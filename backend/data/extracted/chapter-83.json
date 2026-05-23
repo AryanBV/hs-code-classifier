@@ -1,0 +1,1014 @@
+{
+  "chapter": "83",
+  "section": "XV",
+  "title": "MISCELLANEOUS ARTICLES OF BASE METAL",
+  "source_pdf": "Chapter 83 Miscellaneous Articles Of Base Metal.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '83011000') and 6-digit subheading codes without dots (e.g., '830140'). Normalized to NNNN.NN.NN format (e.g., '8301.10.00') and NNNN.NN format (e.g., '8301.40') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'Sl.No. Notes Notification No Notification Date', 'Sl.No. Notes Notification Date Notification No', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "Chapter 83 PDF reproduces the full 9 Section XV 'Main Notes' (BASE METALS AND ARTICLES OF BASE METAL) verbatim on pages 1-4 before the chapter-specific notes. All 9 are captured in section_notes — this cross-validates the identical Section XV notes that appear in Chapters 72-82 PDFs.",
+    "PDF contains typographic artifacts where double-double quote pairs '\"\"' wrap terms in Section XV notes (e.g., '\"\"parts of general use\"\"', '\"\"base metals\"\"', '\"\"cermets\"\"', '\"\"alloys\"\"', '\"\"flattened circles\"\"', '\"\"modified rectangles\"\"'). These are reproduced verbatim as smart-quote encoding artifacts from the source PDF.",
+    "Section XV Note 6 in the PDF reads 'Unlessthe context otherwise requires' (missing space) — preserved verbatim as a source OCR artifact.",
+    "Section XV Note 7 in the PDF reads 'metal areto be treated' (missing space) — preserved verbatim as a source OCR artifact.",
+    "Section XV Note 7(b) in the PDF reads 'alloy isregarded' (missing space) — preserved verbatim as a source OCR artifact.",
+    "Section XV Note 9 spans pages 2-3 and covers definitions of bars/rods, profiles, wire, plates/sheets/strip/foil, and tubes/pipes for the purposes of Chapters 74 to 76 and 78 to 81. It is captured as a single verbatim note as it appears in the PDF.",
+    "Section XV Note 9 references 'crosssection' (no hyphen) and 'crosssections' in places where the standard wording is 'cross-section' / 'cross-sections' — preserved verbatim.",
+    "Chapter 83 has only 2 chapter notes (Main Notes) — no sub-heading notes or supplementary notes in this chapter PDF.",
+    "Chapter Note 2 PDF wraps 'castors' in double-double quotes '\"\"castors\"\"' — preserved verbatim.",
+    "The 'Export Policy' and 'Policy Condition' columns: all tariff lines in Chapter 83 show Export Policy 'Free' with no Policy Condition. Captured only as the verbatim Export Policy where present; the policy_conditions array is empty for this chapter.",
+    "Unit-of-measure (kg/u/etc.) column is NOT present in this PDF — all unit fields set to null for all tariff lines.",
+    "Heading 8301 PDF subheading row '830140' has title 'Other locks :' (with trailing colon and indicator) — preserved verbatim.",
+    "Heading 8302 PDF subheading row '830230' has title 'other mountings, fittings and similar articles suitable for motor vehicles' (lowercase initial 'other') — preserved verbatim.",
+    "Heading 8302 PDF tariff line '83023010' description is 'Curve drive stakes' — preserved verbatim (likely OCR variant of 'curb-drive stakes' or 'curve-drive stays', but reproduced as the PDF renders it).",
+    "Heading 8302 subheading '830241' PDF title is 'Other mountings, fittings and similar articles : -- Suitable for buildings' (two hyphens indicator). Tariff lines 8302.41.10 / .20 / .90 PDF descriptions include the full umbrella prefix and four-hyphen indicator '----' (e.g., 'Other mountings, fittings and similar articles: ----Fittings for doors and windows') — preserved verbatim.",
+    "Heading 8302 subheadings '830242' and '830249' PDF rows are single-line 6-digit titles followed directly by tariff line codes '83024200' and '83024900' (no separate 8-digit subdivisions). Modelled as subheadings 8302.42 / 8302.49 with one tariff line each (8302.42.00 / 8302.49.00).",
+    "Heading 8303 in the PDF appears only as a single 8-digit code row '83030000' with the heading-level description text — no separate 6-digit subheading row is shown. Modelled as subheading '8303.00' carrying the single tariff line '8303.00.00'. Heading title preserved verbatim from the row description.",
+    "Heading 8304 same pattern as 8303 — single 8-digit row '83040000' under the heading description. Modelled as subheading '8304.00' / tariff line '8304.00.00'. The PDF description contains 'office or desk quipment' (likely 'office or desk equipment') — preserved verbatim.",
+    "Heading 8305 PDF heading-level description spans two cells/rows: 'Fittings for loose-leaf binders or files, letter clips, letter corners, paper clips, indexing tags and similar office articles, of base metal; staples in strips (for example, for offices, upholstery, packaging), of base metal.' — concatenated verbatim from the source.",
+    "Heading 8306 subheading '830621' PDF title is 'Statuettes and other ornaments : -- Plated with precious metal' and subheading '830629' PDF title is 'Statuettes and other ornaments : -- Other' — preserved verbatim with the umbrella-prefix-and-indicator pattern.",
+    "Heading 8308 tariff lines 8308.10.21 / 8308.10.29 PDF descriptions split eyelet sub-types: 'Eyelets: ----For footwear' / 'Eyelets: ----Other' — preserved verbatim.",
+    "Heading 8308 subheading '830890' PDF tariff line descriptions split buckles and beads-and-spangles into multiple sub-items using umbrella prefix and '----' indicators (e.g., 'Buckles: ----For footwear', 'Buckles: ----Other', 'Beads and spangles of base metal: ----For garments, made ups, knitwear, plastic and leather goods'). Each preserved verbatim.",
+    "Heading 8308 tariff line '83089040' PDF description reads 'Beads and spangles of base metal: ----Fittings for travel requisites and leather goods other' — the trailing word 'other' appears to be a source PDF artifact; preserved verbatim.",
+    "Heading 8308 tariff lines '83089091' and '83089099' PDF descriptions are 'For garments, made ups, knitwear, plastic and leather goods' and 'Other' — these appear to be a further sub-classification under subheading 8308.90 separate from the beads-and-spangles series. Preserved verbatim.",
+    "Heading 8309 subheading '830910' PDF tariff line is '83091000' with description 'Crown corks' — modelled as subheading '8309.10' / tariff line '8309.10.00'.",
+    "Heading 8310 has a single subheading-level row '831000' immediately followed by tariff lines '83100010' and '83100090'. The 6-digit row title repeats the heading description with a trailing colon. The PDF heading 8310 description text references 'heading 94.05.' (with decimal-point) while the subheading 831000 row references 'heading 9405:' (no decimal) — both preserved verbatim.",
+    "Heading 8311 subheading '831130' PDF row is title-only ('Coated rods and cored wire, of base metal, for soldering, brazing or welding by flame') followed by tariff lines '83113010' and '83113090' — modelled as subheading 8311.30 with two tariff lines.",
+    "Heading 8311 PDF includes a tariff line '83119000' (Other) which is the residual 'Other' subheading at heading-level — modelled as subheading '8311.90' / tariff line '8311.90.00'."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "For the purposes of this Chapter, parts of base metal are to be classified with their parent articles. However, articles of iron or steel of headings 7312, 7315, 7317, 7318 or 7320, or similar articles of other base metal (Chapters 74 to 76 and 78 to 81) are not to be taken as parts of articles of this Chapter."
+    },
+    {
+      "number": "2",
+      "text": "For the purposes of heading 8302, the word \"\"castors\"\" means those having a diameter (including, where appropriate, tyres) not exceeding 75 mm, or those having a diameter (including, where appropriate, tyres) exceeding 75 mm provided that the width of the wheel or tyre fitted thereto is less than 30 mm."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "This Section does not cover : (a) prepared paints, inks or other products with a basis of metallic flakes or powder (headings 3207 to 3210, 3212, 3213 or 3215); (b) ferro-cerium or other pyrophoric alloys(heading 3606); (c) headgear or parts thereof of heading 6506 or 6507; (d) umbrella frames or other articles of heading 6603; (e) goods of Chapter 71 (for example, precious metal alloys, base metal clad with precious metal, imitation jewellery); (f) articles of Section XVI (machinery, mechanical a pliances and electrical goods); (g) assembled railway or tramway track (heading 8608) or other articles of Section XVII (vehicles, ships and boats, aircraft); (h) instruments or apparatus of Section XVIII, including clock or watch springs; (ij) lead shot prepared for ammunition (heading 9306) or other articles of Section XIX (arms and ammunition); (k) articles of Chapter 94 (for example, furniture, mattress supports, luminaires and lighting fittings, illuminated signs, prefabricated buildings); (l) articles of Chapter 95 (for example, toys, games, sports requisites); (m) hand sieves, buttons, pens, pencil-holders, pen nibs, monopods, bipods, tripods and similar articles or other articles of Chapter 96 (miscellaneous manufactured articles); or\"\"\"\" (n) articles of Chapter 97 (for example, works of art)."
+    },
+    {
+      "number": "2",
+      "text": "Throughout this Schedule, the expression \"\"parts of general use\"\" means : (a) articles of heading 7307, 7312, 7315, 7317 or 7318 and similar articles of other base metal, other than articles specially designed for use exclusively in implants in medical, surgical, dental or veterinary sciences (heading 9021); (b) springs and leaves for springs, of base metal, other than clock or watch springs (heading 9114); and (c) articles of headings 8301, 8302, 8308, 8310 and frames and mirrors, of base metal, of heading 8306. In Chapters 73 to 76 and 78 to 82 (but not in heading 7315) references to parts of goods do not include references to parts of general use as defined above. Subject to the preceding paragraph and to Note 1 to Chapter 83, the articles of Chapter 82 or 83 are excluded from Chapters 72 to 76 and 78 to 81."
+    },
+    {
+      "number": "3",
+      "text": "Throughout this Schedule, the expression \"\"base metals\"\" means : iron and steel, copper, nickel, aluminium, lead, zinc, tin, tungsten (wolfram), molybdenum, tantalum, magnesium, cobalt, bismuth, cadmium, titanium, zirconium, antimony, manganese, beryllium, chromium, germanium, vanadium, gallium, hafnium, indium, niobium (columbium),rhenium and thallium."
+    },
+    {
+      "number": "4",
+      "text": "Throughout this Schedule, the term \"cermets\" means products containing a microscopic heterogenous combination of a metallic component and a ceramic component. The term \"cermets\" includes sintered metal carbides (metal carbides sintered with a metal)."
+    },
+    {
+      "number": "5",
+      "text": "Classification of alloys (other than ferro-alloys and master alloys as defined in Chapters 72 and 74) : (a) an alloy of base metals is to be classified as an alloy of the metal which predominates by weight over each of the other metals; (b) an alloy composed of base metals of this Section and of elements not falling within this Section is to be treated as an alloy of base metals of this Section if the total weight of such metals equals or exceeds the total weight of the other elements present; (c) in this Section, the term \"\"\"alloys\"\"\" includes sintered mixtures of metal powders, heterogeneous intimate mixtures obtained by melting (other than cermets) and intermetallic compounds."
+    },
+    {
+      "number": "6",
+      "text": "Unlessthe context otherwise requires, any reference in this Schedule to a base metal includes a reference to alloys which, by virtue of Note 5 above, are to be classified as alloys of that metal."
+    },
+    {
+      "number": "7",
+      "text": "Classification of composite articles: Except where the headings otherwise require, articles of base metal (including articles of mixed materials treated as articles of base metal under the General Interpretive Rules) containing two or more base metals areto be treated as articles of the base metal predominating by weight over each of the other metals. For this purpose: (a) iron and steel, or different kinds of iron or steel, are regarded as one and the same metal; (b) an alloy isregarded as being entirely composed of that metal as an alloy of which, by virtue of Note 5, it is classified; and (c) a cermet of heading 8113 is regarded as a single base metal."
+    },
+    {
+      "number": "8",
+      "text": "In this Section, the following expressions have the meanings hereby assigned to them : (a) waste and scrap: (i) all metal waste and scrap; (ii) metal goods definitely not usable as such because of breakage, cutting-up, wear or other reasons. (b) Powders: products of which 90% or more by weight passes through a sieve having a mesh aperture of 1 mm."
+    },
+    {
+      "number": "9",
+      "text": "For the purposes of Chapters 74 to 76 and 78 to 81, the following expressions shall have the meanings hereby assigned to them: (a) Bars and rods: Rolled, extruded, drawn or forged products, not in coils, which have a uniform solid cross-section along their whole length in the shape of circles, ovals, rectangles (including squares), equilateral triangles or regular convex polygons (including \"\"\"flattened circles\"\"\" and \"\"\"modified rectangles\"\"\", of which two opposite sides are convex arcs, the other two sides being straight, of equal length and parallel). Products with a rectangular (including square), triangular or polygonal cross-section may have corners rounded along their whole length. The thickness of such products which have a rectangular (including \"\"\"modified rectangular\"\"\") cross-section exceeds one-tenth of the width. The expression also covers cast or sintered products, of the same forms and dimensions, which have been subsequently worked after production (otherwise than by simple trimming or descaling), provided that they have not thereby assumed the character of articles or products of other headings. Wirebars and billets of Chapter 74 with their ends tapered or otherwise worked simply to facilitate their entry into machines for converting them into, for example, drawing stock (wire-rod) or tubes, are however to be taken to be unwrought copper of heading 7403. This provision applies mutatis mutandis to the products of Chapter 81. (b) Profiles: Rolled, extruded, drawn, forged or formed products, coiled or not, of a uniform cross-section along their whole length, which do not conform to any of the definitions of bars, rods, wire, plates, sheets, strip, foil, tubes or pipes. The expression also covers cast or sintered products, of the same forms, which have been subsequently worked after production (otherwise than by simple trimming or de-scaling), provided that they have not thereby assumed the character of articles or products of other headings. (c) Wire: Rolled, extruded or drawn products, in coils, which have a uniform solid cross-section along their whole length in the shape of circles, ovals, rectangles (including squares), equilateral triangles or regular convex polygons (including \"\"\"flattened circles\"\"\" and \"\"\"modified rectangles\"\"\", of which two opposite sides are convex arcs, the other two sides being straight, of equal length and parallel). Products with a rectangular (including square), triangular or polygonal cross-section may have corners rounded along their whole length. The thickness of such products which have a rectangular (including \"\"\"modified rectangular\"\"\") cross-section exceeds one-tenth of the width. (d) Plates, sheets, strip and foil: Flat-surfaced products (other than the unwrought products of heading 8001), coiled or not, of solid rectangular (other than square) cross-section with or without rounded corners (including \"\"\"modified rectangles\"\"\" of which two opposite sides are convex arcs, the other two sides being straight, of equal length and parallel) of a uniform thickness, which are: - of rectangular (including square) shape with a thickness not exceeding one-tenth of the width; - of a shape other than rectangular or square, of any size, provided that they do not assume the character of articles or products of other headings. Headings for plates, sheets, strip, and foil apply, inter alia, to plates, sheets, strip, and foil with patterns (for example, grooves, ribs, chequers, tears, buttons, lozenges) and to such products which have been perforated, corrugated, polished or coated, provided that they do not thereby assume the character of articles or products of other headings. (e) Tubes and pipes: Hollow products, coiled or not, which have a uniform cross-section with only one enclosed void along their whole length in the shape of circles, ovals, rectangles (including squares), equilateral triangles or regular convex polygons, and which have a uniform wall thickness. Products with a rectangular (including square), equilateral triangular or regular convex polygonal cross-section, which may have corners rounded along their whole length, are also to be considered as tubes and pipes provided the inner and outer crosssections are concentric and have the same form and orientation. Tubes and pipes of the foregoing cross-sections may be polished, coated, bent, threaded, drilled, waisted, expanded, cone-shaped or fitted with flanges, collars or rings."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "Articles of iron or steel of headings 7312, 7315, 7317, 7318 or 7320 (stranded wire/cables, chain, nails/staples/screws, bolts/nuts/screws/washers, springs), or similar articles of other base metal (Chapters 74 to 76 and 78 to 81) — not to be taken as parts of articles of Chapter 83",
+      "redirects_to_chapter": "73",
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1",
+      "source_note_text": "For the purposes of this Chapter, parts of base metal are to be classified with their parent articles. However, articles of iron or steel of headings 7312, 7315, 7317, 7318 or 7320, or similar articles of other base metal (Chapters 74 to 76 and 78 to 81) are not to be taken as parts of articles of this Chapter."
+    },
+    {
+      "excluded_product_text": "Similar articles of other base metal (parts of general use of copper, nickel, aluminium, lead, zinc, tin, etc.) — not taken as parts of articles of Chapter 83",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1",
+      "source_note_text": "For the purposes of this Chapter, parts of base metal are to be classified with their parent articles. However, articles of iron or steel of headings 7312, 7315, 7317, 7318 or 7320, or similar articles of other base metal (Chapters 74 to 76 and 78 to 81) are not to be taken as parts of articles of this Chapter."
+    },
+    {
+      "excluded_product_text": "Prepared paints, inks or other products with a basis of metallic flakes or powder",
+      "redirects_to_chapter": "32",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(a)",
+      "source_note_text": "This Section does not cover : (a) prepared paints, inks or other products with a basis of metallic flakes or powder (headings 3207 to 3210, 3212, 3213 or 3215)"
+    },
+    {
+      "excluded_product_text": "Ferro-cerium or other pyrophoric alloys",
+      "redirects_to_chapter": "36",
+      "redirects_to_heading": "3606",
+      "source_note_number": "Section Note 1(b)",
+      "source_note_text": "(b) ferro-cerium or other pyrophoric alloys(heading 3606)"
+    },
+    {
+      "excluded_product_text": "Headgear or parts thereof",
+      "redirects_to_chapter": "65",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(c)",
+      "source_note_text": "(c) headgear or parts thereof of heading 6506 or 6507"
+    },
+    {
+      "excluded_product_text": "Umbrella frames or other articles of heading 6603",
+      "redirects_to_chapter": "66",
+      "redirects_to_heading": "6603",
+      "source_note_number": "Section Note 1(d)",
+      "source_note_text": "(d) umbrella frames or other articles of heading 6603"
+    },
+    {
+      "excluded_product_text": "Goods of Chapter 71 (precious metal alloys, base metal clad with precious metal, imitation jewellery)",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(e)",
+      "source_note_text": "(e) goods of Chapter 71 (for example, precious metal alloys, base metal clad with precious metal, imitation jewellery)"
+    },
+    {
+      "excluded_product_text": "Articles of Section XVI (machinery, mechanical appliances and electrical goods)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(f)",
+      "source_note_text": "(f) articles of Section XVI (machinery, mechanical a pliances and electrical goods)"
+    },
+    {
+      "excluded_product_text": "Assembled railway or tramway track",
+      "redirects_to_chapter": "86",
+      "redirects_to_heading": "8608",
+      "source_note_number": "Section Note 1(g)",
+      "source_note_text": "(g) assembled railway or tramway track (heading 8608) or other articles of Section XVII (vehicles, ships and boats, aircraft)"
+    },
+    {
+      "excluded_product_text": "Other articles of Section XVII (vehicles, ships and boats, aircraft)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(g)",
+      "source_note_text": "(g) assembled railway or tramway track (heading 8608) or other articles of Section XVII (vehicles, ships and boats, aircraft)"
+    },
+    {
+      "excluded_product_text": "Instruments or apparatus of Section XVIII, including clock or watch springs",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(h)",
+      "source_note_text": "(h) instruments or apparatus of Section XVIII, including clock or watch springs"
+    },
+    {
+      "excluded_product_text": "Lead shot prepared for ammunition",
+      "redirects_to_chapter": "93",
+      "redirects_to_heading": "9306",
+      "source_note_number": "Section Note 1(ij)",
+      "source_note_text": "(ij) lead shot prepared for ammunition (heading 9306) or other articles of Section XIX (arms and ammunition)"
+    },
+    {
+      "excluded_product_text": "Other articles of Section XIX (arms and ammunition)",
+      "redirects_to_chapter": "93",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(ij)",
+      "source_note_text": "(ij) lead shot prepared for ammunition (heading 9306) or other articles of Section XIX (arms and ammunition)"
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 94 (furniture, mattress supports, luminaires and lighting fittings, illuminated signs, prefabricated buildings)",
+      "redirects_to_chapter": "94",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(k)",
+      "source_note_text": "(k) articles of Chapter 94 (for example, furniture, mattress supports, luminaires and lighting fittings, illuminated signs, prefabricated buildings)"
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 95 (toys, games, sports requisites)",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(l)",
+      "source_note_text": "(l) articles of Chapter 95 (for example, toys, games, sports requisites)"
+    },
+    {
+      "excluded_product_text": "Hand sieves, buttons, pens, pencil-holders, pen nibs, monopods, bipods, tripods and similar articles or other articles of Chapter 96 (miscellaneous manufactured articles)",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(m)",
+      "source_note_text": "(m) hand sieves, buttons, pens, pencil-holders, pen nibs, monopods, bipods, tripods and similar articles or other articles of Chapter 96 (miscellaneous manufactured articles)"
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 97 (works of art, collectors' pieces, antiques)",
+      "redirects_to_chapter": "97",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(n)",
+      "source_note_text": "(n) articles of Chapter 97 (for example, works of art)"
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "8301",
+      "title": "Padlocks and locks (key, combination or electrically operated), of base metal; clasps and frames with clasps, incorporating locks, of base metal; keys for any of the foregoing articles, of base metal.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8301.10",
+          "title": "Padlocks",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8301.10.00",
+              "description": "Padlocks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8301.20",
+          "title": "Locks of a kind used for motor vehicles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8301.20.00",
+              "description": "Locks of a kind used for motor vehicles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8301.30",
+          "title": "Locks of a kind used for furniture",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8301.30.00",
+              "description": "Locks of a kind used for furniture",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8301.40",
+          "title": "Other locks :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8301.40.10",
+              "description": "Combination locks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8301.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8301.50",
+          "title": "Clasps and frames with clasps, incorporating locks",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8301.50.00",
+              "description": "Clasps and frames with clasps, incorporating locks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8301.60",
+          "title": "Parts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8301.60.00",
+              "description": "Parts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8301.70",
+          "title": "Keys presented separately",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8301.70.00",
+              "description": "Keys presented separately",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "8302",
+      "title": "Base metal mountings, fittings and similar articles suitable for furniture, doors, staircases, windows, blinds, coachwork, saddlery, trunks, chests, caskets or the like; base metal hat-racks, hat-pegs, brackets and similar fixtures; castors with mountings of base metal; automatic door closers of base metal.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8302.10",
+          "title": "Hinges",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8302.10.10",
+              "description": "Of steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8302.10.20",
+              "description": "Of brass",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8302.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8302.20",
+          "title": "Castors",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8302.20.00",
+              "description": "Castors",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8302.30",
+          "title": "other mountings, fittings and similar articles suitable for motor vehicles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8302.30.10",
+              "description": "Curve drive stakes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8302.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8302.41",
+          "title": "Other mountings, fittings and similar articles : -- Suitable for buildings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8302.41.10",
+              "description": "Other mountings, fittings and similar articles: ----Fittings for doors and windows",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8302.41.20",
+              "description": "Other mountings, fittings and similar articles: ----Tower bolts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8302.41.90",
+              "description": "Other mountings, fittings and similar articles: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8302.42",
+          "title": "Other mountings, fittings and similar articles : -- Other, suitable for furniture",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8302.42.00",
+              "description": "Other mountings, fittings and similar articles : -- Other, suitable for furniture",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8302.49",
+          "title": "Other mountings, fittings and similar articles : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8302.49.00",
+              "description": "Other mountings, fittings and similar articles : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8302.50",
+          "title": "Hat-racks, hat-pegs, brackets and similar fixtures",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8302.50.00",
+              "description": "Hat-racks, hat-pegs, brackets and similar fixtures",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8302.60",
+          "title": "Automatic door closers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8302.60.00",
+              "description": "Automatic door closers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "8303",
+      "title": "Armoured or reinforced safes, strong-boxes and doors and safe deposit lockers for strong-rooms, cash or deed boxes and the like, of base metal.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8303.00",
+          "title": "Armoured or reinforced safes, strong-boxes and doors and safe deposit lockers for strong-rooms, cash or deed boxes and the like, of base metal.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8303.00.00",
+              "description": "Armoured or reinforced safes, strong-boxes and doors and safe deposit lockers for strong-rooms, cash or deed boxes and the like, of base metal.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "8304",
+      "title": "Filing cabinets, card-index cabinets, paper trays, paper rests, pen trays, office-stamp stands and similar office or desk quipment, of base metal, other than office furniture of heading 94.03.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8304.00",
+          "title": "Filing cabinets, card-index cabinets, paper trays, paper rests, pen trays, office-stamp stands and similar office or desk quipment, of base metal, other than office furniture of heading 94.03.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8304.00.00",
+              "description": "Filing cabinets, card-index cabinets, paper trays, paper rests, pen trays, office-stamp stands and similar office or desk quipment, of base metal, other than office furniture of heading 94.03.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "8305",
+      "title": "Fittings for loose-leaf binders or files, letter clips, letter corners, paper clips, indexing tags and similar office articles, of base metal; staples in strips (for example, for offices, upholstery, packaging), of base metal.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8305.10",
+          "title": "Fittings for loose-leaf binders or files",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8305.10.00",
+              "description": "Fittings for loose-leaf binders or files",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8305.20",
+          "title": "Staples in strips",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8305.20.00",
+              "description": "Staples in strips",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8305.90",
+          "title": "Other, including parts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8305.90.10",
+              "description": "Pins (other than those of heading 7317)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8305.90.20",
+              "description": "Clips",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8305.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "8306",
+      "title": "Bells, gongs and the like, non-electric, of base metal; statuettes and other ornaments, of base metal; photograph, picture or similar frames, of base metal; mirrors of base metal.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8306.10",
+          "title": "Bells, gongs and the like",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8306.10.00",
+              "description": "Bells, gongs and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8306.21",
+          "title": "Statuettes and other ornaments : -- Plated with precious metal",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8306.21.10",
+              "description": "Statuettes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8306.21.20",
+              "description": "Trophies",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8306.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8306.29",
+          "title": "Statuettes and other ornaments : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8306.29.10",
+              "description": "Statuettes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8306.29.20",
+              "description": "Trophies",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8306.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8306.30",
+          "title": "Photograph, picture or similar frames; mirrors",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8306.30.00",
+              "description": "Photograph, picture or similar frames; mirrors",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "8307",
+      "title": "Flexible tubing of base metal, with or without fittings.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8307.10",
+          "title": "Of iron or steel",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8307.10.00",
+              "description": "Of iron or steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8307.90",
+          "title": "Of other base metal",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8307.90.00",
+              "description": "Of other base metal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "8308",
+      "title": "Clasps, frames with clasps, buckles, buckle-clasps, hooks, eyes, eyelets and the like, of base metal, of a kind used for clothing or clothing accessories, footwear, jewellery, wrist-watches, books, awnings, leather goods, travel goods or saddlery or for other made up articles; tubular or bifurcated rivets, of base metal; beads and spangles, of base metal.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8308.10",
+          "title": "Hooks, eyes and eyelets",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8308.10.10",
+              "description": "Hooks and eyes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8308.10.21",
+              "description": "Eyelets: ----For footwear",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8308.10.29",
+              "description": "Eyelets: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8308.20",
+          "title": "Tubular or bifurcated rivets",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8308.20.00",
+              "description": "Tubular or bifurcated rivets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8308.90",
+          "title": "Other, including parts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8308.90.11",
+              "description": "Buckles: ----For footwear",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8308.90.19",
+              "description": "Buckles: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8308.90.20",
+              "description": "Imitation zari spangles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8308.90.31",
+              "description": "Beads and spangles of base metal: ----For garments, made ups, knitwear, plastic and leather goods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8308.90.39",
+              "description": "Beads and spangles of base metal: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8308.90.40",
+              "description": "Beads and spangles of base metal: ----Fittings for travel requisites and leather goods other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8308.90.91",
+              "description": "For garments, made ups, knitwear, plastic and leather goods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8308.90.99",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "8309",
+      "title": "Stoppers, caps and lids (including crown corks, screw caps and pouring stoppers), capsules for bottles, threaded bungs, bung covers, seals and other packing accessories, of base metal.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8309.10",
+          "title": "Crown corks",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8309.10.00",
+              "description": "Crown corks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8309.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8309.90.10",
+              "description": "Pilfer proof caps for packaging, all sorts, with or without washers or other fittings of cork, rubber, polyethylene or any other material",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8309.90.20",
+              "description": "Aluminium caps, seals, capsules and closers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8309.90.30",
+              "description": "Other seals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8309.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "8310",
+      "title": "Sign-plates, name-plates, address-plates and similar plates, numbers, letters and other symbols, of base metal, excluding those of heading 94.05.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8310.00",
+          "title": "Sign-plates, name-plates, address-plates and similar plates, numbers, letters and other symbols, of base metal, excluding those of heading 9405:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8310.00.10",
+              "description": "Enamel iron signboard",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8310.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "8311",
+      "title": "Wire, rods, tubes, plates, electrodes and similar products, of base metal or of metal carbides, coated or cored with flux material, of a kind used for soldering, brazing, welding or deposition of metal or of metal carbides; wire and rods, of agglomerated base metal powder, used for metal spraying.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8311.10",
+          "title": "Coated electrodes of base metal, for electric arc-welding",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8311.10.00",
+              "description": "Coated electrodes of base metal, for electric arc-welding",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8311.20",
+          "title": "Cored wire of base metal, for electric arc-welding",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8311.20.00",
+              "description": "Cored wire of base metal, for electric arc-welding",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8311.30",
+          "title": "Coated rods and cored wire, of base metal, for soldering, brazing or welding by flame",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8311.30.10",
+              "description": "Wire and rods of agglomerated base metal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8311.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8311.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8311.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

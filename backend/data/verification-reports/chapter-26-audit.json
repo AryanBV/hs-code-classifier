@@ -1,0 +1,93 @@
+{
+  "chapter": "26",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "2601.11.11",
+        "in_pdf": true,
+        "pdf_description": "60% Fe or more but below 62% Fe — exact",
+        "json_description": "60% Fe or more but below 62% Fe — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2601.11.39",
+        "in_pdf": true,
+        "pdf_description": "65% Fe and above — exact",
+        "json_description": "65% Fe and above — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2601.12.10",
+        "in_pdf": true,
+        "pdf_description": "Iron ore pellets — exact",
+        "json_description": "Iron ore pellets — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2602.00.50",
+        "in_pdf": true,
+        "pdf_description": "Manganese ore (30%-35%) — exact",
+        "json_description": "Manganese ore (30%-35%) — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2606.00.10",
+        "in_pdf": true,
+        "pdf_description": "Bauxite (natural), not calcined — exact",
+        "json_description": "Bauxite (natural), not calcined — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2610.00.20",
+        "in_pdf": true,
+        "pdf_description": "Chrome ore lumps 40-47% Cr2O3 — exact",
+        "json_description": "Chrome ore lumps 40-47% Cr2O3 — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2613.10.00",
+        "in_pdf": true,
+        "pdf_description": "Roasted — exact",
+        "json_description": "Roasted — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2615.10.00",
+        "in_pdf": true,
+        "pdf_description": "Zirconium ores — exact",
+        "json_description": "Zirconium ores — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2617.90.00",
+        "in_pdf": true,
+        "pdf_description": "Other — exact",
+        "json_description": "Other — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2620.21.00",
+        "in_pdf": true,
+        "pdf_description": "Containing mainly lead — exact",
+        "json_description": "Containing mainly lead — exact",
+        "match": "exact"
+      }
+    ],
+    "hierarchy_errors": [],
+    "missed_codes": [],
+    "extra_codes": [],
+    "note_mismatches": [],
+    "count_check": {
+      "json_h": 21,
+      "pdf_h_estimate": 21,
+      "json_sh": 37,
+      "pdf_sh_estimate": 37,
+      "json_tl": 75,
+      "pdf_tl_estimate": 75
+    }
+  },
+  "notes_field": "All 10 sampled codes verified. Iron-ore Fe-grade breakdown (60-62%, 62-65%, 65%+) matches PDF. STE/policy-condition annotations preserved.",
+  "warnings": []
+}

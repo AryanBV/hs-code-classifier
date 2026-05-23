@@ -1,0 +1,538 @@
+{
+  "chapter": "19",
+  "section": "IV",
+  "title": "PREPARATIONS OF CEREALS, FLOUR, STARCH OR MILK; PASTRYCOOKS' PRODUCTS",
+  "source_pdf": "Chapter 19 Preparations Of Cereals, Flour, Starch Or Milk; Pastrycooks Products.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '19011010') and 6-digit subheading codes without dots (e.g., '190110'). Normalized to NNNN.NN.NN format (e.g., '1901.10.10') and NNNN.NN format (e.g., '1901.10') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'Sl.No. Notes Notification Date Notification No', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "Audit note specifies 'Main Notes (3 notes)' for Chapter 19, but the source PDF shows 4 notes in the Chapter 19 Main Notes table (Notes 1-4). All 4 notes are preserved verbatim as they appear in the PDF. Note 2 spans across a page break (ends with '(heading 1106).' on page 2).",
+    "Section IV Main Notes contains 1 note (definition of 'pellets'). Captured under section_notes. Section IV title in source PDF: 'PREPARED FOODSTUFFS; BEVERAGES, SPIRITS AND VINEGAR; TOBACCO AND MANUFACTURED TOBACCO SUBSTITUTES; PRODUCTS, WHETHER OR NOT CONTAINING NICOTINE, INTENDED FOR INHALATION WITHOUT COMBUSTION; OTHER NICOTINE CONTAINING PRODUCTS INTENDED FOR THE INTAKE OF NICOTINE INTO THE HUMAN BODY'.",
+    "PDF Notification No. and Notification Date columns are blank for all notes — all chapter and section notes have no notification metadata.",
+    "Note 2 contains escaped double quotes around 'groats', 'flour' and 'meal' rendered in the PDF as doubled quotation marks (e.g., '\"\"groats\"\"'). Preserved verbatim as they appear.",
+    "Tariff line 1905.32.11 in the source PDF describes 'Communion wafers: ---- Coated with chocolate or containing chocolate' under subheading 1905.32 ('--Waffles and wafers'). This pairing appears anomalous (communion wafers typically classify under 1905.90), but is preserved verbatim from the source PDF.",
+    "Subheading 1905.32 in the PDF shows only tariff lines 1905.32.11 and 1905.32.90 (no 1905.32.19 or other intermediate codes). Preserved verbatim.",
+    "Subheading 1902.11 description in PDF: 'Uncooked pasta, not stuffed or otherwise prepared : --Containing eggs' (with HS nomenclature '--' dash prefix). Subheading 1902.19: 'Uncooked pasta, not stuffed or otherwise prepared : -- Other'. Preserved verbatim.",
+    "Export Policy column shows 'Free' for all tariff lines in this chapter. Policy Condition column is blank for all tariff lines. No policy conditions, export licensing notes, or notification metadata appear in this chapter — policy_conditions array is empty.",
+    "Unit-of-measure column is NOT shown in this chapter's PDF table — unit field set to null for all tariff lines.",
+    "Heading 1903 has no subheading-level 6-digit code in the PDF table; only the 8-digit tariff line 1903.00.00 is shown directly under the heading row. Captured under synthetic subheading '1903.00' to preserve schema consistency.",
+    "Heading 1904 description in PDF reads 'Prepared foods obtained by the swelling or roasting of cereals or cereal products (for example, corn flakes); cereals (other than maize (corn)) in grain form or in the form of flakes or other worked grains (except flour, groats and meal), pre-cooked, or otherwise prepared, not elsewhere specified or included.' — preserved verbatim including spelling.",
+    "Tariff line 1904.10.20 description 'Paws, Mudi and the like' uses Indian regional cereal preparation terms (Paws = poha/flattened rice; Mudi = puffed rice) — preserved verbatim.",
+    "Subheading 1904.20 description in PDF ends with a semicolon: 'Prepared foods obtained from unroasted cereal flakes or from mixtures of unroasted cereal flakes and roasted cereal flakes or swelled cereals;' — preserved verbatim."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover : (a) except in the case of stuffed products of heading 1902, food preparations containing more than 20% by weight of sausage, meat, meat offal, blood, insect, fish or crustaceans, molluscs or other aquaticinvertebrates, or any combination thereof (Chapter 16); (b) biscuits or other articles made from flour or from starch, specially prepared for use in animal feeding (heading 2309); or (c) medicaments or other products of Chapter 30."
+    },
+    {
+      "number": "2",
+      "text": "For the purposes of heading 1901: (a) the term \"\"groats\"\" means cereal groats of Chapter 11; (b) the terms \"\"flour\"\" and \"\"meal\"\" means : (1) cereal flour and meal of Chapter 11, and (2) flour, meal and powder of vegetable origin of any Chapter, other than flour, meal or powder of dried vegetables (heading 0712), of potatoes (heading 1105) or of dried leguminous vegetables (heading 1106)."
+    },
+    {
+      "number": "3",
+      "text": "Heading 1904 does not cover preparations containing more than 6% by weight of cocoa calculated on a totally defatted basis or completely coated with chocolate or other food preparations containing cocoa of heading 1806 (heading 1806)."
+    },
+    {
+      "number": "4",
+      "text": "For the purposes of heading 1904, the expression \"otherwise prepared\" means prepared or processed to an extent beyond that provided for in the headings of, or Notes to, Chapter 10 or 11."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "In this Section, the term \"pellets\" means products which have been agglomerated either directly by compression or by the addition of a binder in a proportion not exceeding 3 (percent) by weight."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "food preparations containing more than 20% by weight of sausage, meat, meat offal, blood, insect, fish or crustaceans, molluscs or other aquatic invertebrates, or any combination thereof (except in the case of stuffed products of heading 1902)",
+      "redirects_to_chapter": "16",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover : (a) except in the case of stuffed products of heading 1902, food preparations containing more than 20% by weight of sausage, meat, meat offal, blood, insect, fish or crustaceans, molluscs or other aquaticinvertebrates, or any combination thereof (Chapter 16)"
+    },
+    {
+      "excluded_product_text": "biscuits or other articles made from flour or from starch, specially prepared for use in animal feeding",
+      "redirects_to_chapter": "23",
+      "redirects_to_heading": "2309",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "(b) biscuits or other articles made from flour or from starch, specially prepared for use in animal feeding (heading 2309)"
+    },
+    {
+      "excluded_product_text": "medicaments or other products of Chapter 30",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "(c) medicaments or other products of Chapter 30."
+    },
+    {
+      "excluded_product_text": "flour, meal or powder of dried vegetables (excluded from the heading 1901 definition of 'flour' and 'meal')",
+      "redirects_to_chapter": "07",
+      "redirects_to_heading": "0712",
+      "source_note_number": "Note 2(b)",
+      "source_note_text": "For the purposes of heading 1901: ... (b) the terms \"\"flour\"\" and \"\"meal\"\" means : (1) cereal flour and meal of Chapter 11, and (2) flour, meal and powder of vegetable origin of any Chapter, other than flour, meal or powder of dried vegetables (heading 0712), of potatoes (heading 1105) or of dried leguminous vegetables (heading 1106)."
+    },
+    {
+      "excluded_product_text": "flour, meal or powder of potatoes (excluded from the heading 1901 definition of 'flour' and 'meal')",
+      "redirects_to_chapter": "11",
+      "redirects_to_heading": "1105",
+      "source_note_number": "Note 2(b)",
+      "source_note_text": "For the purposes of heading 1901: ... (b) the terms \"\"flour\"\" and \"\"meal\"\" means : (1) cereal flour and meal of Chapter 11, and (2) flour, meal and powder of vegetable origin of any Chapter, other than flour, meal or powder of dried vegetables (heading 0712), of potatoes (heading 1105) or of dried leguminous vegetables (heading 1106)."
+    },
+    {
+      "excluded_product_text": "flour, meal or powder of dried leguminous vegetables (excluded from the heading 1901 definition of 'flour' and 'meal')",
+      "redirects_to_chapter": "11",
+      "redirects_to_heading": "1106",
+      "source_note_number": "Note 2(b)",
+      "source_note_text": "For the purposes of heading 1901: ... (b) the terms \"\"flour\"\" and \"\"meal\"\" means : (1) cereal flour and meal of Chapter 11, and (2) flour, meal and powder of vegetable origin of any Chapter, other than flour, meal or powder of dried vegetables (heading 0712), of potatoes (heading 1105) or of dried leguminous vegetables (heading 1106)."
+    },
+    {
+      "excluded_product_text": "preparations containing more than 6% by weight of cocoa calculated on a totally defatted basis or completely coated with chocolate or other food preparations containing cocoa of heading 1806 (excluded from heading 1904)",
+      "redirects_to_chapter": "18",
+      "redirects_to_heading": "1806",
+      "source_note_number": "Note 3",
+      "source_note_text": "Heading 1904 does not cover preparations containing more than 6% by weight of cocoa calculated on a totally defatted basis or completely coated with chocolate or other food preparations containing cocoa of heading 1806 (heading 1806)."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "1901",
+      "title": "Malt extract; food preparations of flour, groats, meal, starch or malt extract, not containing cocoa or containing less than 40 percent by weight of cocoa calculated on a totally defatted basis, not elsewhere specified or included; food preparations of goods of headings 04.01 to 04.04, not containing cocoa or containing less than 5 percent by weight of cocoa calculated on a totally defatted basis, not elsewhere specified or included.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1901.10",
+          "title": "Preparations suitable for infants or young children, put up for retail sale",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1901.10.10",
+              "description": "Malted milk (including powder)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1901.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1901.20",
+          "title": "Mixes and doughs for the preparation of bakers wares of heading 19.05",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1901.20.00",
+              "description": "Mixes and doughs for the preparation of bakers wares of heading 19.05",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1901.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1901.90.10",
+              "description": "Malt extract",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1901.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1902",
+      "title": "Pasta, whether or not cooked or stuffed (with meat or other substances) or otherwise prepared, such as spaghetti, macaroni, noodles, lasagne, gnocchi, ravioli, cannelloni; couscous, whether or not prepared.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1902.11",
+          "title": "Uncooked pasta, not stuffed or otherwise prepared : --Containing eggs",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1902.11.00",
+              "description": "Uncooked pasta, not stuffed or otherwise prepared : --Containing eggs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1902.19",
+          "title": "Uncooked pasta, not stuffed or otherwise prepared : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1902.19.00",
+              "description": "Uncooked pasta, not stuffed or otherwise prepared : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1902.20",
+          "title": "Stuffed pasta, whether or not cooked or otherwise prepared",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1902.20.10",
+              "description": "Cooked",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1902.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1902.30",
+          "title": "Other pasta",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1902.30.10",
+              "description": "Dried",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1902.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1902.40",
+          "title": "Couscous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1902.40.10",
+              "description": "Unprepared",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1902.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1903",
+      "title": "Tapioca and substitutes therefore prepared from starch, in the form of flakes, grains, pearls, siftings or in similar forms",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1903.00",
+          "title": "Tapioca and substitutes therefore prepared from starch, in the form of flakes, grains, pearls, siftings or in similar forms",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1903.00.00",
+              "description": "Tapioca and substitutes therefore prepared from starch, in the form of flakes, grains, pearls, siftings or in similar forms",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "1904",
+      "title": "Prepared foods obtained by the swelling or roasting of cereals or cereal products (for example, corn flakes); cereals (other than maize (corn)) in grain form or in the form of flakes or other worked grains (except flour, groats and meal), pre-cooked, or otherwise prepared, not elsewhere specified or included.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1904.10",
+          "title": "Prepared foods obtained by the swelling or roasting of cereals or cereal products",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1904.10.10",
+              "description": "Corn flakes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1904.10.20",
+              "description": "Paws, Mudi and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1904.10.30",
+              "description": "Bulgar wheat",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1904.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1904.20",
+          "title": "Prepared foods obtained from unroasted cereal flakes or from mixtures of unroasted cereal flakes and roasted cereal flakes or swelled cereals;",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1904.20.10",
+              "description": "With millet content 15% or more by weight",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1904.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1904.30",
+          "title": "Bulgur wheat",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1904.30.00",
+              "description": "Bulgur wheat",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1904.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1904.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1905",
+      "title": "Bread, pastry, cakes, biscuits and other bakers wares, whether or not containing cocoa; communion wafers, empty cachets of a kind suitable for pharmaceutical use, sealing wafers, rice paper and similar products.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1905.10",
+          "title": "Crispbread",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1905.10.00",
+              "description": "Crispbread",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1905.20",
+          "title": "Gingerbread and the like",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1905.20.00",
+              "description": "Gingerbread and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1905.31",
+          "title": "Sweet biscuits; waffles and wafers : --Sweet biscuits",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1905.31.00",
+              "description": "Sweet biscuits; waffles and wafers : --Sweet biscuits",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1905.32",
+          "title": "--Waffles and wafers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1905.32.11",
+              "description": "Communion wafers: ---- Coated with chocolate or containing chocolate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1905.32.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1905.40",
+          "title": "Rusks, toasted bread and similar toasted products",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1905.40.00",
+              "description": "Rusks, toasted bread and similar toasted products",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1905.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1905.90.10",
+              "description": "Pastries and cakes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1905.90.20",
+              "description": "Biscuits not elsewhere specified or included",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1905.90.30",
+              "description": "Extruded or expanded products, savoury or salted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1905.90.40",
+              "description": "Papad",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1905.90.51",
+              "description": "Communion wafers:---- Coated with chocolate or containing chocolate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1905.90.59",
+              "description": "Communion wafers: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1905.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

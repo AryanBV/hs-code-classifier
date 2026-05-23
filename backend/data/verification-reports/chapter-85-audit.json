@@ -1,0 +1,26 @@
+{
+  "chapter": "85",
+  "verdict": "CLEAN",
+  "counts": {
+    "headings": 48,
+    "subheadings": 296,
+    "tariff_lines": 634
+  },
+  "hierarchy_errors": [],
+  "hierarchy_error_count": 0,
+  "missing_headings": [],
+  "missing_codes_sample": [],
+  "missing_subheadings_sample": [],
+  "description_mismatches": [
+    {
+      "code": "8549.29.00",
+      "desc": "Of a kind used principally for the recovery of precious metal: -- Other",
+      "recall": 0.0,
+      "reverified": "false_positive_pdf_layout_wrap_json_matches_cbic_official_tariff"
+    }
+  ],
+  "notes_issues": [],
+  "sample_size_codes": 15,
+  "sample_size_subs": 5,
+  "notes": "Initial desc-recall MINOR flag was false positive from pdftotext column wrap. Re-verified against CBIC official tariff PDF: JSON descriptions match official text exactly."
+}

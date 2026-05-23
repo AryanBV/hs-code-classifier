@@ -1,0 +1,1179 @@
+{
+  "chapter": "02",
+  "section": "I",
+  "title": "MEAT AND EDIBLE MEAT OFFAL",
+  "source_pdf": "Chapter 02 Meat And Edible Meat Offal.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '02011000'). Normalized to NNNN.NN.NN format (e.g., '0201.10.00') per project schema. 6-digit subheading numbers (e.g., '020110') normalized to NNNN.NN (e.g., '0201.10'). Heading codes (e.g., '0201') are 4-digit.",
+    "PDF table-chrome headers ('Sl.No. Notes Notification No Notification Date', 'SI.No. Notes Notification Date Notification No', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Main Notes', 'Supplementary Notes', 'Policy Condition', 'Export Licensing Notes', 'Product Description and Export Policy') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Section I Main Notes (pre-chapter) contain 2 notes: (1) reference to young of genus/species, and (2) definition of 'dried' as including dehydrated/evaporated/freeze-dried products. These are captured in section_notes.",
+    "Chapter 02 has a single Main Note (SI.No. 1) which is a 'This Chapter does not cover' exclusion clause with sub-items (a), (b), (c), (d). Each sub-item is captured as a separate row in exclusion_clauses per project schema.",
+    "Two distinct Supplementary Notes tables appear in the PDF. The first (page 2, immediately after Main Notes) contains 1 entry defining 'wild animal' under Wild Life (Protection) Act, 1972 — captured in subheading_notes. The second Supplementary Notes table (page 4) contains 8 entries: items 1-2 are sub-heading definitions ('Beef includes meat and edible offal of cows, oxens and calf' and 'Offal includes heart, liver, tongue, kidneys and other organs') captured in subheading_notes; items 3-8 are restatements/cross-references of Policy Conditions 1-6 (with minor textual variations such as 'Restricted Export authorisation' vs 'restricted export authorisation..' and case differences) — these are NOT re-captured in subheading_notes to avoid duplication; the canonical text is preserved in policy_conditions.",
+    "Policy Conditions table contains 8 numbered conditions covering: (1) chilled/frozen meat veterinary certification, (2) canned meat pre-shipment inspection, (3) gonads/reproductive organs/germplasm restricted authorisation, (4) APEDA declaration requirement, (5) carton labeling requirements, (6) State veterinary certification, (7) Wild Life (Protection) Act prohibition on wild animal exports, (8) Halal certification scheme (I-CAS Halal) for 15 listed countries.",
+    "Policy Condition 8 (Halal) contains '?' characters in place of typographic quote marks ('?India Conformity Assessment Scheme(I-CAS)- Halal?', 'importing country?s requirements'). These are OCR/encoding artifacts from the source PDF — preserved verbatim. Intended text uses curly quotes around 'India Conformity Assessment Scheme(I-CAS)- Halal' and an apostrophe in 'country's'.",
+    "The 'Export Licensing Notes' header appears at the bottom of page 3 immediately after Policy Condition 8 but is followed only by the Supplementary Notes table on page 4 and then the tariff table — no Export Licensing Notes content rows are present in this chapter. The header is preserved as a table-chrome artifact and no export_licensing_notes field is populated.",
+    "Source PDF contains minor spelling/typo artifacts preserved verbatim: 'POUTRY' (heading 0209, should be 'POULTRY'), 'oxens' (Supp Note 1, should be 'oxen'), 'Conition' (Policy Condition references, should be 'Condition'), 'dolphines' (subheading 0208.40, should be 'dolphins'), 'authorisation..' (with double period, Supp Note 5).",
+    "Heading 0205 (Meat of horses, asses, mules or hinnies, fresh, chilled or frozen) appears in the PDF only as the 8-digit tariff line '02050000' with no separate 4-digit heading row. The heading title is reconstructed from the tariff line description per ITC(HS) convention; tariff line is attached directly under the heading.",
+    "Subheading 0206.80 (Other, fresh or chilled) and 0206.90 (Other, frozen) appear with the 6-digit code in the PDF (020680, 020690). Subheading 0210.20 ('Meat of bovine animals') appears as an 8-digit code 02102000 — preserved as the single tariff line '0210.20.00' under subheading '0210.20'.",
+    "Subheading 0210.99 ('Of primates' for tariff line 02109200 area) — the PDF row '02109100' uses description 'Other, including edible flours and meals of meat or meat offal' and on the next page shows ': -- Of primates' as a continuation/orphan row without a tariff line code. This appears to be a layout artifact where '-- Of primates' is the sub-description fragment of 0210.91 in the source. Captured verbatim under 0210.91 tariff line.",
+    "All tariff lines under headings 0204, 0206 (selected), 0207 partial, 0208, 0209, and 0210 are shown with Notification No '34/2024-25' dated '01.10.2024' in the Policy Condition column. Many of these tariff-line-specific Policy Condition cells contain text like 'Quality control and inspection under Policy Conition 1 and 2 respectively as well as Policy Condition 4 are required to be fulfilled. Exports shall also be subject to Policy Condition 8 of this Chapter.' — these reference the chapter-level Policy Conditions and are not re-captured per tariff line in this extraction. The canonical Policy Conditions are in policy_conditions.",
+    "Tariff line 0210.20.00 (Meat of bovine animals, salted/in brine/dried/smoked) carries a tariff-line-specific Policy Condition restating Policy Conditions 1, 2, 4, 6 with the same buffalo-not-for-breeding-and-milch-purposes condition. This is preserved as a chapter-wide pattern via policy_conditions; the per-tariff-line restatement is not duplicated here."
+  ],
+  "chapter_notes": [],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "Any reference in this Section to a particular genus or species of an animal, except where the context otherwise requires, includes a reference to the young of that genus or species."
+    },
+    {
+      "number": "2",
+      "text": "Except where the context otherwise requires, throughout this Schedule, any reference to \"dried\" products also covers products which have been dehydrated, evaporated or freeze-dried."
+    }
+  ],
+  "chapter_subheading_notes": [
+    {
+      "number": "Supplementary Note 1 (page 2)",
+      "text": "In this Chapter, \"wild animal\" means wild animal as defined in the Wild Life (Protection) Act, 1972 (53 of 1972)."
+    },
+    {
+      "number": "Supplementary Note 1 (page 4)",
+      "text": "Beef includes meat and edible offal of cows, oxens and calf."
+    },
+    {
+      "number": "Supplementary Note 2 (page 4)",
+      "text": "Offal includes heart, liver, tongue, kidneys and other organs."
+    }
+  ],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "products of the kinds described in headings 0201 to 0208 or 0210, unfit or unsuitable for human consumption",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover : (a) products of the kinds described in headings 0201 to 0208 or 0210, unfit or unsuitable for human consumption; (b) edible, non-living insects (heading 0410); (c) guts, bladders or stomachs of animals (heading 0504) or animal blood (heading 0511 or 3002); or (d) animal fat, other than products of heading 0209 (Chapter 15)."
+    },
+    {
+      "excluded_product_text": "edible, non-living insects",
+      "redirects_to_chapter": "04",
+      "redirects_to_heading": "0410",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover : (a) products of the kinds described in headings 0201 to 0208 or 0210, unfit or unsuitable for human consumption; (b) edible, non-living insects (heading 0410); (c) guts, bladders or stomachs of animals (heading 0504) or animal blood (heading 0511 or 3002); or (d) animal fat, other than products of heading 0209 (Chapter 15)."
+    },
+    {
+      "excluded_product_text": "guts, bladders or stomachs of animals",
+      "redirects_to_chapter": "05",
+      "redirects_to_heading": "0504",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "This Chapter does not cover : (a) products of the kinds described in headings 0201 to 0208 or 0210, unfit or unsuitable for human consumption; (b) edible, non-living insects (heading 0410); (c) guts, bladders or stomachs of animals (heading 0504) or animal blood (heading 0511 or 3002); or (d) animal fat, other than products of heading 0209 (Chapter 15)."
+    },
+    {
+      "excluded_product_text": "animal blood (heading 0511)",
+      "redirects_to_chapter": "05",
+      "redirects_to_heading": "0511",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "This Chapter does not cover : (a) products of the kinds described in headings 0201 to 0208 or 0210, unfit or unsuitable for human consumption; (b) edible, non-living insects (heading 0410); (c) guts, bladders or stomachs of animals (heading 0504) or animal blood (heading 0511 or 3002); or (d) animal fat, other than products of heading 0209 (Chapter 15)."
+    },
+    {
+      "excluded_product_text": "animal blood (heading 3002)",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": "3002",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "This Chapter does not cover : (a) products of the kinds described in headings 0201 to 0208 or 0210, unfit or unsuitable for human consumption; (b) edible, non-living insects (heading 0410); (c) guts, bladders or stomachs of animals (heading 0504) or animal blood (heading 0511 or 3002); or (d) animal fat, other than products of heading 0209 (Chapter 15)."
+    },
+    {
+      "excluded_product_text": "animal fat, other than products of heading 0209",
+      "redirects_to_chapter": "15",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(d)",
+      "source_note_text": "This Chapter does not cover : (a) products of the kinds described in headings 0201 to 0208 or 0210, unfit or unsuitable for human consumption; (b) edible, non-living insects (heading 0410); (c) guts, bladders or stomachs of animals (heading 0504) or animal blood (heading 0511 or 3002); or (d) animal fat, other than products of heading 0209 (Chapter 15)."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "0201",
+      "title": "Meat of bovine animals, fresh or chilled.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0201.10",
+          "title": "Carcasses and half-carcasses",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0201.10.00",
+              "description": "Carcasses and half-carcasses",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0201.20",
+          "title": "Other cuts with bone in",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0201.20.00",
+              "description": "Other cuts with bone in",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0201.30",
+          "title": "Boneless",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0201.30.00",
+              "description": "Boneless",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "However, export of Boneless meat of buffalo (both male and female) fresh and chilled Boneless meat of buffalo (both male and female) frozen is free subject to the following condition. 1. Export allowed on production of a certificate from the designated veterinary authority of the State, from which the meat or offals emanate, to the effect that the meat or offals are from buffaloes not used for breeding and purposes.condition stipulated 2. Quality control and inspection under Policy Conition 1 and 2 respectively as well as Policy Condition 4 and 6 above are required to be fulfilled. Exports shall also be subject to Policy Condition 8 of this Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0202",
+      "title": "Meat of bovine animals, frozen.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0202.10",
+          "title": "Carcasses and half-carcasses",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0202.10.00",
+              "description": "Carcasses and half-carcasses",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0202.20",
+          "title": "Other cuts with bone in",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0202.20.00",
+              "description": "Other cuts with bone in",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0202.30",
+          "title": "Boneless",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0202.30.00",
+              "description": "Boneless",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "However, export of Boneless meat of buffalo (both male and female) fresh and chilled Boneless meat of buffalo (both male and female) frozen is free subject to the following condition. 1. Export allowed on production of a certificate from the designated veterinary authority of the State, from which the meat or offals emanate, to the effect that the meat or offals are from buffaloes not used for breeding and purposes. 2. Quality control and inspection under Policy Conition 1 and 2 respectively as well as Policy Condition 4 and 6 above are required to be fulfilled. Exports shall also be subject to Policy Condition 8 of this Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0203",
+      "title": "Meat of swine, fresh, chilled or frozen.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0203.11",
+          "title": "Fresh or chilled : -- Carcasses and half-carcasses",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0203.11.00",
+              "description": "Fresh or chilled : -- Carcasses and half-carcasses",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0203.12",
+          "title": "Fresh or chilled : -- Hams, shoulders and cuts thereof, with bone in",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0203.12.00",
+              "description": "Fresh or chilled : -- Hams, shoulders and cuts thereof, with bone in",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0203.19",
+          "title": "Fresh or chilled : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0203.19.00",
+              "description": "Fresh or chilled : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0203.21",
+          "title": "Frozen : -- Carcasses and half-carcasses",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0203.21.00",
+              "description": "Frozen : -- Carcasses and half-carcasses",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0203.22",
+          "title": "Frozen : -- Hams, shoulders and cuts thereof, with bone in",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0203.22.00",
+              "description": "Frozen : -- Hams, shoulders and cuts thereof, with bone in",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0203.29",
+          "title": "Frozen : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0203.29.00",
+              "description": "Frozen : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0204",
+      "title": "Meat of sheep or goats, fresh, chilled or frozen.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0204.10",
+          "title": "Carcasses and half-carcasses of lamb, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0204.10.00",
+              "description": "Carcasses and half-carcasses of lamb, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Quality control and inspection under Policy Conition 1 and 2 respectively as well as Policy Condition 4 are required to be fulfilled. Exports shall also be subject to Policy Condition 8 of this Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0204.21",
+          "title": "Other meat of sheep, fresh or chilled : -- Carcasses and half-carcasses",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0204.21.00",
+              "description": "Carcasses and half-carcasses",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Quality control and inspection under Policy Conition 1 and 2 respectively as well as Policy Condition 4 are required to be fulfilled. Exports shall also be subject to Policy Condition 8 of this Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0204.22",
+          "title": "Other meat of sheep, fresh or chilled : -- Other cuts with bone in",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0204.22.00",
+              "description": "Other cuts with bone in",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Quality control and inspection under Policy Conition 1 and 2 respectively as well as Policy Condition 4 are required to be fulfilled. Exports shall also be subject to Policy Condition 8 of this Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0204.23",
+          "title": "Other meat of sheep, fresh or chilled : -- Boneless",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0204.23.00",
+              "description": "Boneless",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Quality control and inspection under Policy Conition 1 and 2 respectively as well as Policy Condition 4 are required to be fulfilled. Exports shall also be subject to Policy Condition 8 of this Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0204.30",
+          "title": "Carcasses and half-carcasses of lamb, frozen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0204.30.00",
+              "description": "Carcasses and half-carcasses of lamb, frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Quality control and inspection under Policy Conition 1 and 2 respectively as well as Policy Condition 4 are required to be fulfilled. Exports shall also be subject to Policy Condition 8 of this Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0204.41",
+          "title": "Other meat of sheep, frozen : -- Carcasses and half-carcasses",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0204.41.00",
+              "description": "Other meat of sheep, frozen : -- Carcasses and half-carcasses",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Quality control and inspection under Policy Conition 1 and 2 respectively as well as Policy Condition 4 are required to be fulfilled. Exports shall also be subject to Policy Condition 8 of this Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0204.42",
+          "title": "Other meat of sheep, frozen : -- Other cuts with bone in",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0204.42.00",
+              "description": "Other meat of sheep, frozen : -- Other cuts with bone in",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Quality control and inspection under Policy Conition 1 and 2 respectively as well as Policy Condition 4 are required to be fulfilled. Exports shall also be subject to Policy Condition 8 of this Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0204.43",
+          "title": "Other meat of sheep, frozen : -- Boneless",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0204.43.00",
+              "description": "Other meat of sheep, frozen : -- Boneless",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Quality control and inspection under Policy Conition 1 and 2 respectively as well as Policy Condition 4 are required to be fulfilled. Exports shall also be subject to Policy Condition 8 of this Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0204.50",
+          "title": "Meat of goats",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0204.50.00",
+              "description": "Meat of goats",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Quality control and inspection under Policy Conition 1 and 2 respectively as well as Policy Condition 4 are required to be fulfilled. Exports shall also be subject to Policy Condition 8 of this Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0205",
+      "title": "Meat of horses, asses, mules or hinnies, fresh, chilled or frozen.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0205.00",
+          "title": "Meat of horses, asses, mules or hinnies, fresh, chilled or frozen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0205.00.00",
+              "description": "Meat of horses, asses, mules or hinnies, fresh, chilled or frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "0206",
+      "title": "Edible offal of bovine animals, swine, sheep, goats, horses, asses, mules or hinnies, fresh, chilled or frozen.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0206.10",
+          "title": "Of bovine animals, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0206.10.00",
+              "description": "Of bovine animals, fresh or chilled",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Beef in the form of offal of cows, oxen and calf is not permitted to be exported. However, exports of offal of buffalo except gonads and reproductive organs is free subject to following condition: - 1.Export allowed on Production of a certificate from the designated veterinary authority of the State, from which the meat or offals emanate, to the effect that the meat or offals are from buffaloes not used for breeding and milch purposes. 2. Quality control and inspection under Policy Conition 1 and 2 respectively as well as Policy Condition 4 and 6 above are required to be fulfilled. Exports shall also be subject to Policy Condition 8 of this Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0206.21",
+          "title": "Of bovine animals, frozen : -- Tongues",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0206.21.00",
+              "description": "Of bovine animals, frozen : -- Tongues",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Beef in the form of offal of cows, oxen and calf is not permitted to be exported. However, exports of offal of buffalo except gonads and reproductive organs is free subject to following condition: - 1.Export allowed on Production of a certificate from the designated veterinary authority of the State, from which the meat or offals emanate, to the effect that the meat or offals are from buffaloes not used for breeding and milch purposes. 2. Quality control and inspection under Policy Conition 1 and 2 respectively as well as Policy Condition 4 and 6 above are required to be fulfilled. Exports shall also be subject to Policy Condition 8 of this Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0206.22",
+          "title": "Of bovine animals, frozen : -- Livers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0206.22.00",
+              "description": "Of bovine animals, frozen : -- Livers",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Beef in the form of offal of cows, oxen and calf is not permitted to be exported. However, exports of offal of buffalo except gonads and reproductive organs is free subject to following condition: - 1.Export allowed on Production of a certificate from the designated veterinary authority of the State, from which the meat or offals emanate, to the effect that the meat or offals are from buffaloes not used for breeding and milch purposes. 2. Quality control and inspection under Policy Conition 1 and 2 respectively as well as Policy Condition 4 and 6 above are required to be fulfilled. Exports shall also be subject to Policy Condition 8 of this Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0206.29",
+          "title": "Of bovine animals, frozen : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0206.29.00",
+              "description": "Of bovine animals, frozen : -- Other",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Beef in the form of offal of cows, oxen and calf is not permitted to be exported. However, exports of offal of buffalo except gonads and reproductive organs is free subject to following condition: - 1.Export allowed on Production of a certificate from the designated veterinary authority of the State, from which the meat or offals emanate, to the effect that the meat or offals are from buffaloes not used for breeding and milch purposes. 2. Quality control and inspection under Policy Conition 1 and 2 respectively as well as Policy Condition 4 and 6 above are required to be fulfilled. Exports shall also be subject to Policy Condition 8 of this Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0206.30",
+          "title": "Of swine, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0206.30.00",
+              "description": "Of swine, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0206.41",
+          "title": "Of swine, frozen : -- Livers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0206.41.00",
+              "description": "Of swine, frozen : -- Livers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0206.49",
+          "title": "Of swine, frozen : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0206.49.00",
+              "description": "Of swine, frozen : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0206.80",
+          "title": "Other, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0206.80.10",
+              "description": "Of sheep or goats",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Quality control and inspection under Policy Conition 1 and 2 respectively as well as Policy Condition 4 and 6 above are required to be fulfilled. Exports shall also be subject to Policy Condition 8 of this Chapter."
+            },
+            {
+              "code": "0206.80.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Exports shall be subject to Policy Condition 8 of this Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0206.90",
+          "title": "Other, frozen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0206.90.10",
+              "description": "Of sheep or goats",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Quality control and inspection under Policy Conition 1 and 2 respectively as well as Policy Condition 4 and 6 above are required to be fulfilled. Exports shall also be subject to Policy Condition 8 of this Chapter."
+            },
+            {
+              "code": "0206.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Exports shall be subject to Policy Condition 8 of this Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0207",
+      "title": "Meat and edible offal, of the poultry of heading 01.05, fresh, chilled or frozen.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0207.11",
+          "title": "Of fowls of the species Gallus domesticus : -- Not cut in pieces, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0207.11.00",
+              "description": "Of fowls of the species Gallus domesticus : -- Not cut in pieces, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0207.12",
+          "title": "Of fowls of the species Gallus domesticus : -- Not cut in pieces, frozen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0207.12.00",
+              "description": "Of fowls of the species Gallus domesticus : -- Not cut in pieces, frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0207.13",
+          "title": "Of fowls of the species Gallus domesticus : -- Cuts and offal, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0207.13.00",
+              "description": "Of fowls of the species Gallus domesticus : -- Cuts and offal, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0207.14",
+          "title": "Of fowls of the species Gallus domesticus : -- Cuts and offal, frozen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0207.14.00",
+              "description": "Of fowls of the species Gallus domesticus : -- Cuts and offal, frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0207.24",
+          "title": "Of turkeys : --Not cut in pieces, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0207.24.00",
+              "description": "Of turkeys : --Not cut in pieces, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0207.25",
+          "title": "Of turkeys : --Not cut in pieces, frozen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0207.25.00",
+              "description": "Of turkeys : --Not cut in pieces, frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0207.26",
+          "title": "Of turkeys : --Cuts and offal, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0207.26.00",
+              "description": "Of turkeys : --Cuts and offal, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0207.27",
+          "title": "Of turkeys : --Cuts and offal, frozen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0207.27.00",
+              "description": "Of turkeys : --Cuts and offal, frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0207.41",
+          "title": "Of ducks : --Not cut in pieces, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0207.41.00",
+              "description": "Of ducks : --Not cut in pieces, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0207.42",
+          "title": "Of ducks : --Not cut in pieces, frozen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0207.42.00",
+              "description": "Of ducks : --Not cut in pieces, frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0207.43",
+          "title": "Of ducks : --Fatty livers, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0207.43.00",
+              "description": "Of ducks : --Fatty livers, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0207.44",
+          "title": "Of ducks : --Other, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0207.44.00",
+              "description": "Of ducks : --Other, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0207.45",
+          "title": "Of ducks : --Other, frozen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0207.45.00",
+              "description": "Of ducks : --Other, frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0207.51",
+          "title": "Of geese : -- Not cut in pieces, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0207.51.00",
+              "description": "Of geese : -- Not cut in pieces, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0207.52",
+          "title": "Of geese : -- Not cut in pieces, frozen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0207.52.00",
+              "description": "Of geese : -- Not cut in pieces, frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0207.53",
+          "title": "Of geese : -- Fatty livers, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0207.53.00",
+              "description": "Of geese : -- Fatty livers, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0207.54",
+          "title": "Of geese : -- Other, fresh or chilled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0207.54.00",
+              "description": "Of geese : -- Other, fresh or chilled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0207.55",
+          "title": "Of geese : -- Other, frozen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0207.55.00",
+              "description": "Of geese : -- Other, frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0207.60",
+          "title": "Of guinea fowls",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0207.60.00",
+              "description": "Of guinea fowls",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0208",
+      "title": "Other meat and edible meat offal, fresh, chilled or frozen.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0208.10",
+          "title": "Of rabbits or hares",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0208.10.00",
+              "description": "Of rabbits or hares",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0208.30",
+          "title": "Of primates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0208.30.00",
+              "description": "Of primates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0208.40",
+          "title": "Of whales, dolphines and porpoises (mammals of the order cetacea); of manatees and dugongs (mammals of the order Sirenia); of seals, sea lions and walruses (mammals of the sub-order Pinnipedia)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0208.40.00",
+              "description": "Of whales, dolphines and porpoises (mammals of the order cetacea); of manatees and dugongs (mammals of the order Sirenia); of seals, sea lions and walruses (mammals of the sub-order Pinnipedia)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0208.50",
+          "title": "Of reptiles (including snakes and turtles)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0208.50.00",
+              "description": "Of reptiles (including snakes and turtles)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0208.60",
+          "title": "Of camels and other camelids (Camelidae)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0208.60.00",
+              "description": "Of camels and other camelids (Camelidae)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0208.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0208.90.10",
+              "description": "Of wild animals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0208.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0209",
+      "title": "PIG FAT, FREE OF LEAN MEAT AND POUTRY FAT, NOT RENDERED OR OTHERWISE EXTRACTED, FRESH, CHILLED, FROZEN, SALTED, IN BRINE, DRIED OR SMOKED",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0209.10",
+          "title": "Of pigs",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0209.10.00",
+              "description": "Of pigs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0209.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0209.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0210",
+      "title": "MEAT AND EDIBLE MEAT OFFAL, SALTED, IN BRINE, DRIED OR SMOKED; EDIBLE FLOURS AND MEALS OF MEAT OR MEAT OFFAL",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0210.11",
+          "title": "Meat of swine : -- Hams, shoulders and cuts thereof, with bone in",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0210.11.00",
+              "description": "Meat of swine : -- Hams, shoulders and cuts thereof, with bone in",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0210.12",
+          "title": "Meat of swine : -- Bellies (streaky) and cuts thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0210.12.00",
+              "description": "Meat of swine : -- Bellies (streaky) and cuts thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0210.19",
+          "title": "Meat of swine : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0210.19.00",
+              "description": "Meat of swine : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0210.20",
+          "title": "Meat of bovine animals",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0210.20.00",
+              "description": "Meat of bovine animals",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Beef in the form of offal of cows, oxen and calf is Prohibited and not permitted to be exported. However, exports of offal of buffalo except gonads and reproductive organs is free subject to following condition: - 1.Export allowed on Production of a certificate from the designated veterinary authority of the State, from which the meat or offals emanate, to the effect that the meat or offals are from buffaloes not used for breeding and milch purposes. 2. Quality control and inspection under Policy Conition 1 and 2 respectively as well as Policy Condition 4 and 6 above are required to be fulfilled."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0210.91",
+          "title": "Other, including edible flours and meals of meat or meat offal : -- Of primates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0210.91.00",
+              "description": "Other, including edible flours and meals of meat or meat offal : -- Of primates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0210.92",
+          "title": "Other, including edible flours and meals of meat or meat offal :-- Of whales, dolphins and porpoises (mammals of the order cetacea); of manatees and dugongs (mammals of the order Sirenia); of seals, sea lions and walruses (mammals of the sub-order Pinnipedia)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0210.92.00",
+              "description": "Other, including edible flours and meals of meat or meat offal:-- Of whales, dolphins and porpoises (mammals of the order cetacea); of manatees and dugongs (mammals of the order Sirenia); of seals, sea lions and walruses (mammals of the sub-order Pinnipedia)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0210.93",
+          "title": "Other, including edible flours and meals of meat or meat offal : -- Of reptiles (including snakes and turtles)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0210.93.00",
+              "description": "Other, including edible flours and meals of meat or meat offal : -- Of reptiles (including snakes and turtles)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0210.99",
+          "title": "Other, including edible flours and meals of meat or meat offal : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0210.99.00",
+              "description": "Other, including edible flours and meals of meat or meat offal : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

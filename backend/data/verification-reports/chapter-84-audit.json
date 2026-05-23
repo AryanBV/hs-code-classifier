@@ -1,0 +1,48 @@
+{
+  "chapter": "84",
+  "verdict": "MAJOR",
+  "counts": {
+    "headings": 86,
+    "subheadings": 554,
+    "tariff_lines": 1088
+  },
+  "hierarchy_errors": [
+    "Subheading 8406.90 not under heading 8405",
+    "Subheading 8483.50 not under heading 8408",
+    "Subheading 8483.60 not under heading 8408",
+    "Subheading 1150.00 not under heading 8411",
+    "Subheading 8412.29 not under heading 8411",
+    "Subheading 8412.80 not under heading 8411",
+    "Subheading 8412.90 not under heading 8411",
+    "Subheading 8434.90 not under heading 8433",
+    "Subheading 8446.10 not under heading 8445",
+    "Subheading 8446.21 not under heading 8445",
+    "Subheading 8446.29 not under heading 8445",
+    "Subheading 8446.30 not under heading 8445",
+    "Subheading 8455.21 not under heading 8454",
+    "Subheading 8482.10 not under heading 8481",
+    "Subheading 8482.20 not under heading 8481",
+    "Subheading 8482.91 not under heading 8481"
+  ],
+  "hierarchy_error_count": 16,
+  "missing_headings": [],
+  "missing_codes_sample": [],
+  "missing_subheadings_sample": [],
+  "description_mismatches": [
+    {
+      "code": "8424.41.00",
+      "desc": "Agricultural or horticultural sprayers : -- Portable sprayers",
+      "recall": 0.0
+    },
+    {
+      "code": "8462.32.00",
+      "desc": "Slitting lines, cut-to-length lines and other shearing machines (excluding press",
+      "recall": 0.23
+    }
+  ],
+  "notes_issues": [],
+  "sample_size_codes": 15,
+  "sample_size_subs": 5,
+  "re_extraction_required": true,
+  "note": "16 subheading misplacements CONFIRMED against CBIC official tariff PDF. Re-extraction has NOT yet completed at audit time. Examples: 8406.90 placed under 8405 (should be 8406), 8483.50 placed under 8408 (should be 8483), bogus code 1150.00 (OCR corruption), 8412.x placed under 8411, 8434.90 placed under 8433, 8446.x placed under 8445, 8455.21 placed under 8454, 8482.x placed under 8481. Recommend MAJOR re-extraction."
+}

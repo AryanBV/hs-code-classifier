@@ -1,0 +1,749 @@
+{
+  "chapter": "41",
+  "section": "VIII",
+  "title": "Raw Hides And Skins (Other Than Furskins) And Leather",
+  "source_pdf": "Chapter 41 Raw Hides And Skins (Other Than Furskins) And Leather.pdf",
+  "extracted_at": null,
+  "extractor_model": null,
+  "extraction_warnings": [
+    "Source PDF page 1, Main Note 2(B): the term 'crust' is wrapped in triple double-quotes (\"\"\"crust\"\"\") — likely PDF encoding artifact. Normalized to single quotes in the structured 'subnotes' field while keeping the raw verbatim form in the parent 'text' field.",
+    "Source PDF page 2, Policy Condition 2: literal '?' characters appear after 'Shipment Clearance Certificate' and 'Health Certificate' — likely encoding artifacts for symbol characters (e.g., trademark, registered, or footnote markers). Preserved verbatim.",
+    "Source PDF page 2, Export Licensing Note 2: a stray closing double-quote appears after 'young ones' with no matching opening quote. Preserved verbatim.",
+    "Source PDF page 3 (heading 4102.10.30 row): description cell concatenates 'Lamb skins other than pelts' with the next subheading label 'Without wool on:' — preserved verbatim in the tariff_line description; the subsequent subheading 4102.21 appears separately.",
+    "Several subheadings (e.g., 4101.20, 4101.50, 4101.90, 4102.10, 4102.21, 4102.29, 4106 series) are shown in the source PDF without dot separators (e.g., '410120', '410250'). Codes have been normalized to NNNN.NN and NNNN.NN.NN format per project schema.",
+    "Heading 4108, 4109, 4110, 4111 do not appear in the source PDF for this chapter — consistent with WCO HS 2022 nomenclature where these headings were deleted in earlier HS revisions. No tariff lines extracted for these.",
+    "Heading 4112 in the source PDF lists a single 8-digit code 4112.00.00 directly under the heading without an intermediate explicit subheading row — a synthetic subheading 4112.00 is created to maintain schema consistency."
+  ],
+  "chapter_notes": [],
+  "section_notes": [],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "4101",
+      "title": "Raw hides and skins of bovine (including buffalo) or equine animals (fresh, or salted, dried, limed, pickled or otherwise preserved, but not tanned, parchment-dressed or further prepared), whether or not dehaired or split.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4101.20",
+          "title": "Whole hides and skins, unsplit, of a weight per skin not exceeding 8 kg when simply dried, 10 kg when dry-salted, or 16 kg when fresh, wet-salted or otherwise preserved",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4101.20.10",
+              "description": "Of cow, including cow calf",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4101.20.20",
+              "description": "Of buffalo, including buffalo calf",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4101.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4101.50",
+          "title": "Whole hides and skins, of a weight exceeding 16 kg",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4101.50.10",
+              "description": "Of cow, including cow calf",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4101.50.20",
+              "description": "Of buffalo, including buffalo calf",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "to Policy Condition 2 of this chapter."
+            },
+            {
+              "code": "4101.50.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4101.90",
+          "title": "Other, including butts, bends and bellies",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4101.90.10",
+              "description": "Of cow, including cow calf",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4101.90.20",
+              "description": "Of buffalo, including buffalo calf",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4101.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4102",
+      "title": "Raw skins of sheep or lambs (fresh, or salted, dried, limed, pickled or otherwise preserved, but not tanned, parchment-dressed or further prepared), whether or not with wool on or split, other than those excluded by Note 1 (c) to this Chapter.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4102.10",
+          "title": "With wool on",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4102.10.10",
+              "description": "Sheep skins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4102.10.20",
+              "description": "Pelts of baby lambs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4102.10.30",
+              "description": "Lamb skins other than pelts Without wool on:",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4102.21",
+          "title": "Without wool on : -- Pickled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4102.21.10",
+              "description": "Sheep skins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4102.21.20",
+              "description": "Lamb skins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4102.21.30",
+              "description": "Lamb pelt",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4102.29",
+          "title": "Without wool on : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4102.29.10",
+              "description": "Sheep skins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4102.29.20",
+              "description": "Lamb skins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4103",
+      "title": "Other raw hides and skins (fresh, or salted, dried, limed, pickled or otherwise preserved, but not tanned, parchment-dressed or further prepared), whether or not dehaired or split, other than those excluded by Note 1 (b) or 1 (c) to this Chapter.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4103.20",
+          "title": "Of reptiles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4103.20.00",
+              "description": "Of reptiles",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4103.30",
+          "title": "Of swine",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4103.30.00",
+              "description": "Of swine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4103.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4103.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4104",
+      "title": "Tanned or crust hides and skins of bovine (including buffalo) or equine animals, without hair on, whether or not split, but not further prepared.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4104.11",
+          "title": "In the wet state (including wet-blue) : -- Full grains, unsplit; grain splits",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4104.11.00",
+              "description": "In the wet state (including wet-blue) : -- Full grains, unsplit; grain splits",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4104.19",
+          "title": "In the wet state (including wet-blue) : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4104.19.00",
+              "description": "In the wet state (including wet-blue) : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4104.41",
+          "title": "In the dry state (crust) : -- Full grains, unsplit; grain splits",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4104.41.00",
+              "description": "In the dry state (crust) : -- Full grains, unsplit; grain splits",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4104.49",
+          "title": "In the dry state (crust) : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4104.49.00",
+              "description": "In the dry state (crust) : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4105",
+      "title": "Tanned or crust skins of sheep or lambs, without wool on, whether or not split, but not further prepared.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4105.10",
+          "title": "In the wet state (including wet-blue)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4105.10.00",
+              "description": "In the wet state (including wet-blue)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4105.30",
+          "title": "In the dry state (crust)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4105.30.00",
+              "description": "In the dry state (crust)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4106",
+      "title": "Tanned or crust hides and skins of other animals, without wool or hair on, whether or not split, but not further prepared.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4106.21",
+          "title": "Of goats or kids : -- In the wet state (including wet-blue)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4106.21.00",
+              "description": "Of goats or kids : -- In the wet state (including wet-blue)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4106.22",
+          "title": "Of goats or kids : -- In the dry state (crust)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4106.22.00",
+              "description": "Of goats or kids : -- In the dry state (crust)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4106.31",
+          "title": "Of swine : -- In the wet state (including wet-blue)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4106.31.00",
+              "description": "Of swine : -- In the wet state (including wet-blue)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4106.32",
+          "title": "Of swine : -- In the dry state (crust)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4106.32.00",
+              "description": "Of swine : -- In the dry state (crust)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4106.40",
+          "title": "Of reptiles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4106.40.00",
+              "description": "Of reptiles",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4106.91",
+          "title": "Other : -- In the wet state (including wet-blue)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4106.91.00",
+              "description": "Other : -- In the wet state (including wet-blue)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4106.92",
+          "title": "Other : -- In the dry state (crust)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4106.92.00",
+              "description": "Other : -- In the dry state (crust)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4107",
+      "title": "Leather further prepared after tanning or crusting, including parchment-dressed leather, of bovine (including buffalo) or equine animals, without hair on, whether or not split, other than leather of heading 41.14.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4107.11",
+          "title": "Whole hides and skins : -- Full grains, unsplit",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4107.11.00",
+              "description": "Whole hides and skins : -- Full grains, unsplit",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4107.12",
+          "title": "Whole hides and skins : -- Grain splits",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4107.12.00",
+              "description": "Whole hides and skins : -- Grain splits",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4107.19",
+          "title": "Whole hides and skins : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4107.19.00",
+              "description": "Whole hides and skins : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4107.91",
+          "title": "Other, including sides : -- Full grains, unsplit",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4107.91.00",
+              "description": "Other, including sides : -- Full grains, unsplit",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4107.92",
+          "title": "Other, including sides : -- Grain splits",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4107.92.00",
+              "description": "Other, including sides : -- Grain splits",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4107.99",
+          "title": "Other, including sides : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4107.99.00",
+              "description": "Other, including sides : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4112",
+      "title": "Leather further prepared after tanning or crusting, including parchment-dressed leather, of sheep or lamb, without wool on, whether or not split, other than leather of heading 41.14.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4112.00",
+          "title": "Leather further prepared after tanning or crusting, including parchment-dressed leather, of sheep or lamb, without wool on, whether or not split, other than leather of heading 41.14.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4112.00.00",
+              "description": "Leather further prepared after tanning or crusting, including parchment-dressed leather, of sheep or lamb, without wool on, whether or not split, other than leather of heading 41.14.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "4113",
+      "title": "Leather further prepared after tanning or crusting, including parchment-dressed leather, of other animals, without wool or hair on, whether or not split, other than leather of heading 41.14.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4113.10",
+          "title": "Of goats or kids",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4113.10.00",
+              "description": "Of goats or kids",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4113.20",
+          "title": "Of swine",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4113.20.00",
+              "description": "Of swine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4113.30",
+          "title": "Of reptiles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4113.30.00",
+              "description": "Of reptiles",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4113.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4113.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4114",
+      "title": "Chamois (including combination chamois) leather; patent leather and patent laminated leather; metallised leather.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4114.10",
+          "title": "Chamois (including combination chamois) leather",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4114.10.00",
+              "description": "Chamois (including combination chamois) leather",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4114.20",
+          "title": "Patent leather and patent laminated leather; metallised leather",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4114.20.10",
+              "description": "Patent leather and patent laminated leather",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4114.20.20",
+              "description": "Metallised leather",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4115",
+      "title": "Composition leather with a basis of leather or leather fibre, in slabs, sheets or strip, whether or not in rolls; parings and other waste of leather or of composition leather, not suitable for the manufacture of leather articles; leather dust, powder and flour.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4115.10",
+          "title": "Composition leather with a basis of leather or leather fibre, in slabs, sheets or strip, whether or not in rolls",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4115.10.00",
+              "description": "Composition leather with a basis of leather or leather fibre, in slabs, sheets or strip, whether or not in rolls",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4115.20",
+          "title": "Parings and other waste of leather or of composition leather, not suitable for the manufacture of leather articles; leather dust, powder and flour",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4115.20.10",
+              "description": "Cuttings of leather",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4115.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

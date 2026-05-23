@@ -1,0 +1,817 @@
+{
+  "chapter": "22",
+  "section": "IV",
+  "title": "BEVERAGES, SPIRITS AND VINEGAR",
+  "source_pdf": "Chapter 22 Beverages, Spirits And Vinegar.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '22011010'). Normalized to NNNN.NN.NN format (e.g., '2201.10.10') per project schema. Subheading numbers in PDF (e.g., '220110') normalized to NNNN.NN (e.g., '2201.10').",
+    "PDF table-chrome headers ('Sl.No. Notes Notification Date Notification No', 'Main Notes', 'Sub-Heading Notes', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Source PDF has no separate 'Export Licensing Notes' table for Chapter 22. The export_licensing_notes field is therefore an empty array. The chapter-level note about 'alcoholic strength by volume' (Chapter Note 2) is preserved verbatim in chapter_notes; the sub-heading definitional note about 'sparkling wine' (Sub-Heading Note 1) is preserved verbatim in the heading_notes of heading 2204 (where the rule applies to subheading 2204.10).",
+    "Section IV Main Note about 'pellets' appears on PDF page 1 above the Chapter 22 title and is attributed to section_notes (Section IV, Prepared Foodstuffs; Beverages, Spirits and Vinegar; Tobacco and Manufactured Tobacco Substitutes; Products, Whether or Not Containing Nicotine, Intended for Inhalation without Combustion; Other Nicotine Containing Products Intended for the Intake of Nicotine into the Human Body), not chapter_notes.",
+    "Heading 2202 description in PDF is rendered in ALL CAPS ('WATERS, INCLUDING MINERAL WATERS AND AERATED WATERS, CONTAINING ADDED SUGAR OR OTHER SWEETENING MATTER OR FLAVOURED, AND OTHER NON-ALCOHOLIC BEVERAGES, NOT INCLUDING FRUIT, NUT OR VEGETABLE JUICES OF HEADING 2009'). Preserved verbatim in ALL CAPS as it appears in the source.",
+    "Tariff line code '22030000' (Beer made from malt) represents subheading 2203 (single-dash heading with one 8-digit code, no 6-digit subheading row in the PDF). Recorded under a synthetic subheading '2203.00' to preserve the 7-node schema; subheading title matches the heading title.",
+    "Tariff line code '22041000' represents subheading 2204.10 (Sparkling wine) with tariff suffix '00' — preserved as the 8-digit form '2204.10.00' under subheading '2204.10'. The PDF presents this as a single-tariff-line subheading.",
+    "Tariff line code '22043000' represents subheading 2204.30 (Other grape must) with tariff suffix '00' — preserved as '2204.30.00' under subheading '2204.30'.",
+    "Tariff line codes '22051000', '22059000', '22060000', '22072000', '22086000', '22090010', '22090020', '22090090' similarly represent single-tariff-line subheadings or direct 8-digit subheadings — preserved in NNNN.NN.NN format under their corresponding subheadings.",
+    "Subheading 2206 has no 6-digit subheading row in the PDF; the only tariff line is '22060000' (Other fermented beverages...). Recorded under a synthetic subheading '2206.00' to preserve the 7-node schema; subheading title matches the heading title.",
+    "Subheading 2209 has no 6-digit subheading row in the PDF beyond the prefix row '220900' (Vinegar and substitutes for vinegar obtained from acetic acid:). Recorded under subheading '2209.00' containing the three tariff lines '2209.00.10', '2209.00.20', '2209.00.90'.",
+    "Tariff line 2207.20.00 (Ethyl alcohol and other spirits, denatured, of any strength) carries an Export Policy of 'Restricted' with a specific Policy Condition. Captured verbatim in the policy_conditions array with notification 62/2015-20 dated 22.03.2023.",
+    "Tariff line 2208.40.92 description is rendered in PDF as 'Other: ---- other' (lowercase 'o' in 'other'). Preserved verbatim with lowercase 'other' to match the source.",
+    "Tariff line 2208.90.12 description in PDF reads 'Indenatured ethyl alcohol' — likely a typographical error for 'Undenatured ethyl alcohol' but preserved verbatim as it appears in the source. The 'Other' tier (2208.90.92) similarly reads 'Indenatured ethyl alcohol'.",
+    "Heading 2204 description in PDF reads 'Wine of fresh grapes, including fortified wines; grape must other than that of heading 20.09.' The reference '20.09' uses dot notation; preserved verbatim from source."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover: (a) products of this Chapter (other than those of heading 2209) prepared for culinary purposes and thereby rendered unsuitable for consumption as beverages (generally heading 2103); (b) sea water (heading 2501); (c) distilled or conductivity water or water of similar purity (heading 2853); (d) acetic acid of concentration exceeding 10 % by weight of acetic acid (heading 2915); (e) medicaments of heading 3003 or 3004; or (f) perfumery or toilet preparations (Chapter 33)."
+    },
+    {
+      "number": "2",
+      "text": "For the purposes of this Chapter and of Chapters 20 and 21, the \"alcoholic strength by volume\" shall be determined at a temperature of 20 C."
+    },
+    {
+      "number": "3",
+      "text": "For the purposes of heading 2202, the term \"non-alcoholic beverages\" means beverages of an alcoholic strength by volume not exceeding 0.5 % vol. Alcoholic beverages are classified in headings 2203 to 2206 or heading 2208 as appropriate."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "In this Section, the term \"pellets\" means products which have been agglomerated either directly by compression or by the addition of a binder in a proportion not exceeding 3 (percent) by weight."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "products of this Chapter (other than those of heading 2209) prepared for culinary purposes and thereby rendered unsuitable for consumption as beverages",
+      "redirects_to_chapter": "21",
+      "redirects_to_heading": "2103",
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover: (a) products of this Chapter (other than those of heading 2209) prepared for culinary purposes and thereby rendered unsuitable for consumption as beverages (generally heading 2103); (b) sea water (heading 2501); (c) distilled or conductivity water or water of similar purity (heading 2853); (d) acetic acid of concentration exceeding 10 % by weight of acetic acid (heading 2915); (e) medicaments of heading 3003 or 3004; or (f) perfumery or toilet preparations (Chapter 33)."
+    },
+    {
+      "excluded_product_text": "sea water",
+      "redirects_to_chapter": "25",
+      "redirects_to_heading": "2501",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover: (a) products of this Chapter (other than those of heading 2209) prepared for culinary purposes and thereby rendered unsuitable for consumption as beverages (generally heading 2103); (b) sea water (heading 2501); (c) distilled or conductivity water or water of similar purity (heading 2853); (d) acetic acid of concentration exceeding 10 % by weight of acetic acid (heading 2915); (e) medicaments of heading 3003 or 3004; or (f) perfumery or toilet preparations (Chapter 33)."
+    },
+    {
+      "excluded_product_text": "distilled or conductivity water or water of similar purity",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": "2853",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "This Chapter does not cover: (a) products of this Chapter (other than those of heading 2209) prepared for culinary purposes and thereby rendered unsuitable for consumption as beverages (generally heading 2103); (b) sea water (heading 2501); (c) distilled or conductivity water or water of similar purity (heading 2853); (d) acetic acid of concentration exceeding 10 % by weight of acetic acid (heading 2915); (e) medicaments of heading 3003 or 3004; or (f) perfumery or toilet preparations (Chapter 33)."
+    },
+    {
+      "excluded_product_text": "acetic acid of concentration exceeding 10 % by weight of acetic acid",
+      "redirects_to_chapter": "29",
+      "redirects_to_heading": "2915",
+      "source_note_number": "Note 1(d)",
+      "source_note_text": "This Chapter does not cover: (a) products of this Chapter (other than those of heading 2209) prepared for culinary purposes and thereby rendered unsuitable for consumption as beverages (generally heading 2103); (b) sea water (heading 2501); (c) distilled or conductivity water or water of similar purity (heading 2853); (d) acetic acid of concentration exceeding 10 % by weight of acetic acid (heading 2915); (e) medicaments of heading 3003 or 3004; or (f) perfumery or toilet preparations (Chapter 33)."
+    },
+    {
+      "excluded_product_text": "medicaments of heading 3003 or 3004",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": "3003",
+      "source_note_number": "Note 1(e)",
+      "source_note_text": "This Chapter does not cover: (a) products of this Chapter (other than those of heading 2209) prepared for culinary purposes and thereby rendered unsuitable for consumption as beverages (generally heading 2103); (b) sea water (heading 2501); (c) distilled or conductivity water or water of similar purity (heading 2853); (d) acetic acid of concentration exceeding 10 % by weight of acetic acid (heading 2915); (e) medicaments of heading 3003 or 3004; or (f) perfumery or toilet preparations (Chapter 33)."
+    },
+    {
+      "excluded_product_text": "medicaments of heading 3003 or 3004",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": "3004",
+      "source_note_number": "Note 1(e)",
+      "source_note_text": "This Chapter does not cover: (a) products of this Chapter (other than those of heading 2209) prepared for culinary purposes and thereby rendered unsuitable for consumption as beverages (generally heading 2103); (b) sea water (heading 2501); (c) distilled or conductivity water or water of similar purity (heading 2853); (d) acetic acid of concentration exceeding 10 % by weight of acetic acid (heading 2915); (e) medicaments of heading 3003 or 3004; or (f) perfumery or toilet preparations (Chapter 33)."
+    },
+    {
+      "excluded_product_text": "perfumery or toilet preparations",
+      "redirects_to_chapter": "33",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(f)",
+      "source_note_text": "This Chapter does not cover: (a) products of this Chapter (other than those of heading 2209) prepared for culinary purposes and thereby rendered unsuitable for consumption as beverages (generally heading 2103); (b) sea water (heading 2501); (c) distilled or conductivity water or water of similar purity (heading 2853); (d) acetic acid of concentration exceeding 10 % by weight of acetic acid (heading 2915); (e) medicaments of heading 3003 or 3004; or (f) perfumery or toilet preparations (Chapter 33)."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "2201",
+      "title": "Waters, including natural or artificial mineral waters and aerated waters, not containing added sugar or other sweetening matter nor flavoured; ice and snow.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2201.10",
+          "title": "Mineral waters and aerated waters",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2201.10.10",
+              "description": "Mineral Water",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2201.10.20",
+              "description": "Aerated water",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2201.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2201.90.10",
+              "description": "Ice and snow",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2201.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2202",
+      "title": "WATERS, INCLUDING MINERAL WATERS AND AERATED WATERS, CONTAINING ADDED SUGAR OR OTHER SWEETENING MATTER OR FLAVOURED, AND OTHER NON-ALCOHOLIC BEVERAGES, NOT INCLUDING FRUIT, NUT OR VEGETABLE JUICES OF HEADING 2009",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2202.10",
+          "title": "Waters, including mineral waters and aerated waters, containing added sugar or other sweetening matter or flavoured :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2202.10.10",
+              "description": "Aerated waters",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2202.10.20",
+              "description": "Lemonade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2202.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2202.91",
+          "title": "Other : -- Non-alcoholic beer",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2202.91.00",
+              "description": "Other : -- Non-alcoholic beer",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2202.99",
+          "title": "Other -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2202.99.10",
+              "description": "Soya milk drinks, whether or not sweetened or flavoured",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2202.99.20",
+              "description": "Fruit pulp or fruit juice based drink",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2202.99.30",
+              "description": "Beverages containing milk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2202.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2203",
+      "title": "Beer made from malt.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2203.00",
+          "title": "Beer made from malt.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2203.00.00",
+              "description": "Beer made from malt.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2204",
+      "title": "Wine of fresh grapes, including fortified wines; grape must other than that of heading 20.09.",
+      "heading_notes": [
+        {
+          "number": "Sub-Heading Note 1",
+          "text": "For the purposes of sub-heading 2204 10, the expression \"sparkling wine\" means wine which, when kept at a temperature of 20C in closed containers, has an excess pressure of not less than 3 bars."
+        }
+      ],
+      "subheadings": [
+        {
+          "subheading": "2204.10",
+          "title": "Sparkling wine",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2204.10.00",
+              "description": "Sparkling wine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2204.21",
+          "title": "Other wine; grape must with fermentation prevented or arrested by the addition of alcohol : -- In containers holding 2 l or less",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2204.21.10",
+              "description": "Port and other red wines",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2204.21.20",
+              "description": "Sherry and other white wines",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2204.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2204.22",
+          "title": "Other wine; grape must with fermentation prevented or arrested by the addition of alcohol : -- In containers holding more than 2 l but not more than 10 l",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2204.22.10",
+              "description": "Port and other red wines",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2204.22.20",
+              "description": "Sherry and other white wines",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2204.22.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2204.29",
+          "title": "Other wine; grape must with fermentation prevented or arrested by the addition of alcohol : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2204.29.10",
+              "description": "Port and other red wines",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2204.29.20",
+              "description": "Sherry and other white wines",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2204.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2204.30",
+          "title": "Other grape must",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2204.30.00",
+              "description": "Other grape must",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2205",
+      "title": "Vermouth and other wine of fresh grapes flavoured with plants or aromatic substances.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2205.10",
+          "title": "In containers holding 2 l or less",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2205.10.00",
+              "description": "In containers holding 2 l or less",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2205.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2205.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2206",
+      "title": "Other fermented beverages (for example, cider, perry, mead, sake); mixtures of fermented beverages and mixtures of fermented beverages and non-alcoholic beverages, not elsewhere specified or included",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2206.00",
+          "title": "Other fermented beverages (for example, cider, perry, mead, sake); mixtures of fermented beverages and mixtures of fermented beverages and non-alcoholic beverages, not elsewhere specified or included",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2206.00.00",
+              "description": "Other fermented beverages (for example, cider, perry, mead, sake); mixtures of fermented beverages and mixtures of fermented beverages and non-alcoholic beverages, not elsewhere specified or included",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2207",
+      "title": "Undenatured ethyl alcohol of an alcoholic strength by volume of 80 percent vol. or higher; ethyl alcohol and other spirits, denatured, of any strength.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2207.10",
+          "title": "Undenatured ethyl alcohol of an alcoholic strength by volume of 80% vol. or higher:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2207.10.11",
+              "description": "Rectified spirit: ---- Concentrates of alcoholic beverages",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2207.10.19",
+              "description": "Rectified spirit: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2207.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2207.20",
+          "title": "Ethyl alcohol and other spirits, denatured, of any strength",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2207.20.00",
+              "description": "Ethyl alcohol and other spirits, denatured, of any strength",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Export is permitted under Restricted Export Authorization only for non-fuel purposes. However, export of Bio-fuel from Special Economic Zones (SEZ)/ Export Oriented Units (EoUs) are allowed for Fuel as well as Non-Fuel purposes without any restriction when produced using only imported feed stock."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2208",
+      "title": "Undenatured ethyl alcohol of an alcoholic strength by volume of less than 80 percent vol.; spirits, liqueurs and other spirituous beverages.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2208.20",
+          "title": "Spirits obtained by distilling grape wine or grape marc",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2208.20.11",
+              "description": "In containers holding 2 l or less: ---- Brandy",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.20.19",
+              "description": "In containers holding 2 l or less: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.20.91",
+              "description": "Other: ---- Brandy",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.20.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2208.30",
+          "title": "Whiskies",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2208.30.11",
+              "description": "In containers holding 2 l or less: ---- Bourbon whiskey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.30.12",
+              "description": "In containers holding 2 l or less: ---- Scotch",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.30.13",
+              "description": "In containers holding 2 l or less: ---- Blended",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.30.19",
+              "description": "In containers holding 2 l or less: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.30.91",
+              "description": "Other: ---- Bourbon whiskey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.30.92",
+              "description": "Other: ---- Scotch",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.30.93",
+              "description": "Other: ---- Blended",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.30.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2208.40",
+          "title": "Rum and other spirits obtained by distilling fermented sugar-cane products.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2208.40.11",
+              "description": "In containers holding 2 l or less: ---- Rum",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.40.12",
+              "description": "In containers holding 2 l or less: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.40.91",
+              "description": "Other: ---- Rum",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.40.92",
+              "description": "Other: ---- other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2208.50",
+          "title": "Gin and Geneva",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2208.50.11",
+              "description": "In containers holding 2 l or less: ---- Gin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.50.12",
+              "description": "In containers holding 2 l or less: ---- Geneva",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.50.91",
+              "description": "Other: ---- Gin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.50.92",
+              "description": "Other: ---- Geneva",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2208.60",
+          "title": "Vodka",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2208.60.00",
+              "description": "Vodka",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2208.70",
+          "title": "Liqueurs and cordials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2208.70.11",
+              "description": "In containers holding 2 l or less: ---- Liqueurs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.70.12",
+              "description": "In containers holding 2 l or less: ---- Cordials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.70.91",
+              "description": "Other: ---- Liqueurs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.70.92",
+              "description": "Other: ---- Cordials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2208.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2208.90.11",
+              "description": "In containers holding 2 l or less: ---- Tequila",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.90.12",
+              "description": "In containers holding 2 l or less: ---- Indenatured ethyl alcohol",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.90.19",
+              "description": "In containers holding 2 l or less: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.90.91",
+              "description": "Other: ---- Tequila",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.90.92",
+              "description": "Other: ---- Indenatured ethyl alcohol",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2208.90.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2209",
+      "title": "Vinegar and substitutes for vinegar obtained from acetic acid.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2209.00",
+          "title": "Vinegar and substitutes for vinegar obtained from acetic acid:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2209.00.10",
+              "description": "Brewed vinegar",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2209.00.20",
+              "description": "Synthetic vinegar",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2209.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

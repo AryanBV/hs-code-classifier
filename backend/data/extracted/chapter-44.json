@@ -1,0 +1,3186 @@
+{
+  "chapter": "44",
+  "section": "IX",
+  "title": "Wood And Articles Of Wood; Wood Charcoal",
+  "source_pdf": "Chapter 44 Wood And Articles Of Wood; Wood Charcoal.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "Section IX header appears at top of PDF as a title only ('Section IX, WOOD AND ARTICLES OF WOOD; CORKAND ARTICLES OF CORK; MANUFACTURES OF STRAW, OF ESPARTO OR OF OTHER PLAITINGMATERIALS; BASKETWARE AND WICKERWORK'). No Section IX Notes table is present in this Chapter 44 PDF; section_notes array is therefore empty. Run-together words ('CORKAND', 'PLAITINGMATERIALS') preserved as in source.",
+    "Tariff codes in source PDF use no-dot 8-digit format (NNNNNNNN). Normalized to NNNN.NN.NN by inserting dots after positions 4 and 6.",
+    "Subheading-level codes in source PDF appear as 6-digit no-dot (NNNNNN) or as 4-digit heading repeats (e.g. '440111'). Normalized to NNNN.NN.",
+    "Main Note 1 (the master exclusion list) spans two table rows in the source PDF; reassembled into a single verbatim note. Sub-clauses (a) through (r) extracted as separate exclusion_clauses entries.",
+    "Main Note 2 (densified wood definition) spans two table rows in source PDF; reassembled into a single verbatim note. Source PDF renders 'densified wood' inside doubled double-quotes (e.g. '\"\"densified wood\"\"') — normalized to single double-quotes.",
+    "Main Note 6 in source PDF appears to duplicate Main Note 5 content verbatim ('Heading 4417 does not apply to tools...'). The source-PDF text for Note 6 is preserved exactly as printed (it contains a 'wood applies also to bamboos' sentence followed by what appears to be a duplicate of Note 5). Flagged as likely source-PDF data quality issue.",
+    "Several notes contain run-together words from source PDF (e.g. 'chips,in', 'orforinsecticidal,fungicidal orsimilar', 'purposes(heading1211)', 'walking-sticks', 'partsthereof', 'hasthereby', 'hardnesstogether', 'similarfloating', 'furnituremaking', 'crosssectional'). Preserved verbatim.",
+    "Policy Condition 3 (Red Sanders) and Policy Condition 5 (sandalwood) contain CITES references; captured in export_licensing_notes.",
+    "Several subheading rows in source PDF have descriptions that span the heading-level repeat label (e.g. '4407.19 Coniferous : -- Other', '4403.99 Other : -- Other'). Preserved verbatim.",
+    "Tariff line 4403.99.18 (Red Sanders) description in source reads 'Red Sanders (Pterocar pus Sautatinus)' with internal space and likely OCR-mangled Latin name; preserved verbatim.",
+    "Heading 4405 appears in source PDF only at the 8-digit level (44050000 'Wood wool; wood flour.'). No separate 4-digit heading row printed; reconstructed heading 4405 from the tariff line.",
+    "Heading 4413 appears in source PDF only at the 8-digit level (44130000 'Densified wood, in blocks, plates, strips or profile shapes.'). No separate 4-digit heading row printed; reconstructed.",
+    "Several Other / Other category subheading rows in source PDF have no Export Policy column populated (blank); preserved as null in tariff_lines.unit (no unit columns present in Schedule 2 PDF).",
+    "Policy Condition 6 first row ('Export of Value added products of Red Sanders wood ...') spans two table rows in source PDF (continuation row starts 'Restricted wherein Exports is permitted ...'); reassembled into one verbatim note.",
+    "Subheading 4412.31 has tariff lines 4412.31.10 through 4412.31.90; subheading 4412.33 has 4412.33.10 through 4412.33.90; subheading 4412.34 has 4412.34.10 through 4412.34.90; subheading 4412.39 has 4412.39.10 through 4412.39.90 — each set captured verbatim.",
+    "Heading 4418 in source PDF contains two parallel sub-heading numbering systems (older 4418.11/4418.19/4418.21/4418.29/4418.30/4418.40/4418.50 and newer 4418.73-79, 4418.81-89, 4418.91/92/99). Both preserved as they appear in source.",
+    "Heading 4421 sub-heading 4421.99 in source PDF has two parallel tariff-line numbering blocks (44219111-44219190 and 44219911-44219990). Both blocks preserved verbatim.",
+    "Source PDF Export Policy column populated with 'Free', 'Prohibited', or 'Restricted' values; these are export-policy status, not units. The 'unit' field in the schema is preserved as null (Schedule 2 PDF does not include unit-of-measurement column).",
+    "[phantom-cleanup v2] Applied verdict from ours-only-verdict.json: removed 4 phantom subheadings, tagged 0 as india_specific."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover: (a) wood, in chips,in shavings, crushed, ground or powdered, of a kind used primarily in perfumery, in pharmacy, orforinsecticidal,fungicidal orsimilar purposes(heading1211); (b) bamboos or other materials of a woody nature of a kind used primarily for plaiting, in the rough, whether or not split, sawn lengthwise or cut to length (heading 1401); (c) wood, in chips, in shavings, ground or powdered, of a kind used primarily in dyeing or in tanning (heading 1404); (d) activated charcoal (heading 3802); (e) articles of heading 4202; (f) goods of Chapter 46; (g) footwear or parts thereof Chapter 64; (h) goods of Chapter 66 (for example, umbrellas and walking-sticks and parts thereof); (ij) goods of heading 6808; (k)imitation jewellery of heading 7117; (l) goods of Section XVI or Section XVII(for example, machine parts, cases, covers, cabinets for machines and apparatus and wheel wrights? wares); (m) goods of Section XVIII (for example, clock cases and musical instruments and partsthereof); (n) parts of firearms (heading 9305); (o) articles of Chapter 94 (for example, furniture, luminaires and lighting fittings, prefabricated buildings); (p) articles of Chapter 95 (for example, toys, games, sports requisites); (q) articles of Chapter 96 (for example, smoking pipes and parts thereof, buttons, pencils, and monopods, bipods, tripods and similar articles) excluding bodies and handles, of wood, for articles of heading 9603; or (r) articles of Chapter 97 (for example, works of art )."
+    },
+    {
+      "number": "2",
+      "text": "In this Chapter, the expression \"densified wood\" means wood which has been subjected to chemical or physical treatment (being, in the case of layers bonded together, treatment in excess of that needed to ensure a good bond), and which hasthereby acquired increased density or hardnesstogether with improved mechanical strength or resistance to chemical or electrical agencies."
+    },
+    {
+      "number": "3",
+      "text": "Headings 4414 to 4421 apply to articles of the respective descriptions of particle board or similar board, fibreboard, laminated wood or densified wood as they apply to such articles of wood."
+    },
+    {
+      "number": "4",
+      "text": "Products of heading 4410, 4411 or 4412 may be worked to form the shapes provided for in respect of the goods of heading 4409, curved, corrugated, perforated, cut or formed to shapes other than square or rectangular or submitted to any other operation provided it does not give them the character of articles of other headings."
+    },
+    {
+      "number": "5",
+      "text": "Heading 4417 does not apply to tools in which the blade, working edge, working surface or other working part is formed by any of the materials specified in Note 1 to Chapter 82."
+    },
+    {
+      "number": "6",
+      "text": "Subject to Note 1 above and except where the context otherwise requires, any reference to \"wood\" in a heading of this Chapter applies also to bamboos and other materials of a woody nature.Heading 4417 does not apply to tools in which the blade, working edge, working surface or other working part is formed by any of the materials specified in Note 1 to Chapter 82."
+    },
+    {
+      "number": "Sub-Heading Note 1",
+      "text": "For the purposes of sub-heading 4401 31, the expression \"wood pellets\" means by-products such as cutter shavings, sawdust or chips, of the mechanical wood processing industry, furnituremaking industry or other wood transformation activities, which have been agglomerated either directly by compression or by the addition of a binder in a proportion not exceeding 3% by weight. Such pellets are cylindrical, with a diameter not exceeding 25 mm and a length not exceeding 100 mm."
+    },
+    {
+      "number": "Sub-Heading Note 2",
+      "text": "For the purposes of sub-heading 4401 32, the expression ?wood briquettes? means by-products such as cutter shavings, sawdust or chips, of the mechanical wood processing industry, furniture making or other wood transformation activities, which have been agglomerated either directly by compression or by addition of a binder in a proportion not exceeding 3% by weight. Such briquettes are in the form of cubiform, polyhedral or cylindrical units with the minimum crosssectional dimension greater than 25 mm;"
+    },
+    {
+      "number": "Sub-Heading Note 3",
+      "text": "For the purposes of sub-heading 4407 13, \"S-P-F\" refers to wood sourced from mixed stands of spruce, pine and fir where the proportion of each species varies and is unknown."
+    },
+    {
+      "number": "Sub-Heading Note 4",
+      "text": "For the purposes of sub-heading 4407 14, \"Hem-fir\" refers to wood sourced from mixed stands of Western hemlock and fir where the proportion of each species varies and is unknown."
+    },
+    {
+      "number": "Supplementary Note 1",
+      "text": "\"Marine plywood\" means plywood conforming to Indian Standard Specification IS 710."
+    },
+    {
+      "number": "Supplementary Note 2",
+      "text": "\"Aircraft plywood\" means plywood conforming to Indian Standard Specification Nos. IS 709 and IS 4859."
+    },
+    {
+      "number": "Supplementary Note 3",
+      "text": "For the purposes of heading 4412, the expression \"similar laminated wood\" includes blockboard, laminboard and battenboard, in which the core is thick and composed of blocks, laths or battens of wood glued or otherwise joined together and surface with the outer plies and also panels in which the wooden core is replaced by other materials such as a layer of layers of particle board, fibre board, wood waste glued or otherwise joined together, asbestos or cork."
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [
+    {
+      "number": "Sub-Heading Note 1",
+      "text": "For the purposes of sub-heading 4401 31, the expression \"wood pellets\" means by-products such as cutter shavings, sawdust or chips, of the mechanical wood processing industry, furnituremaking industry or other wood transformation activities, which have been agglomerated either directly by compression or by the addition of a binder in a proportion not exceeding 3% by weight. Such pellets are cylindrical, with a diameter not exceeding 25 mm and a length not exceeding 100 mm."
+    },
+    {
+      "number": "Sub-Heading Note 2",
+      "text": "For the purposes of sub-heading 4401 32, the expression ?wood briquettes? means by-products such as cutter shavings, sawdust or chips, of the mechanical wood processing industry, furniture making or other wood transformation activities, which have been agglomerated either directly by compression or by addition of a binder in a proportion not exceeding 3% by weight. Such briquettes are in the form of cubiform, polyhedral or cylindrical units with the minimum crosssectional dimension greater than 25 mm;"
+    },
+    {
+      "number": "Sub-Heading Note 3",
+      "text": "For the purposes of sub-heading 4407 13, \"S-P-F\" refers to wood sourced from mixed stands of spruce, pine and fir where the proportion of each species varies and is unknown."
+    },
+    {
+      "number": "Sub-Heading Note 4",
+      "text": "For the purposes of sub-heading 4407 14, \"Hem-fir\" refers to wood sourced from mixed stands of Western hemlock and fir where the proportion of each species varies and is unknown."
+    }
+  ],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "wood, in chips, in shavings, crushed, ground or powdered, of a kind used primarily in perfumery, in pharmacy, or for insecticidal, fungicidal or similar purposes (heading 1211)",
+      "redirects_to_chapter": "12",
+      "redirects_to_heading": "1211",
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover: (a) wood, in chips,in shavings, crushed, ground or powdered, of a kind used primarily in perfumery, in pharmacy, orforinsecticidal,fungicidal orsimilar purposes(heading1211)"
+    },
+    {
+      "excluded_product_text": "bamboos or other materials of a woody nature of a kind used primarily for plaiting, in the rough, whether or not split, sawn lengthwise or cut to length (heading 1401)",
+      "redirects_to_chapter": "14",
+      "redirects_to_heading": "1401",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover: (b) bamboos or other materials of a woody nature of a kind used primarily for plaiting, in the rough, whether or not split, sawn lengthwise or cut to length (heading 1401)"
+    },
+    {
+      "excluded_product_text": "wood, in chips, in shavings, ground or powdered, of a kind used primarily in dyeing or in tanning (heading 1404)",
+      "redirects_to_chapter": "14",
+      "redirects_to_heading": "1404",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "This Chapter does not cover: (c) wood, in chips, in shavings, ground or powdered, of a kind used primarily in dyeing or in tanning (heading 1404)"
+    },
+    {
+      "excluded_product_text": "activated charcoal (heading 3802)",
+      "redirects_to_chapter": "38",
+      "redirects_to_heading": "3802",
+      "source_note_number": "Note 1(d)",
+      "source_note_text": "This Chapter does not cover: (d) activated charcoal (heading 3802)"
+    },
+    {
+      "excluded_product_text": "articles of heading 4202",
+      "redirects_to_chapter": "42",
+      "redirects_to_heading": "4202",
+      "source_note_number": "Note 1(e)",
+      "source_note_text": "This Chapter does not cover: (e) articles of heading 4202"
+    },
+    {
+      "excluded_product_text": "goods of Chapter 46",
+      "redirects_to_chapter": "46",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(f)",
+      "source_note_text": "This Chapter does not cover: (f) goods of Chapter 46"
+    },
+    {
+      "excluded_product_text": "footwear or parts thereof Chapter 64",
+      "redirects_to_chapter": "64",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(g)",
+      "source_note_text": "This Chapter does not cover: (g) footwear or parts thereof Chapter 64"
+    },
+    {
+      "excluded_product_text": "goods of Chapter 66 (for example, umbrellas and walking-sticks and parts thereof)",
+      "redirects_to_chapter": "66",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(h)",
+      "source_note_text": "This Chapter does not cover: (h) goods of Chapter 66 (for example, umbrellas and walking-sticks and parts thereof)"
+    },
+    {
+      "excluded_product_text": "goods of heading 6808",
+      "redirects_to_chapter": "68",
+      "redirects_to_heading": "6808",
+      "source_note_number": "Note 1(ij)",
+      "source_note_text": "This Chapter does not cover: (ij) goods of heading 6808"
+    },
+    {
+      "excluded_product_text": "imitation jewellery of heading 7117",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": "7117",
+      "source_note_number": "Note 1(k)",
+      "source_note_text": "This Chapter does not cover: (k)imitation jewellery of heading 7117"
+    },
+    {
+      "excluded_product_text": "goods of Section XVI or Section XVII (for example, machine parts, cases, covers, cabinets for machines and apparatus and wheel wrights' wares)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(l)",
+      "source_note_text": "This Chapter does not cover: (l) goods of Section XVI or Section XVII(for example, machine parts, cases, covers, cabinets for machines and apparatus and wheel wrights? wares)"
+    },
+    {
+      "excluded_product_text": "goods of Section XVIII (for example, clock cases and musical instruments and parts thereof)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(m)",
+      "source_note_text": "This Chapter does not cover: (m) goods of Section XVIII (for example, clock cases and musical instruments and partsthereof)"
+    },
+    {
+      "excluded_product_text": "parts of firearms (heading 9305)",
+      "redirects_to_chapter": "93",
+      "redirects_to_heading": "9305",
+      "source_note_number": "Note 1(n)",
+      "source_note_text": "This Chapter does not cover: (n) parts of firearms (heading 9305)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 94 (for example, furniture, luminaires and lighting fittings, prefabricated buildings)",
+      "redirects_to_chapter": "94",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(o)",
+      "source_note_text": "This Chapter does not cover: (o) articles of Chapter 94 (for example, furniture, luminaires and lighting fittings, prefabricated buildings)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 95 (for example, toys, games, sports requisites)",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(p)",
+      "source_note_text": "This Chapter does not cover: (p) articles of Chapter 95 (for example, toys, games, sports requisites)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 96 (for example, smoking pipes and parts thereof, buttons, pencils, and monopods, bipods, tripods and similar articles) excluding bodies and handles, of wood, for articles of heading 9603",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(q)",
+      "source_note_text": "This Chapter does not cover: (q) articles of Chapter 96 (for example, smoking pipes and parts thereof, buttons, pencils, and monopods, bipods, tripods and similar articles) excluding bodies and handles, of wood, for articles of heading 9603"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 97 (for example, works of art)",
+      "redirects_to_chapter": "97",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(r)",
+      "source_note_text": "This Chapter does not cover: (r) articles of Chapter 97 (for example, works of art )"
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "4401",
+      "title": "Fuel wood, in logs, in billets, in twigs, in faggots or in similar forms; wood in chips or particles; sawdust and wood waste and scrap, whether or not agglomerated in logs, briquettes, pellets or similar forms.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4401.10",
+          "title": "Coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4401.10.00",
+              "description": "Coniferous",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false,
+          "india_specific": true,
+          "india_specific_note": "8-digit code 44011000 'Coniferous' is explicitly present in Chapter 44 PDF as a fuel-wood tariff line. India retains the legacy HS 2017 subheading 4401.10 'Fuel wood' even though WCO HS 2022 split it into 4401.11 (Coniferous) and 4401.12 (Non-coniferous). Real Indian row."
+        },
+        {
+          "subheading": "4401.11",
+          "title": "Fuel wood, in logs, in billets, in twigs, in faggots or in similar forms : -- Coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4401.11.10",
+              "description": "In logs",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "exclusively out of imported logs/timber) and; b. Fuel wood, in logs, in billets, in twigs, in faggots or in similar forms; Wood in chips or particles; Sawdust and wood waste and scrap,"
+            },
+            {
+              "code": "4401.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "wood waste and scrap, whether or not agglomerated in logs, briquettes, pellets or similar forms is not permitted."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4401.12",
+          "title": "Fuel wood, in logs, in billets, in twigs, in faggots or in similar forms : -- Non-coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4401.12.10",
+              "description": "In logs",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "wood waste and scrap, whether or not agglomerated in logs, briquettes, pellets or similar forms is not permitted."
+            },
+            {
+              "code": "4401.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "logs, in billets, in twigs, in faggots or in similar forms; Wood in chips or particles; Sawdust and wood waste and scrap, whether or not agglomerated in logs, briquettes, pellets or similar forms is not permitted."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4401.21",
+          "title": "Wood in chips or particles : -- Coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4401.21.00",
+              "description": "Wood in chips or particles : -- Coniferous",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4401.22",
+          "title": "Wood in chips or particles : -- Non-coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4401.22.00",
+              "description": "Wood in chips or particles:-- Non-coniferous",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4401.31",
+          "title": "Sawdust and wood waste and scrap, agglomerated in logs, briquettes, pellets or similar forms : -- Wood pellets",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4401.31.00",
+              "description": "Sawdust and wood waste and scrap, agglomerated in logs, briquettes, pellets or similar forms : -- Wood pellets",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "not permitted. 2."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4401.32",
+          "title": "Wood briquettes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4401.32.00",
+              "description": "Wood briquettes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "1. Export of Wood and wood products in the form of logs, timber, stumps, roots, bark, chips, powder, flakes, dust, and charcoal other than sawn timber made"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4401.39",
+          "title": "Sawdust and wood waste and scrap, agglomerated in logs, briquettes, pellets or similar forms : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4401.39.00",
+              "description": "Sawdust and wood waste and scrap, agglomerated in logs, briquettes, pellets or similar forms : -- Other",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "not permitted. 2."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4401.41",
+          "title": "Sawdust and wood waste and scrap, not agglomerated: - - Sawdust",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4401.41.00",
+              "description": "Sawdust and wood waste and scrap, not agglomerated: - - Sawdust",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4401.49",
+          "title": "Sawdust and wood waste and scrap, not agglomerated:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4401.49.00",
+              "description": "Sawdust and wood waste and scrap, not agglomerated:",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4402",
+      "title": "Wood charcoal (including shell or nut charcoal), whether or not agglomerated.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4402.10",
+          "title": "Of bamboo",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4402.10.00",
+              "description": "Of bamboo",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of Bamboo Notification No. 60(RE- 23.12.2013"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4402.20",
+          "title": "Of shell or nut:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4402.20.10",
+              "description": "Of coconut shell",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4402.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Prohibited. However, this 2013)/2009-2014 23.12.2013 Prohibition on Export of charcoal will not apply to Bhutan."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4403",
+      "title": "Wood in the rough, whether or not stripped of bark or sapwood, or roughly squared.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4403.11",
+          "title": "Treated with paint, stains, creosote or other preservatives : -- Coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4403.11.00",
+              "description": "Treated with paint, stains, creosote or other preservatives : -- Coniferous",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4403.12",
+          "title": "Treated with paint, stains, creosote or other preservatives : -- Non-coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4403.12.00",
+              "description": "Treated with paint, stains, creosote or other preservatives : -- Non-coniferous",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4403.21",
+          "title": "Other, coniferous : - - Of pine (Pinus spp.), of which the smallest cross-sectional dimension is 15 cm or more:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4403.21.10",
+              "description": "Saw logs and veneer logs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.21.20",
+              "description": "Poles, pilings and posts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4403.22",
+          "title": "Other, coniferous : -- Of pine (Pinus spp.), other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4403.22.10",
+              "description": "Saw logs and veneer logs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.22.20",
+              "description": "Poles, pilings and posts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.22.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4403.23",
+          "title": "Of fir (Abies spp.) and spruce (Picea spp.), of which the smallest cross-sectional dimension is 15 cm or more:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4403.23.10",
+              "description": "Saw logs and veneer logs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.23.20",
+              "description": "Poles, pilings and posts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.23.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4403.24",
+          "title": "Other, coniferous : -- Of fir (Abies spp.) and spruce (Picea spp.), other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4403.24.10",
+              "description": "Saw logs and veneer logs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.24.20",
+              "description": "Poles, pilings and posts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.24.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4403.25",
+          "title": "Other, of which the smallest cross-sectional dimension is 15 cm or more:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4403.25.10",
+              "description": "Saw logs and veneer logs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.25.20",
+              "description": "Poles, pilings and posts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.25.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4403.26",
+          "title": "Other, coniferous : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4403.26.10",
+              "description": "Saw logs and veneer logs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.26.20",
+              "description": "Poles, pilings and posts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.26.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4403.41",
+          "title": "Other, of tropical wood : -- Dark Red Meranti, Light Red Meranti and Meranti Bakau",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4403.41.00",
+              "description": "Other, of tropical wood : -- Dark Red Meranti, Light Red Meranti and Meranti Bakau",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4403.42",
+          "title": "Teak",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4403.42.00",
+              "description": "Teak",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4403.49",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4403.49.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4403.91",
+          "title": "Other : -- Of oak (Quercus spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4403.91.00",
+              "description": "Other : -- Of oak (Quercus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4403.93",
+          "title": "Other:- - Of beech (Fagus spp.), of which the smallest cross-sectional dimension is 15 cm or more",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4403.93.00",
+              "description": "Other:- - Of beech (Fagus spp.), of which the smallest cross-sectional dimension is 15 cm or more",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4403.94",
+          "title": "Other : -- Of beech (Fagus spp.), other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4403.94.00",
+              "description": "Other : -- Of beech (Fagus spp.), other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4403.95",
+          "title": "Other:--Of birch (Betula spp.), of which the smallest cross-sectional dimension is 15 cm or more",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4403.95.00",
+              "description": "Other:--Of birch (Betula spp.), of which the smallest cross-sectional dimension is 15 cm or more",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4403.96",
+          "title": "Other : -- Of birch (Betula spp.), other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4403.96.00",
+              "description": "Other : -- Of birch (Betula spp.), other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4403.97",
+          "title": "Other : -- Of poplar and aspen (Populus spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4403.97.00",
+              "description": "Other : -- Of poplar and aspen (Populus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4403.98",
+          "title": "Other : -- Of eucalyptus (Eucalyptus spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4403.98.00",
+              "description": "Other : -- Of eucalyptus (Eucalyptus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4403.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4403.99.11",
+              "description": "Andaman Padauk (Pterocarous dalbaergiodes)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.99.12",
+              "description": "Bonsum (Phoebe goalparensis)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.99.13",
+              "description": "Gurgan (Dipterocarpus alatus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.99.14",
+              "description": "Khair (Acacia Catechu)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.99.15",
+              "description": "Lampati (Duabanga grandiflora)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.99.16",
+              "description": "Laurel (Terminalia alata)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.99.17",
+              "description": "Paliwood (Palaquium Elliplicum)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.99.18",
+              "description": "Red Sanders (Pterocar pus Sautatinus)",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Conditon 3 of this 25/2023 03.08.2023 Chapter"
+            },
+            {
+              "code": "4403.99.19",
+              "description": "Rose Wood (Dalbergea Latifolio)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.99.21",
+              "description": "Sal (Chorea robusta, Sandalwood (Santalum album), Semul (Bombax ceiba), Walnut wood (Juglans binata), Anjam (Hardwickiabinata), Sisso (Dalbergia sisso) and White cedar (Dysozylum spp.) and the like: ---- Sal (Chorea robusta)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.99.22",
+              "description": "Sal (Chorea robusta, Sandalwood (Santalum album), Semul (Bombax ceiba), Walnut wood (Juglans binata), Anjam (Hardwickiabinata), Sisso (Dalbergia sisso) and White cedar (Dysozylum spp.) and the like: ---- Sandal wood (Santalum albur)",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Conditon 5 of this"
+            },
+            {
+              "code": "4403.99.23",
+              "description": "Sal (Chorea robusta, Sandalwood (Santalum album), Semul (Bombax ceiba), Walnut wood (Juglans binata), Anjam (Hardwickiabinata), Sisso (Dalbergia sisso) and White cedar (Dysozylum spp.) and the like: ---- Semul (Bombax ceiba)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.99.24",
+              "description": "Sal (Chorea robusta, Sandalwood (Santalum album), Semul (Bombax ceiba), Walnut wood (Juglans binata), Anjam (Hardwickiabinata), Sisso (Dalbergia sisso) and White cedar (Dysozylum spp.) and the like: ---- Walnut wood (Juglans binata)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.99.25",
+              "description": "Sal (Chorea robusta, Sandalwood (Santalum album), Semul (Bombax ceiba), Walnut wood (Juglans binata), Anjam (Hardwickiabinata), Sisso (Dalbergia sisso) and White cedar (Dysozylum spp.) and the like: ---- Anjam (Hardwickia binata)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.99.27",
+              "description": "Sal (Chorea robusta, Sandalwood (Santalum album), Semul (Bombax ceiba), Walnut wood (Juglans binata), Anjam (Hardwickiabinata), Sisso (Dalbergia sisso) and White cedar (Dysozylum spp.) and the like: ---- Sissoo (Dalbergia sisso)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.99.28",
+              "description": "Sal (Chorea robusta, Sandalwood (Santalum album), Semul (Bombax ceiba), Walnut wood (Juglans binata), Anjam (Hardwickiabinata), Sisso (Dalbergia sisso) and White cedar (Dysozylum spp.) and the like: ---- White cedar [Dysozylum malabaricum]",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4403.99.90",
+              "description": "Sal (Chorea robusta, Sandalwood (Santalum album), Semul (Bombax ceiba), Walnut wood (Juglans binata), Anjam (Hardwickiabinata), Sisso (Dalbergia sisso) and White cedar (Dysozylum spp.) and the like: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4404",
+      "title": "Hoopwood; split poles; piles, pickets and stakes of wood, pointed but not sawn lengthwise; wooden sticks, roughly trimmed but not turned, bent or otherwise worked, suitable for the manufacture of walking-sticks, umbrellas, tool handles or the like; chipwood and the like.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4404.10",
+          "title": "Coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4404.10.00",
+              "description": "Coniferous",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4404.20",
+          "title": "Non-coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4404.20.10",
+              "description": "Wooden sticks, roughly trimmed but not turned, bent or otherwise worked, suitable for the manufacture of walking sticks, tool handles, split poles, piles, pickets, stakes and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4404.20.20",
+              "description": "Drawn Wood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4404.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4405",
+      "title": "Wood wool; wood flour.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4405.00",
+          "title": "Wood wool; wood flour.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4405.00.00",
+              "description": "Wood wool; wood flour.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "4406",
+      "title": "Railway or tramway sleepers (cross-ties) of wood.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4406.11",
+          "title": "Not impregnated : -- Coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4406.11.00",
+              "description": "Not impregnated : -- Coniferous",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4406.12",
+          "title": "Not impregnated : -- Non-coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4406.12.00",
+              "description": "Not impregnated : -- Non-coniferous",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4406.91",
+          "title": "Other : -- Coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4406.91.00",
+              "description": "Other : -- Coniferous",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4406.92",
+          "title": "Other : -- Non-coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4406.92.00",
+              "description": "Other : -- Non-coniferous",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4407",
+      "title": "Wood sawn or chipped lengthwise, sliced or peeled, whether or not planed, sanded or end-jointed, of a thickness exceeding 6 mm.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4407.11",
+          "title": "Coniferous : -- Of pine (Pinus spp)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.11.00",
+              "description": "Coniferous : -- Of pine (Pinus spp)",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "permitted as per Policy"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4407.12",
+          "title": "Coniferous : -- Of fir (Abies spp) and spruce Picea spp)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.12.00",
+              "description": "Coniferous : -- Of fir (Abies spp) and spruce Picea spp)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4407.13",
+          "title": "Of S-P-F (spruce (Picea spp.), pine (Pinus spp.) and fir (Abies spp.))",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.13.00",
+              "description": "Of S-P-F (spruce (Picea spp.), pine (Pinus spp.) and fir (Abies spp.))",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4407.14",
+          "title": "Of Hem-fir (Western hemlock (Tsugaheterophylla) and fir (Abies spp.))",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.14.00",
+              "description": "Of Hem-fir (Western hemlock (Tsugaheterophylla) and fir (Abies spp.))",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4407.19",
+          "title": "Coniferous : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.19.10",
+              "description": "Douglas fir (Pseudotsuga menziesii)",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "permitted as per Policy"
+            },
+            {
+              "code": "4407.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "permitted as per Policy condition 4 of this Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4407.21",
+          "title": "Of tropical wood : -- Mahogany (Swietenia spp)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.21.00",
+              "description": "Of tropical wood : -- Mahogany (Swietenia spp)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4407.22",
+          "title": "Of tropical wood : -- Virola, Imbuia and Balsa",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.22.00",
+              "description": "Of tropical wood : -- Virola, Imbuia and Balsa",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4407.23",
+          "title": "Teak",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.23.00",
+              "description": "Teak",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4407.25",
+          "title": "Of tropical wood : -- Dark Red Meranti, Light Red Meranti and Meranti Bakau",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.25.00",
+              "description": "Of tropical wood : -- Dark Red Meranti, Light Red Meranti and Meranti Bakau",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4407.26",
+          "title": "Of tropical wood : -- White Lauan, White Meranti, White Seraya, Yellow Meranti and Alan",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.26.00",
+              "description": "Of tropical wood : -- White Lauan, White Meranti, White Seraya, Yellow Meranti and Alan",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4407.27",
+          "title": "Of tropical wood : -- Sapelli",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.27.00",
+              "description": "Of tropical wood : -- Sapelli",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4407.28",
+          "title": "Of tropical wood : -- Iroko",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.28.00",
+              "description": "Of tropical wood : -- Iroko",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Certain Exports are"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4407.29",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.29.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "permitted as per Policy condition 4 of this Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4407.91",
+          "title": "Other : -- Of oak (Quercus spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.91.00",
+              "description": "Other : -- Of oak (Quercus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4407.92",
+          "title": "Other : -- Of beech (Fagus spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.92.00",
+              "description": "Other : -- Of beech (Fagus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4407.93",
+          "title": "Other : -- Of maple (Acer spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.93.00",
+              "description": "Other : -- Of maple (Acer spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4407.94",
+          "title": "Other : -- Of cherry (Prunus spp)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.94.00",
+              "description": "Other : -- Of cherry (Prunus spp)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4407.95",
+          "title": "Other : -- Of ash (Fraxinus spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.95.00",
+              "description": "Other : -- Of ash (Fraxinus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4407.96",
+          "title": "Other : -- Of birch (Betula spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.96.00",
+              "description": "Other : -- Of birch (Betula spp.)",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "permitted as per Policy"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4407.97",
+          "title": "Other : -- Of poplar and aspen (Populus spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.97.00",
+              "description": "Other : -- Of poplar and aspen (Populus spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4407.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4407.99.20",
+              "description": "Willow",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "permitted as per Policy condition 4 of this Chapter. 1.Export of Red Sanders may be permitted subject to Policy condition 3 of"
+            },
+            {
+              "code": "4407.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "this Chapter. 2. Certain 25/2023 03.08.2023 other Exports may be permitted subject to"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4408",
+      "title": "Sheets for veneering (including those obtained by slicing laminated wood), for plywood or for similar laminated wood and other wood, sawn lengthwise, sliced or peeled, whether or not planed, sanded, spliced or end-jointed, of a thickness not exceeding 6 mm.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4408.10",
+          "title": "Coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4408.10.10",
+              "description": "Sheets for plywood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4408.10.20",
+              "description": "Oak wood veneer",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4408.10.30",
+              "description": "Veneer sheets, for match boxes and match splints",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4408.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4408.31",
+          "title": "Of tropical wood : -- Dark Red Meranti, Light Red Meranti and Meranti Bakau",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4408.31.10",
+              "description": "Sheets for plywood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4408.31.20",
+              "description": "Veneer sheets (of Rose Wood)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4408.31.30",
+              "description": "Veneer sheets, for match boxes and match splints",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4408.31.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4408.39",
+          "title": "Of tropical wood : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4408.39.10",
+              "description": "Sheets for plywoods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4408.39.20",
+              "description": "Veneer sheets (of rose wood)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4408.39.30",
+              "description": "Veneer sheets, for match boxes and match splints",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4408.39.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4408.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4408.90.10",
+              "description": "Sheets for plywoods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4408.90.20",
+              "description": "Veneer sheets, for match boxes and match splints",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4408.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4409",
+      "title": "Wood (including strips and friezes for parquet flooring, not assembled) continuously shaped (tongued, grooved, rebated, chamfered, V-jointed, beaded, moulded, rounded or the like) along any of its edges, ends or faces, whether or not planed, sanded or end-jointed.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4409.10",
+          "title": "Coniferous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4409.10.10",
+              "description": "Planned, Tongued, grooved, Rebated, Chamfered, V-jointed, and the like but not further moulded",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4409.10.20",
+              "description": "Beadings, and mouldings (including moulded, skirting and other moulded boards)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4409.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4409.21",
+          "title": "Non-coniferous : -- Of bamboo",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4409.21.00",
+              "description": "Non-coniferous : -- Of bamboo",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4409.22",
+          "title": "Non-coniferous : -- Of tropical wood",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4409.22.00",
+              "description": "Non-coniferous : -- Of tropical wood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4409.29",
+          "title": "Non-coniferous : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4409.29.10",
+              "description": "Planed, tongued, grooved, rebated, chamfered, V-jointed, and the like but not further moulded",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4409.29.20",
+              "description": "Beadings and Mouldings (including moulded skirting and other moulded boards)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4409.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4410",
+      "title": "Particle board, oriented strand board (OSB) and similar board (for example, waferboard) of wood or other ligneous materials, whether or not agglomerated with resins or other organic binding substances.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4410.11",
+          "title": "Of wood : -- Particle board",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4410.11.10",
+              "description": "Plain particle boards",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4410.11.20",
+              "description": "Insulation board and hard board",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4410.11.30",
+              "description": "Veneered particle board, not having decorative veneers on any face",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4410.11.90",
+              "description": "Others",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4410.12",
+          "title": "Of wood : -- Oriented strand board (OSB)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4410.12.10",
+              "description": "Unworked or not further worked than sanded",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4410.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4410.19",
+          "title": "Of wood : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4410.19.00",
+              "description": "Of wood : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4410.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4410.90.10",
+              "description": "Plain particle board",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4410.90.20",
+              "description": "Insulation board and hard board",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4410.90.30",
+              "description": "Veneered particle board, not having decorative veneers on any face",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4410.90.40",
+              "description": "of Coir",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4410.90.50",
+              "description": "of jute fibre",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4410.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4411",
+      "title": "Fibreboard of wood or other ligneous materials, whether or not bonded with resins or other organic substances.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4411.12",
+          "title": "Medium density fibreboard (MDF) : -- Of a thickness not exceeding 5 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4411.12.00",
+              "description": "Medium density fibreboard (MDF) : -- Of a thickness not exceeding 5 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4411.13",
+          "title": "Medium density fibreboard (MDF) : -- Of a thickness exceeding 5 mm but not exceeding 9 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4411.13.00",
+              "description": "Medium density fibreboard (MDF) : -- Of a thickness exceeding 5 mm but not exceeding 9 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4411.14",
+          "title": "Medium density fibreboard (MDF) : -- Of a thickness exceeding 9 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4411.14.00",
+              "description": "Medium density fibreboard (MDF) : -- Of a thickness exceeding 9 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4411.92",
+          "title": "Other : -- Of a density exceeding 08 g/cm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4411.92.11",
+              "description": "Not mechanically worked or surface covered: ---- Hard board",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4411.92.19",
+              "description": "Not mechanically worked or surface covered: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4411.92.21",
+              "description": "Other: ---- Hardboard",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4411.92.29",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4411.93",
+          "title": "Other : -- Of a density exceeding 05 g/cm but not exceeding 08 g/cm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4411.93.11",
+              "description": "Not mechanically worked or surface covered: ---- Insulation Board",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4411.93.19",
+              "description": "Not mechanically worked or surface covered: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4411.93.21",
+              "description": "Other: ---- Insulation board",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4411.93.29",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4411.94",
+          "title": "Other : -- Of a density not exceeding 05 g/cm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4411.94.11",
+              "description": "Insulation board",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4411.94.19",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4411.94.21",
+              "description": "Other: ---- Insulation board",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4411.94.22",
+              "description": "Other: ---- Of Coir",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4411.94.23",
+              "description": "of jute fibre",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4411.94.29",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4412",
+      "title": "Plywood, veneered panels and similar laminated wood.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4412.10",
+          "title": "Of bamboo",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4412.10.00",
+              "description": "Of bamboo",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4412.31",
+          "title": "Other plywood, consisting solely of sheets of wood (other than bamboo), each ply not exceeding 6 mm thickness : -- With at least one outer ply of tropical wood",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4412.31.10",
+              "description": "Decorative plywood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.31.20",
+              "description": "Tea chest panels or shooks, packed in sets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.31.30",
+              "description": "Other tea chest panels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.31.40",
+              "description": "Marine and aircraft plywood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.31.50",
+              "description": "Cuttings and trimmings of plywood of width not exceeding 5 cm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.31.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4412.33",
+          "title": "Other plywood, consisting solely of sheets of wood (other than bamboo), each ply not exceeding 6 mm thickness : -- Other, with at least one outer ply of non-coniferous wood of the species alder (Alnus spp.), ash (Fraxinus spp.), beech (Fagus spp.), birch (Betula spp.), cherry (Prunus spp.), chestnut (Castanea spp.), elm (Ulmus spp.), eucalyptus (Eucalyptus spp.), hickory (Carya spp.), horse chestnut (Aesculus spp.), lime (Tilia spp.), maple (Acer spp.), oak (Quercus spp.), plane tree (Platanus spp.), poplar and aspen (Populus spp.), robinia (Robinia spp.), tulipwood (Liriodendron spp.) or walnut (Juglans spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4412.33.10",
+              "description": "Decorative plywood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.33.20",
+              "description": "Tea chest panels, shooks whether or not packed in sets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.33.30",
+              "description": "Marine and aircraft plywood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.33.40",
+              "description": "Cutting and trimmings of plywood of width not exceeding 5 cm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.33.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4412.34",
+          "title": "Other, with at least one outer ply of non-coniferous wood not specified under subheading 441233 -- Other, with at least one outer ply of non-coniferous wood not specified under subheading 4412.33",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4412.34.10",
+              "description": "Decorative plywood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.34.20",
+              "description": "Tea chest panels, shooks whether or not packed in sets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.34.30",
+              "description": "Marine and aircraft plywood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.34.40",
+              "description": "Cutting and trimmings of plywood of width not exceeding 5 cm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.34.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4412.39",
+          "title": "Other, with at least one outer ply of non-coniferous wood not specified under subheading 441233 -- Other, with both outer plies of coniferous wood",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4412.39.10",
+              "description": "Decorative plywood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.39.20",
+              "description": "Tea chest panels, shooks whether or not packed in sets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.39.30",
+              "description": "Marine and aircraft plywood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.39.40",
+              "description": "Cuttings and trimmings of plywood of width not exceeding 5 cm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.39.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4412.41",
+          "title": "With at least one outer ply of tropical wood",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4412.41.00",
+              "description": "With at least one outer ply of tropical wood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4412.42",
+          "title": "Other, with at least one outer ply of non-coniferous wood",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4412.42.00",
+              "description": "Other, with at least one outer ply of non-coniferous wood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4412.49",
+          "title": "Other, With both outer plies Of coniferous Wood",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4412.49.00",
+              "description": "Other, With both outer plies Of coniferous Wood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4412.51",
+          "title": "Blockboard, laminboard and battenboard: - - With at least one outer ply of tropical wood",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4412.51.00",
+              "description": "Blockboard, laminboard and battenboard: - - With at least one outer ply of tropical wood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4412.52",
+          "title": "Blockboard, laminboard and battenboard: - - Other, with at least one outer ply of non-coniferous wood",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4412.52.00",
+              "description": "Blockboard, laminboard and battenboard: - - Other, with at least one outer ply of non-coniferous wood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4412.59",
+          "title": "Blockboard, laminboard and battenboard: - - Other, with both outer plies of coniferous wood",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4412.59.00",
+              "description": "Blockboard, laminboard and battenboard: - - Other, with both outer plies of coniferous wood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4412.91",
+          "title": "Other: - - With at least one outer ply of tropical wood:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4412.91.10",
+              "description": "Other: - - - Decorative plywood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.91.20",
+              "description": "Other: - - - Tea chest panel or shooks, packed in sets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.91.30",
+              "description": "Other: - - - Marine and aircraft plywood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.91.40",
+              "description": "Other: - - - Cuttings and trimmings of plywood of which not exceeding 5cm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.91.90",
+              "description": "Other: - - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4412.92",
+          "title": "Other: - - Other, with at least one outer ply of non-coniferous wood:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4412.92.10",
+              "description": "Other: - - - Decorative plywood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.92.20",
+              "description": "Other: - - - Tea chest panel or shooks, packed in sets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.92.30",
+              "description": "Other: - - - Marine and aircraft plywood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.92.40",
+              "description": "Other: - - - Cuttings and trimmings of plywood of which not exceeding 5cm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4412.99",
+          "title": "Other:- - Other, with both outer plies of coniferous wood:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4412.99.10",
+              "description": "Decorative plywood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.99.20",
+              "description": "Tea chest panel or shooks, packed in sets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.99.30",
+              "description": "Marine and Aircraft plywood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.99.40",
+              "description": "Cuttings and trimmings of plywood of width not exceeding 5cm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4412.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4413",
+      "title": "Densified wood, in blocks, plates, strips or profile shapes.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4413.00",
+          "title": "Densified wood, in blocks, plates, strips or profile shapes.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4413.00.00",
+              "description": "Densified wood, in blocks, plates, strips or profile shapes.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "4414",
+      "title": "Wooden frames for paintings, photographs, mirrors or similar objects.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4414.10",
+          "title": "Of tropical wood",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4414.10.00",
+              "description": "Of tropical wood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4414.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4414.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4415",
+      "title": "Packing cases, boxes, crates, drums and similar packings, of wood; cable-drums of wood; pallets, box pallets and other load boards, of wood; pallet collars of wood.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4415.10",
+          "title": "Cases, boxes, crates, drums and similar packings; cable-drums",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4415.10.00",
+              "description": "Cases, boxes, crates, drums and similar packings; cable-drums",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4415.20",
+          "title": "Pallets, box pallets and other load boards; pallet collars",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4415.20.00",
+              "description": "Pallets, box pallets and other load boards; pallet collars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4416",
+      "title": "Casks, barrels, vats, tubs and other coopers products and parts thereof, of wood, including staves.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4416.00",
+          "title": "Casks, barrels, vats, tubs and other coopers' products and parts thereof, of wood, including staves:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4416.00.10",
+              "description": "Casks, barrels, vats and tubs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4416.00.20",
+              "description": "Other coopers products",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4416.00.91",
+              "description": "Parts (of wood): ---- Riven or sawn staves of wood not further prepared",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4416.00.99",
+              "description": "Parts (of wood): ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "4417",
+      "title": "Tools, tool bodies, tool handles, broom or brush bodies and handles, of wood; boot or shoe lasts and trees, of wood.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4417.00",
+          "title": "Tools, tool bodies, tool handles, broom or brush bodies and handles, of wood; boot or shoe lasts and trees, of wood.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4417.00.00",
+              "description": "Tools, tool bodies, tool handles, broom or brush bodies and handles, of wood; boot or shoe lasts and trees, of wood.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "4418",
+      "title": "Builders joinery and carpentry of wood, including cellular wood panels, assembled flooring panels, shingles and shakes.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4418.11",
+          "title": "Windows, French-windows and their frames: - - Of tropical wood",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4418.11.00",
+              "description": "Windows, French-windows and their frames: - - Of tropical wood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4418.19",
+          "title": "Windows, French-windows and their frames: - - Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4418.19.00",
+              "description": "Windows, French-windows and their frames: - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4418.21",
+          "title": "Doors and their frames and thresholds: - - Of tropical wood:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4418.21.10",
+              "description": "Doors and their frames and thresholds: - - - Flush doors",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4418.21.20",
+              "description": "Doors and their frames and thresholds: - - - Frames and thresholds of flush doors",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4418.21.90",
+              "description": "Doors and their frames and thresholds: - - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4418.29",
+          "title": "Other:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4418.29.10",
+              "description": "Doors and their frames and thresholds: - - - Flush doors",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4418.29.20",
+              "description": "Doors and their frames and thresholds: - - - Frames and thresholds of flush doors",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4418.29.90",
+              "description": "Doors and their frames and thresholds: - - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4418.30",
+          "title": "Doors and their frames and thresholds: - Posts and beams other than products of sub-headings 4418 81 to 4418 89",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4418.30.00",
+              "description": "Doors and their frames and thresholds: - Posts and beams other than products of sub-headings 4418 81 to 4418 89",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4418.40",
+          "title": "Shuttering for concrete constructional work",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4418.40.00",
+              "description": "Shuttering for concrete constructional work",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4418.50",
+          "title": "Shingles and shakes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4418.50.00",
+              "description": "Shingles and shakes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4418.73",
+          "title": "Assembled flooring panels : -- Of bamboo or with at least the top layer (wear layer) of bamboo",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4418.73.00",
+              "description": "Assembled flooring panels : -- Of bamboo or with at least the top layer (wear layer) of bamboo",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4418.74",
+          "title": "Assembled flooring panels : -- Other, for mosaic floors",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4418.74.00",
+              "description": "Assembled flooring panels : -- Other, for mosaic floors",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4418.75",
+          "title": "Assembled flooring panels : -- Other, multilayer",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4418.75.00",
+              "description": "Assembled flooring panels : -- Other, multilayer",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4418.79",
+          "title": "Assembled flooring panels : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4418.79.00",
+              "description": "Assembled flooring panels : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4418.81",
+          "title": "Engineered structural timber products: - - Glue-laminated timber (glulam)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4418.81.00",
+              "description": "Engineered structural timber products: - - Glue-laminated timber (glulam)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4418.82",
+          "title": "Engineered structural timber products: - - Cross-laminated timber (CLT or X-lam)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4418.82.00",
+              "description": "Engineered structural timber products: - - Cross-laminated timber (CLT or X-lam)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4418.83",
+          "title": "Engineered structural timber products: - - I beams",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4418.83.00",
+              "description": "Engineered structural timber products: - - I beams",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4418.89",
+          "title": "Engineered structural timber products: - - Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4418.89.00",
+              "description": "Engineered structural timber products: - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4418.91",
+          "title": "Other : -- Of bamboo",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4418.91.00",
+              "description": "Other : -- Of bamboo",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4418.92",
+          "title": "Engineered structural timber products: - - Cellular wood panels",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4418.92.00",
+              "description": "Engineered structural timber products: - - Cellular wood panels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4418.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4418.99.00",
+              "description": "Other : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4419",
+      "title": "Tableware and kitchenware, of wood.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4419.11",
+          "title": "Of bamboo : -- Bread boards, chopping boards and similar boards",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4419.11.00",
+              "description": "Of bamboo : -- Bread boards, chopping boards and similar boards",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4419.12",
+          "title": "Of bamboo : -- Chopsticks",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4419.12.00",
+              "description": "Of bamboo : -- Chopsticks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4419.19",
+          "title": "Of bamboo : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4419.19.00",
+              "description": "Of bamboo : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4419.20",
+          "title": "of tropical wood",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4419.20.00",
+              "description": "of tropical wood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4419.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4419.90.10",
+              "description": "Bread boards, chopping boards and similar boards",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4419.90.20",
+              "description": "Chopsticks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4419.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4420",
+      "title": "Wood marquetry and inlaid wood; caskets and cases for jewellery or cutlery, and similar articles, of wood; statuettes and other ornaments, of wood; wooden articles of furniture not falling in Chapter 94.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4420.11",
+          "title": "Statuettes and other ornaments: - - Of tropical wood",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4420.11.00",
+              "description": "Statuettes and other ornaments: - - Of tropical wood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4420.19",
+          "title": "Statuettes and other ornaments: - - Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4420.19.00",
+              "description": "Statuettes and other ornaments: - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4420.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4420.90.10",
+              "description": "Wood marquetry and inlaid wood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4420.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "permitted as per Policy Condition 6 of this Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4421",
+      "title": "Other articles of wood.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4421.10",
+          "title": "Clothes hangers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4421.10.00",
+              "description": "Clothes hangers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4421.20",
+          "title": "Coffins",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4421.20.00",
+              "description": "Coffins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4421.91",
+          "title": "Other : -- Of bamboo",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4421.91.11",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like, of turned wood: ---- For cotton machinery",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4421.91.19",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like, of turned wood: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4421.91.20",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like, of turned wood: ---- Wood paving Blocks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4421.91.30",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like, of turned wood: ---- Match splints",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4421.91.40",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like, of turned wood: ---- Pencil slats",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4421.91.50",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like, of turned wood: ---- Parts of wood, namely oars, paddles and rudders for ships, boats and other similarfloating structures",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4421.91.60",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like, of turned wood: ---- Parts of domestic decorative articles used as tableware and kitchenware",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4421.91.70",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like, of turned wood: ---- Articles of densified wood not included or specified elsewhere",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4421.91.90",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like, of turned wood: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4421.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4421.99.11",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like of turned wood: ---- For cotton machinery",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4421.99.12",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like of turned wood: ---- For jute machinery",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4421.99.13",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like of turned wood: ---- For silk regenerated and synthetic fibre machinery",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4421.99.14",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like of turned wood: ---- For other machinery",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4421.99.19",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like of turned wood: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4421.99.20",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like of turned wood: ---- Wood paving Blocks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4421.99.30",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like of turned wood: ---- Match splints",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4421.99.40",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like of turned wood: ---- Pencil slats",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4421.99.50",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like of turned wood: ---- Parts of wood, namely oars, paddles and rudders for ships, boats and other similar floating structures",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4421.99.60",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like of turned wood: ---- Parts of domestic decorative articles used as tableware and kitchenware",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4421.99.70",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like of turned wood: ---- Articles of densified wood not included or specified elsewhere",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4421.99.90",
+              "description": "Spools, cops, bobbins, sewing thread reels and the like of turned wood: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

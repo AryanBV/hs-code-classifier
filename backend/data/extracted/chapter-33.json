@@ -1,0 +1,1267 @@
+{
+  "chapter": "33",
+  "section": "VI",
+  "title": "ESSENTIAL OILS AND RESINOIDS; PERFUMERY, COSMETIC OR TOILET PREPARATIONS",
+  "source_pdf": "Chapter 33 Essential Oils And Resinoids; Perfumery, Cosmetic Or Toilet Preparations.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '33011200') and 6-digit subheading codes without dots (e.g., '330119'). Normalized to NNNN.NN.NN format (e.g., '3301.12.00') and NNNN.NN format (e.g., '3301.19') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'Sl.No. Notes Notification Date Notification No', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "Section VI 'Main Notes' (4 notes) are attributed to section_notes (Section VI, Products of the Chemical or Allied Industries), not chapter_notes. These are identical to those of Chapter 28/30 etc.",
+    "Many subheadings in heading 3301 (e.g., 3301.29, 3301.30, 3301.90) contain very long compound descriptions where multiple distinct products are listed (e.g., 'Anise oil; Cajeput oil; Cananga oil; Caraway oil; Cassia oil; Cedarwood oil; Cinnamon bark oil; Cinnamon leaf oil') and the individual tariff line is identified by a ': ---- <product name>' suffix. These compound descriptions are preserved verbatim as they appear in the PDF.",
+    "Tariff line 3301.30.10 (Agar oil) has a Restricted export policy with an extensive Policy Condition (Notification 52/2024-25 dated 20.01.2025) covering annual export limits of 7,050 Kg per annum for Agar Oil from Aquilaria Malaccensis from artificially propagated sources, requiring Certificate of Origin from Forest Department, CITES permit, etc. Captured verbatim in policy_conditions metadata.",
+    "Tariff line 3301.29.37 (Sandalwood oil) has a Restricted export policy under Notification 15/2015-20 dated 05.07.2017. Captured in policy_conditions metadata.",
+    "PDF source has typo 'Fennugreek' (instead of 'Fenugreek') in subheading 3301.90 tariff lines (3301.90.11 through 3301.90.17). Preserved verbatim from source.",
+    "Subheading 3301.25 in PDF reads 'Essential oils other than those of citrus fruit : -- Of other mints' — preserved verbatim including hyphen-prefix indicators ('--') from WCO HS nomenclature.",
+    "Heading 3303 in PDF lists tariff lines as '33030010', '33030020', etc. The intermediate subheading is shown as '330300' ('Perfumes and toilet waters:'). Normalized as subheading 3303.00 with tariff lines 3303.00.10 through 3303.00.90.",
+    "Subheading 3304.91 PDF description reads 'Other : -- Powders, whether or not compressed' — colon and hyphen-prefix indicators preserved verbatim.",
+    "Heading 3307 tariff line 3307.41.00 description spans multiple lines: 'preparations for perfuming or deodorizing rooms, including odoriferous preparations used during religious rites : -- Agarbatti and other odoriferous preparations which operate by burning' — concatenated verbatim from PDF.",
+    "The 'Export Policy' and 'Policy Condition' columns are not part of the tariff line description field; they are captured separately. Unit-of-measure column (kg/u/etc) is NOT shown in this chapter's PDF — unit field set to null for all tariff lines.",
+    "Source PDF Note 4 (chapter note) text includes 'scented sachets; odoriferous preparations which operate by burning; perfumed papers and papers impregnated or coated with cosmetics; contact lens or artificial eye solution; wadding, felt and nonwovens, impregnated, coated or covered with perfume or cosmetics; animal toilet preparations.' — preserved verbatim including missing space after colon ('preparations:scented sachets')."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover: (a) natural oleoresins or vegetable extracts of heading 1301 or 1302; (b) soap or other products of heading 3401; or (c) gum, wood or sulphate turpentine or other products of heading 3805."
+    },
+    {
+      "number": "2",
+      "text": "The expression \"odoriferous substances\" in heading 3302 refers only to the substances of heading 3301, to odoriferous constituents isolated from those substances or to synthetic aromatics."
+    },
+    {
+      "number": "3",
+      "text": "Headings 3303 to 3307 apply, inter alia, to products, whether or not mixed (other than aqueous distillates and aqueous solutions of essential oils), suitable for use as goods of these headings and put up in packings of a kind sold by retail for such use."
+    },
+    {
+      "number": "4",
+      "text": "The expression \"perfumery, cosmetic or toilet preparations\" in heading 3307 applies, inter alia, to the following products:scented sachets; odoriferous preparations which operate by burning; perfumed papers and papers impregnated or coated with cosmetics; contact lens or artificial eye solution; wadding, felt and nonwovens, impregnated, coated or covered with perfume or cosmetics; animal toilet preparations."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "(A) Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 are to be classified in those headings and in no other heading of this Schedule. (B) Subject to paragraph (A) above, goods answering to a description in heading 2843, 2846 or 2852 are to be classified in those headings and in no other heading of this Section."
+    },
+    {
+      "number": "2",
+      "text": "Subject to Note 1 above, goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale are to be classified in those headings and in no other heading of this Schedule."
+    },
+    {
+      "number": "3",
+      "text": "Goods put up in sets consisting of two or more separate constituents,some or all of which fall in this Section and are intended to be mixed together to obtain a product of Section VI or VII, are to be classified in the heading appropriate to that product, provided that the constituents are: (a) having regard to the manner in which they are put up, clearly identifiable as being intended to be used together without first being repacked; (b) presented together; and (c) identifiable, whether by their nature or by the relative proportions in which they are present, as being complementary one to another."
+    },
+    {
+      "number": "4",
+      "text": "Where a product answers to a description in one or more of the headings in Section VI by virtue of being described by name or function and also to heading 3827, then it is classifiable in a heading that references the product by name or function and not under heading 3827."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "natural oleoresins or vegetable extracts of heading 1301 or 1302",
+      "redirects_to_chapter": "13",
+      "redirects_to_heading": "1301",
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover: (a) natural oleoresins or vegetable extracts of heading 1301 or 1302"
+    },
+    {
+      "excluded_product_text": "soap or other products of heading 3401",
+      "redirects_to_chapter": "34",
+      "redirects_to_heading": "3401",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "(b) soap or other products of heading 3401"
+    },
+    {
+      "excluded_product_text": "gum, wood or sulphate turpentine or other products of heading 3805",
+      "redirects_to_chapter": "38",
+      "redirects_to_heading": "3805",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "(c) gum, wood or sulphate turpentine or other products of heading 3805"
+    },
+    {
+      "excluded_product_text": "Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 — must be classified in those headings and not elsewhere",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": "2844",
+      "source_note_number": "Section VI Note 1(A)",
+      "source_note_text": "(A) Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 are to be classified in those headings and in no other heading of this Schedule."
+    },
+    {
+      "excluded_product_text": "Goods answering to a description in heading 2843, 2846 or 2852 — must be classified in those headings and not elsewhere in Section VI",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": "2843",
+      "source_note_number": "Section VI Note 1(B)",
+      "source_note_text": "(B) Subject to paragraph (A) above, goods answering to a description in heading 2843, 2846 or 2852 are to be classified in those headings and in no other heading of this Section."
+    },
+    {
+      "excluded_product_text": "Goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale — classified in those headings only",
+      "redirects_to_chapter": "33",
+      "redirects_to_heading": "3303",
+      "source_note_number": "Section VI Note 2",
+      "source_note_text": "Subject to Note 1 above, goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale are to be classified in those headings and in no other heading of this Schedule."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "3301",
+      "title": "Essential oils (terpeneless or not), including concretes and absolutes; resinoids; extracted oleoresins; concentrates of essential oils in fats, in fixed oils, in waxes or the like, obtained by enfleurage or maceration; terpenic by-products of the deterpenation of essential oils; aqueous distillates and aqueous solutions of essential oils.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3301.12",
+          "title": "Essential oils of citrus fruit -- Of orange",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3301.12.00",
+              "description": "Essential oils of citrus fruit -- Of orange",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3301.13",
+          "title": "Essential oils of citrus fruit -- Of lemon",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3301.13.00",
+              "description": "Essential oils of citrus fruit -- Of lemon",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3301.19",
+          "title": "Essential oils of citrus fruit -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3301.19.10",
+              "description": "Citronella oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.19.90",
+              "description": "Other Essential oils other than those of citrus fruit:",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3301.22",
+          "title": "Essential oils other than those of citrus fruit:--Of jasmin:",
+          "subheading_notes": [],
+          "tariff_lines": [],
+          "wco_2022_match": false,
+          "india_specific": true,
+          "india_specific_note": "Subheading 330122 appears as a row in Chapter 33, mapped to '--Of jasmin' (column wrap interleaves with the 8-digit child 33012400). India uses 3301.22 as the 'Of jasmin' subheading per its tariff structure. Real Indian entry, regardless of how the WCO HS 2022 numbering compares."
+        },
+        {
+          "subheading": "3301.24",
+          "title": "Essential oils other than those of citrus fruit : -- Of peppermint (Mentha piperita)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3301.24.00",
+              "description": "Essential oils other than those of citrus fruit : -- Of peppermint (Mentha piperita)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3301.25",
+          "title": "Essential oils other than those of citrus fruit : -- Of other mints",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3301.25.10",
+              "description": "Spearmint oil (Ex-mentha spicata)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.25.20",
+              "description": "Water mint-oil (Ex-mentha aquatic)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.25.30",
+              "description": "Horsemint oil (Ex-mentha sylvestries)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.25.40",
+              "description": "Bergament oil (Ex-mentha citrate)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.25.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3301.29",
+          "title": "Essential oils other than those of citrus fruit : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3301.29.11",
+              "description": "Anise oil; Cajeput oil; Cananga oil; Caraway oil; Cassia oil; Cedarwood oil; Cinnamon bark oil; Cinnamon leaf oil: ---- Anise oil (aniseed oil)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.12",
+              "description": "Anise oil; Cajeput oil; Cananga oil; Caraway oil; Cassia oil; Cedarwood oil; Cinnamon bark oil; Cinnamon leaf oil: ---- Cajeput oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.13",
+              "description": "Anise oil; Cajeput oil; Cananga oil; Caraway oil; Cassia oil; Cedarwood oil; Cinnamon bark oil; Cinnamon leaf oil: ---- Cananga oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.14",
+              "description": "Anise oil; Cajeput oil; Cananga oil; Caraway oil; Cassia oil; Cedarwood oil; Cinnamon bark oil; Cinnamon leaf oil: ---- Caraway oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.15",
+              "description": "Anise oil; Cajeput oil; Cananga oil; Caraway oil; Cassia oil; Cedarwood oil; Cinnamon bark oil; Cinnamon leaf oil: ---- Cassia oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.16",
+              "description": "Anise oil; Cajeput oil; Cananga oil; Caraway oil; Cassia oil; Cedarwood oil; Cinnamon bark oil; Cinnamon leaf oil: ---- Cedarwood oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.17",
+              "description": "Anise oil; Cajeput oil; Cananga oil; Caraway oil; Cassia oil; Cedarwood oil; Cinnamon bark oil; Cinnamon leaf oil: ---- Cinnamon bark oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.18",
+              "description": "Anise oil; Cajeput oil; Cananga oil; Caraway oil; Cassia oil; Cedarwood oil; Cinnamon bark oil; Cinnamon leaf oil: ---- Cinnamon leaf oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.21",
+              "description": "Clove leaf or stem oil; Coriander seed oil; Dill oil; Eucalyptus oil; Fennel seed oil; Ginger oil; Ginger grass oil; Clove bud oil: ---- Clove leaf or stem oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.22",
+              "description": "Clove leaf or stem oil; Coriander seed oil; Dill oil; Eucalyptus oil; Fennel seed oil; Ginger oil; Ginger grass oil; Clove bud oil: ----Coriander seed oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.23",
+              "description": "Clove leaf or stem oil; Coriander seed oil; Dill oil; Eucalyptus oil; Fennel seed oil; Ginger oil; Ginger grass oil; Clove bud oil: ----Dill oil (anethum oil)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.24",
+              "description": "Clove leaf or stem oil; Coriander seed oil; Dill oil; Eucalyptus oil; Fennel seed oil; Ginger oil; Ginger grass oil; Clove bud oil: ----Eucalyptus oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.25",
+              "description": "Clove leaf or stem oil; Coriander seed oil; Dill oil; Eucalyptus oil; Fennel seed oil; Ginger oil; Ginger grass oil; Clove bud oil: ----Fennel seed oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.26",
+              "description": "Clove leaf or stem oil; Coriander seed oil; Dill oil; Eucalyptus oil; Fennel seed oil; Ginger oil; Ginger grass oil; Clove bud oil: ----Ginger oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.27",
+              "description": "Clove leaf or stem oil; Coriander seed oil; Dill oil; Eucalyptus oil; Fennel seed oil; Ginger oil; Ginger grass oil; Clove bud oil: ----Ginger grass oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.28",
+              "description": "Clove leaf or stem oil; Coriander seed oil; Dill oil; Eucalyptus oil; Fennel seed oil; Ginger oil; Ginger grass oil; Clove bud oil: ----Clove bud oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.31",
+              "description": "Tuberose concentrate; Nutmeg oil; Palmarosa oil; Patchouli oil; Pepper oil; Petitgrain oil; Sandalwood oil; Rose oil: ---- Tuberose concentrate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.32",
+              "description": "Tuberose concentrate; Nutmeg oil; Palmarosa oil; Patchouli oil; Pepper oil; Petitgrain oil; Sandalwood oil; Rose oil: ---- Nutmeg oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.33",
+              "description": "Tuberose concentrate; Nutmeg oil; Palmarosa oil; Patchouli oil; Pepper oil; Petitgrain oil; Sandalwood oil; Rose oil: ---- Palmarosa oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.34",
+              "description": "Tuberose concentrate; Nutmeg oil; Palmarosa oil; Patchouli oil; Pepper oil; Petitgrain oil; Sandalwood oil; Rose oil: ---- Patchouli oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.35",
+              "description": "Tuberose concentrate; Nutmeg oil; Palmarosa oil; Patchouli oil; Pepper oil; Petitgrain oil; Sandalwood oil; Rose oil: ---- Pepper oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.36",
+              "description": "Tuberose concentrate; Nutmeg oil; Palmarosa oil; Patchouli oil; Pepper oil; Petitgrain oil; Sandalwood oil; Rose oil: ---- Petitgrain oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.37",
+              "description": "Tuberose concentrate; Nutmeg oil; Palmarosa oil; Patchouli oil; Pepper oil; Petitgrain oil; Sandalwood oil; Rose oil: ---- Sandalwood oil",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "15/2015-20 05.07.2017"
+            },
+            {
+              "code": "3301.29.38",
+              "description": "Tuberose concentrate; Nutmeg oil; Palmarosa oil; Patchouli oil; Pepper oil; Petitgrain oil; Sandalwood oil; Rose oil: ---- Rose oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.41",
+              "description": "Camphor oil; Lemon grass oil; Ylang ylang oil; Davana oil; Cumin oil; Celery seed oil; paprika oil; turmeric oil: ---- Camphor oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.42",
+              "description": "Camphor oil; Lemon grass oil; Ylang ylang oil; Davana oil; Cumin oil; Celery seed oil; paprika oil; turmeric oil: ---- Lemon grass oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.43",
+              "description": "Camphor oil; Lemon grass oil; Ylang ylang oil; Davana oil; Cumin oil; Celery seed oil; paprika oil; turmeric oil: ---- Ylang ylang oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.44",
+              "description": "Camphor oil; Lemon grass oil; Ylang ylang oil; Davana oil; Cumin oil; Celery seed oil; paprika oil; turmeric oil: ---- Davana oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.45",
+              "description": "Camphor oil; Lemon grass oil; Ylang ylang oil; Davana oil; Cumin oil; Celery seed oil; paprika oil; turmeric oil: ---- Cumin oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.46",
+              "description": "Camphor oil; Lemon grass oil; Ylang ylang oil; Davana oil; Cumin oil; Celery seed oil; paprika oil; turmeric oil: ---- Celery seed oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.47",
+              "description": "Camphor oil; Lemon grass oil; Ylang ylang oil; Davana oil; Cumin oil; Celery seed oil; paprika oil; turmeric oil: ---- Garlic oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.48",
+              "description": "Camphor oil; Lemon grass oil; Ylang ylang oil; Davana oil; Cumin oil; Celery seed oil; paprika oil; turmeric oil: ---- Paprika oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.49",
+              "description": "Camphor oil; Lemon grass oil; Ylang ylang oil; Davana oil; Cumin oil; Celery seed oil; paprika oil; turmeric oil: ---- Turmeric oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.50",
+              "description": "Camphor oil; Lemon grass oil; Ylang ylang oil; Davana oil; Cumin oil; Celery seed oil; paprika oil; turmeric oil: ---- Spices oils not else where specified or included",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.29.90",
+              "description": "Camphor oil; Lemon grass oil; Ylang ylang oil; Davana oil; Cumin oil; Celery seed oil; paprika oil; turmeric oil: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3301.30",
+          "title": "Resinoids",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3301.30.10",
+              "description": "Agar oil",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "following conditions: 52/2024-25 20.01.2025 i. Applications for authorization to Agar Oil sourced from artificially propagated plantations (cultivated outside forest areas) must include: a) An attested copy of a Certificate of Origin issued following a physical inspection by a Forest Department officer authorized by the relevant State Government. The certificate must detail the date and quantity of procurement from legal sources and confirm that the plantation from which the agarwood"
+            },
+            {
+              "code": "3301.30.91",
+              "description": "Other: ---- Flavouring essences, all types, including those for liquors",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.30.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3301.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3301.90.11",
+              "description": "Fenugreek, Ginger, Pepper, Turmeric, Cardamom, Celery seed and Nutmeg Oleoresins: ---- Fennugreek Oleoresins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.12",
+              "description": "Fenugreek, Ginger, Pepper, Turmeric, Cardamom, Celery seed and Nutmeg Oleoresins: ---- Ginger Oleoresins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.13",
+              "description": "Fenugreek, Ginger, Pepper, Turmeric, Cardamom, Celery seed and Nutmeg Oleoresins: ---- Pepper Oleoresins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.14",
+              "description": "Fenugreek, Ginger, Pepper, Turmeric, Cardamom, Celery seed and Nutmeg Oleoresins: ---- Turmeric Oleoresins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.15",
+              "description": "Fenugreek, Ginger, Pepper, Turmeric, Cardamom, Celery seed and Nutmeg Oleoresins: ---- Cardamom Oleoresins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.16",
+              "description": "Fenugreek, Ginger, Pepper, Turmeric, Cardamom, Celery seed and Nutmeg Oleoresins: ---- Celery seed Oleoresins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.17",
+              "description": "Fenugreek, Ginger, Pepper, Turmeric, Cardamom, Celery seed and Nutmeg Oleoresins: ---- Nutmeg Oleoresins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.21",
+              "description": "Clove, Capsicum, Coriander, Cumin and Fennel Oleoreins and oleoresins of spices not elsewhere specified or included: ---- Clove Oleoresins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.22",
+              "description": "Clove, Capsicum, Coriander, Cumin and Fennel Oleoreins and oleoresins of spices not elsewhere specified or included: ---- Capsicum Oleoresins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.23",
+              "description": "Clove, Capsicum, Coriander, Cumin and Fennel Oleoreins and oleoresins of spices not elsewhere specified or included: ---- Coriander Oleoresins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.24",
+              "description": "Clove, Capsicum, Coriander, Cumin and Fennel Oleoreins and oleoresins of spices not elsewhere specified or included: ---- Cumin Oleoresins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.25",
+              "description": "Clove, Capsicum, Coriander, Cumin and Fennel Oleoreins and oleoresins of spices not elsewhere specified or included: ---- Fennel Oleoresins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.29",
+              "description": "Clove, Capsicum, Coriander, Cumin and Fennel Oleoreins and oleoresins of spices not elsewhere specified or included: ---- Oleoresins of spices not elsewhere specified or included",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.31",
+              "description": "Attars of all kinds in fixed oil base; mustard oil aroma, essence of ambrettolide (ambrette seed oil essence): ---- Attars of all kinds in fixed oil base",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.32",
+              "description": "Attars of all kinds in fixed oil base; mustard oil aroma, essence of ambrettolide (ambrette seed oil essence): ---- Mustard oil aroma",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.33",
+              "description": "Attars of all kinds in fixed oil base; mustard oil aroma, essence of ambrettolide (ambrette seed oil essence): ---- Essence of ambrettolide (ambrette seed oil essence)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.41",
+              "description": "Concentrates of essential oils in fats, in fixed oils or in waxes or the like, obtained by cold absorption or by maceration not elsewhere specified or included: ---- Flavouring essences, all types, including those for liquors",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.49",
+              "description": "Concentrates of essential oils in fats, in fixed oils or in waxes or the like, obtained by cold absorption or by maceration not elsewhere specified or included: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.51",
+              "description": "Terpenic by-products of the deterpenation of essential oils: ---- Flavouring essences, all types, including those for liquors",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.59",
+              "description": "Terpenic by-products of the deterpenation of essential oils: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.60",
+              "description": "Terpenic by-products of the deterpenation of essential oils: ---- Aqueous distillates of essential oil, not elsewhere specified or included",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.71",
+              "description": "Aqueous solutions of essential oils: ---- Flavouring essences, all types, including those for liquors",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.79",
+              "description": "Aqueous solutions of essential oils: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3301.90.90",
+              "description": "Aqueous solutions of essential oils: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3302",
+      "title": "Mixtures of odoriferous substances and mixtures (including alcoholic solutions) with a basis of one or more of these substances, of a kind used as raw materials in industry; other preparations based on odoriferous substances, of a kind used for the manufacture of beverages.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3302.10",
+          "title": "Of a kind used in the food or drink industries",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3302.10.10",
+              "description": "Synthetic flavouring essences",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3302.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3302.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3302.90.11",
+              "description": "Mixtures of Aromatic chemicals and essential oils as perfume base: ---- Synthetic perfumery compounds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3302.90.12",
+              "description": "Mixtures of Aromatic chemicals and essential oils as perfume base: ---- Synthetic essential oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3302.90.19",
+              "description": "Mixtures of Aromatic chemicals and essential oils as perfume base: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3302.90.20",
+              "description": "Mixtures of Aromatic chemicals and essential oils as perfume base: ---- Aleuritic acid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3302.90.90",
+              "description": "Mixtures of Aromatic chemicals and essential oils as perfume base: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3303",
+      "title": "Perfumes and toilet waters.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3303.00",
+          "title": "Perfumes and toilet waters:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3303.00.10",
+              "description": "Eau-de-cologne",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3303.00.20",
+              "description": "Rose water",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3303.00.30",
+              "description": "Keora water",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3303.00.40",
+              "description": "Perfumes and perfumery compounds not containing spirit (excluding aqueous distillates)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3303.00.50",
+              "description": "Perfumes containing spirit",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3303.00.60",
+              "description": "Spirituous toilet preparations not elsewhere specified or included",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3303.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "3304",
+      "title": "Beauty or make-up preparations and preparations for the care of the skin (other than medicaments), including sunscreen or sun tan preparations; manicure or pedicure preparations.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3304.10",
+          "title": "Lip make-up preparations",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3304.10.00",
+              "description": "Lip make-up preparations",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3304.20",
+          "title": "Eye make-up preparations",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3304.20.00",
+              "description": "Eye make-up preparations",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3304.30",
+          "title": "Manicure or pedicure preparations",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3304.30.00",
+              "description": "Manicure or pedicure preparations",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3304.91",
+          "title": "Other : -- Powders, whether or not compressed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3304.91.10",
+              "description": "Face powders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3304.91.20",
+              "description": "Talcum powders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3304.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3304.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3304.99.10",
+              "description": "Face creams",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3304.99.20",
+              "description": "Nail polish or lacquers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3304.99.30",
+              "description": "Moisturising lotion",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3304.99.40",
+              "description": "Sindur, Bindi, Kum Kum",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3304.99.50",
+              "description": "Turmeric preparations",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3304.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3305",
+      "title": "Preparations for use on the hair.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3305.10",
+          "title": "Shampoos",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3305.10.10",
+              "description": "Containing spirit",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3305.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3305.20",
+          "title": "Preparations for permanent waving or straightening",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3305.20.00",
+              "description": "Preparations for permanent waving or straightening",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3305.30",
+          "title": "Hair lacquers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3305.30.00",
+              "description": "Hair lacquers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3305.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3305.90.11",
+              "description": "Hair oil: ---- Perfumed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3305.90.19",
+              "description": "Hair oil: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3305.90.20",
+              "description": "Hair oil: ---- Brilliantines (spirituous)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3305.90.30",
+              "description": "Hair oil: ---- Hair cream",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3305.90.40",
+              "description": "Hair oil: ---- Hair dyes (natural, herbal or synthetic)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3305.90.50",
+              "description": "Hair oil: ---- Hair fixers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3305.90.90",
+              "description": "Hair oil: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3306",
+      "title": "Preparations for oral or dental hygiene, including denture fixative pastes and powders; yarn used to clean between the teeth (dental floss), in individual retail packages.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3306.10",
+          "title": "Dentifrices",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3306.10.10",
+              "description": "In powder",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3306.10.20",
+              "description": "In paste",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3306.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3306.20",
+          "title": "Yarn used to clean between the teeth (dental floss)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3306.20.00",
+              "description": "Yarn used to clean between the teeth (dental floss)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3306.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3306.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3307",
+      "title": "Pre-shave, shaving or after-shave preparations, personal deodorants, bath preparations, depilatories and other perfumery, cosmetic or toilet preparations, not elsewhere specified or included; prepared room deodorisers, whether or not perfumed or having disinfectant properties.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3307.10",
+          "title": "Pre-shave, shaving or after-shave preparations",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3307.10.10",
+              "description": "Shaving cream",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3307.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3307.20",
+          "title": "Personal deodorants and antiperspirants",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3307.20.00",
+              "description": "Personal deodorants and antiperspirants",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3307.30",
+          "title": "Perfumed bath salts and other bath preparations",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3307.30.10",
+              "description": "Bath oil (thailam)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3307.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3307.41",
+          "title": "preparations for perfuming or deodorizing rooms, including odoriferous preparations used during religious rites : -- Agarbatti and other odoriferous preparations which operate by burning",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3307.41.00",
+              "description": "preparations for perfuming or deodorizing rooms, including odoriferous preparations used during religious rites : -- Agarbatti and other odoriferous preparations which operate by burning",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3307.49",
+          "title": "preparations for perfuming or deodorizing rooms, including odoriferous preparations used during religious rites : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3307.49.00",
+              "description": "preparations for perfuming or deodorizing rooms, including odoriferous preparations used during religious rites : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3307.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3307.90.10",
+              "description": "Depilatories",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3307.90.20",
+              "description": "Sterile contact lens care solution",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3307.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

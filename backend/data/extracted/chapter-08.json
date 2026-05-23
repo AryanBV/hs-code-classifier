@@ -1,0 +1,1525 @@
+{
+  "chapter": "08",
+  "section": "II",
+  "title": "EDIBLE FRUIT AND NUTS; PEEL OF CITRUS FRUIT OR MELONS",
+  "source_pdf": "Chapter 08 Edible Fruit And Nuts; Peel Of Citrus Fruit Or Melons.pdf",
+  "extracted_at": "2026-05-21",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '08011100'). Normalized to NNNN.NN.NN format (e.g., '0801.11.00') per project schema. 6-digit subheading codes in PDF (e.g., '080112') normalized to NNNN.NN (e.g., '0801.12').",
+    "Chapter 08 Note 3 contains an OCR artifact: the phrase 'additional preservation orstabilisation' appears with a missing space between 'or' and 'stabilisation'. Preserved verbatim from the source PDF. The intended reading is 'additional preservation or stabilisation'.",
+    "Chapter 08 Note 3 contains a second OCR/typographic artifact: 'bymoderate heat treatment' appears with a missing space between 'by' and 'moderate'. Preserved verbatim from the source PDF. The intended reading is 'by moderate heat treatment'.",
+    "Chapter 08 Note 2 contains a hyphenation artifact: 'correspon-ding' is broken across lines with a hyphen in the source PDF. Preserved verbatim. The intended reading is 'corresponding'.",
+    "Heading 0812 description in the PDF tariff table is written in ALL CAPS as 'FRUIT AND NUTS PROVISIONALLY PRESERVED, BUT UNSUITABLE IN THAT STATE FOR IMMEDIATE CONSUMPTION'. Other heading descriptions in the same table use Title Case. Preserved verbatim from source.",
+    "PDF table-chrome headers ('Sl.No. Notes Notification No Notification Date', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Main Notes', 'Product Description and Export Policy') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "The Section II 'Main Note' about 'pellets' appears on PDF page 1 above the Chapter 08 title and is attributed to section_notes (Section II, Vegetable Products), not chapter_notes.",
+    "Heading 0803 has subheading '080310' (Plantains) with two tariff lines (Curry plantain, Other), then a heading-level catch-all subheading '080390' (Other) with tariff lines 'Bananas, fresh' and 'Other'. Note the asymmetry: 0803.10 is a plantain-specific bucket while 0803.90 is the fresh-banana bucket; this matches the WCO 6-digit single-dash structure where 0803 is split into plantains (-) and other (-).",
+    "Heading 0804 subheading '080450' (Guavas, mangoes and mangosteens) contains 12 named tariff lines including a unique Indian elaboration: tariff lines 0804.50.21 through 0804.50.28 enumerate Indian mango cultivars (Alphonso/Hapus, Banganapalli, Chausa, Dasheri, Langda, Kesar, Totapuri, Mallika). This level of cultivar-specific national tariff detail is rare and reflects mango export priority.",
+    "Heading 0807 subheading 080719 has tariff lines 0807.19.10 (Musk melons) and 0807.19.90 (Other). No subheading is shown for 0807.20; 0807.20.00 (Papaws) appears as a standalone 8-digit code in the source. Reconstructed: 0807.20 is treated as a single-tariff-line subheading.",
+    "Heading 0808 (Apples, pears and quinces, fresh.) has only three tariff lines in the source (0808.10.00 Apples, 0808.30.00 Pears, 0808.40.00 Quinces). No subheadings 0808.20 are shown — this is consistent with the WCO 2017 amendment that split former 0808.20 (pears and quinces) into 0808.30 (pears) and 0808.40 (quinces).",
+    "Heading 0809 covers 'Apricots, cherries, peaches (including nectarines), plums and sloes, fresh.' Subheading 0809.10.00 (Apricots), 0809.30.00 (Peaches, including nectarines), 0809.40.00 (Plums and sloes) appear as standalone 8-digit codes; only Cherries has the 0809.21 / 0809.29 sub-split (Sour cherries vs Other). Reconstructed accordingly.",
+    "Heading 0810 (Other fruit, fresh.) subheading '081090' (Other) contains a notable Indian elaboration with named tariff lines for Pomegranates (0810.90.10), Tamarind, fresh (0810.90.20), Sapota/chico (0810.90.30), Custard-apple/Ata (0810.90.40), Bore (0810.90.50), Lichi (0810.90.60), and Other (0810.90.90). 'Lichi' is preserved verbatim (the more common spelling is 'Lychee').",
+    "Heading 0811 covers frozen fruit and nuts. The PDF lists subheading 081110 (Strawberries) with tariff lines 0811.10.10 (Containing added sugar), 0811.10.20 (Not containing added sugar), and 0811.10.90 (Other). The 'Other' line at the .90 suffix is unusual because the named binary split (with/without added sugar) typically exhausts the subheading; preserved verbatim.",
+    "Heading 0812 description in PDF is 'FRUIT AND NUTS PROVISIONALLY PRESERVED, BUT UNSUITABLE IN THAT STATE FOR IMMEDIATE CONSUMPTION' (all caps, no trailing period). Verbatim preservation.",
+    "Heading 0813 subheading 081350 is described as 'Mixtures of nuts or dried fruits of this Chapter' with tariff lines 0813.50.10 (Mixtures of nuts) and 0813.50.20 (Mixtures of dried fruits). Note: the PDF does not include an 0813.50.90 line.",
+    "Heading 0814 has only one tariff line (0814.00.00 — Peel of citrus fruit or melons...). No subheadings present. The full description spans multiple lines in the PDF: 'Peel of citrus fruit or melons (including watermelons), fresh, frozen, dried or provisionally preserved in brine, in sulphur water or in other preservative solutions'. Preserved verbatim.",
+    "Chapter 08 contains NO entries in the Policy Condition column for any tariff line EXCEPT 0806.10.00 (Grapes, Fresh) which has Policy Condition: 'Exports of Grapes, Fresh to European Union is permitted subject to registration with APEDA.' (Notification 28 (RE ? 2012)/2009-2014 dated 03.01.2013). The '?' in the notification number is an OCR artifact from the source PDF; the intended character is likely a hyphen '-' (i.e., '28 (RE - 2012)/2009-2014').",
+    "All 84 tariff lines in Chapter 08 have Export Policy = 'Free' except heading-level and subheading-level rows which have no policy column populated (these are container rows, not classifiable codes). No tariff line is Prohibited or Restricted.",
+    "PDF page count: 13 pages total. Pages 1-2 contain section + chapter notes. Pages 3-13 contain the tariff schedule."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover inedible nuts or fruits."
+    },
+    {
+      "number": "2",
+      "text": "Chilled fruits and nuts are to be classified in the same headings as the correspon-ding fresh fruits and nuts."
+    },
+    {
+      "number": "3",
+      "text": "Dried fruit or dried nuts of this Chapter may be partially rehydrated, or treated for the following purposes: (a) for additional preservation orstabilisation (for example, bymoderate heat treatment, sulphuring, the addition of sorbic acid or potassium sorbate); (b) to improve or maintain their appearance (for example, by the addition of vegetable oil or small quantities of glucose syrup), provided that they retain the character of dried fruit or dried nuts."
+    },
+    {
+      "number": "4",
+      "text": "Heading 0812 applies to fruit and nuts which have been treated solely to ensure their provisional preservation during transport or storage prior to use (for example, by sulphur dioxide gas, in brine, in sulphur water or in other preservative solutions), provided they remain unsuitable for immediate consumption in that state."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "In this Section, the term \"pellets\" means products which have been agglomerated either directly by compression or by the addition of a binder in a proportion not exceeding 3 (percent) by weight."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "inedible nuts or fruits",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover inedible nuts or fruits."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "0801",
+      "title": "Coconuts, Brazil nuts and cashew nuts, fresh or dried, whether or not shelled or peeled.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0801.11",
+          "title": "Coconuts : -- Desiccated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0801.11.00",
+              "description": "Coconuts : -- Desiccated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0801.12",
+          "title": "Coconuts : -- In the inner shell (endocarp)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0801.12.10",
+              "description": "Fresh",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0801.12.20",
+              "description": "Dried",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0801.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0801.19",
+          "title": "Coconuts : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0801.19.10",
+              "description": "Fresh",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0801.19.20",
+              "description": "Dried",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0801.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0801.21",
+          "title": "Brazil nuts : -- In shell",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0801.21.00",
+              "description": "Brazil nuts : -- In shell",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0801.22",
+          "title": "Brazil nuts : -- Shelled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0801.22.00",
+              "description": "Brazil nuts : -- Shelled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0801.31",
+          "title": "Cashew nuts : -- In shell",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0801.31.00",
+              "description": "Cashew nuts : -- In shell",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0801.32",
+          "title": "Cashew nuts : -- Shelled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0801.32.10",
+              "description": "Cashew kernel, broken",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0801.32.20",
+              "description": "Cashew kernel, whole",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0801.32.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0802",
+      "title": "Other nuts, fresh or dried, whether or not shelled or peeled.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0802.11",
+          "title": "Almonds : -- In shell",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0802.11.00",
+              "description": "Almonds : -- In shell",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0802.12",
+          "title": "Almonds : -- Shelled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0802.12.00",
+              "description": "Almonds : -- Shelled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0802.21",
+          "title": "Hazelnuts or filberts (Corylus spp.) : -- In shell",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0802.21.00",
+              "description": "Hazelnuts or filberts (Corylus spp.) : -- In shell",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0802.22",
+          "title": "Hazelnuts or filberts (Corylus spp.) : -- shelled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0802.22.00",
+              "description": "Hazelnuts or filberts (Corylus spp.) : -- shelled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0802.31",
+          "title": "Walnuts : -- In shell",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0802.31.00",
+              "description": "Walnuts : -- In shell",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0802.32",
+          "title": "Walnuts : -- Shelled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0802.32.00",
+              "description": "Walnuts : -- Shelled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0802.41",
+          "title": "Chestnuts (Castanea spp.) : -- In shell",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0802.41.00",
+              "description": "Chestnuts (Castanea spp.) : -- In shell",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0802.42",
+          "title": "Chestnuts (Castanea spp.) : -- Shelled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0802.42.00",
+              "description": "Chestnuts (Castanea spp.) : -- Shelled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0802.51",
+          "title": "Pistachios : --In shell",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0802.51.00",
+              "description": "Pistachios : --In shell",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0802.52",
+          "title": "Pistachios : --Shelled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0802.52.00",
+              "description": "Pistachios : --Shelled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0802.61",
+          "title": "Macadamia nuts : -- In shell",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0802.61.00",
+              "description": "Macadamia nuts : -- In shell",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0802.62",
+          "title": "Macadamia nuts : -- Shelled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0802.62.00",
+              "description": "Macadamia nuts : -- Shelled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0802.70",
+          "title": "Kola nuts (Cola spp.)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0802.70.00",
+              "description": "Kola nuts (Cola spp.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0802.80",
+          "title": "Areca nuts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0802.80.10",
+              "description": "Whole",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0802.80.20",
+              "description": "Split",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0802.80.30",
+              "description": "Ground",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0802.80.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0802.91",
+          "title": "Other- - Pine nuts, in shell",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0802.91.00",
+              "description": "Other- - Pine nuts, in shell",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0802.92",
+          "title": "Other- - Pine nuts, shelled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0802.92.00",
+              "description": "Other- - Pine nuts, shelled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0802.99",
+          "title": "Other- - Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0802.99.00",
+              "description": "Other- - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0803",
+      "title": "Bananas, including plantains, fresh or dried.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0803.10",
+          "title": "Plantains",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0803.10.10",
+              "description": "Curry plantain",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0803.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0803.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0803.90.10",
+              "description": "Bananas, fresh",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0803.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0804",
+      "title": "Dates, figs, pineapples, avocados, guavas, mangoes and mangosteens, fresh or dried.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0804.10",
+          "title": "Dates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0804.10.10",
+              "description": "Fresh (excluding wet dates)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0804.10.20",
+              "description": "Soft (khayzur or wet dates)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0804.10.30",
+              "description": "Hard (chhohara or kharek)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0804.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0804.20",
+          "title": "Figs",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0804.20.10",
+              "description": "Fresh",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0804.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0804.30",
+          "title": "Pineapples",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0804.30.00",
+              "description": "Pineapples",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0804.40",
+          "title": "Avocados",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0804.40.00",
+              "description": "Avocados",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0804.50",
+          "title": "Guavas, mangoes and mangosteens",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0804.50.10",
+              "description": "Guavas fresh or dried",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0804.50.21",
+              "description": "Alphonso (Hapus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0804.50.22",
+              "description": "Banganapalli",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0804.50.23",
+              "description": "Chausa",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0804.50.24",
+              "description": "Dasheri",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0804.50.25",
+              "description": "Langda",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0804.50.26",
+              "description": "Kesar",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0804.50.27",
+              "description": "Totapuri",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0804.50.28",
+              "description": "Mallika",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0804.50.29",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0804.50.30",
+              "description": "Guavas, mangoes and mangosteens:--- Mangoes, sliced dried",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0804.50.40",
+              "description": "Mango pulp",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0804.50.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0805",
+      "title": "Citrus fruit, fresh or dried.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0805.10",
+          "title": "Oranges",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0805.10.00",
+              "description": "Oranges",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0805.21",
+          "title": "Mandarins (including tangerines and satsumas); clementines, wilkings and similar citrus hybrids : -- Mandarins (including tangerines and satsumas)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0805.21.00",
+              "description": "Mandarins (including tangerines and satsumas); clementines, wilkings and similar citrus hybrids : -- Mandarins (including tangerines and satsumas)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0805.22",
+          "title": "Mandarins (including tangerines and satsumas); clementines, wilkings and similar citrus hybrids : -- Clementines",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0805.22.00",
+              "description": "Mandarins (including tangerines and satsumas); clementines, wilkings and similar citrus hybrids : -- Clementines",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0805.29",
+          "title": "Mandarins (including tangerines and satsumas); clementines, wilkings and similar citrus hybrids : --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0805.29.00",
+              "description": "Mandarins (including tangerines and satsumas); clementines, wilkings and similar citrus hybrids : --Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0805.40",
+          "title": "Grapefruit and pomelos",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0805.40.00",
+              "description": "Grapefruit and pomelos",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0805.50",
+          "title": "Lemons (Citrus limon, Citrus limonum) and limes (Citrus aurantifolia, Citrus latifolia)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0805.50.00",
+              "description": "Lemons (Citrus limon, Citrus limonum) and limes (Citrus aurantifolia, Citrus latifolia)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0805.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0805.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0806",
+      "title": "Grapes, fresh or dried.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0806.10",
+          "title": "Fresh",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0806.10.00",
+              "description": "Fresh",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Exports of Grapes, Fresh to 28 (RE ? 2012)/2009- European Union is permitted 2014 subject to registration with APEDA."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0806.20",
+          "title": "Dried",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0806.20.10",
+              "description": "Raisins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0806.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0807",
+      "title": "Melons (including watermelons) and papaws (papayas), fresh.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0807.11",
+          "title": "Melons (including watermelons) : -- Watermelons",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0807.11.00",
+              "description": "Melons (including watermelons) : -- Watermelons",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0807.19",
+          "title": "Melons (including watermelons) :-- Other:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0807.19.10",
+              "description": "Musk melons",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0807.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0807.20",
+          "title": "Papaws (papayas)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0807.20.00",
+              "description": "Papaws (papayas)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0808",
+      "title": "Apples, pears and quinces, fresh.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0808.10",
+          "title": "Apples",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0808.10.00",
+              "description": "Apples",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0808.30",
+          "title": "Pears",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0808.30.00",
+              "description": "Pears",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0808.40",
+          "title": "Quinces",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0808.40.00",
+              "description": "Quinces",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0809",
+      "title": "Apricots, cherries, peaches (including nectarines), plums and sloes, fresh.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0809.10",
+          "title": "Apricots",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0809.10.00",
+              "description": "Apricots",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0809.21",
+          "title": "Cherries : -- Sour cherries (Prunus cerasus)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0809.21.00",
+              "description": "Cherries : -- Sour cherries (Prunus cerasus)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0809.29",
+          "title": "Cherries : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0809.29.00",
+              "description": "Cherries : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0809.30",
+          "title": "Peaches, including nectarines",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0809.30.00",
+              "description": "Peaches, including nectarines",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0809.40",
+          "title": "Plums and sloes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0809.40.00",
+              "description": "Plums and sloes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0810",
+      "title": "Other fruit, fresh.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0810.10",
+          "title": "Strawberries",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0810.10.00",
+              "description": "Strawberries",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0810.20",
+          "title": "Raspberries, blackberries, mulberries and loganberries",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0810.20.00",
+              "description": "Raspberries, blackberries, mulberries and loganberries",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0810.30",
+          "title": "Black, white or red currants and gooseberries",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0810.30.00",
+              "description": "Black, white or red currants and gooseberries",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0810.40",
+          "title": "Cranberries, bilberries and other fruits of the genus Vaccinium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0810.40.00",
+              "description": "Cranberries, bilberries and other fruits of the genus Vaccinium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0810.50",
+          "title": "Kiwifruit",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0810.50.00",
+              "description": "Kiwifruit",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0810.60",
+          "title": "Durians",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0810.60.00",
+              "description": "Durians",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0810.70",
+          "title": "Persimmons",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0810.70.00",
+              "description": "Persimmons",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0810.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0810.90.10",
+              "description": "Pomegranates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0810.90.20",
+              "description": "Tamarind, fresh",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0810.90.30",
+              "description": "Sapota (chico)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0810.90.40",
+              "description": "Custard-apple (Ata)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0810.90.50",
+              "description": "Bore",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0810.90.60",
+              "description": "Lichi",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0810.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0811",
+      "title": "Fruit and nuts, uncooked or cooked by steaming or boiling in water, frozen, whether or not containing added sugar or other sweetening matter.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0811.10",
+          "title": "Strawberries",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0811.10.10",
+              "description": "Containing added sugar",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0811.10.20",
+              "description": "Not containing added sugar",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0811.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0811.20",
+          "title": "Raspberries, blackberries, mulberries, loganberries, black, white or red currants and gooseberries",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0811.20.10",
+              "description": "Containing added sugar",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0811.20.20",
+              "description": "Not containing added sugar",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0811.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0811.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0811.90.10",
+              "description": "Containing added sugar",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0811.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0812",
+      "title": "FRUIT AND NUTS PROVISIONALLY PRESERVED, BUT UNSUITABLE IN THAT STATE FOR IMMEDIATE CONSUMPTION",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0812.10",
+          "title": "Cherries",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0812.10.00",
+              "description": "Cherries",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0812.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0812.90.10",
+              "description": "Mango slices in brine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0812.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0813",
+      "title": "Fruit, dried, other than that of headings 08.01 to 08.06; mixtures of nuts or dried fruits of this Chapter.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0813.10",
+          "title": "Apricots",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0813.10.00",
+              "description": "Apricots",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0813.20",
+          "title": "Prunes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0813.20.00",
+              "description": "Prunes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0813.30",
+          "title": "Apples",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0813.30.00",
+              "description": "Apples",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0813.40",
+          "title": "Other fruit",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0813.40.10",
+              "description": "Tamarind, dried",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0813.40.20",
+              "description": "Singoda whole (water nut)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0813.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0813.50",
+          "title": "Mixtures of nuts or dried fruits of this Chapter",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0813.50.10",
+              "description": "Mixtures of nuts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0813.50.20",
+              "description": "Mixtures of dried fruits",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0814",
+      "title": "Peel of citrus fruit or melons (including watermelons), fresh, frozen, dried or provisionally preserved in brine, in sulphur water or in other preservative solutions",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0814.00",
+          "title": "Peel of citrus fruit or melons (including watermelons), fresh, frozen, dried or provisionally preserved in brine, in sulphur water or in other preservative solutions",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0814.00.00",
+              "description": "Peel of citrus fruit or melons (including watermelons), fresh, frozen, dried or provisionally preserved in brine, in sulphur water or in other preservative solutions",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    }
+  ]
+}

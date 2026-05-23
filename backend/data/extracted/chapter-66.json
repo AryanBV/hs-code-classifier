@@ -1,0 +1,174 @@
+{
+  "chapter": "66",
+  "title": "Umbrellas, Sun Umbrellas, Walking-Sticks, Seat-Sticks, Whips, Riding-Crops And Parts Thereof",
+  "section": "XII",
+  "source_pdf": "Chapter 66 Umbrellas, Sun Umbrellas, Walking-Sticks, Seat-Sticks, Whips, Riding-Crops And Parts Thereof.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '66011000'). Normalized to NNNN.NN.NN format (e.g., '6601.10.00') per project schema. 6-digit subheading numbers in PDF (e.g., '660390') normalized to NNNN.NN form (e.g., '6603.90').",
+    "PDF table-chrome headers ('Sl.No. Notes Notification Date Notification No', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Main Notes', 'Product Description and Export Policy') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Section XII heading appears on PDF page 1 above the Chapter 66 title: 'Section XII, FOOTWEAR, HEADGEAR, UMBRELLAS, SUN UMBRELLAS, WALKING-STICKS, SEAT-STICKS, WHIPS, RIDING-CROPS AND PARTS THEREOF; PREPARED FEATHERS AND ARTICLES MADE THEREWITH; ARTIFICIAL FLOWERS; ARTICLES OF HUMAN HAIR'. No Section XII notes appear in this chapter PDF.",
+    "Heading 6602 has no subheading row in the source PDF; the tariff line '66020000' is attached directly under the heading. Normalized to subheading '6602.00' containing tariff line '6602.00.00'.",
+    "Subheading 6601.90 ('Other') does not appear as an explicit 6-digit row in the source PDF. The two tariff lines '66019100' ('Other : -- Having a telescopic shaft') and '66019900' ('Other : -- Other') are 8-digit codes that map to WCO subheadings 6601.91 and 6601.99 respectively. Each is preserved under its own normalized subheading entry ('6601.91' and '6601.99'). Tariff codes preserved verbatim as '6601.91.00' and '6601.99.00'.",
+    "Heading 6603 subheading '66032000' is an 8-digit code (no 6-digit subheading row in PDF). Normalized to subheading '6603.20' with tariff line '6603.20.00' ('Umbrella frames, including frames mounted on shafts (sticks)').",
+    "Notification Date and Notification No columns are empty for both Main Notes rows in the source PDF — preserved as null in any structured representation; chapter_notes retain only number and verbatim text.",
+    "All tariff lines in Chapter 66 are 'Free' in the Export Policy column. No Policy Condition entries appear in the source PDF — policy_conditions array is empty."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover: (a) measure walking-sticks or the like (heading 9017); (b) firearm-sticks, sword-sticks, loaded walking-sticks or the like (Chapter 93); or (c) goods of Chapter 95 (for example, toy umbrellas, toy sun umbrellas)."
+    },
+    {
+      "number": "2",
+      "text": "Heading 6603 does not cover parts, trimmings or accessories of textile material, or covers, tassels, thongs, umbrella cases or the like, of any material. Such goods presented with, but not fitted to, articles of heading 6601 or 6602 are to be classified separately and are not to be treated as forming part of those articles."
+    }
+  ],
+  "section_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "measure walking-sticks or the like",
+      "redirects_to_chapter": "90",
+      "redirects_to_heading": "9017",
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover: (a) measure walking-sticks or the like (heading 9017); (b) firearm-sticks, sword-sticks, loaded walking-sticks or the like (Chapter 93); or (c) goods of Chapter 95 (for example, toy umbrellas, toy sun umbrellas)."
+    },
+    {
+      "excluded_product_text": "firearm-sticks, sword-sticks, loaded walking-sticks or the like",
+      "redirects_to_chapter": "93",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover: (a) measure walking-sticks or the like (heading 9017); (b) firearm-sticks, sword-sticks, loaded walking-sticks or the like (Chapter 93); or (c) goods of Chapter 95 (for example, toy umbrellas, toy sun umbrellas)."
+    },
+    {
+      "excluded_product_text": "goods of Chapter 95 (for example, toy umbrellas, toy sun umbrellas)",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover: (a) measure walking-sticks or the like (heading 9017); (b) firearm-sticks, sword-sticks, loaded walking-sticks or the like (Chapter 93); or (c) goods of Chapter 95 (for example, toy umbrellas, toy sun umbrellas)."
+    },
+    {
+      "excluded_product_text": "parts, trimmings or accessories of textile material, or covers, tassels, thongs, umbrella cases or the like, of any material (presented with but not fitted to articles of heading 6601 or 6602) — to be classified separately, not as parts of those articles",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2",
+      "source_note_text": "Heading 6603 does not cover parts, trimmings or accessories of textile material, or covers, tassels, thongs, umbrella cases or the like, of any material. Such goods presented with, but not fitted to, articles of heading 6601 or 6602 are to be classified separately and are not to be treated as forming part of those articles."
+    }
+  ],
+  "headings": [
+    {
+      "heading": "6601",
+      "title": "Umbrellas and sun umbrellas (including walking-stick umbrellas, garden umbrellas and similar umbrellas).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6601.10",
+          "title": "Garden or similar umbrellas",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6601.10.00",
+              "description": "Garden or similar umbrellas",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6601.91",
+          "title": "Other : -- Having a telescopic shaft",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6601.91.00",
+              "description": "Other : -- Having a telescopic shaft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6601.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6601.99.00",
+              "description": "Other : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6602",
+      "title": "Walking-sticks, seat-sticks, whips, riding-crops and the like.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6602.00",
+          "title": "Walking-sticks, seat-sticks, whips, riding-crops and the like.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6602.00.00",
+              "description": "Walking-sticks, seat-sticks, whips, riding-crops and the like.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6603",
+      "title": "Parts, trimmings and accessories of articles of heading 66.01 or 66.02.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6603.20",
+          "title": "Umbrella frames, including frames mounted on shafts (sticks)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6603.20.00",
+              "description": "Umbrella frames, including frames mounted on shafts (sticks)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6603.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6603.90.10",
+              "description": "Umbrella ribs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6603.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "policy_conditions": []
+}

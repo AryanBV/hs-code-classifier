@@ -1,0 +1,449 @@
+{
+  "chapter": "93",
+  "section": "XIX",
+  "title": "ARMS AND AMMUNITION; PARTS AND ACCESSORIES THEREOF",
+  "source_pdf": "Chapter 93 Arms And Ammunition; Parts And Accessories Thereof.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '93011010') and 6-digit subheading codes without dots (e.g., '930110'). Normalized to NNNN.NN.NN format (e.g., '9301.10.10') and NNNN.NN format (e.g., '9301.10') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'SI.No. Notes Notification Date Notification No', 'Policy Condition', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "Chapter 93 is the ONLY chapter in Section XIX (Arms And Ammunition, Parts And Accessories Thereof). The section title row in the PDF acts as a section header — no separate numbered section notes appear in the source. section_notes array is therefore empty.",
+    "Chapter title on PDF page 1 (above the Main Notes table) reads 'Chapter 93 Arms And Ammunition; Parts And Accessories Thereof.' The canonical ITC(HS) chapter title 'ARMS AND AMMUNITION; PARTS AND ACCESSORIES THEREOF' is used in the title field; source_pdf preserves the PDF filename.",
+    "Heading 9301 description in PDF is rendered in ALL CAPS as 'MILITARY WEAPONS, OTHER THAN REVOLVERS, PISTOLS AND THE ARMS OF HEADING' — the trailing word '9307' appears truncated in the source PDF table cell. The canonical WCO HS text continues '...AND THE ARMS OF HEADING 9307'. Preserved verbatim as it appears in the source.",
+    "Heading 9305 description in PDF is rendered in ALL CAPS as 'PARTS AND ACCESSORIES OF ARTICLES OF HEADINGS 9301 TO 9304'. Preserved verbatim.",
+    "Subheading 9301.10 description ('Artillery weapons (for example, guns, howitzers and mortars)') has no '00'-suffix tariff line in the PDF — it is split into 9301.10.10 (Self propelled) and 9301.10.90 (Other) directly.",
+    "Subheading 9305.91 in the PDF appears with description 'Other --Of military weapons of heading 93.01' (with literal '93.01' written with a dot) and the tariff line 9305.91.00 description reads 'Other : -- Of military weapons of heading 9301' (without dot). Both preserved verbatim. The HS hierarchy puts 9305.91 as 'Other: --Of military weapons of heading 9301'.",
+    "Subheading 9305.99 has tariff lines 9305.99.10 (Of goods of heading 9304) and 9305.99.90 (Other). Subheading row 930599 description reads 'Other:' verbatim.",
+    "Heading 9302 has a single tariff line 9302.00.00 ('Revolvers and Pistols, other than those of heading 9303 or 9304') with no intermediate subheading row in the PDF. Modeled as a single subheading '9302.00' containing one tariff line per the project schema convention.",
+    "Heading 9304 has a single tariff line 9304.00.00 ('Other Arms (for example, spring, air or gas guns and pistols, truncheons), excluding those of heading 9307') with no intermediate subheading row. Modeled as subheading '9304.00' with one tariff line.",
+    "Heading 9307 has a single tariff line 9307.00.00 ('Swords, cutlasses, bayonets, lances and similar arms and parts thereof and scabbards and sheaths therefor.'). Description spans page 5 to page 6 in the source PDF — concatenated verbatim. Modeled as subheading '9307.00' with one tariff line. Source PDF spells 'therefor' (no 'e') — preserved verbatim.",
+    "Policy Condition column for many tariff lines reads 'Subject to Policy Condition 1&2of the chapter.' (missing space between '2' and 'of') — preserved verbatim as the source PDF artifact. Policy Conditions 1 and 2 are the SCOMET (Special Chemicals, Organisms, Materials, Equipment and Technologies) Category-6 Munitions List authorization and the Arms Act licence + Archaeological Survey of India certificate requirements.",
+    "Notification Date and Notification No columns are EMPTY in the source PDF for both Main Notes (notes 1, 2) and Policy Conditions (conditions 1, 2). No notification numbers or dates are cited in the source — captured as null in policy_conditions entries.",
+    "All tariff lines in Chapter 93 are shown with Export Policy 'Free' in the source PDF. However, ALL tariff lines are subject to Policy Condition 1 of the Chapter (SCOMET Category-6 Munitions authorization from Department of Defence Production), and tariff lines in headings 9302, 9303, 9306 are additionally subject to Policy Condition 2 (Arms Act licence + ASI certificate + identification marks for firearms). The nominal 'Free' export policy is GATED by these decisive policy conditions — actual export legality is conditional on SCOMET / Arms Act compliance.",
+    "Subheading 9305.91 in the PDF table has tariff line code 93059100 with description 'Other : -- Of military weapons of heading 9301' — the punctuation 'Other : --' (with spaces around the colon) is preserved verbatim.",
+    "Section XIX title row at the top of PDF page 1 reads 'Section XIX, ARMS AND AMMUNITION, PARTS AND ACCESSORIES THEREOF' — treated as section header chrome, not a numbered section note."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover : (a) goods of Chapter 36 (for example, percussion caps, detonators, signalling flares); (b) parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39); (c) armoured fighting vehicles (heading 8710); (d) telescopic sights or other optical devices suitable for use with arms, unless mounted on a firearm or presented with the firearm on which they are designed to be mounted (Chapter 90); (e) bows, arrows, fencing foils or toys (Chapter 95); or (f) collectors pieces or antiques (heading 9705 or 9706)."
+    },
+    {
+      "number": "2",
+      "text": "In heading 9306, the reference to \"parts thereof\" does not include radio or radar apparatus of heading 8526."
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "goods of Chapter 36 (for example, percussion caps, detonators, signalling flares)",
+      "redirects_to_chapter": "36",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover : (a) goods of Chapter 36 (for example, percussion caps, detonators, signalling flares)"
+    },
+    {
+      "excluded_product_text": "parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover : (b) parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39) [redirect target was Section XV, modeled as null chapter FK]"
+    },
+    {
+      "excluded_product_text": "similar goods of plastics (parts of general use of plastics)",
+      "redirects_to_chapter": "39",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover : (b) parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39)"
+    },
+    {
+      "excluded_product_text": "armoured fighting vehicles",
+      "redirects_to_chapter": "87",
+      "redirects_to_heading": "8710",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "This Chapter does not cover : (c) armoured fighting vehicles (heading 8710)"
+    },
+    {
+      "excluded_product_text": "telescopic sights or other optical devices suitable for use with arms, unless mounted on a firearm or presented with the firearm on which they are designed to be mounted",
+      "redirects_to_chapter": "90",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(d)",
+      "source_note_text": "This Chapter does not cover : (d) telescopic sights or other optical devices suitable for use with arms, unless mounted on a firearm or presented with the firearm on which they are designed to be mounted (Chapter 90)"
+    },
+    {
+      "excluded_product_text": "bows, arrows, fencing foils or toys",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(e)",
+      "source_note_text": "This Chapter does not cover : (e) bows, arrows, fencing foils or toys (Chapter 95)"
+    },
+    {
+      "excluded_product_text": "collectors pieces or antiques",
+      "redirects_to_chapter": "97",
+      "redirects_to_heading": "9705",
+      "source_note_number": "Note 1(f)",
+      "source_note_text": "This Chapter does not cover : (f) collectors pieces or antiques (heading 9705 or 9706)"
+    },
+    {
+      "excluded_product_text": "collectors pieces or antiques",
+      "redirects_to_chapter": "97",
+      "redirects_to_heading": "9706",
+      "source_note_number": "Note 1(f)",
+      "source_note_text": "This Chapter does not cover : (f) collectors pieces or antiques (heading 9705 or 9706)"
+    },
+    {
+      "excluded_product_text": "radio or radar apparatus (excluded from the meaning of \"parts thereof\" in heading 9306)",
+      "redirects_to_chapter": "85",
+      "redirects_to_heading": "8526",
+      "source_note_number": "Note 2",
+      "source_note_text": "In heading 9306, the reference to \"parts thereof\" does not include radio or radar apparatus of heading 8526."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "9301",
+      "title": "MILITARY WEAPONS, OTHER THAN REVOLVERS, PISTOLS AND THE ARMS OF HEADING",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9301.10",
+          "title": "Artillery weapons (for example, guns, howitzers and mortars)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9301.10.10",
+              "description": "Self propelled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "9301.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9301.20",
+          "title": "Rocket launchers; flame-throwers; grenade launchers; torpedo tubes and similar projectors",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9301.20.00",
+              "description": "Rocket launchers; flame-throwers; grenade launchers; torpedo tubes and similar projectors",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9301.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9301.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9302",
+      "title": "Revolvers and Pistols, other than those of heading 9303 or 9304",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9302.00",
+          "title": "Revolvers and Pistols, other than those of heading 9303 or 9304",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9302.00.00",
+              "description": "Revolvers and Pistols, other than those of heading 9303 or 9304",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1&2of the chapter."
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "9303",
+      "title": "Other firearms and similar devices which operate by the firing of an explosive charge (for example, sporting shotguns and rifles, muzzle-loading firearms, Very pistols and other devices designed to project only signal flares, pistols and revolvers for firing blank ammunition, captive-bolt humane killers, line-throwing guns).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9303.10",
+          "title": "Muzzle-loading firearms",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9303.10.00",
+              "description": "Muzzle-loading firearms",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1&2of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9303.20",
+          "title": "Other sporting, hunting or target-shooting shotguns, including combination shotgun-rifles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9303.20.00",
+              "description": "Other sporting, hunting or target-shooting shotguns, including combination shotgun-rifles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1&2of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9303.30",
+          "title": "Other sporting, hunting or target-shooting rifles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9303.30.00",
+              "description": "Other sporting, hunting or target-shooting rifles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1&2of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9303.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9303.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1&2of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9304",
+      "title": "Other Arms (for example, spring, air or gas guns and pistols, truncheons), excluding those of heading 9307",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9304.00",
+          "title": "Other Arms (for example, spring, air or gas guns and pistols, truncheons), excluding those of heading 9307",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9304.00.00",
+              "description": "Other Arms (for example, spring, air or gas guns and pistols, truncheons), excluding those of heading 9307",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "9305",
+      "title": "PARTS AND ACCESSORIES OF ARTICLES OF HEADINGS 9301 TO 9304",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9305.10",
+          "title": "Of revolvers or pistols",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9305.10.00",
+              "description": "Of revolvers or pistols",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9305.20",
+          "title": "Of shotguns or rifles of heading 9303 :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9305.20.10",
+              "description": "Shotgun barrels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "9305.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9305.91",
+          "title": "Other --Of military weapons of heading 93.01",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9305.91.00",
+              "description": "Other : -- Of military weapons of heading 9301",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9305.99",
+          "title": "Other:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9305.99.10",
+              "description": "Of goods of heading 9304",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "9305.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9306",
+      "title": "Bombs, grenades, torpedoes, mines, missiles and similar munitions of war and parts thereof; cartridges and other ammunition and projectiles and parts thereof, including shot and cartridge wads.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9306.21",
+          "title": "Shotgun cartridges and parts thereof; air gun pellets : -- Cartridges",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9306.21.00",
+              "description": "Shotgun cartridges and parts thereof; air gun pellets : -- Cartridges",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1&2of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9306.29",
+          "title": "Shotgun cartridges and parts thereof; air gun pellets : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9306.29.00",
+              "description": "Shotgun cartridges and parts thereof; air gun pellets : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1&2of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9306.30",
+          "title": "Other cartridges and parts thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9306.30.00",
+              "description": "Other cartridges and parts thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1&2of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9306.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9306.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1&2of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9307",
+      "title": "Swords, cutlasses, bayonets, lances and similar arms and parts thereof and scabbards and sheaths therefor.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9307.00",
+          "title": "Swords, cutlasses, bayonets, lances and similar arms and parts thereof and scabbards and sheaths therefor.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9307.00.00",
+              "description": "Swords, cutlasses, bayonets, lances and similar arms and parts thereof and scabbards and sheaths therefor.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    }
+  ]
+}

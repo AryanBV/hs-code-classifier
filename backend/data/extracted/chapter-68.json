@@ -1,0 +1,1256 @@
+{
+  "chapter": "68",
+  "title": "Articles Of Stone, Plaster, Cement, Asbestos, Mica Or Similar Materials",
+  "section": "XIII",
+  "source_pdf": "Chapter 68 Articles Of Stone, Plaster, Cement, Asbestos, Mica Or Similar Materials.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "Section XIII header is present on page 1 of source PDF: 'Section XIII, ARTICLES OF STONE, PLASTER, CEMENT, ASBESTOS, MICA OR SIMILAR MATERIALS; CERAMIC PRODUCTS; GLASS AND GLASSWARE'. No standalone Section XIII Main Notes table is present in this Chapter 68 PDF; section_notes array is therefore empty.",
+    "Chapter 68 Main Notes table contains 2 notes (Note 1 and Note 2). Note 1 is a chapter exclusion note listing items (a) through (n) that are not covered. Note 2 defines 'worked monumental or building stone' for heading 6802.",
+    "Source PDF Note 2 contains a transcription artifact: 'worked monumental or building stone' is rendered with double-doubled quotes ('\"\"worked monumental or building stone\"\"'). Preserved as a single set of double quotes in this JSON.",
+    "Source PDF Note 1 sub-clause sequence skips letter (j) (uses (i), (ij), (k)) — this is verbatim from the source. Sub-clauses extracted as separate exclusion_clauses entries.",
+    "Tariff codes in source PDF use no-dot format (NNNNNNNN). All 8-digit codes normalized to NNNN.NN.NN by inserting dots after positions 4 and 6.",
+    "Some 6-digit subheading codes in source PDF (e.g. 680221, 680223, 680229, 680421, 680422, 680423, 680430, 680510, 680520, 680710, 680790, 681011, 681019, 681099, 681140, 681189, 681320, 681410, 681490, 681599) are normalized to NNNN.NN format (e.g. 6802.21).",
+    "Headings 6802, 6804, 6810, 6811, 6812, 6813, 6814, 6815 use the standard sub-heading layout where parent description lines (e.g. 'Other monumental or building stone and articles thereof, simply cut or sawn, with a flat or even surface : -- Marble, travertine and alabaster') appear as a sub-heading row followed by tariff lines.",
+    "Sub-heading 681410 is followed by tariff lines 68141010-68141090. Sub-heading 681490 (Other) is followed by 68149010-68149090. No 'parent' tariff-line code with all zeros exists for those sub-headings.",
+    "Heading 6815 description text 'Carbon fibres; articles of carbon fibres for non-electrical uses; other articles of graphite or other carbon for non-electrical uses: -- Carbon fibres' is split across two rows in the source PDF for tariff line 68151100 (text continues on next row 'other carbon for non-electrical uses: - - Carbon fibres'). Reassembled into the single tariff line description.",
+    "Tariff line 68159100 description begins 'Other articles :-' in source PDF (single hyphen); preserved verbatim.",
+    "Tariff lines 68118100, 68118200, 68138100, 68138900 are subheading-level 6-digit codes (681181, 681182, 681381, 681389) extended with '00'. Source PDF lists them under heading 6811 / 6813 without an explicit sub-heading title row; treated as sub-headings of heading 6811 and 6813 respectively.",
+    "Sub-heading 681189 ('Not containing asbestos : -- Other articles') appears as a sub-heading row with two tariff lines 68118910 and 68118990 in source.",
+    "Sub-heading 681320 ('Containing asbestos') has two tariff lines (68132010, 68132090). Sub-heading 681389 ('Not containing asbestos') has two tariff lines (68138100, 68138900) without an explicit sub-heading title row — treated as direct tariff lines under heading 6813.",
+    "All tariff lines display Export Policy 'Free' and have empty Policy Condition column. No policy_conditions, export_licensing_notes, or notification entries are present in this Chapter 68 PDF.",
+    "Asbestos note: Chapter 68 PDF does NOT contain explicit asbestos export restrictions / policy conditions in the visible Schedule 2 columns. All asbestos-related tariff lines (681140, 68114010, 68114020, 68114090, 6812, 681281, 68128000, 681291, 681299*, 681320, 68132010, 68132090, 68138100, 68138900) show Export Policy 'Free' with empty Policy Condition. policy_conditions array left empty.",
+    "Unit column is not provided in this source PDF; all tariff_lines.unit set to null.",
+    "Source PDF does not contain explicit Sub-Heading Notes or Supplementary Notes for Chapter 68; subheading_notes arrays are empty."
+  ],
+  "section_notes": [],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover : (a) goods of Chapter 25 ; (b) coated, impregnated or covered paper and paperboard of heading 4810 or 4811 (for example, paper and paperboard coated with mica powder or graphite, bituminised or asphalted paper and paperboard) ; (c) coated, impregnated or covered textile fabric of Chapter 56 or 59 (for example, fabric coated or covered with mica powder, bituminised or asphalted fabric) ; (d) articles of Chapter 71 ; (e) tools or parts of tools, of Chapter 82 ; (f) lithographic stones of heading 8442 ; (g) electrical insulators (heading 8546) or fittings of insulating material of heading 8547 ; (h) dental burrs (heading 9018) ; (ij) articles of Chapter 91 (for example, clocks and clock cases) (k) articles of Chapter 94 (for example, furniture, luminaires and lighting fittings, prefabricated buildings) ; (l) articles of Chapter 95 (for example, toys, games and sports requisites) ; (m) articles of heading 9602, if made of materials specified in Note 2 (b) to Chapter 96, or of heading 9606 (for example, buttons), of heading 9609 (for example, slate pencils), heading 9610 (for example, drawing slates) or of heading 9620 (monopods, bipods, tripods and similar articles); or; (n) articles of Chapter 97 (for example, works of art)."
+    },
+    {
+      "number": "2",
+      "text": "In heading 6802, the expression \"worked monumental or building stone\" applies not only to the varieties of stone referred to in heading 2512.5 or 2516 but also to all other natural stone (for example, quartzite, flint, dolomite and steatite) similarly worked; it does not, however, apply to slate."
+    }
+  ],
+  "subheading_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "goods of Chapter 25",
+      "redirects_to_chapter": "25",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover : (a) goods of Chapter 25"
+    },
+    {
+      "excluded_product_text": "coated, impregnated or covered paper and paperboard of heading 4810 or 4811 (for example, paper and paperboard coated with mica powder or graphite, bituminised or asphalted paper and paperboard)",
+      "redirects_to_chapter": "48",
+      "redirects_to_heading": "4810",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover : (b) coated, impregnated or covered paper and paperboard of heading 4810 or 4811 (for example, paper and paperboard coated with mica powder or graphite, bituminised or asphalted paper and paperboard)"
+    },
+    {
+      "excluded_product_text": "coated, impregnated or covered paper and paperboard of heading 4810 or 4811 (for example, paper and paperboard coated with mica powder or graphite, bituminised or asphalted paper and paperboard)",
+      "redirects_to_chapter": "48",
+      "redirects_to_heading": "4811",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover : (b) coated, impregnated or covered paper and paperboard of heading 4810 or 4811 (for example, paper and paperboard coated with mica powder or graphite, bituminised or asphalted paper and paperboard)"
+    },
+    {
+      "excluded_product_text": "coated, impregnated or covered textile fabric of Chapter 56 or 59 (for example, fabric coated or covered with mica powder, bituminised or asphalted fabric)",
+      "redirects_to_chapter": "56",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "This Chapter does not cover : (c) coated, impregnated or covered textile fabric of Chapter 56 or 59 (for example, fabric coated or covered with mica powder, bituminised or asphalted fabric)"
+    },
+    {
+      "excluded_product_text": "coated, impregnated or covered textile fabric of Chapter 56 or 59 (for example, fabric coated or covered with mica powder, bituminised or asphalted fabric)",
+      "redirects_to_chapter": "59",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "This Chapter does not cover : (c) coated, impregnated or covered textile fabric of Chapter 56 or 59 (for example, fabric coated or covered with mica powder, bituminised or asphalted fabric)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 71",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(d)",
+      "source_note_text": "This Chapter does not cover : (d) articles of Chapter 71"
+    },
+    {
+      "excluded_product_text": "tools or parts of tools, of Chapter 82",
+      "redirects_to_chapter": "82",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(e)",
+      "source_note_text": "This Chapter does not cover : (e) tools or parts of tools, of Chapter 82"
+    },
+    {
+      "excluded_product_text": "lithographic stones of heading 8442",
+      "redirects_to_chapter": "84",
+      "redirects_to_heading": "8442",
+      "source_note_number": "Note 1(f)",
+      "source_note_text": "This Chapter does not cover : (f) lithographic stones of heading 8442"
+    },
+    {
+      "excluded_product_text": "electrical insulators (heading 8546)",
+      "redirects_to_chapter": "85",
+      "redirects_to_heading": "8546",
+      "source_note_number": "Note 1(g)",
+      "source_note_text": "This Chapter does not cover : (g) electrical insulators (heading 8546) or fittings of insulating material of heading 8547"
+    },
+    {
+      "excluded_product_text": "fittings of insulating material of heading 8547",
+      "redirects_to_chapter": "85",
+      "redirects_to_heading": "8547",
+      "source_note_number": "Note 1(g)",
+      "source_note_text": "This Chapter does not cover : (g) electrical insulators (heading 8546) or fittings of insulating material of heading 8547"
+    },
+    {
+      "excluded_product_text": "dental burrs (heading 9018)",
+      "redirects_to_chapter": "90",
+      "redirects_to_heading": "9018",
+      "source_note_number": "Note 1(h)",
+      "source_note_text": "This Chapter does not cover : (h) dental burrs (heading 9018)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 91 (for example, clocks and clock cases)",
+      "redirects_to_chapter": "91",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(ij)",
+      "source_note_text": "This Chapter does not cover : (ij) articles of Chapter 91 (for example, clocks and clock cases)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 94 (for example, furniture, luminaires and lighting fittings, prefabricated buildings)",
+      "redirects_to_chapter": "94",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(k)",
+      "source_note_text": "This Chapter does not cover : (k) articles of Chapter 94 (for example, furniture, luminaires and lighting fittings, prefabricated buildings)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 95 (for example, toys, games and sports requisites)",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(l)",
+      "source_note_text": "This Chapter does not cover : (l) articles of Chapter 95 (for example, toys, games and sports requisites)"
+    },
+    {
+      "excluded_product_text": "articles of heading 9602, if made of materials specified in Note 2 (b) to Chapter 96",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": "9602",
+      "source_note_number": "Note 1(m)",
+      "source_note_text": "This Chapter does not cover : (m) articles of heading 9602, if made of materials specified in Note 2 (b) to Chapter 96, or of heading 9606 (for example, buttons), of heading 9609 (for example, slate pencils), heading 9610 (for example, drawing slates) or of heading 9620 (monopods, bipods, tripods and similar articles)"
+    },
+    {
+      "excluded_product_text": "articles of heading 9606 (for example, buttons)",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": "9606",
+      "source_note_number": "Note 1(m)",
+      "source_note_text": "This Chapter does not cover : (m) articles of heading 9602, if made of materials specified in Note 2 (b) to Chapter 96, or of heading 9606 (for example, buttons), of heading 9609 (for example, slate pencils), heading 9610 (for example, drawing slates) or of heading 9620 (monopods, bipods, tripods and similar articles)"
+    },
+    {
+      "excluded_product_text": "heading 9609 (for example, slate pencils)",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": "9609",
+      "source_note_number": "Note 1(m)",
+      "source_note_text": "This Chapter does not cover : (m) articles of heading 9602, if made of materials specified in Note 2 (b) to Chapter 96, or of heading 9606 (for example, buttons), of heading 9609 (for example, slate pencils), heading 9610 (for example, drawing slates) or of heading 9620 (monopods, bipods, tripods and similar articles)"
+    },
+    {
+      "excluded_product_text": "heading 9610 (for example, drawing slates)",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": "9610",
+      "source_note_number": "Note 1(m)",
+      "source_note_text": "This Chapter does not cover : (m) articles of heading 9602, if made of materials specified in Note 2 (b) to Chapter 96, or of heading 9606 (for example, buttons), of heading 9609 (for example, slate pencils), heading 9610 (for example, drawing slates) or of heading 9620 (monopods, bipods, tripods and similar articles)"
+    },
+    {
+      "excluded_product_text": "heading 9620 (monopods, bipods, tripods and similar articles)",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": "9620",
+      "source_note_number": "Note 1(m)",
+      "source_note_text": "This Chapter does not cover : (m) articles of heading 9602, if made of materials specified in Note 2 (b) to Chapter 96, or of heading 9606 (for example, buttons), of heading 9609 (for example, slate pencils), heading 9610 (for example, drawing slates) or of heading 9620 (monopods, bipods, tripods and similar articles)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 97 (for example, works of art)",
+      "redirects_to_chapter": "97",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(n)",
+      "source_note_text": "This Chapter does not cover : (n) articles of Chapter 97 (for example, works of art)"
+    }
+  ],
+  "policy_conditions": [],
+  "export_licensing_notes": [],
+  "headings": [
+    {
+      "heading": "6801",
+      "title": "Setts, curbstones and flagstones, of natural stone (except slate).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6801.00",
+          "title": "Setts, curbstones and flagstones, of natural stone (except slate)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6801.00.00",
+              "description": "Setts, curbstones and flagstones, of natural stone (except slate).",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6802",
+      "title": "WORKED MONUMENTAL OR BUILDING STONE (EXCEPT SLATE) AND ARTICLES THEREOF, OTHER THAN GOODS OF HEADING 6801; MOSAICCUBES AND THE LIKE, OF NATURAL STONE (INCLUDING SLATE), WHETHER OR NOT ON A BACKING; ARTIFICIALLY COLOURED GRANULES, CHIPPINGS AND POWDER, OF NATURAL STONE (INCLUDING SLATE)",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6802.10",
+          "title": "Tiles, cubes and similar articles, whether or not rectangular (including square), the largest surface area of which is capable of being enclosed in a square the side of which is less than 7 cm; artificially coloured granules, chippings and powder",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6802.10.00",
+              "description": "Tiles, cubes and similar articles, whether or not rectangular (including square), the largest surface area of which is capable of being enclosed in a square the side of which is less than 7 cm; artificially coloured granules, chippings and powder",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6802.21",
+          "title": "Other monumental or building stone and articles thereof, simply cut or sawn, with a flat or even surface : -- Marble, travertine and alabaster",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6802.21.10",
+              "description": "Marble blocks or tiles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6802.21.20",
+              "description": "Marble monumental stone",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6802.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6802.23",
+          "title": "Other monumental or building stone and articles thereof, simply cut or sawn, with a flat or even surface : -- Granite",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6802.23.10",
+              "description": "Granite blocks or tiles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6802.23.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6802.29",
+          "title": "Other monumental or building stone and articles thereof, simply cut or sawn, with a flat or even surface : -- Other stone",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6802.29.00",
+              "description": "Other monumental or building stone and articles thereof, simply cut or sawn, with a flat or even surface : -- Other stone",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6802.91",
+          "title": "Other : -- Marble, travertine and alabaster",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6802.91.00",
+              "description": "Other : -- Marble, travertine and alabaster",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6802.92",
+          "title": "Other : -- Other calcareous stone",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6802.92.00",
+              "description": "Other : -- Other calcareous stone",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6802.93",
+          "title": "Other : -- Granite",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6802.93.00",
+              "description": "Other : -- Granite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6802.99",
+          "title": "Other : -- Other stone",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6802.99.00",
+              "description": "Other : -- Other stone",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6803",
+      "title": "Worked slate and articles of slate or of agglomerated slate.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6803.00",
+          "title": "Worked slate and articles of slate or of agglomerated slate",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6803.00.00",
+              "description": "Worked slate and articles of slate or of agglomerated slate.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6804",
+      "title": "Millstones, grindstones, grinding wheels and the like, without frameworks, for grinding, sharpening, polishing, trueing or cutting, hand sharpening or polishing stones, and parts thereof, of natural stone, of agglomerated natural or artificial abrasives, or of ceramics, with or without parts of other materials.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6804.10",
+          "title": "Millstones and grindstones for milling, grinding or pulping",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6804.10.00",
+              "description": "Millstones and grindstones for milling, grinding or pulping",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6804.21",
+          "title": "Other millstones, grindstones, grinding wheels and the like : -- Of agglomerated synthetic or natural diamond",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6804.21.10",
+              "description": "Diamond impregnated wheels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6804.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6804.22",
+          "title": "Other millstones, grindstones, grinding wheels and the like : -- Of other agglomerated abrasives or of ceramics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6804.22.10",
+              "description": "Grinding wheels of synthetic abrasive",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6804.22.20",
+              "description": "Grinding wheels of other materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6804.22.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6804.23",
+          "title": "Other millstones, grindstones, grinding wheels and the like : -- Of natural stone",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6804.23.10",
+              "description": "Grinding wheels made of natural stone",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6804.23.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6804.30",
+          "title": "Hand sharpening or polishing stones",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6804.30.10",
+              "description": "Polishing stones",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6804.30.20",
+              "description": "Sharpening stones",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6805",
+      "title": "Natural or artificial abrasive powder or grain, on a base of textile material, of paper, of paperboard or of other materials, whether or not cut to shape or sewn or otherwise made up.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6805.10",
+          "title": "On a base of woven textile fabric only",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6805.10.10",
+              "description": "Abrasive cloths",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6805.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6805.20",
+          "title": "on a base of paper or paperboard only",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6805.20.10",
+              "description": "Emery or corundum coated paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6805.20.20",
+              "description": "Flint coated paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6805.20.30",
+              "description": "Glass or sand coated paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6805.20.40",
+              "description": "Other abrasive paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6805.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6805.30",
+          "title": "On a base of other materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6805.30.00",
+              "description": "On a base of other materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6806",
+      "title": "Slag wool, rock wool and similar mineral wools; exfoliated vermiculite, expanded clays, foamed slag and similar expanded mineral materials; mixtures and articles of heat-insulating, sound-insulating or sound-absorbing mineral materials, other than those of heading 68.11 or 68.12 or of Chapter 69.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6806.10",
+          "title": "Slag wool, rock wool and similar mineral wools (including intermixtures thereof), in bulk, sheets or rolls",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6806.10.00",
+              "description": "Slag wool, rock wool and similar mineral wools (including intermixtures thereof), in bulk, sheets or rolls",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6806.20",
+          "title": "Exfoliated vermiculite, expanded clays, foamed slag and similar expanded mineral materials (including intermixtures thereof)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6806.20.00",
+              "description": "Exfoliated vermiculite, expanded clays, foamed slag and similar expanded mineral materials (including intermixtures thereof)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6806.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6806.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6807",
+      "title": "Articles of asphalt or of similar material (for example, petroleum bitumen or coal tar pitch).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6807.10",
+          "title": "In rolls",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6807.10.10",
+              "description": "Tarfelt roofing",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6807.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6807.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6807.90.10",
+              "description": "Tarfelt roofing",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6807.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6808",
+      "title": "Panels, boards, tiles, blocks and similar articles of vegetable fibre, of straw or of shavings, chips, particles, sawdust or other waste, of wood, agglomerated with cement, plaster or other mineral binders.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6808.00",
+          "title": "Panels, boards, tiles, blocks and similar articles of vegetable fibre, of straw or of shavings, chips, particles, sawdust or other waste, of wood, agglomerated with cement, plaster or other mineral binders",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6808.00.00",
+              "description": "Panels, boards, tiles, blocks and similar articles of vegetable fibre, of straw or of shavings, chips, particles, sawdust or other waste, of wood, agglomerated with cement, plaster or other mineral binders.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6809",
+      "title": "Articles of plaster or of compositions based on plaster.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6809.11",
+          "title": "Boards, sheets, panels, tiles and similar articles, not ornamented : -- Faced or reinforced with paper or paperboard only",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6809.11.00",
+              "description": "Boards, sheets, panels, tiles and similar articles, not ornamented : -- Faced or reinforced with paper or paperboard only",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6809.19",
+          "title": "Boards, sheets, panels, tiles and similar articles, not ornamented : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6809.19.00",
+              "description": "Boards, sheets, panels, tiles and similar articles, not ornamented : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6809.90",
+          "title": "Other articles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6809.90.00",
+              "description": "Other articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6810",
+      "title": "Articles of cement, of concrete or of artificial stone, whether or not reinforced.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6810.11",
+          "title": "Tiles, flagstones, bricks and similar articles : -- Building blocks and bricks",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6810.11.10",
+              "description": "Cement bricks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6810.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6810.19",
+          "title": "Tiles, flagstones, bricks and similar articles : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6810.19.10",
+              "description": "Cement tiles for mosaic",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6810.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6810.91",
+          "title": "Other articles : -- Prefabricated structural components for building or civil engineering",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6810.91.00",
+              "description": "Other articles : -- Prefabricated structural components for building or civil engineering",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6810.99",
+          "title": "Other articles : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6810.99.10",
+              "description": "Concrete boulder",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6810.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6811",
+      "title": "Articles of asbestos-cement, of cellulose fibre-cement or the like.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6811.40",
+          "title": "Containing asbestos",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6811.40.10",
+              "description": "Asbestos - cement sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6811.40.20",
+              "description": "Asbestos - cement tiles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6811.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6811.81",
+          "title": "Not containing asbestos : -- Corrugated sheets",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6811.81.00",
+              "description": "Not containing asbestos : -- Corrugated sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6811.82",
+          "title": "Not containing asbestos : -- Other sheets, panels, tiles and similar articles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6811.82.00",
+              "description": "Not containing asbestos : -- Other sheets, panels, tiles and similar articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6811.89",
+          "title": "Not containing asbestos : -- Other articles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6811.89.10",
+              "description": "Tubes, pipes and tube or pipe fittings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6811.89.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6812",
+      "title": "Fabricated asbestos fibres; mixtures with a basis of asbestos or with a basis of asbestos and magnesium carbonate; articles of such mixtures or of asbestos (for example, thread, woven fabric, clothing, headgear, footwear, gaskets), whether or not reinforced, other than goods of heading 68.11 or 68.13.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6812.80",
+          "title": "Of crocidolite",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6812.80.00",
+              "description": "Of crocidolite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6812.91",
+          "title": "Other : -- Clothing, clothing accessories, footwear and headgear",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6812.91.00",
+              "description": "Other : -- Clothing, clothing accessories, footwear and headgear",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6812.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6812.99.11",
+              "description": "Lagging compounds: ----Asbestos",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6812.99.19",
+              "description": "Lagging compounds: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6812.99.21",
+              "description": "Asbestos packing joints and gaskets: ----Packing joints",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6812.99.22",
+              "description": "Asbestos packing joints and gaskets: ----Gaskets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6812.99.90",
+              "description": "Asbestos packing joints and gaskets: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6813",
+      "title": "Friction material and articles thereof (for example, sheets, rolls, strips, segments, discs, washers, pads), not mounted, for brakes, for clutches or the like, with a basis of asbestos, of other mineral substances or of cellulose, whether or not combined with textile or other materials.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6813.20",
+          "title": "Containing asbestos",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6813.20.10",
+              "description": "Brake lining and pads",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6813.20.90",
+              "description": "Asbestos friction materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6813.81",
+          "title": "Not containing asbestos : -- Brake linings and pads",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6813.81.00",
+              "description": "Not containing asbestos : -- Brake linings and pads",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6813.89",
+          "title": "Not containing asbestos : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6813.89.00",
+              "description": "Not containing asbestos : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6814",
+      "title": "Worked mica and articles of mica, including agglomerated or reconstituted mica, whether or not on a support of paper, paperboard or other materials.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6814.10",
+          "title": "Plates, sheets and strips of agglomerated or reconstituted mica, whether or not on a support",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6814.10.10",
+              "description": "Cut mica condenser films or plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6814.10.20",
+              "description": "Sheets and strips cut to shape",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6814.10.30",
+              "description": "Washers and discs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6814.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6814.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6814.90.10",
+              "description": "Mica stacked units",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6814.90.20",
+              "description": "Silvered mica, capacitor plates or silvered mica plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6814.90.30",
+              "description": "Micanite and all sorts of built up mica",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6814.90.40",
+              "description": "Mica paper or reconstituted mica paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6814.90.50",
+              "description": "Moulded glass bonded or glass bonded mica",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6814.90.60",
+              "description": "Mica bricks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6814.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6815",
+      "title": "Articles of stone or of other mineral substances (including carbon fibres, articles of carbon fibres and articles of peat), not elsewhere specified or included.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "6815.11",
+          "title": "Carbon fibres; articles of carbon fibres for non-electrical uses; other articles of graphite or other carbon for non-electrical uses: - - Carbon fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6815.11.00",
+              "description": "Carbon fibres; articles of carbon fibres for non-electrical uses; other articles of graphite or other carbon for non-electrical uses: - - Carbon fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6815.12",
+          "title": "Fabrics of carbon fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6815.12.00",
+              "description": "Fabrics of carbon fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6815.13",
+          "title": "Carbon fibres; articles of carbon fibres for non-electrical uses; other articles of graphite or other carbon for non-electrical uses: - - Other articles of carbon fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6815.13.00",
+              "description": "Carbon fibres; articles of carbon fibres for non-electrical uses; other articles of graphite or other carbon for non-electrical uses: - - Other articles of carbon fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6815.19",
+          "title": "Carbon fibres; articles of carbon fibres for non-electrical uses; other articles of graphite or other carbon for non-electrical uses: - - Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6815.19.00",
+              "description": "Carbon fibres; articles of carbon fibres for non-electrical uses; other articles of graphite or other carbon for non-electrical uses: - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6815.20",
+          "title": "Articles of peat",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6815.20.00",
+              "description": "Articles of peat",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6815.91",
+          "title": "Other articles :- - Containing magnesite, magnesia in the form of periclase, dolomite including in the form of dolime, or chromite",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6815.91.00",
+              "description": "Other articles :- - Containing magnesite, magnesia in the form of periclase, dolomite including in the form of dolime, or chromite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "6815.99",
+          "title": "Other articles : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "6815.99.10",
+              "description": "Bricks and tiles of fly ash",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6815.99.20",
+              "description": "Sanitary wares, kitchen wares and other made up articles of fly ash",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6815.99.30",
+              "description": "Basalt fibre, filament and articles thereof conforming to ASTM D3039, C1185",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "6815.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

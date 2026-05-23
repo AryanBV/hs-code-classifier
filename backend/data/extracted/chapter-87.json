@@ -1,0 +1,2819 @@
+{
+  "chapter": "87",
+  "section": "XVII",
+  "title": "VEHICLES OTHER THAN RAILWAY OR TRAMWAY ROLLING-STOCK, AND PARTS AND ACCESSORIES THEREOF",
+  "source_pdf": "Chapter 87 Vehicles Other Than Railway Or Tramway Rolling-Stock, And Parts And Accessories Thereof.pdf",
+  "extracted_at": "2026-05-21",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '87011000'). Normalized to NNNN.NN.NN format (e.g., '8701.10.00') per project schema. Subheading numbers in PDF (e.g., '870110' or '870321') normalized to NNNN.NN form (e.g., '8701.10' / '8703.21').",
+    "Section XVII section_notes are reproduced verbatim from the PDF. Note 2 contains lettered sub-clauses (a) through (l) defining exclusions from the meaning of 'parts' and 'parts and accessories' across Section XVII (Chapters 86-89). These are the legally controlling rules for deciding whether an article is classified as a vehicle part (Ch.87) or with its constituent material/general-purpose function (e.g., Ch.40, Ch.73, Ch.85, Ch.90). Each exclusion is also captured structurally in exclusion_clauses.",
+    "Section XVII Note 3 contains the 'solely or principally used' rule (the parts-classification GIR-2(a)-like principle for vehicles). Captured verbatim in section_notes and as a guidance entry — note that Note 3 is not strictly an exclusion-to-another-chapter rule, so it appears only in section_notes, not in exclusion_clauses.",
+    "Chapter 87 Note 1 excludes 'railway or tramway rolling-stock designed solely for running on rails' — these belong to Chapter 86. Captured as an exclusion_clause.",
+    "PDF page 1 shows a typographic artifact: ''parts'' and ''parts and accessories'' are rendered with paired double-double quotes (likely smart-quote encoding artifact). Reproduced verbatim in section_notes; the intended text is the single-quoted terms 'parts' and 'parts and accessories'.",
+    "PDF contains minor OCR artifacts in Section XVII Note 2: 'vehiclesspecially' (missing space) at the start of Note 4 sub-clause (a) and 'mountedon' (missing space) in Chapter 87 Note 2. Reproduced verbatim; these are source-document errors.",
+    "Supplementary Note 1 references 'tariff item 8711 60 80' — Indian-format spacing for 8711.60.80. The corresponding tariff line in the schedule is captured as '8711.60.80' (PDF code '87116080') under subheading '8711.60'.",
+    "PDF table-chrome headers ('Sl.No. Notes Notification No Notification Date', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Main Notes', 'Sub-Heading Notes', 'Supplementary Notes', 'Policy Condition', 'Product Description and Export Policy') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "The PDF lists a 6-digit row '870600' under heading 8706 with description 'Chassis fitted with engines, for the motor vehicles of headings 8701 to 8705:' — this acts as a subheading umbrella. Modelled as subheading '8706.00' carrying tariff lines 8706.00.11 onward. The heading 8706 title itself is the row '8706' (no decimal).",
+    "Some heading-level rows in the PDF have a descriptive title (e.g., heading 8703 'Motor cars and other motor vehicles ...') while others are bare codes — verbatim heading titles preserved where present.",
+    "Heading 8710 in the PDF has a single 8-digit code '87100000' directly under the heading-level description (no separate 6-digit subheading row). Modelled as subheading '8710.00' with tariff line '8710.00.00'.",
+    "PDF row '87110000' with description 'Vintage Motorcycles, parts and components thereof manufactured prior to 1.1.1940' appears as an out-of-sequence 8-digit code under heading 8711 ABOVE the normal subheading 8711.10. Preserved verbatim under a subheading '8711.00' wrapper to retain valid NNNN.NN.NN structure; flagged here because the official HS does not include 8711.00 — this is an Indian ITC(HS) policy-tariff convention referenced by Policy Condition 1.",
+    "PDF row '87029019' description 'Other, non air-conditioned other' is preserved verbatim (the duplicated word 'other' at end appears to be a source artifact; the rest of the 87029x series uses the pattern 'Other: ----Other, non air-conditioned').",
+    "PDF row '8716' heading description reads 'Trailers and semi-trailers; other vehicles, not mechanically' — this is truncated in the source PDF (the full official text is 'Trailers and semi-trailers; other vehicles, not mechanically propelled; and parts thereof.'). Preserved verbatim with a warning. Likely a source PDF rendering issue.",
+    "Heading 8704 contains tariff lines '8704.22.19' and '8704.32.19' (PDF '87042219', '87043219') with description 'Lorries and trucks: ----Other' that have no Export Policy filled — preserved verbatim with unit/policy as null.",
+    "Subheadings within heading 8704 — 8704.22, 8704.31, 8704.32, 8704.41, 8704.42, 8704.43, 8704.51, 8704.52, 8704.60 — are represented in the PDF only by their single-line code (e.g., '87042100'), not by a separate 6-digit row. Modelled by wrapping each 8-digit code in its corresponding 6-digit subheading.",
+    "Subheading 8714.92 has a 6-digit row '871492' with description 'Other : -- Wheel rims and spokes' but no corresponding '00' tariff line; subheading-level rows 8714.93, 8714.95, 8714.99 follow the same pattern. Preserved as subheading title with their respective 8-digit tariff lines.",
+    "Unit (kg/u/etc.) information is not present in this PDF — all unit fields set to null.",
+    "Policy Condition 1: 'Vintage motor cars and vintage motor cycles including their parts and components are Restricted for Export. (i) Export of Vintage motor cars, parts and components thereof manufactured prior to 01.01.1950 is permitted only against a Restricted Export Authorisation. (ii) Export of Vintage motorcycles, parts and components thereof manufactured prior to 01.01.1940 is permitted only against a Restricted Export Authorisation.' Applied to many tariff lines under headings 8703, 8706, 8707, 8708, 8711, 8714.",
+    "[phantom-cleanup v2] Applied verdict from ours-only-verdict.json: removed 0 phantom subheadings, tagged 1 as india_specific."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover railway or tramway rolling-stock designed solely for running on rails."
+    },
+    {
+      "number": "2",
+      "text": "For the purposes of this Chapter, \"tractors\" means vehicles constructed essentially for hauling or pushing another vehicle, appliance or load, whether or not they contain subsidiary provision for the transport,in connection with the main use of the tractor, of tools, seeds, fertilizers or other goods. Machines and working tools designed for fitting to tractors of heading 8701 as interchangeable equipment remain classified in their respective headings even if presented with the tractor, and whether or not mountedon it."
+    },
+    {
+      "number": "3",
+      "text": "Motor chassis fitted with cabs fall in headings 8702 to 8704, and not in heading 8706."
+    },
+    {
+      "number": "4",
+      "text": "Heading 8712 includes all children s bicycles. Other children s cyclesfall in heading 9503."
+    },
+    {
+      "number": "Sub-Heading Note 1",
+      "text": "Sub-heading 8708 22 covers : (a) front windscreens (windshields), rear windows and other windows, framed; and (b) front windscreens (windshields), rear windows and other windows, whether or not framed, incorporating heating devices or other electrical or electronic devices, when suitable for use solely or principally with the motor vehicles of headings 8701 to 8705."
+    },
+    {
+      "number": "Supplementary Note 1",
+      "text": "For the purposes of tariff item 8711 60 80, the term ?E-bicycle or battery operated pedal assisted vehicle? means vehicle equipped with an auxiliary electric motor having a thirty-minute power less than 0.25 kW and maximum speed not exceeding 25 km/h and conforming to the provisions of the Motor Vehicles Act, 1988 (59 of 1988) and the rules made thereunder."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "This Section does not cover articles of heading 9503 or 9508 or bobsleighs, toboggans and the like of heading 9506."
+    },
+    {
+      "number": "2",
+      "text": "The expressions \"\"parts\"\" and \"\"parts and accessories\"\" do not apply to the following articles, whether or not they are identifiable as for the goods of this Section: (a) joints, washers or the like of any material (classified according to their constituent material or in heading 8484) or other articles of vulcanised rubber other than hard rubber (heading 4016), (b) parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39), (c) articles of Chapter 82 (tools), (d) articles of heading 8306, (e) machines and apparatus of headings 8401 to 8479, or parts thereof, other than the radiators for the articles of this Section, articles of heading 8481 or 8482 or, provided they constitute integral parts of engines and motors, articles of heading 8483, (f) electrical machinery or equipment (Chapter 85), (g) articles of Chapter 90, (h) articles of Chapter 91, (ij) arms (Chapter 93), (k) luminaries and lighting fittings and parts thereof of heading 9405, or (l) brushes of a kind used as parts of vehicles (heading 9603)."
+    },
+    {
+      "number": "3",
+      "text": "References in Chapters 86 to 88 to \"parts\" or \" accessories\" do not apply to parts or accessories which are not suitable for use solely or principally with the articles of those Chapters. A part or accessory which answersto a description in two or more of the headings of those Chapters is to be classified under that heading which corresponds to the principal use of that part of accessory."
+    },
+    {
+      "number": "4",
+      "text": "For the purposes of this Section: (a) vehiclesspecially constructed to travel on both road and rail are classified under the appropriate heading of Chapter 87, (b) amphibious motor vehicles are classified under the appropriate heading of Chapter 87, (c) aircraft specially constructed so that they can also be used as road vehicles are classified under the appropriate heading of Chapter 88."
+    },
+    {
+      "number": "5",
+      "text": "Air-cushion vehicles are to be classified within this Section with the vehicles to which they are most akin as follows: (a) in Chapter 86 if designed to travel on a guide-track (hovertrains), (b) in Chapter 87 if designed to travel over land or over both land and water, (c) in Chapter 89 if designed to travel over water, whether or not able to land on beaches or landing - stages or also able to travel over ice. Parts and accessories of air-cushion vehicles are to be classified in the same way as those of vehicles of the heading in which the air-cushion vehicles are classified under the above provisions. Hovertrain track fixtures and fittings are to be classified as railway track fixtures and fittings, and signalling, safety or traffic control equipment for hovertrain transport systems as signalling, safety or traffic control equipment for railways."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "railway or tramway rolling-stock designed solely for running on rails",
+      "redirects_to_chapter": "86",
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1",
+      "source_note_text": "This Chapter does not cover railway or tramway rolling-stock designed solely for running on rails."
+    },
+    {
+      "excluded_product_text": "Machines and working tools designed for fitting to tractors of heading 8701 as interchangeable equipment (even if presented with the tractor, and whether or not mounted on it)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 2",
+      "source_note_text": "For the purposes of this Chapter, \"tractors\" means vehicles constructed essentially for hauling or pushing another vehicle, appliance or load, whether or not they contain subsidiary provision for the transport,in connection with the main use of the tractor, of tools, seeds, fertilizers or other goods. Machines and working tools designed for fitting to tractors of heading 8701 as interchangeable equipment remain classified in their respective headings even if presented with the tractor, and whether or not mountedon it."
+    },
+    {
+      "excluded_product_text": "Motor chassis fitted with cabs",
+      "redirects_to_chapter": "87",
+      "redirects_to_heading": "8702",
+      "source_note_number": "Chapter Note 3",
+      "source_note_text": "Motor chassis fitted with cabs fall in headings 8702 to 8704, and not in heading 8706."
+    },
+    {
+      "excluded_product_text": "Children's cycles other than bicycles (toy cycles)",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": "9503",
+      "source_note_number": "Chapter Note 4",
+      "source_note_text": "Heading 8712 includes all children s bicycles. Other children s cyclesfall in heading 9503."
+    },
+    {
+      "excluded_product_text": "Articles of heading 9503 (toys) or 9508 (roundabouts, swings, shooting galleries and other fairground amusements)",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": "9503",
+      "source_note_number": "Section Note 1",
+      "source_note_text": "This Section does not cover articles of heading 9503 or 9508 or bobsleighs, toboggans and the like of heading 9506."
+    },
+    {
+      "excluded_product_text": "Bobsleighs, toboggans and the like",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": "9506",
+      "source_note_number": "Section Note 1",
+      "source_note_text": "This Section does not cover articles of heading 9503 or 9508 or bobsleighs, toboggans and the like of heading 9506."
+    },
+    {
+      "excluded_product_text": "Joints, washers or the like of any material (classified according to their constituent material, or in heading 8484 if of metal sheeting combined with other material or laminated)",
+      "redirects_to_chapter": "84",
+      "redirects_to_heading": "8484",
+      "source_note_number": "Section Note 2(a)",
+      "source_note_text": "The expressions \"\"parts\"\" and \"\"parts and accessories\"\" do not apply to the following articles, whether or not they are identifiable as for the goods of this Section: (a) joints, washers or the like of any material (classified according to their constituent material or in heading 8484) or other articles of vulcanised rubber other than hard rubber (heading 4016), ..."
+    },
+    {
+      "excluded_product_text": "Other articles of vulcanised rubber other than hard rubber (e.g., rubber hoses, rubber engine mounts, rubber bushings of soft/unhardened rubber)",
+      "redirects_to_chapter": "40",
+      "redirects_to_heading": "4016",
+      "source_note_number": "Section Note 2(a)",
+      "source_note_text": "The expressions \"\"parts\"\" and \"\"parts and accessories\"\" do not apply to the following articles, whether or not they are identifiable as for the goods of this Section: (a) joints, washers or the like of any material (classified according to their constituent material or in heading 8484) or other articles of vulcanised rubber other than hard rubber (heading 4016), ..."
+    },
+    {
+      "excluded_product_text": "Parts of general use, as defined in Note 2 to Section XV, of base metal (e.g., bolts, nuts, screws, springs, chains, locks of base metal)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 2(b)",
+      "source_note_text": "(b) parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39), ..."
+    },
+    {
+      "excluded_product_text": "Similar goods of plastics (parts of general use made of plastic)",
+      "redirects_to_chapter": "39",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 2(b)",
+      "source_note_text": "(b) parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39), ..."
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 82 (tools, implements, cutlery, spoons and forks, of base metal)",
+      "redirects_to_chapter": "82",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 2(c)",
+      "source_note_text": "(c) articles of Chapter 82 (tools), ..."
+    },
+    {
+      "excluded_product_text": "Articles of heading 8306 (bells, gongs, statuettes, ornaments and similar articles, of base metal; photograph, picture and similar frames of base metal; mirrors of base metal)",
+      "redirects_to_chapter": "83",
+      "redirects_to_heading": "8306",
+      "source_note_number": "Section Note 2(d)",
+      "source_note_text": "(d) articles of heading 8306, ..."
+    },
+    {
+      "excluded_product_text": "Machines and apparatus of headings 8401 to 8479, or parts thereof — other than radiators for the articles of this Section",
+      "redirects_to_chapter": "84",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 2(e)",
+      "source_note_text": "(e) machines and apparatus of headings 8401 to 8479, or parts thereof, other than the radiators for the articles of this Section, articles of heading 8481 or 8482 or, provided they constitute integral parts of engines and motors, articles of heading 8483, ..."
+    },
+    {
+      "excluded_product_text": "Articles of heading 8481 (taps, cocks, valves and similar appliances)",
+      "redirects_to_chapter": "84",
+      "redirects_to_heading": "8481",
+      "source_note_number": "Section Note 2(e)",
+      "source_note_text": "(e) machines and apparatus of headings 8401 to 8479, or parts thereof, other than the radiators for the articles of this Section, articles of heading 8481 or 8482 or, provided they constitute integral parts of engines and motors, articles of heading 8483, ..."
+    },
+    {
+      "excluded_product_text": "Articles of heading 8482 (ball, roller or needle roller bearings)",
+      "redirects_to_chapter": "84",
+      "redirects_to_heading": "8482",
+      "source_note_number": "Section Note 2(e)",
+      "source_note_text": "(e) machines and apparatus of headings 8401 to 8479, or parts thereof, other than the radiators for the articles of this Section, articles of heading 8481 or 8482 or, provided they constitute integral parts of engines and motors, articles of heading 8483, ..."
+    },
+    {
+      "excluded_product_text": "Articles of heading 8483 (transmission shafts, cranks, bearing housings, gears, etc.) — when they constitute integral parts of engines and motors",
+      "redirects_to_chapter": "84",
+      "redirects_to_heading": "8483",
+      "source_note_number": "Section Note 2(e)",
+      "source_note_text": "(e) machines and apparatus of headings 8401 to 8479, or parts thereof, other than the radiators for the articles of this Section, articles of heading 8481 or 8482 or, provided they constitute integral parts of engines and motors, articles of heading 8483, ..."
+    },
+    {
+      "excluded_product_text": "Electrical machinery or equipment (Chapter 85) — e.g., starter motors, alternators, ignition coils, batteries, lighting equipment of Chapter 85",
+      "redirects_to_chapter": "85",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 2(f)",
+      "source_note_text": "(f) electrical machinery or equipment (Chapter 85), ..."
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 90 (optical, photographic, cinematographic, measuring, checking, precision, medical or surgical instruments and apparatus) — e.g., speedometers, tachometers, navigation instruments",
+      "redirects_to_chapter": "90",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 2(g)",
+      "source_note_text": "(g) articles of Chapter 90, ..."
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 91 (clocks and watches and parts thereof) — e.g., dashboard clocks",
+      "redirects_to_chapter": "91",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 2(h)",
+      "source_note_text": "(h) articles of Chapter 91, ..."
+    },
+    {
+      "excluded_product_text": "Arms (Chapter 93)",
+      "redirects_to_chapter": "93",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 2(ij)",
+      "source_note_text": "(ij) arms (Chapter 93), ..."
+    },
+    {
+      "excluded_product_text": "Luminaires and lighting fittings and parts thereof of heading 9405",
+      "redirects_to_chapter": "94",
+      "redirects_to_heading": "9405",
+      "source_note_number": "Section Note 2(k)",
+      "source_note_text": "(k) luminaries and lighting fittings and parts thereof of heading 9405, ..."
+    },
+    {
+      "excluded_product_text": "Brushes of a kind used as parts of vehicles (e.g., wiper blade brush inserts)",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": "9603",
+      "source_note_number": "Section Note 2(l)",
+      "source_note_text": "(l) brushes of a kind used as parts of vehicles (heading 9603)."
+    },
+    {
+      "excluded_product_text": "Parts or accessories which are not suitable for use solely or principally with the articles of Chapters 86 to 88",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 3",
+      "source_note_text": "References in Chapters 86 to 88 to \"parts\" or \" accessories\" do not apply to parts or accessories which are not suitable for use solely or principally with the articles of those Chapters. A part or accessory which answersto a description in two or more of the headings of those Chapters is to be classified under that heading which corresponds to the principal use of that part of accessory."
+    },
+    {
+      "excluded_product_text": "Air-cushion vehicles designed to travel on a guide-track (hovertrains)",
+      "redirects_to_chapter": "86",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 5(a)",
+      "source_note_text": "Air-cushion vehicles are to be classified within this Section with the vehicles to which they are most akin as follows: (a) in Chapter 86 if designed to travel on a guide-track (hovertrains), (b) in Chapter 87 if designed to travel over land or over both land and water, (c) in Chapter 89 if designed to travel over water, whether or not able to land on beaches or landing - stages or also able to travel over ice. ..."
+    },
+    {
+      "excluded_product_text": "Air-cushion vehicles designed to travel over water",
+      "redirects_to_chapter": "89",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 5(c)",
+      "source_note_text": "Air-cushion vehicles are to be classified within this Section with the vehicles to which they are most akin as follows: (a) in Chapter 86 if designed to travel on a guide-track (hovertrains), (b) in Chapter 87 if designed to travel over land or over both land and water, (c) in Chapter 89 if designed to travel over water, whether or not able to land on beaches or landing - stages or also able to travel over ice. ..."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "8701",
+      "title": "Tractors (other than tractors of heading 87.09).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8701.10",
+          "title": "Single axle tractors",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8701.10.00",
+              "description": "Single axle tractors",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8701.21",
+          "title": "Road tractors for semi-trailers: -- With only compression-ignition internal combustion piston engine (diesel or semi-diesel)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8701.21.00",
+              "description": "Road tractors for semi-trailers: - - With only compression-ignition internal combustion piston engine (diesel or semi-diesel)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8701.22",
+          "title": "Road tractors for semi-trailers: -- With both compression-ignition internal combustion piston engine (diesel or semi-diesel) and electric motor as motors for propulsion",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8701.22.00",
+              "description": "Road tractors for semi-trailers: - - With both compression-ignition internal combustion piston engine (diesel or semi-diesel) and electric motor as motors for propulsion",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8701.23",
+          "title": "Road tractors for semi-trailers: -- With both spark-ignition internal combustion piston engine and electric motor as motors for propulsion",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8701.23.00",
+              "description": "Road tractors for semi-trailers: - - With both spark-ignition internal combustion piston engine and electric motor as motors for propulsion",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8701.24",
+          "title": "Road tractors for semi-trailers: -- With only electric motor for propulsion",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8701.24.00",
+              "description": "Road tractors for semi-trailers: - - With only electric motor for propulsion",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8701.29",
+          "title": "Road tractors for semi-trailers: -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8701.29.00",
+              "description": "Road tractors for semi-trailers: - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8701.30",
+          "title": "Track-laying tractors",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8701.30.11",
+              "description": "Garden tractors: ----Of engine capacity not exceeding 1800 cc",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8701.30.19",
+              "description": "Garden tractors: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8701.30.91",
+              "description": "other ----Of engine capacity not exceeding 1800 cc",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8701.30.99",
+              "description": "other ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8701.91",
+          "title": "Other, of an engine power : -- Not exceeding 18 kW",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8701.91.00",
+              "description": "Other, of an engine power : -- Not exceeding 18 kW",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8701.92",
+          "title": "Other, of an engine power : -- Exceeding 18 kW but not exceeding 37 kW",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8701.92.00",
+              "description": "Other, of an engine power : -- Exceeding 18 kW but not exceeding 37 kW",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8701.93",
+          "title": "Other, of an engine power : -- Exceeding 37 kW but not exceeding 75 kW",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8701.93.00",
+              "description": "Other, of an engine power : -- Exceeding 37 kW but not exceeding 75 kW",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8701.94",
+          "title": "Other, of an engine power : -- Exceeding 75 kW but not exceeding 130 kW",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8701.94.00",
+              "description": "Other, of an engine power : -- Exceeding 75 kW but not exceeding 130 kW",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8701.95",
+          "title": "Other, of an engine power : -- Exceeding 130 kW",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8701.95.00",
+              "description": "Other, of an engine power : -- Exceeding 130 kW",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "8702",
+      "title": "Motor vehicles for the transport of ten or more persons, including the driver.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8702.10",
+          "title": "With only compression-ignition internal combustion piston engine (diesel or semi-diesel)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8702.10.11",
+              "description": "Integrated monocoque vehicle, air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.10.12",
+              "description": "Integrated monocoque vehicle, non air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.10.18",
+              "description": "Other, air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.10.19",
+              "description": "Other, non air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.10.21",
+              "description": "other ----Integrated monocoque vehicle, air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.10.22",
+              "description": "other ----Integrated monocoque vehicle, non air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.10.28",
+              "description": "other ----Other, air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.10.29",
+              "description": "other ----Other, non air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8702.20",
+          "title": "With both compression-ignition internal combustion piston engine (diesel or semi-diesel) and electric motor as motors for propulsion",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8702.20.11",
+              "description": "Vehicles for transport of not more than 13 persons, including the driver: ----Integrated monocoque vehicle, air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.20.12",
+              "description": "Vehicles for transport of not more than 13 persons, including the driver: ----Integrated monocoque vehicle, non air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.20.18",
+              "description": "Vehicles for transport of not more than 13 persons, including the driver: ----Other, air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.20.19",
+              "description": "Vehicles for transport of not more than 13 persons, including the driver: ----Other, non air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.20.21",
+              "description": "other ----Integrated monocoque vehicle, air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.20.22",
+              "description": "other ----Integrated monocoque vehicle, non air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.20.28",
+              "description": "other ----Other, air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.20.29",
+              "description": "other ----Other, non air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8702.30",
+          "title": "With both spark-ignition internal combustion piston engine and electric motor as motors for propulsion:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8702.30.11",
+              "description": "Vehicles for transport of not more than 13 persons, including the driver: ----Integrated monocoque vehicle, air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.30.12",
+              "description": "Vehicles for transport of not more than 13 persons, including the driver: ----Integrated monocoque vehicle, non air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.30.18",
+              "description": "Vehicles for transport of not more than 13 persons, including the driver: ----Other, air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.30.19",
+              "description": "Vehicles for transport of not more than 13 persons, including the driver: ----Other, non air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.30.21",
+              "description": "other ----Integrated monocoque vehicle, air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.30.22",
+              "description": "other ----Integrated monocoque vehicle, non air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.30.28",
+              "description": "other ----Other, air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.30.29",
+              "description": "other ----Other, non air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8702.40",
+          "title": "With only electric motor for propulsion",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8702.40.11",
+              "description": "Vehicles for transport of not more than 13 persons, including the driver: ----Integrated monocoque vehicle, air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.40.12",
+              "description": "Vehicles for transport of not more than 13 persons, including the driver: ----Integrated monocoque vehicle, non air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.40.18",
+              "description": "Vehicles for transport of not more than 13 persons, including the driver: ----Other, air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.40.19",
+              "description": "Vehicles for transport of not more than 13 persons, including the driver: ----Other, non air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.40.21",
+              "description": "Other: ----Integrated monocoque vehicle, air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.40.22",
+              "description": "Other: ----Integrated monocoque vehicle, non air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.40.28",
+              "description": "Other: ----Other, air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.40.29",
+              "description": "Other: ----Other, non air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8702.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8702.90.11",
+              "description": "Vehicles for transport of not more than 13 persons, including the driver: ----Integrated monocoque vehicle, air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.90.12",
+              "description": "Vehicles for transport of not more than 13 persons, including the driver: ----Integrated monocoque vehicle, non air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.90.18",
+              "description": "Vehicles for transport of not more than 13 persons, including the driver: ----Other, air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.90.19",
+              "description": "Other, non air-conditioned other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.90.21",
+              "description": "Other: ----Integrated monocoque vehicle, air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.90.22",
+              "description": "Other: ----Integrated monocoque vehicle, non air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.90.28",
+              "description": "Other: ----Other, air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8702.90.29",
+              "description": "Other: ----Other, non air-conditioned",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "8703",
+      "title": "Motor cars and other motor vehicles principally designed for the transport of persons (other than those of heading 87.02), including station wagons and racing cars.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8703.10",
+          "title": "Vehicles specially designed for travelling on snow; golf cars and similar vehicles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8703.10.10",
+              "description": "Electrically operated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8703.21",
+          "title": "Other vehicles, with only spark-ignition internal combustion reciprocating piston engine : -- Of a cylinder capacity not exceeding 1,000 cc",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8703.21.10",
+              "description": "Vehicles principally designed for the transport of more than seven persons, including the driver",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of the chapter."
+            },
+            {
+              "code": "8703.21.20",
+              "description": "Three-wheeled vehicles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.21.91",
+              "description": "Other: ----Motor cars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8703.21.92",
+              "description": "Other: ----Specialised transport vehicles such as ambulances, prison vans and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.21.99",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8703.22",
+          "title": "Other vehicles, with only spark-ignition internal combustion reciprocating piston engine : -- Of a cylinder capacity exceeding 1,000 cc but not exceeding 1,500 cc",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8703.22.10",
+              "description": "Vehicles principally designed for the transport of more than seven persons, including the driver",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy"
+            },
+            {
+              "code": "8703.22.20",
+              "description": "Specialised transport vehicles such as ambulances, prison vans and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "chapter."
+            },
+            {
+              "code": "8703.22.30",
+              "description": "Three-wheeled vehicles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.22.91",
+              "description": "Other: ----Motor cars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8703.22.99",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8703.23",
+          "title": "Other vehicles, with only spark-ignition internal combustion reciprocating piston engine : -- Of a cylinder capacity exceeding 1,500 cc but not exceeding 3,000 cc",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8703.23.10",
+              "description": "Vehicles principally designed for the transport of more than seven persons, including the driver",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.23.20",
+              "description": "Three-wheeled vehicles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.23.91",
+              "description": "Other: ----Motor cars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8703.23.92",
+              "description": "Other: ----Specialized transport vehicles such as ambulances, prison vans and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.23.99",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8703.24",
+          "title": "Other vehicles, with only spark-ignition internal combustion reciprocating piston engine : -- Of a cylinder capacity exceeding 3,000 cc",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8703.24.10",
+              "description": "Vehicles principally designed for the transport of more than seven persons, including the driver",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of the chapter."
+            },
+            {
+              "code": "8703.24.20",
+              "description": "Three-wheeled vehicles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.24.91",
+              "description": "Other: ----Motor cars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8703.24.92",
+              "description": "Other: ----Specialised transport vehicles such as ambulances, prison vans and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.24.99",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8703.31",
+          "title": "Other vehicles, with only compression-ignition internal combustion piston engine (diesel or semi-diesel) : -- Of a cylinder capacity not exceeding 1,500 cc",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8703.31.10",
+              "description": "Other: ----Vehicles principally designed for the transport of more than seven persons, including the driver",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.31.91",
+              "description": "Other: ----Motor cars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.31.92",
+              "description": "Other: ----Specialised transport vehicles such as ambulances, prison vans and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.31.99",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8703.32",
+          "title": "Other vehicles, with only compression-ignition internal combustion piston engine (diesel or semi-diesel) : -- Of a cylinder capacity exceeding 1,500 cc but not exceeding 2,500 cc",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8703.32.10",
+              "description": "Vehicles principally designed for the transport of more than seven persons, including the driver",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.32.91",
+              "description": "Motor cars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.32.92",
+              "description": "Specialised transport vehicles such as ambulances, prison vans and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.32.99",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8703.33",
+          "title": "Other vehicles, with only compression-ignition internal combustion piston engine (diesel or semi-diesel) : -- Of a cylinder capacity exceeding 2,500 cc",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8703.33.10",
+              "description": "Vehicles principally designed for the transport of more than seven persons, including the driver",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.33.20",
+              "description": "Three-wheeled vehicles other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.33.91",
+              "description": "Other: ----Motor cars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.33.92",
+              "description": "Other: ----Specialised transport vehicles such as ambulances, prison vans and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.33.99",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8703.40",
+          "title": "Other vehicles, with both spark-ignition internal combustion piston engine and electric motor as motors for propulsion, other than those capable of being charged by plugging to external source of electric power:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8703.40.10",
+              "description": "Vehicles principally designed for transport of more than seven persons, including driver",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.40.20",
+              "description": "Specialised transport vehicles such as ambulances, prison vans and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.40.30",
+              "description": "Motor cars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.40.40",
+              "description": "Three-wheeled vehicles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8703.50",
+          "title": "Other vehicles, with both compression-ignition internal combustion piston engine (diesel or semi-diesel) and electric motor as motors for propulsion, other than those capable of being charged by plugging to external source of electric power",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8703.50.10",
+              "description": "Vehicles principally designed for transport of more than seven persons, including driver",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.50.20",
+              "description": "Specialised transport vehicles such as ambulances, prison vans and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.50.30",
+              "description": "Motor cars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.50.40",
+              "description": "Three-wheeled vehicles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.50.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8703.60",
+          "title": "Other vehicles, with both spark-ignition internal combustion piston engine and electric motor as motors for propulsion, capable of being charged by plugging to external source of electric power:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8703.60.10",
+              "description": "Vehicles principally designed for transport of more than seven persons, including driver",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.60.20",
+              "description": "Specialised transport vehicles such as ambulances, prison vans and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.60.30",
+              "description": "Motor cars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.60.40",
+              "description": "Three-wheeled vehicles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.60.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8703.70",
+          "title": "Other vehicles, with both compression-ignition internal combustion piston engine (diesel or semi-diesel) and electric motor as motors for propulsion, capable of being charged by plugging to external source of electric power",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8703.70.10",
+              "description": "Vehicles principally designed for transport of more than seven persons, including driver",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.70.20",
+              "description": "Specialised transport vehicles such as ambulances, prison vans and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.70.30",
+              "description": "Motor cars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.70.40",
+              "description": "Three-wheeled vehicles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.70.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8703.80",
+          "title": "Other vehicles, with only electric motor for propulsion",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8703.80.10",
+              "description": "Vehicles principally designed for transport of more than seven persons, including driver",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.80.20",
+              "description": "Specialised transport vehicles such as ambulances, prison vans and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.80.30",
+              "description": "Motor cars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.80.40",
+              "description": "Three-wheeled vehicles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8703.80.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8703.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8703.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "8704",
+      "title": "Motor vehicles for the transport of goods.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8704.10",
+          "title": "Dumpers designed for off-highway use",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8704.10.10",
+              "description": "With net weight (excluding pay-load) exceeding 8 tonnes and maximum pay-load capacity not less than 10 tonnes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8704.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8704.21",
+          "title": "Other, with only compression-ignition internal combustion piston engine (diesel or semi-diesel): - - g.v.w. not exceeding 5 tonnes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8704.21.00",
+              "description": "Other, with only compression-ignition internal combustion piston engine (diesel or semi-diesel): - - g.v.w. not exceeding 5 tonnes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8704.22",
+          "title": "Other, with only compression-ignition internal combustion piston engine (diesel or semi-diesel): - - g.v.w. exceeding 5 tonnes but not exceeding 20 tonnes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8704.22.00",
+              "description": "Other, with only compression-ignition internal combustion piston engine (diesel or semi-diesel): - - g.v.w. exceeding 5 tonnes but not exceeding 20 tonnes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8704.22.19",
+              "description": "Lorries and trucks: ----Other",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8704.23",
+          "title": "Other, with only compression-ignition internal combustion piston engine (diesel or semi-diesel): - - g.v.w. exceeding 20 tonnes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8704.23.00",
+              "description": "Other, with only compression-ignition internal combustion piston engine (diesel or semi-diesel): - - g.v.w. exceeding 20 tonnes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8704.31",
+          "title": "Other, with only spark-ignition internal combustion piston engine - - g.v.w. not exceeding 5 tonnes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8704.31.00",
+              "description": "Other, with only spark-ignition internal combustion piston engine - - g.v.w. not exceeding 5 tonnes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8704.32",
+          "title": "Other, with only spark-ignition internal combustion piston engine - - g.v.w. exceeding 5 tonnes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8704.32.00",
+              "description": "Other, with only spark-ignition internal combustion piston engine - - g.v.w. exceeding 5 tonnes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8704.32.19",
+              "description": "Lorries and trucks: ----Other",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8704.41",
+          "title": "Other, with both compression-ignition internal combustion piston engine (diesel or semi-diesel) and electric motor as motors for propulsion: - - g.v.w. not exceeding 5 tonnes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8704.41.00",
+              "description": "Other, with both compression-ignition internal combustion piston engine (diesel or semi-diesel) and electric motor as motors for propulsion: - - g.v.w. not exceeding 5 tonnes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8704.42",
+          "title": "Other, with both compression-ignition internal combustion piston engine (diesel or semi-diesel) and electric motor as motors for propulsion: - - g.v.w. exceeding 5 tonnes but not exceeding 20 tonnes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8704.42.00",
+              "description": "Other, with both compression-ignition internal combustion piston engine (diesel or semi-diesel) and electric motor as motors for propulsion: - - g.v.w. exceeding 5 tonnes but not exceeding 20 tonnes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8704.43",
+          "title": "Other, with both compression-ignition internal combustion piston engine (diesel or semi-diesel) and electric motor as motors for propulsion: - - g.v.w. exceeding 20 tonnes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8704.43.00",
+              "description": "Other, with both compression-ignition internal combustion piston engine (diesel or semi-diesel) and electric motor as motors for propulsion: - - g.v.w. exceeding 20 tonnes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8704.51",
+          "title": "Other, with both spark-ignition internal combustion piston engine and electric motor as motors for propulsion: - - g.v.w. not exceeding 5 tonnes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8704.51.00",
+              "description": "Other, with both spark-ignition internal combustion piston engine and electric motor as motors for propulsion: - - g.v.w. not exceeding 5 tonnes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8704.52",
+          "title": "Other, with both spark-ignition internal combustion piston engine and electric motor as motors for propulsion: - - g.v.w. exceeding 5 tonnes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8704.52.00",
+              "description": "Other, with both spark-ignition internal combustion piston engine and electric motor as motors for propulsion: - - g.v.w. exceeding 5 tonnes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8704.60",
+          "title": "Other, with both spark-ignition internal combustion piston engine and electric motor as motors for propulsion: - Other with only electric motor for propulsion",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8704.60.00",
+              "description": "Other, with both spark-ignition internal combustion piston engine and electric motor as motors for propulsion: - Other with only electric motor for propulsion",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8704.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8704.90.11",
+              "description": "Lorries and trucks: ----Refrigerated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8704.90.12",
+              "description": "Lorries and trucks: ----Electrically operated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8704.90.19",
+              "description": "Lorries and trucks: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8704.90.90",
+              "description": "Lorries and trucks: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "8705",
+      "title": "Special purpose motor vehicles, other than those principally designed for the transport of persons or goods (for example, breakdown lorries, crane lorries, fire fighting vehicles, concretemixer lorries, road sweeper lorries, spraying lorries, mobile workshops, mobile radiological units).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8705.10",
+          "title": "Crane Lorries",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8705.10.00",
+              "description": "Crane Lorries",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8705.20",
+          "title": "Mobile drilling derricks",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8705.20.00",
+              "description": "Mobile drilling derricks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8705.30",
+          "title": "Fire fighting vehicles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8705.30.00",
+              "description": "Fire fighting vehicles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8705.40",
+          "title": "Concrete-mixer lorries",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8705.40.00",
+              "description": "Concrete-mixer lorries",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8705.90",
+          "title": "Other:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8705.90.10",
+              "description": "Lorries (Trucks) fitted with bridging systems",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8705.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "8706",
+      "title": "Chassis fitted with engines, for the motor vehicles of headings 87.01 to 87.05.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8706.00",
+          "title": "Chassis fitted with engines, for the motor vehicles of headings 8701 to 8705:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8706.00.11",
+              "description": "For the tractors of heading 8701: ----Of engine capacity not exceeding 1800 cc",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8706.00.19",
+              "description": "For the tractors of heading 8701: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8706.00.21",
+              "description": "for the vehicles of heading 8702: ----For transport of not more than thirteen persons, including the driver",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8706.00.29",
+              "description": "for the vehicles of heading 8702: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8706.00.31",
+              "description": "for the vehicles of heading 8703: ----For three-wheeled vehicles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8706.00.39",
+              "description": "for the vehicles of heading 8703: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the"
+            },
+            {
+              "code": "8706.00.41",
+              "description": "for the vehicles of heading 8704: ----For three-wheeled motor vehicle",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "chapter."
+            },
+            {
+              "code": "8706.00.42",
+              "description": "for the vehicles of heading 8704: ----For vehicles, other than petrol driven",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8706.00.43",
+              "description": "for the vehicles of heading 8704: ----For dumpers covered in the heading 8704",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8706.00.49",
+              "description": "for the vehicles of heading 8704: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8706.00.50",
+              "description": "For the motor vehicles of heading 8705",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "8707",
+      "title": "Bodies (including cabs), for the motor vehicles of headings 87.01 to 87.05.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8707.10",
+          "title": "For the vehicles of 87.03",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8707.10.00",
+              "description": "For the vehicles of 87.03",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8707.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8707.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "8708",
+      "title": "Parts and accessories of the motor vehicles of headings 87.01 to 87.05.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8708.10",
+          "title": "Bumpers and parts thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8708.10.10",
+              "description": "For tractors",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8708.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8708.21",
+          "title": "Other parts and accessories of bodies (including cabs): ----Safety seat belts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8708.21.00",
+              "description": "Other parts and accessories of bodies (including cabs): ----Safety seat belts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8708.22",
+          "title": "Front windscreens (windshields), rear windows and other windows specified in Sub-heading Note 1 to this Chapter",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8708.22.00",
+              "description": "Front windscreens (windshields), rear windows and other windows specified in Sub-heading Note 1 to this Chapter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8708.29",
+          "title": "Other parts and accessories of bodies (including cabs): ----Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8708.29.00",
+              "description": "Other parts and accessories of bodies (including cabs): ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8708.30",
+          "title": "Brakes and servo-brakes; parts thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8708.30.00",
+              "description": "Brakes and servo-brakes; parts thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8708.40",
+          "title": "Gear boxes and parts thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8708.40.00",
+              "description": "Gear boxes and parts thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8708.50",
+          "title": "Drive-axles with differential, whether or not provided with other transmission components, non-driving axles; parts thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8708.50.00",
+              "description": "Drive-axles with differential, whether or not provided with other transmission components, non-driving axles; parts thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8708.70",
+          "title": "Road wheels and parts and accessories thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8708.70.00",
+              "description": "Road wheels and parts and accessories thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8708.80",
+          "title": "Suspension systems and parts thereof (including shock-absorbers)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8708.80.00",
+              "description": "Suspension systems and parts thereof (including shock-absorbers)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8708.91",
+          "title": "Other parts and accessories :-- Radiators and parts thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8708.91.00",
+              "description": "Other parts and accessories : -- Radiators and parts thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8708.92",
+          "title": "Other parts and accessories : -- Silencers (mufflers) and exhaust pipes; parts thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8708.92.00",
+              "description": "Other parts and accessories : -- Silencers (mufflers) and exhaust pipes; parts thereof thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8708.93",
+          "title": "Other parts and accessories : -- Clutches and parts thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8708.93.00",
+              "description": "Other parts and accessories : -- Clutches and parts thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8708.94",
+          "title": "Other parts and accessories : -- Steering wheels, steering columns and steering boxes; parts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8708.94.00",
+              "description": "Other parts and accessories : -- Steering wheels, steering columns and steering boxes; parts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8708.95",
+          "title": "Other parts and accessories : -- Safety airbags with inflater system; parts thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8708.95.00",
+              "description": "Other parts and accessories : -- Safety airbags with inflater system; parts thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8708.99",
+          "title": "Other parts and accessories : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8708.99.00",
+              "description": "Other parts and accessories : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "8709",
+      "title": "Works trucks, self-propelled, not fitted with lifting or handling equipment, of the type used in factories, warehouses, dock areas or airports for short distance transport of goods; tractors of the type used on railway station platforms; parts of the foregoing vehicles.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8709.11",
+          "title": "Vehicles : -- Electrical",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8709.11.00",
+              "description": "Vehicles : -- Electrical",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8709.19",
+          "title": "Vehicles : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8709.19.00",
+              "description": "Vehicles : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8709.90",
+          "title": "Parts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8709.90.00",
+              "description": "Parts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "8710",
+      "title": "Tanks and other armoured fighting vehicles, motorised, whether or not fitted with weapons, and parts of such vehicles.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8710.00",
+          "title": "Tanks and other armoured fighting vehicles, motorised, whether or not fitted with weapons, and parts of such vehicles.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8710.00.00",
+              "description": "Tanks and other armoured fighting vehicles, motorised, whether or not fitted with weapons, and parts of such vehicles.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "8711",
+      "title": "Motorcycles (including mopeds) and cycles fitted with an auxiliary motor, with or without side-cars; side-cars.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8711.00",
+          "title": "Vintage Motorcycles, parts and components thereof manufactured prior to 1.1.1940",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8711.00.00",
+              "description": "Vintage Motorcycles, parts and components thereof manufactured prior to 1.1.1940",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            }
+          ],
+          "india_specific": true,
+          "wco_2022_match": false,
+          "india_specific_note": "The 87110000 row carries a UNIQUE Indian-specific description (Vintage Motorcycles pre-1940) that is semantically distinct from the heading 8711 caption (general motorcycles). It functions as the canonical code for India's vintage motorcycle export-restriction policy, even though the row's policy cell is blank (policy is documented in chapter Main Note 1). This is a deliberate Indian national subdivision, not a layout artifact."
+        },
+        {
+          "subheading": "8711.10",
+          "title": "With internal combustion piston engine of a cylinder capacity not exceeding 50 cc :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8711.10.10",
+              "description": "Mopeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8711.10.20",
+              "description": "Motorised cycles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8711.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8711.20",
+          "title": "With internal combustion piston engine of a cylinder capacity exceeding 50 cc but not exceeding 250 cc :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8711.20.11",
+              "description": "Scooters: ----Of cylinder capacity not exceeding 75 cc",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8711.20.19",
+              "description": "Scooters: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8711.20.21",
+              "description": "Motor cycles: ----Of cylinder capacity not exceeding 75 cc",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8711.20.29",
+              "description": "Motor cycles: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8711.20.31",
+              "description": "Mopeds: ----Of cylinder capacity not exceeding 75 cc",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8711.20.39",
+              "description": "Mopeds: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8711.20.91",
+              "description": "Other: ----Of cylinder capacity not exceeding 75 cc",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8711.20.99",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8711.30",
+          "title": "With internal combustion piston engine of a cylinder capacity exceeding 250 cc but not exceeding 500 cc :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8711.30.10",
+              "description": "Scooters",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8711.30.20",
+              "description": "Motor-cycles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8711.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8711.40",
+          "title": "With internal combustion piston engine of a cylinder capacity exceeding500 cc but not exceeding 800 cc :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8711.40.10",
+              "description": "Motor-cycles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8711.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8711.50",
+          "title": "With internal combustion piston engine of a cylinder capacity exceeding 800 cc",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8711.50.00",
+              "description": "With internal combustion piston engine of a cylinder capacity exceeding 800 cc",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8711.60",
+          "title": "With electric motor for propulsion",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8711.60.10",
+              "description": "Motor cycles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8711.60.20",
+              "description": "Scooters",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8711.60.30",
+              "description": "Mopeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8711.60.80",
+              "description": "E-bicycle or battery-operated pedal assisted vehicle",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8711.60.90",
+              "description": "Others",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8711.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8711.90.10",
+              "description": "Side-cars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8711.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "8712",
+      "title": "Bicycles and other cycles (including delivery tricycles), not motorised.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8712.00",
+          "title": "Bicycles and other cycles (including delivery tricycles), not motorised :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8712.00.10",
+              "description": "Bicycles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8712.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "8713",
+      "title": "Carriages for disabled persons, whether or not motorised or otherwise mechanically propelled.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8713.10",
+          "title": "Not mechanically propelled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8713.10.10",
+              "description": "Wheel chairs for invalid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8713.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8713.90",
+          "title": "Other :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8713.90.10",
+              "description": "Wheel chairs for invalid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8713.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "8714",
+      "title": "Parts and accessories of vehicles of headings 87.11 to 87.13.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8714.10",
+          "title": "Of motorcycles (including mopeds)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8714.10.10",
+              "description": "Saddles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            },
+            {
+              "code": "8714.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8714.20",
+          "title": "Of carriages for disabled persons",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8714.20.10",
+              "description": "Mechanically propelled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8714.20.20",
+              "description": "Non-mechanically propelled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8714.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8714.91",
+          "title": "Other : -- Frames and forks, and parts thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8714.91.00",
+              "description": "Other : -- Frames and forks, and parts thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8714.92",
+          "title": "Other : -- Wheel rims and spokes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8714.92.10",
+              "description": "Bicycle rims",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8714.92.20",
+              "description": "Bicycle spokes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8714.92.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8714.93",
+          "title": "Other : -- Hubs, other than coaster braking hubs and hub brakes, and free-wheel sprocket-wheels",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8714.93.10",
+              "description": "Bicycle hubs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8714.93.20",
+              "description": "Bicycle free-wheels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8714.93.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8714.94",
+          "title": "Other : -- Brakes, including coaster braking hubs and hub brakes, and parts thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8714.94.00",
+              "description": "Other : -- Brakes, including coaster braking hubs and hub brakes, and parts thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8714.95",
+          "title": "Other : -- Saddles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8714.95.10",
+              "description": "Bicycle saddles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8714.95.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8714.96",
+          "title": "Other : -- Pedals and crank-gear, and parts thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8714.96.00",
+              "description": "Other : -- Pedals and crank-gear, and parts thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8714.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8714.99.10",
+              "description": "Bicycle chains",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8714.99.20",
+              "description": "Bicycle wheels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8714.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "8715",
+      "title": "Baby carriages and parts thereof.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8715.00",
+          "title": "Baby carriages and parts thereof :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8715.00.10",
+              "description": "Baby carriages",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8715.00.20",
+              "description": "Parts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "8716",
+      "title": "Trailers and semi-trailers; other vehicles, not mechanically",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "8716.10",
+          "title": "Trailers and semi-trailers of the caravan type, for housing or camping",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8716.10.00",
+              "description": "Trailers and semi-trailers of the caravan type, for housing or camping",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8716.20",
+          "title": "Self-loading or self-unloading trailers and semi-trailers for agricultural purposes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8716.20.00",
+              "description": "Self-loading or self-unloading trailers and semi-trailers for agricultural purposes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8716.31",
+          "title": "Other trailers and semi-trailers for the transport of goods : -- Tanker trailers and tanker semi-trailers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8716.31.00",
+              "description": "Other trailers and semi-trailers for the transport of goods : -- Tanker trailers and tanker semi-trailers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8716.39",
+          "title": "Other trailers and semi-trailers for the transport of goods : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8716.39.00",
+              "description": "Other trailers and semi-trailers for the transport of goods : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8716.40",
+          "title": "Other trailers and semi-trailers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8716.40.00",
+              "description": "Other trailers and semi-trailers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8716.80",
+          "title": "Other vehicles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8716.80.10",
+              "description": "Hand propelled vehicles (e.g. hand carts, rickshaws and the like)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8716.80.20",
+              "description": "Animal drawn vehicles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8716.80.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "8716.90",
+          "title": "Parts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "8716.90.10",
+              "description": "Parts and accessories of trailers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "8716.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

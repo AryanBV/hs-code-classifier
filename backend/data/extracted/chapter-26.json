@@ -1,0 +1,1092 @@
+{
+  "chapter": "26",
+  "section": "V",
+  "title": "ORES, SLAG AND ASH",
+  "source_pdf": "Chapter 26 Ores, Slag And Ash.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses codes without dots — 8-digit (e.g., '26011111'), 6-digit subheading (e.g., '260111'), and 4-digit heading (e.g., '2601'). Normalized to NNNN.NN.NN, NNNN.NN, and NNNN format per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'Sl.No. Notes Notification Date Notification No', 'Sub-Heading Notes', 'Supplementary Notes', 'Policy Condition', 'Export Licensing Notes', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "Section V chapter header reads 'Section V, MINERAL PRODUCTS'. The 'Main Notes' table in this chapter PDF lists 3 notes that are chapter-specific (Note 1 exclusions from this Chapter; Note 2 defining 'ores' for headings 2601-2617; Note 3 scope of heading 2620). These are attributed to chapter_notes (Chapter 26), not section_notes — the source PDF does not include Section V section-level notes in this file.",
+    "PDF source contains spacing artifacts in several notes (e.g., 'manucture' for 'manufacture', 'compoundsofmetals' for 'compounds of metals', 'residuesfromthe' for 'residues from the', '20percentor' for '20 percent or'). Preserved verbatim as they appear in the source.",
+    "Tariff line descriptions use 'percent' instead of '%' symbol verbatim (e.g., '60percent Fe or more but below 62percent Fe'). Preserved verbatim.",
+    "Subheading 2602.00 has 9 tariff lines (2602.00.10 through 2602.00.90) under it. The Export Policy column shows 'Restricted' for 2602.00.10 and 'STE (State Trading Enterprise)' for 2602.00.20 through 2602.00.90 with policy condition 'Export is allowed through Manganese Ore India Limited (MOIL) only.' for the STE entries.",
+    "Heading 2610 (CHROMIUM ORES AND CONCENTRATES) has all 5 tariff lines marked 'Restricted' with Notification No '13/2023' and Date '22.06.2023' — captured verbatim in policy_conditions metadata on each tariff line.",
+    "Tariff line 2601.12.10 (Iron ore pellets) has Notification No '92(RE-2013)' and Date '26.09.2014' for the export policy/policy condition note about KIOCL.",
+    "Tariff line 2601.11.50 (Iron ore concentrates) Policy Condition column contains long verbatim text about Kudremukh Iron Ore Company Limited exemption — preserved verbatim across page break (pages 5-6).",
+    "Tariff line 2601.12.90 (Other) Policy Condition column contains verbatim text about Rejects of iron ore chips with 10% quantity limit and 6mm size limit — preserved verbatim.",
+    "Subheadings 2601.11, 2601.12, 2606.00, 2610.00, 2614.00, 2615.90, 2616.90, 2619.00, 2620.19, 2620.29, 2620.30, 2620.40, 2620.90 are explicit in the PDF and captured as subheadings. Single-tariff-line subheadings such as 2601.20, 2603.00, 2604.00, 2605.00, 2607.00, 2608.00, 2609.00, 2611.00, 2612.10, 2612.20, 2613.10, 2613.90, 2615.10, 2616.10, 2617.10, 2617.90, 2618.00, 2620.11, 2620.60, 2620.91, 2620.99, 2621.10, 2621.90 are inferred from the 8-digit codes where the PDF does not show an explicit 6-digit row.",
+    "Tariff line 2620.11.00 in PDF appears as code '26201100' under heading 2620 — normalized to 2620.11.00 (subheading 2620.11). Similarly 2620.60.00, 2620.91.00, 2620.99.00.",
+    "Heading 2602 PDF description appears in ALL CAPS with text wrapping: 'MANGANESE ORES AND CONCENTRATES, INCLUDING FERRUGINOUS MANGANESE ORES AND CONCENTRATES WITH A MANGANESE CONTENT OF 20% OR MORE, CALCULATED ON THE DRY WEIGHT'. The lower-case subheading 2602.00 description is also present in the PDF — both preserved verbatim.",
+    "Heading 2610 PDF description appears in ALL CAPS: 'CHROMIUM ORES AND CONCENTRATES'. Subheading 2610.00 description is 'Chromium ores and concentrates.' — both preserved verbatim.",
+    "PDF heading 2615 contains subheading 2615.90 'Other' which contains tariff lines 2615.90.10 (Vanadium) and 2615.90.20 (Niobium tantalum). Tantalum and vanadium ores from the heading title are covered under 2615.90.",
+    "Policy Condition row 1 references 'Iron ore of Goa origin', 'Iron ore of Redi origin', and 'STE' (State Trading Enterprise) — preserved verbatim.",
+    "Export Licensing Note 1 references 'Atomic Energy Act, 1962' for rare earth phosphates containing uranium/thorium. Export Licensing Note 2 references 'code 2617' (Other ores and concentrates).",
+    "Tariff line 2601.11.29 PDF description is 'Iron ore lumps (below 60percent Fe, including black iron ore containing up to 10percent Mn) ---- 58 percent Fe or more but below 60 percent Fe' — note the page-break in the PDF separates 'but below 60 percent Fe' onto the next page. Concatenated verbatim.",
+    "Unit-of-measure column is NOT shown in this chapter's PDF — unit field set to null for all tariff lines."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover: (a) slag or similar industrial waste prepared as macadam (heading 2517); (b) natural magnesium carbonate (magnesite), whether or not calcined (heading 2519); (c) sludges from the storage tanks of petroleum oils, consisting mainly of such oils (2710); (d) basic slag of Chapter 31; (e) slag wool, rock wool or similar mineral wools (heading 6806); (f) waste or scrap of precious metal or of metal clad with precious metal; other waste or scrap containing precious metal or precious metal compounds, of a kind used principally for the recovery of precious metal (heading 7112 or 8549); or (g) copper, nickel or cobalt mattes produced by any process of smelting (Section XV)."
+    },
+    {
+      "number": "2",
+      "text": "For the purposes of headings 2601 to 2617, the term \"ores\" means minerals of mineralogical species actually used in the metallurgical industry for the extraction of mercury, of the metals of heading 2844 or of the metals of Section XIV or XV, even if they are intended for nonmetallurgical purposes. Headings 2601 to 2617 do not, however, include minerals which have been submitted to processes not normal to the metallurgical industry"
+    },
+    {
+      "number": "3",
+      "text": "Heading 2620 applies only to: (a) slag, ash and residues of a kind used in industry either for the extraction of metals or as a basisforthe manucture of chemical compounds ofmetals, excluding ash and residuesfromthe incineration of municipal waste (heading 2621); and (b) slag, ash and residues containing arsenic, whether or not containing metals, of a kind used either for the extraction of arsenic or metals or for the manufacture of their chemical compounds."
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [
+    {
+      "number": "1",
+      "text": "For the purposes of sub-heading 2620 21, \"leaded gasoline sludges and leaded anti- knock compound sludges\" mean sludges obtained from storage tanks of leaded gasoline and leaded anti-knock compounds (for example, tetraethyl lead), and consisting essentially of lead, lead compounds and iron oxide."
+    },
+    {
+      "number": "2",
+      "text": "Slag, ash and residues containing arsenic, mercury, thallium or their mixtures, of a kind used for the extraction of arsenic or those metals or for the manufacture of their chemical compounds, are to be classified in sub-heading 2620 60."
+    }
+  ],
+  "supplementary_notes": [
+    {
+      "number": "1",
+      "text": "For the products of heading 2601, the percentage of Fe content, wherever specified, shall be calculated on the Dry Weight or Dry Metric Tonne (DMT) basis."
+    }
+  ],
+  "export_licensing_notes": [
+    {
+      "number": "1",
+      "text": "Rare Earth compounds are freely exportable, but rare earth phosphates, which contain uranium and thorium are prescribed substances and are controlled as per provisions of Atomic Energy Act, 1962 ."
+    },
+    {
+      "number": "2",
+      "text": "Other minerals under code 2617 are freely exportable, except those which have been notified as prescribed substances and controlled under Atomic Energy Act, 1962."
+    }
+  ],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "slag or similar industrial waste prepared as macadam",
+      "redirects_to_chapter": "25",
+      "redirects_to_heading": "2517",
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "(a) slag or similar industrial waste prepared as macadam (heading 2517)"
+    },
+    {
+      "excluded_product_text": "natural magnesium carbonate (magnesite), whether or not calcined",
+      "redirects_to_chapter": "25",
+      "redirects_to_heading": "2519",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "(b) natural magnesium carbonate (magnesite), whether or not calcined (heading 2519)"
+    },
+    {
+      "excluded_product_text": "sludges from the storage tanks of petroleum oils, consisting mainly of such oils",
+      "redirects_to_chapter": "27",
+      "redirects_to_heading": "2710",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "(c) sludges from the storage tanks of petroleum oils, consisting mainly of such oils (2710)"
+    },
+    {
+      "excluded_product_text": "basic slag of Chapter 31",
+      "redirects_to_chapter": "31",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(d)",
+      "source_note_text": "(d) basic slag of Chapter 31"
+    },
+    {
+      "excluded_product_text": "slag wool, rock wool or similar mineral wools",
+      "redirects_to_chapter": "68",
+      "redirects_to_heading": "6806",
+      "source_note_number": "Note 1(e)",
+      "source_note_text": "(e) slag wool, rock wool or similar mineral wools (heading 6806)"
+    },
+    {
+      "excluded_product_text": "waste or scrap of precious metal or of metal clad with precious metal; other waste or scrap containing precious metal or precious metal compounds, of a kind used principally for the recovery of precious metal",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": "7112",
+      "source_note_number": "Note 1(f)",
+      "source_note_text": "(f) waste or scrap of precious metal or of metal clad with precious metal; other waste or scrap containing precious metal or precious metal compounds, of a kind used principally for the recovery of precious metal (heading 7112 or 8549)"
+    },
+    {
+      "excluded_product_text": "copper, nickel or cobalt mattes produced by any process of smelting",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(g)",
+      "source_note_text": "(g) copper, nickel or cobalt mattes produced by any process of smelting (Section XV)"
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "2601",
+      "title": "Iron ores and concentrates, including roasted iron pyrites.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2601.11",
+          "title": "Iron ores and concentrates, other than roasted iron pyrites : -- Non-agglomerated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2601.11.11",
+              "description": "60percent Fe or more but below 62percent Fe",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "2601.11.12",
+              "description": "62percent Fe or more but below 65percent Fe",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "2601.11.19",
+              "description": "65percent Fe and above",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "2601.11.21",
+              "description": "Iron ore lumps (below 60percent Fe, including black iron ore containing up to 10percent Mn) ---- Iron ore lumps below 55percent Fe",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "2601.11.22",
+              "description": "Iron ore lumps (below 60percent Fe, including black iron ore containing up to 10percent Mn) ---- Iron ore lumps 55percent Fe or more but below 58 percent Fe",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "2601.11.29",
+              "description": "Iron ore lumps (below 60percent Fe, including black iron ore containing up to 10percent Mn) ---- 58 percent Fe or more but below 60 percent Fe",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "2601.11.31",
+              "description": "Iron ore fines (62percent Fe or more) ---- 62percent Fe or more but below 65percent Fe",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "2601.11.39",
+              "description": "Iron ore fines (62percent Fe or more) ---- 65percent Fe and above",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "2601.11.41",
+              "description": "Iron ore Fines (below 62percent Fe) ---- below 55percent Fe",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "2601.11.42",
+              "description": "Iron ore Fines (below 62percent Fe) ---- 55percent Fe or more but below 58percent Fe",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "2601.11.43",
+              "description": "Iron ore Fines (below 62percent Fe) ---- 58percent Fe or more but below 60percent Fe",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "2601.11.49",
+              "description": "Iron ore Fines (below 62percent Fe) ---- 60percent Fe or more but below 62percent Fe",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "2601.11.50",
+              "description": "Iron ore concentrates",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Export of Iron ore concentrate prepared by benefication and/or concentration of low grade ore containing 40 percent or less of iron produced by Kudremukh Iron Ore Company Limited can be exported by STE- Kudremukh Iron Ore Company Limited, Bangalore."
+            },
+            {
+              "code": "2601.11.90",
+              "description": "Others",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2601.12",
+          "title": "Iron ores and concentrates, other than roasted iron pyrites : -- Agglomerated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2601.12.10",
+              "description": "Iron ore pellets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of Iron ore pellets manufactured by Kudremukh Iron Ore Company Limited (KIOCL) to be exported by KIOCL Limited, Bangalore or any entity authorised by KIOCL Limited, Bangalore."
+            },
+            {
+              "code": "2601.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "However, Export of Rejects of iron ore chips and like generated from the manufacturing process after using imported raw material is Free and subject to the following- - The quantity of export of such rejects shall not be more than 10% of the imported raw materials i.e. pellets The size of the rejected pellets chips (fines) shall be less than 6 mm"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2601.20",
+          "title": "Roasted iron pyrites",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2601.20.00",
+              "description": "Roasted iron pyrites",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2602",
+      "title": "MANGANESE ORES AND CONCENTRATES, INCLUDING FERRUGINOUS MANGANESE ORES AND CONCENTRATES WITH A MANGANESE CONTENT OF 20% OR MORE, CALCULATED ON THE DRY WEIGHT",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2602.00",
+          "title": "Manganese ores and concentrates, including ferruginous manganese ores and concentrates with a manganese content of 20percentor more, calculated on the dry weight.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2602.00.10",
+              "description": "Manganese ore (46percent or more)",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            },
+            {
+              "code": "2602.00.20",
+              "description": "Manganese ore (44percent or more but below 46percent)",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Export is allowed through Manganese Ore India Limited (MOIL) only."
+            },
+            {
+              "code": "2602.00.30",
+              "description": "Manganese ore (40percent or more but below 44percent)",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Export is allowed through Manganese Ore India Limited (MOIL) only."
+            },
+            {
+              "code": "2602.00.40",
+              "description": "Manganese ore (35percent or more but below 40percent)",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Export is allowed through Manganese Ore India Limited (MOIL) only."
+            },
+            {
+              "code": "2602.00.50",
+              "description": "Manganese ore (30percent or more but below 35percent)",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Export is allowed through Manganese Ore India Limited (MOIL) only."
+            },
+            {
+              "code": "2602.00.60",
+              "description": "Ferruginous (10percent or more but below 30percent)",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Export is allowed through Manganese Ore India Limited (MOIL) only."
+            },
+            {
+              "code": "2602.00.70",
+              "description": "Manganese ore sinters, agglomerated",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Export is allowed through Manganese Ore India Limited (MOIL) only."
+            },
+            {
+              "code": "2602.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Export is allowed through Manganese Ore India Limited (MOIL) only."
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2603",
+      "title": "Copper ores and concentrates",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2603.00",
+          "title": "Copper ores and concentrates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2603.00.00",
+              "description": "Copper ores and concentrates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2604",
+      "title": "Nickel ores and concentrates",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2604.00",
+          "title": "Nickel ores and concentrates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2604.00.00",
+              "description": "Nickel ores and concentrates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2605",
+      "title": "Cobalt ores and concentrates",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2605.00",
+          "title": "Cobalt ores and concentrates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2605.00.00",
+              "description": "Cobalt ores and concentrates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2606",
+      "title": "Aluminium ores and concentrates.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2606.00",
+          "title": "Aluminium ores and concentrates :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2606.00.10",
+              "description": "Bauxite (natural), not calcined",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2606.00.20",
+              "description": "Bauxite (natural), calcined",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2606.00.90",
+              "description": "Other aluminium ores and concentrates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2607",
+      "title": "Lead ores and concentrates",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2607.00",
+          "title": "Lead ores and concentrates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2607.00.00",
+              "description": "Lead ores and concentrates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2608",
+      "title": "Zinc ores and concentrates",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2608.00",
+          "title": "Zinc ores and concentrates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2608.00.00",
+              "description": "Zinc ores and concentrates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2609",
+      "title": "Tin ores and concentrates.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2609.00",
+          "title": "Tin ores and concentrates.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2609.00.00",
+              "description": "Tin ores and concentrates.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2610",
+      "title": "CHROMIUM ORES AND CONCENTRATES",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2610.00",
+          "title": "Chromium ores and concentrates.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2610.00.10",
+              "description": "Chrome ore lumps, containing 47percent Cr2O3 and above",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            },
+            {
+              "code": "2610.00.20",
+              "description": "Chrome ore lumps, containing 40percent or more but less than 47percent Cr2O3",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            },
+            {
+              "code": "2610.00.30",
+              "description": "Chrome ore lumps below 40percent Cr2O3",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            },
+            {
+              "code": "2610.00.40",
+              "description": "Chrome ore friable and concentrates fixes containing 47percent Cr2O3 and above",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            },
+            {
+              "code": "2610.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2611",
+      "title": "Tungsten ores and concentrates",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2611.00",
+          "title": "Tungsten ores and concentrates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2611.00.00",
+              "description": "Tungsten ores and concentrates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2612",
+      "title": "Uranium or thorium ores and concentrates.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2612.10",
+          "title": "Uranium ores and concentrates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2612.10.00",
+              "description": "Uranium ores and concentrates",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Export is allowed through Indian Rare Earths Limited (IREL) only."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2612.20",
+          "title": "Thorium ores and concentrates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2612.20.00",
+              "description": "Thorium ores and concentrates",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Export is allowed through Indian Rare Earths Limited (IREL) only."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2613",
+      "title": "Molybdenum ores and concentrates.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2613.10",
+          "title": "Roasted",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2613.10.00",
+              "description": "Roasted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2613.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2613.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2614",
+      "title": "Titanium ores and concentrates.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2614.00",
+          "title": "Titanium ores and concentrates :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2614.00.10",
+              "description": "Ilmenite, unprocessed",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Export is allowed through Indian Rare Earths Limited (IREL) only."
+            },
+            {
+              "code": "2614.00.20",
+              "description": "Ilmenite, upgraded (beneficiated ilmenite including ilmenite ground)",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Export is allowed through Indian Rare Earths Limited (IREL) only."
+            },
+            {
+              "code": "2614.00.31",
+              "description": "Rutile: ---- Rare earth oxides including rutile sand",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Export is allowed through Indian Rare Earths Limited (IREL) only."
+            },
+            {
+              "code": "2614.00.39",
+              "description": "Rutile: ----Other",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Export is allowed through Indian Rare Earths Limited (IREL) only."
+            },
+            {
+              "code": "2614.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Export is allowed through Indian Rare Earths Limited (IREL) only."
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2615",
+      "title": "Niobium, tantalum, vanadium or zirconium ores and concentrates.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2615.10",
+          "title": "Zirconium ores and concentrates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2615.10.00",
+              "description": "Zirconium ores and concentrates",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Export is allowed through Indian Rare Earths Limited (IREL) only."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2615.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2615.90.10",
+              "description": "Vanadium ores and concentrates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2615.90.20",
+              "description": "Niobium tantalum ores and concentrates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2616",
+      "title": "Precious metal ores and concentrates.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2616.10",
+          "title": "Silver ores and concentrates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2616.10.00",
+              "description": "Silver ores and concentrates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2616.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2616.90.10",
+              "description": "Gold ores and concentrates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2616.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2617",
+      "title": "Other ores and concentrates.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2617.10",
+          "title": "Antimony ores and concentrates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2617.10.00",
+              "description": "Antimony ores and concentrates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2617.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2617.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2618",
+      "title": "Granulated slag (slag sand) from the manufacture of iron or steel",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2618.00",
+          "title": "Granulated slag (slag sand) from the manufacture of iron or steel",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2618.00.00",
+              "description": "Granulated slag (slag sand) from the manufacture of iron or steel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2619",
+      "title": "Slag, dross (other than granulated slag), scalings and other waste from the manufacture of iron or steel.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2619.00",
+          "title": "Slag, dross (other than granulated slag), scalings and other waste from the manufacture of iron or steel :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2619.00.10",
+              "description": "Converted slag (scull) of blast furnace",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2619.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2620",
+      "title": "Slag, ash and residues (other than from the manufacture of iron or steel) containing metals, arsenic or their compounds.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2620.11",
+          "title": "Containing mainly zinc : -- Hard zinc spelter",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2620.11.00",
+              "description": "Containing mainly zinc : -- Hard zinc spelter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2620.19",
+          "title": "Containing mainly zinc : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2620.19.10",
+              "description": "Zinc dross",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2620.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2620.21",
+          "title": "Containing mainly lead : -- Leaded gasoline sludges and leaded anti-knock compound sludges",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2620.21.00",
+              "description": "Containing mainly lead : -- Leaded gasoline sludges and leaded anti-knock compound sludges",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2620.29",
+          "title": "Containing mainly lead : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2620.29.10",
+              "description": "Lead dross",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2620.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2620.30",
+          "title": "Containing mainly copper",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2620.30.10",
+              "description": "Brass dross",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2620.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2620.40",
+          "title": "Containing mainly aluminium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2620.40.10",
+              "description": "Aluminum dross",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2620.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2620.60",
+          "title": "Containing arsenic, mercury, thallium or their mixtures, of a kind used for the extraction of arsenic or those metals or for the manufacture of their chemical compounds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2620.60.00",
+              "description": "Containing arsenic, mercury, thallium or their mixtures, of a kind used for the extraction of arsenic or those metals or for the manufacture of their chemical compounds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2620.91",
+          "title": "Other : -- Containing antimony, beryllium, cadmium, chromium or their mixtures",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2620.91.00",
+              "description": "Other : -- Containing antimony, beryllium, cadmium, chromium or their mixtures",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2620.99",
+          "title": "Other : --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2620.99.00",
+              "description": "Other : --Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2621",
+      "title": "Other slag and ash, including seaweed ash (kelp); ash and residues from the incineration of municipal waste.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2621.10",
+          "title": "Ash and residues from the incineration of municipal waste",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2621.10.00",
+              "description": "Ash and residues from the incineration of municipal waste",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2621.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2621.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

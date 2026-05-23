@@ -1,0 +1,123 @@
+{
+  "verified_at": "2026-05-23",
+  "method": "pdftotext -layout for text extraction; pdftoppm -png -r 180 for vision rendering of the specific table-page containing each code. Verdicts derived from inspecting whether each contested code appears as a distinct row in the source PDF's tariff table, whether its description row carries unique semantic content vs. duplicating the parent heading, and whether the row has its own policy data.",
+  "source": "C:/Export Business/hs-code-classifier/data/pdfs/ — official Indian Schedule 2 (ITC(HS) 2022) chapter PDFs",
+  "verdicts": [
+    {
+      "code": "3103.10",
+      "chapter": "31",
+      "source_pdf": "Chapter 31 Fertilisers.pdf",
+      "pdf_page": 9,
+      "verdict": "REAL_INDIA_NATIONAL",
+      "pdf_evidence": "PDF p.9 shows a distinct table row: leftmost cell '31031000', description cell 'Straight Phosphatic Fetilizers given below : 1.Single Super Phosphate (16% P2O5) Powdered 2.Single Super Phosphate (14% P2O5) Powdered 3.Single Super Phosphate (16% P2O5) Granulated'. This description is UNIQUE to this row — it differs from heading 3103's description 'Mineral or chemical fertilisers, phosphatic.' The row sits between heading 3103 and subheading 3103.11.00 ('Superphosphates: -- Containing by weight 35 percent or more of diphosphorus pentaoxide (P2O5)'). Subsequent rows (3103.19.00) carry extensive policy text on SSP export conditions.",
+      "decision": "keep_as_india_specific",
+      "reasoning": "WCO HS 2022 deleted 3103.10, but India retained the code at the national level to host a unique product category (Single Super Phosphate fertilizers) with its own policy notification. The row has a distinct description, not a duplicate of the heading caption."
+    },
+    {
+      "code": "4409.00",
+      "chapter": "44",
+      "source_pdf": "Chapter 44 Wood And Articles Of Wood; Wood Charcoal.pdf",
+      "pdf_page": 24,
+      "verdict": "PHANTOM_HEADING_HEADER",
+      "pdf_evidence": "PDF p.24 shows row '44090000' with description 'Wood (including strips and friezes for parquet flooring, not assembled) continuously shaped (tongued, grooved, rebated, chamfered, v-jointed, beaded, moulded, rounded or the like) along any of its edges or faces, whether or not planed, sanded or end-jointed' — which is verbatim the standard heading 4409 caption. All policy cells in this row are blank. Immediately followed by subheading '440910' ('Coniferous') and tariff lines '44091010' ('Planned, Tongued, grooved, Rebated, Chamfered, V-jointed...' Free), '44091020' ('Beadings, and mouldings...' Free).",
+      "decision": "remove",
+      "reasoning": "Description duplicates the heading caption verbatim. No policy/condition data attached. Classic CBIC layout artifact where the heading number is repeated as a 'NNNN00.00' filler row. WCO 2022 has no 4409.00."
+    },
+    {
+      "code": "4415.00",
+      "chapter": "44",
+      "source_pdf": "Chapter 44 Wood And Articles Of Wood; Wood Charcoal.pdf",
+      "pdf_page": 34,
+      "verdict": "PHANTOM_HEADING_HEADER",
+      "pdf_evidence": "PDF p.34 shows row '4415' heading 'Packing cases, boxes, crates, drums and similar packings, of wood; cable-drums of wood ; pallets, box pallets and other load boards, of wood; pallet collars of wood' (no policy). Immediately below: row '44150000' with the SAME description 'Packing cases, boxes, crates, drums and similar packings, of wood; cable-drums of wood ; pallets, box pallets and other load' (no policy). Then real subheadings 44151000 'Cases, boxes, crates, drums and similar packings; cable-drums' Free and 44152000.",
+      "decision": "remove",
+      "reasoning": "44150000 row description is a verbatim repeat of heading 4415 caption. No policy data. Heading-header artifact. WCO 2022 has no 4415.00."
+    },
+    {
+      "code": "4419.00",
+      "chapter": "44",
+      "source_pdf": "Chapter 44 Wood And Articles Of Wood; Wood Charcoal.pdf",
+      "pdf_page": 38,
+      "verdict": "PHANTOM_HEADING_HEADER",
+      "pdf_evidence": "PDF p.38 shows row '4419' heading 'Tableware and kitchenware, of wood.' (no policy). Immediately below: row '44190000' with description 'Tableware and kitchenware, of wood' (no policy). Then real subheadings 44191100 'Of bamboo : -- Bread boards, chopping boards and similar boards' Free, 44191200 'Of bamboo : -- Chopsticks' Free, 44191900 'Of bamboo : -- Other' Free, etc.",
+      "decision": "remove",
+      "reasoning": "44190000 row description is a verbatim repeat of heading 4419 caption. No policy data. Heading-header artifact. WCO 2022 has no 4419.00."
+    },
+    {
+      "code": "4420.00",
+      "chapter": "44",
+      "source_pdf": "Chapter 44 Wood And Articles Of Wood; Wood Charcoal.pdf",
+      "pdf_page": 39,
+      "verdict": "PHANTOM_HEADING_HEADER",
+      "pdf_evidence": "PDF p.39 shows row '4420' heading 'Wood marquetry and inlaid wood; caskets and cases for jewellery or cutlery, and similar articles, of wood; statuettes and other ornaments, of wood; wooden articles of furniture not falling in Chapter 94.' (no policy). Immediately below: row '44200000' with description 'Wood marequetry and inlaid wood; caskets and cases for jewellery or cutlery, and similar articles, of wood; statuettes and other ornaments, of wood; wooden articles of furniture not falling in chapter 94' (PDF typo 'marequetry'; no policy). Then real subheadings 44201100 'Statuettes and other ornaments: - - Of tropical wood' Free, etc.",
+      "decision": "remove",
+      "reasoning": "44200000 row description is a near-verbatim repeat of heading 4420 caption (minor PDF typo). No policy data. Heading-header artifact. WCO 2022 has no 4420.00."
+    },
+    {
+      "code": "4703.00",
+      "chapter": "47",
+      "source_pdf": "Chapter 47 Pulp Of Wood Or Of Other Fibrous Cellulosic Material; Recovered (Waste And Scrap) Paper Or Paperboard.pdf",
+      "pdf_page": 2,
+      "verdict": "PHANTOM_HEADING_HEADER",
+      "pdf_evidence": "PDF p.2 shows row '4703' heading 'Chemical wood pulp, soda or sulphate, other than dissolving grades.' Prohibited. Immediately below: row '47030000' with the SAME description 'Chemical wood pulp, soda or sulphate, other than dissolving grades' (NO policy cell content). Then real subheadings 47031100 'Unbleached : -- Coniferous' Prohibited, 47031900 'Unbleached : -- Non-coniferous' Prohibited, 47032100, 47032900.",
+      "decision": "remove",
+      "reasoning": "47030000 row description duplicates heading 4703 caption verbatim. Policy cell empty. Heading-header artifact. WCO 2022 has no 4703.00."
+    },
+    {
+      "code": "4704.00",
+      "chapter": "47",
+      "source_pdf": "Chapter 47 Pulp Of Wood Or Of Other Fibrous Cellulosic Material; Recovered (Waste And Scrap) Paper Or Paperboard.pdf",
+      "pdf_page": 2,
+      "verdict": "PHANTOM_HEADING_HEADER",
+      "pdf_evidence": "PDF p.2 shows row '4704' heading 'Chemical wood pulp, sulphite, other than dissolving grades.' Immediately below: row '47040000' with description 'Chemical wood pulp, sulphite, other than dissolving grade' (description trivially duplicates heading; no policy cell content). Then real subheadings 47041100, 47041900, 47042100, 47042900 all with 'Prohibited'.",
+      "decision": "remove",
+      "reasoning": "47040000 row description duplicates heading 4704 caption. Policy cell empty. Heading-header artifact. WCO 2022 has no 4704.00."
+    },
+    {
+      "code": "4707.00",
+      "chapter": "47",
+      "source_pdf": "Chapter 47 Pulp Of Wood Or Of Other Fibrous Cellulosic Material; Recovered (Waste And Scrap) Paper Or Paperboard.pdf",
+      "pdf_page": 3,
+      "verdict": "PHANTOM_HEADING_HEADER",
+      "pdf_evidence": "PDF p.3 shows row '4707' heading 'Recovered (waste and scrap) paper or paperboard.' (no policy). Immediately below: row '47070000' with description 'Waste paper' (no policy). Then real subheadings 47071000 'Unbleached kraft paper or paperboard or corrugated paper or paperboard' Prohibited, 47072000 'Other paper or paperboard made mainly of bleached chemical pulp, not coloured in the mass' Prohibited, 47073000 'Paper or paperboard made mainly of mechanical pulp (for example, newspapers, journals and similar printed matter)' Prohibited, 47079000 'Other, including unsorted waste and scrap' Prohibited.",
+      "decision": "remove",
+      "reasoning": "47070000 row sits in the heading-header position immediately below the heading caption and has no policy data. The description 'Waste paper' is a colloquial shorthand for the heading, not a distinct national subdivision — and crucially, real subheadings 4707.10 through 4707.90 cover all of the heading's product space. Heading-header artifact. WCO 2022 has no 4707.00."
+    },
+    {
+      "code": "8711.00",
+      "chapter": "87",
+      "source_pdf": "Chapter 87 Vehicles Other Than Railway Or Tramway Rolling-Stock, And Parts And Accessories Thereof.pdf",
+      "pdf_page": 18,
+      "verdict": "REAL_INDIA_NATIONAL",
+      "pdf_evidence": "PDF p.18 shows row '8711' heading 'Motorcycles (including mopeds) and cycles fitted with an auxiliary motor, with or without side-cars; side-cars.' Immediately below: row '87110000' with description 'Vintage Motorcycles, parts and components thereof manufactured prior to 1.1.1940' (policy/condition cells appear blank in this specific row, but Chapter 87 Main Note 1 states 'Export of Vintage motorcycles, parts and components thereof manufactured prior to 01.01.1940 is permitted only against a Restricted Export Authorisation'). Then real subheadings 871110 'With internal combustion piston engine of a cylinder capacity not exceeding 50 cc :' followed by tariff lines 87111010 'Mopeds' Free, 87111020 'Motorised cycles' Free, etc.",
+      "decision": "keep_as_india_specific",
+      "reasoning": "The 87110000 row carries a UNIQUE Indian-specific description (Vintage Motorcycles pre-1940) that is semantically distinct from the heading 8711 caption (general motorcycles). It functions as the canonical code for India's vintage motorcycle export-restriction policy, even though the row's policy cell is blank (policy is documented in chapter Main Note 1). This is a deliberate Indian national subdivision, not a layout artifact."
+    },
+    {
+      "code": "9705.00",
+      "chapter": "97",
+      "source_pdf": "Chapter 97 Works Of Art, Collectors Pieces And Antiques.pdf",
+      "pdf_page": 4,
+      "verdict": "PHANTOM_HEADING_HEADER",
+      "pdf_evidence": "PDF p.4 shows row '9705' heading 'COLLECTIONS AND COLLECTORS PIECES OF ARCHAEOLOGICAL, ETHNOGRAPHIC, HISTORICAL, ZOOLOGICAL, BOTANICAL, MINERALOGICAL, ANATOMICAL, PALEONTOLOGICAL, OR NUMISMATIC INTEREST'. Immediately below: row '97050090' (= 9705.00.90) with description 'Other' (no policy). Then real subheadings 97051000 'Collections and collectors' pieces of archaeological, ethnographic or historical interest' Free, 97052100 'Human specimens and parts thereof' Free, 97052200 'Extinct or endangered species and parts thereof' Free, 97052900, 97053100, 97053900. NOTE: The PDF has NO row at the 6-digit position '9705.00' / '97050000'. The 8-digit code '9705.00.90' exists as a real Indian tariff line for an unclassified 'Other' bucket, but its 6-digit parent '9705.00' was synthesized by our extractor.",
+      "decision": "remove",
+      "reasoning": "The 6-digit code 9705.00 does NOT appear as any row in the PDF. The PDF jumps from heading 9705 directly to the 8-digit Indian tariff line 9705.00.90 ('Other'), then to real subheadings 9705.10, 9705.21, etc. Our extractor synthesized '9705.00' as a fake parent subheading to host the orphan 8-digit code. The 8-digit 9705.00.90 IS real Indian national content (catch-all 'Other' bucket) and should be retained, but it needs to be attached to a different parent (e.g., directly to heading 9705 with a synthetic-marker or to a corrected 9705.90 parent — not '9705.00'). Note: the user brief said tariff line is '9705.00.00' but our JSON actually has '9705.00.90'; the PDF confirms 9705.00.90."
+    }
+  ],
+  "summary": {
+    "REAL_INDIA_NATIONAL": 2,
+    "PHANTOM_HEADING_HEADER": 8,
+    "OCR_ERROR": 0,
+    "AMBIGUOUS": 0,
+    "codes_REAL_INDIA_NATIONAL": ["3103.10", "8711.00"],
+    "codes_PHANTOM_HEADING_HEADER": ["4409.00", "4415.00", "4419.00", "4420.00", "4703.00", "4704.00", "4707.00", "9705.00"]
+  },
+  "patterns_observed": [
+    "8 of 10 contested codes are PHANTOM_HEADING_HEADER captures — the CBIC PDF layout repeats the heading-number row with a 'NNNN00.00' filler row immediately below, with the heading caption verbatim as its description and no policy data.",
+    "All 4 Ch.44 codes (4409.00, 4415.00, 4419.00, 4420.00) are heading-headers — none have unique descriptions or policy data.",
+    "All 3 Ch.47 codes (4703.00, 4704.00, 4707.00) are heading-headers — heading caption duplicated, policy cell empty, real subheadings follow.",
+    "Only 2 codes (3103.10 and 8711.00) carry unique Indian-specific content: SSP fertilizer policy (Ch.31) and vintage motorcycle pre-1940 policy (Ch.87). Both are deliberate Indian national subdivisions of codes that WCO 2022 deleted/lacks.",
+    "Ch.97 9705.00 is a synthesized artifact: PDF has no 6-digit '9705.00' row, only an 8-digit '9705.00.90' Indian tariff line whose parent was fabricated by the extractor.",
+    "Heuristic for canonical-JSON cleanup: a 'NNNN.00' subheading is phantom if (a) WCO 2022 lacks it AND (b) its description duplicates the heading caption AND (c) its policy cell is empty. Apply this filter to remove the 8 phantoms while retaining 3103.10 and 8711.00."
+  ]
+}

@@ -1,0 +1,1085 @@
+{
+  "chapter": "37",
+  "section": "VI",
+  "title": "PHOTOGRAPHIC OR CINEMATOGRAPHIC GOODS",
+  "source_pdf": "Chapter 37 Photographic Or Cinematographic Goods.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '37011010') and 6-digit subheading codes without dots (e.g., '370110'). Normalized to NNNN.NN.NN format (e.g., '3701.10.10') and NNNN.NN format (e.g., '3701.10') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'Supplementary Notes', 'Sl.No. Notes Notification Date Notification No', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "Section VI 'Main Notes' (4 notes) are attributed to section_notes (Section VI, Products of the Chemical or Allied Industries), not chapter_notes — same as sibling chapters 28/30/31/32/34/36.",
+    "Chapter title on the PDF reads 'Chapter 37 Photographic Or Cinematographic Goods.' The canonical ITC(HS) chapter title 'PHOTOGRAPHIC OR CINEMATOGRAPHIC GOODS' is used in the title field; source_pdf preserves the PDF filename.",
+    "Chapter 37 has only 2 main chapter notes (Note 1: waste/scrap exclusion; Note 2: definition of 'photographic'). The Supplementary Notes section contains 1 entry — captured in subheading_notes array as 'Supplementary Note 1' per project convention (same pattern as chapter-87).",
+    "Chapter 37 Note 1 ('This Chapter does not cover waste or scrap') has no explicit chapter/heading redirection target in the source PDF — captured as an exclusion_clause with redirects_to_chapter=null and redirects_to_heading=null.",
+    "Heading 3705 has no separate 6-digit subheading row in the PDF: it goes directly from the heading row '3705' to an 8-digit code '37050000'. Modelled as subheading '3705.00' wrapping the single tariff line '3705.00.00' to retain valid NNNN.NN.NN structure.",
+    "Heading 3704 has a 6-digit row '370400' acting as a subheading umbrella followed by tariff lines 37040010, 37040020, 37040030, 37040090. Modelled as subheading '3704.00' carrying these tariff lines.",
+    "Heading 3702 contains subheadings 3702.10 (X-ray), then jumps to 3702.31, 3702.32, 3702.39 (without-perforations, not exceeding 105 mm), 3702.41, 3702.42, 3702.43, 3702.44 (without-perforations, exceeding 105 mm), 3702.52, 3702.53, 3702.54, 3702.55, 3702.56 (for colour photography, various widths), then 3702.96, 3702.97, 3702.98 (Other, various dimensions). Subheading codes 3702.20, 3702.30, 3702.40, 3702.50, 3702.51, 3702.91, 3702.92, 3702.93, 3702.94, 3702.95 are NOT present in the PDF — preserved verbatim.",
+    "Heading 3701 contains subheadings 3701.10 (X-ray), 3701.20 (Instant print film — single tariff line 37012000 directly under the 6-digit code 370110 sequence; modelled as subheading '3701.20' with tariff line '3701.20.00'), 3701.30 (Other plates and film, with any side exceeding 255 mm — single tariff line 37013000; modelled as subheading '3701.30' with tariff line '3701.30.00'), 3701.91 (Other: -- For colour photography (polychrome)), and 3701.99 (Other: -- Other).",
+    "Subheading 3702.96 description in PDF reads 'Other : -- Of a width not exceeding 35 mm and of a length not exceeding 30 m' — the leading 'Other' refers to the parent grouping 'Other film, for colour photography is NOT applicable here — these are non-colour-photography rolls'. Preserved verbatim as PDF shows.",
+    "Tariff line 3707.10.00 description in the PDF reads 'Sensitisin' (truncated — official text is 'Sensitising emulsions'). Preserved verbatim as it appears in the source PDF.",
+    "Heading 3706 contains an extensive set of cinematographic film tariff lines including children's films, documentary shorts, advertisement shorts, educational shorts certified by the Central Board of Film Certification, etc. The Supplementary Note 1 ('Central Board of Film Certification' definition) applies to these certifications.",
+    "Tariff line 37061070 description in PDF reads 'Short films not elsewhere specified or included Other:' — the trailing colon is a source artifact suggesting a sub-grouping that follows (37061091, 37061092, 37061099). Preserved verbatim.",
+    "Subheading 3702.96 has tariff line '3702.96.11' and '3702.96.19' under it (sub-grouping by width <= 16mm vs Other), but no .00 tariff line. Same pattern for 3702.97 (3702.97.11, 3702.97.19) and 3702.98 (3702.98.10 Cinematographic film, 3702.98.90 Other). Preserved verbatim.",
+    "The 'Export Policy' and 'Policy Condition' columns are not part of the tariff line description field; they are captured separately. Unit-of-measure column (kg/u/etc) is NOT shown in this chapter's PDF — unit field set to null for all tariff lines.",
+    "All tariff lines in Chapter 37 have Export Policy = 'Free' and no Policy Condition entries — no policy_conditions metadata applies for this chapter."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover waste or scrap"
+    },
+    {
+      "number": "2",
+      "text": "In this Chapter the word \"photographic\" relates to the process by which visible images are formed, directly or indirectly, by the action of light or other forms of radiation on photosensitive, including thermosensitive, surfaces."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "(A) Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 are to be classified in those headings and in no other heading of this Schedule. (B) Subject to paragraph (A) above, goods answering to a description in heading 2843, 2846 or 2852 are to be classified in those headings and in no other heading of this Section."
+    },
+    {
+      "number": "2",
+      "text": "Subject to Note 1 above, goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale are to be classified in those headings and in no other heading of this Schedule."
+    },
+    {
+      "number": "3",
+      "text": "Goods put up in sets consisting of two or more separate constituents,some or all of which fall in this Section and are intended to be mixed together to obtain a product of Section VI or VII, are to be classified in the heading appropriate to that product, provided that the constituents are: (a) having regard to the manner in which they are put up, clearly identifiable as being intended to be used together without first being repacked; (b) presented together; and (c) identifiable, whether by their nature or by the relative proportions in which they are present, as being complementary one to another."
+    },
+    {
+      "number": "4",
+      "text": "Where a product answers to a description in one or more of the headings in Section VI by virtue of being described by name or function and also to heading 3827, then it is classifiable in a heading that references the product by name or function and not under heading 3827."
+    }
+  ],
+  "chapter_subheading_notes": [
+    {
+      "number": "Supplementary Note 1",
+      "text": "In this Chapter, the term \"Central Board of Film Certification\" means the authority established under law in India for the purpose of certifying the films."
+    }
+  ],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "waste or scrap",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover waste or scrap"
+    },
+    {
+      "excluded_product_text": "Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 — must be classified in those headings and not elsewhere in this Schedule",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": "2844",
+      "source_note_number": "Section VI Note 1(A)",
+      "source_note_text": "(A) Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 are to be classified in those headings and in no other heading of this Schedule."
+    },
+    {
+      "excluded_product_text": "Goods answering to a description in heading 2843, 2846 or 2852 — must be classified in those headings and not elsewhere in Section VI",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": "2843",
+      "source_note_number": "Section VI Note 1(B)",
+      "source_note_text": "(B) Subject to paragraph (A) above, goods answering to a description in heading 2843, 2846 or 2852 are to be classified in those headings and in no other heading of this Section."
+    },
+    {
+      "excluded_product_text": "Goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale — classified in those headings only",
+      "redirects_to_chapter": "37",
+      "redirects_to_heading": "3707",
+      "source_note_number": "Section VI Note 2",
+      "source_note_text": "Subject to Note 1 above, goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale are to be classified in those headings and in no other heading of this Schedule."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "3701",
+      "title": "Photographic plates and film in the flat, sensitised, unexposed, of any material other than paper, paperboard or textiles; instant print film in the flat, sensitised, unexposed, whether or not in packs.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3701.10",
+          "title": "For X-ray",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3701.10.10",
+              "description": "Medical",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3701.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3701.20",
+          "title": "Instant print film",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3701.20.00",
+              "description": "Instant print film",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3701.30",
+          "title": "Other plates and film, with any side exceeding 255 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3701.30.00",
+              "description": "Other plates and film, with any side exceeding 255 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3701.91",
+          "title": "Other : -- For colour photography (polychrome)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3701.91.10",
+              "description": "Cinematographic film",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3701.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3701.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3701.99.10",
+              "description": "Cinematographic film",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3701.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3702",
+      "title": "Photographic film in rolls, sensitised, unexposed, of any material other than paper, paperboard or textiles; instant print film in rolls, sensitised, unexposed.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3702.10",
+          "title": "For X-ray",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3702.10.00",
+              "description": "For X-ray",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3702.31",
+          "title": "Other film, without perforations, of a width not exceeding 105 mm : -- For colour photography (polychrome)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3702.31.10",
+              "description": "Cinematographic film",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.31.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3702.32",
+          "title": "Other film, without perforations, of a width not exceeding 105 mm : -- Other, with silver halide emulsion",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3702.32.10",
+              "description": "Cinematographic film",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.32.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3702.39",
+          "title": "Other film, without perforations, of a width not exceeding 105 mm : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3702.39.10",
+              "description": "Cinematographic film",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.39.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3702.41",
+          "title": "Other film, without perforations, of a width exceeding 105 mm : -- Of a width exceeding 610 mm and of a length exceeding 200 m, for colour photography (polychrome)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3702.41.10",
+              "description": "Cinematographic film",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.41.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3702.42",
+          "title": "Other film, without perforations, of a width exceeding 105 mm : -- Of a width exceeding 610 mm and of a length exceeding 200 m, other than for colour photography",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3702.42.10",
+              "description": "Photographic film of a width 620 mm in rolls",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.42.20",
+              "description": "Cinematographic film",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.42.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3702.43",
+          "title": "Other film, without perforations, of a width exceeding 105 mm : -- Of a width exceeding 610 mm and of a length not exceeding 200 m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3702.43.10",
+              "description": "Photographic films (Black and White) of a width 620 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.43.20",
+              "description": "Cinematographic film",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.43.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3702.44",
+          "title": "Other film, without perforations, of a width exceeding 105 mm : -- Of a width exceeding 105 mm but not exceeding 610 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3702.44.10",
+              "description": "Photographic Films of a width 120 mm in rolls",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.44.20",
+              "description": "Cinematographic film",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.44.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3702.52",
+          "title": "Other film, for colour photography (polychrome) : -- Of a width not exceeding 16 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3702.52.10",
+              "description": "Finished rolls of cinematographic positive",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.52.20",
+              "description": "Other cinematographic film",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.52.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3702.53",
+          "title": "Other film, for colour photography (polychrome) : -- Of a width exceeding 16 mm but not exceeding 35 mm and of a length not exceeding 30 m, for slides",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3702.53.00",
+              "description": "Other film, for colour photography (polychrome) : -- Of a width exceeding 16 mm but not exceeding 35 mm and of a length not exceeding 30 m, for slides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3702.54",
+          "title": "Other film, for colour photography (polychrome) : -- Of a width exceeding 16 mm but not exceeding 35 mm and of a length not exceeding 30 m, other than for slides",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3702.54.10",
+              "description": "Finished rolls of cinematographic positive",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.54.20",
+              "description": "Other cinematographic film",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.54.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3702.55",
+          "title": "Other film, for colour photography (polychrome) : -- Of a width exceeding 16 mm but not exceeding 35 mm and of a length exceeding 30 m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3702.55.10",
+              "description": "Finished rolls of cinematographic positive",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.55.20",
+              "description": "Other cinematographic film",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.55.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3702.56",
+          "title": "Other film, for colour photography (polychrome) : -- Of a width exceeding 35 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3702.56.10",
+              "description": "Finished rolls of cinematographic positive",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.56.20",
+              "description": "Other cinematographic film",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.56.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3702.96",
+          "title": "Other : -- Of a width not exceeding 35 mm and of a length not exceeding 30 m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3702.96.11",
+              "description": "Not exceeding 16 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.96.19",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3702.97",
+          "title": "Other : -- Of a width not exceeding 35 mm and of a length exceeding 30 m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3702.97.11",
+              "description": "Not exceeding 16 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.97.19",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3702.98",
+          "title": "Other : -- Of a width exceeding 35 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3702.98.10",
+              "description": "Cinematographic film",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3702.98.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3703",
+      "title": "Photographic paper, paperboard and textiles, sensitised, unexposed",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3703.10",
+          "title": "In rolls of a width exceeding 610 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3703.10.10",
+              "description": "Photographic paper or paperboard",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3703.10.20",
+              "description": "Textiles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3703.20",
+          "title": "Other, for colour photography (polychrome)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3703.20.10",
+              "description": "Photographic paper or paperboard",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3703.20.20",
+              "description": "Textiles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3703.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3703.90.10",
+              "description": "Photographic paper or paperboard",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3703.90.20",
+              "description": "Textiles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3704",
+      "title": "Photographic plates, film, paper, paperboard and textiles, exposed but not developed.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3704.00",
+          "title": "Photographic plates, film, paper, paper board and textiles, exposed but not developed :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3704.00.10",
+              "description": "Photographic paper, or paperboard",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3704.00.20",
+              "description": "Cinematographic plates and film",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3704.00.30",
+              "description": "Sensitised Textiles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3704.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "3705",
+      "title": "PHOTOGRAPHIC PLATES AND FILM, EXPOSED AND DEVELOPED, OTHER THAN CINEMATOGRAPHIC FILM",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3705.00",
+          "title": "Photographic plates and film, exposed and developed, other than cinematographic film.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3705.00.00",
+              "description": "Photographic plates and film, exposed and developed, other than cinematographic film.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "3706",
+      "title": "Cinematographic film, exposed and developed, whether or not incorporating sound track or consisting only of sound track.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3706.10",
+          "title": "Of a width of 35 mm or more",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3706.10.11",
+              "description": "Made wholly in black and white and of a length not exceeding 4,000 m",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.10.12",
+              "description": "Made wholly in black and white and of a length exceeding 4,000 m",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.10.13",
+              "description": "Made wholly or partly in colour and of a length not exceeding 4,000 m",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.10.14",
+              "description": "Made wholly or partly in colour and of a length exceeding 4,000 m",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.10.15",
+              "description": "Children's films certified by the Central Board of Film Certification to be Children's Film",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.10.20",
+              "description": "Documentary Shorts, and Films certified as such by the Central Board of Film Certification",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.10.30",
+              "description": "News Reels and clippings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.10.41",
+              "description": "Advertisement Shorts and Films: ---- Made wholly in black and white",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.10.42",
+              "description": "Advertisement Shorts and Films: ---- Made wholly or partly in colour",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.10.51",
+              "description": "Other Childrens Film: ---- Patch prints, including Logos intended exclusively for the entertainment of children.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.10.52",
+              "description": "Other Childrens Film: ---- Childrens film certified by the Central Board of Films Certification to be Childrens Film",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.10.59",
+              "description": "Other Childrens Film: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.10.61",
+              "description": "Certified as predominantly educational by the Central Board of Film Certification",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.10.62",
+              "description": "Patch prints, including logos intended exclusively for educational purposes.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.10.63",
+              "description": "Teaching aids including film strips of educational nature",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.10.69",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.10.70",
+              "description": "Short films not elsewhere specified or included Other:",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.10.91",
+              "description": "Audio-Visual news or Audio-Visual views materials including news clippings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.10.92",
+              "description": "Master Positives, exposed negatives, dupes and rush prints as are not cleared for Public exhibitions.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.10.99",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3706.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3706.90.11",
+              "description": "Made wholly in black and white and of a length not exceeding 4,000 m",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.90.12",
+              "description": "Made wholly in black and white and of a length exceeding 4,000 m",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.90.13",
+              "description": "Made wholly or partly in colour and of a length not exceeding 4,000 m",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.90.14",
+              "description": "Made wholly or partly in colour and of a length exceeding 4,000 m",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.90.15",
+              "description": "Children's films certified by the Central Board of Film Certification to be \"Children's Film\"",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.90.20",
+              "description": "Documentary Shorts, and Films certified as such by the Central Board of Film Certification",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.90.30",
+              "description": "News Reels and clippings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.90.41",
+              "description": "Advertisement Shorts and Films: ---- Made wholly in black and white",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.90.42",
+              "description": "Advertisement Shorts and Films: ---- Made wholly or partly in colour",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.90.51",
+              "description": "Other Childrens Film: ---- Patch prints, including Logos intended exclusively for the entertainment of children.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.90.52",
+              "description": "Other Childrens Film: ---- Childrens film certified by the Central Board of Films Certification to be Childrens Film",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.90.59",
+              "description": "Other Childrens Film: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.90.61",
+              "description": "Educational Shorts, and Films: ---- Certified as predominantly educational by the Central Board of Film Certification",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.90.62",
+              "description": "Educational Shorts, and Films: ---- Patch prints, including logos intended exclusively for educational purposes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.90.63",
+              "description": "Educational Shorts, and Films: ---- Teaching aids including film strips of educational nature",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.90.64",
+              "description": "Educational Shorts, and Films: ---- Certified as predominantly educational, by Central Board of Film Certification, of width below 30 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.90.69",
+              "description": "Educational Shorts, and Films: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.90.70",
+              "description": "Educational Shorts, and Films: ---- Short film not elsewhere specified",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.90.91",
+              "description": "Other: ---- Audio-Visual news or Audio-Visual views materials including news clippings.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.90.92",
+              "description": "Other: ---- Master Positives, exposed negatives, dupes and rush prints as are not cleared for Public exhibitions.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3706.90.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3707",
+      "title": "Chemical preparations for photographic uses (other than varnishes, glues, adhesives and similar preparations); unmixed products for photographic uses, put up in measured portions or put up for retail sale in a form ready to use.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3707.10",
+          "title": "Sensitisin",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3707.10.00",
+              "description": "Sensitisin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3707.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3707.90.10",
+              "description": "Chemical products mixed or compounded for Photographic uses (for example, developers and fixers) whether or not in bulk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3707.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

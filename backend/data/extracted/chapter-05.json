@@ -1,0 +1,768 @@
+{
+  "chapter": "05",
+  "section": "I",
+  "title": "PRODUCTS OF ANIMAL ORIGIN, NOT ELSEWHERE SPECIFIED OR INCLUDED",
+  "source_pdf": "Chapter 05 Products Of Animal Origin, Not Elsewhere Specified Or Included.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '05010010') and 6-digit subheading numbers without dots (e.g., '050100'). Normalized to NNNN.NN.NN format for tariff lines (e.g., '0501.00.10') and NNNN.NN for subheadings (e.g., '0501.00') per project schema.",
+    "PDF table-chrome headers ('Sl.No. Notes Notification No Notification Date', 'Sl.No. Notes Notification Date Notification No', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Main Notes', 'Supplementary Notes', 'Policy Condition', 'Export Licensing Notes', 'Product Description and Export Policy') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Section I 'Main Notes' (2 notes) are attributed to section_notes (Section I, LIVE ANIMALS; ANIMAL PRODUCTS), not chapter_notes. Chapter 05 'Main Notes' (4 notes) are attributed to chapter_notes.",
+    "Heading 0503 and heading 0509 do not appear in the PDF — these heading numbers are reserved/deleted in the ITC(HS) schedule and have no tariff lines. Skipped in the headings array.",
+    "Note 1 of Chapter 05 (the exclusion note) contains several OCR/spacing artifacts in the source PDF: 'edible products(other than guts, ...)' (missing space after 'products'), 'piecesthereof' (missing space), 'animal blood, liquid or dried' (commas preserved verbatim). Preserved verbatim as they appear in the source.",
+    "Supplementary Note 1 contains OCR spacing artifacts: 'In thisChapter' (missing space), 'meaningsrespectively' (missing space). Preserved verbatim.",
+    "Policy Condition rows contain '?' characters in place of typographic quote marks (e.g., 'Shipment Clearance Certificate?', 'Production Process Certificate?', 'Health Certificate?'). These are OCR/encoding artifacts from the source PDF — preserved verbatim as they appear in the source. The intended text is the certificate names enclosed in quotation marks.",
+    "Policy Condition 4 contains a repeated phrase due to source rendering: 'Export of Bone and bone products Bone and Bone Products, horn and horn products hooves and hoof products, Bile, ...'. The duplication of 'Bone and bone products' is preserved verbatim as it appears in the source PDF.",
+    "Tariff line 0511.99.91 description 'Other: ---- Frozen semen, other than bovine :bovine embryo:' has an inline policy condition fragment in the source PDF Policy Condition column: 'Export of Gonads and other reproductive organs of buffaloes &Germplasm of Cattle and buffaloes is restricted.' This is preserved as the description-level policy condition for that line.",
+    "Tariff line 0511.99 has description 'other -- Other' (lowercase 'other') in the PDF. Preserved verbatim.",
+    "Subheading 0511.91 description in PDF: 'Other : -- Products of fish or crustaceans, molluscs or other aquatic invertebrates; dead animals of Chapter 3' — verbatim.",
+    "Tariff line 0508.00.20 (Chanks), 0508.00.30 (Cowries), 0508.00.50 (Shells) have multi-sentence policy condition text in the Policy Condition column (e.g., references to Wild Life (Protection) Act, 1972 and CITES). Captured at tariff_line level.",
+    "Tariff line 0506.10.49 (Bones, horn cones and parts thereof, not crushed: ---- Other) has a multi-clause policy condition: '1. Export of Human Skeletons and Shavings of Shed Antlers of Chital and Sambhar is prohibited and not permitted to be exported 2. Subject to Policy Condition 1, 3 &4 of the Chapter'. Preserved verbatim.",
+    "Tariff line 0511.99.99 (Other: ---- Other) has a multi-clause policy condition referencing ICMR No Objection Certificate for Human Embryos/Gametes/Gonad tissues, restriction on Germplasm of Cattle and buffaloes, and prohibition on Human Skeletons / shed antlers of chital/sambhar / peacock tail feathers handicrafts. Preserved verbatim.",
+    "Export Licensing Notes section contains 2 notes (handicrafts of bone/horn; wild animals/CITES). Captured in export_licensing_notes scope of policy_conditions.",
+    "Policy Condition 2 text references 'European Union' — the PDF renders 'Pig Bristles and Hair' policy as allowed freely except to EU, with detailed CAPEXIL certification conditions. Preserved verbatim including '?' OCR quote artifacts."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover: (a) edible products(other than guts, bladders and stomachs of animals, whole and piecesthereof, and animal blood, liquid or dried); (b) hides or skins (including furskins) other than goods of heading 0505 and parings and similar waste of raw hides or skins of heading 0511 (Chapter 41 or 43); (c) animal textile materials, other than horsehair and horsehair waste (Section XI); or (d) prepared knots or tufts for broom or brush making (heading 9603)"
+    },
+    {
+      "number": "2",
+      "text": "For the purposes of heading 0501, the sorting of hair by length (provided the root ends and tip ends respectively are not arranged together) shall be deemed not to constitute working."
+    },
+    {
+      "number": "3",
+      "text": "Throughout this Schedule, elephant, hippopotamus, walrus, narwhal and wild boar tusks, rhinoceros horns and the teeth of all animals are regarded as \"ivory\"."
+    },
+    {
+      "number": "4",
+      "text": "Throughout the Schedule, the expression \"horsehair\" means hair of the manes or tails of equine or bovine animals. Heading 0511 covers, inter alia, horsehair and horsehair waste, whether or not put up as a layer with or without supporting material."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "Any reference in this Section to a particular genus or species of an animal, except where the context otherwise requires, includes a reference to the young of that genus or species."
+    },
+    {
+      "number": "2",
+      "text": "Except where the context otherwise requires, throughout this Schedule, any reference to \"dried\" products also covers products which have been dehydrated, evaporated or freeze-dried."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [
+    {
+      "number": "1",
+      "text": "In thisChapter, the expressions \"wild animal\" and \"wild life\" have the meaningsrespectively assigned to them in clauses (36) and (37) of section 2 of the Wild Life (Protection) Act, 1972 (53 of 1972); and the expression \"wild bird\" means any bird specified in Schedules to that Act."
+    }
+  ],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "edible products (other than guts, bladders and stomachs of animals, whole and pieces thereof, and animal blood, liquid or dried)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover: (a) edible products(other than guts, bladders and stomachs of animals, whole and piecesthereof, and animal blood, liquid or dried)"
+    },
+    {
+      "excluded_product_text": "hides or skins (including furskins) other than goods of heading 0505 and parings and similar waste of raw hides or skins of heading 0511",
+      "redirects_to_chapter": "41",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "(b) hides or skins (including furskins) other than goods of heading 0505 and parings and similar waste of raw hides or skins of heading 0511 (Chapter 41 or 43)"
+    },
+    {
+      "excluded_product_text": "hides or skins (including furskins) other than goods of heading 0505 and parings and similar waste of raw hides or skins of heading 0511",
+      "redirects_to_chapter": "43",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "(b) hides or skins (including furskins) other than goods of heading 0505 and parings and similar waste of raw hides or skins of heading 0511 (Chapter 41 or 43)"
+    },
+    {
+      "excluded_product_text": "animal textile materials, other than horsehair and horsehair waste",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "(c) animal textile materials, other than horsehair and horsehair waste (Section XI)"
+    },
+    {
+      "excluded_product_text": "prepared knots or tufts for broom or brush making",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": "9603",
+      "source_note_number": "Note 1(d)",
+      "source_note_text": "(d) prepared knots or tufts for broom or brush making (heading 9603)"
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "0501",
+      "title": "Human hair, unworked, whether or not washed or scoured; waste of human hair.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0501.00",
+          "title": "Human hair, unworked, whether or not washed or scoured; Waste of human hair :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0501.00.10",
+              "description": "Human hair unworked, whether or not washed or scoured",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "However, export is 'Free' if FOB value is US Dollar 65 or above per Kilogram."
+            },
+            {
+              "code": "0501.00.20",
+              "description": "Waste of human hair",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "However, export is 'Free' if FOB value is US Dollar 65 or above per Kilogram."
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "0502",
+      "title": "Pigs, hogs or boars bristles and hair; badger hair and other brush making hair; waste of such bristles or hair.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0502.10",
+          "title": "Pigs, hogs or boars bristles and hair and waste thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0502.10.10",
+              "description": "Pigs, hogs or boars bristles and hair",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 &2 of the Chapter"
+            },
+            {
+              "code": "0502.10.20",
+              "description": "Waste of pigs hogs or boars bristles and hair",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 &2 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0502.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0502.90.10",
+              "description": "Badger hair and other brush making hair",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0502.90.20",
+              "description": "Yak tail hair",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0502.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0504",
+      "title": "Guts, bladders and stomachs of animals (other than fish), whole and pieces thereof, fresh, chilled, frozen, salted, in brine, dried or smoked.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0504.00",
+          "title": "Guts, bladders and stomachs of animals(other than fish), whole and pieces thereof, fresh, chilled, frozen, salted, in brine, dried or smoked:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0504.00.10",
+              "description": "Guts of cattle for natural food casings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0504.00.20",
+              "description": "Guts of sheep and goats for natural food casings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0504.00.31",
+              "description": "Guts of other animals for natural food casings :---- Of wild animals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0504.00.39",
+              "description": "Guts of other animals for natural food casings :---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0504.00.41",
+              "description": "Guts other than for natural food casings: ---- Of wild animals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0504.00.49",
+              "description": "Guts other than for natural food casings: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0504.00.51",
+              "description": "Bladders and stomachs: ---- Of wild animals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0504.00.59",
+              "description": "Bladders and stomachs: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "0505",
+      "title": "Skins and other parts of birds, with their feathers or down, feathers and parts of feathers (whether or not with trimmed edges) and down, not further worked than cleaned, disinfected or treated for preservation; powder and waste of feathers or parts of feathers.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0505.10",
+          "title": "Feathers of a kind used for stuffing; down",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0505.10.10",
+              "description": "Of wild birds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0505.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0505.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0505.90.10",
+              "description": "Peacock tail and wing feather (trimmed or not)",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            },
+            {
+              "code": "0505.90.21",
+              "description": "Other feather (excluding for stuffing purpose): ---- Of wild birds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0505.90.29",
+              "description": "Other feather (excluding for stuffing purpose): ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0505.90.31",
+              "description": "Powder and waste of feathers or parts of feathers: ---- Of wild birds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0505.90.39",
+              "description": "Powder and waste of feathers or parts of feathers: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0505.90.91",
+              "description": "Skins and other parts: ---- Of wild birds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0505.90.99",
+              "description": "Skins and other parts: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0506",
+      "title": "Bones and horn-cores, unworked, defatted, simply prepared (but not cut to shape), treated with acid or degelatinised; powder and waste of these products.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0506.10",
+          "title": "Ossein and bones treated with acid",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0506.10.11",
+              "description": "Bones, including horn-cores, crushed: ---- Of wild animals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0506.10.19",
+              "description": "Bones, including horn-cores, crushed: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1, 3 &4 of the Chapter"
+            },
+            {
+              "code": "0506.10.21",
+              "description": "Bone grist: ---- Of wild animals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0506.10.29",
+              "description": "Bone grist: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1, 3 &4 of the Chapter"
+            },
+            {
+              "code": "0506.10.31",
+              "description": "Ossein: ---- Of wild animals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0506.10.39",
+              "description": "Ossein: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1, 3 &4 of the Chapter"
+            },
+            {
+              "code": "0506.10.41",
+              "description": "Bones, horn cones and parts thereof, not crushed: ---- Of wild animals",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            },
+            {
+              "code": "0506.10.49",
+              "description": "Bones, horn cones and parts thereof, not crushed: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "1. Export of Human Skeletons and Shavings of Shed Antlers of Chital and Sambhar is prohibited and not permitted to be exported 2. Subject to Policy Condition 1, 3 &4 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0506.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0506.90.11",
+              "description": "Bone meal: ---- Of wild animals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0506.90.19",
+              "description": "Bone meal: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1, 3 &4 of the Chapter"
+            },
+            {
+              "code": "0506.90.91",
+              "description": "Other: ---- Of wild animals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0506.90.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1, 3 &4 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0507",
+      "title": "Ivory, tortoise-shell, whalebone and whalebone hair, horns, antlers, hooves, nails, claws and beaks, unworked or simply prepared but not cut to shape; powder and waste of these products.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0507.10",
+          "title": "Ivory; ivory powder and waste",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0507.10.10",
+              "description": "Ivory",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0507.10.20",
+              "description": "Ivory powder and waste",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0507.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0507.90.10",
+              "description": "Hoof meal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0507.90.20",
+              "description": "Horn meal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0507.90.30",
+              "description": "Hooves, claws, nails and beaks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1&4of the Chapter"
+            },
+            {
+              "code": "0507.90.40",
+              "description": "Antlers",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": null
+            },
+            {
+              "code": "0507.90.50",
+              "description": "Buffalo horns",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 &4 of the Chapter"
+            },
+            {
+              "code": "0507.90.60",
+              "description": "Tortoise-shell",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0507.90.70",
+              "description": "Claws and waste of tortoise shell",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0507.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1&4of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0508",
+      "title": "Coral and similar materials, unworked or simply prepared but not otherwise worked; shells of molluscs, crustaceans or echinoderms and cuttle-bone, unworked or simply prepared but not cut to shape, powder and waste thereof.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0508.00",
+          "title": "Coral and similar materials, unworked or simply prepared but not otherwise worked; shells of molluscs, crustaceans or echinoderms and cuttle-bone, unworked or simply prepared but not cut to shape, powder and waste thereof :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0508.00.10",
+              "description": "Coral",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0508.00.20",
+              "description": "Chanks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of Sea shells, including polished sea shells and handicrafts made out of those species not included in the Schedules of the Wild Life (Protection) Act, 1972 is permitted freely"
+            },
+            {
+              "code": "0508.00.30",
+              "description": "Cowries",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of Sea shells, including polished sea shells and handicrafts made out of those species included in CITES (Excluding the species mentioned in Schedules of Wild Life (Protection) Act, 1972 is to be governed by CITES Regulations"
+            },
+            {
+              "code": "0508.00.40",
+              "description": "Cuttlefish bones",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0508.00.50",
+              "description": "Shells",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Export of Sea shells, including polished sea shells and handicrafts made out of those species included in the Schedules of the Wild Life (Protection) Act, 1972 is not permitted to be exported"
+            },
+            {
+              "code": "0508.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "0510",
+      "title": "Ambergris, castoreum, civet and musk; cantharides; bile, whether or not dried; glands and other animal products used in the preparation of pharmaceutical products, fresh, chilled, frozen or otherwise provisionally preserved.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0510.00",
+          "title": "Ambergris, castoreum, civet and musk; cantharides; bile, whether or not dried; glands and other animal products used in the preparation of pharmaceutical products, fresh, chilled, frozen or otherwise provisionally preserved",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0510.00.10",
+              "description": "Bezoar, cow (goolochan)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0510.00.20",
+              "description": "Ox Gallstone",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0510.00.30",
+              "description": "Placenta, frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0510.00.91",
+              "description": "Other :---- Of wild animals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0510.00.99",
+              "description": "Other :---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 & 4 of the Chapter"
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "0511",
+      "title": "Animal products not elsewhere specified or included; dead animals of Chapter 1 or 3, unfit for human consumption.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0511.10",
+          "title": "Bovine semen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0511.10.00",
+              "description": "Bovine semen",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0511.91",
+          "title": "Other : -- Products of fish or crustaceans, molluscs or other aquatic invertebrates; dead animals of Chapter 3",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0511.91.10",
+              "description": "Fish nails",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0511.91.20",
+              "description": "Fish tails",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0511.91.30",
+              "description": "Other fish waste",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0511.91.40",
+              "description": "Artemia cyst",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0511.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0511.99",
+          "title": "other -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0511.99.10",
+              "description": "Silkworm pupae",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1&4of the Chapter"
+            },
+            {
+              "code": "0511.99.21",
+              "description": "Sinews and tendons: ---- Of wild life",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1&4of the Chapter"
+            },
+            {
+              "code": "0511.99.29",
+              "description": "Sinews and tendons: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1&4of the Chapter"
+            },
+            {
+              "code": "0511.99.91",
+              "description": "Other: ---- Frozen semen, other than bovine :bovine embryo:",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Export of Gonads and other reproductive organs of buffaloes &Germplasm of Cattle and buffaloes is restricted."
+            },
+            {
+              "code": "0511.99.92",
+              "description": "Other: ---- Of wild life",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1&4of the Chapter"
+            },
+            {
+              "code": "0511.99.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "1. Subject to Policy Condition 1, 3 &4 of the Chapter 2. However, Export of Human Embryos/Gametes/Gonad tissues is free subject to No Objection Certificate from Indian Council of Medical Research (ICMR). 2. However, Export of Gonads and other reproductive organs of buffaloes &Germplasm of Cattle and buffaloes is restricted subject to permitted under Restricted Export Authorization. 3. However, Export of Human Skeletons, Manufactured Articles of shavings of shed antlers of chital and sambhar and Handicrafts and articles of peacock tail feathers are Prohibited and not permitted to be exported."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

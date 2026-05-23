@@ -1,0 +1,150 @@
+{
+  "chapter": "16",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings_count": 0,
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "1601.00.00",
+        "in_pdf": true,
+        "pdf_description": "16010000 sausages and Free chapter. similar products, of meat, meat offal, blood or insects; food preparations",
+        "json_description": "sausages and similar products, of meat, meat offal, blood or insects; food preparations based on these products",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1602.32.00",
+        "in_pdf": true,
+        "pdf_description": "16023200 Of poultry of Free heading 01.05 : -- Of fowls of the species Gallus domesticus 16023900 Of poultry of",
+        "json_description": "Of poultry of heading 01.05 : -- Of fowls of the species Gallus domesticus",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1602.50.00",
+        "in_pdf": true,
+        "pdf_description": "16025000 Of swine : -- Hams 16029000 and cuts thereof 1603 Of swine : -- Shoulders and cuts 160300 thereof 16030010 Of s",
+        "json_description": "Of bovine animals",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1604.11.00",
+        "in_pdf": true,
+        "pdf_description": "16041100 Prepared or 160412 preserved fish; caviar and caviar substitutes prepared from fish eggs. Fish, whole or in Fre",
+        "json_description": "Fish, whole or in pieces, but not minced : -- Salmon",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1604.13.20",
+        "in_pdf": true,
+        "pdf_description": "16041320 minced : -- 160414 Sardines, sardinella 16041410 and brisling or 16041490 sprats 16041500 Sardines, sardinella ",
+        "json_description": "Sprats",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1604.17.00",
+        "in_pdf": true,
+        "pdf_description": "16041700 Fish, whole or in Free 16041800 pieces, but not Prohibited 16041900 minced : -- Eels Free 16042000 Free 1604310",
+        "json_description": "Fish, whole or in pieces, but not minced : -- Eels",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1604.32.00",
+        "in_pdf": true,
+        "pdf_description": "16043200 pieces, but not Free minced : -- Shark 1605 fins Free 16051000 Free 16052100 Fish, whole or in pieces, but not",
+        "json_description": "Caviar and caviar substitutes : -- Caviar substitutes",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1605.30.00",
+        "in_pdf": true,
+        "pdf_description": "16053000 prawns : -- Other 16054000 16055100 Lobster Free 16055200 16055300 Other crustaceans Free 16055400 16055500 Mol",
+        "json_description": "Lobster",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1605.54.00",
+        "in_pdf": true,
+        "pdf_description": "16055400 16055500 Molluscs : -- Free 16055600 Oysters 16055700 16055800 Molluscs : -- Free 16055900 Scallops, including ",
+        "json_description": "Molluscs : -- Cuttle fish and squid",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1605.59.00",
+        "in_pdf": true,
+        "pdf_description": "16055900 Scallops, including 16056100 queen scallops Molluscs : -- Free Mussels Molluscs : -- Cuttle Free fish and squid",
+        "json_description": "Molluscs : -- Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      }
+    ],
+    "hierarchy_errors": [],
+    "missed_codes": [],
+    "extra_codes": [],
+    "subheading_checks": [
+      {
+        "subheading": "1601.00",
+        "title": "sausages and similar products, of meat, meat offal, blood or insects; food preparations based on these products",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1602.49",
+        "title": "Of swine : -- Other, including mixtures",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1604.15",
+        "title": "Fish, whole or in pieces, but not minced : -- Mackerel",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1605.21",
+        "title": "Shrimps and prawns : -- Not in airtight container",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1605.55",
+        "title": "Molluscs : -- Octopus",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      }
+    ],
+    "note_mismatches": [],
+    "count_check": {
+      "json_h": 5,
+      "pdf_h_estimate": 5,
+      "json_sh": 42,
+      "pdf_sh_estimate": 42,
+      "json_tl": 47,
+      "pdf_tl_estimate": 47
+    }
+  },
+  "fix_needed": null
+}

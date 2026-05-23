@@ -1,0 +1,1520 @@
+{
+  "chapter": "12",
+  "section": "II",
+  "title": "OIL SEEDS AND OLEAGINOUS FRUITS; MISCELLANEOUS GRAINS, SEEDS AND FRUIT; INDUSTRIAL OR MEDICINAL PLANTS; STRAW AND FODDER",
+  "source_pdf": "Chapter 12 Oil Seeds And Oleaginous Fruits; Miscellaneous Grains, Seeds And Fruit; Industrial Or Medicinal Plants; Straw and Fodder..pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '12011000'). Normalized to NNNN.NN.NN format (e.g., '1201.10.00') per project schema. Six-digit subheading numbers in PDF (e.g., '120230', '120241') normalized to NNNN.NN form (e.g., '1202.30', '1202.41').",
+    "PDF table-chrome headers ('SI.No. Notes Notification No Notification Date', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Main Notes', 'Sub-Heading Notes', 'Policy Condition', 'Export Licensing Notes', 'Product Description and Export Policy') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Section II Main Note about 'pellets' appears on PDF page 1 above the Chapter 12 title and is attributed to section_notes (Section II, Vegetable Products), not chapter_notes.",
+    "PDF preserves doubled quotation marks (e.g., '\"\"seeds of a kind used for sowing\"\"', '\"\"seaweeds and other algae\"\"') in Main Notes 3 and 5 — these appear to be OCR/encoding artifacts where single typographic quotes were rendered as paired straight quotes; preserved verbatim from source.",
+    "Export Licensing Notes and certain Policy Condition cells contain '?' characters in place of typographic quote marks (e.g., '?formulation?', '?Certificate of Analysis?', '?Procedure for Control of Contamination of Salmonella in Sesame Seeds for Export to EU?', '?Spice?', 'Elephant?s foot'). These are OCR/encoding artifacts from the source PDF — preserved verbatim. The intended text uses quotation marks or an apostrophe.",
+    "Tariff line code 8-digit codes ending in '00' (e.g., '12011000' → '1201.10.00', '12030000' → '1203.00.00', '12081000' → '1208.10.00') represent subheadings where only the single '00' tariff line exists. Captured as one tariff line under the corresponding 6-digit subheading.",
+    "Heading 1203 ('Copra.') is represented in the PDF as the single tariff line '12030000' with description 'Copra.' — no separate subheading row appears in the source; tariff line is grouped under subheading '1203.00' for schema consistency.",
+    "Heading 1204 has a single subheading '120400' (Linseed, whether or not broken) with two tariff lines '12040010' and '12040090'.",
+    "Heading 1206 has a single subheading '120600' (Sunflower seeds, whether or not broken) with two tariff lines '12060010' and '12060090'.",
+    "Heading 1213 ('Cereal straw and husks') is a single tariff line '12130000' (no separate subheading row); represented under subheading '1213.00' for schema consistency.",
+    "Subheading 1207.40 (Sesamum seeds) tariff lines '1207.40.10' and '1207.40.90' carry extensive Policy Condition text covering exports to Russian Federation, European Union, and the United States (IOPEPC certification, NABL accredited laboratories, EU Salmonella procedure). Captured verbatim with '?' artifacts preserved.",
+    "Subheading 1211.90 contains a large block of 8-digit tariff lines (1211.90.11 through 1211.90.90) with sub-grouping labels in the PDF: 'Seeds, Kernel, Aril, Fruit, Pericarp, Fruit rind, Endosperm, Mesocarp, Endocarp', 'Leaves, Leaf bud, Galls, flowers, Inflorescence, Spadix, Flower bud, Style and Stigma, Stamen and pods', 'Bark, husk, and rind', 'Roots, Root stalk, Bulb, Corn,Tuber, Stolon and rhizome', 'Roots and Rhizomes', 'Whole Plant, Aerial Part, Stem, Shoot and Wood'. Each group descriptor is prefixed to the tariff line description verbatim.",
+    "Policy Condition cell for tariff lines 1207.40.10 and 1207.40.90 contained extensive multi-page text — captured verbatim into policy_conditions array entries; '?' OCR artifacts preserved.",
+    "Tariff line 1211.90.51 (Sandalwood chips and dust) carries a multi-page Policy Condition text with detailed sandalwood export rules covering (a)-(f) sub-clauses, captured verbatim into the policy_conditions array.",
+    "Tariff line 1211.90.54 (Agarwood) carries a multi-page Policy Condition with quantitative annual export limits for Agarwood (Aquilaria Malaccensis) chips and powder and detailed permit conditions, captured verbatim. Cell uses '?' for typographic quote marks (preserved).",
+    "Tariff line 1212.29.90 (Other algae) Policy Condition contains export rules for sea weeds of Tamil Nadu Coast origin; captured verbatim.",
+    "Tariff line 1209.29.90 Policy Condition relates to Egyptian clover (Barseem) Trifolium alaxtum seeds and Saffron seeds or corms; captured verbatim.",
+    "Tariff line 1213.00.00 Policy Condition relates to fodder including wheat and rice straw; captured verbatim with notification 58/2015-20 dated 14.02.2023.",
+    "Subheading 1207.99 contains a 'Other : -- Other' descriptor followed by named tariff lines: 1207.99.10 (Ajams), 1207.99.20 (Mango kernel), 1207.99.30 (Niger seed), 1207.99.40 (Kokam), 1207.99.90 (Other) — verified verbatim from PDF.",
+    "Subheading 1211 has no subheading-level prefix codes; PDF lists heading 1211 directly with tariff lines 1211.20.00 (Ginseng roots), 1211.30.00 (Coca leaf), 1211.40.00 (Poppy straw), 1211.60.00 (Bark of African cherry), and subheading 1211.90 (Other). These tariff lines are placed under synthetic 6-digit subheadings '1211.20', '1211.30', '1211.40', '1211.60' for schema consistency, each containing a single '.00' tariff line.",
+    "Subheading 1209.99 'Other : -- Other' contains tariff lines 1209.99.10 (Fruit seeds for planting or sowings) and 1209.99.90 (Other) — both carry policy condition text re: affidavit for seed exports and seeds of all forestry species & Cashew seeds restriction (captured verbatim).",
+    "Tariff line 1209.29.90 description in PDF is 'Other' under subheading '120929' (Seeds of forage plants : -- Other). Captured with subheading group descriptor included for searchability.",
+    "Heading 1211 description (verbatim): 'Plants and parts of plants (including seeds and fruits), of a kind used primarily in perfumery, in pharmacy or for insecticidal, fungicidal or similar purposes, fresh, chilled, frozen or dried, whether or not cut, crushed or powdered.' — preserved with trailing period.",
+    "Heading 1212 description (verbatim): 'Locust beans, seaweeds and other algae, sugar beet and sugar cane, fresh, chilled, frozen or dried, whether or not ground; stones and kernels and other vegetable products (including unroasted chicory roots of the variety Cichorium intybus sativum) of a kind used primarily for human consumption, not elsewhere specified or included.' — preserved with trailing period."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "Heading 1207 applies, inter alia, to palm nuts and kernels, cotton seeds, castor oil seeds, sesamum seeds, mustard seeds, safflower seeds, poppy seeds and shea nuts (karite nuts). It does not apply to products of heading 0801 or 0802 or to olives (Chapter 7 or Chapter 20)."
+    },
+    {
+      "number": "2",
+      "text": "Heading 1208 applies not only to non-defatted flours and meals but also to flours and meals which have been partially defatted or defatted and wholly or partially refatted with their original oils. It does not, however, apply to residues of headings 2304 to 2306."
+    },
+    {
+      "number": "3",
+      "text": "For the purposes of heading 1209, beet seeds, grass and other herbage seeds, seeds of ornamental flowers, vegetable seeds, seeds of forest trees, seeds of fruit trees, seeds of vetches (other than those of the species Vicia faba) or of lupines are to be regarded as \"\"seeds of a kind used for sowing\"\". Heading 1209 does not, however, apply to the following even if for sowing : (a) leguminous vegetables or sweet corn (Chapter 7); (b) spices or other products of Chapter 9; (c) cereals (Chapter 10); or (d) products of headings 1201 to 1207 or 1211."
+    },
+    {
+      "number": "4",
+      "text": "Heading 1211 applies, inter alia, to the following plants or parts thereof: basil, borage, ginseng, hyssop, liquorice, all species of mint, rosemary, rue, sage and wormwood. Heading 1211 does not, however, apply to : (a) medicaments of Chapter 30; (b) perfumery, cosmetic or toilet preparations of Chapter 33; or (c) insecticides, fungicides, herbicides, disinfectants or similar products of heading 3808."
+    },
+    {
+      "number": "5",
+      "text": "For the purposes of heading 1212, the term \"\"seaweeds and other algae\"\" does not include : (a) dead single-cell micro-organisms of heading 2102; (b) cultures of micro-organisms of heading 3002; or (c) fertilizers of heading 3101 or 3105."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "In this Section, the term \"pellets\" means products which have been agglomerated either directly by compression or by the addition of a binder in a proportion not exceeding 3 (percent) by weight."
+    }
+  ],
+  "chapter_subheading_notes": [
+    {
+      "number": "1",
+      "text": "For the purposes of sub-heading 1205 10, the expression \"low erucic acid rape or colza seeds\" means rape or colza seeds yielding a fixed oil which has an erucic acid content of less than 2% by weight and yielding a solid component which contains less than 30 micromoles of glucosinolates per gram."
+    }
+  ],
+  "supplementary_notes": [],
+  "export_licensing_notes": [
+    {
+      "number": "1",
+      "text": "Seeds of all forestry species including Nux Vomica, Red Sanders, Rubber, Russa Grass and tufts, Sandalwood and seeds of tufts, Sandalwood and seeds of ornamental wild variety plants stand restricted for export and shall be allowed under licence and also shall be regulated according to the rules notified under Biological ( Diversity) Act, 2002"
+    },
+    {
+      "number": "2",
+      "text": "1. Baddomes cycad (Cycas beddomei). 2. Blue vanda (Vanda coerulea). 3. Saussurea costus. 4. Ladies slipper orcid (Paphiopedilium species). 5. Pitcher plant (Nepenthes Khasiana). 6. Red vanda (Renanthera imschootiana). 7. Rauvolifia serpentina (Sarpagandha). 8. Ceropegia species. 9. Frerea indica (Shindal Mankundi). 10. Podophyllum hexandurm (emodi) (Indian Podophyllum.) 11. Cyatheaceae species (Tree Ferns). 12. Cycadacea species (Cycads). 13. Dioscorea deltoidea (Elephant?s foot). 14. Euphorbia species (Euphorbias). 15. Orchidaceae species (Orchids). 16. Pterocarpus santalinus (Redsanders). 17. Taxus Wallichiana (Common Yew or irmi Leaves). 18. Aquilaria malaccensis (Agarwood). 19. Aconitum species. 20. Coptis teeta. 21. Coscinium fenestrum (Calumba wood). 22. Dactylorhiza hatagirea. 23. Gentiana Kurroo (Kuru , Kutki). 24. Gnetum species. 25. Kampheria Galenga. 26. Nardostachys grandiflora. 27. Panax pseudoginseng. 28. Picrorhiza kurrooa. 29. Swertia chirata (Charayatah)."
+    },
+    {
+      "number": "3",
+      "text": "(i) However, in respect of CITES species, a CITES permit of export shall be required. (ii) Exports allowed only through the Ports of Mumbai, Nhava Sheva, Kolkata, Cochin, Delhi, Chennai, Tuticorin, Amritsar, Calicut, Thiruvananthapuram, Kandla and Mundra. (iii) Except for the documents prescribed above, no additional informations/ NOC/ documents shall be required to be furnished by the Exporter to any authority of State or Central Government."
+    },
+    {
+      "number": "4",
+      "text": "The term ?formulation? used here may include products, which may contain portions / extracts of plants on the prohibited list. Further the term ?formulation? shall also include value added formulations as well as herbal ayurvedic, and exports subject to the provisions of CITES or Wild Life (protection) Act, 1972 in case where the formulation contains species listed therein."
+    }
+  ],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "products of heading 0801",
+      "redirects_to_chapter": "08",
+      "redirects_to_heading": "0801",
+      "source_note_number": "Note 1",
+      "source_note_text": "Heading 1207 applies, inter alia, to palm nuts and kernels, cotton seeds, castor oil seeds, sesamum seeds, mustard seeds, safflower seeds, poppy seeds and shea nuts (karite nuts). It does not apply to products of heading 0801 or 0802 or to olives (Chapter 7 or Chapter 20)."
+    },
+    {
+      "excluded_product_text": "products of heading 0802",
+      "redirects_to_chapter": "08",
+      "redirects_to_heading": "0802",
+      "source_note_number": "Note 1",
+      "source_note_text": "Heading 1207 applies, inter alia, to palm nuts and kernels, cotton seeds, castor oil seeds, sesamum seeds, mustard seeds, safflower seeds, poppy seeds and shea nuts (karite nuts). It does not apply to products of heading 0801 or 0802 or to olives (Chapter 7 or Chapter 20)."
+    },
+    {
+      "excluded_product_text": "olives",
+      "redirects_to_chapter": "07",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "Heading 1207 applies, inter alia, to palm nuts and kernels, cotton seeds, castor oil seeds, sesamum seeds, mustard seeds, safflower seeds, poppy seeds and shea nuts (karite nuts). It does not apply to products of heading 0801 or 0802 or to olives (Chapter 7 or Chapter 20)."
+    },
+    {
+      "excluded_product_text": "olives (preserved or prepared)",
+      "redirects_to_chapter": "20",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "Heading 1207 applies, inter alia, to palm nuts and kernels, cotton seeds, castor oil seeds, sesamum seeds, mustard seeds, safflower seeds, poppy seeds and shea nuts (karite nuts). It does not apply to products of heading 0801 or 0802 or to olives (Chapter 7 or Chapter 20)."
+    },
+    {
+      "excluded_product_text": "residues of headings 2304 to 2306 (oil-cake and other solid residues)",
+      "redirects_to_chapter": "23",
+      "redirects_to_heading": "2304",
+      "source_note_number": "Note 2",
+      "source_note_text": "Heading 1208 applies not only to non-defatted flours and meals but also to flours and meals which have been partially defatted or defatted and wholly or partially refatted with their original oils. It does not, however, apply to residues of headings 2304 to 2306."
+    },
+    {
+      "excluded_product_text": "leguminous vegetables or sweet corn for sowing",
+      "redirects_to_chapter": "07",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3",
+      "source_note_text": "For the purposes of heading 1209, beet seeds, grass and other herbage seeds, seeds of ornamental flowers, vegetable seeds, seeds of forest trees, seeds of fruit trees, seeds of vetches (other than those of the species Vicia faba) or of lupines are to be regarded as \"\"seeds of a kind used for sowing\"\". Heading 1209 does not, however, apply to the following even if for sowing : (a) leguminous vegetables or sweet corn (Chapter 7); (b) spices or other products of Chapter 9; (c) cereals (Chapter 10); or (d) products of headings 1201 to 1207 or 1211."
+    },
+    {
+      "excluded_product_text": "spices or other products of Chapter 9 (even if for sowing)",
+      "redirects_to_chapter": "09",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3",
+      "source_note_text": "For the purposes of heading 1209, beet seeds, grass and other herbage seeds, seeds of ornamental flowers, vegetable seeds, seeds of forest trees, seeds of fruit trees, seeds of vetches (other than those of the species Vicia faba) or of lupines are to be regarded as \"\"seeds of a kind used for sowing\"\". Heading 1209 does not, however, apply to the following even if for sowing : (a) leguminous vegetables or sweet corn (Chapter 7); (b) spices or other products of Chapter 9; (c) cereals (Chapter 10); or (d) products of headings 1201 to 1207 or 1211."
+    },
+    {
+      "excluded_product_text": "cereals (even if for sowing)",
+      "redirects_to_chapter": "10",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3",
+      "source_note_text": "For the purposes of heading 1209, beet seeds, grass and other herbage seeds, seeds of ornamental flowers, vegetable seeds, seeds of forest trees, seeds of fruit trees, seeds of vetches (other than those of the species Vicia faba) or of lupines are to be regarded as \"\"seeds of a kind used for sowing\"\". Heading 1209 does not, however, apply to the following even if for sowing : (a) leguminous vegetables or sweet corn (Chapter 7); (b) spices or other products of Chapter 9; (c) cereals (Chapter 10); or (d) products of headings 1201 to 1207 or 1211."
+    },
+    {
+      "excluded_product_text": "products of headings 1201 to 1207 (even if for sowing)",
+      "redirects_to_chapter": "12",
+      "redirects_to_heading": "1201",
+      "source_note_number": "Note 3",
+      "source_note_text": "For the purposes of heading 1209, beet seeds, grass and other herbage seeds, seeds of ornamental flowers, vegetable seeds, seeds of forest trees, seeds of fruit trees, seeds of vetches (other than those of the species Vicia faba) or of lupines are to be regarded as \"\"seeds of a kind used for sowing\"\". Heading 1209 does not, however, apply to the following even if for sowing : (a) leguminous vegetables or sweet corn (Chapter 7); (b) spices or other products of Chapter 9; (c) cereals (Chapter 10); or (d) products of headings 1201 to 1207 or 1211."
+    },
+    {
+      "excluded_product_text": "products of heading 1211 (even if for sowing)",
+      "redirects_to_chapter": "12",
+      "redirects_to_heading": "1211",
+      "source_note_number": "Note 3",
+      "source_note_text": "For the purposes of heading 1209, beet seeds, grass and other herbage seeds, seeds of ornamental flowers, vegetable seeds, seeds of forest trees, seeds of fruit trees, seeds of vetches (other than those of the species Vicia faba) or of lupines are to be regarded as \"\"seeds of a kind used for sowing\"\". Heading 1209 does not, however, apply to the following even if for sowing : (a) leguminous vegetables or sweet corn (Chapter 7); (b) spices or other products of Chapter 9; (c) cereals (Chapter 10); or (d) products of headings 1201 to 1207 or 1211."
+    },
+    {
+      "excluded_product_text": "medicaments (plants or parts of plants used as medicaments)",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 4",
+      "source_note_text": "Heading 1211 applies, inter alia, to the following plants or parts thereof: basil, borage, ginseng, hyssop, liquorice, all species of mint, rosemary, rue, sage and wormwood. Heading 1211 does not, however, apply to : (a) medicaments of Chapter 30; (b) perfumery, cosmetic or toilet preparations of Chapter 33; or (c) insecticides, fungicides, herbicides, disinfectants or similar products of heading 3808."
+    },
+    {
+      "excluded_product_text": "perfumery, cosmetic or toilet preparations",
+      "redirects_to_chapter": "33",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 4",
+      "source_note_text": "Heading 1211 applies, inter alia, to the following plants or parts thereof: basil, borage, ginseng, hyssop, liquorice, all species of mint, rosemary, rue, sage and wormwood. Heading 1211 does not, however, apply to : (a) medicaments of Chapter 30; (b) perfumery, cosmetic or toilet preparations of Chapter 33; or (c) insecticides, fungicides, herbicides, disinfectants or similar products of heading 3808."
+    },
+    {
+      "excluded_product_text": "insecticides, fungicides, herbicides, disinfectants or similar products",
+      "redirects_to_chapter": "38",
+      "redirects_to_heading": "3808",
+      "source_note_number": "Note 4",
+      "source_note_text": "Heading 1211 applies, inter alia, to the following plants or parts thereof: basil, borage, ginseng, hyssop, liquorice, all species of mint, rosemary, rue, sage and wormwood. Heading 1211 does not, however, apply to : (a) medicaments of Chapter 30; (b) perfumery, cosmetic or toilet preparations of Chapter 33; or (c) insecticides, fungicides, herbicides, disinfectants or similar products of heading 3808."
+    },
+    {
+      "excluded_product_text": "dead single-cell micro-organisms (not 'seaweeds and other algae' for purposes of heading 1212)",
+      "redirects_to_chapter": "21",
+      "redirects_to_heading": "2102",
+      "source_note_number": "Note 5",
+      "source_note_text": "For the purposes of heading 1212, the term \"\"seaweeds and other algae\"\" does not include : (a) dead single-cell micro-organisms of heading 2102; (b) cultures of micro-organisms of heading 3002; or (c) fertilizers of heading 3101 or 3105."
+    },
+    {
+      "excluded_product_text": "cultures of micro-organisms",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": "3002",
+      "source_note_number": "Note 5",
+      "source_note_text": "For the purposes of heading 1212, the term \"\"seaweeds and other algae\"\" does not include : (a) dead single-cell micro-organisms of heading 2102; (b) cultures of micro-organisms of heading 3002; or (c) fertilizers of heading 3101 or 3105."
+    },
+    {
+      "excluded_product_text": "fertilizers (algae-based or otherwise) of heading 3101",
+      "redirects_to_chapter": "31",
+      "redirects_to_heading": "3101",
+      "source_note_number": "Note 5",
+      "source_note_text": "For the purposes of heading 1212, the term \"\"seaweeds and other algae\"\" does not include : (a) dead single-cell micro-organisms of heading 2102; (b) cultures of micro-organisms of heading 3002; or (c) fertilizers of heading 3101 or 3105."
+    },
+    {
+      "excluded_product_text": "fertilizers of heading 3105",
+      "redirects_to_chapter": "31",
+      "redirects_to_heading": "3105",
+      "source_note_number": "Note 5",
+      "source_note_text": "For the purposes of heading 1212, the term \"\"seaweeds and other algae\"\" does not include : (a) dead single-cell micro-organisms of heading 2102; (b) cultures of micro-organisms of heading 3002; or (c) fertilizers of heading 3101 or 3105."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "1201",
+      "title": "Soya beans, whether or not broken.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1201.10",
+          "title": "Seed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1201.10.00",
+              "description": "Seed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1201.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1201.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1202",
+      "title": "Ground-nuts, not roasted or otherwise cooked, whether or not shelled or broken.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1202.30",
+          "title": "Seed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1202.30.10",
+              "description": "H. P. S",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "1202.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1202.41",
+          "title": "Other : -- In shell",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1202.41.10",
+              "description": "H.P.S",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "1202.41.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1202.42",
+          "title": "Other : -- Shelled, whether or not broken",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1202.42.10",
+              "description": "Kernels, H.P.S",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "1202.42.20",
+              "description": "Kernels, other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "1202.42.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1203",
+      "title": "Copra.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1203.00",
+          "title": "Copra.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1203.00.00",
+              "description": "Copra.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "1204",
+      "title": "Linseed, whether or not broken.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1204.00",
+          "title": "Linseed, whether or not broken:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1204.00.10",
+              "description": "Of seed quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1204.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "1205",
+      "title": "Rape or colza seeds, whether or not broken.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1205.10",
+          "title": "Low erucic acid rape or colza seeds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1205.10.00",
+              "description": "Low erucic acid rape or colza seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1205.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1205.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1206",
+      "title": "Sunflower seeds, whether or not broken.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1206.00",
+          "title": "Sunflower seeds, whether or not broken:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1206.00.10",
+              "description": "Of seed quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1206.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1207",
+      "title": "Other oil seeds and oleaginous fruits, whether or not broken.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1207.10",
+          "title": "Palm nuts and kernels",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1207.10.10",
+              "description": "Palm nuts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1207.10.90",
+              "description": "Palm kernels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1207.21",
+          "title": "Cotton seeds : -- Seed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1207.21.00",
+              "description": "Cotton seeds : -- Seed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1207.29",
+          "title": "Cotton seeds : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1207.29.00",
+              "description": "Cotton seeds : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1207.30",
+          "title": "Castor oil seeds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1207.30.10",
+              "description": "Of seed quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1207.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1207.40",
+          "title": "Sesamum seeds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1207.40.10",
+              "description": "Of seed quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "1. Export of Seasame Seeds is free for Exports to Russian Federation permitted subject to pre-shipment quality certification issued by (1) Insecticide Residue Testing Laboratory. (2) Geo-Chem Laboratories Pvt. Ltd. (3) Reliable Analytical Laboratory (4) Arbro Pharmaceuticals Ltd. (5) Shri Ram Institute for Industrial Research, Delhi (6) Shri Ram Institute for Industrial Research, Branch Office Bangalore (7) Delhi Test House; and (8) Vimta Labs. or any other agency as may be notified from time to time. 2. Export of Sesame seeds whether or not broken of seeds quality is free subject to export to European Union countries shall be permitted subject to following conditions:- (i) Indian Oilseeds &Produce Export Promotion Council (IOPEPC) is designated as competent authority to issue export certification. (ii) The IOPEPC shall issue export certification within two working days of receiving the request from exporter subject to a ?Certificate of Analysis? by a NABL accredited laboratory. (iii) The procedure for export of sesame seeds to the European Union countries has been outlined in the document ?Procedure for Control of Contamination of Salmonella in Sesame Seeds for Export to EU? which is available on the website of DGFT at http://dgft.gov.in/. 3. Export of items to the United States of America (USA) shall be permitted subject to the following conditions: - i. India Oilseeds &Produce Export Promotion Council (IOPEPC) is designated as competent authority to issue export certification. ii. The IOPEPC shall issue export certification within two working days of receiving the request from exporter subject to a ?Certificate of Analysis? by a NABL accredited laboratory."
+            },
+            {
+              "code": "1207.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "1. Export of items to European Union countries shall be permitted subject to following conditions:- (i) Indian Oilseeds &Produce Export Promotion Council (IOPEPC) is designated as competent authority to issue export certification. (ii) The IOPEPC shall issue export certification within two working days of receiving the request from exporter subject to a ?Certificate of Analysis? by a NABL accredited laboratory. (iii) The procedure for export of sesame seeds to the European Union countries has been outlined in the document ?Procedure for Control of Contamination of Salmonella in Sesame Seeds for Export to EU? which is available on the website of DGFT at http://dgft.gov.in/. 2. Export of other Sesame seeds whether or not broken is free subject to export to European Union countries shall be permitted subject to following conditions:- (i) Indian Oilseeds &Produce Export Promotion Council (IOPEPC) is designated as competent authority to issue export certification. (ii) The IOPEPC shall issue export certification within two working days of receiving the request from exporter subject to a ?Certificate of Analysis? by a NABL accredited laboratory. (iii) The procedure for export of sesame seeds to the European Union countries has been outlined in the document ?Procedure for Control of Contamination of Salmonella in Sesame Seeds for Export to EU? which is available on the website of DGFT at http://dgft.gov.in/. 3. Export of items to the United States of America (USA) shall be permitted subject to the following conditions: - i. India Oilseeds &Produce Export Promotion Council (IOPEPC) is designated as competent authority to issue export certification. ii. The IOPEPC shall issue export certification within two working days of receiving the request from exporter subject to a ?Certificate of Analysis? by a NABL accredited laboratory."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1207.50",
+          "title": "Mustard seeds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1207.50.10",
+              "description": "Of seed quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1207.50.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1207.60",
+          "title": "Safflower (Carthamus tinctorius) seeds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1207.60.10",
+              "description": "Of seed quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1207.60.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1207.70",
+          "title": "Melon seeds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1207.70.10",
+              "description": "Of seed quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1207.70.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1207.91",
+          "title": "Other : -- Poppy seeds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1207.91.00",
+              "description": "Other : -- Poppy seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1207.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1207.99.10",
+              "description": "Ajams",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1207.99.20",
+              "description": "Mango kernel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1207.99.30",
+              "description": "Niger seed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1207.99.40",
+              "description": "Kokam",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1207.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1208",
+      "title": "Flours and meals of oil seeds or oleaginous fruits, other than those of mustard.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1208.10",
+          "title": "Of soya beans",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1208.10.00",
+              "description": "Of soya beans",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1208.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1208.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1209",
+      "title": "Seeds, fruit and spores, of a kind used for sowing.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1209.10",
+          "title": "Sugar beet seeds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1209.10.00",
+              "description": "Sugar beet seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1209.21",
+          "title": "Seeds of forage plants : -- Lucerne (alfalfa) seeds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1209.21.00",
+              "description": "Seeds of forage plants : -- Lucerne (alfalfa) seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1209.22",
+          "title": "Seeds of forage plants : -- Clover (Trifolium spp.) seeds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1209.22.00",
+              "description": "Seeds of forage plants : -- Clover (Trifolium spp.) seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1209.23",
+          "title": "Seeds of forage plants : -- Fescue seeds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1209.23.00",
+              "description": "Seeds of forage plants : -- Fescue seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1209.24",
+          "title": "Seeds of forage plants : -- Kentucky blue grass (Poa pratensis L.) seeds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1209.24.00",
+              "description": "Seeds of forage plants : -- Kentucky blue grass (Poa pratensis L.) seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1209.25",
+          "title": "Seeds of forage plants : -- Rye grass (Lolium multiflorum Lam., Lolium perenne L.) seeds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1209.25.00",
+              "description": "Seeds of forage plants : -- Rye grass (Lolium multiflorum Lam., Lolium perenne L.) seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1209.29",
+          "title": "Seeds of forage plants : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1209.29.10",
+              "description": "Australian lupin seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1209.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "However, Exports of Egyptian clover (Barseem) Trifolium alaxtum seeds and Saffron seeds or corms is Restricted subject to permitted under Restricted Export Authorization."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1209.30",
+          "title": "Seeds of herbaceous plants cultivated principally for their flowers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1209.30.00",
+              "description": "Seeds of herbaceous plants cultivated principally for their flowers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1209.91",
+          "title": "Other : -- Vegetable seeds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1209.91.10",
+              "description": "Of Cabbage",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1209.91.20",
+              "description": "Of Cauliflower",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1209.91.30",
+              "description": "Of Onion",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            },
+            {
+              "code": "1209.91.40",
+              "description": "Of Pea",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1209.91.50",
+              "description": "Of Radish",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1209.91.60",
+              "description": "Of Tomato",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1209.91.70",
+              "description": "Of chilly of genus Capsicum",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1209.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1209.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1209.99.10",
+              "description": "Fruit seeds for planting or sowings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Exports permitted subject to a declaration in the form of an affidavit from the exporter that the seed being exported is not Breeder or Foundation or Wild variety seeds and indicating the source of procurement."
+            },
+            {
+              "code": "1209.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "1. Export of seeds of all trees(excluding seeds of all forestry species), hedges, ornamental plants and flowers and vegetable seeds other than onion seeds is free subject to a declaration in the form of an affidavit from the exporter that the seed being exported is not Breeder or Foundation or Wild variety seeds and indicating the source of procurement. 2. However, Export of seeds of all forestry species &Cashew seeds and plants is restricted subject to permitted under Restricted Export Authorization."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1210",
+      "title": "Hop cones, fresh or dried, whether or not ground, powdered or in the form of pellets; lupulin.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1210.10",
+          "title": "Hop cones, neither ground nor powdered nor in the form of pellets",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1210.10.00",
+              "description": "Hop cones, neither ground nor powdered nor in the form of pellets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1210.20",
+          "title": "Hop cones, ground, powdered or in the form of pellets; lupulin",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1210.20.00",
+              "description": "Hop cones, ground, powdered or in the form of pellets; lupulin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1211",
+      "title": "Plants and parts of plants (including seeds and fruits), of a kind used primarily in perfumery, in pharmacy or for insecticidal, fungicidal or similar purposes, fresh, chilled, frozen or dried, whether or not cut, crushed or powdered.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1211.20",
+          "title": "Ginseng roots",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1211.20.00",
+              "description": "Ginseng roots",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1211.30",
+          "title": "Coca leaf",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1211.30.00",
+              "description": "Coca leaf",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1211.40",
+          "title": "Poppy straw",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1211.40.00",
+              "description": "Poppy straw",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1211.60",
+          "title": "Bark of African cherry (Prunus africana)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1211.60.00",
+              "description": "Bark of African cherry (Prunus africana)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1211.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1211.90.11",
+              "description": "Seeds, Kernel, Aril, Fruit, Pericarp, Fruit rind, Endosperm, Mesocarp, Endocarp :---- Ambrette seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.12",
+              "description": "Seeds, Kernel, Aril, Fruit, Pericarp, Fruit rind, Endosperm, Mesocarp, Endocarp :---- Nuxvomica, dried ripe seeds",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            },
+            {
+              "code": "1211.90.13",
+              "description": "Seeds, Kernel, Aril, Fruit, Pericarp, Fruit rind, Endosperm, Mesocarp, Endocarp :---- Psyllium seed (isobgul)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.14",
+              "description": "Seeds, Kernel, Aril, Fruit, Pericarp, Fruit rind, Endosperm, Mesocarp, Endocarp :---- Neem seed",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            },
+            {
+              "code": "1211.90.15",
+              "description": "Seeds, Kernel, Aril, Fruit, Pericarp, Fruit rind, Endosperm, Mesocarp, Endocarp :----Jojoba seed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.16",
+              "description": "Seeds, Kernel, Aril, Fruit, Pericarp, Fruit rind, Endosperm, Mesocarp, Endocarp - - - - Garcinia",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.19",
+              "description": "Seeds, Kernel, Aril, Fruit, Pericarp, Fruit rind, Endosperm, Mesocarp, Endocarp :---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.21",
+              "description": "Leaves, Leaf bud, Galls, flowers, Inflorescence, Spadix, Flower bud, Style and Stigma, Stamen and pods :----Belladona leaves",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.22",
+              "description": "Leaves, Leaf bud, Galls, flowers, Inflorescence, Spadix, Flower bud, Style and Stigma, Stamen and pods :----Senna leaves and pods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.23",
+              "description": "Leaves, Leaf bud, Galls, flowers, Inflorescence, Spadix, Flower bud, Style and Stigma, Stamen and pods :----Neem leaves",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.24",
+              "description": "Leaves, Leaf bud, Galls, flowers, Inflorescence, Spadix, Flower bud, Style and Stigma, Stamen and pods :----Gymnema",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.25",
+              "description": "Leaves, Leaf bud, Galls, flowers, Inflorescence, Spadix, Flower bud, Style and Stigma, Stamen and pods :----Cubeb",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.26",
+              "description": "Leaves, Leaf bud, Galls, flowers, Inflorescence, Spadix, Flower bud, Style and Stigma, Stamen and pods :----Pyrethrum",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.29",
+              "description": "Leaves, Leaf bud, Galls, flowers, Inflorescence, Spadix, Flower bud, Style and Stigma, Stamen and pods : ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.31",
+              "description": "Bark, husk, and rind: ---- Cascara sagrada bark",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.32",
+              "description": "Bark, husk, and rind: ---- Psyllium husk (isobgul husk)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.33",
+              "description": "Bark, husk, and rind: ---- Gamboge fruit rind",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.34",
+              "description": "Bark, husk, and rind: ---- Ashoka (Saracaasoca.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.35",
+              "description": "Bark, husk and rind: ---- Arjuna (Terminalia arjuna)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.39",
+              "description": "Bark, husk, and rind: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.41",
+              "description": "Roots, Root stalk, Bulb, Corn,Tuber, Stolon and rhizome :- - - - Belladona roots",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.42",
+              "description": "Roots, Root stalk, Bulb, Corn,Tuber, Stolon and rhizome :- - - - Galangal rhizomes and roots",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.43",
+              "description": "Roots, Root stalk, Bulb, Corn,Tuber, Stolon and rhizome :- - - - Ipecac dried rhizome and roots",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.44",
+              "description": "Roots, Root stalk, Bulb, Corn,Tuber, Stolon and rhizome :- - - - Serpentina roots (rowwalfia serpentina and other species of rowwalfias)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.45",
+              "description": "Roots, Root stalk, Bulb, Corn,Tuber, Stolon and rhizome :- - - - Zedovary roots",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.46",
+              "description": "Roots, Root stalk, Bulb, Corn,Tuber, Stolon and rhizome :- - - - Kuth root",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.47",
+              "description": "Roots, Root stalk, Bulb, Corn,Tuber, Stolon and rhizome :- - - - Sarasaparilla roots",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.48",
+              "description": "Roots, Root stalk, Bulb, Corn,Tuber, Stolon and rhizome :- - - - Sweet flag rhizomes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.49",
+              "description": "Roots, Root stalk, Bulb, Corn,Tuber, Stolon and rhizome :- - - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.50",
+              "description": "Roots and Rhizomes: ---- Sandalwood chips and dust",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            },
+            {
+              "code": "1211.90.51",
+              "description": "Whole Plant, Aerial Part, Stem, Shoot and Wood :---- Sandalwood chips and dust",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "1. Export of Sandalwood in any form is prohibited and not permitted to be exported. 2. However, Export of Finished Handicraft products of Sandalwood and Other species and Machine finished sandalwood products is Free. 3. However, Export of Sandalwood oil, Sandalwood De-oiled spent dust &other below forms of sandal wood is restricted and export is permitted under a Restricted Export Authorisation subject to conditionalities as may be notified by the Director General of Foreign Trade from time to time:- (a) dust/ flakes obtained as wood scrap / waste after the manufacturing process by manufacturer exporter of value added sandalwood handicraft products and machine finished sandalwood products; (b) machine finished chips manufactured from cracked portions of sandalwood billets (each finished chips not exceeding 50 gms per piece); (c) powder obtained from wood scrap / waste after the manufacturing of handicraft products and machine finished goods of sandalwood ; (d) small pieces of sandalwood(each piece not exceeding 20 gms) obtained from wood scrap / waste after manufacturing of handicraft / machine finished sandalwood products; (e) sandalwood powder produced from sandalwood wood scrap/waste; (f) any other item of sandalwood as may be specified by DGFT in consultation with MOEF&CC"
+            },
+            {
+              "code": "1211.90.52",
+              "description": "Whole Plant, Aerial Part, Stem, Shoot and Wood :---- Vinca rosea herbs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.53",
+              "description": "Whole Plant, Aerial Part, Stem, Shoot and Wood :---- Mint",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.54",
+              "description": "Whole Plant, Aerial Part, Stem, Shoot and Wood :---- Agarwood",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "The annual limits for export of Agarwood (Aquilaria Malaccensis) Chips and Powder obtained from artificially propagated sources (cultivated origin outside forest 52/2024-25 20.01.2025 areas) has been fixed for three financial years, viz, 2024-25 to 2026-27 (i.e. for the period starting from 1st April, 2024 till 31st March, 2027) as under: Agarwood Chips and Powder ? 1,51,080 Kg per annum. The export of Agarwood (Aquilaria Malaccensis) powder and Chips is permitted subject to following conditions: i. Applications for authorization to export agarwood (Aquilaria Malaccensis) sourced from artificially propagated plantations (cultivated outside forest areas) must include: a) An attested copy of a Certificate of Origin issued following a physical inspection by a Forest Department officer authorized by the relevant State Government. The certificate must detail the date and quantity of procurement from legal sources and confirm that the plantation from which the agarwood was sourced is registered with the State Government. b) A coloured photograph of the products, duly certified by the designated officer of the Forest Department. ii. An undertaking from the firm that items of Agarwood (Aquilaria Malaccensis) proposed to be exported has been harvested from plantation following all conditions of CITES for harvesting of Agarwood and export shall be carried out only upon submission of a valid CITES permit at the time of actual export."
+            },
+            {
+              "code": "1211.90.55",
+              "description": "Whole Plant, Aerial Part, Stem, Shoot and Wood :---- Chirata",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.56",
+              "description": "Whole Plant, Aerial Part, Stem, Shoot and Wood :---- Basil, hyssop, rosemary, sage and savory",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.57",
+              "description": "Whole Plant, Aerial Part, Stem, Shoot and Wood :---- Ashwagandha (Withaniasomnifera)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.58",
+              "description": "Whole Plant, Aerial Part, Stem, Shoot and Wood :---- Giloy (Tinospora cordifolia)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.59",
+              "description": "Whole Plant, Aerial Part, Stem, Shoot and Wood :---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "1211.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1212",
+      "title": "Locust beans, seaweeds and other algae, sugar beet and sugar cane, fresh, chilled, frozen or dried, whether or not ground; stones and kernels and other vegetable products (including unroasted chicory roots of the variety Cichorium intybus sativum) of a kind used primarily for human consumption, not elsewhere specified or included.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1212.21",
+          "title": "Other : -- Fit for human consumption",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1212.21.10",
+              "description": "Seaweeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1212.21.90",
+              "description": "Other algae",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1212.29",
+          "title": "- Other : --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1212.29.10",
+              "description": "Seaweeds",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            },
+            {
+              "code": "1212.29.90",
+              "description": "Other algae",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "1. Exports of Sea weeds of all types, including G-edulis but excluding brown sea weeds and agarophytes of Tamil Nadu Coast origin in processed form is restricted for export. 2. However, Exports of Brown sea weeds and Agrophytes excluding G-edulis of Tamil Nadu coast origin in processed form is free. Exports allowed subject to quantitative ceilings as may be notified by DGFT from time to time."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1212.91",
+          "title": "Other : -- Sugar beet",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1212.91.00",
+              "description": "Other : -- Sugar beet",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1212.92",
+          "title": "Other : -- Locust beans (carob)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1212.92.00",
+              "description": "Other : -- Locust beans (carob)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1212.93",
+          "title": "Other : -- Sugar cane",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1212.93.00",
+              "description": "Other : -- Sugar cane",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1212.94",
+          "title": "Other : -- Chicory roots",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1212.94.00",
+              "description": "Other : -- Chicory roots",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1212.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1212.99.10",
+              "description": "Kokam (cocum) flowers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1212.99.20",
+              "description": "Mohua flowers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1212.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1213",
+      "title": "Cereal straw and husks, unprepared, whether or not chopped, ground, pressed or in the form of pellets.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1213.00",
+          "title": "Cereal straw and husks, unprepared, whether or not chopped, ground, pressed or in the form of pellets.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1213.00.00",
+              "description": "Cereal straw and husks, unprepared, whether or not chopped, ground, pressed or in the form of pellets.",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "The export of Fodder, including wheat, rice straw is Restricted. However, Agri residue based Biomass and Briquettes/Pellets under ITC-HS Heading 1213 will be under Free category."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1214",
+      "title": "Swedes, mangolds, fodder roots, hay, lucerne (alfalfa), clover, sainfoin, forage kale, lupines, vetches and similar forage products, whether or not in the form of pellets.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1214.10",
+          "title": "Lucerne (alfalfa) meal and pellets",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1214.10.00",
+              "description": "Lucerne (alfalfa) meal and pellets",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1214.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1214.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

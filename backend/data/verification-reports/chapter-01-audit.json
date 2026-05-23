@@ -1,0 +1,150 @@
+{
+  "chapter": "01",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings_count": 0,
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "0101.21.00",
+        "in_pdf": true,
+        "pdf_description": "01012100 Horses : -- Pure-bred breeding animals Restricted Subject to Policy Condition 2 of the",
+        "json_description": "Horses : -- Pure-bred breeding animals",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0101.30.20",
+        "in_pdf": true,
+        "pdf_description": "01013020 Livestock Chapter 01013090 Other 010190 Other Free 01019030 Mules and hinnies as lives",
+        "json_description": "Livestock",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0102.21.10",
+        "in_pdf": true,
+        "pdf_description": "01022110 Bulls Restricted 01022120 Cows 010229 Cattle : -- Other Restricted 01022910 Bulls R",
+        "json_description": "Bulls",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0102.39.00",
+        "in_pdf": true,
+        "pdf_description": "01023900 Buffalo : -- Other 010290 Other Restricted 01029010 Pure-bred breeding animals Restricted 01029090 Other 0103 L",
+        "json_description": "Buffalo : -- Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0103.91.00",
+        "in_pdf": true,
+        "pdf_description": "01039100 Other : -- Weighing less than 50 kg Free 01039200 Other : -- Weighing 50 kg or more 0104 Live sheep and goats. ",
+        "json_description": "Other : -- Weighing less than 50 kg",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0105.11.00",
+        "in_pdf": true,
+        "pdf_description": "01051100 turkeys and guinea fowls. Free 01051200 Weighing not more than 185 g : -- Fowls of the species Gallus domesticu",
+        "json_description": "Weighing not more than 185 g : -- Fowls of the species Gallus domesticus",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0105.15.00",
+        "in_pdf": true,
+        "pdf_description": "01051500 Weighing not more than 185 g : -- Geese Free 01059400 Weighing not more than 185 g : -- Guinea fowls Free",
+        "json_description": "Weighing not more than 185 g : -- Guinea fowls",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0106.12.00",
+        "in_pdf": true,
+        "pdf_description": "01061200 Condition 1 of the Mammals: -- Whales, dolphins and porpoises (mammals of the orde",
+        "json_description": "Mammals: -- Whales, dolphins and porpoises (mammals of the order Cetacea); manatees and dugongs (mammals of the order Sirenia); seals, sea lions and walruses (mammals of the suborder Pinnipedia)",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0106.31.00",
+        "in_pdf": true,
+        "pdf_description": "01063100 Birds: -- Birds of prey Prohibited Chapter 01063200 Birds: -- Psittaciformes (including parrots, parakeets, mac",
+        "json_description": "Birds: -- Birds of prey",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0106.41.10",
+        "in_pdf": true,
+        "pdf_description": "01064110 Pureline Stock 01064190 Other Subject to Policy 010649 Insects : -- Other",
+        "json_description": "Pureline Stock",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      }
+    ],
+    "hierarchy_errors": [],
+    "missed_codes": [],
+    "extra_codes": [],
+    "subheading_checks": [
+      {
+        "subheading": "0101.21",
+        "title": "Horses : -- Pure-bred breeding animals",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0102.31",
+        "title": "Buffalo : -- Pure-bred breeding animals",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0104.20",
+        "title": "Goats",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0105.99",
+        "title": "Other : -- Other",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0106.31",
+        "title": "Birds: -- Birds of prey",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      }
+    ],
+    "note_mismatches": [],
+    "count_check": {
+      "json_h": 6,
+      "pdf_h_estimate": 6,
+      "json_sh": 34,
+      "pdf_sh_estimate": 34,
+      "json_tl": 44,
+      "pdf_tl_estimate": 44
+    }
+  },
+  "fix_needed": null
+}

@@ -1,0 +1,1076 @@
+{
+  "chapter": "76",
+  "title": "Aluminium And Articles Thereof",
+  "section": "XV",
+  "source_pdf": "Chapter 76 Aluminium And Articles Thereof.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "Tariff codes in source PDF use no-dot 8-digit format (NNNNNNNN, e.g., '76011010'). All codes normalized to NNNN.NN.NN format (e.g., '7601.10.10') per project schema. Six-digit subheading codes in the PDF (e.g., '760110') normalized to NNNN.NN form (e.g., '7601.10').",
+    "Section XV (Base Metals and Articles of Base Metal) Main Notes apply to Chapters 72-83. They are NOT reproduced in this Chapter 76 file because they have already been extracted verbatim under Chapter 74 (Copper) and Chapter 82 (Tools) of this dataset. Per project convention, section_notes is left empty for Chapter 76 to avoid duplication; refer to chapter-74.json or chapter-82.json for the canonical Section XV main notes.",
+    "Chapter 76 contains NO Chapter Notes section in the source PDF. The PDF only contains 'Sub-Heading Notes' (2 notes). chapter_notes array is therefore empty; the 2 sub-heading notes are placed in chapter_notes as 'Sub-Heading Note 1' and 'Sub-Heading Note 2' per established convention used in chapter-87.json.",
+    "Sub-Heading Note 1 contains an embedded table ('TABLE ? OTHER ELEMENTS Element Limiting content % by weight Fe + Si (iron plus silicon) 1 Other elements(1) , each 0.1(2)'). The '?' character is an OCR artifact for what should be a table caption dash or hyphen. Footnote markers '(1)' and '(2)' refer to the parenthetical explanations following the table. Reproduced verbatim as a single flat string.",
+    "Sub-Heading Note 2 references 'Note 9(c) to Section XV' (which defines 'wire' for Section XV generally) and overrides it for sub-heading 7616.91 — the PDF text appears to read 'sub-heading 761691' which is normalized to '7616.91' in reasoning but preserved verbatim in the note text.",
+    "Heading 7602 tariff line 7602.00.10 contains an extremely long verbatim list of ISRI (Institute of Scrap Recycling Industries) scrap-code descriptions spanning multiple PDF rows. Reassembled into a single verbatim description string; no truncation. ISRI code words preserved exactly (Tablet, Tabloid, Taboo, Taint/Tabor, Take, Talc, Talcred, Taldack, Taldon, Taldork, Tale, Talent, Talk, Tall, Talon, Tann, Taste, Tassel, Tarry, Teens, Telic, Tense, Tepid, Terse, Tetra, Tesla, Thigh, Tooth, Tough, Tread, Trump, Twang, Twist, Twitch, Troma, Tweak, Twire, Zorba, Tata, Tally, Toto, Tutu).",
+    "Tariff line 7602.00.10 source text contains minor typographic artifacts: 'shredder)covered' (missing space before 'covered') and 'codeword Toto' (single-word run-together for 'code word Toto'). Preserved verbatim.",
+    "Heading 7607 sub-heading 7607.19 lists tariff lines 7607.19.91 through 7607.19.99 as variants of 'Other:' (Plain, Embossed, Perforated or cut-to-shape, Coated, Printed, Other) — preserved verbatim with their '----' indent markers.",
+    "Heading 7613 sub-heading 7613.00 in the PDF lists 8-digit codes 76130011-76130029 (Low Pressure Cylinders, High Pressure Cylinders) and 76130091-76130099 (Other:) directly under the subheading umbrella '760300' with no intermediate 6-digit row. All are grouped under subheading '7613.00' per NNNN.NN.NN structural requirement.",
+    "Heading 7615 sub-heading 7615.10 tariff line 7615.10.11 description in the source PDF reads 'Pressure cookers, Solar collectors ----Pressure cookers' — the prefix label 'Pressure cookers, Solar collectors' is repeated; this is a verbatim source artifact where the umbrella label and the leaf split are concatenated. Same pattern applies to 7615.10.12 (Solar collectors), 7615.10.21 (Utensils Non-stick), 7615.10.29 (Utensils Other), 7615.10.30, 7615.10.40, 7615.10.90.",
+    "Subheadings 7604.10, 7604.29, 7605.19, 7605.29, 7606.91, 7606.92, 7616.99 appear in the source PDF as 6-digit umbrella rows with no '00' tariff line of their own — only further 8-digit splits. Modelled as subheadings with their 8-digit tariff lines as children, no umbrella tariff line emitted.",
+    "Heading 7610 sub-heading 7610.90 tariff line 7610.90.21 description in source reads 'Parts of structures, not elsewhere specified :---- Portable bridge' and 7610.90.29 reads 'Parts of structures, not elsewhere specified :---- Other' — the umbrella label is repeated on each leaf; preserved verbatim.",
+    "Unit (kg/u/etc.) information is not present in this PDF — all unit fields set to null.",
+    "Export Policy 'Free' applies to every tariff line in this chapter. No Policy Conditions are filled in the source PDF for Chapter 76 — all policy_condition fields are null. The 'Free' value is captured implicitly via the schema; per pilot convention, only structural data plus unit are surfaced at tariff-line level.",
+    "PDF table-chrome headers ('Sl.No. Notes Notification Date Notification No', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Sub-Heading Notes', 'Product Description and Export Policy') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "No exclusion clauses are derivable from Chapter 76's own legal notes (the 2 sub-heading notes are scope-narrowing/term-defining, not exclusion-to-another-chapter rules). exclusion_clauses is therefore an empty array. Cross-chapter exclusions affecting Chapter 76 are captured upstream in Section XV main notes (see chapter-74.json / chapter-82.json) and in other chapters' notes (e.g., Chapter 39, 73, 74 exclusions redirecting to Ch.76)."
+  ],
+  "section_notes": [],
+  "chapter_notes": [
+    {
+      "number": "Sub-Heading Note 1",
+      "text": "In this Chapter, the following expressions have the meanings hereby assigned to them: (a) Aluminium, not alloyed: Metal containing by weight at least 99% of aluminium, provided that the content by weight of any other element does not exceed the limit specified in the following Table: TABLE ? OTHER ELEMENTS Element Limiting content % by weight Fe + Si (iron plus silicon) 1 Other elements(1) , each 0.1(2) (1) Other elements are, for example, Cr, Cu, Mg, Mn, Ni, Zn (2) Copper is permitted in a proportion greater than 0.1% but not more than 0.2%, provided that neither the chromium nor manganese content exceeds 0.05% (b) Aluminium alloys: Metallic substances in which aluminium predominates by weight over each of the other elements, provided that: (i) the content by weight of at least one of the other elements or of iron plus silicon taken together is greater than the limit specified in the foregoing table; or (ii) the total content by weight of such other elements exceeds 1%."
+    },
+    {
+      "number": "Sub-Heading Note 2",
+      "text": "Notwithstanding the provisions of Note 9(c) to Section XV, for the purposes of sub-heading 761691, the term \"wire\" applies only to products, whether or not in coils, of any cross-sectional shape, of which no cross-sectional dimension exceeds 6 mm."
+    }
+  ],
+  "exclusion_clauses": [],
+  "headings": [
+    {
+      "heading": "7601",
+      "title": "Unwrought aluminium.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7601.10",
+          "title": "Aluminium, not alloyed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7601.10.10",
+              "description": "Ingots",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7601.10.20",
+              "description": "Billets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7601.10.30",
+              "description": "Wire bars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7601.10.40",
+              "description": "Wire rods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7601.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7601.20",
+          "title": "Aluminium alloys",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7601.20.10",
+              "description": "Ingots",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7601.20.20",
+              "description": "Billets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7601.20.30",
+              "description": "Wire bars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7601.20.40",
+              "description": "Wire rods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7601.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7602",
+      "title": "Aluminium waste and scrap.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7602.00",
+          "title": "Aluminium waste and scrap :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7602.00.10",
+              "description": "Aluminium scrap, namely the following: Clean aluminium lithographic sheets covered by ISRI code word Tablet; New, Clean aluminium lithographic sheets covered by ISRI code word Tabloid; Mixed low copper aluminium clippings and solids covered by ISRI code word Taboo; Clean mixed old alloy sheet aluminium covered by ISRI code word Taint/Tabor; New aluminium can stock covered by ISRI code word Take; Old can stock covered by ISRI code word Talc; Shredded aluminium used beverages can (U) scrap covered by ISRI code word Talcred; Densified aluminium used beverages can (UBC) scrap covered by ISRI code word Taldack; Baled aluminium used beverage can (UBC) scrap covered by ISRI code word Taldon; Briquetted aluminium used beverage can (UBC) scrap covered by ISRI code word Taldork; Painted siding covered by ISRI code word Tale; Coated scrap covered by ISRI code word Talent; Aluminium scrap radiators covered by ISRI code word Talk; E.C. aluminium nodules covered by ISRI code word Tall; New pure aluminium wire and cable covered by ISRI code word Talon; New mixed aluminium wire and cable covered by ISRI code word Tann; Old pure aluminium wire and cable covered by ISRI code word Taste; Old mixed aluminium wire and cable covered by ISRI code word Tassel; Aluminium pistons covered by ISRI code word Tarry; Segregated aluminium borings and turnings covered by ISRI code word Teens; Mixed aluminium castings covered by ISRI code word Telic; Mixed aluminium castings covered by ISRI code word Tense; Wrecked airplane sheet aluminium covered by ISRI code word Tepid; New aluminium foil covered by ISRI code word Terse; New aluminium foil covered by ISRI code word Tetra; Old aluminium foil covered by ISRI code word Tesla; Aluminium grindings covered by ISRI code word Thigh; Segregated new aluminium alloy clippings and solids covered by ISRI code word Tooth; Mixed new aluminium alloy clippings and solids covered by ISRI code word Tough; Segregated new aluminium castings, forgings and extrusions covered by ISRI code word Tread; Aluminium auto castings covered by ISRI code word Trump; Insulated aluminium wire scrap covered by ISRI code word Twang; Aluminium airplane castings covered by ISRI code word Twist; Fragmentizer aluminium scrap (from automobile shredder)covered by ISRI code word Twitch; Aluminium auto or truck wheels covered by ISRI code word Troma; Fragmentizer aluminium scrap from automobile shredders covered by ISRI code word Tweak; Burnt fragmentizer aluminium scrap from automobile shredders covered by ISRI code word Twire; Shredded non-ferrous scrap (predominantly aluminium) covered by ISRI code word Zorba; New production aluminium extrusions covered by ISRI code word Tata; All aluminium radiators from automobiles covered by ISRI code word Tally; Aluminium extrusions 10/10 covered by ISRI codeword Toto; Aluminium extrusions dealer grade covered by the word Tutu.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7602.00.90",
+              "description": "Other waste and scrap",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7603",
+      "title": "Aluminium powders and flakes.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7603.10",
+          "title": "Powders of non-lamellar structure",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7603.10.10",
+              "description": "Aluminium powder for thermit process",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7603.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7603.20",
+          "title": "Powders of lamellar structure; flakes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7603.20.00",
+              "description": "Powders of lamellar structure; flakes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7604",
+      "title": "Aluminium bars, rods and profiles.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7604.10",
+          "title": "Of aluminium, not alloyed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7604.10.10",
+              "description": "Wire rods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7604.10.20",
+              "description": "Bars and rods,other than wire rods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7604.10.31",
+              "description": "Profiles: ----Hollow",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7604.10.39",
+              "description": "Profiles: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7604.21",
+          "title": "Of aluminium alloys : -- Hollow profiles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7604.21.00",
+              "description": "Of aluminium alloys : -- Hollow profiles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7604.29",
+          "title": "Of aluminium alloys : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7604.29.10",
+              "description": "Hard drawn bare aluminium conductors steel re-inforced (A.C.S.R.)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7604.29.20",
+              "description": "Wire rods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7604.29.30",
+              "description": "Bars and rods, other than wire rods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7604.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7605",
+      "title": "Aluminium wire.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7605.11",
+          "title": "Of aluminium, not alloyed : -- Of which the maximum cross-sectional dimension exceeds 7 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7605.11.00",
+              "description": "Of aluminium, not alloyed : -- Of which the maximum cross-sectional dimension exceeds 7 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7605.19",
+          "title": "Of aluminium, not alloyed : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7605.19.10",
+              "description": "Of which the maximum cross-sectional dimension exceeds 6 mm but does not exceed 7 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7605.19.91",
+              "description": "Other: ----Hard drawn bare-solid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7605.19.99",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7605.21",
+          "title": "Of aluminium alloys : -- Of which the maximum cross-sectional dimension exceeds 7 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7605.21.00",
+              "description": "Of aluminium alloys : -- Of which the maximum cross-sectional dimension exceeds 7 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7605.29",
+          "title": "Of aluminium alloys : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7605.29.10",
+              "description": "Of which the maximum cross-sectional dimension exceeds 6 mm but does not exceed 7 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7605.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7606",
+      "title": "Aluminium plates, sheets and strip, of a thickness exceeding 0.2 mm.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7606.11",
+          "title": "Rectangular (including square) : -- Of aluminium, not alloyed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7606.11.10",
+              "description": "Electrolytic plates or sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7606.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7606.12",
+          "title": "Rectangular (including square) : -- Of aluminium alloys",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7606.12.00",
+              "description": "Rectangular (including square) : -- Of aluminium alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7606.91",
+          "title": "Other : -- Of aluminium, not alloyed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7606.91.10",
+              "description": "Circles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7606.91.20",
+              "description": "Electrolytic plates or sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7606.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7606.92",
+          "title": "Other : -- Of aluminium alloys",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7606.92.10",
+              "description": "Circles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7606.92.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7607",
+      "title": "Aluminium foil (whether or not printed or backed with paper, paperboard, plastics or similar backing materials) of a thickness (excluding any backing) not exceeding 0.2 mm.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7607.11",
+          "title": "Not backed : -- Rolled but not further worked",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7607.11.10",
+              "description": "Ordinarily used for tea chest lining",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7607.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7607.19",
+          "title": "Not backed : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7607.19.10",
+              "description": "Ordinarily used for tea chest lining",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7607.19.91",
+              "description": "Other: ----Plain",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7607.19.92",
+              "description": "Other: ----Embossed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7607.19.93",
+              "description": "Other: ----Perforated or cut-to-shape",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7607.19.94",
+              "description": "Other: ----Coated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7607.19.95",
+              "description": "Other: ----Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7607.19.99",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7607.20",
+          "title": "Backed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7607.20.10",
+              "description": "Ordinarily used for tea chest lining",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7607.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7608",
+      "title": "Aluminium tubes and pipes.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7608.10",
+          "title": "Of aluminium, not alloyed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7608.10.00",
+              "description": "Of aluminium, not alloyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7608.20",
+          "title": "Of aluminium alloys",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7608.20.00",
+              "description": "Of aluminium alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7609",
+      "title": "Aluminium tube or pipe fittings (for example, couplings, elbows, sleeves).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7609.00",
+          "title": "Aluminium tube or pipe fittings (for example, couplings, elbows, sleeves).",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7609.00.00",
+              "description": "Aluminium tube or pipe fittings (for example, couplings, elbows, sleeves).",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7610",
+      "title": "Aluminium structures (excluding prefabricated buildings of heading 94.06) and parts of structures (for example, bridges and bridge-sections, towers, lattice masts, roofs, roofing frameworks, doors and windows and their frames and thresholds for doors, balustrades, pillars and columns); aluminium plates, rods, profiles, tubes and the like, prepared for use in structures.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7610.10",
+          "title": "Doors, windows and their frames and thresholds for doors",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7610.10.00",
+              "description": "Doors, windows and their frames and thresholds for doors",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7610.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7610.90.10",
+              "description": "Structures",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7610.90.21",
+              "description": "Parts of structures, not elsewhere specified :---- Portable bridge",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7610.90.29",
+              "description": "Parts of structures, not elsewhere specified :---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7610.90.30",
+              "description": "Aluminium plates, rods, profiles, tubes and the like prepared for use in structure",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7610.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7611",
+      "title": "Aluminium reservoirs, tanks, vats and similar containers, for any material (other than compressed or liquefied gas), of a capacity exceeding 300 l, whether or not lined or heat-insulated, but not fitted with mechanical or thermal equipment.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7611.00",
+          "title": "Aluminium reservoirs, tanks, vats and similar containers, for any material (other than compressed or liquefied gas), of a capacity exceeding 300 l, whether or not lined or heat-insulated, but not fitted with mechanical or thermal equipment.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7611.00.00",
+              "description": "Aluminium reservoirs, tanks, vats and similar containers, for any material (other than compressed or liquefied gas), of a capacity exceeding 300 l, whether or not lined or heat-insulated, but not fitted with mechanical or thermal equipment.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7612",
+      "title": "Aluminium casks, drums, cans, boxes and similar containers (including rigid or collapsible tubular containers), for any material (other than compressed or liquefied gas), of a capacity not exceeding 300 l, whether or not lined or heat-insulated, but not fitted with mechanical or thermal equipment.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7612.10",
+          "title": "Collapsible tubular containers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7612.10.10",
+              "description": "Plain",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7612.10.20",
+              "description": "Lacquered",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7612.10.30",
+              "description": "Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7612.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7612.90.10",
+              "description": "Plain",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7612.90.20",
+              "description": "Lacquered",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7612.90.30",
+              "description": "Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7612.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7613",
+      "title": "Aluminium containers for compressed or liquefied gas.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7613.00",
+          "title": "Aluminium containers for compressed or liquefied gas :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7613.00.11",
+              "description": "Low Pressure Cylinders: ----Plain",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7613.00.12",
+              "description": "Low Pressure Cylinders: ----Lacquered",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7613.00.13",
+              "description": "Low Pressure Cylinders: ----Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7613.00.19",
+              "description": "Low Pressure Cylinders: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7613.00.21",
+              "description": "High Pressure Cylinders: ----Plain",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7613.00.22",
+              "description": "High Pressure Cylinders: ----Lacquered",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7613.00.23",
+              "description": "High Pressure Cylinders: ----Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7613.00.29",
+              "description": "High Pressure Cylinders: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7613.00.91",
+              "description": "Other: ----Plain",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7613.00.92",
+              "description": "Other: ----Lacquered",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7613.00.93",
+              "description": "Other: ----Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7613.00.99",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7614",
+      "title": "Stranded wire, cables, plaited bands and the like, of aluminium, not electrically insulated.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7614.10",
+          "title": "With steel core",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7614.10.00",
+              "description": "With steel core",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7614.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7614.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7615",
+      "title": "Table, kitchen or other household articles and parts thereof, of aluminium; pot scourers and scouring or polishing pads, gloves and the like, of aluminium; sanitary ware and parts thereof, of aluminium.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7615.10",
+          "title": "Table, kitchen or other household articles and parts thereof; pot scourers and scouring or polishing pads, gloves and the like",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7615.10.11",
+              "description": "Pressure cookers, Solar collectors ----Pressure cookers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7615.10.12",
+              "description": "Pressure cookers, Solar collectors ----Solar collectors",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7615.10.21",
+              "description": "Utensils: ----Non-stick",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7615.10.29",
+              "description": "Utensils: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7615.10.30",
+              "description": "Utensils: ----Other Table, kitchen or other household articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7615.10.40",
+              "description": "Utensils: ----Pot scourers and scouring or polishing pads, gloves and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7615.10.90",
+              "description": "Utensils: ----Parts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7615.20",
+          "title": "Sanitary ware and parts thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7615.20.10",
+              "description": "Sanitary ware of aluminium and aluminium alloys for indoor use",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7615.20.20",
+              "description": "Parts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7615.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7616",
+      "title": "Other articles of aluminium.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7616.10",
+          "title": "Nails, tacks, staples (other than those of heading 83.05), screws, bolts, nuts, screw hooks, rivets, cotters, cotter-pins, washers and similar articles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7616.10.00",
+              "description": "Nails, tacks, staples (other than those of heading 83.05), screws, bolts, nuts, screw hooks, rivets, cotters, cotter-pins, washers and similar articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7616.91",
+          "title": "Other : -- Cloth, grill, netting and fencing, of aluminium wire",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7616.91.00",
+              "description": "Other : -- Cloth, grill, netting and fencing, of aluminium wire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7616.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7616.99.10",
+              "description": "Expanded metal of aluminium and aluminium alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7616.99.20",
+              "description": "Chains",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7616.99.30",
+              "description": "Bobbins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7616.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

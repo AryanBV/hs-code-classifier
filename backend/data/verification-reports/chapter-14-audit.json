@@ -1,0 +1,150 @@
+{
+  "chapter": "14",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings_count": 0,
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "1401.10.00",
+        "in_pdf": true,
+        "pdf_description": "14011000 Bamboos Prohibited Export of Bamboo products made from 11/2015-20 23.06.2017 bamboo obtained from legal",
+        "json_description": "Bamboos",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1401.20.00",
+        "in_pdf": true,
+        "pdf_description": "14012000 Rattans Free 140190 Other Free 14019010 Canes 14019090 Other Free 1404 14042000 Vegetable products 140490",
+        "json_description": "Rattans",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1401.90.10",
+        "in_pdf": true,
+        "pdf_description": "14019010 Canes 14019090 Other Free 1404 14042000 Vegetable products 140490 not elsewhere 14049010 specified or included.",
+        "json_description": "Canes",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1404.20.00",
+        "in_pdf": true,
+        "pdf_description": "14042000 Vegetable products 140490 not elsewhere 14049010 specified or included. 14049021 14049029 Cotton linters Free 1",
+        "json_description": "Cotton linters",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1404.90.10",
+        "in_pdf": true,
+        "pdf_description": "14049010 specified or included. 14049021 14049029 Cotton linters Free 14049030 Other 14049040 Bidi wrapper leaves Free 1",
+        "json_description": "Bidi wrapper leaves (tendu)",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1404.90.29",
+        "in_pdf": true,
+        "pdf_description": "14049029 Cotton linters Free 14049030 Other 14049040 Bidi wrapper leaves Free 14049050 (tendu) 14049060 14049070 Soap-nu",
+        "json_description": "Soap-nuts: ---- Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1404.90.30",
+        "in_pdf": true,
+        "pdf_description": "14049030 Other 14049040 Bidi wrapper leaves Free 14049050 (tendu) 14049060 14049070 Soap-nuts: ---- Free 14049090 Powder",
+        "json_description": "Hard seeds, pips, hulls and nuts, of a kind used primarily for carving",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1404.90.40",
+        "in_pdf": true,
+        "pdf_description": "14049040 Bidi wrapper leaves Free 14049050 (tendu) 14049060 14049070 Soap-nuts: ---- Free 14049090 Powder Soap-nuts: ---",
+        "json_description": "Betel leaves",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1404.90.60",
+        "in_pdf": true,
+        "pdf_description": "14049060 14049070 Soap-nuts: ---- Free 14049090 Powder Soap-nuts: ---- Other Free Hard seeds, pips, Free hulls and nuts,",
+        "json_description": "Coconut shell, unworked",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "1404.90.70",
+        "in_pdf": true,
+        "pdf_description": "14049070 Soap-nuts: ---- Free 14049090 Powder Soap-nuts: ---- Other Free Hard seeds, pips, Free hulls and nuts, of a kin",
+        "json_description": "Rudraksha seeds",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      }
+    ],
+    "hierarchy_errors": [],
+    "missed_codes": [],
+    "extra_codes": [],
+    "subheading_checks": [
+      {
+        "subheading": "1401.10",
+        "title": "Bamboos",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1401.20",
+        "title": "Rattans",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1401.90",
+        "title": "Other",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1404.20",
+        "title": "Cotton linters",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "1404.90",
+        "title": "Other",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      }
+    ],
+    "note_mismatches": [],
+    "count_check": {
+      "json_h": 2,
+      "pdf_h_estimate": 2,
+      "json_sh": 5,
+      "pdf_sh_estimate": 5,
+      "json_tl": 14,
+      "pdf_tl_estimate": 14
+    }
+  },
+  "fix_needed": null
+}

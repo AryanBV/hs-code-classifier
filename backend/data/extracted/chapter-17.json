@@ -1,0 +1,521 @@
+{
+  "chapter": "17",
+  "section": "IV",
+  "title": "SUGARS AND SUGAR CONFECTIONERY",
+  "source_pdf": "Chapter 17 Sugars And Sugar Confectionery.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '17011200'). Normalized to NNNN.NN.NN format (e.g., '1701.12.00') per project schema. Subheading numbers in PDF (e.g., '170113') normalized to NNNN.NN (e.g., '1701.13').",
+    "PDF table-chrome headers ('Sl.No. Notes Notification No Notification Date', 'Sl.No. Notes Notification Date Notification No', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Main Notes', 'Sub-Heading Notes', 'Export Licensing Notes', 'Product Description and Export Policy') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Subheading 1701.12 (Beet sugar) has a single tariff line 1701.12.00 directly in the PDF without an intermediate subheading row — captured as one tariff line under subheading 1701.12 with the same description.",
+    "Subheading 1701.11 (Raw sugar — cane sugar of standard polarimeter reading) does NOT appear in this Indian ITC(HS) Schedule 2 PDF for Chapter 17. The schedule jumps from heading 1701 directly to subheading 1701.12 (Beet sugar), then 1701.13 (Cane sugar specified in Subheading Note 2), then 1701.14 (Other cane sugar), then 1701.91 and 1701.99. This reflects the HS 2022 structure as adopted in the Indian schedule.",
+    "Section IV Main Note about 'pellets' appears on PDF page 1 above the Chapter 17 title and is attributed to section_notes (Section IV), not chapter_notes.",
+    "The Notification Date / Notification No columns for tariff line 1701.14.90 contain a run-on block of values '10/2015-20 20/2015-20 36/2023' and '24.05.2022 07.09.2015 18.10.2023' embedded inside the Policy Condition cell text rather than placed in the right-hand columns. These appear to be notification references for the constituent policy conditions (1, 2, 3) and are preserved verbatim in the policy condition text. The right-hand columns for 1701.14.90 show '17/2025-26' and '17-06-2025' — captured as the primary notification reference.",
+    "The same Policy Condition text and run-on notification block (with values '10/2015-20 20/2015-20 36/2023 24.05.2022 07.09.2015 18.10.2023') repeats verbatim for tariff line 1701.99.90 with primary notification 17/2025-26 dated 17-06-2025 — captured as a separate policy_conditions entry.",
+    "Sugar export quotas captured verbatim: CXL Quota (EU), TRQ (USA), TRQ (UK), and Pharma Grade Sugar Restricted Export Authorization with 25,000 MT annual cap. All preserved in policy_conditions.",
+    "All other tariff lines in Chapter 17 (1701.12.00, 1701.13.10, 1701.13.20, 1701.13.90, 1701.14.10, 1701.14.20, 1701.91.00, 1701.99.10, headings 1702/1703/1704 tariff lines) show export policy 'Free' with no Policy Condition.",
+    "Heading 1704 description in PDF reads 'Sugar confectionery (including white chocolate), not containing cocoa.' — verbatim, including the trailing period."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover: (a) Sugar confectionery containing cocoa (heading 1806); (b) Chemically pure sugars (other than sucrose, lactose, maltose, glucose and fructose) or other products of heading 2940; or (c) Medicaments or other products of Chapter 30."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "In this Section, the term \"pellets\" means products which have been agglomerated either directly by compression or by the addition of a binder in a proportion not exceeding 3 (percent) by weight."
+    }
+  ],
+  "chapter_subheading_notes": [
+    {
+      "number": "1",
+      "text": "For the purposes of sub-headings 1701 12, 1701 13 and 1701 14 \"raw sugar\" means sugar whose content of sucrose by weight, in the dry state, corresponds to a polarimeter reading of less than 99.5 degree."
+    },
+    {
+      "number": "2",
+      "text": "Sub-heading 1701 13 covers only cane sugar obtained without centrifugation, whose content of sucrose by weight, in the dry state, corresponds to a polarimeter reading of 69 degree or more but less than 93 degree. The product contains only natural anhedral microcrystals, of irregular shape, not visible to the naked eye, which are surrounded by residues of molasses and other constituents of sugar cane."
+    }
+  ],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "Sugar confectionery containing cocoa",
+      "redirects_to_chapter": "18",
+      "redirects_to_heading": "1806",
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover: (a) Sugar confectionery containing cocoa (heading 1806); (b) Chemically pure sugars (other than sucrose, lactose, maltose, glucose and fructose) or other products of heading 2940; or (c) Medicaments or other products of Chapter 30."
+    },
+    {
+      "excluded_product_text": "Chemically pure sugars (other than sucrose, lactose, maltose, glucose and fructose) or other products of heading 2940",
+      "redirects_to_chapter": "29",
+      "redirects_to_heading": "2940",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover: (a) Sugar confectionery containing cocoa (heading 1806); (b) Chemically pure sugars (other than sucrose, lactose, maltose, glucose and fructose) or other products of heading 2940; or (c) Medicaments or other products of Chapter 30."
+    },
+    {
+      "excluded_product_text": "Medicaments or other products of Chapter 30",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "This Chapter does not cover: (a) Sugar confectionery containing cocoa (heading 1806); (b) Chemically pure sugars (other than sucrose, lactose, maltose, glucose and fructose) or other products of heading 2940; or (c) Medicaments or other products of Chapter 30."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "1701",
+      "title": "Cane or beet sugar and chemically pure sucrose, in solid form.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1701.12",
+          "title": "Raw sugar not containing added flavouring or colouring matter : -- Beet sugar",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1701.12.00",
+              "description": "Raw sugar not containing added flavouring or colouring matter : -- Beet sugar",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1701.13",
+          "title": "Raw sugar not containing added flavouring or colouring matter : -- Cane sugar specified in Subheading Note 2 to this Chapter",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1701.13.10",
+              "description": "Cane jaggery",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1701.13.20",
+              "description": "Khandsari sugar",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1701.13.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1701.14",
+          "title": "Raw sugar not containing added flavouring or colouring matter : -- Other cane sugar",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1701.14.10",
+              "description": "Cane jaggery",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1701.14.20",
+              "description": "Khandsari sugar",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1701.14.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "1. Export of Sugar (Raw Sugar, White Sugar, Refined Sugar and Organic Sugar) is Restricted till further orders subject to the following conditions:- (i) export of sugar is allowed only with specific permission from Directorate of Sugar, Department of Food and Public Distribution (DFPD), Ministry of Consumer Affairs, Food and Public Distribution (ii) Detailed procedure for issue of necessary permissions for export of sugar will be notified separately by Department of Food and Public Distribution (DFPD) 2. However, Export of Sugar to EU under CXL Quota is free subject to the following condition: - The Certificate of Origin shall be issued by Additional DGFT, Mumbai. The exporters shall be required to furnish the details of actual exports (viz. quantity, value, destination, name &address of foreign buyer etc.) to the Additional DGFT, Mumbai as well as to APEDA, New Delhi. This will be subject to quantitative ceiling notified by DGFT from time to time. 3. However, Export of Sugar to USA under TRQ subject to following condition: - The quota will be operated by APEDA, New Delhi as per the modalities and operational guidelines to be notified by APEDA. The exporters shall be 10/2015-20 20/2015-20 36/2023 24.05.2022 07.09.2015 18.10.2023 required to furnish the details of actual"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1701.91",
+          "title": "Other:--Refined sugar containing added flavoring",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1701.91.00",
+              "description": "Other:--Refined sugar containing added flavoring",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1701.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1701.99.10",
+              "description": "Sugar cubes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1701.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "1. Export of Sugar (Raw Sugar, White Sugar, Refined Sugar and Organic Sugar) is Restricted till further orders subject to the following conditions:- (i) export of sugar is allowed only with specific permission from Directorate of Sugar, Department of Food and Public Distribution (DFPD), Ministry of Consumer Affairs, Food and Public Distribution (ii) Detailed procedure for issue of necessary permissions for export of sugar will be notified separately by Department of Food and Public Distribution (DFPD) 2. However, Export of Sugar to EU under CXL Quota is free subject to the following condition: - The Certificate of Origin shall be issued by Additional DGFT, Mumbai. The exporters shall be required to furnish the details of actual exports (viz. quantity, value, destination, name &address of foreign buyer etc.) to the Additional DGFT, Mumbai as well as to APEDA, New Delhi. This will be subject to quantitative ceiling notified by DGFT from time to time. 3. However, Export of Sugar to USA under TRQ subject to following condition: - The quota will be operated by APEDA, New Delhi as per the modalities and operational guidelines to be notified by APEDA. The exporters shall be 10/2015-20 20/2015-20 36/2023 24.05.2022 07.09.2015 18.10.2023 required to furnish the details of actual exports(viz. quantity, value, destination, name &address of foreign buyer etc.) to"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1702",
+      "title": "Other sugars, including chemically pure lactose, maltose, glucose and fructose, in solid form; sugar syrups not containing added flavouring or colouring matter; artificial honey, whether or not mixed with natural honey; caramel.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1702.11",
+          "title": "Lactose and lactose syrup : -- Containing by weight 99 percent or more lactose, expressed as anhydrous lactose, calculated on the dry matter",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1702.11.10",
+              "description": "In solid form",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1702.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1702.19",
+          "title": "Lactose and lactose syrup : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1702.19.10",
+              "description": "In solid form",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1702.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1702.20",
+          "title": "Maple sugar and maple syrup",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1702.20.10",
+              "description": "In solid form",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1702.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1702.30",
+          "title": "Glucose and glucose syrup, not containing fructose or containing in the dry state less than 20 percent by weight of fructose",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1702.30.10",
+              "description": "Glucose, liquid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1702.30.20",
+              "description": "Glucose, solid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1702.30.31",
+              "description": "Dextrose: ---- In solid form",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1702.30.39",
+              "description": "Dextrose: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1702.40",
+          "title": "Glucose and glucose syrup, containing in the dry state at least 20 percent but less than 50 percent by weight of fructose, excluding invert sugar",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1702.40.10",
+              "description": "Glucose, liquid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1702.40.20",
+              "description": "Glucose, solid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1702.40.31",
+              "description": "Dextrose: ---- In solid form",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1702.40.39",
+              "description": "Dextrose: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1702.50",
+          "title": "Chemically pure fructose",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1702.50.00",
+              "description": "Chemically pure fructose",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1702.60",
+          "title": "Other fructose and fructose syrup, containing in the dry state more than 50 percent by weight of fructose, excluding invert sugar",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1702.60.10",
+              "description": "In solid form",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1702.60.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1702.90",
+          "title": "Other, including invert sugar and other sugar and sugar syrup blends containing in the dry state 50 percent by weight of fructose",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1702.90.10",
+              "description": "Palmyra sugar",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1702.90.20",
+              "description": "Chemically pure maltose",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1702.90.30",
+              "description": "Artificial honey, whether or not mixed with natural honey",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1702.90.40",
+              "description": "Caramel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1702.90.50",
+              "description": "Insulin syrup",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1702.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1703",
+      "title": "Molasses resulting from the extraction or refining of sugar.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1703.10",
+          "title": "Cane molasses",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1703.10.00",
+              "description": "Cane molasses",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1703.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1703.90.10",
+              "description": "Molasses, edible",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1703.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1704",
+      "title": "Sugar confectionery (including white chocolate), not containing cocoa.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1704.10",
+          "title": "Chewing gum, whether or not sugar coated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1704.10.00",
+              "description": "Chewing gum, whether or not sugar coated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1704.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1704.90.10",
+              "description": "Jelly confectionary",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1704.90.20",
+              "description": "Boiled sweets, whether or not filled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1704.90.30",
+              "description": "Toffees, caramels and similar sweets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1704.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4378 @@
+{
+  "chapter": "28",
+  "section": "VI",
+  "title": "INORGANIC CHEMICALS; ORGANIC OR INORGANIC COMPOUNDS OF PRECIOUS METALS, OF RARE-EARTH METALS, OF RADIOACTIVE ELEMENTS OR OF ISOTOPES",
+  "source_pdf": "Chapter 28 Inorganic Chemicals; Organic Or Inorganic Compounds Of Precious Metals, Of Rare-Earth Metals, Of Radioactive Elements or of Isotopes.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '28011000') and 6-digit subheading codes without dots (e.g., '280130'). Normalized to NNNN.NN.NN format (e.g., '2801.10.00') and NNNN.NN format (e.g., '2801.30') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'Sub-Heading Notes', 'Supplementary Notes', 'Policy Condition', 'Export Licensing Notes', 'Sl.No. Notes Notification Date Notification No', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "Section VI 'Main Notes' (4 notes) printed at the top of the Chapter 28 PDF are attributed to section_notes (Section VI, Products of the Chemical or Allied Industries), not chapter_notes.",
+    "Chapter title on PDF page 1 reads 'Chapter 28 Inorganic Chemicals; Organic Or Inorganic Compounds Of Precious Metals, Of Rare-Earth Metals, Of Radioactive Elements Or Of Isotopes.' — uppercased to ITC(HS) canonical form in the title field; source_pdf preserves the original filename.",
+    "Chapter 28 Note 6 contains OCR artifact: the word 'isotopes' appears wrapped in triple-double-quote characters as '\"\"\"isotopes\"\"\"' — preserved verbatim. Also contains spelling 'artiticially' (sic) instead of 'artificially' — preserved verbatim from source.",
+    "PDF subheading 2842.90 has '----' (4-dash) and '--' indents which were used to infer the subheading parent. The tariff lines 2842.90.10 (Arsenites and arsenates), 2842.90.20 (Bichromates and dichromates), 2842.90.90 (Other) are grouped under the implicit subheading 2842.90 ('Other').",
+    "Subheading 2843.10 'Colloidal precious metals' appears as a 6-digit grouping (PDF code '284310') with three 8-digit tariff lines (2843.10.10/20/90). Preserved as a subheading-with-tariff-lines pattern.",
+    "Subheading 2844.30 PDF description has subitem indents (Compounds of thorium or of uranium depleted in U235:) inside tariff line 2844.30.10 — preserved verbatim including the trailing colon, since the PDF treats it as a compound description.",
+    "Heading 2844 tariff line 2844.43.00 description in the PDF spans across page break and includes the leading word 'headings' which is a wrapped continuation of '2844 10, 2844 20 or 2844 30' from the previous page. Concatenated verbatim into a single description.",
+    "Heading 2844 tariff line 2844.44.00 description in the PDF begins with a literal opening double-quote ('\"Radioactive elements...'). This appears to be an OCR artifact from a quoted phrase in the source; preserved verbatim.",
+    "Heading 2848 ('Phosphides...') is not present in this PDF — heading 2847 (Hydrogen peroxide) is followed directly by heading 2849 (Carbides). Heading 2848 was deleted in HS 2017 (phosphides moved to 2853). Preserved as listed in PDF.",
+    "Heading 2851 is not present in the PDF (deleted in HS 2017 — contents moved to 2853 and 2852). Heading 2850 (Hydrides etc.) is followed by 2852 (Inorganic or organic compounds of mercury). Preserved as listed in PDF.",
+    "Subheading 2850.00 contains tariff line code 2850.00.41 (Silicides: ---- Of calcium) and 2850.00.49 (Silicides: ---- Other) — these are 4-dash sub-classifications under an implicit sub-grouping 'Silicides'. Preserved verbatim with the leading 'Silicides:' prefix.",
+    "Subheading 2841.30 'Sodium dichromate' has no sub-subheading code printed in the PDF (no '284130' 6-digit code shown explicitly); the 8-digit tariff line 2841.30.00 is shown directly. Inferred subheading 2841.30 from the code structure.",
+    "Subheadings 2841.50, 2841.61, 2841.69, 2841.70, 2841.80, 2841.90: 2841.61 and 2841.69 are shown as 8-digit codes (2841.61.00, 2841.69.00) without explicit 6-digit subheading rows in the PDF. Inferred subheadings from code structure.",
+    "Subheading 2843.21 (Silver compounds: -- Silver nitrate) and 2843.29 (Silver compounds: -- Other) are shown directly as 8-digit codes (2843.21.00, 2843.29.00) without an explicit 6-digit subheading row '284321'/'284329' in the PDF. Inferred subheadings from code structure.",
+    "Subheading 2849.10 'Of calcium' (2849.10.00) is shown directly without an explicit 6-digit row. Inferred.",
+    "Subheadings 2842.10 (Double or complex silicates), 2840.30 (Peroxoborates), 2843.30 (Gold compounds), 2833.21/24/25/27 (Other sulphates: of various metals), 2834.21 (Nitrates: Of potassium), 2835.22/24/25 (Phosphates: Of various), 2835.31/39 (Polyphosphates), 2836.30/40/50/60 (various carbonates), 2836.91/92 (Other Lithium/Strontium carbonates), 2837.11 (Cyanides of sodium), 2839.11 (Sodium metasilicates), 2839.19 (Of sodium: Other), 2840.11/19 (Disodium tetraborate variants), 2818.10 (Artificial corundum), 2818.30 (Aluminium hydroxide), 2819.10 (Chromium trioxide), 2819.90 (Other), 2820.10/90 (Manganese dioxide / Other), 2822.00 has no explicit subheading row but contains tariff lines, etc. — these are subheading-with-direct-tariff-line patterns where the PDF prints the 8-digit code directly under the heading without an intermediate 6-digit subheading row. Inferred subheadings from code structure throughout.",
+    "Tariff line 2807.00.10 description in the PDF reads 'Sulphurc acid' (sic) — likely typo for 'Sulphuric acid'. Preserved verbatim.",
+    "Tariff line 2812.19.90 description reads 'other' (lowercase) in the PDF — preserved verbatim (other tariff lines use 'Other' with capital O).",
+    "Tariff line 2813.90.30 (Lime Sulphur) has Policy Condition column showing a literal '-' character. Captured as null since '-' indicates 'no policy condition' in this PDF context.",
+    "Tariff line 2826.11.00 ('-- Of hydrogen fluoride (hydrofluoric acid)') is not present in the PDF. The heading 2826 lists 2826.12.00 (Of aluminium), 2826.19 (Other) with 2826.19.10 (Magnesium fluoride) and 2826.19.90 (Other), 2826.30.00 (Sodium hexafluoroaluminate), 2826.90.00 (Other). The omission of 2826.11.00 is preserved verbatim from the PDF.",
+    "Tariff line 2853.90.50 'Magnesium phosphide plates, zinc phosphide' Policy Condition column shows a literal '-' — captured as null.",
+    "Sub-heading note 1 references 'sub-heading 2852 10' (with space) — verbatim preservation of PDF's spacing inconsistency. The corresponding code is 2852.10.",
+    "Supplementary Note 1 ('Sub-heading 2804 40 includes, liquefied or solidified gas.') refers to subheading 2804.40 (Oxygen). Supplementary Note 2 is a general reference to the Bureau of Indian Standards. Both captured under chapter_notes as supplementary notes.",
+    "Tariff line 2843.90.12 description contains 'kg. 10%' — likely a wrapped-from-PDF artifact referring to the weight/percentage of rhodium and palladium in a noble metal solution. Preserved verbatim.",
+    "Subheading 2842.10 'Double or complex silicates, including aluminosilicates whether or not chemically defined' has a direct 8-digit code (2842.10.00) without an explicit 6-digit row. Inferred.",
+    "The 'Export Policy' and 'Policy Condition' columns are not part of the tariff line description field; they are captured separately. Unit-of-measure column is NOT shown in this chapter's PDF — unit field set to null for all tariff lines.",
+    "Heading 2842 only shows 2842.10.00 and the 2842.90 sub-grouping. There are no 2842.20/2842.30/etc. subheadings in this PDF. Preserved verbatim.",
+    "Subheading 2843.10 (Colloidal precious metals) has 3 tariff lines (2843.10.10, 2843.10.20, 2843.10.90) while 2843.21, 2843.29, 2843.30 are 8-digit codes directly under heading 2843. Subheading 2843.90 (Other compounds; amalgams) has 4 tariff lines (2843.90.11, 2843.90.12, 2843.90.19, 2843.90.20).",
+    "Subheading 2844.30 has 7 tariff lines (2844.30.10, 2844.30.21, 2844.30.22, 2844.30.23, 2844.30.29, 2844.30.30, 2844.30.90). Subheading 2845.90 has 2 tariff lines (2845.90.10, 2845.90.90).",
+    "Subheading 2846.10 (Cerium compounds) has 2 tariff lines (2846.10.10, 2846.10.90); 2846.90 (Other) has 4 tariff lines (2846.90.10/20/30/90). 2847 is a single tariff line 2847.00.00 (Hydrogen peroxide).",
+    "Subheading 2853.90 has 6 tariff lines (2853.90.10/20/30/40/50/90). Subheading 2853.10 is a single 8-digit code (2853.10.00).",
+    "Policy Condition 1 of the Chapter ('Export authorization from Department of Atomic Energy would be required for export of items in Category-0 (Nuclear materials, nuclear-related other materials, equipment and technology) of SCOMET.') is referenced by multiple tariff lines: 2825.20.00 (Lithium oxide and hydroxide), 2836.91.00 (Lithium carbonates), and all of heading 2844 and most of heading 2845. Captured in policy_conditions metadata and on each affected tariff line via tariff_line.policy_condition field.",
+    "Export Licensing Note 1 covers Potassium Permanganate (2841.61.00) which has a policy condition note: 'Export of Potassium Permanganate is free subject to No Objection Certificate from Narcotics Commissioner of India, Gwalior'."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "Except where the context otherwise requires, the headings of this Chapter apply only to: (a) separate chemical elements and separate chemically defined compounds, whether or not containing impurities; (b) the products mentioned in (a) above dissolved in water; (c) the products mentioned in (a) above dissolved in other solvents provided that the solution constitutes a normal and necessary method of putting up these products adopted solely for reasons of safety or for transport and that the solvent does not render the product particularly suitable for specific use rather than for general use; (d) the products mentioned in (a), (b) or (c) above with an added stabiliser (including an anticaking agent) necessary for their preservation or transport; (e) the products mentioned in (a), (b), (c) or (d) above with an added anti-dusting agent or a colouring substance added to facilitate their identification or for safety reasons, provided that the additions do not render the product particularly suitable for specific use rather than for general use."
+    },
+    {
+      "number": "2",
+      "text": "In addition to dithionites and sulphoxylates, stabilised with organic substances (heading 2831), carbonates and peroxocarbonates of inorganic bases (heading 2836), cyanides, cyanide oxides and complex cyanides ofinorganic bases(heading 2837),fulminates, cyanates and thiocyanates, of inorganic bases(heading 2842), organic products included in headings 2843 to 2846 and 2852 carbides (heading 2849), only the following compounds of carbon are to be classified in this Chapter: (a) oxides of carbon, hydrogen cyanide and fulminic, isocyanic, thiocyanic and other simple or complex cyanogen acids (heading 2811); (b) halide oxides of carbon (heading 2812); (c) carbon disulphide (heading 2813); (d) thiocarbonates, selenocarbonates, tellurocarbonates, selenocyanates, tellurocyanates, tetrathiocyanatodiamminochromates (reineckates) and other complex cyanates, of inorganic bases (heading 2842); (e) hydrogen peroxide, solidified with urea (heading 2847), carbon oxysulphide, thiocarbonyl halides, cyanogen, cyanogen halides and cyanamide and its metal derivatives (heading 2853) other than calcium cyanamide, whether or not pure (Chapter 31)."
+    },
+    {
+      "number": "3",
+      "text": "Subject to the provisions of Note 1 to Section VI, this Chapter does not cover: (a) sodium chloride or magnesium oxide, whether or not pure, or other products of Section V; (b) organo-inorganic compounds other than mentioned in Note 2 above; (c) products mentioned in Note 2, 3 , 4 or 5 to Chapter 31; (d) inorganic products of a kind used as luminophores, of heading 3206; glass frit and other glass in the form of powder, granules or flakes, of heading 3207; (e) artificial graphite (heading 3801); products put up as charges for fire extinguishers or put up in fire-extinguishing grenades, of heading 3813; ink removers put up in packings for retail sale, of heading 3824; cultured crystals (other than optical elements) weighing not less than 2.5 g each, of the halides of the alkali or alkaline-earth metals, of heading 3824; (f) precious or semi-precious stones (natural, synthetic or reconstructed) or dust or powder of such stones (headings 7102 to 7105), or precious metals or precious metal alloys of Chapter 71; (g) the metals, whether or not pure, metal alloys or cermets, including sintered metal carbides (metal carbides sintered with a metal), of Section XV; or (h) optical elements, for example, of the halides of the alkali or alkaline-earth metals (heading 9001)."
+    },
+    {
+      "number": "4",
+      "text": "Chemically defined complex acids consisting of a non-metal acid of Sub-Chapter II and a metal acid of Sub-Chapter IV are to be classified in heading 2811."
+    },
+    {
+      "number": "5",
+      "text": "Headings 2826 to 2842 apply only to metal or ammonium salts or peroxysalts. Except where the context otherwise requires, double or complex salts are to be classified in heading 2842."
+    },
+    {
+      "number": "6",
+      "text": "Heading 2844 applies only to: (a) technetium (atomic No. 43), promethium (atomic No. 61), Polonium (atomic No. 84) and all elements with an atomic number greater than 84; (b) natural or artificial radioactive isotopes (including those of the precious metals or of the base metals of Sections XIV and XV), whether or not mixed together; (c) compounds, inorganic or organic, of these elements or isotopes, whether or not chemically defined, whether or not mixed together; (d) alloys, dispersions (including cermets), ceramic products and mixtures containing these elements or isotopes or inorganic or organic compounds thereof and having a specific radioactivity exceeding 74 Bq/g (0.002 micro ci/g); (e) spent (irradiated) fuel elements (cartridges) of nuclear reactors; (f) radioactive residues whether or not usable. The term \"\"\"isotopes\"\"\", for the purposes of this Note and of the wording of headings 2844 and 2845, refers to: (i) individual nuclides, excluding, however, those existing in nature in the monoisotopic (ii) mixtures of isotopes of one and the same element, enriched in one or several of the said isotopes, that is, elements of which the natural isotopic composition has been artiticially modified."
+    },
+    {
+      "number": "7",
+      "text": "Heading 2853 includes copper phosphide (phosphor copper) containing more than 15 % by weight of phosphorus."
+    },
+    {
+      "number": "8",
+      "text": "Chemical elements(for example,silicon and selenium) doped for use in electronics are to be classified in this Chapter, provided that they are in forms unworked as drawn, or in the form of cylinders or rods. When cut in the forms of discs, wafers or similar forms, they fall in heading 3818."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "(A) Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 are to be classified in those headings and in no other heading of this Schedule. (B) Subject to paragraph (A) above, goods answering to a description in heading 2843, 2846 or 2852 are to be classified in those headings and in no other heading of this Section."
+    },
+    {
+      "number": "2",
+      "text": "Subject to Note 1 above, goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale are to be classified in those headings and in no other heading of this Schedule."
+    },
+    {
+      "number": "3",
+      "text": "Goods put up in sets consisting of two or more separate constituents,some or all of which fall in this Section and are intended to be mixed together to obtain a product of Section VI or VII, are to be classified in the heading appropriate to that product, provided that the constituents are: (a) having regard to the manner in which they are put up, clearly identifiable as being intended to be used together without first being repacked; (b) presented together; and (c) identifiable, whether by their nature or by the relative proportions in which they are present, as being complementary one to another."
+    },
+    {
+      "number": "4",
+      "text": "Where a product answers to a description in one or more of the headings in Section VI by virtue of being described by name or function and also to heading 3827, then it is classifiable in a heading that references the product by name or function and not under heading 3827."
+    }
+  ],
+  "chapter_subheading_notes": [
+    {
+      "number": "1",
+      "text": "For the purposes of sub-heading 2852 10, the expression \"chemically defined\" means all organic or inorganic compounds of mercury meeting the requirements of clauses (a) to (e) of Note 1 to Chapter 28 or clauses ( a) to (h) of Note 1 to Chapter 29."
+    }
+  ],
+  "supplementary_notes": [
+    {
+      "number": "1",
+      "text": "Sub-heading 2804 40 includes, liquefied or solidified gas."
+    },
+    {
+      "number": "2",
+      "text": "In this Chapter, reference to any standard of the Bureau of Indian Standards refers to the last published version of that standard."
+    }
+  ],
+  "export_licensing_notes": [
+    {
+      "number": "1",
+      "text": "Export of Potassium Permanganate is freely allowed subject to No Objection Certificate from Narcotics Commissioner, Gwalior."
+    }
+  ],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "sodium chloride or magnesium oxide, whether or not pure, or other products of Section V",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(a)",
+      "source_note_text": "Subject to the provisions of Note 1 to Section VI, this Chapter does not cover: (a) sodium chloride or magnesium oxide, whether or not pure, or other products of Section V"
+    },
+    {
+      "excluded_product_text": "organo-inorganic compounds other than mentioned in Note 2 above",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(b)",
+      "source_note_text": "(b) organo-inorganic compounds other than mentioned in Note 2 above"
+    },
+    {
+      "excluded_product_text": "products mentioned in Note 2, 3, 4 or 5 to Chapter 31",
+      "redirects_to_chapter": "31",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(c)",
+      "source_note_text": "(c) products mentioned in Note 2, 3 , 4 or 5 to Chapter 31"
+    },
+    {
+      "excluded_product_text": "inorganic products of a kind used as luminophores, of heading 3206",
+      "redirects_to_chapter": "32",
+      "redirects_to_heading": "3206",
+      "source_note_number": "Note 3(d)",
+      "source_note_text": "(d) inorganic products of a kind used as luminophores, of heading 3206; glass frit and other glass in the form of powder, granules or flakes, of heading 3207"
+    },
+    {
+      "excluded_product_text": "glass frit and other glass in the form of powder, granules or flakes, of heading 3207",
+      "redirects_to_chapter": "32",
+      "redirects_to_heading": "3207",
+      "source_note_number": "Note 3(d)",
+      "source_note_text": "(d) inorganic products of a kind used as luminophores, of heading 3206; glass frit and other glass in the form of powder, granules or flakes, of heading 3207"
+    },
+    {
+      "excluded_product_text": "artificial graphite",
+      "redirects_to_chapter": "38",
+      "redirects_to_heading": "3801",
+      "source_note_number": "Note 3(e)",
+      "source_note_text": "(e) artificial graphite (heading 3801); products put up as charges for fire extinguishers or put up in fire-extinguishing grenades, of heading 3813; ink removers put up in packings for retail sale, of heading 3824; cultured crystals (other than optical elements) weighing not less than 2.5 g each, of the halides of the alkali or alkaline-earth metals, of heading 3824"
+    },
+    {
+      "excluded_product_text": "products put up as charges for fire extinguishers or put up in fire-extinguishing grenades, of heading 3813",
+      "redirects_to_chapter": "38",
+      "redirects_to_heading": "3813",
+      "source_note_number": "Note 3(e)",
+      "source_note_text": "(e) artificial graphite (heading 3801); products put up as charges for fire extinguishers or put up in fire-extinguishing grenades, of heading 3813; ink removers put up in packings for retail sale, of heading 3824; cultured crystals (other than optical elements) weighing not less than 2.5 g each, of the halides of the alkali or alkaline-earth metals, of heading 3824"
+    },
+    {
+      "excluded_product_text": "ink removers put up in packings for retail sale, of heading 3824",
+      "redirects_to_chapter": "38",
+      "redirects_to_heading": "3824",
+      "source_note_number": "Note 3(e)",
+      "source_note_text": "(e) artificial graphite (heading 3801); products put up as charges for fire extinguishers or put up in fire-extinguishing grenades, of heading 3813; ink removers put up in packings for retail sale, of heading 3824; cultured crystals (other than optical elements) weighing not less than 2.5 g each, of the halides of the alkali or alkaline-earth metals, of heading 3824"
+    },
+    {
+      "excluded_product_text": "cultured crystals (other than optical elements) weighing not less than 2.5 g each, of the halides of the alkali or alkaline-earth metals, of heading 3824",
+      "redirects_to_chapter": "38",
+      "redirects_to_heading": "3824",
+      "source_note_number": "Note 3(e)",
+      "source_note_text": "(e) artificial graphite (heading 3801); products put up as charges for fire extinguishers or put up in fire-extinguishing grenades, of heading 3813; ink removers put up in packings for retail sale, of heading 3824; cultured crystals (other than optical elements) weighing not less than 2.5 g each, of the halides of the alkali or alkaline-earth metals, of heading 3824"
+    },
+    {
+      "excluded_product_text": "precious or semi-precious stones (natural, synthetic or reconstructed) or dust or powder of such stones (headings 7102 to 7105), or precious metals or precious metal alloys of Chapter 71",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": "7102",
+      "source_note_number": "Note 3(f)",
+      "source_note_text": "(f) precious or semi-precious stones (natural, synthetic or reconstructed) or dust or powder of such stones (headings 7102 to 7105), or precious metals or precious metal alloys of Chapter 71"
+    },
+    {
+      "excluded_product_text": "the metals, whether or not pure, metal alloys or cermets, including sintered metal carbides (metal carbides sintered with a metal), of Section XV",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(g)",
+      "source_note_text": "(g) the metals, whether or not pure, metal alloys or cermets, including sintered metal carbides (metal carbides sintered with a metal), of Section XV"
+    },
+    {
+      "excluded_product_text": "optical elements, for example, of the halides of the alkali or alkaline-earth metals",
+      "redirects_to_chapter": "90",
+      "redirects_to_heading": "9001",
+      "source_note_number": "Note 3(h)",
+      "source_note_text": "(h) optical elements, for example, of the halides of the alkali or alkaline-earth metals (heading 9001)"
+    },
+    {
+      "excluded_product_text": "Compounds of carbon other than those listed in Note 2 (a)-(e) — only listed carbon compounds (oxides of carbon, hydrogen cyanide, halide oxides of carbon, carbon disulphide, thiocarbonates and related complex cyanates, hydrogen peroxide solidified with urea, etc.) are classified in Chapter 28; other carbon compounds excluded",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2",
+      "source_note_text": "In addition to dithionites and sulphoxylates, stabilised with organic substances (heading 2831), carbonates and peroxocarbonates of inorganic bases (heading 2836), cyanides, cyanide oxides and complex cyanides ofinorganic bases(heading 2837),fulminates, cyanates and thiocyanates, of inorganic bases(heading 2842), organic products included in headings 2843 to 2846 and 2852 carbides (heading 2849), only the following compounds of carbon are to be classified in this Chapter: (a) oxides of carbon, hydrogen cyanide and fulminic, isocyanic, thiocyanic and other simple or complex cyanogen acids (heading 2811); (b) halide oxides of carbon (heading 2812); (c) carbon disulphide (heading 2813); (d) thiocarbonates, selenocarbonates, tellurocarbonates, selenocyanates, tellurocyanates, tetrathiocyanatodiamminochromates (reineckates) and other complex cyanates, of inorganic bases (heading 2842); (e) hydrogen peroxide, solidified with urea (heading 2847), carbon oxysulphide, thiocarbonyl halides, cyanogen, cyanogen halides and cyanamide and its metal derivatives (heading 2853) other than calcium cyanamide, whether or not pure (Chapter 31)."
+    },
+    {
+      "excluded_product_text": "calcium cyanamide, whether or not pure — classified in Chapter 31 (fertilisers), not Chapter 28",
+      "redirects_to_chapter": "31",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(e)",
+      "source_note_text": "(e) hydrogen peroxide, solidified with urea (heading 2847), carbon oxysulphide, thiocarbonyl halides, cyanogen, cyanogen halides and cyanamide and its metal derivatives (heading 2853) other than calcium cyanamide, whether or not pure (Chapter 31)."
+    },
+    {
+      "excluded_product_text": "Doped chemical elements (e.g., silicon, selenium) cut in the forms of discs, wafers or similar forms — classified in heading 3818, not Chapter 28",
+      "redirects_to_chapter": "38",
+      "redirects_to_heading": "3818",
+      "source_note_number": "Note 8",
+      "source_note_text": "Chemical elements(for example,silicon and selenium) doped for use in electronics are to be classified in this Chapter, provided that they are in forms unworked as drawn, or in the form of cylinders or rods. When cut in the forms of discs, wafers or similar forms, they fall in heading 3818."
+    },
+    {
+      "excluded_product_text": "Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 — must be classified in those headings and in no other heading of this Schedule",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": "2844",
+      "source_note_number": "Section VI Note 1(A)",
+      "source_note_text": "(A) Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 are to be classified in those headings and in no other heading of this Schedule."
+    },
+    {
+      "excluded_product_text": "Goods answering to a description in heading 2843, 2846 or 2852 — must be classified in those headings and in no other heading of this Section",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": "2843",
+      "source_note_number": "Section VI Note 1(B)",
+      "source_note_text": "(B) Subject to paragraph (A) above, goods answering to a description in heading 2843, 2846 or 2852 are to be classified in those headings and in no other heading of this Section."
+    },
+    {
+      "excluded_product_text": "Goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale — classified in those headings only",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Section VI Note 2",
+      "source_note_text": "Subject to Note 1 above, goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale are to be classified in those headings and in no other heading of this Schedule."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "2801",
+      "title": "Fluorine, chlorine, bromine and iodine.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2801.10",
+          "title": "Chlorine",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2801.10.00",
+              "description": "Chlorine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2801.20",
+          "title": "Iodine",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2801.20.00",
+              "description": "Iodine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2801.30",
+          "title": "Fluorine; bromine",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2801.30.10",
+              "description": "Fluorine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2801.30.20",
+              "description": "Bromine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2802",
+      "title": "Sulphur, sublimed or precipitated; colloidal sulphur.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2802.00",
+          "title": "Sulphur, sublimed or precipitated; colloidal sulphur :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2802.00.10",
+              "description": "Sublimed sulphur",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2802.00.20",
+              "description": "Precipitated sulphur",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2802.00.30",
+              "description": "Colloidal sulphur",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2803",
+      "title": "Carbon (carbon blacks and other forms of carbon not elsewhere specified or included).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2803.00",
+          "title": "Carbon (carbon blacks and other forms of carbon not elsewhere specified or included) :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2803.00.10",
+              "description": "Carbon blacks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2803.00.20",
+              "description": "Acetylene black",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2803.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2804",
+      "title": "Hydrogen, rare gases and other non-metals.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2804.10",
+          "title": "Hydrogen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2804.10.00",
+              "description": "Hydrogen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2804.21",
+          "title": "Rare gases : -- Argon",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2804.21.00",
+              "description": "Rare gases : -- Argon",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2804.29",
+          "title": "Rare gases : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2804.29.10",
+              "description": "Helium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2804.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2804.30",
+          "title": "Nitrogen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2804.30.00",
+              "description": "Nitrogen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2804.40",
+          "title": "Oxygen",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2804.40.10",
+              "description": "Medicinal grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2804.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2804.50",
+          "title": "Boron; tellurium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2804.50.10",
+              "description": "Boron",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2804.50.20",
+              "description": "Tellurium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2804.61",
+          "title": "Silicon : -- Containing by weight not less than 99.99 percent of silicon",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2804.61.00",
+              "description": "Silicon : -- Containing by weight not less than 99.99 percent of silicon",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2804.69",
+          "title": "Silicon : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2804.69.00",
+              "description": "Silicon : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2804.70",
+          "title": "Phosphorus",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2804.70.10",
+              "description": "Phosphorus, black",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2804.70.20",
+              "description": "Phosphorus, red",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2804.70.30",
+              "description": "Phosphorus, white or yellow",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2804.80",
+          "title": "Arsenic",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2804.80.00",
+              "description": "Arsenic",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2804.90",
+          "title": "Selenium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2804.90.00",
+              "description": "Selenium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2805",
+      "title": "ALKALI OR ALKALINE-EARTH METALS; RARE-EARTH METALS,SCANDIUM AND YTTRIUM, WHETHER OR NOT INTERMIXED OR INTERALLOYED; MERCURY",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2805.11",
+          "title": "Alkali or alkaline-earth metals : -- Sodium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2805.11.00",
+              "description": "Alkali or alkaline-earth metals : -- Sodium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2805.12",
+          "title": "Alkali or alkaline-earth metals : -- Calcium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2805.12.00",
+              "description": "Alkali or alkaline-earth metals : -- Calcium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2805.19",
+          "title": "Alkali or alkaline-earth metals : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2805.19.00",
+              "description": "Alkali or alkaline-earth metals : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2805.30",
+          "title": "Rare-earth metals, scandium and yttrium, whether or not intermixed or interalloyed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2805.30.00",
+              "description": "Rare-earth metals, scandium and yttrium, whether or not intermixed or interalloyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2805.40",
+          "title": "Mercury",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2805.40.00",
+              "description": "Mercury",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2806",
+      "title": "Hydrogen chloride (hydrochloric acid); chlorosulphuric acid.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2806.10",
+          "title": "Hydrogen chloride (hydrochloric acid)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2806.10.00",
+              "description": "Hydrogen chloride (hydrochloric acid)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2806.20",
+          "title": "Chlorosulphuric acid",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2806.20.00",
+              "description": "Chlorosulphuric acid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2807",
+      "title": "Sulphuric acid; oleum.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2807.00",
+          "title": "Sulphuric acid; oleum :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2807.00.10",
+              "description": "Sulphurc acid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2807.00.20",
+              "description": "Oleum",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2808",
+      "title": "Nitric acid; sulphonitric acids.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2808.00",
+          "title": "Nitric acid; sulphonitric acids :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2808.00.10",
+              "description": "Nitric acid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2808.00.20",
+              "description": "Sulphonitric acids",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2809",
+      "title": "Diphosphorus pentaoxide; phosphoric acid; polyphosphoric acids, whether or not chemically defined.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2809.10",
+          "title": "Diphosphorus pentaoxide",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2809.10.00",
+              "description": "Diphosphorus pentaoxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2809.20",
+          "title": "Phosphoric acid and polyphosphoric acids",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2809.20.10",
+              "description": "Phosporic acid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2809.20.20",
+              "description": "Polyphosphoric acids",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2810",
+      "title": "Oxides of boron; boric acids.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2810.00",
+          "title": "Oxides of boron; boric acids",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2810.00.10",
+              "description": "Oxides of boron; boric acids: --- Oxides of boron",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2810.00.20",
+              "description": "Oxides of boron; boric acids: --- Boric acids",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2811",
+      "title": "Other inorganic acids and other inorganic oxygen compounds of non-metals.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2811.11",
+          "title": "Other inorganic acids : -- Hydrogen fluoride (hydrofluoric acid)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2811.11.00",
+              "description": "Other inorganic acids : -- Hydrogen fluoride (hydrofluoric acid)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2811.12",
+          "title": "Other inorganic acids : -- Hydrogen cyanide (hydrocyanic acid)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2811.12.00",
+              "description": "Other inorganic acids : -- Hydrogen cyanide (hydrocyanic acid)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2811.19",
+          "title": "Other inorganic acids : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2811.19.20",
+              "description": "Hypophosphorus acid (phosphinic acid)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2811.19.30",
+              "description": "Acids of arsenic",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2811.19.40",
+              "description": "Sulphonic acid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2811.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2811.21",
+          "title": "Other inorganic oxygen compounds of non-metals : -- Carbon dioxide",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2811.21.10",
+              "description": "Dry ice",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2811.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2811.22",
+          "title": "Other inorganic oxygen compounds of non-metals : -- Silicon dioxide",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2811.22.00",
+              "description": "Other inorganic oxygen compounds of non-metals : -- Silicon dioxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2811.29",
+          "title": "Other inorganic oxygen compounds of non-metals : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2811.29.10",
+              "description": "Arsenic pentoxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2811.29.20",
+              "description": "Arsenic trioxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2811.29.30",
+              "description": "Nitrous oxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2811.29.40",
+              "description": "Carbon monoxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2811.29.50",
+              "description": "Sulphur trioxide (sulphuric anhydride)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2811.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2812",
+      "title": "Halides and halide oxides of non-metals.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2812.11",
+          "title": "Chlorides and chloride oxides : -- Carbonyl dichloride (phosgene)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2812.11.00",
+              "description": "Chlorides and chloride oxides : -- Carbonyl dichloride (phosgene)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2812.12",
+          "title": "Chlorides and chloride oxides : -- Phosphorus oxychloride",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2812.12.00",
+              "description": "Chlorides and chloride oxides : -- Phosphorus oxychloride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2812.13",
+          "title": "Chlorides and chloride oxides : -- Phosphorus trichloride",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2812.13.00",
+              "description": "Chlorides and chloride oxides : -- Phosphorus trichloride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2812.14",
+          "title": "Chlorides and chloride oxides : -- Phosphorus pentachloride",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2812.14.00",
+              "description": "Chlorides and chloride oxides : -- Phosphorus pentachloride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2812.15",
+          "title": "Chlorides and chloride oxides : -- Sulphur monochloride",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2812.15.00",
+              "description": "Chlorides and chloride oxides : -- Sulphur monochloride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2812.16",
+          "title": "Chlorides and chloride oxides : -- Sulphur dichloride",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2812.16.00",
+              "description": "Chlorides and chloride oxides : -- Sulphur dichloride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2812.17",
+          "title": "Chlorides and chloride oxides : -- Thionyl chloride",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2812.17.00",
+              "description": "Chlorides and chloride oxides : -- Thionyl chloride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2812.19",
+          "title": "Chlorides and chloride oxides : --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2812.19.10",
+              "description": "Sulphur oxychloride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2812.19.20",
+              "description": "Silicon tetrachloride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2812.19.30",
+              "description": "Arsenic trichloride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2812.19.90",
+              "description": "other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2812.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2812.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2813",
+      "title": "Sulphides of non-metals; commercial phosphorus trisulphide.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2813.10",
+          "title": "Carbon disulphide",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2813.10.00",
+              "description": "Carbon disulphide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2813.90",
+          "title": "other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2813.90.10",
+              "description": "Arsenic disulphide (artificial)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2813.90.20",
+              "description": "Commercial phosphorus trisulphide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2813.90.30",
+              "description": "Lime Sulphur",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2813.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2814",
+      "title": "Ammonia, anhydrous or in aqueous solution.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2814.10",
+          "title": "Anhydrous ammonia",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2814.10.00",
+              "description": "Anhydrous ammonia",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2814.20",
+          "title": "Ammonia in aqueous solution",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2814.20.00",
+              "description": "Ammonia in aqueous solution",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2815",
+      "title": "Sodium hydroxide (caustic soda); potassium hydroxide (caustic potash); peroxides of sodium or potassium.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2815.11",
+          "title": "Sodium hydroxide (caustic soda) : -- Solid",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2815.11.10",
+              "description": "Flakes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2815.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2815.12",
+          "title": "Sodium hydroxide (caustic soda) : -- In aqueous solution (soda lye or liquid soda)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2815.12.00",
+              "description": "Sodium hydroxide (caustic soda) : -- In aqueous solution (soda lye or liquid soda)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2815.20",
+          "title": "Potassium hydroxide (caustic potash)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2815.20.00",
+              "description": "Potassium hydroxide (caustic potash)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2815.30",
+          "title": "Peroxides of sodium or potassium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2815.30.00",
+              "description": "Peroxides of sodium or potassium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2816",
+      "title": "Hydroxide and peroxide of magnesium; oxides, hydroxides and peroxides, of strontium or barium.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2816.10",
+          "title": "Hydroxide and peroxide of magnesium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2816.10.10",
+              "description": "Hydroxide of magnesium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2816.10.20",
+              "description": "Peroxide of magnesium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2816.40",
+          "title": "Oxides, hydroxides and peroxides, of strontium or barium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2816.40.00",
+              "description": "Oxides, hydroxides and peroxides, of strontium or barium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2817",
+      "title": "Zinc oxide; zinc peroxide.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2817.00",
+          "title": "Zinc oxide; zinc peroxide :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2817.00.10",
+              "description": "Zinc oxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2817.00.20",
+              "description": "Zinc peroxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2818",
+      "title": "Artificial corundum, whether or not chemically defined; aluminium oxide; aluminium hydroxide.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2818.10",
+          "title": "Artificial corundum, whether or not chemically defined",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2818.10.00",
+              "description": "Artificial corundum, whether or not chemically defined",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2818.20",
+          "title": "Aluminium oxide, other than artificial corundum",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2818.20.11",
+              "description": "Alumina, calcined: Metallurgical grade, conforming to IS 17441",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2818.20.19",
+              "description": "Alumina, calcined: ---- Non- metallurgical grade, conforming to IS 17441",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2818.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2818.30",
+          "title": "Aluminium hydroxide",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2818.30.00",
+              "description": "Aluminium hydroxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2819",
+      "title": "Chromium oxides and hydroxides.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2819.10",
+          "title": "Chromium trioxide",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2819.10.00",
+              "description": "Chromium trioxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2819.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2819.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2820",
+      "title": "Manganese oxides.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2820.10",
+          "title": "Manganese dioxide",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2820.10.00",
+              "description": "Manganese dioxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2820.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2820.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2821",
+      "title": "Iron oxides and hydroxides; earth colours containing 70 percent or more by weight of combined iron evaluated as Fe2O3.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2821.10",
+          "title": "Iron oxides and hydroxides",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2821.10.10",
+              "description": "Iron oxides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2821.10.20",
+              "description": "Iron hydroxides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2821.20",
+          "title": "Earth colours",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2821.20.00",
+              "description": "Earth colours",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2822",
+      "title": "Cobalt oxides and hydroxides; commercial cobalt oxides.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2822.00",
+          "title": "Cobalt oxides and hydroxides; commercial cobalt oxides :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2822.00.10",
+              "description": "Cobalt oxides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2822.00.20",
+              "description": "Cobalt hydroxides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2822.00.30",
+              "description": "Commercial cobalt oxides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2823",
+      "title": "Titanium oxides.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2823.00",
+          "title": "Titanium oxides :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2823.00.10",
+              "description": "Titanium dioxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2823.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2824",
+      "title": "Lead oxides; red lead and orange lead.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2824.10",
+          "title": "Lead monoxide (litharge, massicot)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2824.10.10",
+              "description": "Litharge",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2824.10.20",
+              "description": "Massicot",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2824.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2824.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2825",
+      "title": "Hydrazine and hydroxylamine and their inorganic salts; other inorganic bases; other metal oxides, hydroxides and peroxides.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2825.10",
+          "title": "Hydrazine and hydroxylamine and their inorganic salts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2825.10.10",
+              "description": "Hydrazine anhydrous",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2825.10.20",
+              "description": "Hydrazine hydrate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2825.10.30",
+              "description": "Hydrazine sulphate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2825.10.40",
+              "description": "Hydroxylamine sulphate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2825.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2825.20",
+          "title": "Lithium oxide and hydroxide",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2825.20.00",
+              "description": "Lithium oxide and hydroxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2825.30",
+          "title": "Vanadium oxides and hydroxides",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2825.30.10",
+              "description": "Vanadium pentaoxide flakes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2825.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2825.40",
+          "title": "Nickel oxides and hydroxides",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2825.40.00",
+              "description": "Nickel oxides and hydroxides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2825.50",
+          "title": "Copper oxides and hydroxides",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2825.50.00",
+              "description": "Copper oxides and hydroxides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2825.60",
+          "title": "Germanium oxides and zirconium dioxide",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2825.60.10",
+              "description": "Germanium oxides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2825.60.20",
+              "description": "Zirconium dioxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2825.70",
+          "title": "Molybdenum oxides and hydroxides",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2825.70.10",
+              "description": "Molybdenum trioxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2825.70.20",
+              "description": "Molybdic acid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2825.70.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2825.80",
+          "title": "Antimony oxides",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2825.80.00",
+              "description": "Antimony oxides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2825.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2825.90.10",
+              "description": "Tin oxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2825.90.20",
+              "description": "Cadmium oxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2825.90.40",
+              "description": "Calcium hydroxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2825.90.50",
+              "description": "Ammonium hydroxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2825.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2826",
+      "title": "Fluorides; fluorosilicates, fluoroaluminates and other complex fluorine salts.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2826.12",
+          "title": "Fluorides : -- Of aluminium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2826.12.00",
+              "description": "Fluorides : -- Of aluminium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2826.19",
+          "title": "Fluorides : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2826.19.10",
+              "description": "Magnesium fluoride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2826.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2826.30",
+          "title": "Sodium hexafluoroaluminate (synthetic cryolite)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2826.30.00",
+              "description": "Sodium hexafluoroaluminate (synthetic cryolite)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2826.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2826.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2827",
+      "title": "Chlorides, chloride oxides and chloride hydroxides; bromides and bromide oxides; iodides and iodide oxides.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2827.10",
+          "title": "Ammonium chloride",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2827.10.00",
+              "description": "Ammonium chloride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2827.20",
+          "title": "Calcium chloride",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2827.20.00",
+              "description": "Calcium chloride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2827.31",
+          "title": "Other chlorides : -- Of magnesium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2827.31.00",
+              "description": "Other chlorides : -- Of magnesium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2827.32",
+          "title": "Other chlorides : -- Of aluminium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2827.32.00",
+              "description": "Other chlorides : -- Of aluminium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2827.35",
+          "title": "Other chlorides : -- Of nickel",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2827.35.00",
+              "description": "Other chlorides : -- Of nickel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2827.39",
+          "title": "Other chlorides : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2827.39.20",
+              "description": "Mercurous chloride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2827.39.30",
+              "description": "Strontium chloride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2827.39.40",
+              "description": "Cuprous chloride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2827.39.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2827.41",
+          "title": "Chloride oxides and chloride hydroxides : -- Of copper",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2827.41.10",
+              "description": "Copper oxychloride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2827.41.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2827.49",
+          "title": "Chloride oxides and chloride hydroxides : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2827.49.00",
+              "description": "Chloride oxides and chloride hydroxides : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2827.51",
+          "title": "Bromides and bromide oxides : -- Bromides of sodium or of potassium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2827.51.10",
+              "description": "Bromides of sodium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2827.51.20",
+              "description": "Bromides of potassium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2827.59",
+          "title": "Bromides and bromide oxides : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2827.59.10",
+              "description": "Magnesium bromide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2827.59.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2827.60",
+          "title": "Iodides and iodide oxides",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2827.60.10",
+              "description": "Potassium iodide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2827.60.20",
+              "description": "Sodium iodide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2827.60.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2828",
+      "title": "Hypochlorites; commercial calcium hypochlorite; chlorites; hypobromites.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2828.10",
+          "title": "Commercial calcium hypochlorite and other calcium hypochlorites",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2828.10.10",
+              "description": "Commercial calcium hypochlorite (bleaching paste or powder)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2828.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2828.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2828.90.11",
+              "description": "Sodium hypochlorites: ---- Bleaching paste or powder",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2828.90.19",
+              "description": "Sodium hypochlorites: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2828.90.20",
+              "description": "Potassium hypochlorites",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2828.90.30",
+              "description": "Sodium chlorite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2828.90.40",
+              "description": "Aluminium chlorite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2828.90.50",
+              "description": "Hypobromites",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2828.90.60",
+              "description": "Bleaching paste or powder of other hypochlorites",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2828.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2829",
+      "title": "Chlorates and perchlorates; bromates and perbromates; iodates and periodates.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2829.11",
+          "title": "Chlorates : -- Of sodium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2829.11.00",
+              "description": "Chlorates : -- Of sodium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2829.19",
+          "title": "Chlorates : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2829.19.10",
+              "description": "Barium chlorate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2829.19.20",
+              "description": "Potassium chlorate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2829.19.30",
+              "description": "Magnesium chlorate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2829.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2829.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2829.90.10",
+              "description": "Perchlorates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2829.90.20",
+              "description": "Bromates and perbromates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2829.90.30",
+              "description": "Iodates and periodates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2830",
+      "title": "Sulphides; polysulphides, whether or not chemically defined.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2830.10",
+          "title": "Sodium sulphides",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2830.10.00",
+              "description": "Sodium sulphides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2830.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2830.90.10",
+              "description": "Sulphides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2830.90.20",
+              "description": "Polysulphides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2831",
+      "title": "Dithionites and sulphoxylates.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2831.10",
+          "title": "Of sodium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2831.10.10",
+              "description": "Sodium dithionites (sodium hydrosulfite)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2831.10.20",
+              "description": "Sodium sulphoxylates (including sodium formaldehyde sulphoxylate)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2831.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2831.90.10",
+              "description": "Dithionites",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2831.90.20",
+              "description": "Sulphoxylates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2832",
+      "title": "Sulphites; thiosulphates.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2832.10",
+          "title": "Sodium sulphites",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2832.10.10",
+              "description": "Sodium bisulphite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2832.10.20",
+              "description": "Sodium hydrosulphites",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2832.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2832.20",
+          "title": "Other sulphites",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2832.20.10",
+              "description": "Potassium metabisulphite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2832.20.20",
+              "description": "Magnesium sulphite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2832.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2832.30",
+          "title": "Thiosulphates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2832.30.10",
+              "description": "Sodium thiosulphate (hypo)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2832.30.20",
+              "description": "Magnesium thiosulphate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2832.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2833",
+      "title": "Sulphates; alums; peroxosulphates (persulphates).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2833.11",
+          "title": "Sodium sulphates : -- Disodium sulphate",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2833.11.00",
+              "description": "Sodium sulphates : -- Disodium sulphate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2833.19",
+          "title": "Sodium sulphates : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2833.19.10",
+              "description": "Sodium hydrogen sulphate (acid sulphate)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2833.19.20",
+              "description": "Sodium pyrosulphate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2833.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2833.21",
+          "title": "Other sulphates : -- Of magnesium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2833.21.00",
+              "description": "Other sulphates : -- Of magnesium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2833.22",
+          "title": "Other sulphates : -- Of aluminium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2833.22.10",
+              "description": "Aluminium sulphate (iron free)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2833.22.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2833.24",
+          "title": "Other sulphates : -- Of nickel",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2833.24.00",
+              "description": "Other sulphates : -- Of nickel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2833.25",
+          "title": "Other sulphates : -- Of copper",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2833.25.00",
+              "description": "Other sulphates : -- Of copper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2833.27",
+          "title": "Other sulphates : -- Of barium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2833.27.00",
+              "description": "Other sulphates : -- Of barium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2833.29",
+          "title": "Other sulphates : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2833.29.10",
+              "description": "Ferrous sulphate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2833.29.30",
+              "description": "Quinidine sulphate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2833.29.40",
+              "description": "Manganese sulphate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2833.29.50",
+              "description": "Strontium sulphate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2833.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2833.30",
+          "title": "Alums",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2833.30.10",
+              "description": "Ammonium alum",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2833.30.20",
+              "description": "Ferric ammonium alum",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2833.30.30",
+              "description": "Potash alum",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2833.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2833.40",
+          "title": "Peroxosulphates (persulphates)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2833.40.00",
+              "description": "Peroxosulphates (persulphates)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2834",
+      "title": "Nitrites; nitrates.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2834.10",
+          "title": "Nitrites",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2834.10.10",
+              "description": "Sodium nitrite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2834.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2834.21",
+          "title": "Nitrates : -- Of potassium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2834.21.00",
+              "description": "Nitrates : -- Of potassium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2834.29",
+          "title": "Nitrates : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2834.29.10",
+              "description": "Strontium nitrate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2834.29.20",
+              "description": "Magnesium nitrate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2834.29.30",
+              "description": "Barium nitrate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2834.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2835",
+      "title": "Phosphinates (hypophosphites), phosphonates (phosphites) and phosphates; polyphosphates, whether or not chemically defined.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2835.10",
+          "title": "Phosphinates (hypophosphites) and phosphonates (phosphites)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2835.10.10",
+              "description": "Calcium hypophosphite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2835.10.20",
+              "description": "Magnesium hypophosphite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2835.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2835.22",
+          "title": "Phosphates : -- Of mono- or disodium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2835.22.00",
+              "description": "Phosphates : -- Of mono- or disodium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2835.24",
+          "title": "Phosphates : -- Of potassium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2835.24.00",
+              "description": "Phosphates : -- Of potassium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2835.25",
+          "title": "Phosphates : -- Calcium hydrogenorthophosphate (dicalcium phosphate)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2835.25.00",
+              "description": "Phosphates : -- Calcium hydrogenorthophosphate (dicalcium phosphate)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2835.26",
+          "title": "Phosphates : -- Other phosphates of calcium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2835.26.10",
+              "description": "Calcium monobasic phosphate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2835.26.20",
+              "description": "Calcium tribasic phosphate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2835.26.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2835.29",
+          "title": "Phosphates : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2835.29.10",
+              "description": "Magnesium phosphate, monobasic",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2835.29.20",
+              "description": "Magnesium phosphate, dibasic",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2835.29.30",
+              "description": "Magnesium phosphate, tribasic",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2835.29.40",
+              "description": "Sodium hexa meta phosphate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2835.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2835.31",
+          "title": "Polyphosphates : -- Sodium triphosphate (sodium tripolyphosphate)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2835.31.00",
+              "description": "Polyphosphates : -- Sodium triphosphate (sodium tripolyphosphate)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2835.39",
+          "title": "Polyphosphates : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2835.39.00",
+              "description": "Polyphosphates : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2836",
+      "title": "Carbonates; peroxocarbonates (percarbonates); commercial ammonium carbonate containing ammonium carbamate.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2836.20",
+          "title": "Disodium carbonate",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2836.20.10",
+              "description": "Disodium carbonate, dense",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2836.20.20",
+              "description": "Disodium carbonate, light",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2836.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2836.30",
+          "title": "Sodium hydrogencarbonate (sodium bicarbonate)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2836.30.00",
+              "description": "Sodium hydrogencarbonate (sodium bicarbonate)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2836.40",
+          "title": "Potassium carbonates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2836.40.00",
+              "description": "Potassium carbonates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2836.50",
+          "title": "Calcium carbonate",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2836.50.00",
+              "description": "Calcium carbonate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2836.60",
+          "title": "Barium carbonate",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2836.60.00",
+              "description": "Barium carbonate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2836.91",
+          "title": "Other : -- Lithium carbonates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2836.91.00",
+              "description": "Other : -- Lithium carbonates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2836.92",
+          "title": "Other : -- Strontium carbonate",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2836.92.00",
+              "description": "Other : -- Strontium carbonate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2836.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2836.99.10",
+              "description": "Percarbonates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2836.99.20",
+              "description": "Magnesium carbonate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2836.99.30",
+              "description": "Aluminium bicarbonate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2836.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2837",
+      "title": "Cyanides, cyanide oxides and complex cyanides.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2837.11",
+          "title": "Cyanides and cyanide oxides : -- Of sodium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2837.11.00",
+              "description": "Cyanides and cyanide oxides : -- Of sodium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2837.19",
+          "title": "Cyanides and cyanide oxides : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2837.19.10",
+              "description": "Potassium cyanide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2837.19.20",
+              "description": "Double cyanide of potassium and sodium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2837.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2837.20",
+          "title": "Complex cyanides",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2837.20.10",
+              "description": "Ammonium sulphocyanide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2837.20.20",
+              "description": "Potassium ferricyanide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2837.20.30",
+              "description": "Potassium ferrocyanide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2837.20.40",
+              "description": "Sodium ferrocyanide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2837.20.50",
+              "description": "Sodium nitroprusside (sodium nitroferricyanide)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2837.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2839",
+      "title": "Silicates; commercial alkali metal silicates.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2839.11",
+          "title": "Of sodium : -- Sodium metasilicates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2839.11.00",
+              "description": "Of sodium : -- Sodium metasilicates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2839.19",
+          "title": "Of sodium : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2839.19.00",
+              "description": "Of sodium : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2839.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2839.90.10",
+              "description": "Magnesium trisilicate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2839.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2840",
+      "title": "Borates; peroxoborates (perborates).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2840.11",
+          "title": "Disodium tetraborate (refined borax) : -- Anhydrous",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2840.11.00",
+              "description": "Disodium tetraborate (refined borax) : -- Anhydrous",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2840.19",
+          "title": "Disodium tetraborate (refined borax) : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2840.19.00",
+              "description": "Disodium tetraborate (refined borax) : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2840.20",
+          "title": "Other borates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2840.20.10",
+              "description": "Magnesium borates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2840.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2840.30",
+          "title": "Peroxoborates (perborates)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2840.30.00",
+              "description": "Peroxoborates (perborates)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2841",
+      "title": "Salts of oxometallic or peroxometallic acids.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2841.30",
+          "title": "Sodium dichromate",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2841.30.00",
+              "description": "Sodium dichromate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2841.50",
+          "title": "Other chromates and dichromates; peroxochromates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2841.50.10",
+              "description": "Sodium chromate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2841.50.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2841.61",
+          "title": "Manganites, manganates and permanganates : -- Potassium permanganate",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2841.61.00",
+              "description": "Manganites, manganates and permanganates : -- Potassium permanganate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of Potassium Permanganate is free subject to No Objection Certificate from Narcotics Commissioner of India, Gwalior"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2841.69",
+          "title": "Manganites, manganates and permanganates : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2841.69.00",
+              "description": "Manganites, manganates and permanganates : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2841.70",
+          "title": "Molybdates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2841.70.10",
+              "description": "Aluminium molybdate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2841.70.20",
+              "description": "Sodium molybdate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2841.70.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2841.80",
+          "title": "Tungstates (wolframates)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2841.80.10",
+              "description": "Sodium tungstate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2841.80.20",
+              "description": "Magnesium tungstate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2841.80.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2841.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2841.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2842",
+      "title": "Other salts of inorganic acids or peroxoacids (including aluminosilicates whether or not chemically defined), other than azides.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2842.10",
+          "title": "Double or complex silicates, including aluminosilicates whether or not chemically defined",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2842.10.00",
+              "description": "Double or complex silicates, including aluminosilicates whether or not chemically defined",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2842.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2842.90.10",
+              "description": "Arsenites and arsenates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2842.90.20",
+              "description": "Bichromates and dichromates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2842.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2843",
+      "title": "Colloidal precious metals; inorganic or organic compounds of precious metals, whether or not chemically defined; amalgams of precious metals.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2843.10",
+          "title": "Colloidal precious metals",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2843.10.10",
+              "description": "Of gold",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2843.10.20",
+              "description": "Of silver",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2843.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2843.21",
+          "title": "Silver compounds : -- Silver nitrate",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2843.21.00",
+              "description": "Silver compounds : -- Silver nitrate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2843.29",
+          "title": "Silver compounds : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2843.29.00",
+              "description": "Silver compounds : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2843.30",
+          "title": "Gold compounds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2843.30.00",
+              "description": "Gold compounds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2843.90",
+          "title": "Other compounds; amalgams",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2843.90.11",
+              "description": "Other compounds: ---- Sodium aurous thiosulphate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2843.90.12",
+              "description": "Other compounds: ---- Noble metal solutions of platinum, kg. 10% - rhodium and palladium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2843.90.19",
+              "description": "Other compounds: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2843.90.20",
+              "description": "Amalgams",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2844",
+      "title": "Radioactive chemical elements and radioactive isotopes (including the fissile or fertile chemical elements and isotopes) and their compounds; mixtures and residues containing these products.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2844.10",
+          "title": "Natural uranium and its compounds; alloys, dispersions (including cermets), ceramic products and mixtures containing natural uranium or natural uranium compounds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2844.10.00",
+              "description": "Natural uranium and its compounds; alloys, dispersions (including cermets), ceramic products and mixtures containing natural uranium or natural uranium compounds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2844.20",
+          "title": "Uranium enriched in U 235 and its compounds; plutonium and its compounds; alloys, dispersions (including cermets), ceramic products and mixtures containing uranium enriched in U 235, plutonium or compounds of these products",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2844.20.00",
+              "description": "Uranium enriched in U 235 and its compounds; plutonium and its compounds; alloys, dispersions (including cermets), ceramic products and mixtures containing uranium enriched in U 235, plutonium or compounds of these products",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2844.30",
+          "title": "Uranium depleted in U 235 and its compounds; thorium and its compounds; alloys, dispersions (including cermets), ceramic products and mixtures containing uranium depleted in U 235, thorium or compounds of these products",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2844.30.10",
+              "description": "Uranium depleted in U235 and or thorium and their alloys, unwrought or wrought and compounds thereof Compounds of thorium or of uranium depleted in U235:",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "2844.30.21",
+              "description": "Thorium oxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "2844.30.22",
+              "description": "Thorium hydroxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "2844.30.23",
+              "description": "Thorium nitrate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "2844.30.29",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "2844.30.30",
+              "description": "Waste and scrap of uranium depleted in U235 or of thorium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "2844.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2844.41",
+          "title": "Radioactive elements and isotopes and compounds other than those of sub-headings 2844 10, 2844 20 or 2844 30; alloys, dispersions (including cermets), ceramic products and mixtures containing these elements, isotopes or compounds; radioactive residues: -- Tritium and its compounds; alloys, dispersions (including cermets), ceramic products and mixtures containing tritium or its compounds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2844.41.00",
+              "description": "Radioactive elements and isotopes and compounds other than those of sub-headings2844 10, 2844 20 or 2844 30; alloys, dispersions (including cermets), ceramic products and mixtures containing these elements, isotopes or compounds; radioactive residues: -- Tritium and its compounds; alloys, dispersions (including cermets), ceramic products and mixtures containing tritium or its compounds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2844.42",
+          "title": "Actinium-225, actinium-227, californium-253, curium-240, curium-241, curium-242, curium-243, curium-244, einsteinium-253, einsteinium-254, gadolinium-148, polonium208, polonium-209, polonium-210, radium-223, uranium-230 or uranium-232, and their compounds; alloys, dispersions (including cermets), ceramic products and mixtures containing these elements or compounds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2844.42.00",
+              "description": "Actinium-225, actinium-227, californium-253, curium-240, curium-241, curium-242, curium-243, curium-244, einsteinium-253, einsteinium-254, gadolinium-148, polonium208, polonium-209, polonium-210, radium-223, uranium-230 or uranium-232, and their compounds; alloys, dispersions (including cermets), ceramic products and mixtures containing these elements or compounds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2844.43",
+          "title": "Radioactive elements and isotopes and compounds other than those of sub-headings 2844 10, 2844 20 or 2844 30; alloys, dispersions (including cermets), ceramic products and mixtures containing these elements, isotopes or compounds; radioactive residues: -- Other radioactive elements and isotopes and compounds; other alloys, dispersions (including cermets), ceramic products and mixtures containing these elements, isotopes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2844.43.00",
+              "description": "Radioactive elements and isotopes and compounds other than those of sub-headings2844 10, 2844 20 or 2844 30; alloys, dispersions (including cermets), ceramic products and mixtures containing these elements, isotopes or compounds; radioactive residues: -- Other radioactive elements and isotopes and compounds; other alloys, dispersions (including cermets), ceramic products and mixtures containing these elements, isotopes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2844.44",
+          "title": "Radioactive elements and isotopes and compounds other than those of sub-headings 2844 10, 2844 20 or 2844 30; alloys, dispersions (including cermets), ceramic products and mixtures containing these elements, isotopes or compounds; radioactive residues: -- Radioactive residues",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2844.44.00",
+              "description": "\"Radioactive elements and isotopes and compounds other than those of sub-headings2844 10, 2844 20 or 2844 30; alloys, dispersions (including cermets), ceramic products and mixtures containing these elements, isotopes or compounds; radioactive residues: -- Radioactive residues",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2844.50",
+          "title": "Spent (irradiated) fuel elements (cartridges) of nuclear reactors",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2844.50.00",
+              "description": "Spent (irradiated) fuel elements (cartridges) of nuclear reactors",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2845",
+      "title": "Isotopes other than those of heading 28.44; compounds, inorganic or organic, of such isotopes, whether or not chemically defined.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2845.10",
+          "title": "Heavy water (deuterium oxide)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2845.10.00",
+              "description": "Heavy water (deuterium oxide)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2845.20",
+          "title": "Boron enriched in boron-10 and its compounds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2845.20.00",
+              "description": "Boron enriched in boron-10 and its compounds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2845.30",
+          "title": "Lithium enriched in lithium-6 and its compounds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2845.30.00",
+              "description": "Lithium enriched in lithium-6 and its compounds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2845.40",
+          "title": "Helium-3",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2845.40.00",
+              "description": "Helium-3",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2845.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2845.90.10",
+              "description": "Nuclear fuels not elsewhere included or specified",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "2845.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2846",
+      "title": "Compounds, inorganic or organic, of rare-earth metals, of yttrium or of scandium or of mixtures of these metals.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2846.10",
+          "title": "Cerium compounds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2846.10.10",
+              "description": "Cerium oxides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2846.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2846.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2846.90.10",
+              "description": "Rare earth oxides not elsewhere included or specified",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2846.90.20",
+              "description": "Rare earth fluorides not elsewhere included or specified",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2846.90.30",
+              "description": "Rare earth chlorides not elsewhere included or specified",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2846.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2847",
+      "title": "Hydrogen peroxide, whether or not solidified with urea.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2847.00",
+          "title": "Hydrogen peroxide, whether or not solidified with urea",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2847.00.00",
+              "description": "Hydrogen peroxide, whether or not solidified with urea",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2849",
+      "title": "Carbides, whether or not chemically defined.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2849.10",
+          "title": "Of calcium",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2849.10.00",
+              "description": "Of calcium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2849.20",
+          "title": "Of silicon",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2849.20.10",
+              "description": "Carborandum",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2849.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2849.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2849.90.10",
+              "description": "Boron carbide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2849.90.20",
+              "description": "Tungsten carbide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2849.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2850",
+      "title": "Hydrides, nitrides, azides, silicides and borides, whether or not chemically defined, other than compounds which are also carbides of heading 28.49.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2850.00",
+          "title": "Hydrides, nitrides, azides, silicides and borides, whether or not chemically defined, other than compounds which are also carbides of heading 2849:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2850.00.10",
+              "description": "Hydrides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter."
+            },
+            {
+              "code": "2850.00.20",
+              "description": "Nitrides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2850.00.30",
+              "description": "Azides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2850.00.41",
+              "description": "Silicides: ---- Of calcium",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2850.00.49",
+              "description": "Silicides: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2850.00.50",
+              "description": "Borides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2852",
+      "title": "Inorganic or organic compounds of mercury, whether or not chemically defined, excluding amalgams.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2852.10",
+          "title": "Chemically defined",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2852.10.00",
+              "description": "Chemically defined",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2852.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2852.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2853",
+      "title": "Phosphides, whether or not chemically defined, excluding ferrophosphorus; other inorganic compounds (including distilled or conductivity water and water of similar purity); liquid air (whether or not rare gases have been removed); compressed air; amalgams, other than amalgams of precious metals.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2853.10",
+          "title": "Cyanogen chloride (chlorcyan)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2853.10.00",
+              "description": "Cyanogen chloride (chlorcyan)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2853.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2853.90.10",
+              "description": "Distilled or conductivity water and water of similar purity",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2853.90.20",
+              "description": "Liquid air, whether or not rare gases have been removed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2853.90.30",
+              "description": "Compressed air",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2853.90.40",
+              "description": "Amalgams, other than of precious metals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2853.90.50",
+              "description": "Magnesium phosphide plates, zinc phosphide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2853.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

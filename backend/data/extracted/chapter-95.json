@@ -1,0 +1,1152 @@
+{
+  "chapter": "95",
+  "section": "XX",
+  "title": "TOYS, GAMES AND SPORTS REQUISITES; PARTS AND ACCESSORIES THEREOF",
+  "source_pdf": "Chapter 95 Toys, Games And Sports Requisites; Parts And Accessories Thereof.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '95030010'). Normalized to NNNN.NN.NN format (e.g., '9503.00.10') per project schema. Subheading numbers in PDF (e.g., '950300', '950490') normalized to NNNN.NN form (e.g., '9503.00', '9504.90').",
+    "Chapter 95 Main Note 1 is the dense 'This Chapter does not cover' exclusion list with sub-clauses (a) through (x). Captured verbatim in chapter_notes; each lettered sub-item is also split into a separate row in exclusion_clauses for structural lookup.",
+    "PDF page 1 shows typographic artifacts where some terms are rendered with paired triple double-quotes (e.g., '\"\"\"smart cards\"\"\"', '\"\"\"amusement park rides\"\"\"', '\"\"\"water park amusements\"\"\"', '\"\"\"fairground amusements\"\"\"', '\"pet toys\"'). These are smart-quote encoding artifacts from the source PDF. Reproduced verbatim in chapter_notes; the intended text uses single double-quotes around the defined terms.",
+    "PDF text 'children?s bicycles' (Note 1 sub-clause (o)) contains a stray '?' where an apostrophe ('children's') should appear — OCR/encoding artifact in the source PDF. Reproduced verbatim.",
+    "PDF text 'Chapter 61or 62' (Note 1 sub-clause (e)) is missing a space — OCR artifact. Reproduced verbatim.",
+    "PDF text 'appro-priate heading' (Note 5) shows a stray hyphen from the source layout. Reproduced verbatim.",
+    "Heading 9508 title in the heading-row table reads 'TRAVELLING CIRCUSES AND TRAVELLING MENAGERIES; AMUSEMENT PARK RIDES AND WATER PARK AMUSEMENTS; FAIRGROUND AMUSEMENTS, INCLUDING SHOOTING GALLERIES; TRAVELLING THEATRES' in ALL CAPS in the PDF — preserved verbatim.",
+    "Heading 9504 title in the PDF reads 'VIDEO GAME CONSOLES AND MACHINES, TABLE OR PARLOUR GAMES, INCLUDING PINTABLES, BILLIARDS, SPECIAL TABLES FOR CASINO GAMES AND AUTOMATIC BOWLING EQUIPMENT, AMUSEMENT MACHINES OPERATED BY COINS, BANK NOTES, BANK CARDS, TOKENS OR BY ANY OTHER MEANS OF PAYMENT' in ALL CAPS — preserved verbatim.",
+    "Heading 9503 in the PDF carries both a heading-level row '9503' and an umbrella subheading row '950300' with similar text. Modelled as heading '9503' with a single subheading '9503.00' carrying the 8-digit tariff lines 9503.00.10, 9503.00.20, 9503.00.91, 9503.00.99 — this is an Indian ITC(HS) single-subheading convention for heading 9503.",
+    "Heading 9505 has two subheading umbrellas: '9505.10' (9505.10.00 articles for Christmas festivities — single 8-digit line) and '9505.90' (other, with 9505.90.10 Magical equipments and 9505.90.90 Other).",
+    "Heading 9506 contains a mix of single-line 6-digit-to-8-digit collapses (e.g., 9506.11, 9506.12, 9506.19, 9506.21, 9506.29, 9506.31, 9506.32, 9506.39, 9506.40, 9506.51, 9506.61, 9506.70) and 6-digit subheadings with multiple 8-digit lines (e.g., 9506.59, 9506.62, 9506.69, 9506.91, 9506.99). Modelled by wrapping each 8-digit code in its corresponding 6-digit subheading.",
+    "Heading 9507 contains subheadings 9507.10 (Fishing rods), 9507.20 (Fish-hooks), 9507.30 (Fishing reels), and 9507.90 (Other, with 9507.90.10 Fish landing and butterfly nets and 9507.90.90 Other).",
+    "Heading 9508 contains an umbrella subheading 9508.10 (Travelling circuses and travelling menageries), subheading group 9508.2x (Amusement park rides and water park amusements: roller coasters, carousels, dodge em cars, motion simulators, water rides, water park amusements, other), subheading 9508.30 (Fairground amusements), and subheading 9508.40 (Travelling theatres). Each 8-digit code wrapped in its corresponding 6-digit subheading.",
+    "Heading 9501 and 9502 are absent from the PDF — these HS positions were vacated globally (wheeled toys and dolls were merged into heading 9503 in HS 2007). Not represented in this extraction; documented here for completeness.",
+    "Unit (kg/u/etc.) information is not present in this PDF — all unit fields set to null.",
+    "Export Policy is 'Free' for all 8-digit tariff lines in this chapter; Policy Condition column is empty for all rows.",
+    "PDF table-chrome headers ('Sl.No. Notes Notification Date Notification No', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Main Notes', 'Sub-Heading Notes', 'Product Description and Export Policy') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Notification Date and Notification No columns in the Notes table are EMPTY for every row in Chapter 95 — no notifications recorded against any note.",
+    "PDF row '950669' description 'Balls, other than golf balls and table-tennis balls : -- Other' is a 6-digit subheading carrying 8-digit lines for specific ball types (Hockey, Cricket, Golf, Rugby, Other). Note: 'Golf ball' (9506.69.30) appears under 9506.69 rather than under a dedicated golf subheading — this is an Indian ITC(HS) tariff convention.",
+    "Heading 9506 subheading 9506.59 covers 'Tennis, badminton or similar rackets ... -- Other' with 8-digit lines 9506.59.10 (Squash or racketball badminton rackets) and 9506.59.90 (Other).",
+    "Subheading 9506.69 description shows the formatting glitch 'Other -- Other' / 'Other: ----Other' which reproduces the multi-level indent dashes from the source PDF (single hyphens '-' indicate subheading level, dashes '----' indicate tariff line level)."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover : (a) Candles (heading 3406); (b) fireworks or other pyrotechnic articles of heading 3604; (c) yarns, monofilament, cords or gut or the like for fishing, cut to length but not made up into fishing lines, of Chapter 39, heading 4206 or Section XI; (d) sports bags or other containers of heading 4202, 4303 or 4304; (e) fancy dress of textiles, of Chapter 61 or 62; sports clothing and special articles of apparel of textiles, of Chapter 61or 62, whether or not incorporating incidentally protective components such as pads or padding in the elbow, knee or groin areas (for example, fencing clothing or soccer goalkeeper jerseys); (f) textile flags or bunting, or sails for boats, sailboards or land craft, of Chapter 63; (g) sports footwear (other than skating boots with ice or roller skates attached) of Chapter 64, or sports headgear of Chapter 65; (h) walking-sticks, whips, riding-crops or the like (heading 6602), or parts thereof (heading 6603); (ij) unmounted glass eyes for dolls or other toys, of heading 7018; (k) parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39); (l) bells, gongs or the like of heading 8306; (m) pumps for liquids (heading 8413), filtering or purifying machinery and apparatus for liquids or gases (heading 8421), electric motors (heading 8501), electric transformers (heading 8504), discs, tapes, solid-state non-volatile storage devices, \"\"\"smart cards\"\"\" and other media for the recording of sound or of other phenomena, whether or not recorded (heading 8523), radio remote control apparatus (heading 8526) or cordless infrared remote control devices (heading 8543); (n) sports vehicles (other than bobsleighs, toboggans and the like) of Section XVII; (o) children?s bicycles (heading 8712); (p) unmanned aircraft (heading 8806); (q) sports craft such as canoes and skiffs (Chapter 89), or their means of propulsion (Chapter 44 for such articles made of wood); (r) spectacles, goggles or the like, for sports or outdoor games (heading 9004); (s) decoy calls or whistles (heading 9208); (t) arms or other articles of Chapter 93; (u)electric garlands of all kinds (heading 9405); (v) monopods, bipods, tripods and similar articles (heading 9620); (w)racket strings, tents or other camping goods, or gloves, mittens and mitts (Classified according to the constituent material); or (x) Tableware, kitchenware, toilet articles, carpets and other textile floor coverings, apparel, bed linen, table lines, toilet linen, kitchen linen and similar articles having a utilitarian function (classified according to their constituent material)."
+    },
+    {
+      "number": "2",
+      "text": "This Chapter includes articles in which natural or cultured pearls, precious or semi-precious stones (natural, synthetic or reconstructed ), precious metal or metal clad with precious metal constitute only minor constituents."
+    },
+    {
+      "number": "3",
+      "text": "Subject to Note 1 above, parts and accessories which are suitable for use solely or principally with articles of this Chapter are to be classified with those articles."
+    },
+    {
+      "number": "4",
+      "text": "Subject to the provisions of Note 1, heading 9503 applies, inter alia, to articles of this heading combined with one or more items, which cannot be considered as sets under the terms of rule 3(b) of the General rules for Interpretation of this schedule, and which, if presented separately, would be classified in other headings, provided the articles are put up together for retail sale and the combinations have the essential character of toys."
+    },
+    {
+      "number": "5",
+      "text": "Heading 9503 does not cover articles which, on account of their design, shape or constituent material, are identifiable as intended exclusively for animals, for example, \"pet toys\" (classification in their own appro-priate heading)."
+    },
+    {
+      "number": "6",
+      "text": "For the purposes of heading 9508: (a) The expression \"\"\"amusement park rides\"\"\" means a device or combination of devices or equipment that carry, convey, or direct a person or persons over or through a fixed or restricted course, including water courses, or within a defined area for the primary purposes of amusement or entertainment. Such rides may be combined within an amusement park, theme park, water park or fairground. These amusement park rides do not include equipment of a kind commonly installed in residences or playgrounds; (b) The expression \"\"\"water park amusements\"\"\" means a device or combination of devices or equipment that are characterised by a defined area involving water, with no purposes built path. Water park amusements only include equipment designed specifically for water parks; and (c) The expression \"\"\"fairground amusements\"\"\" means games of chance, strength or skill, which commonly employ an operator or attendant and may be installed in permanent buildings or independent concession stalls. Fairground amusements do not include equipment of heading 9504. This heading does not include equipment more specifically classified elsewhere in the Nomenclature."
+    },
+    {
+      "number": "Sub-Heading Note 1",
+      "text": "Sub-heading 9504 50 covers : (a) Video game consoles from which the image is reproduced on television receiver, a monitor or other external screen or surface; or (b) Video game machines having a self-contained video screen, whether or not portable. This sub-heading does not cover video game consoles or machines operated by coins, banknotes, bank cards, tokens or by any other means of payment (sub-heading 9504 30)."
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "Candles",
+      "redirects_to_chapter": "34",
+      "redirects_to_heading": "3406",
+      "source_note_number": "Chapter Note 1(a)",
+      "source_note_text": "This Chapter does not cover : (a) Candles (heading 3406); ..."
+    },
+    {
+      "excluded_product_text": "Fireworks or other pyrotechnic articles",
+      "redirects_to_chapter": "36",
+      "redirects_to_heading": "3604",
+      "source_note_number": "Chapter Note 1(b)",
+      "source_note_text": "(b) fireworks or other pyrotechnic articles of heading 3604; ..."
+    },
+    {
+      "excluded_product_text": "Yarns, monofilament, cords or gut or the like for fishing, cut to length but not made up into fishing lines",
+      "redirects_to_chapter": "39",
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1(c)",
+      "source_note_text": "(c) yarns, monofilament, cords or gut or the like for fishing, cut to length but not made up into fishing lines, of Chapter 39, heading 4206 or Section XI; ..."
+    },
+    {
+      "excluded_product_text": "Yarns, monofilament, cords or gut or the like for fishing, cut to length but not made up into fishing lines (catgut/gut articles)",
+      "redirects_to_chapter": "42",
+      "redirects_to_heading": "4206",
+      "source_note_number": "Chapter Note 1(c)",
+      "source_note_text": "(c) yarns, monofilament, cords or gut or the like for fishing, cut to length but not made up into fishing lines, of Chapter 39, heading 4206 or Section XI; ..."
+    },
+    {
+      "excluded_product_text": "Yarns, monofilament, cords or gut or the like for fishing, cut to length but not made up into fishing lines (textile materials of Section XI, Chapters 50-63)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1(c)",
+      "source_note_text": "(c) yarns, monofilament, cords or gut or the like for fishing, cut to length but not made up into fishing lines, of Chapter 39, heading 4206 or Section XI; ..."
+    },
+    {
+      "excluded_product_text": "Sports bags or other containers (e.g., gym bags, cricket kit bags, golf bags)",
+      "redirects_to_chapter": "42",
+      "redirects_to_heading": "4202",
+      "source_note_number": "Chapter Note 1(d)",
+      "source_note_text": "(d) sports bags or other containers of heading 4202, 4303 or 4304; ..."
+    },
+    {
+      "excluded_product_text": "Sports bags or other containers of furskin",
+      "redirects_to_chapter": "43",
+      "redirects_to_heading": "4303",
+      "source_note_number": "Chapter Note 1(d)",
+      "source_note_text": "(d) sports bags or other containers of heading 4202, 4303 or 4304; ..."
+    },
+    {
+      "excluded_product_text": "Sports bags or other containers of artificial fur",
+      "redirects_to_chapter": "43",
+      "redirects_to_heading": "4304",
+      "source_note_number": "Chapter Note 1(d)",
+      "source_note_text": "(d) sports bags or other containers of heading 4202, 4303 or 4304; ..."
+    },
+    {
+      "excluded_product_text": "Fancy dress of textiles (e.g., Halloween costumes, masquerade costumes of knitted textiles)",
+      "redirects_to_chapter": "61",
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1(e)",
+      "source_note_text": "(e) fancy dress of textiles, of Chapter 61 or 62; sports clothing and special articles of apparel of textiles, of Chapter 61or 62, whether or not incorporating incidentally protective components such as pads or padding in the elbow, knee or groin areas (for example, fencing clothing or soccer goalkeeper jerseys); ..."
+    },
+    {
+      "excluded_product_text": "Fancy dress of textiles (woven textiles); sports clothing and special articles of apparel of textiles (e.g., fencing clothing, soccer goalkeeper jerseys), whether or not incorporating incidentally protective components such as pads or padding in the elbow, knee or groin areas",
+      "redirects_to_chapter": "62",
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1(e)",
+      "source_note_text": "(e) fancy dress of textiles, of Chapter 61 or 62; sports clothing and special articles of apparel of textiles, of Chapter 61or 62, whether or not incorporating incidentally protective components such as pads or padding in the elbow, knee or groin areas (for example, fencing clothing or soccer goalkeeper jerseys); ..."
+    },
+    {
+      "excluded_product_text": "Textile flags or bunting, or sails for boats, sailboards or land craft",
+      "redirects_to_chapter": "63",
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1(f)",
+      "source_note_text": "(f) textile flags or bunting, or sails for boats, sailboards or land craft, of Chapter 63; ..."
+    },
+    {
+      "excluded_product_text": "Sports footwear (other than skating boots with ice or roller skates attached)",
+      "redirects_to_chapter": "64",
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1(g)",
+      "source_note_text": "(g) sports footwear (other than skating boots with ice or roller skates attached) of Chapter 64, or sports headgear of Chapter 65; ..."
+    },
+    {
+      "excluded_product_text": "Sports headgear (e.g., cricket helmets, riding caps, baseball caps of textile)",
+      "redirects_to_chapter": "65",
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1(g)",
+      "source_note_text": "(g) sports footwear (other than skating boots with ice or roller skates attached) of Chapter 64, or sports headgear of Chapter 65; ..."
+    },
+    {
+      "excluded_product_text": "Walking-sticks, whips, riding-crops or the like",
+      "redirects_to_chapter": "66",
+      "redirects_to_heading": "6602",
+      "source_note_number": "Chapter Note 1(h)",
+      "source_note_text": "(h) walking-sticks, whips, riding-crops or the like (heading 6602), or parts thereof (heading 6603); ..."
+    },
+    {
+      "excluded_product_text": "Parts of walking-sticks, whips, riding-crops or the like",
+      "redirects_to_chapter": "66",
+      "redirects_to_heading": "6603",
+      "source_note_number": "Chapter Note 1(h)",
+      "source_note_text": "(h) walking-sticks, whips, riding-crops or the like (heading 6602), or parts thereof (heading 6603); ..."
+    },
+    {
+      "excluded_product_text": "Unmounted glass eyes for dolls or other toys",
+      "redirects_to_chapter": "70",
+      "redirects_to_heading": "7018",
+      "source_note_number": "Chapter Note 1(ij)",
+      "source_note_text": "(ij) unmounted glass eyes for dolls or other toys, of heading 7018; ..."
+    },
+    {
+      "excluded_product_text": "Parts of general use, as defined in Note 2 to Section XV, of base metal (e.g., bolts, nuts, screws, springs, chains of base metal)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1(k)",
+      "source_note_text": "(k) parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39); ..."
+    },
+    {
+      "excluded_product_text": "Similar goods of plastics (parts of general use made of plastic)",
+      "redirects_to_chapter": "39",
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1(k)",
+      "source_note_text": "(k) parts of general use, as defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics (Chapter 39); ..."
+    },
+    {
+      "excluded_product_text": "Bells, gongs or the like of base metal",
+      "redirects_to_chapter": "83",
+      "redirects_to_heading": "8306",
+      "source_note_number": "Chapter Note 1(l)",
+      "source_note_text": "(l) bells, gongs or the like of heading 8306; ..."
+    },
+    {
+      "excluded_product_text": "Pumps for liquids",
+      "redirects_to_chapter": "84",
+      "redirects_to_heading": "8413",
+      "source_note_number": "Chapter Note 1(m)",
+      "source_note_text": "(m) pumps for liquids (heading 8413), filtering or purifying machinery and apparatus for liquids or gases (heading 8421), electric motors (heading 8501), electric transformers (heading 8504), discs, tapes, solid-state non-volatile storage devices, \"\"\"smart cards\"\"\" and other media for the recording of sound or of other phenomena, whether or not recorded (heading 8523), radio remote control apparatus (heading 8526) or cordless infrared remote control devices (heading 8543); ..."
+    },
+    {
+      "excluded_product_text": "Filtering or purifying machinery and apparatus for liquids or gases",
+      "redirects_to_chapter": "84",
+      "redirects_to_heading": "8421",
+      "source_note_number": "Chapter Note 1(m)",
+      "source_note_text": "(m) pumps for liquids (heading 8413), filtering or purifying machinery and apparatus for liquids or gases (heading 8421), electric motors (heading 8501), electric transformers (heading 8504), discs, tapes, solid-state non-volatile storage devices, \"\"\"smart cards\"\"\" and other media for the recording of sound or of other phenomena, whether or not recorded (heading 8523), radio remote control apparatus (heading 8526) or cordless infrared remote control devices (heading 8543); ..."
+    },
+    {
+      "excluded_product_text": "Electric motors",
+      "redirects_to_chapter": "85",
+      "redirects_to_heading": "8501",
+      "source_note_number": "Chapter Note 1(m)",
+      "source_note_text": "(m) pumps for liquids (heading 8413), filtering or purifying machinery and apparatus for liquids or gases (heading 8421), electric motors (heading 8501), electric transformers (heading 8504), discs, tapes, solid-state non-volatile storage devices, \"\"\"smart cards\"\"\" and other media for the recording of sound or of other phenomena, whether or not recorded (heading 8523), radio remote control apparatus (heading 8526) or cordless infrared remote control devices (heading 8543); ..."
+    },
+    {
+      "excluded_product_text": "Electric transformers",
+      "redirects_to_chapter": "85",
+      "redirects_to_heading": "8504",
+      "source_note_number": "Chapter Note 1(m)",
+      "source_note_text": "(m) pumps for liquids (heading 8413), filtering or purifying machinery and apparatus for liquids or gases (heading 8421), electric motors (heading 8501), electric transformers (heading 8504), discs, tapes, solid-state non-volatile storage devices, \"\"\"smart cards\"\"\" and other media for the recording of sound or of other phenomena, whether or not recorded (heading 8523), radio remote control apparatus (heading 8526) or cordless infrared remote control devices (heading 8543); ..."
+    },
+    {
+      "excluded_product_text": "Discs, tapes, solid-state non-volatile storage devices, smart cards and other media for the recording of sound or of other phenomena, whether or not recorded",
+      "redirects_to_chapter": "85",
+      "redirects_to_heading": "8523",
+      "source_note_number": "Chapter Note 1(m)",
+      "source_note_text": "(m) pumps for liquids (heading 8413), filtering or purifying machinery and apparatus for liquids or gases (heading 8421), electric motors (heading 8501), electric transformers (heading 8504), discs, tapes, solid-state non-volatile storage devices, \"\"\"smart cards\"\"\" and other media for the recording of sound or of other phenomena, whether or not recorded (heading 8523), radio remote control apparatus (heading 8526) or cordless infrared remote control devices (heading 8543); ..."
+    },
+    {
+      "excluded_product_text": "Radio remote control apparatus",
+      "redirects_to_chapter": "85",
+      "redirects_to_heading": "8526",
+      "source_note_number": "Chapter Note 1(m)",
+      "source_note_text": "(m) pumps for liquids (heading 8413), filtering or purifying machinery and apparatus for liquids or gases (heading 8421), electric motors (heading 8501), electric transformers (heading 8504), discs, tapes, solid-state non-volatile storage devices, \"\"\"smart cards\"\"\" and other media for the recording of sound or of other phenomena, whether or not recorded (heading 8523), radio remote control apparatus (heading 8526) or cordless infrared remote control devices (heading 8543); ..."
+    },
+    {
+      "excluded_product_text": "Cordless infrared remote control devices",
+      "redirects_to_chapter": "85",
+      "redirects_to_heading": "8543",
+      "source_note_number": "Chapter Note 1(m)",
+      "source_note_text": "(m) pumps for liquids (heading 8413), filtering or purifying machinery and apparatus for liquids or gases (heading 8421), electric motors (heading 8501), electric transformers (heading 8504), discs, tapes, solid-state non-volatile storage devices, \"\"\"smart cards\"\"\" and other media for the recording of sound or of other phenomena, whether or not recorded (heading 8523), radio remote control apparatus (heading 8526) or cordless infrared remote control devices (heading 8543); ..."
+    },
+    {
+      "excluded_product_text": "Sports vehicles (other than bobsleighs, toboggans and the like) — e.g., snowmobiles, ATVs, racing cars",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1(n)",
+      "source_note_text": "(n) sports vehicles (other than bobsleighs, toboggans and the like) of Section XVII; ..."
+    },
+    {
+      "excluded_product_text": "Children's bicycles",
+      "redirects_to_chapter": "87",
+      "redirects_to_heading": "8712",
+      "source_note_number": "Chapter Note 1(o)",
+      "source_note_text": "(o) children?s bicycles (heading 8712); ..."
+    },
+    {
+      "excluded_product_text": "Unmanned aircraft (e.g., drones)",
+      "redirects_to_chapter": "88",
+      "redirects_to_heading": "8806",
+      "source_note_number": "Chapter Note 1(p)",
+      "source_note_text": "(p) unmanned aircraft (heading 8806); ..."
+    },
+    {
+      "excluded_product_text": "Sports craft such as canoes and skiffs",
+      "redirects_to_chapter": "89",
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1(q)",
+      "source_note_text": "(q) sports craft such as canoes and skiffs (Chapter 89), or their means of propulsion (Chapter 44 for such articles made of wood); ..."
+    },
+    {
+      "excluded_product_text": "Means of propulsion for sports craft made of wood (e.g., wooden oars and paddles)",
+      "redirects_to_chapter": "44",
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1(q)",
+      "source_note_text": "(q) sports craft such as canoes and skiffs (Chapter 89), or their means of propulsion (Chapter 44 for such articles made of wood); ..."
+    },
+    {
+      "excluded_product_text": "Spectacles, goggles or the like, for sports or outdoor games",
+      "redirects_to_chapter": "90",
+      "redirects_to_heading": "9004",
+      "source_note_number": "Chapter Note 1(r)",
+      "source_note_text": "(r) spectacles, goggles or the like, for sports or outdoor games (heading 9004); ..."
+    },
+    {
+      "excluded_product_text": "Decoy calls or whistles",
+      "redirects_to_chapter": "92",
+      "redirects_to_heading": "9208",
+      "source_note_number": "Chapter Note 1(s)",
+      "source_note_text": "(s) decoy calls or whistles (heading 9208); ..."
+    },
+    {
+      "excluded_product_text": "Arms or other articles of Chapter 93 (firearms, ammunition, swords, bayonets, etc.)",
+      "redirects_to_chapter": "93",
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1(t)",
+      "source_note_text": "(t) arms or other articles of Chapter 93; ..."
+    },
+    {
+      "excluded_product_text": "Electric garlands of all kinds (e.g., Christmas lights, fairy lights)",
+      "redirects_to_chapter": "94",
+      "redirects_to_heading": "9405",
+      "source_note_number": "Chapter Note 1(u)",
+      "source_note_text": "(u)electric garlands of all kinds (heading 9405); ..."
+    },
+    {
+      "excluded_product_text": "Monopods, bipods, tripods and similar articles",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": "9620",
+      "source_note_number": "Chapter Note 1(v)",
+      "source_note_text": "(v) monopods, bipods, tripods and similar articles (heading 9620); ..."
+    },
+    {
+      "excluded_product_text": "Racket strings, tents or other camping goods, or gloves, mittens and mitts (classified according to the constituent material)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1(w)",
+      "source_note_text": "(w)racket strings, tents or other camping goods, or gloves, mittens and mitts (Classified according to the constituent material); ..."
+    },
+    {
+      "excluded_product_text": "Tableware, kitchenware, toilet articles, carpets and other textile floor coverings, apparel, bed linen, table linen, toilet linen, kitchen linen and similar articles having a utilitarian function (classified according to their constituent material)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1(x)",
+      "source_note_text": "(x) Tableware, kitchenware, toilet articles, carpets and other textile floor coverings, apparel, bed linen, table lines, toilet linen, kitchen linen and similar articles having a utilitarian function (classified according to their constituent material)."
+    },
+    {
+      "excluded_product_text": "Articles which, on account of their design, shape or constituent material, are identifiable as intended exclusively for animals, for example, \"pet toys\" (classification in their own appropriate heading)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 5",
+      "source_note_text": "Heading 9503 does not cover articles which, on account of their design, shape or constituent material, are identifiable as intended exclusively for animals, for example, \"pet toys\" (classification in their own appro-priate heading)."
+    },
+    {
+      "excluded_product_text": "Video game consoles or machines operated by coins, banknotes, bank cards, tokens or by any other means of payment (classified in sub-heading 9504.30)",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": "9504",
+      "source_note_number": "Sub-Heading Note 1",
+      "source_note_text": "Sub-heading 9504 50 covers : (a) Video game consoles from which the image is reproduced on television receiver, a monitor or other external screen or surface; or (b) Video game machines having a self-contained video screen, whether or not portable. This sub-heading does not cover video game consoles or machines operated by coins, banknotes, bank cards, tokens or by any other means of payment (sub-heading 9504 30)."
+    },
+    {
+      "excluded_product_text": "Fairground amusement equipment more specifically classified elsewhere in the Nomenclature; coin-operated amusement machines and similar equipment of heading 9504; equipment of a kind commonly installed in residences or playgrounds (not heading 9508)",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": "9504",
+      "source_note_number": "Chapter Note 6",
+      "source_note_text": "For the purposes of heading 9508: (a) The expression \"\"\"amusement park rides\"\"\" means a device or combination of devices or equipment that carry, convey, or direct a person or persons over or through a fixed or restricted course, including water courses, or within a defined area for the primary purposes of amusement or entertainment. Such rides may be combined within an amusement park, theme park, water park or fairground. These amusement park rides do not include equipment of a kind commonly installed in residences or playgrounds; (b) The expression \"\"\"water park amusements\"\"\" means a device or combination of devices or equipment that are characterised by a defined area involving water, with no purposes built path. Water park amusements only include equipment designed specifically for water parks; and (c) The expression \"\"\"fairground amusements\"\"\" means games of chance, strength or skill, which commonly employ an operator or attendant and may be installed in permanent buildings or independent concession stalls. Fairground amusements do not include equipment of heading 9504. This heading does not include equipment more specifically classified elsewhere in the Nomenclature."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "9503",
+      "title": "Tricycles, scooters, pedal cars and similar wheeled toys; dolls carriages; dolls; other toys; reduced-size (scale) models and similar recreational models, working or not; puzzles of all kinds.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9503.00",
+          "title": "Tricycles, scooters, pedal cars and similar wheeled toys; dolls' carriages; dolls; other toys; reduced-size (scale) models and similar recreational models, working or not; puzzles of all kinds:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9503.00.10",
+              "description": "Electronic",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9503.00.20",
+              "description": "Non electronic",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9503.00.91",
+              "description": "Parts: ---- Of electronic toys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9503.00.99",
+              "description": "Parts: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9504",
+      "title": "VIDEO GAME CONSOLES AND MACHINES, TABLE OR PARLOUR GAMES, INCLUDING PINTABLES, BILLIARDS, SPECIAL TABLES FOR CASINO GAMES AND AUTOMATIC BOWLING EQUIPMENT, AMUSEMENT MACHINES OPERATED BY COINS, BANK NOTES, BANK CARDS, TOKENS OR BY ANY OTHER MEANS OF PAYMENT",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9504.20",
+          "title": "Articles and accessories for billiards of all kinds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9504.20.00",
+              "description": "Articles and accessories for billiards of all kinds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9504.30",
+          "title": "Other games, operated by coins, banknotes, bank cards, tokens or by any other means of payment, other than automatic bowling alley equipment",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9504.30.00",
+              "description": "Other games, operated by coins, banknotes, bank cards, tokens or by any other means of payment, other than automatic bowling alley equipment",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9504.40",
+          "title": "Playing cards",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9504.40.00",
+              "description": "Playing cards",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9504.50",
+          "title": "Video game consoles and machines, other than those of subheading 9504.30",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9504.50.00",
+              "description": "Video game consoles and machines, other than those of subheading 9504.30",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9504.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9504.90.10",
+              "description": "Chess set, all types",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9504.90.20",
+              "description": "Carom Board, with or without coins and strikers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9504.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9505",
+      "title": "Festive, carnival or other entertainment articles, including conjuring tricks and novelty jokes.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9505.10",
+          "title": "articles for Christmas festivities",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9505.10.00",
+              "description": "articles for Christmas festivities",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9505.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9505.90.10",
+              "description": "Magical equipments",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9505.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9506",
+      "title": "Articles and equipment for general physical exercise, gymnastics, athletics, other sports (including table-tennis) or outdoor games, not specified or included elsewhere in this Chapter; swimming pools and paddling pools.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9506.11",
+          "title": "Snow-skis and other snow-ski equipment : -- Skis",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9506.11.00",
+              "description": "Snow-skis and other snow-ski equipment : -- Skis",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9506.12",
+          "title": "Snow-skis and other snow-ski equipment : -- Ski-fastenings (ski-bindings)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9506.12.00",
+              "description": "Snow-skis and other snow-ski equipment : -- Ski-fastenings (ski-bindings)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9506.19",
+          "title": "Snow-skis and other snow-ski equipment : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9506.19.00",
+              "description": "Snow-skis and other snow-ski equipment : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9506.21",
+          "title": "Water-skis, surf-boards, sailboards and other water-sport equipment : -- Sailboards",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9506.21.00",
+              "description": "Water-skis, surf-boards, sailboards and other water-sport equipment : -- Sailboards",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9506.29",
+          "title": "Water-skis, surf-boards, sailboards and other water-sport equipment : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9506.29.00",
+              "description": "Water-skis, surf-boards, sailboards and other water-sport equipment : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9506.31",
+          "title": "Golf clubs and other golf equipment : -- Clubs, complete",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9506.31.00",
+              "description": "Golf clubs and other golf equipment : -- Clubs, complete",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9506.32",
+          "title": "Golf clubs and other golf equipment : -- Balls",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9506.32.00",
+              "description": "Golf clubs and other golf equipment : -- Balls",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9506.39",
+          "title": "Golf clubs and other golf equipment : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9506.39.00",
+              "description": "Golf clubs and other golf equipment : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9506.40",
+          "title": "Articles and equipment for table-tennis",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9506.40.00",
+              "description": "Articles and equipment for table-tennis",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9506.51",
+          "title": "Tennis, badminton or similar rackets, whether or not strung : -- Lawn-tennis rackets, whether or not strung",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9506.51.00",
+              "description": "Tennis, badminton or similar rackets, whether or not strung : -- Lawn-tennis rackets, whether or not strung",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9506.59",
+          "title": "Tennis, badminton or similar rackets, whether or not strung : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9506.59.10",
+              "description": "Other: ----Squash or racketball badminton rackets, whether or not strung",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9506.59.90",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9506.61",
+          "title": "Balls, other than golf balls and table-tennis balls : -- Lawn-tennis balls",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9506.61.00",
+              "description": "Balls, other than golf balls and table-tennis balls : -- Lawn-tennis balls",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9506.62",
+          "title": "Balls, other than golf balls and table-tennis balls : -- Inflatable",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9506.62.10",
+              "description": "Football",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9506.62.20",
+              "description": "Volley ball",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9506.62.30",
+              "description": "Basket ball",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9506.62.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9506.69",
+          "title": "Balls, other than golf balls and table-tennis balls : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9506.69.10",
+              "description": "Hockey ball",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9506.69.20",
+              "description": "Cricket ball",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9506.69.30",
+              "description": "Golf ball",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9506.69.40",
+              "description": "Rugby ball",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9506.69.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9506.70",
+          "title": "Ice skates and roller skates, including skating boots with skates attached",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9506.70.00",
+              "description": "Ice skates and roller skates, including skating boots with skates attached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9506.91",
+          "title": "Other : -- Articles and equipment for general physical exercise, gymnastics or athletics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9506.91.10",
+              "description": "Other: ----Boxing equipment",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9506.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9506.99",
+          "title": "Other -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9506.99.10",
+              "description": "Badminton shuttle cocks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9506.99.20",
+              "description": "Leg pads and bats for Cricket",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9506.99.30",
+              "description": "Shoulder pads for Football",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9506.99.40",
+              "description": "Hockey sticks and blades",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9506.99.50",
+              "description": "Polo sticks including blades, shafts and heads",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9506.99.60",
+              "description": "Sports net",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9506.99.70",
+              "description": "Tennis and badminton racket pressures",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9506.99.80",
+              "description": "Shin-guards and elbow or shoulders pads excluding those for football; waist, thigh and hip protective equipment",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9506.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9507",
+      "title": "Fishing rods, fish-hooks and other line fishing tackle; fish landing nets, butterfly nets and similar nets; decoy birds (other than those of heading 92.08 or 97.05) and similar hunting or shooting requisites.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9507.10",
+          "title": "Fishing rods",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9507.10.00",
+              "description": "Fishing rods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9507.20",
+          "title": "Fish-hooks, whether or not snelled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9507.20.00",
+              "description": "Fish-hooks, whether or not snelled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9507.30",
+          "title": "Fishing reels",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9507.30.00",
+              "description": "Fishing reels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9507.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9507.90.10",
+              "description": "Fish landing and butterfly nets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9507.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9508",
+      "title": "TRAVELLING CIRCUSES AND TRAVELLING MENAGERIES; AMUSEMENT PARK RIDES AND WATER PARK AMUSEMENTS; FAIRGROUND AMUSEMENTS, INCLUDING SHOOTING GALLERIES; TRAVELLING THEATRES",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9508.10",
+          "title": "Travelling circuses and travelling menageries",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9508.10.00",
+              "description": "Travelling circuses and travelling menageries",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9508.21",
+          "title": "Amusement park rides and water park amusements: -- Roller coasters",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9508.21.00",
+              "description": "Amusement park rides and water park amusements: - - Roller coasters",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9508.22",
+          "title": "Amusement park rides and water park amusements: -- Carousels, swings and roundabouts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9508.22.00",
+              "description": "Amusement park rides and water park amusements: - - Carousels, swings and roundabouts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9508.23",
+          "title": "Amusement park rides and water park amusements: -- Dodge em cars",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9508.23.00",
+              "description": "Amusement park rides and water park amusements: - - Dodge em cars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9508.24",
+          "title": "Amusement park rides and water park amusements: -- Motion simulators and moving theatres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9508.24.00",
+              "description": "Amusement park rides and water park amusements: - - Motion simulators and moving theatres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9508.25",
+          "title": "Amusement park rides and water park amusements: -- Water rides",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9508.25.00",
+              "description": "Amusement park rides and water park amusements: - - Water rides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9508.26",
+          "title": "Amusement park rides and water park amusements: -- Water park amusements",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9508.26.00",
+              "description": "Amusement park rides and water park amusements: - - Water park amusements",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9508.29",
+          "title": "Amusement park rides and water park amusements: -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9508.29.00",
+              "description": "Amusement park rides and water park amusements: - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9508.30",
+          "title": "Fairground amusements",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9508.30.00",
+              "description": "Amusement park rides and water park amusements: - Fairground amusements",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9508.40",
+          "title": "Travelling theatres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9508.40.00",
+              "description": "Amusement park rides and water park amusements: - Travelling theatres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

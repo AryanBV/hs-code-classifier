@@ -1,0 +1,93 @@
+{
+  "chapter": "22",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "2201.10.10",
+        "in_pdf": true,
+        "pdf_description": "Mineral Water — exact",
+        "json_description": "Mineral Water — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2202.10.90",
+        "in_pdf": true,
+        "pdf_description": "Other — exact",
+        "json_description": "Other — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2203.00.00",
+        "in_pdf": true,
+        "pdf_description": "Beer made from malt — exact",
+        "json_description": "Beer made from malt — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2204.22.20",
+        "in_pdf": true,
+        "pdf_description": "Sherry and other white wines — exact",
+        "json_description": "Sherry and other white wines — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2205.10.00",
+        "in_pdf": true,
+        "pdf_description": "In containers <=2l — exact",
+        "json_description": "In containers <=2l — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2207.20.00",
+        "in_pdf": true,
+        "pdf_description": "Denatured ethyl alcohol — exact",
+        "json_description": "Denatured ethyl alcohol — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2208.30.12",
+        "in_pdf": true,
+        "pdf_description": "Scotch — exact",
+        "json_description": "Scotch — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2208.30.99",
+        "in_pdf": true,
+        "pdf_description": "Other Other — exact",
+        "json_description": "Other Other — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2208.50.12",
+        "in_pdf": true,
+        "pdf_description": "Geneva — exact",
+        "json_description": "Geneva — exact",
+        "match": "exact"
+      },
+      {
+        "code": "2208.70.91",
+        "in_pdf": true,
+        "pdf_description": "Liqueurs — exact",
+        "json_description": "Liqueurs — exact",
+        "match": "exact"
+      }
+    ],
+    "hierarchy_errors": [],
+    "missed_codes": [],
+    "extra_codes": [],
+    "note_mismatches": [],
+    "count_check": {
+      "json_h": 9,
+      "pdf_h_estimate": 9,
+      "json_sh": 24,
+      "pdf_sh_estimate": 24,
+      "json_tl": 65,
+      "pdf_tl_estimate": 65
+    }
+  },
+  "notes_field": "All 10 sampled codes verified. Wine/spirits sub-categories (Port, Sherry, Geneva, Scotch, Liqueurs) match PDF. Hierarchy clean.",
+  "warnings": []
+}

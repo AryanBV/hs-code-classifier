@@ -1,0 +1,1440 @@
+{
+  "chapter": "09",
+  "section": "II",
+  "title": "COFFEE, TEA, MATÉ AND SPICES",
+  "source_pdf": "Chapter 09 Coffee, Tea, Mat And Spices.pdf",
+  "extracted_at": "2026-05-21",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '09011111'). Normalized to NNNN.NN.NN format (e.g., '0901.11.11') per project schema. Subheading numbers in PDF (e.g., '090111') normalized to NNNN.NN (e.g., '0901.11').",
+    "PDF contains '?' characters in place of typographic quote marks in the Export Licensing Notes (e.g., '?Spice?' and '?masalas?'). These are OCR/encoding artifacts from the source PDF — preserved verbatim as they appear in the source. The intended text is 'Spice' and 'masalas' enclosed in quotation marks.",
+    "The chapter title on PDF page 1 is rendered as 'Chapter 09 Coffee, Tea, Mat And Spices.' — the official ITC(HS) chapter title is 'COFFEE, TEA, MATÉ AND SPICES' (heading 0903 in the chapter is 'Maté'). Title field uses the canonical form with diacritic; source_pdf field preserves the abbreviated filename form.",
+    "PDF table-chrome headers ('Sl.No. Notes Notification No Notification Date', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Main Notes', 'Policy Condition', 'Export Licensing Notes', 'Product Description and Export Policy') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Heading 0903 ('Maté') is represented in the PDF as the single tariff line '09030000' with description 'Mate'. No subheading row appears in the source; tariff line is attached directly under the heading. The accented spelling 'Maté' is reflected in the chapter title; the heading description in the PDF reads 'Mate' (without accent) and is preserved verbatim.",
+    "Heading 0904 description in PDF reads 'Pepper of the genus Piper; dried or crushed or ground fruits of the genus Capsicum or of the genus Pimenta.' — verbatim, including the trailing period.",
+    "Section II Main Note about 'pellets' appears on PDF page 1 above the Chapter 09 title and is attributed to section_notes (Section II, Vegetable Products), not chapter_notes.",
+    "Tariff line code '09092200' represents subheading 0909.22 with tariff suffix '00' — preserved as the 8-digit form '0909.22.00' under subheading '0909.22'. Similar pattern for '09030000', '09011200', '09081200', '09082100', '09082200', '09051000', '09052000', '09062000', '09072000', '09093200' — all are 8-digit codes where the subheading has only one tariff line (the '00' line).",
+    "Policy Condition: tariff lines from heading 0904 onwards display 'Subject to Policy Condition 1 of the Chapter' with Notification No '32/2015-20' dated '04.10.2017'. This is captured in the policy_conditions array."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "Mixtures of the products of headings 0904 to 0910 are to be classified as follows: (a) mixtures of two or more of the products of the same heading are to be classified in that heading; (b) mixtures of two or more of the products of different headings are to be classified in heading 0910. The addition of other substances to the products of headings 0904 to 0910 [or to the mixtures referred to in paragraph (a) or (b) above] shall not affect their classification provided the resulting mixtures retain the essential character of the goods of those heading. Otherwise such mixtures are not classified in this Chapter; those constituting mixed condiments or mixed seasonings are classified in heading 2103."
+    },
+    {
+      "number": "2",
+      "text": "This Chapter does not cover Cubeb pepper (Piper cubeba) or other products of heading 1211."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "In this Section, the term \"pellets\" means products which have been agglomerated either directly by compression or by the addition of a binder in a proportion not exceeding 3 (percent) by weight."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "Cubeb pepper (Piper cubeba)",
+      "redirects_to_chapter": "12",
+      "redirects_to_heading": "1211",
+      "source_note_number": "Note 2",
+      "source_note_text": "This Chapter does not cover Cubeb pepper (Piper cubeba) or other products of heading 1211."
+    },
+    {
+      "excluded_product_text": "other products of heading 1211",
+      "redirects_to_chapter": "12",
+      "redirects_to_heading": "1211",
+      "source_note_number": "Note 2",
+      "source_note_text": "This Chapter does not cover Cubeb pepper (Piper cubeba) or other products of heading 1211."
+    },
+    {
+      "excluded_product_text": "mixed condiments or mixed seasonings (where the addition of other substances has caused the mixture to lose the essential character of the goods of headings 0904 to 0910)",
+      "redirects_to_chapter": "21",
+      "redirects_to_heading": "2103",
+      "source_note_number": "Note 1",
+      "source_note_text": "Mixtures of the products of headings 0904 to 0910 are to be classified as follows: (a) mixtures of two or more of the products of the same heading are to be classified in that heading; (b) mixtures of two or more of the products of different headings are to be classified in heading 0910. The addition of other substances to the products of headings 0904 to 0910 [or to the mixtures referred to in paragraph (a) or (b) above] shall not affect their classification provided the resulting mixtures retain the essential character of the goods of those heading. Otherwise such mixtures are not classified in this Chapter; those constituting mixed condiments or mixed seasonings are classified in heading 2103."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "0901",
+      "title": "Coffee, whether or not roasted or decaffeinated; coffee husks and skins; coffee substitutes containing coffee in any proportion.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0901.11",
+          "title": "Coffee, not roasted : --Not decaffeinated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0901.11.11",
+              "description": "Arabica plantation: ---- A Grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.11.12",
+              "description": "Arabica plantation: ---- B Grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.11.13",
+              "description": "Arabica plantation: ---- C Grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.11.19",
+              "description": "Arabica plantation: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.11.21",
+              "description": "Arabica Cherry: ---- AB Grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.11.22",
+              "description": "Arabica Cherry: ---- PB Grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.11.23",
+              "description": "Arabica Cherry: ---- C Grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.11.24",
+              "description": "Arabica Cherry: ---- B/B/B Grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.11.29",
+              "description": "Arabica Cherry: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.11.31",
+              "description": "Rob Parchment: ---- AB Grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.11.32",
+              "description": "Rob Parchment: ---- PB Grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.11.33",
+              "description": "Rob Parchment: ---- C Grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.11.39",
+              "description": "Rob Parchment: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.11.41",
+              "description": "Rob cherry: ---- AB Grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.11.42",
+              "description": "Rob cherry: ---- PB Grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.11.43",
+              "description": "Rob cherry: ---- C Grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.11.44",
+              "description": "Rob cherry: ---- B/B/B Grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.11.45",
+              "description": "Rob cherry: ---- Bulk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.11.49",
+              "description": "Rob cherry: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0901.12",
+          "title": "Coffee, not roasted : --Decaffeinated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0901.12.00",
+              "description": "Coffee, not roasted : --Decaffeinated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0901.21",
+          "title": "Coffee roasted : --Not decaffeinated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0901.21.10",
+              "description": "In bulk packing",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0901.22",
+          "title": "Coffee roasted : --Decaffeinated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0901.22.10",
+              "description": "In bulk packing",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.22.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0901.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0901.90.10",
+              "description": "Coffee husks and skins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.90.20",
+              "description": "Coffee substitutes containing coffee",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0901.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0902",
+      "title": "Tea, whether or not flavoured.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0902.10",
+          "title": "Green tea (not fermented) in immediate packings of a content not exceeding 3 kg",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0902.10.10",
+              "description": "Contents not exceeding 25 g.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0902.10.20",
+              "description": "Contents exceeding 25 g. but not exceeding 1 kg.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0902.10.30",
+              "description": "Contents exceeding 1 kg but not exceeding 3 kg.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0902.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0902.20",
+          "title": "Other green tea (not fermented)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0902.20.10",
+              "description": "Green Tea in packets exceeding content 3 kg. but not exceeding 20 kg.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0902.20.20",
+              "description": "Green Tea in bulk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0902.20.30",
+              "description": "Green Tea agglomerated in forms such as ball, brick and tablets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0902.20.40",
+              "description": "Green Tea waste",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0902.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0902.30",
+          "title": "Black tea (fermented) and partly fermented tea, in immediate packings of a content not exceeding 3 kg",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0902.30.10",
+              "description": "Contents not exceeding 25 g.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0902.30.20",
+              "description": "Contents exceeding 25 g. but not exceeding 1 kg.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0902.30.30",
+              "description": "Contents exceeding 1 kg. but not exceeding 3 kg.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0902.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0902.40",
+          "title": "Other black tea (fermented) and other partly fermented tea",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0902.40.10",
+              "description": "Content exceeding 3 kg. but not exceeding 20 kg.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0902.40.20",
+              "description": "Black Tea, leaf in bulk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0902.40.30",
+              "description": "Black Tea, dust in bulk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0902.40.40",
+              "description": "Tea bags",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0902.40.50",
+              "description": "Black Tea, agglomerated in forms such as ball, brick and tablets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0902.40.60",
+              "description": "Black Tea waste",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "0902.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0903",
+      "title": "Maté.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0903.00",
+          "title": "Mate",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0903.00.00",
+              "description": "Mate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "0904",
+      "title": "Pepper of the genus Piper; dried or crushed or ground fruits of the genus Capsicum or of the genus Pimenta.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0904.11",
+          "title": "Pepper : --Neither crushed nor ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0904.11.10",
+              "description": "Pepper, long",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0904.11.20",
+              "description": "Light black pepper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0904.11.30",
+              "description": "Black pepper, garbled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0904.11.40",
+              "description": "Black pepper ungarbled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0904.11.50",
+              "description": "Green pepper, dehydrated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0904.11.60",
+              "description": "Pepper pinheads",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0904.11.70",
+              "description": "Green pepper, frozen or dried",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0904.11.80",
+              "description": "Pepper other than green, frozen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0904.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0904.12",
+          "title": "Pepper : --Crushed or ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0904.12.00",
+              "description": "Pepper : --Crushed or ground",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0904.21",
+          "title": "Fruits of the genus Capsicum or of the genus Pimenta : --Dried, neither crushed nor ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0904.21.10",
+              "description": "Of genus Capsicum",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0904.21.20",
+              "description": "Of genus Pimenta",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0904.22",
+          "title": "Fruits of the genus Capsicum or of the genus Pimenta : --Crushed or ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0904.22.11",
+              "description": "Chilly Powder",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0904.22.19",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0904.22.21",
+              "description": "Of genus Pimenta :----Powder",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0904.22.29",
+              "description": "Of genus Pimenta :----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0905",
+      "title": "Vanilla.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0905.10",
+          "title": "Neither crushed nor ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0905.10.00",
+              "description": "Neither crushed nor ground",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0905.20",
+          "title": "Crushed or ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0905.20.00",
+              "description": "Crushed or ground",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0906",
+      "title": "Cinnamon and cinnamon-tree flowers.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0906.11",
+          "title": "Neither crushed nor ground : --Cinnamon (Cinnamomum zeylanicum Blume)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0906.11.10",
+              "description": "Cinnamon bark",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0906.11.20",
+              "description": "Cinnamon tree flowers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0906.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0906.19",
+          "title": "Neither crushed nor ground : --Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0906.19.10",
+              "description": "cassia",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0906.19.90",
+              "description": "other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0906.20",
+          "title": "Crushed or ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0906.20.00",
+              "description": "Crushed or ground",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0907",
+      "title": "Cloves (whole fruit, cloves and stems).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0907.10",
+          "title": "Neither crushed nor ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0907.10.10",
+              "description": "Extracted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0907.10.20",
+              "description": "Not Extracted (other than stem)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0907.10.30",
+              "description": "Stem",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0907.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0907.20",
+          "title": "Crushed or ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0907.20.00",
+              "description": "Crushed or ground",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0908",
+      "title": "Nutmeg, mace and cardamoms.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0908.11",
+          "title": "Nutmeg : -- Neither crushed nor ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0908.11.10",
+              "description": "In shell",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0908.11.20",
+              "description": "Shelled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0908.12",
+          "title": "Nutmeg : -- Crushed or ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0908.12.00",
+              "description": "Nutmeg : -- Crushed or ground",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0908.21",
+          "title": "Mace : --Neither crushed nor ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0908.21.00",
+              "description": "Mace : --Neither crushed nor ground",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0908.22",
+          "title": "Mace : -- Crushed or ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0908.22.00",
+              "description": "Mace : -- Crushed or ground",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0908.31",
+          "title": "Cardamoms : -- Neither crushed nor ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0908.31.10",
+              "description": "Large ( amomum)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0908.31.20",
+              "description": "Small (ellettaria),alleppey green",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0908.31.30",
+              "description": "Small, coorg green",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0908.31.40",
+              "description": "Small, bleached,half bleached or bleachable",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0908.31.50",
+              "description": "Small mixed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0908.31.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0908.32",
+          "title": "Cardamoms : --Crushed or ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0908.32.10",
+              "description": "Powder",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0908.32.20",
+              "description": "Small cardamom seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0908.32.30",
+              "description": "Cardamom husk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0908.32.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0909",
+      "title": "Seeds of anise, badian, fennel, coriander, cumin or caraway; juniper berries.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0909.21",
+          "title": "Seeds of coriander : --Neither crushed nor ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0909.21.10",
+              "description": "Of seed quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0909.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0909.22",
+          "title": "Seeds of coriander : --Crushed or ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0909.22.00",
+              "description": "Seeds of coriander : --Crushed or ground",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0909.31",
+          "title": "Seeds of cumin : --Neither crushed nor ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0909.31.11",
+              "description": "Cumin, black :---- Of seed quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0909.31.19",
+              "description": "Cumin, black :----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0909.31.21",
+              "description": "Cumin, other than black: ---- Of seed quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0909.31.29",
+              "description": "Cumin, other than black: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0909.32",
+          "title": "Seeds of cumin : --Crushed or ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0909.32.00",
+              "description": "Seeds of cumin : --Crushed or ground",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0909.61",
+          "title": "Seeds of anise, badian, caraway or fennel; juniper berries : --Neither crushed nor ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0909.61.11",
+              "description": "Seeds of anise :---- Of seed quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0909.61.19",
+              "description": "Seeds of anise :----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0909.61.21",
+              "description": "Seeds of badian: ---- Of seed quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0909.61.29",
+              "description": "Seeds of badian: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0909.61.31",
+              "description": "Seeds of caraway or fennel: ---- Of seed quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0909.61.39",
+              "description": "Seeds of caraway or fennel: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0909.61.41",
+              "description": "Juniper berries: ----- Of seed quality",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0909.61.49",
+              "description": "Juniper berries: ----- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0909.62",
+          "title": "Seeds of anise, badian, caraway or fennel; juniper berries : -- Crushed or ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0909.62.10",
+              "description": "Anise",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0909.62.20",
+              "description": "Badian",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0909.62.30",
+              "description": "Caraway or fennel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0909.62.40",
+              "description": "Juniper berries",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "0910",
+      "title": "Ginger, saffron, turmeric (curcuma), thyme, bay leaves, curry and other spices.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "0910.11",
+          "title": "Ginger : -- Neither crushed nor ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0910.11.10",
+              "description": "Fresh",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.11.20",
+              "description": "Dried, unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.11.30",
+              "description": "Dried, bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0910.12",
+          "title": "Ginger : -- Crushed or ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0910.12.10",
+              "description": "Powder",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0910.20",
+          "title": "Saffron",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0910.20.10",
+              "description": "Saffron stigma",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.20.20",
+              "description": "Saffron stamen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0910.30",
+          "title": "Turmeric (curcuma)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0910.30.10",
+              "description": "Fresh",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.30.20",
+              "description": "Dried",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.30.30",
+              "description": "Powder",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0910.91",
+          "title": "Other spices : -- Mixtures referred to in Note 1 (b) to this Chapter",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0910.91.00",
+              "description": "Other spices : -- Mixtures referred to in Note 1 (b) to this Chapter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "0910.99",
+          "title": "Other spices : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "0910.99.11",
+              "description": "Seed: ---- Celery",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.99.12",
+              "description": "Seed: ---- Fenugreek",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.99.13",
+              "description": "Seed: ---- Dill",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.99.14",
+              "description": "Seed: ---- Ajwain",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.99.15",
+              "description": "Seed: ---- Cassia torea",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.99.19",
+              "description": "Seed: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.99.21",
+              "description": "Powder: ---- Cassia",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.99.23",
+              "description": "Powder: ---- Celery",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.99.24",
+              "description": "Powder: ---- Fenugreek",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.99.25",
+              "description": "Powder: ---- Dill",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.99.26",
+              "description": "Powder: ---- Poppy",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.99.27",
+              "description": "Powder: ---- Mustard",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.99.29",
+              "description": "Powder: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.99.30",
+              "description": "Husk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "0910.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

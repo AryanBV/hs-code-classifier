@@ -1,0 +1,235 @@
+{
+  "chapter": "14",
+  "section": "II",
+  "title": "VEGETABLE PLAITING MATERIALS; VEGETABLE PRODUCTS NOT ELSEWHERE SPECIFIED OR INCLUDED",
+  "source_pdf": "Chapter 14 Vegetable Plaiting Materials; Vegetable Products Not Elsewhere Specified Or Included.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses codes without dots: 8-digit tariff lines (e.g., '14011000') and 6-digit subheading rows (e.g., '140190', '140490'). Normalized to NNNN.NN.NN format (e.g., '1401.10.00') and NNNN.NN format (e.g., '1401.90', '1404.90') per project schema.",
+    "Headings 1402 and 1403 are not present in the source PDF — they were deleted from the HS nomenclature. Only headings 1401 and 1404 appear in Chapter 14.",
+    "Subheadings 1401.10 (Bamboos) and 1401.20 (Rattans) and 1404.20 (Cotton linters) are presented in the PDF only as 8-digit tariff line rows ('14011000', '14012000', '14042000') without a separate 6-digit subheading header row. Each is captured as a subheading containing a single tariff line ending in '.00'.",
+    "Subheadings 1401.90 (Other, under 1401) and 1404.90 (Other, under 1404) appear in the PDF as 6-digit rows '140190' and '140490' with description 'Other' and no export-policy column value — captured as subheadings with their nested 8-digit tariff lines.",
+    "Section II Main Note (about 'pellets') appears on PDF page 1 above the Chapter 14 title and is attributed to section_notes (Section II, Vegetable Products), not chapter_notes.",
+    "Export Licensing Notes table contains one row about 'Export of quantities of wheat flour to Maldives' (Notification 12/2015-20, 27.06.2017). Wheat flour is classified under Chapter 11, not Chapter 14 — this note appears under Chapter 14 in the source PDF but its subject matter is unrelated to Chapter 14 products. Preserved verbatim in policy_conditions per source.",
+    "Tariff line 1401.10.00 (Bamboos) carries Export Policy 'Prohibited' with a detailed Policy Condition (Notification 11/2015-20 dated 23.06.2017 and 08/2015-20 dated 19.05.2022). Captured in policy_conditions array.",
+    "Tariff line 1404.90.40 (Betel leaves) carries an export condition (registration with SHEFEXIL for EU exports, Notification 30/2015-20 dated 23.09.2021). Captured in policy_conditions array.",
+    "PDF table-chrome headers ('Sl.No. Notes Notification No Notification Date', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Main Notes', 'Export Licensing Notes', 'Product Description and Export Policy') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Chapter 14 Main Notes table presents column order 'Sl.No. | Notes | Notification Date | Notification No' (with Date before No) whereas Section II Main Notes table presents 'Sl.No. | Notes | Notification No. | Notification Date' (with No before Date). Both Main Notes rows in this chapter have empty Notification fields — no impact on captured data."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover the following products which are to be classified in Section XI: vegetable materials or fibres of vegetable materials of a kind used primarily in the manufacture of textiles, however prepared, or other vegetable materials which have undergone treatment so as to render them suitable for use only as textile materials."
+    },
+    {
+      "number": "2",
+      "text": "Heading 1401 applies, inter alia, to bamboos (whether or not split, sawn lengthwise, cut to length, rounded at the ends, bleached, rendered non-inflammable, polished or dyed), split osier, reeds and the like, to rattan cores and to drawn or split rattans. The heading does not apply to chipwood (heading 4404)."
+    },
+    {
+      "number": "3",
+      "text": "Heading 1404 does not apply to wood wool (heading 4405) and prepared knots or tufts for broom or brush making (heading 9603)."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "In this Section, the term \"pellets\" means products which have been agglomerated either directly by compression or by the addition of a binder in a proportion not exceeding 3 (percent) by weight."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "vegetable materials or fibres of vegetable materials of a kind used primarily in the manufacture of textiles, however prepared",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover the following products which are to be classified in Section XI: vegetable materials or fibres of vegetable materials of a kind used primarily in the manufacture of textiles, however prepared, or other vegetable materials which have undergone treatment so as to render them suitable for use only as textile materials."
+    },
+    {
+      "excluded_product_text": "other vegetable materials which have undergone treatment so as to render them suitable for use only as textile materials",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "This Chapter does not cover the following products which are to be classified in Section XI: vegetable materials or fibres of vegetable materials of a kind used primarily in the manufacture of textiles, however prepared, or other vegetable materials which have undergone treatment so as to render them suitable for use only as textile materials."
+    },
+    {
+      "excluded_product_text": "chipwood",
+      "redirects_to_chapter": "44",
+      "redirects_to_heading": "4404",
+      "source_note_number": "Note 2",
+      "source_note_text": "Heading 1401 applies, inter alia, to bamboos (whether or not split, sawn lengthwise, cut to length, rounded at the ends, bleached, rendered non-inflammable, polished or dyed), split osier, reeds and the like, to rattan cores and to drawn or split rattans. The heading does not apply to chipwood (heading 4404)."
+    },
+    {
+      "excluded_product_text": "wood wool",
+      "redirects_to_chapter": "44",
+      "redirects_to_heading": "4405",
+      "source_note_number": "Note 3",
+      "source_note_text": "Heading 1404 does not apply to wood wool (heading 4405) and prepared knots or tufts for broom or brush making (heading 9603)."
+    },
+    {
+      "excluded_product_text": "prepared knots or tufts for broom or brush making",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": "9603",
+      "source_note_number": "Note 3",
+      "source_note_text": "Heading 1404 does not apply to wood wool (heading 4405) and prepared knots or tufts for broom or brush making (heading 9603)."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "1401",
+      "title": "Vegetable materials of a kind used primarily for plaiting (for example, bamboos, rattans, reeds, rushes, osier, raffia, cleaned, bleached or dyed cereal straw, and lime bark).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1401.10",
+          "title": "Bamboos",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1401.10.00",
+              "description": "Bamboos",
+              "unit": null,
+              "export_policy": "Prohibited",
+              "policy_condition": "Export of Bamboo products made from bamboo obtained from legal source; except bamboo charcoal, bamboo pulp and unprocessed bamboo shoots is free subject to following conditions: (i) All the bamboo products made from bamboo obtained from legal sources are permitted for export subject to proper documentation/Certificate of Origin (CoO) proving that the bamboo used for making products has been obtained from legal sources. (ii) The CoO shall be issued by the concerned State Forest Department/ Agriculture Department from where bamboo has been procured by the purchaser of making handicrafts/machine made products."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1401.20",
+          "title": "Rattans",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1401.20.00",
+              "description": "Rattans",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1401.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1401.90.10",
+              "description": "Canes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1401.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1404",
+      "title": "Vegetable products not elsewhere specified or included.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1404.20",
+          "title": "Cotton linters",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1404.20.00",
+              "description": "Cotton linters",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1404.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1404.90.10",
+              "description": "Bidi wrapper leaves (tendu)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1404.90.21",
+              "description": "Soap-nuts: ---- Powder",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1404.90.29",
+              "description": "Soap-nuts: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1404.90.30",
+              "description": "Hard seeds, pips, hulls and nuts, of a kind used primarily for carving",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1404.90.40",
+              "description": "Betel leaves",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export to European Union is permitted subject to registration with SHEFEXIL, the designated Competent Authority"
+            },
+            {
+              "code": "1404.90.50",
+              "description": "Indian katha",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1404.90.60",
+              "description": "Coconut shell, unworked",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1404.90.70",
+              "description": "Rudraksha seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1404.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

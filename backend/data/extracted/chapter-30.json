@@ -1,0 +1,2178 @@
+{
+  "chapter": "30",
+  "section": "VI",
+  "title": "PHARMACEUTICAL PRODUCTS",
+  "source_pdf": "Chapter 30 Pharmaceutical Products.pdf",
+  "extracted_at": "2026-05-21",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '30012010') and 6-digit subheading codes without dots (e.g., '300120'). Normalized to NNNN.NN.NN format (e.g., '3001.20.10') and NNNN.NN format (e.g., '3001.20') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'Sl.No. Notes Notification No Notification Date', 'Sub-Heading Notes', 'Policy Condition', 'Export Licensing Notes', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "PDF contains '?' characters in place of typographic quote marks in several notes (e.g., '?CITES?', '?Shipment Clearance Certificate?', '?Health Certificate?', '?The words Heavy metals within permissible limits?'). These are OCR/encoding artifacts from the source PDF — preserved verbatim as they appear in the source.",
+    "Chapter title on PDF page 1 (above the Section VI notes table) reads 'Chapter 30 Pharmaceutical Products.' The canonical ITC(HS) chapter title 'PHARMACEUTICAL PRODUCTS' is used in the title field; source_pdf preserves the PDF filename.",
+    "Section VI 'Main Notes' (4 notes) are attributed to section_notes (Section VI, Products of the Chemical or Allied Industries), not chapter_notes.",
+    "The Policy Condition section in the source PDF (page 3-4) lists 6 numbered rows but only Sl.No. '1' is shown with explicit numbering text; rows 2-6 appear without their own 'Policy Condition N' numeric label in the header. Tariff-line Policy Condition references in the table cite 'Policy Condition 1', '2', '4 & 5', and '6' of the Chapter. Policy conditions are captured by their PDF row Sl.No.",
+    "Heading 3002 description on the PDF spans multiple lines and is rendered in ALL CAPS with internal spacing artifacts (e.g., 'FORTHERAPEUTIC' as one word). Preserved verbatim — the intended text is 'FOR THERAPEUTIC'.",
+    "Subheading 3002.41 PDF description includes 'Vaccines, toxins, cultures of micro-organisms (excluding yeasts) and similar products: - - Vaccines for human medicine:' — contains hyphen-prefix indicators ('- -') from the WCO HS nomenclature and a trailing colon.",
+    "Several tariff-line descriptions in heading 3003 (subheading 3003.90) and 3004 (subheading 3004.90) are very long compound descriptions covering multiple sub-groups joined by ': ----' (e.g., 'Bovine Albumin and drugs of animal origin, Merbromine National Formulary XII (Mercurochrome), Calcium Sennoside, Anaesthetic agents used in human or veterinary medicine or surgery, Aluminium hydroxide gel: ---- Bovine Albumin and drugs of animal origin'). These are preserved verbatim as they appear in the PDF.",
+    "Tariff lines 3001.20.10, 3001.20.20, 3001.20.30, 3001.20.90 in the PDF appear under subheading 3001.20 ('Extracts of glands or other organs or of their secretions'). Tariff lines 3001.90.10, 3001.90.91, 3001.90.99 appear under subheading 3001.90 ('Other').",
+    "Subheading 3002.10 ('Antisera and other blood fractions and immunological products...') has tariff line code '3002.10.20' followed by '3002.10.91'. There is no '3002.10.10' or '3002.10.99' tariff line shown in the PDF — preserved verbatim. Code '3002.10.20' appears once in the PDF without a separate sub-classification description.",
+    "The 'Export Policy' and 'Policy Condition' columns are not part of the tariff line description field; they are captured separately. Unit-of-measure column (kg/u/etc) is NOT shown in this chapter's PDF — unit field set to null for all tariff lines.",
+    "Subheading 3002.10 row 3002.10.20 has an empty Export Policy/Policy Condition column in the PDF. Preserved verbatim.",
+    "Policy Condition row Sl.No. 6 in the PDF appears as '1. Any human biological materials/samples/products which are related to activities covered under the provision of Drugs &Cosmetics Act 1940 &Rules thereunder are free for export subject to No objection from CDSCO. 2. Any human biological materials/samples/products NOT covered under (1) above are free for export subject to No objection from ICMR/DHR.' — Sl.No. '6' was implicit (numbering inferred from sequence after rows 1-5).",
+    "Tariff line code 30049014 (3004.90.14) description spans across page break: 'Ayurvedic, Unani, Homoeopathic, Siddha or Bio-chemic systems medicaments, put up for retail sale: ---- Of Homoeopathic System'. Concatenated verbatim from page 22-23.",
+    "Tariff line code 30049096 (3004.90.96) Policy Condition column contains additional text after the standard 'Subject to Policy Condition 1 of the Chapter': 'Furthermore, export of Ketamine is allowed subject to obtaining No Objection Certificate from Narcotics Commissioner'. Captured in policy_conditions metadata.",
+    "Heading 3006 description in PDF reads 'Pharmaceutical goods specified in Note 4 to this Chapter.' — verbatim including the trailing period."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover: (a) foods or beverages(suchas dietetic, diabeticorfortified foods,food supplements,tonic beverages and mineral waters), other than nutritional preparations for intravenous administration (Section IV); (b) products, such as tablets, chewing gum or patches (transdermal systems), containing nicotine and intended to assist tobacco use cessation (heading 2404); (c) plasters specially calcined or finely ground for use in dentistry (heading 2520); (d) aqueous distillates or aqueous solutions of essential oil, suitable for medicinal uses (heading 3301); (e) preparations of headings 3303 to 3307, even if they have therapeutic or prophylactic properties; (f)soap or other products of heading 3401 containing added medicaments; (g) preparations with a basis of plaster for use in dentistry (heading 3407); (h) blood albumin not prepared for therapeutic or prophylactic uses (heading 3502); or. (ij) diagnostic reagents of heading 3822."
+    },
+    {
+      "number": "2",
+      "text": "For the purposes of heading 3002, the expression \"immunological products\" appliesto peptides and proteins (other than goods of heading 2937) which are directly involved in the regulation of immunological processes, such as monoclonal antibodies (MAB), antibody fragments, antibody conjugates and antibody fragment conjugates, interleukins, interferons (IFN), chemokines and certain tumor necrosis factors (TNF), growth factors(GF), hematopoietins and colony stimulating factors(CSF).;"
+    },
+    {
+      "number": "3",
+      "text": "For the purposes of headings 3003 and 3004 and of Note 4(d) to this Chapter, the following are to be treated: (a) as unmixed products: (1) unmixed products dissolved in water; (2) all goods of Chapter 28 or 29; and (3)simple vegetable extracts of heading1302,merelystandardised or dissolved in any solvent; (b) as products which have been mixed: (1) colloidalsolutions and suspensions(other than colloidalsulphur); (2) vegetable extracts obtained by the treatment of mixture of vegetable materials; and (3) salts and concentrates obtained by evaporating natural mineral waters."
+    },
+    {
+      "number": "4",
+      "text": "Heading 3006 applies only to the following, which are to be classified in that heading and in no other heading of this Schedule? (a) sterile surgical catgut,similar sterile suture materials (including sterile absorbable surgical or dental yarns) and sterile tissue adhesives for surgical wound closure; (b)sterile laminaria and sterile laminaria tents; (c) sterile absorbable surgical or dental haemostatics sterile surgical or dental adhesion barriers, whether or not absorbable; (d) opacifying preparations for X-ray examinations and diagnostic reagents designed to be administered to the patient, being unmixed products put up in measured doses or products consisting of two or more ingredients which have been mixed together for such uses; (e) placebos and blinded (or double-blinded) clinical trial kits for use in recognized clinical trials, put up in measured doses, even if they might contain active medicaments; (f) dental cements and other dental fillings; bone reconstruction cements; (g) first-aid boxes and kits; (h) chemical contraceptive preparations based on hormones, on other products of heading 2937 or on spermicides; (i) gel preparations designed to be used in human or veterinary medicine as a lubricant for parts of the body for surgical operations or physical examinations or as a coupling agent between the body and medical instruments; and (j)waste pharmaceuticals, that is, pharmaceutical products which are unfit for their original intended purpose due to, for example, expiry ofshelf-life. (k) appliancesidentifiable for ostomy use, that is, colostomy, ileostomy and urostomy pouches cut to shape and their adhesive wafers or faceplates."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "(A) Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 are to be classified in those headings and in no other heading of this Schedule. (B) Subject to paragraph (A) above, goods answering to a description in heading 2843, 2846 or 2852 are to be classified in those headings and in no other heading of this Section."
+    },
+    {
+      "number": "2",
+      "text": "Subject to Note 1 above, goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale are to be classified in those headings and in no other heading of this Schedule."
+    },
+    {
+      "number": "3",
+      "text": "Goods put up in sets consisting of two or more separate constituents,some or all of which fall in this Section and are intended to be mixed together to obtain a product of Section VI or VII, are to be classified in the heading appropriate to that product, provided that the constituents are: (a) having regard to the manner in which they are put up, clearly identifiable as being intended to be used together without first being repacked; (b) presented together; and (c) identifiable, whether by their nature or by the relative proportions in which they are present, as being complementary one to another."
+    },
+    {
+      "number": "4",
+      "text": "Where a product answers to a description in one or more of the headings in Section VI by virtue of being described by name or function and also to heading 3827, then it is classifiable in a heading that references the product by name or function and not under heading 3827."
+    }
+  ],
+  "chapter_subheading_notes": [
+    {
+      "number": "1",
+      "text": "For the purposes of sub-headings 3002 13 and 3002 14, the following are to be treated: (a) as unmixed products, pure products, whether or not containing impurities; (b) as products which have been mixed: (1) the products mentioned in (a) above dissolved in water or in other solvents; (2) the products mentioned in (a) and (b) (1) above with an added stabiliser necessary for their preservation or transport; and (3) the products mentioned in (a), (b) (1) and (b) (2) above with any other additive."
+    },
+    {
+      "number": "2",
+      "text": "Sub-headings 3003 60 and 3004 60 cover medicaments containing artemisinin (INN) for oral ingestion combined with other pharmaceutical active ingredients, or containing any of the following active principles, whether or not combined with other pharmaceutical active ingredients: amodi aquine (INN); artelinic acid oritssalts; artenimol(INN); artemotil(INN); artemether(INN); artesunate (INN); chloroquine (INN); dihydroartemisinin (INN); lumefantrine (INN);mefloquine (INN); piperaquine (INN); pyrimethamine (INN) or sulfadoxine (INN)."
+    }
+  ],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "foods or beverages (such as dietetic, diabetic or fortified foods, food supplements, tonic beverages and mineral waters), other than nutritional preparations for intravenous administration",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover: (a) foods or beverages(suchas dietetic, diabeticorfortified foods,food supplements,tonic beverages and mineral waters), other than nutritional preparations for intravenous administration (Section IV)"
+    },
+    {
+      "excluded_product_text": "products, such as tablets, chewing gum or patches (transdermal systems), containing nicotine and intended to assist tobacco use cessation",
+      "redirects_to_chapter": "24",
+      "redirects_to_heading": "2404",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "(b) products, such as tablets, chewing gum or patches (transdermal systems), containing nicotine and intended to assist tobacco use cessation (heading 2404)"
+    },
+    {
+      "excluded_product_text": "plasters specially calcined or finely ground for use in dentistry",
+      "redirects_to_chapter": "25",
+      "redirects_to_heading": "2520",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "(c) plasters specially calcined or finely ground for use in dentistry (heading 2520)"
+    },
+    {
+      "excluded_product_text": "aqueous distillates or aqueous solutions of essential oil, suitable for medicinal uses",
+      "redirects_to_chapter": "33",
+      "redirects_to_heading": "3301",
+      "source_note_number": "Note 1(d)",
+      "source_note_text": "(d) aqueous distillates or aqueous solutions of essential oil, suitable for medicinal uses (heading 3301)"
+    },
+    {
+      "excluded_product_text": "preparations of headings 3303 to 3307, even if they have therapeutic or prophylactic properties",
+      "redirects_to_chapter": "33",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(e)",
+      "source_note_text": "(e) preparations of headings 3303 to 3307, even if they have therapeutic or prophylactic properties"
+    },
+    {
+      "excluded_product_text": "soap or other products of heading 3401 containing added medicaments",
+      "redirects_to_chapter": "34",
+      "redirects_to_heading": "3401",
+      "source_note_number": "Note 1(f)",
+      "source_note_text": "(f)soap or other products of heading 3401 containing added medicaments"
+    },
+    {
+      "excluded_product_text": "preparations with a basis of plaster for use in dentistry",
+      "redirects_to_chapter": "34",
+      "redirects_to_heading": "3407",
+      "source_note_number": "Note 1(g)",
+      "source_note_text": "(g) preparations with a basis of plaster for use in dentistry (heading 3407)"
+    },
+    {
+      "excluded_product_text": "blood albumin not prepared for therapeutic or prophylactic uses",
+      "redirects_to_chapter": "35",
+      "redirects_to_heading": "3502",
+      "source_note_number": "Note 1(h)",
+      "source_note_text": "(h) blood albumin not prepared for therapeutic or prophylactic uses (heading 3502)"
+    },
+    {
+      "excluded_product_text": "diagnostic reagents of heading 3822",
+      "redirects_to_chapter": "38",
+      "redirects_to_heading": "3822",
+      "source_note_number": "Note 1(ij)",
+      "source_note_text": "(ij) diagnostic reagents of heading 3822"
+    },
+    {
+      "excluded_product_text": "peptides and proteins which are goods of heading 2937 (excluded from the heading 3002 definition of 'immunological products')",
+      "redirects_to_chapter": "29",
+      "redirects_to_heading": "2937",
+      "source_note_number": "Note 2",
+      "source_note_text": "For the purposes of heading 3002, the expression \"immunological products\" appliesto peptides and proteins (other than goods of heading 2937) which are directly involved in the regulation of immunological processes, such as monoclonal antibodies (MAB), antibody fragments, antibody conjugates and antibody fragment conjugates, interleukins, interferons (IFN), chemokines and certain tumor necrosis factors (TNF), growth factors(GF), hematopoietins and colony stimulating factors(CSF).;"
+    },
+    {
+      "excluded_product_text": "all goods of Chapter 28 or 29 (treated as 'unmixed products' for purposes of headings 3003 and 3004 and Note 4(d))",
+      "redirects_to_chapter": "29",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(a)(2)",
+      "source_note_text": "For the purposes of headings 3003 and 3004 and of Note 4(d) to this Chapter, the following are to be treated: (a) as unmixed products: (1) unmixed products dissolved in water; (2) all goods of Chapter 28 or 29; and (3)simple vegetable extracts of heading1302,merelystandardised or dissolved in any solvent"
+    },
+    {
+      "excluded_product_text": "simple vegetable extracts of heading 1302, merely standardised or dissolved in any solvent (treated as 'unmixed products' for purposes of headings 3003 and 3004)",
+      "redirects_to_chapter": "13",
+      "redirects_to_heading": "1302",
+      "source_note_number": "Note 3(a)(3)",
+      "source_note_text": "For the purposes of headings 3003 and 3004 and of Note 4(d) to this Chapter, the following are to be treated: (a) as unmixed products: ... (3)simple vegetable extracts of heading1302,merelystandardised or dissolved in any solvent"
+    },
+    {
+      "excluded_product_text": "Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 — must be classified in those headings and not elsewhere",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": "2844",
+      "source_note_number": "Section VI Note 1(A)",
+      "source_note_text": "(A) Goods (other than radioactive ores) answering to a description in heading 2844 or 2845 are to be classified in those headings and in no other heading of this Schedule."
+    },
+    {
+      "excluded_product_text": "Goods answering to a description in heading 2843, 2846 or 2852 — must be classified in those headings and not elsewhere in Section VI",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": "2843",
+      "source_note_number": "Section VI Note 1(B)",
+      "source_note_text": "(B) Subject to paragraph (A) above, goods answering to a description in heading 2843, 2846 or 2852 are to be classified in those headings and in no other heading of this Section."
+    },
+    {
+      "excluded_product_text": "Goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale — classified in those headings only",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": "3004",
+      "source_note_number": "Section VI Note 2",
+      "source_note_text": "Subject to Note 1 above, goods classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307, 3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale are to be classified in those headings and in no other heading of this Schedule."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "3001",
+      "title": "Glands and other organs for organo-therapeutic uses, dried,whether or not powdered; extracts of glands or other organs or of their secretions for organo-therapeutic uses; heparin and its salts; other human or animal substances prepared for therapeutic or prophylactic uses, not elsewhere specified or included.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3001.20",
+          "title": "Extracts of glands or other organs or of their secretions",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3001.20.10",
+              "description": "Liquid extracts of liver",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3001.20.20",
+              "description": "Liver extracts, dry",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3001.20.30",
+              "description": "Snake Venom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3001.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "However, the following items are restricted and allowed to export under Restricted Export Authorization: 1. Gonads and other reproductive organs of buffaloes 2. Germplasm of cattle and buffaloes"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3001.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3001.90.10",
+              "description": "Of human origin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3001.90.91",
+              "description": "Other: ---- Heparin and its salts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of Heparin and its salts is Free wherein export of the item produced from animal by-products allowed freely but export to European Union allowed subject to the following conditions : (i) A ?Shipment Clearance Certificate? is to be issued consignment- wise by the CAPEXIL indicating details of the name and address of the exporter, address of the registered plant, IEC No. of the exporter, Plant approval number, nature of export product, quantity, invoice number and date, port of loading (name of the port) and destination; (ii) After the shipment is made, the exporter shall also provide a ?Health Certificate? consignment-wise to the buyer giving details of the product with HS Code, packaging, its origin, destination, vessel name, date of departure, health requirements, etc. This Health Certificate would be issued jointly by CAPEXIL and Regional Animal Quarantine Officer, Department of Animal Husbandry, Dairying and Fisheries, Ministry of Agriculture and Farmers Welfare, Government of India."
+            },
+            {
+              "code": "3001.90.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "However, the following items are restricted and allowed to export under Restricted Export Authorization: 1. Gonads and other reproductive organs of buffaloes 2. Germplasm of cattle and buffaloes"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3002",
+      "title": "HUMAN BLOOD; ANIMAL BLOOD PREPARED FORTHERAPEUTIC, PROPHYLACTIC OR DIAGNOSTIC USES; ANTISERA, OTHER BLOOD FRACTIONS AND IMMUNOLOGICAL PRODUCTS, WHETHER OR NOT MODIFIED OR OBTAINED BY MEANS OF BIOTECHNOLOGICAL PROCESSES; VACCINES,TOXINS, CULTURES OF MICRO-ORGANISMS (EXCLUDING YEASTS) AND ETHER SIMILAR PRODUCTS; CELL CULTURES, WHETHER OR NOT MODIFIED",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3002.10",
+          "title": "Antisera and other blood fractions and immunological products, whether or not modified or obtained by means of biotechnological processes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3002.10.20",
+              "description": "Antisera and other blood fractions and immunological products, whether or not modified or obtained by means of biotechnological processes",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            },
+            {
+              "code": "3002.10.91",
+              "description": "Antisera and other blood fractions and immunological products, whether or not modified or obtained by means of biotechnological processes",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false,
+          "india_specific": true,
+          "india_specific_note": "Subheading 300210 is explicitly present as a row in the Indian PDF (alongside its child 8-digit codes 30021020, 30021091, etc.). India retains the legacy HS 2017 subheading 3002.10 'Antisera and other blood fractions...' even though WCO HS 2022 split it into 3002.12-3002.15. Genuine India-specific retention."
+        },
+        {
+          "subheading": "3002.12",
+          "title": "Antisera, other blood fractions and immunological products, whether or not modified or obtained by means of biotechnological processes -- Antisera and other blood fractions",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3002.12.10",
+              "description": "For diphtheria",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 6 of the Chapter."
+            },
+            {
+              "code": "3002.12.20",
+              "description": "For tetanus",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 6 of the Chapter."
+            },
+            {
+              "code": "3002.12.30",
+              "description": "For rabies",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 6 of the Chapter."
+            },
+            {
+              "code": "3002.12.40",
+              "description": "For snake venom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 6 of the Chapter."
+            },
+            {
+              "code": "3002.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 6 of the Chapter."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3002.13",
+          "title": "Immunological products, unmixed, not put up in measured doses or in forms or packings for retail sale",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3002.13.00",
+              "description": "Immunological products, unmixed, not put up in measured doses or in forms or packings for retail sale",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3002.14",
+          "title": "Immunological products, mixed, not put up in measured doses or in forms or packings for retail sale",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3002.14.00",
+              "description": "Immunological products, mixed, not put up in measured doses or in forms or packings for retail sale",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3002.15",
+          "title": "Antisera, other blood fractions and immunological products, whether or not modified or obtained by means of biotechnological processes -- Immunological products, put up in measured doses or in forms or packings for retail sale",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3002.15.00",
+              "description": "Antisera, other blood fractions and immunological products, whether or not modified or obtained by means of biotechnological processes -- Immunological products, put up in measured doses or in forms or packings for retail sale",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3002.41",
+          "title": "Vaccines, toxins, cultures of micro-organisms (excluding yeasts) and similar products: - - Vaccines for human medicine:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3002.41.11",
+              "description": "Single vaccines for: - - - - Cholera and typhoid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3002.41.12",
+              "description": "Single vaccines for: - - - - Hepatitis",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3002.41.13",
+              "description": "Single vaccines for: - - - - Tetanus",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3002.41.14",
+              "description": "Single vaccines for: - - - - Polio",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3002.41.15",
+              "description": "Single vaccines for: - - - - Tuberculosis",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3002.41.16",
+              "description": "Single vaccines for: - - - - Rabies",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3002.41.17",
+              "description": "Single vaccines for: - - - - Japanese encephalitis",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3002.41.18",
+              "description": "Single vaccines for: - - - - Whopping cough (pertussis)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3002.41.19",
+              "description": "Single vaccines for: - - - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3002.41.21",
+              "description": "Diphtheria, pertussis and tetanus (DPT)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3002.41.22",
+              "description": "Mixed vaccines for: - - - - Diphtheria and tetanus (DT)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3002.41.23",
+              "description": "Mixed vaccines for: - - - - Measles, mumps and rubella (MMR)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3002.41.24",
+              "description": "Mixed vaccines for: - - - - Typhoid-paratyphoid (TAB)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3002.41.25",
+              "description": "Mixed vaccines for: - - - - Typhoid-paratyphoid-cholera (TABC)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3002.41.29",
+              "description": "Mixed vaccines for: - - - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3002.42",
+          "title": "Mixed vaccines for: - - Vaccines for veterinary medicine",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3002.42.00",
+              "description": "Mixed vaccines for: - - Vaccines for veterinary medicine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3002.49",
+          "title": "Mixed vaccines for: - - Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3002.49.10",
+              "description": "Mixed vaccines for: - - - Cultures of micro-organisms (excluding yeast)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3002.49.20",
+              "description": "Mixed vaccines for: - - - Toxins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3002.49.90",
+              "description": "Mixed vaccines for: - - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3002.51",
+          "title": "Cell cultures, whether or not modified - - Cell therapy products",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3002.51.00",
+              "description": "Cell cultures, whether or not modified - - Cell therapy products",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3002.59",
+          "title": "Cell cultures, whether or not modified - - Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3002.59.00",
+              "description": "Cell cultures, whether or not modified - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3002.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3002.90.10",
+              "description": "Human blood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 6 of the Chapter."
+            },
+            {
+              "code": "3002.90.20",
+              "description": "Animal blood prepared for therapeutic, prophylactic or diagnostic uses",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 4 &5 of the Chapter."
+            },
+            {
+              "code": "3002.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3003",
+      "title": "Medicaments (excluding goods of heading 30.02, 30.05 or 30.06) consisting of two or more constituents which have been mixed together for therapeutic or prophylactic uses, not put up in measured doses or in forms or packings for retail sale",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3003.10",
+          "title": "Containing penicillins or derivatives thereof, with a penicillanic acid structure, or streptomycins or their derivatives",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3003.10.00",
+              "description": "Containing penicillins or derivatives thereof, with a penicillanic acid structure, or streptomycins or their derivatives",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3003.20",
+          "title": "Other, containing antibiotics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3003.20.00",
+              "description": "Other, containing antibiotics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3003.31",
+          "title": "Other, containing hormones or other products of heading 29.37 : -- Containing insulin",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3003.31.00",
+              "description": "Other, containing hormones or other products of heading 29.37 : -- Containing insulin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3003.39",
+          "title": "Other, containing hormones or other products of heading 29.37 : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3003.39.00",
+              "description": "Other, containing hormones or other products of heading 29.37 : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3003.41",
+          "title": "Other, containing alkaloids or derivatives thereof : -- Containing ephedrine or its salts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3003.41.00",
+              "description": "Other, containing alkaloids or derivatives thereof : -- Containing ephedrine or its salts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3003.42",
+          "title": "Other, containing alkaloids or derivatives thereof : -- Containing pseudoephedrine (INN) or its salts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3003.42.00",
+              "description": "Other, containing alkaloids or derivatives thereof : -- Containing pseudoephedrine (INN) or its salts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3003.43",
+          "title": "Other, containing alkaloids or derivatives thereof : -- Containing norephedrine or its salts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3003.43.00",
+              "description": "Other, containing alkaloids or derivatives thereof : -- Containing norephedrine or its salts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3003.49",
+          "title": "Other, containing alkaloids or derivatives thereof : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3003.49.00",
+              "description": "Other, containing alkaloids or derivatives thereof : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3003.60",
+          "title": "Other, containing antimalarial active principles described in Subheading Note 2 to this Chapter",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3003.60.00",
+              "description": "Other, containing antimalarial active principles described in Subheading Note 2 to this Chapter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3003.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3003.90.11",
+              "description": "Ayurvedic, Unani, siddha, Homoeopathic or bio-chemic systems medicaments: ---- Of Ayurvedic System",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "3003.90.12",
+              "description": "Ayurvedic, Unani, siddha, Homoeopathic or bio-chemic systems medicaments: ---- Of Unani systems",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "3003.90.13",
+              "description": "Ayurvedic, Unani, siddha, Homoeopathic or bio-chemic systems medicaments: ---- Of Siddha system",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "3003.90.14",
+              "description": "Ayurvedic, Unani, siddha, Homoeopathic or bio-chemic systems medicaments: ---- Of Homoeopathic System",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "3003.90.15",
+              "description": "Ayurvedic, Unani, siddha, Homoeopathic or bio-chemic systems medicaments: ---- Of Bio-chemic system",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 2 of the Chapter"
+            },
+            {
+              "code": "3003.90.21",
+              "description": "Menthol crystals and Milk of Magnesia: ---- Menthol crystals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3003.90.22",
+              "description": "Menthol crystals and Milk of Magnesia: ---- Milk of Magnesia",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3003.90.31",
+              "description": "Bovine Albumin and drugs of animal origin, Merbromine National Formulary XII (Mercurochrome), Calcium Sennoside, Anaesthetic agents used in human or veterinary medicine or surgery, Aluminium hydroxide gel: ---- Bovine Albumin and drugs of animal origin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3003.90.32",
+              "description": "Bovine Albumin and drugs of animal origin, Merbromine National Formulary XII (Mercurochrome), Calcium Sennoside, Anaesthetic agents used in human or veterinary medicine or surgery, Aluminium hydroxide gel: ---- Merbromine National Formulary XII (mercurochrome)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3003.90.33",
+              "description": "Bovine Albumin and drugs of animal origin, Merbromine National Formulary XII (Mercurochrome), Calcium Sennoside, Anaesthetic agents used in human or veterinary medicine or surgery, Aluminium hydroxide gel: ---- Calcium Sennoside",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3003.90.34",
+              "description": "Bovine Albumin and drugs of animal origin, Merbromine National Formulary XII (Mercurochrome), Calcium Sennoside, Anaesthetic agents used in human or veterinary medicine or surgery, Aluminium hydroxide gel: ---- Anaesthetic agents used in human or veterinary medicine or surgery",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3003.90.35",
+              "description": "Bovine Albumin and drugs of animal origin, Merbromine National Formulary XII (Mercurochrome), Calcium Sennoside, Anaesthetic agents used in human or veterinary medicine or surgery, Aluminium hydroxide gel: ---- Aluminium hydroxide gel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3003.90.36",
+              "description": "Bovine Albumin and drugs of animal origin, Merbromine National Formulary XII (Mercurochrome), Calcium Sennoside, Anaesthetic agents used in human or veterinary medicine or surgery, Aluminium hydroxide gel: ---- Ketamine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "However export of Ketamine is allowed subject to obtaining No Objection Certificate from Narcotics Commissioner"
+            },
+            {
+              "code": "3003.90.90",
+              "description": "Bovine Albumin and drugs of animal origin, Merbromine National Formulary XII (Mercurochrome), Calcium Sennoside, Anaesthetic agents used in human or veterinary medicine or surgery, Aluminium hydroxide gel: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3004",
+      "title": "Medicaments (excluding goods of heading 30.02, 30.05 or 30.06) consisting of mixed or unmixed products for therapeutic or prophylactic uses, put up in measured doses (including those in the form of transdermal administration systems) or in forms or packings for retail sale.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3004.10",
+          "title": "containing Penicillins or derivatives thereof, with a penicillanic acid structure, or streptomycins or their derivatives",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3004.10.10",
+              "description": "Penicillins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.10.20",
+              "description": "Ampicillin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.10.30",
+              "description": "Amoxycillin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.10.40",
+              "description": "Becampicillin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.10.50",
+              "description": "Cloxacillin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.10.60",
+              "description": "Ampicillin and Cloxacillin combinations",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.10.70",
+              "description": "Streptomycin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3004.20",
+          "title": "Other, containing antibiotics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3004.20.11",
+              "description": "Cephalosporins and their derivatives: ---- Cefazolin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.12",
+              "description": "Cephalosporins and their derivatives: ---- Cephalexin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.13",
+              "description": "Cephalosporins and their derivatives: ---- Ciprofloxacin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.14",
+              "description": "Cephalosporins and their derivatives: ---- Cefoxitin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.19",
+              "description": "Cephalosporins and their derivatives: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.20",
+              "description": "Cephalosporins and their derivatives: ---- Sulfonamides and Cotrimoxazole",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.31",
+              "description": "Fluoroquinolones: ---- Norfloxacin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.32",
+              "description": "Fluoroquinolones: ---- Nalidixic acid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.33",
+              "description": "Fluoroquinolones: ---- Ciprofloxacin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.34",
+              "description": "Fluoroquinolones: ---- Ofloxacin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.39",
+              "description": "Fluoroquinolones: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.41",
+              "description": "Tetracyclines: ---- Chlortetracycline",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.42",
+              "description": "Tetracyclines: ---- Oxytetracycline",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.49",
+              "description": "Tetracyclines: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.50",
+              "description": "Tetracyclines: ---- Chloramphenicol",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.61",
+              "description": "Macrolide: ---- Erythromycin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.62",
+              "description": "Macrolide: ---- Roxithromycin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.63",
+              "description": "Macrolide: ---- Clarithromycin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.64",
+              "description": "Macrolide: ---- Azithromycin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.69",
+              "description": "Macrolide: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.70",
+              "description": "Macrolide: ---- Cefadroxil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.91",
+              "description": "Other: ---- Isoniazid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.92",
+              "description": "Other: ---- Rifampicin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.93",
+              "description": "Other: ---- Pyrazinamide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.94",
+              "description": "Other: ---- Ethambutol",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.95",
+              "description": "Other: ---- Clindamycin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.96",
+              "description": "Other: ---- Vancomycin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.97",
+              "description": "Other: ---- Polymyxin B and Colistin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.20.99",
+              "description": "Other: ---- Hormones or other products",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3004.31",
+          "title": "Other, containing hormones or other products of heading 29.37 : -- Containing insulin",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3004.31.10",
+              "description": "Insulin injection",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.31.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3004.32",
+          "title": "Other, containing hormones or other products of heading 29.37 : -- Containing corticosteroid hormones, their derivatives or structural analogues",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3004.32.00",
+              "description": "Other, containing hormones or other products of heading 29.37 : -- Containing corticosteroid hormones, their derivatives or structural analogues",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3004.39",
+          "title": "Other, containing hormones or other products of heading 29.37 : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3004.39.11",
+              "description": "Pituitary hormones; Prednisolone; Dexamethasone; Danazol; Other progestogen and oestogen group hormones: ---- Pituitary hormones",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.39.12",
+              "description": "Pituitary hormones; Prednisolone; Dexamethasone; Danazol; Other progestogen and oestogen group hormones: ---- Prednisolone",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.39.13",
+              "description": "Pituitary hormones; Prednisolone; Dexamethasone; Danazol; Other progestogen and oestogen group hormones: ---- Dexamethasone",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.39.14",
+              "description": "Pituitary hormones; Prednisolone; Dexamethasone; Danazol; Other progestogen and oestogen group hormones: ---- Danazol",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.39.19",
+              "description": "Pituitary hormones; Prednisolone; Dexamethasone; Danazol; Other progestogen and oestogen group hormones: ---- Other progestogen and oestogen group hormones",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.39.21",
+              "description": "Gonadotrophins and luteinising hormone: ---- Gonadotrophins",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.39.22",
+              "description": "Gonadotrophins and luteinising hormone: ---- Luteinising hormone",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.39.90",
+              "description": "Gonadotrophins and luteinising hormone: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3004.41",
+          "title": "Other, containing alkaloids or derivatives thereof : -- Containing ephedrine or its salts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3004.41.00",
+              "description": "Other, containing alkaloids or derivatives thereof : -- Containing ephedrine or its salts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3004.42",
+          "title": "Other, containing alkaloids or derivatives thereof : -- Containing pseudoephedrine (INN) or its salts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3004.42.00",
+              "description": "Other, containing alkaloids or derivatives thereof : -- Containing pseudoephedrine (INN) or its salts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3004.43",
+          "title": "Other, containing alkaloids or derivatives thereof : -- Containing norephedrine or its salts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3004.43.00",
+              "description": "Other, containing alkaloids or derivatives thereof : -- Containing norephedrine or its salts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3004.49",
+          "title": "Other, containing alkaloids or derivatives thereof : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3004.49.10",
+              "description": "Atropine and salts thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.49.20",
+              "description": "Caffeine and salts thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.49.30",
+              "description": "Codeine and derivatives, with or without ephedrine hydrochloride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.49.40",
+              "description": "Ergot preparations, ergotamine and salts thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.49.50",
+              "description": "Papavarine hydrochloride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.49.60",
+              "description": "Bromohexin and salbutamol",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.49.70",
+              "description": "Theophylline and salts thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.49.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3004.50",
+          "title": "Other, containing vitamins or other products of heading 29.36",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3004.50.10",
+              "description": "Heamatinics and Erythropoyetin preperations",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.50.20",
+              "description": "Preperations of minerals and their supplements",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.50.31",
+              "description": "Preparations of vitamins: ---- Of Vitamin A",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.50.32",
+              "description": "Preparations of vitamins: ---- Of Vitamin B1 and B2 and their salts thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.50.33",
+              "description": "Preparations of vitamins: ---- Of Vitamin B9",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.50.34",
+              "description": "Preparations of vitamins: ---- Of Vitamin B12",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.50.35",
+              "description": "Preparations of vitamins: ---- Of Vitamin C",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.50.36",
+              "description": "Preparations of vitamins: ---- Of Vitamin D",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.50.37",
+              "description": "Preparations of vitamins: ---- Of Vitamin E",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.50.39",
+              "description": "Preparations of vitamins: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.50.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3004.60",
+          "title": "Other, containing antimalarial active principles described in Subheading Note 2 to this Chapter",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3004.60.00",
+              "description": "Other, containing antimalarial active principles described in Subheading Note 2 to this Chapter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3004.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3004.90.11",
+              "description": "Ayurvedic, Unani, Homoeopathic, Siddha or Bio-chemic systems medicaments, put up for retail sale: ---- Of Ayurvedic System",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1&2of the Chapter"
+            },
+            {
+              "code": "3004.90.12",
+              "description": "Ayurvedic, Unani, Homoeopathic, Siddha or Bio-chemic systems medicaments, put up for retail sale: ---- Of Unani systems",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1&2of the Chapter"
+            },
+            {
+              "code": "3004.90.13",
+              "description": "Ayurvedic, Unani, Homoeopathic, Siddha or Bio-chemic systems medicaments, put up for retail sale: ---- Of Siddha system",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1&2of the Chapter"
+            },
+            {
+              "code": "3004.90.14",
+              "description": "Ayurvedic, Unani, Homoeopathic, Siddha or Bio-chemic systems medicaments, put up for retail sale: ---- Of Homoeopathic System",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1&2of the Chapter"
+            },
+            {
+              "code": "3004.90.15",
+              "description": "Ayurvedic, Unani, Homoeopathic, Siddha or Bio-chemic systems medicaments, put up for retail sale: ---- Of Bio-chemic system",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1&2of the Chapter"
+            },
+            {
+              "code": "3004.90.21",
+              "description": "Anthelmintics drugs; Antiamoebic and other Antiprotozal drugs; Antifungal drugs: ---- Anthelmintics and preparations thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.22",
+              "description": "Anthelmintics drugs; Antiamoebic and other Antiprotozal drugs; Antifungal drugs: ---- Metronidazole",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.23",
+              "description": "Anthelmintics drugs; Antiamoebic and other Antiprotozal drugs; Antifungal drugs: ---- Tinidazole",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.24",
+              "description": "Anthelmintics drugs; Antiamoebic and other Antiprotozal drugs; Antifungal drugs: ---- Secnidazole",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.25",
+              "description": "Anthelmintics drugs; Antiamoebic and other Antiprotozal drugs; Antifungal drugs: ---- Diloxamide Furoate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.26",
+              "description": "Anthelmintics drugs; Antiamoebic and other Antiprotozal drugs; Antifungal drugs: ---- Sodium Stibogluconate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.27",
+              "description": "Anthelmintics drugs; Antiamoebic and other Antiprotozal drugs; Antifungal drugs: ---- Pentamidine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.29",
+              "description": "Anthelmintics drugs; Antiamoebic and other Antiprotozal drugs; Antifungal drugs: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.31",
+              "description": "Antihistaminics drugs; Antacids preparations; Antiulcer drugs; Antiemitics and other Gastrointestinal drugs: ---- Promethazine, Chlorphenimiramine, Astemizole and Ceteirizine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.32",
+              "description": "Antihistaminics drugs; Antacids preparations; Antiulcer drugs; Antiemitics and other Gastrointestinal drugs: ---- Sodium bicarbonate, Magnesium hydroxide (Milk of Magnesia), Magnesium carbonate, Magnesium trisilicate, Aluminium hydroxide gel, Magaldarate and combinations thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.33",
+              "description": "Antihistaminics drugs; Antacids preparations; Antiulcer drugs; Antiemitics and other Gastrointestinal drugs: ---- Cimetidine, Rantidine, Nizatidine and Roxatidine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.34",
+              "description": "Antihistaminics drugs; Antacids preparations; Antiulcer drugs; Antiemitics and other Gastrointestinal drugs: ---- Omeprazole and Lansoprazole",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.35",
+              "description": "Antihistaminics drugs; Antacids preparations; Antiulcer drugs; Antiemitics and other Gastrointestinal drugs: ---- Dicyclomine, Metoclopramide and Dexamethasone and Ondansetron",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.36",
+              "description": "Antihistaminics drugs; Antacids preparations; Antiulcer drugs; Antiemitics and other Gastrointestinal drugs: ---- Chenodiol and Ursodiol",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.39",
+              "description": "Antihistaminics drugs; Antacids preparations; Antiulcer drugs; Antiemitics and other Gastrointestinal drugs: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.41",
+              "description": "Anticancer drugs: ---- Cyclophosphamide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.42",
+              "description": "Anticancer drugs: ---- Methotrexate, 5-fluorouracil(5-FU) and Ftorafur",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.43",
+              "description": "Anticancer drugs: ---- Bincristine and Vinblastine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.44",
+              "description": "Anticancer drugs: ---- Paclitaxel and Docetaxel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.45",
+              "description": "Anticancer drugs: ---- Etoposide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.46",
+              "description": "Anticancer drugs: ---- Actinomycin D-Dactinomycin and Doxorubicin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.47",
+              "description": "Anticancer drugs: ---- L-Asparaginase, Cisplatin and Carboplatin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.48",
+              "description": "Anticancer drugs: ---- Tamoxifen",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.49",
+              "description": "Anticancer drugs: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.51",
+              "description": "Antitubercular drugs; Antileprotic drugs; Antimalarial drugs: ---- Isoniazid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.52",
+              "description": "Antitubercular drugs; Antileprotic drugs; Antimalarial drugs: ---- Rifampicin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.53",
+              "description": "Antitubercular drugs; Antileprotic drugs; Antimalarial drugs: ---- Pyrazimamide and Ethambutol",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.54",
+              "description": "Antitubercular drugs; Antileprotic drugs; Antimalarial drugs: ---- Streptomycin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.55",
+              "description": "Antitubercular drugs; Antileprotic drugs; Antimalarial drugs: ---- Dapsone(DDS), Acedapsone (DADDS), Solopsone and Clofazimine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.56",
+              "description": "Antitubercular drugs; Antileprotic drugs; Antimalarial drugs: ---- Chloroquine, Amodiaquine, Mefloquine, Quinine, Chloroguamamide, Pyrimethamine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.57",
+              "description": "Antitubercular drugs; Antileprotic drugs; Antimalarial drugs: ---- Other Antitubercular drugs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.58",
+              "description": "Antitubercular drugs; Antileprotic drugs; Antimalarial drugs: ---- Other Antileprotic drugs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.59",
+              "description": "Antitubercular drugs; Antileprotic drugs; Antimalarial drugs: ---- Other Antimalarial drugs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.61",
+              "description": "Nonsteroidal antiinflammatory, analgesics and antipyratic drugs: ---- Analgin with or without other compounds such as paracetamol",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.62",
+              "description": "Nonsteroidal antiinflammatory, analgesics and antipyratic drugs: ---- Acetyl salicylic acid (Aspirin) and formulations thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.63",
+              "description": "Nonsteroidal antiinflammatory, analgesics and antipyratic drugs: ---- Ibuprofen with or without paracetamol or other compunds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.64",
+              "description": "Nonsteroidal antiinflammatory, analgesics and antipyratic drugs: ---- Oxyphen butazone, Phenyl butazone and formulations thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.65",
+              "description": "Nonsteroidal antiinflammatory, analgesics and antipyratic drugs: ---- Indomethacin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.66",
+              "description": "Nonsteroidal antiinflammatory, analgesics and antipyratic drugs: ---- Mephenamic acid, dactofenac sodium, Piroxicam, Tenoxicam and Meloxicam",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.67",
+              "description": "Nonsteroidal antiinflammatory, analgesics and antipyratic drugs: ---- Ketorolac, Nimesulide, Mabumetone and Nefopam",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.69",
+              "description": "Nonsteroidal antiinflammatory, analgesics and antipyratic drugs: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.71",
+              "description": "Antihepertensive drugs: ---- Captopril, Enalapril, Lisimopril, Perimdopril and Ramipril",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.72",
+              "description": "Antihepertensive drugs: ---- Verapamil, Nifedipine, Amlodipine and Lacidipine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.73",
+              "description": "Antihepertensive drugs: ---- Losartam",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.74",
+              "description": "Antihepertensive drugs: ---- Propranolol, Metoprolol, Atenolol and Labetalol",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.75",
+              "description": "Antihepertensive drugs: ---- Prazosin, Terazosin, Phentolamine and Phenoxybenzamime",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.76",
+              "description": "Antihepertensive drugs: ---- Clonidine, Methyldopa",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.77",
+              "description": "Antihepertensive drugs: ---- Hydralazine, Minoxidil and Diazoxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.79",
+              "description": "Antihepertensive drugs: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.81",
+              "description": "Antiepiliptic drugs; Sulfa drugs not elsewhere specified or included, Preparations of enzymes; veterinary medicinal preparations, not for human use, not elsewhere specified or included; Oral rehydration salts; Antibacterial formulations not elsewhere specified or included, Sedatives and Tranquilizers: ---- Phenobarbitone, Memphobarbitone, Primidone, Phenytoin, Carbamazepine, Ethosuximide, Valporic acid (Sodium valporate), Diazepam, Lamotrigine, Gabapentin, Bigabatrin, Phenacemide, Trimethadione and Acetazolamide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.82",
+              "description": "Antiepiliptic drugs; Sulfa drugs not elsewhere specified or included, Preparations of enzymes; veterinary medicinal preparations, not for human use, not elsewhere specified or included; Oral rehydration salts; Antibacterial formulations not elsewhere specified or included, Sedatives and Tranquilizers: ---- Other Antiepileptic drugs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.83",
+              "description": "Antiepiliptic drugs; Sulfa drugs not elsewhere specified or included, Preparations of enzymes; veterinary medicinal preparations, not for human use, not elsewhere specified or included; Oral rehydration salts; Antibacterial formulations not elsewhere specified or included, Sedatives and Tranquilizers: ---- Sulpha drugs not elsewhere specified or included",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.84",
+              "description": "Antiepiliptic drugs; Sulfa drugs not elsewhere specified or included, Preparations of enzymes; veterinary medicinal preparations, not for human use, not elsewhere specified or included; Oral rehydration salts; Antibacterial formulations not elsewhere specified or included, Sedatives and Tranquilizers: ---- Preparations of Enzymes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.85",
+              "description": "Antiepiliptic drugs; Sulfa drugs not elsewhere specified or included, Preparations of enzymes; veterinary medicinal preparations, not for human use, not elsewhere specified or included; Oral rehydration salts; Antibacterial formulations not elsewhere specified or included, Sedatives and Tranquilizers: ---- Veterinary medicinal preparations, not for human use, not elsewhere specified or included",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.86",
+              "description": "Antiepiliptic drugs; Sulfa drugs not elsewhere specified or included, Preparations of enzymes; veterinary medicinal preparations, not for human use, not elsewhere specified or included; Oral rehydration salts; Antibacterial formulations not elsewhere specified or included, Sedatives and Tranquilizers: ---- Oral rehydration salts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.87",
+              "description": "Antiepiliptic drugs; Sulfa drugs not elsewhere specified or included, Preparations of enzymes; veterinary medicinal preparations, not for human use, not elsewhere specified or included; Oral rehydration salts; Antibacterial formulations not elsewhere specified or included, Sedatives and Tranquilizers: ---- Antibacterial formulations, not elsewhere specified or included",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.88",
+              "description": "Antiepiliptic drugs; Sulfa drugs not elsewhere specified or included, Preparations of enzymes; veterinary medicinal preparations, not for human use, not elsewhere specified or included; Oral rehydration salts; Antibacterial formulations not elsewhere specified or included, Sedatives and Tranquilizers: ---- Sedatives",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.89",
+              "description": "Antiepiliptic drugs; Sulfa drugs not elsewhere specified or included, Preparations of enzymes; veterinary medicinal preparations, not for human use, not elsewhere specified or included; Oral rehydration salts; Antibacterial formulations not elsewhere specified or included, Sedatives and Tranquilizers: ---- Tranquilizers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.91",
+              "description": "Other: ---- Salbutamol, Terbutaline, Ephedrine, Salmeterol and Methyl xanthimes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.92",
+              "description": "Other: ---- Plasma expanders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.93",
+              "description": "Other: ---- Chlorophenimiramine Maleate, with or without other compounds (excluding steriods and alkaloids)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.94",
+              "description": "Other: ---- Theophylline, Aminophylline and other Broncho dilators",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.95",
+              "description": "Other: ---- Carcino-chemotherapeutic drugs not elsewhere specified or included",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            },
+            {
+              "code": "3004.90.96",
+              "description": "Other: ---- Ketamine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter Furthermore, export of Ketamine is allowed subject to obtaining No Objection Certificate from Narcotics Commissioner"
+            },
+            {
+              "code": "3004.90.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 1 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3005",
+      "title": "Wadding, gauze, bandages and similar articles (for example, dressings, adhesive plasters, poultices), impregnated or coated with pharmaceutical substances or put up in forms or packings for retail sale for medical, surgical, dental or veterinary purposes.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3005.10",
+          "title": "Adhesive dressings and other articles having an adhesive layer",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3005.10.10",
+              "description": "Adhesive guaze",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3005.10.20",
+              "description": "Adhesive tape",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3005.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3005.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3005.90.10",
+              "description": "Cotton wool, medicated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3005.90.20",
+              "description": "Poultice of Kaolin",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3005.90.30",
+              "description": "Lint, medicated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3005.90.40",
+              "description": "Bandages",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3005.90.50",
+              "description": "Burn therapy dressing soaked in protective gel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3005.90.60",
+              "description": "Micro pores surgical tapes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3005.90.70",
+              "description": "Corn removers and callous removers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3005.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "3006",
+      "title": "Pharmaceutical goods specified in Note 4 to this Chapter.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "3006.10",
+          "title": "Sterile surgical catgut, similar sterile suture materials (including sterile absorbable surgical or dental yarns) and sterile tissue adhesives for surgical wound closure; sterile laminaria and sterile laminaria tents; sterile absorbable surgical or dental haemostatics; sterile surgical or dental adhesion barriers, whether or not absorbable",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3006.10.10",
+              "description": "Sterile surgical catgut, similar sterile suture materials (including sterile absorbable surgical or dental yarns) and sterile tissue adhesives for surgical wound closure",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3006.10.20",
+              "description": "sterile laminaria and sterile laminaria tents; sterile absorbable surgical or dental haemostatics; sterile surgical or dental adhesion barriers, whether or not absorbable",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3006.30",
+          "title": "Opacifying preparations for X-ray examinations; diagnostic reagents designed to be administered to the patient",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3006.30.00",
+              "description": "Opacifying preparations for X-ray examinations; diagnostic reagents designed to be administered to the patient",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3006.40",
+          "title": "Dental cements and other dental fillings; bone reconstruction cements",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3006.40.00",
+              "description": "Dental cements and other dental fillings; bone reconstruction cements",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3006.50",
+          "title": "First-aid boxes and kits",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3006.50.00",
+              "description": "First-aid boxes and kits",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3006.60",
+          "title": "Chemical contraceptive preparations based on hormones, on other products of heading 29.37 or on spermicides",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3006.60.10",
+              "description": "Based on hormones",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3006.60.20",
+              "description": "Based on other products of heading 2937",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "3006.60.30",
+              "description": "Based on spermicides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3006.70",
+          "title": "Gel preparations designed to be used in human or veterinary medicine as a lubricant for parts of the body for surgical operations or physical examinations or as a coupling agent between the body and medical instruments",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3006.70.00",
+              "description": "Gel preparations designed to be used in human or veterinary medicine as a lubricant for parts of the body for surgical operations or physical examinations or as a coupling agent between the body and medical instruments",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3006.91",
+          "title": "Other : -- Appliances identifiable for ostomy use",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3006.91.00",
+              "description": "Other : -- Appliances identifiable for ostomy use",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "3006.93",
+          "title": "Cell cultures, whether or not modified - - Placebos and blinded (or double-blinded) clinical trial kits for a recognised clinical trial, put up in measured doses",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "3006.93.00",
+              "description": "Cell cultures, whether or not modified - - Placebos and blinded (or double-blinded) clinical trial kits for a recognised clinical trial, put up in measured doses",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

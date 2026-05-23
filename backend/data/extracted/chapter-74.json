@@ -1,0 +1,1373 @@
+{
+  "chapter": "74",
+  "title": "Copper And Articles Thereof",
+  "section": "XV",
+  "source_pdf": "Chapter 74 Copper And Articles Thereof.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '74010010'). Normalized to NNNN.NN.NN format (e.g., '7401.00.10') per project schema. Subheading numbers in PDF (e.g., '740100' or '740321') normalized to NNNN.NN form (e.g., '7401.00' / '7403.21').",
+    "Section XV contains 9 Main Notes covering all base-metal chapters (72-83). All 9 captured verbatim in section_notes. Section XV Note 2 ('parts of general use' definition) and Note 3 ('base metals' enumerated list) are legally decisive for classification across 12 base-metal chapters — captured verbatim.",
+    "Section XV Note 1 (exclusions list) sub-clauses (a) through (n) each split into separate exclusion_clauses rows redirecting to the relevant chapter/heading.",
+    "Section XV Note 9 spans pages 2-4 of the PDF: it defines bars/rods, profiles, wire, plates/sheets/strip/foil, and tubes/pipes for Chapters 74-76 and 78-81. Reproduced verbatim with sub-clauses (a)-(e) combined as one note text.",
+    "Chapter 74 Main Note 1 defines (a) Refined copper, (b) Copper alloys, (c) Master alloys. The Note references a TABLE listing limiting content percentages for other elements (Ag 0.25, As 0.5, Cd 1.3, Cr 1.4, Mg 0.8, Pb 1.5, S 0.7, Sn 0.8, Te 0.8, Zn 1.0, Zr 0.3, Other elements * each 0.3). Reproduced verbatim; PDF renders the table inline with a 'TABLE ?' artifact.",
+    "Chapter 74 Sub-Heading Note 1 defines (a) Copper-zinc base alloys (brasses), (b) Copper-tin base alloys (bronzes), (c) Copper-nickel-zinc base alloys (nickel silvers), (d) Copper-nickel base alloys. Captured verbatim in subheading_notes.",
+    "PDF table-chrome headers ('Sl.No. Notes Notification No Notification Date', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Main Notes', 'Sub-Heading Notes', 'Product Description and Export Policy') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "PDF row '7401' has heading title 'COPPER MATTES; CEMENT COPPER (PRECIPITATED COPPER)' rendered in all-caps; the corresponding subheading row '740100' uses sentence case. Heading title preserved verbatim.",
+    "Heading 7404 (Copper waste and scrap) has subheading '7404.00' with 8 tariff lines (7404.00.11 through 7404.00.29). Several lines contain extensive verbatim ISRI code-word lists (e.g., '7404.00.12' lists ISRI code words Barley, Berry, Birch, Candy, Cliff, Clove, Cobra, Cocoa, Dream, Palms, Drove, Druid; '7404.00.22' lists ~20 ISRI brass scrap code words). These are reproduced verbatim and may exceed normal description length.",
+    "Heading 7405 has a single 8-digit code '74050000' directly under the heading-level description (no separate 6-digit subheading row). Modelled as subheading '7405.00' with tariff line '7405.00.00'.",
+    "Heading 7407 — subheadings 7407.10 (refined copper) and 7407.21/7407.29 (copper alloys) have 8-digit lines following the pattern XXXXX10, XXXXX20, XXXXX30, XXXXX40, XXXXX51, XXXXX59, XXXXX90. Subheading 7407.10 has TWO 8-digit codes both labelled 'Profiles: ----Other' ('74071059' and '74071090') — reproduced verbatim as they appear in the PDF; this is a source-document quirk (likely 7407.10.59 = sub-other under hollow profiles family, 7407.10.90 = other profiles).",
+    "Heading 7408 — subheadings 7408.11, 7408.19 (refined copper), 7408.21, 7408.22, 7408.29 (copper alloys) — 7408.22 includes a special tariff line '7408.22.10 Silver plated flattened wire of copper (lametta)' which is an Indian ITC(HS) national-line addition. Two 8-digit lines under 7408.19 both labelled 'Other' ('74081990') and 'Welding wire' ('74081920') — reproduced verbatim.",
+    "Heading 7412 — subheading 7412.20 (Of copper alloys) has 4 tariff lines: 7412.20.11 (Brass: Tube-well strainer), 7412.20.12 (Brass: Hose connectors), 7412.20.19 (Brass: Other), 7412.20.90 (Brass: Fittings of bronze and similar alloys of copper). The last line is labelled 'Brass:' but describes bronze fittings — PDF source-text artifact; reproduced verbatim.",
+    "Heading 7413 has only a single 8-digit code '74130000' (Stranded wire, cables, plaited bands and the like, of copper, not electrically insulated). No separate heading-level or subheading-level row in the PDF. Modelled as heading 7413 / subheading 7413.00 / tariff line 7413.00.00 using the same description verbatim.",
+    "Headings 7414 (cloth, grill and netting of copper wire; expanded metal of copper), 7416 (copper springs), 7417 (cooking or heating apparatus of a kind used for domestic purposes, non-electric, and parts thereof, of copper) are NOT PRESENT in this PDF — the Indian ITC(HS) Schedule 2 omits these headings (they were merged into 7419 'Other articles of copper' or have been deleted in the 2022 schedule). Heading sequence in PDF jumps from 7413 to 7415, and from 7415 to 7418. Preserved as-is; gaps documented.",
+    "Heading 7415 — subheading 7415.33 (Other threaded articles: Screws; bolts and nuts) and 7415.39 (Other threaded articles: Other) follow PDF as five-digit pattern '741533' / '741539' with two 8-digit lines each. Subheading 7415.21 (Washers) and 7415.29 (Other articles, not threaded: Other) appear as direct 8-digit codes '74152100' / '74152900' without separate 6-digit subheading rows — modelled as subheadings 7415.21 and 7415.29 with single .00 tariff lines.",
+    "Heading 7418 — subheading 7418.10 (Table, kitchen or other household articles...) has 8 tariff lines, several labelled 'Utensils:' or 'Other:' with E.P.N.S. (Electro-Plated Nickel Silver) variants. Tariff line '7418.10.10' description is 'Pot scourers and scouring or polishing pads, gloves and the like Utensils:' — the trailing 'Utensils:' appears to be a PDF column-bleed artifact from the next-row heading; reproduced verbatim.",
+    "Heading 7419 — subheading 7419.20 (Cast, moulded, stamped or forged) is a direct 8-digit code '74192000' without separate 6-digit subheading row — modelled as subheading 7419.20 with single .00 tariff line. Subheading 7419.80 (Other) has 6 tariff lines including 7419.80.10 (Reservoirs), 7419.80.20 (Articles electro-plated with nickel-silver), 7419.80.30 (Articles of brass), 7419.80.40 (Copper worked articles), 7419.80.50 (Copper chain), 7419.80.90 (Other articles of copper).",
+    "Unit (kg/u/etc.) information is not present in this PDF — all unit fields set to null.",
+    "Export Policy 'Free' is captured implicitly per row but not modelled in the JSON tariff_lines structure (consistent with prior chapters in this extraction pattern). No policy conditions appear for any Chapter 74 tariff lines.",
+    "Section XV Notes 1-9 are reproduced verbatim with original PDF quoting artifacts (e.g., '\"\"parts of general use\"\"' appears with paired double-double quotes — a smart-quote encoding artifact from the source PDF). Reproduced as-is to preserve fidelity."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "In this Chapter, the following expressions have the meanings hereby assigned to them: (a) Refined copper: Metal containing at least 99.85 per cent. by weight of copper; or Metal containing at least 97.5 per cent. by weight of copper, provided that the content by weight of any other element does not exceed the limit specified in the following Table : TABLE ? OTHER ELEMENTS Element Limiting content % by weight Ag Silver 0.25 As Arsenic 0.5 Cd Cadmium 1.3 Cr Chromium 1.4 Mg Magnesium 0.8 Pb Lead 1.5 S Sulphur 0.7 Sn Tin 0.8 Te Tellurium 0.8 Zn Zinc 1.0 Zr Zirconium 0.3 Other elements *, each 0.3 * Other elements are, for example, Al, Be, Co, Fe, Mn, Ni, Si. (b) Copper alloys: Metallic substances other than unrefined copper in which copper predominates by weight over each of the other elements, provided that : (i) the content byweight of at least one of the other elementsis greater than the limitspecified in the foregoing table; or (ii) the total content by weight of such other elements exceeds 2.5 per cent. (c) Master alloys: Alloys containing with other elements more than 10 per cent by weight, of copper not usefully malleable and commonly used as an additive in the manufacture of other alloys or as deoxidants, de-sulphuring agents or for similar uses in the metallurgy of non-ferrous metals. However, copper phosphide (phosphor copper) containing more than 15% by weight of phosphorous falls in heading 2853."
+    }
+  ],
+  "subheading_notes": [
+    {
+      "number": "1",
+      "text": "In this Chapter the following expressions have the meanings hereby assigned to them: (a) Copper-zinc base alloys (brasses) Alloys of copper and zinc, with or without other elements. When other elements are present: (i) zinc predominates by weight over each of such other elements; (ii) any nickel content by weight is less than 5%.[see copper-nickel-zinc alloys(nickel silvers)]; and (iii) any tin content by weight is less than 3%. [see copper-tin alloys (bronzes)]. (b) Copper-tin base alloys (bronzes) Alloys of copper and tin, with or without other elements. When other elements are present, tin predominates by weight over each of such other elements, except that when the tin content is 3% or more the zinc content by weight may exceed that of tin but must be less than 10%. (c) Copper-nickel-zinc base alloys (nickel silvers) Alloys of copper, nickel and zinc, with or without other elements. The nickel content is 5% or more by weight [see copper-zinc alloys (brasses)]. (d) Copper-nickel base alloys Alloys of copper and nickel, with or without other elements but in any case containing by weight not more than 1% of zinc. When other elements are present, nickel predominates by weight over each of such other elements."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "This Section does not cover : (a) prepared paints, inks or other products with a basis of metallic flakes or powder (headings 3207 to 3210, 3212, 3213 or 3215); (b) ferro-cerium or other pyrophoric alloys(heading 3606); (c) headgear or parts thereof of heading 6506 or 6507; (d) umbrella frames or other articles of heading 6603; (e) goods of Chapter 71 (for example, precious metal alloys, base metal clad with precious metal, imitation jewellery); (f) articles of Section XVI (machinery, mechanical a pliances and electrical goods); (g) assembled railway or tramway track (heading 8608) or other articles of Section XVII (vehicles, ships and boats, aircraft); (h) instruments or apparatus of Section XVIII, including clock or watch springs; (ij) lead shot prepared for ammunition (heading 9306) or other articles of Section XIX (arms and ammunition); (k) articles of Chapter 94 (for example, furniture, mattress supports, luminaires and lighting fittings, illuminated signs, prefabricated buildings); (l) articles of Chapter 95 (for example, toys, games, sports requisites); (m) hand sieves, buttons, pens, pencil-holders, pen nibs, monopods, bipods, tripods and similar articles or other articles of Chapter 96 (miscellaneous manufactured articles); or\"\"\"\" (n) articles of Chapter 97 (for example, works of art)."
+    },
+    {
+      "number": "2",
+      "text": "Throughout this Schedule, the expression \"\"\"\"parts of general use\"\"\"\" means : (a) articles of heading 7307, 7312, 7315, 7317 or 7318 and similar articles of other base metal, other than articles specially designed for use exclusively in implants in medical, surgical, dental or veterinary sciences (heading 9021); (b) springs and leaves for springs, of base metal, other than clock or watch springs (heading 9114); and (c) articles of headings 8301, 8302, 8308, 8310 and frames and mirrors, of base metal, of heading 8306. In Chapters 73 to 76 and 78 to 82 (but not in heading 7315) references to parts of goods do not include references to parts of general use as defined above. Subject to the preceding paragraph and to Note 1 to Chapter 83, the articles of Chapter 82 or 83 are excluded from Chapters 72 to 76 and 78 to 81."
+    },
+    {
+      "number": "3",
+      "text": "Throughout this Schedule, the expression \"\"base metals\"\" means : iron and steel, copper, nickel, aluminium, lead, zinc, tin, tungsten (wolfram), molybdenum, tantalum, magnesium, cobalt, bismuth, cadmium, titanium, zirconium, antimony, manganese, beryllium, chromium, germanium, vanadium, gallium, hafnium, indium, niobium (columbium),rhenium and thallium."
+    },
+    {
+      "number": "4",
+      "text": "Throughout this Schedule, the term \"cermets\" means products containing a microscopic heterogenous combination of a metallic component and a ceramic component. The term \"cermets\" includes sintered metal carbides (metal carbides sintered with a metal)."
+    },
+    {
+      "number": "5",
+      "text": "Classification of alloys (other than ferro-alloys and master alloys as defined in Chapters 72 and 74) : (a) an alloy of base metals is to be classified as an alloy of the metal which predominates by weight over each of the other metals; (b) an alloy composed of base metals of this Section and of elements not falling within this Section is to be treated as an alloy of base metals of this Section if the total weight of such metals equals or exceeds the total weight of the other elements present; (c) in this Section, the term \"\"\"\"alloys\"\"\"\" includes sintered mixtures of metal powders, heterogeneous intimate mixtures obtained by melting (other than cermets) and intermetallic compounds."
+    },
+    {
+      "number": "6",
+      "text": "Unlessthe context otherwise requires, any reference in this Schedule to a base metal includes a reference to alloys which, by virtue of Note 5 above, are to be classified as alloys of that metal."
+    },
+    {
+      "number": "7",
+      "text": "Classification of composite articles: Except where the headings otherwise require, articles of base metal (including articles of mixed materials treated as articles of base metal under the General Interpretive Rules) containing two or more base metals areto be treated as articles of the base metal predominating by weight over each of the other metals. For this purpose: (a) iron and steel, or different kinds of iron or steel, are regarded as one and the same metal; (b) an alloy isregarded as being entirely composed of that metal as an alloy of which, by virtue of Note 5, it is classified; and (c) a cermet of heading 8113 is regarded as a single base metal."
+    },
+    {
+      "number": "8",
+      "text": "In this Section, the following expressions have the meanings hereby assigned to them : (a) waste and scrap: (i) all metal waste and scrap; (ii) metal goods definitely not usable as such because of breakage, cutting-up, wear or other reasons. (b) Powders: products of which 90% or more by weight passes through a sieve having a mesh aperture of 1 mm."
+    },
+    {
+      "number": "9",
+      "text": "For the purposes of Chapters 74 to 76 and 78 to 81, the following expressions shall have the meanings hereby assigned to them: (a) Bars and rods: Rolled, extruded, drawn or forged products, not in coils, which have a uniform solid cross-section along their whole length in the shape of circles, ovals, rectangles (including squares), equilateral triangles or regular convex polygons (including \"\"\"\"flattened circles\"\"\"\" and \"\"\"\"modified rectangles\"\"\"\", of which two opposite sides are convex arcs, the other two sides being straight, of equal length and parallel). Products with a rectangular (including square), triangular or polygonal cross-section may have corners rounded along their whole length. The thickness of such products which have a rectangular (including \"\"\"\"modified rectangular\"\"\"\") cross-section exceeds one-tenth of the width. The expression also covers cast or sintered products, of the same forms and dimensions, which have been subsequently worked after production (otherwise than by simple trimming or descaling), provided that they have not thereby assumed the character of articles or products of other headings. Wirebars and billets of Chapter 74 with their ends tapered or otherwise worked simply to facilitate their entry into machines for converting them into, for example, drawing stock (wire-rod) or tubes, are however to be taken to be unwrought copper of heading 7403. This provision applies mutatis mutandis to the products of Chapter 81. (b) Profiles: Rolled, extruded, drawn, forged or formed products, coiled or not, of a uniform cross-section along their whole length, which do not conform to any of the definitions of bars, rods, wire, plates, sheets, strip, foil, tubes or pipes. The expression also covers cast or sintered products, of the same forms, which have been subsequently worked after production (otherwise than by simple trimming or de-scaling), provided that they have not thereby assumed the character of articles or products of other headings. (c) Wire: Rolled, extruded or drawn products, in coils, which have a uniform solid cross-section along their whole length in the shape of circles, ovals, rectangles (including squares), equilateral triangles or regular convex polygons (including \"\"\"\"flattened circles\"\"\"\" and \"\"\"\"modified rectangles\"\"\"\", of which two opposite sides are convex arcs, the other two sides being straight, of equal length and parallel). Products with a rectangular (including square), triangular or polygonal cross-section may have corners rounded along their whole length. The thickness of such products which have a rectangular (including \"\"\"\"modified rectangular\"\"\"\") cross-section exceeds one-tenth of the width. (d) Plates, sheets, strip and foil: Flat-surfaced products (other than the unwrought products of heading 8001), coiled or not, of solid rectangular (other than square) cross-section with or without rounded corners (including \"\"\"\"modified rectangles\"\"\"\" of which two opposite sides are convex arcs, the other two sides being straight, of equal length and parallel) of a uniform thickness, which are: - of rectangular (including square) shape with a thickness not exceeding one-tenth of the width; - of a shape other than rectangular or square, of any size, provided that they do not assume the character of articles or products of other headings. Headings for plates, sheets, strip, and foil apply, inter alia, to plates, sheets, strip, and foil with patterns (for example, grooves, ribs, chequers, tears, buttons, lozenges) and to such products which have been perforated, corrugated, polished or coated, provided that they do not thereby assume the character of articles or products of other headings. (e) Tubes and pipes: Hollow products, coiled or not, which have a uniform cross-section with only one enclosed void along their whole length in the shape of circles, ovals, rectangles (including squares), equilateral triangular or regular convex polygons, and which have a uniform wall thickness. Products with a rectangular (including square), equilateral triangular or regular convex polygonal cross-section, which may have corners rounded along their whole length, are also to be considered as tubes and pipes provided the inner and outer crosssections are concentric and have the same form and orientation. Tubes and pipes of the foregoing cross-sections may be polished, coated, bent, threaded, drilled, waisted, expanded, cone-shaped or fitted with flanges, collars or rings."
+    }
+  ],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "Prepared paints, inks or other products with a basis of metallic flakes or powder",
+      "redirects_to_chapter": "32",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(a)",
+      "source_note_text": "This Section does not cover : (a) prepared paints, inks or other products with a basis of metallic flakes or powder (headings 3207 to 3210, 3212, 3213 or 3215); ..."
+    },
+    {
+      "excluded_product_text": "Ferro-cerium or other pyrophoric alloys",
+      "redirects_to_chapter": "36",
+      "redirects_to_heading": "3606",
+      "source_note_number": "Section Note 1(b)",
+      "source_note_text": "(b) ferro-cerium or other pyrophoric alloys(heading 3606); ..."
+    },
+    {
+      "excluded_product_text": "Headgear or parts thereof of heading 6506 or 6507",
+      "redirects_to_chapter": "65",
+      "redirects_to_heading": "6506",
+      "source_note_number": "Section Note 1(c)",
+      "source_note_text": "(c) headgear or parts thereof of heading 6506 or 6507; ..."
+    },
+    {
+      "excluded_product_text": "Umbrella frames or other articles of heading 6603",
+      "redirects_to_chapter": "66",
+      "redirects_to_heading": "6603",
+      "source_note_number": "Section Note 1(d)",
+      "source_note_text": "(d) umbrella frames or other articles of heading 6603; ..."
+    },
+    {
+      "excluded_product_text": "Goods of Chapter 71 (for example, precious metal alloys, base metal clad with precious metal, imitation jewellery)",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(e)",
+      "source_note_text": "(e) goods of Chapter 71 (for example, precious metal alloys, base metal clad with precious metal, imitation jewellery); ..."
+    },
+    {
+      "excluded_product_text": "Articles of Section XVI (machinery, mechanical appliances and electrical goods)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(f)",
+      "source_note_text": "(f) articles of Section XVI (machinery, mechanical a pliances and electrical goods); ..."
+    },
+    {
+      "excluded_product_text": "Assembled railway or tramway track (heading 8608) or other articles of Section XVII (vehicles, ships and boats, aircraft)",
+      "redirects_to_chapter": "86",
+      "redirects_to_heading": "8608",
+      "source_note_number": "Section Note 1(g)",
+      "source_note_text": "(g) assembled railway or tramway track (heading 8608) or other articles of Section XVII (vehicles, ships and boats, aircraft); ..."
+    },
+    {
+      "excluded_product_text": "Instruments or apparatus of Section XVIII, including clock or watch springs",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(h)",
+      "source_note_text": "(h) instruments or apparatus of Section XVIII, including clock or watch springs; ..."
+    },
+    {
+      "excluded_product_text": "Lead shot prepared for ammunition (heading 9306) or other articles of Section XIX (arms and ammunition)",
+      "redirects_to_chapter": "93",
+      "redirects_to_heading": "9306",
+      "source_note_number": "Section Note 1(ij)",
+      "source_note_text": "(ij) lead shot prepared for ammunition (heading 9306) or other articles of Section XIX (arms and ammunition); ..."
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 94 (for example, furniture, mattress supports, luminaires and lighting fittings, illuminated signs, prefabricated buildings)",
+      "redirects_to_chapter": "94",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(k)",
+      "source_note_text": "(k) articles of Chapter 94 (for example, furniture, mattress supports, luminaires and lighting fittings, illuminated signs, prefabricated buildings); ..."
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 95 (for example, toys, games, sports requisites)",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(l)",
+      "source_note_text": "(l) articles of Chapter 95 (for example, toys, games, sports requisites); ..."
+    },
+    {
+      "excluded_product_text": "Hand sieves, buttons, pens, pencil-holders, pen nibs, monopods, bipods, tripods and similar articles or other articles of Chapter 96 (miscellaneous manufactured articles)",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(m)",
+      "source_note_text": "(m) hand sieves, buttons, pens, pencil-holders, pen nibs, monopods, bipods, tripods and similar articles or other articles of Chapter 96 (miscellaneous manufactured articles); ..."
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 97 (for example, works of art)",
+      "redirects_to_chapter": "97",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 1(n)",
+      "source_note_text": "(n) articles of Chapter 97 (for example, works of art)."
+    },
+    {
+      "excluded_product_text": "Parts of general use as defined in Section XV Note 2 — articles of heading 7307, 7312, 7315, 7317 or 7318 and similar articles of other base metal (i.e., chains, ropes, springs, nails/screws/bolts, tube fittings of base metal)",
+      "redirects_to_chapter": "73",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 2(a)",
+      "source_note_text": "Throughout this Schedule, the expression \"\"\"\"parts of general use\"\"\"\" means : (a) articles of heading 7307, 7312, 7315, 7317 or 7318 and similar articles of other base metal, other than articles specially designed for use exclusively in implants in medical, surgical, dental or veterinary sciences (heading 9021); ..."
+    },
+    {
+      "excluded_product_text": "Articles specially designed for use exclusively in implants in medical, surgical, dental or veterinary sciences",
+      "redirects_to_chapter": "90",
+      "redirects_to_heading": "9021",
+      "source_note_number": "Section Note 2(a)",
+      "source_note_text": "Throughout this Schedule, the expression \"\"\"\"parts of general use\"\"\"\" means : (a) articles of heading 7307, 7312, 7315, 7317 or 7318 and similar articles of other base metal, other than articles specially designed for use exclusively in implants in medical, surgical, dental or veterinary sciences (heading 9021); ..."
+    },
+    {
+      "excluded_product_text": "Springs and leaves for springs, of base metal, other than clock or watch springs (i.e., parts of general use)",
+      "redirects_to_chapter": "73",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 2(b)",
+      "source_note_text": "(b) springs and leaves for springs, of base metal, other than clock or watch springs (heading 9114); ..."
+    },
+    {
+      "excluded_product_text": "Clock or watch springs",
+      "redirects_to_chapter": "91",
+      "redirects_to_heading": "9114",
+      "source_note_number": "Section Note 2(b)",
+      "source_note_text": "(b) springs and leaves for springs, of base metal, other than clock or watch springs (heading 9114); ..."
+    },
+    {
+      "excluded_product_text": "Articles of headings 8301, 8302, 8308, 8310 (i.e., padlocks, locks, mountings, fittings, hooks, eyes, sign-plates of base metal — parts of general use)",
+      "redirects_to_chapter": "83",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 2(c)",
+      "source_note_text": "(c) articles of headings 8301, 8302, 8308, 8310 and frames and mirrors, of base metal, of heading 8306. ..."
+    },
+    {
+      "excluded_product_text": "Frames and mirrors, of base metal, of heading 8306 (parts of general use)",
+      "redirects_to_chapter": "83",
+      "redirects_to_heading": "8306",
+      "source_note_number": "Section Note 2(c)",
+      "source_note_text": "(c) articles of headings 8301, 8302, 8308, 8310 and frames and mirrors, of base metal, of heading 8306. ..."
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 82 (tools, implements, cutlery, spoons and forks of base metal) — excluded from Chapters 72 to 76 and 78 to 81 (including this Chapter 74)",
+      "redirects_to_chapter": "82",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 2",
+      "source_note_text": "Subject to the preceding paragraph and to Note 1 to Chapter 83, the articles of Chapter 82 or 83 are excluded from Chapters 72 to 76 and 78 to 81."
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 83 (miscellaneous articles of base metal — padlocks, locks, mountings, safes, clasps, bells, statuettes, sign-plates, wire-and-rod for soldering, etc.) — excluded from Chapters 72 to 76 and 78 to 81 (including this Chapter 74)",
+      "redirects_to_chapter": "83",
+      "redirects_to_heading": null,
+      "source_note_number": "Section Note 2",
+      "source_note_text": "Subject to the preceding paragraph and to Note 1 to Chapter 83, the articles of Chapter 82 or 83 are excluded from Chapters 72 to 76 and 78 to 81."
+    },
+    {
+      "excluded_product_text": "Copper phosphide (phosphor copper) containing more than 15% by weight of phosphorous — excluded from Chapter 74 master alloys (Chapter Note 1(c)) and classified as a separate chemical compound",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": "2853",
+      "source_note_number": "Chapter Note 1(c)",
+      "source_note_text": "(c) Master alloys: Alloys containing with other elements more than 10 per cent by weight, of copper not usefully malleable and commonly used as an additive in the manufacture of other alloys or as deoxidants, de-sulphuring agents or for similar uses in the metallurgy of non-ferrous metals. However, copper phosphide (phosphor copper) containing more than 15% by weight of phosphorous falls in heading 2853."
+    },
+    {
+      "excluded_product_text": "Wirebars and billets of Chapter 74 with their ends tapered or otherwise worked simply to facilitate their entry into machines for converting them into drawing stock (wire-rod) or tubes — these are treated as UNWROUGHT COPPER and remain in heading 7403, not as bars/rods of heading 7407",
+      "redirects_to_chapter": "74",
+      "redirects_to_heading": "7403",
+      "source_note_number": "Section Note 9(a)",
+      "source_note_text": "Wirebars and billets of Chapter 74 with their ends tapered or otherwise worked simply to facilitate their entry into machines for converting them into, for example, drawing stock (wire-rod) or tubes, are however to be taken to be unwrought copper of heading 7403."
+    }
+  ],
+  "headings": [
+    {
+      "heading": "7401",
+      "title": "COPPER MATTES; CEMENT COPPER (PRECIPITATED COPPER)",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7401.00",
+          "title": "Copper mattes; cement copper (precipitated copper).",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7401.00.10",
+              "description": "Copper mattes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7401.00.90",
+              "description": "Cement copper (precipitated copper)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7402",
+      "title": "Unrefined copper; copper anodes for electrolytic refining.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7402.00",
+          "title": "Unrefined copper; copper anodes for electrolytic refining :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7402.00.10",
+              "description": "Blister copper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7402.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7403",
+      "title": "Refined copper and copper alloys, unwrought.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7403.11",
+          "title": "Refined copper : -- Cathodes and sections of cathodes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7403.11.00",
+              "description": "Refined copper : -- Cathodes and sections of cathodes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7403.12",
+          "title": "Refined copper : -- Wire-bars",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7403.12.00",
+              "description": "Refined copper : -- Wire-bars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7403.13",
+          "title": "Refined copper : -- Billets",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7403.13.00",
+              "description": "Refined copper : -- Billets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7403.19",
+          "title": "Refined copper : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7403.19.00",
+              "description": "Refined copper : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7403.21",
+          "title": "Copper alloys : -- Copper-zinc base alloys (brass)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7403.21.00",
+              "description": "Copper alloys : -- Copper-zinc base alloys (brass)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7403.22",
+          "title": "Copper alloys : -- Copper-tin base alloys (bronze)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7403.22.10",
+              "description": "Phosphor bronze",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7403.22.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7403.29",
+          "title": "Copper alloys : -- Other copper alloys (other than master alloys of heading 74.05)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7403.29.00",
+              "description": "Copper alloys : -- Other copper alloys (other than master alloys of heading 74.05)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7404",
+      "title": "Copper waste and scrap.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7404.00",
+          "title": "Copper waste and scrap:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7404.00.11",
+              "description": "Of copper: ----Empty or discharged cartridges of all bores and sizes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7404.00.12",
+              "description": "Of copper: ----Copper scrap, namely the following: Copper wire scrap covered by ISRI code words Barley, Berry and Birch; Heavy copper scrap covered by ISRI code word Candy; Unalloyed copper scrap covered by ISRI code word Cliff; Copper wire nodules scrap covered by ISRI code words Clove, Cobra and Cocoa; Light copper scrap covered by ISRI code word Dream; Muntz metal tubes covered by ISRI code word Palms; Miscellaneous copper-containing skimmings, grindings, ashes, irony brass and copper, residues and slags covered by ISRI code word Drove; Copper wire scrap with various types of insulation covered by ISRI code word Druid",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7404.00.19",
+              "description": "Of copper: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7404.00.21",
+              "description": "Of copper alloys: ----Empty or discharged cartridges of all bores and sizes, including the following: clean fired 70/30 brass shells free of bullets, iron and any other foreign material covered by ISRI code word Lake; clean muffled (popped) 70/30 brass shells free of bullets, iron and any other foreign material covered by ISRI code word Lamb",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7404.00.22",
+              "description": "Of copper alloys: ----Brass scrap, namely the following: Refinery brass scrap covered by ISRI code word Drink; Composition of Red brass scrap covered by ISRI code word Ebony; Red brass composition turnings scrap covered by ISRI code word Enerv; Genuine babbit-lined brass bushings scrap covered by ISRI code word Elder; Machinery or hard brass solids scrap covered by ISRI code word Engel; Machinery or hand brass solids scrap covered by ISRI code word Erin; Cocks and faucets scrap covered by ISRI code word Grape; Yellow brass scrap covered by ISRI code word Honey; Yellow brass castings covered by ISRI code word Ivory; New brass clippings covered by ISRI code word Label; Yellow brass primer covered by ISRI code word Lark; Brass pipe covered by ISRI code word Melon; Yellow brass rod turnings covered by ISRI code word Night; New yellow brass rod ends covered by ISRI code word Noble; Yellow brass turnings covered by ISRI code word Nomad; Mixed unsweated auto radiators covered by ISRI code word Ocean; Admiralty brass condenser tubes covered by ISRI code word Pales; Aluminum brass condenser tubes covered by ISRI code word Pallu.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7404.00.24",
+              "description": "Bronze scrap, including the following: manganese bronze solids covered ISRI code word Parch; High lead bronze solids and borings covered by ISRI code word Elias",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7404.00.25",
+              "description": "Of copper alloys: ----Copper nickel scrap, including the following: new cupro nickel clips and solids covered by ISRI code word Dandy; cupro nickel solids covered by ISRI code word Daunt; soldered cupro-nickel solids covered by ISRI code word Delta; cupro nickel spinnings, turnings, borings covered by ISRI code word Decoy;",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7404.00.29",
+              "description": "Of copper alloys: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7405",
+      "title": "Master alloys of copper.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7405.00",
+          "title": "Master alloys of copper.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7405.00.00",
+              "description": "Master alloys of copper.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7406",
+      "title": "Copper powders and flakes.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7406.10",
+          "title": "Powders of non-lamellar structure",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7406.10.00",
+              "description": "Powders of non-lamellar structure",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7406.20",
+          "title": "Powders of lamellar structure; flakes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7406.20.00",
+              "description": "Powders of lamellar structure; flakes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7407",
+      "title": "Copper bars, rods and profiles.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7407.10",
+          "title": "Of refined copper",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7407.10.10",
+              "description": "Electrolytic copper rods or black copper rods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7407.10.20",
+              "description": "Other copper rods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7407.10.30",
+              "description": "Copper bars (excluding hollow bars)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7407.10.40",
+              "description": "Hollow bars of copper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7407.10.51",
+              "description": "Profiles: ----Hollow profiles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7407.10.59",
+              "description": "Profiles: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7407.10.90",
+              "description": "Profiles: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7407.21",
+          "title": "Of copper alloys : -- Of copper-zinc base alloys (brass)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7407.21.10",
+              "description": "Bars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7407.21.20",
+              "description": "Rods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7407.21.30",
+              "description": "Hollow bars",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7407.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7407.29",
+          "title": "Of copper alloys : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7407.29.10",
+              "description": "Rods of bronze and similar alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7407.29.21",
+              "description": "Profiles: ----Hollow",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7407.29.29",
+              "description": "Profiles: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7407.29.90",
+              "description": "Profiles: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7408",
+      "title": "Copper wire.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7408.11",
+          "title": "Of refined copper : -- Of which the maximum cross-sectional dimension exceeds 6 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7408.11.10",
+              "description": "Copper weld wire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7408.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7408.19",
+          "title": "Of refined copper : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7408.19.10",
+              "description": "Copper weld wire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7408.19.20",
+              "description": "Welding wire",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7408.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7408.21",
+          "title": "Of copper alloys : -- Of copper-zinc base alloys (brass)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7408.21.10",
+              "description": "Of copper alloys: ----Of which the maximum cross-sectional dimension exceeds 6 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7408.21.90",
+              "description": "Of copper alloys: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7408.22",
+          "title": "Of copper alloys : -- Of copper-nickel base alloys (cupro-nickel) or copper-nickel-zinc base alloys (nickel silver)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7408.22.10",
+              "description": "Silver plated flattened wire of copper (lametta)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7408.22.20",
+              "description": "Of which the maximum cross-sectional dimension exceeds 6 mm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7408.22.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7408.29",
+          "title": "Of copper alloys : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7408.29.10",
+              "description": "Wire of bronze and similar alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7408.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7409",
+      "title": "Copper plates, sheets and strip, of a thickness exceeding 0.15 mm.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7409.11",
+          "title": "Of refined copper : -- In coils",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7409.11.00",
+              "description": "Of refined copper : -- In coils",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7409.19",
+          "title": "Of refined copper : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7409.19.00",
+              "description": "Of refined copper : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7409.21",
+          "title": "Of copper-zinc base alloys (brass) : -- In coils",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7409.21.00",
+              "description": "Of copper-zinc base alloys (brass) : -- In coils",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7409.29",
+          "title": "Of copper-zinc base alloys (brass) : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7409.29.00",
+              "description": "Of copper-zinc base alloys (brass) : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7409.31",
+          "title": "Of copper-tin base alloys (bronze) : -- In coils",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7409.31.00",
+              "description": "Of copper-tin base alloys (bronze) : -- In coils",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7409.39",
+          "title": "Of copper-tin base alloys (bronze) : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7409.39.00",
+              "description": "Of copper-tin base alloys (bronze) : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7409.40",
+          "title": "Of copper-nickel base alloys (cupro-nickel) or copper-nickel-zinc base alloys (nickel silver)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7409.40.00",
+              "description": "Of copper-nickel base alloys (cupro-nickel) or copper-nickel-zinc base alloys (nickel silver)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7409.90",
+          "title": "Of other copper alloys",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7409.90.00",
+              "description": "Of other copper alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7410",
+      "title": "Copper foil (whether or not printed or backed with paper, paperboard, plastics or similar backing materials) of a thickness (excluding any backing) not exceeding 0.15 mm.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7410.11",
+          "title": "Not backed : -- Of refined copper",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7410.11.00",
+              "description": "Not backed : -- Of refined copper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7410.12",
+          "title": "Not backed : -- Of copper alloys",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7410.12.00",
+              "description": "Not backed : -- Of copper alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7410.21",
+          "title": "Backed : -- Of refined copper",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7410.21.00",
+              "description": "Backed : -- Of refined copper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7410.22",
+          "title": "Backed : -- Of copper alloys",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7410.22.00",
+              "description": "Backed : -- Of copper alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7411",
+      "title": "Copper tubes and pipes.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7411.10",
+          "title": "Of refined copper",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7411.10.00",
+              "description": "Of refined copper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7411.21",
+          "title": "Of copper alloys : -- Of copper-zinc base alloys (brass)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7411.21.00",
+              "description": "Of copper alloys : -- Of copper-zinc base alloys (brass)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7411.22",
+          "title": "Of copper alloys : -- Of copper-nickel base alloys (cupro-nickel) or copper-nickel-zinc base alloys (nickel silver)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7411.22.00",
+              "description": "Of copper alloys : -- Of copper-nickel base alloys (cupro-nickel) or copper-nickel-zinc base alloys (nickel silver)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7411.29",
+          "title": "Of copper alloys : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7411.29.00",
+              "description": "Of copper alloys : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7412",
+      "title": "Copper tube or pipe fittings (for example, couplings, elbows, sleeves).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7412.10",
+          "title": "Of refined copper",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7412.10.00",
+              "description": "Of refined copper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7412.20",
+          "title": "Of copper alloys",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7412.20.11",
+              "description": "Brass: ----Tube-well strainer",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7412.20.12",
+              "description": "Brass: ----Hose connectors",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7412.20.19",
+              "description": "Brass: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7412.20.90",
+              "description": "Brass: ----Fittings of bronze and similar alloys of copper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7413",
+      "title": "Stranded wire, cables, plaited bands and the like, of copper, not electrically insulated.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7413.00",
+          "title": "Stranded wire, cables, plaited bands and the like, of copper, not electrically insulated.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7413.00.00",
+              "description": "Stranded wire, cables, plaited bands and the like, of copper, not electrically insulated.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7415",
+      "title": "Nails, tacks, drawing pins, staples (other than those of heading 83.05) and similar articles, of copper or of iron or steel with heads of copper; screws, bolts, nuts, screw hooks, rivets, cotters, cotter-pins, washers (including spring washers) and similar articles, of copper.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7415.10",
+          "title": "Nails and tacks, drawing pins, staples and similar articles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7415.10.00",
+              "description": "Nails and tacks, drawing pins, staples and similar articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7415.21",
+          "title": "Other articles, not threaded : -- Washers (including spring washers)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7415.21.00",
+              "description": "Other articles, not threaded : -- Washers (including spring washers)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7415.29",
+          "title": "Other articles, not threaded : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7415.29.00",
+              "description": "Other articles, not threaded : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7415.33",
+          "title": "Other threaded articles : -- Screws; bolts and nuts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7415.33.10",
+              "description": "Screws for wood",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7415.33.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7415.39",
+          "title": "Other threaded articles : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7415.39.10",
+              "description": "Rivets (excluding tubular or bifurcated)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7415.39.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7418",
+      "title": "Table, kitchen or other household articles and parts thereof, of copper; pot scourers and scouring or polishing pads, gloves and the like, of copper; sanitary ware and parts thereof, of copper.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7418.10",
+          "title": "Table, kitchen or other household articles and parts thereof; pot scourers and scouring or polishing pads, gloves and the like.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7418.10.10",
+              "description": "Pot scourers and scouring or polishing pads, gloves and the like Utensils:",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7418.10.21",
+              "description": "Utensils: ----Of brass",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7418.10.22",
+              "description": "Utensils: ----Of copper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7418.10.23",
+              "description": "Utensils: ----Of other copper alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7418.10.24",
+              "description": "Utensils: ----E.P.N.S. ware",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7418.10.31",
+              "description": "Other: ----Of E.P.N.S.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7418.10.39",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7418.10.90",
+              "description": "Other: ----Parts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7418.20",
+          "title": "Sanitary ware and parts thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7418.20.10",
+              "description": "Sanitary ware",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7418.20.20",
+              "description": "Parts of sanitary ware",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7419",
+      "title": "Other articles of copper.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7419.20",
+          "title": "Cast, moulded, stamped or forged, but not further worked",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7419.20.00",
+              "description": "Cast, moulded, stamped or forged, but not further worked",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7419.80",
+          "title": "Other:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7419.80.10",
+              "description": "Reservoirs, tanks, vats and similar containers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7419.80.20",
+              "description": "Articles of copper alloys electro-plated with nickel-silver",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7419.80.30",
+              "description": "Articles of brass",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7419.80.40",
+              "description": "Copper worked articles",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7419.80.50",
+              "description": "Copper chain",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7419.80.90",
+              "description": "Other articles of copper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

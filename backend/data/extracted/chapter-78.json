@@ -1,0 +1,241 @@
+{
+  "chapter": "78",
+  "title": "Lead And Articles Thereof",
+  "section": "XV",
+  "source_pdf": "Chapter 78 Lead And Articles Thereof.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses tariff codes without dots (e.g. '78011000') and 6-digit sub-heading codes without dots (e.g. '780199'). Normalized to NNNN.NN.NN format (e.g. '7801.10.00') and NNNN.NN format (e.g. '7801.99') per project schema.",
+    "Section XV ('Base Metals and Articles of Base Metal') Main Notes are NOT present in this chapter PDF; they have been captured in Chapters 74/75/82 extractions per project plan. section_notes array is therefore empty in this file.",
+    "Chapter 78 PDF contains NO Chapter Notes table — only a 'Sub-Heading Notes' table with 1 entry. chapter_notes array is therefore empty; the single sub-heading note is captured under subheading 7801.10 (the sub-heading that introduces the 'refined lead' classification).",
+    "Sub-Heading Note 1 (refined lead definition) in source PDF contains four sets of consecutive double-quote characters ('\"\"\"\"refined lead\"\"\"\"'). Preserved verbatim as they appear in the source PDF.",
+    "Sub-Heading Note 1 contains a literal '?' character in the table header ('TABLE ? OTHER ELEMENTS'), which is an OCR/encoding artifact in the source PDF (likely a dash or em-dash). Preserved verbatim.",
+    "Sub-Heading Note 1 'Notification Date' and 'Notification No' columns are blank in the source PDF — captured as null.",
+    "Heading 7801 source PDF description reads 'Unwrought lead.' verbatim (with trailing period). Heading 7804 reads 'Lead plates, sheets, strip and foil; lead powders and flakes.' verbatim (with trailing period). Heading 7806 reads 'Other articles of lead.' verbatim (with trailing period). Preserved as-is.",
+    "Sub-heading 7801.99 description in source PDF reads 'Other : -- Other' — the WCO HS dash-prefix indicator preserved verbatim.",
+    "Sub-heading 7801.91 description in source PDF reads 'Other : -- Containing by weight antimony as the principal other element' and appears as an 8-digit tariff line '78019100' with no separate 6-digit sub-heading row. This is the sole tariff line under sub-heading 7801.91; preserved verbatim.",
+    "No Policy Conditions, no Export Licensing Notes appear in the Chapter 78 source PDF. All listed tariff lines show Export Policy = 'Free' with empty Policy Condition column.",
+    "No exclusion clauses (no 'This Chapter does not cover ...' language) appear anywhere in the Chapter 78 source PDF. exclusion_clauses array is therefore empty.",
+    "Tariff line 7802.00.10 description in source PDF is a long compound description spanning multiple ISRI scrap-code references (Racks, Radio, Relay, Ropes, Roses, Rink, Rono, Roper). Preserved verbatim as a single description string.",
+    "Source PDF lists heading 7802 with a single 6-digit sub-heading '780200' carrying the title 'Lead waste and scrap:' (note trailing colon) and 8-digit tariff lines 78020010 and 78020090. Trailing colon preserved verbatim.",
+    "HS Chapter 78 has no heading 7803 or 7805 (these were deleted in HS revisions); only headings 7801, 7802, 7804, 7806 appear in the source PDF — preserved as-is.",
+    "Sub-heading 7804.20 ('Powders and flakes') appears with a single 8-digit tariff line 7804.20.00 in source PDF — captured as such."
+  ],
+  "section_notes": [],
+  "chapter_notes": [],
+  "exclusion_clauses": [],
+  "headings": [
+    {
+      "heading": "7801",
+      "title": "Unwrought lead.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7801.10",
+          "title": "Refined lead",
+          "subheading_notes": [
+            {
+              "number": "1",
+              "text": "In this Chapter the expression \"\"\"\"refined lead\"\"\"\" means metal containing by weight at least 99.9% of lead, provided that the content by weight of any other element does not exceed the limit specified in the following Table: TABLE ? OTHER ELEMENTS Element Limiting content % by weight Ag Silver 0.02 As Arsenic 0.005 Bi Bismuth 0.05 Ca Calcium 0.002 Cd Cadmium 0.002 Cu Copper 0.08 Fe Iron 0.002 S Sulphur 0.002 Sb Antimony 0.005 Sn Tin 0.005 Zn Zinc 0.002 Other (for each example Te), 0.001 Each",
+              "notification_date": null,
+              "notification_no": null
+            }
+          ],
+          "tariff_lines": [
+            {
+              "code": "7801.10.00",
+              "description": "Refined lead",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7801.91",
+          "title": "Other : -- Containing by weight antimony as the principal other element",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7801.91.00",
+              "description": "Other : -- Containing by weight antimony as the principal other element",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7801.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7801.99.10",
+              "description": "Pig lead",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7801.99.20",
+              "description": "Unrefined lead",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7801.99.30",
+              "description": "Unrefined lead alloys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7801.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7802",
+      "title": "Lead waste and scrap",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7802.00",
+          "title": "Lead waste and scrap:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7802.00.10",
+              "description": "Lead scrap, namely the following: Scrap lead-soft covered by ISRI code word Racks; Mixed hard or soft scrap lead covered by ISRI code word Radio; Lead covered copper cable covered by ISRI code word Relay; Wheel weights covered by ISRI code word Ropes; Mixed common babbit covered by ISRI code word Roses; Scrap wet whole intact lead batteries consisting of SLI (starting, lighting and ignition), automotive, truck, 8-D and commercial golf cart and marine type batteries covered by ISRI code word Rink; Scrap industrial intact lead cells consisting of plates enclosed by some form of complete plastic case covered by ISRI code word Rono; Scrap whole Intact Industrial Lead Batteries Consisting of bus, diesel, locomotive, telephone or steel cased batteries covered by ISRI code word Roper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7802.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7804",
+      "title": "Lead plates, sheets, strip and foil; lead powders and flakes.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7804.11",
+          "title": "Plates, sheets, strip and foil : -- Sheets, strip and foil of a thickness (excluding any backing) not exceeding 0.2 mm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7804.11.10",
+              "description": "Sheets and strip",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7804.11.20",
+              "description": "Foil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7804.19",
+          "title": "Plates, sheets, strip and foil : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7804.19.10",
+              "description": "Plates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7804.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        },
+        {
+          "subheading": "7804.20",
+          "title": "Powders and flakes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7804.20.00",
+              "description": "Powders and flakes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7806",
+      "title": "Other articles of lead.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "7806.00",
+          "title": "Other articles of lead",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "7806.00.10",
+              "description": "Sanitary fixtures",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7806.00.20",
+              "description": "Indian lead seals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7806.00.30",
+              "description": "Blanks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "7806.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "policy_conditions": []
+}

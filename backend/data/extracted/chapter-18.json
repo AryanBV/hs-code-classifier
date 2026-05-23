@@ -1,0 +1,354 @@
+{
+  "chapter": "18",
+  "section": "IV",
+  "title": "COCOA AND COCOA PREPARATIONS",
+  "source_pdf": "Chapter 18 Cocoa And Cocoa Preparations.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '18010000'). Normalized to NNNN.NN.NN format (e.g., '1801.00.00') per project schema. Subheading numbers in PDF (e.g., '180690') normalized to NNNN.NN (e.g., '1806.90').",
+    "PDF table-chrome headers ('Sl.No. Notes Notification No Notification Date', 'Itc(hs) Code. Description Export Policy Policy Condition', 'Main Notes', 'Product Description and Export Policy') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Section IV Main Note about 'pellets' appears on PDF page 1 above the Chapter 18 title. It is attributed to section_notes (Section IV, Prepared Foodstuffs; Beverages, Spirits and Vinegar; Tobacco and Manufactured Tobacco Substitutes; Products, whether or not containing Nicotine, intended for Inhalation without Combustion; Other Nicotine Containing Products intended for the Intake of Nicotine into the Human Body), not chapter_notes.",
+    "Headings 1801, 1802, 1804, 1805 in the PDF appear only as 8-digit tariff lines (18010000, 18020000, 18040000, 18050000) without an explicit heading or subheading row. Each is represented as heading NNNN with a single subheading 'NNNN.00' carrying one tariff line 'NNNN.00.00'.",
+    "Heading 1803 appears with two 8-digit codes (18031000 'Not defatted', 18032000 'Wholly or partly defatted'). These are preserved as subheadings 1803.10 and 1803.20, each with a single tariff line '1803.10.00' and '1803.20.00' respectively (PDF shows the 8-digit form only).",
+    "Subheadings 1806.20, 1806.31, 1806.32 in the PDF appear only as 8-digit tariff lines (18062000, 18063100, 18063200) without an explicit 6-digit subheading row. Each is represented as a subheading with a single tariff line ending in '.00'. Subheading 1806.20 description 'Other preparations in blocks, slabs or bars weighing more than 2 Kg. or in liquid, paste, powder, granular or other bulk form in containers or immediate packings, of a content exceeding 2 Kg. Other, in blocks, slabs or bars:' is preserved verbatim including the trailing 'Other, in blocks, slabs or bars:' fragment which serves as the parent descriptor for 1806.31 and 1806.32 in the HS nomenclature.",
+    "All tariff lines in Chapter 18 have Export Policy = 'Free' with no Policy Condition entries. No policy_conditions or export_licensing_notes are present in the source PDF for this chapter.",
+    "Unit column is not present in the Schedule 2 Export Policy PDF for this chapter; 'unit' is set to null for all tariff lines."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover: (a) food preparations containing more than 20 % by weight of sausage, meat, meat offal, blood, insects, fish or crustaceans, molluscs or other aquatic invertebrates, or any combination thereof (Chapter 16); (b) preparations of headings 0403, 1901, 1902, 1904, 1905, 2105, 2202, 2208, 3003 or 3004."
+    },
+    {
+      "number": "2",
+      "text": "Heading 1806 includes sugar confectionery containing cocoa and, subject to Note 1 to this Chapter, other food preparations containing cocoa."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "In this Section, the term \"pellets\" means products which have been agglomerated either directly by compression or by the addition of a binder in a proportion not exceeding 3 (percent) by weight."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "food preparations containing more than 20 % by weight of sausage, meat, meat offal, blood, insects, fish or crustaceans, molluscs or other aquatic invertebrates, or any combination thereof",
+      "redirects_to_chapter": "16",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover: (a) food preparations containing more than 20 % by weight of sausage, meat, meat offal, blood, insects, fish or crustaceans, molluscs or other aquatic invertebrates, or any combination thereof (Chapter 16); (b) preparations of headings 0403, 1901, 1902, 1904, 1905, 2105, 2202, 2208, 3003 or 3004."
+    },
+    {
+      "excluded_product_text": "preparations of heading 0403",
+      "redirects_to_chapter": "04",
+      "redirects_to_heading": "0403",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover: (a) food preparations containing more than 20 % by weight of sausage, meat, meat offal, blood, insects, fish or crustaceans, molluscs or other aquatic invertebrates, or any combination thereof (Chapter 16); (b) preparations of headings 0403, 1901, 1902, 1904, 1905, 2105, 2202, 2208, 3003 or 3004."
+    },
+    {
+      "excluded_product_text": "preparations of heading 1901",
+      "redirects_to_chapter": "19",
+      "redirects_to_heading": "1901",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover: (a) food preparations containing more than 20 % by weight of sausage, meat, meat offal, blood, insects, fish or crustaceans, molluscs or other aquatic invertebrates, or any combination thereof (Chapter 16); (b) preparations of headings 0403, 1901, 1902, 1904, 1905, 2105, 2202, 2208, 3003 or 3004."
+    },
+    {
+      "excluded_product_text": "preparations of heading 1902",
+      "redirects_to_chapter": "19",
+      "redirects_to_heading": "1902",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover: (a) food preparations containing more than 20 % by weight of sausage, meat, meat offal, blood, insects, fish or crustaceans, molluscs or other aquatic invertebrates, or any combination thereof (Chapter 16); (b) preparations of headings 0403, 1901, 1902, 1904, 1905, 2105, 2202, 2208, 3003 or 3004."
+    },
+    {
+      "excluded_product_text": "preparations of heading 1904",
+      "redirects_to_chapter": "19",
+      "redirects_to_heading": "1904",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover: (a) food preparations containing more than 20 % by weight of sausage, meat, meat offal, blood, insects, fish or crustaceans, molluscs or other aquatic invertebrates, or any combination thereof (Chapter 16); (b) preparations of headings 0403, 1901, 1902, 1904, 1905, 2105, 2202, 2208, 3003 or 3004."
+    },
+    {
+      "excluded_product_text": "preparations of heading 1905",
+      "redirects_to_chapter": "19",
+      "redirects_to_heading": "1905",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover: (a) food preparations containing more than 20 % by weight of sausage, meat, meat offal, blood, insects, fish or crustaceans, molluscs or other aquatic invertebrates, or any combination thereof (Chapter 16); (b) preparations of headings 0403, 1901, 1902, 1904, 1905, 2105, 2202, 2208, 3003 or 3004."
+    },
+    {
+      "excluded_product_text": "preparations of heading 2105",
+      "redirects_to_chapter": "21",
+      "redirects_to_heading": "2105",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover: (a) food preparations containing more than 20 % by weight of sausage, meat, meat offal, blood, insects, fish or crustaceans, molluscs or other aquatic invertebrates, or any combination thereof (Chapter 16); (b) preparations of headings 0403, 1901, 1902, 1904, 1905, 2105, 2202, 2208, 3003 or 3004."
+    },
+    {
+      "excluded_product_text": "preparations of heading 2202",
+      "redirects_to_chapter": "22",
+      "redirects_to_heading": "2202",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover: (a) food preparations containing more than 20 % by weight of sausage, meat, meat offal, blood, insects, fish or crustaceans, molluscs or other aquatic invertebrates, or any combination thereof (Chapter 16); (b) preparations of headings 0403, 1901, 1902, 1904, 1905, 2105, 2202, 2208, 3003 or 3004."
+    },
+    {
+      "excluded_product_text": "preparations of heading 2208",
+      "redirects_to_chapter": "22",
+      "redirects_to_heading": "2208",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover: (a) food preparations containing more than 20 % by weight of sausage, meat, meat offal, blood, insects, fish or crustaceans, molluscs or other aquatic invertebrates, or any combination thereof (Chapter 16); (b) preparations of headings 0403, 1901, 1902, 1904, 1905, 2105, 2202, 2208, 3003 or 3004."
+    },
+    {
+      "excluded_product_text": "preparations of heading 3003",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": "3003",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover: (a) food preparations containing more than 20 % by weight of sausage, meat, meat offal, blood, insects, fish or crustaceans, molluscs or other aquatic invertebrates, or any combination thereof (Chapter 16); (b) preparations of headings 0403, 1901, 1902, 1904, 1905, 2105, 2202, 2208, 3003 or 3004."
+    },
+    {
+      "excluded_product_text": "preparations of heading 3004",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": "3004",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "This Chapter does not cover: (a) food preparations containing more than 20 % by weight of sausage, meat, meat offal, blood, insects, fish or crustaceans, molluscs or other aquatic invertebrates, or any combination thereof (Chapter 16); (b) preparations of headings 0403, 1901, 1902, 1904, 1905, 2105, 2202, 2208, 3003 or 3004."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "1801",
+      "title": "Cocoa beans, whole or broken, raw or roasted",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1801.00",
+          "title": "Cocoa beans, whole or broken, raw or roasted",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1801.00.00",
+              "description": "Cocoa beans, whole or broken, raw or roasted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "1802",
+      "title": "Cocoa shells, husks, skins and other cocoa waste",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1802.00",
+          "title": "Cocoa shells, husks, skins and other cocoa waste",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1802.00.00",
+              "description": "Cocoa shells, husks, skins and other cocoa waste",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "1803",
+      "title": "Cocoa paste, whether or not defatted.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1803.10",
+          "title": "Not defatted",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1803.10.00",
+              "description": "Not defatted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1803.20",
+          "title": "Wholly or partly defatted",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1803.20.00",
+              "description": "Wholly or partly defatted",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "1804",
+      "title": "Cocoa butter, fat and oil",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1804.00",
+          "title": "Cocoa butter, fat and oil",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1804.00.00",
+              "description": "Cocoa butter, fat and oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "1805",
+      "title": "Cocoa powder, not containing added sugar or other sweetening matter",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1805.00",
+          "title": "Cocoa powder, not containing added sugar or other sweetening matter",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1805.00.00",
+              "description": "Cocoa powder, not containing added sugar or other sweetening matter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "1806",
+      "title": "Chocolate and other food preparations containing cocoa.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "1806.10",
+          "title": "Cocoa powder, containing added sugar or other sweetening matter",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1806.10.00",
+              "description": "Cocoa powder, containing added sugar or other sweetening matter",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1806.20",
+          "title": "Other preparations in blocks, slabs or bars weighing more than 2 Kg. or in liquid, paste, powder, granular or other bulk form in containers or immediate packings, of a content exceeding 2 Kg. Other, in blocks, slabs or bars:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1806.20.00",
+              "description": "Other preparations in blocks, slabs or bars weighing more than 2 Kg. or in liquid, paste, powder, granular or other bulk form in containers or immediate packings, of a content exceeding 2 Kg. Other, in blocks, slabs or bars:",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1806.31",
+          "title": "Other, in blocks, slabs or bars : -- Filled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1806.31.00",
+              "description": "Other, in blocks, slabs or bars : -- Filled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1806.32",
+          "title": "Other, in blocks, slabs or bars : -- Not filled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1806.32.00",
+              "description": "Other, in blocks, slabs or bars : -- Not filled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "1806.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "1806.90.10",
+              "description": "Chocolate and chocolate products",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1806.90.20",
+              "description": "Sugar confectionery containing cocoa",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1806.90.30",
+              "description": "Spreads containing cocoa",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1806.90.40",
+              "description": "Preparations containing cocoa for making beverages",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "1806.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

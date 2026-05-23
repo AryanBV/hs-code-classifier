@@ -1,0 +1,482 @@
+{
+  "chapter": "97",
+  "section": "XXI",
+  "title": "WORKS OF ART, COLLECTORS' PIECES AND ANTIQUES",
+  "source_pdf": "Chapter 97 Works Of Art, Collectors Pieces And Antiques.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '97012100') and 6-digit subheading codes without dots (e.g., '970310'). Normalized to NNNN.NN.NN format (e.g., '9701.21.00') and NNNN.NN format (e.g., '9703.10') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'Sl.No. Notes Notification Date Notification No', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "Section XXI title in source PDF reads 'WORKS OF ART, COLLECTORS' PIECES AND ANTIQUES' — this is identical to the Chapter 97 title because Section XXI contains only Chapter 97. No separate section_notes table appears in the PDF; the 'Main Notes' table contains only Chapter 97 notes (6 notes). section_notes left as empty array.",
+    "All 6 Main Notes have empty 'Notification Date' and 'Notification No' columns in the source PDF.",
+    "Heading 9701 description in PDF is rendered in ALL CAPS with an internal spacing artifact 'HANDDECORATED' (intended 'HAND-DECORATED'). Preserved verbatim.",
+    "Heading 9704 has two descriptions in the PDF: the heading-level description 'Postage or revenue stamps, stamp-postmarks, first-day covers, postal stationery (stamped paper), and the like, used or unused, other than those of heading 49.07.' and the subheading-level (single subheading 9704.00) description 'Postage or revenue stamps, stamp-post marks, first-day covers, postal stationery (stamped paper), and the like, used or unused, other than those of heading 4907 :' which differ slightly (49.07 vs 4907, 'stamp-postmarks' vs 'stamp-post marks'). Both preserved verbatim.",
+    "Heading 9705 description in PDF is rendered in ALL CAPS. The PDF lists subheading 9705.00.90 ('Other') BEFORE subheading 9705.10.00 ('Collections and collectors' pieces of archaeological, ethnographic or historical interest'). Preserved in PDF order; the '9705.00.90' code does not follow the normal hierarchical ordering (likely a residual entry from an older nomenclature).",
+    "Subheading 9705.10.00 description 'Collections and collectors' pieces of archaeological, ethnographic or historical interest' spans across page break between PDF pages 4 and 5 — concatenated verbatim.",
+    "Heading 9706 'ANTIQUES OF AN AGE EXCEEDING 100 YEARS' is rendered in ALL CAPS in the PDF — preserved verbatim. Tariff lines 9706.10.00 (Of an age exceeding 250 years) and 9706.90.00 (Other) each have a Policy Condition: 'Export of Replicas of antique weapons is Free subject to Certificate from the District Magistrate concerned/ Commissioner of Police under whose jurisdiction the replica has been manufactured and has been rendered innocuous.' Captured in policy_conditions.",
+    "The 'Export Policy' and 'Policy Condition' columns are not part of the tariff line description field; they are captured separately. Unit-of-measure column (kg/u/etc) is NOT shown in this chapter's PDF — unit field set to null for all tariff lines.",
+    "Note: The Antiquities and Art Treasures Act 1972 governs export of antiquities and art treasures in India. The source PDF for Chapter 97 does NOT explicitly cite the Antiquities and Art Treasures Act 1972 or any related export prohibition by name. The only export-licensing-style note in the PDF for this chapter is the 'Replicas of antique weapons' Policy Condition attached to heading 9706 tariff lines. Export Policy is 'Free' for all tariff lines in the PDF as shown. export_licensing_notes therefore captures only what appears verbatim in the source PDF and is left empty (Antiquities Act references are NOT in this PDF's text and so are not added).",
+    "[phantom-cleanup v2] Applied verdict from ours-only-verdict.json: removed 1 phantom subheadings, tagged 0 as india_specific."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover : (a) unused postage or revenue stamps, postal stationery (stamped paper) or the like of heading 4907; (b) theatrical scenery, studio back-cloths and the like, of painted canvas (heading 5907) except if they may be classified in heading 9706; or (c) pearls, natural or cultured, or precious or semi-precious stones (headings 7101 to 7103)."
+    },
+    {
+      "number": "2",
+      "text": "Heading 9701 does not apply to mosaics that are mass-produced reproductions, casts or works of conventional craftsmanship of a commercial character, even if these articles are designed or created by artists."
+    },
+    {
+      "number": "3",
+      "text": "For the purposes of heading 9702, the expression \"original engravings, prints and lithographs\" means impressions produced directly, in black and white, or in colour, of one or of several plates wholly executed by hand by the artist, irrespective of the process or of the material employed by him, but not including any mechanical or photomechanical process."
+    },
+    {
+      "number": "4",
+      "text": "Heading 9703 does not apply to mass-produced reproductions or works of conventional craftsmanship of a commercial character, even if these articles are designed or created by artists."
+    },
+    {
+      "number": "5",
+      "text": "(A) Subject to Notes 1 to 3 above, articles of this Chapter are to be classified in this Chapter and not in any other Chapter of this Schedule. (B) Heading 9706 does not apply to articles of the preceding headings of this Chapter."
+    },
+    {
+      "number": "6",
+      "text": "Frames around paintings, drawings, pastels, collages or similarly decorative plaques, engravings, prints or lithographs are to be classified with those articles, provided they are of a kind and of a value normal to those articles. Frames which are not of kind or of a value normal to the articles referred to in this Note are to be classified separately."
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "unused postage or revenue stamps, postal stationery (stamped paper) or the like",
+      "redirects_to_chapter": "49",
+      "redirects_to_heading": "4907",
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover : (a) unused postage or revenue stamps, postal stationery (stamped paper) or the like of heading 4907"
+    },
+    {
+      "excluded_product_text": "theatrical scenery, studio back-cloths and the like, of painted canvas (except if they may be classified in heading 9706)",
+      "redirects_to_chapter": "59",
+      "redirects_to_heading": "5907",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "(b) theatrical scenery, studio back-cloths and the like, of painted canvas (heading 5907) except if they may be classified in heading 9706"
+    },
+    {
+      "excluded_product_text": "pearls, natural or cultured, or precious or semi-precious stones",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": "7101",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "(c) pearls, natural or cultured, or precious or semi-precious stones (headings 7101 to 7103)"
+    },
+    {
+      "excluded_product_text": "pearls, natural or cultured, or precious or semi-precious stones",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": "7102",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "(c) pearls, natural or cultured, or precious or semi-precious stones (headings 7101 to 7103)"
+    },
+    {
+      "excluded_product_text": "pearls, natural or cultured, or precious or semi-precious stones",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": "7103",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "(c) pearls, natural or cultured, or precious or semi-precious stones (headings 7101 to 7103)"
+    },
+    {
+      "excluded_product_text": "mosaics that are mass-produced reproductions, casts or works of conventional craftsmanship of a commercial character, even if these articles are designed or created by artists",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2",
+      "source_note_text": "Heading 9701 does not apply to mosaics that are mass-produced reproductions, casts or works of conventional craftsmanship of a commercial character, even if these articles are designed or created by artists."
+    },
+    {
+      "excluded_product_text": "mass-produced reproductions or works of conventional craftsmanship of a commercial character (in respect of heading 9703 — original sculptures and statuary), even if these articles are designed or created by artists",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 4",
+      "source_note_text": "Heading 9703 does not apply to mass-produced reproductions or works of conventional craftsmanship of a commercial character, even if these articles are designed or created by artists."
+    },
+    {
+      "excluded_product_text": "articles of the preceding headings of this Chapter (i.e., articles classifiable in headings 9701 to 9705) — excluded from heading 9706",
+      "redirects_to_chapter": "97",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 5(B)",
+      "source_note_text": "(B) Heading 9706 does not apply to articles of the preceding headings of this Chapter."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "9701",
+      "title": "PAINTINGS, DRAWINGS AND PASTELS, EXECUTED ENTIRELY BY HAND, OTHER THAN DRAWINGS OF HEADING 4906 AND OTHER THAN HAND-PAINTED OR HANDDECORATED MANUFACTURED ARTICLES; COLLAGES AND SIMILAR DECORATIVE PLAQUES",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9701.21",
+          "title": "Of an age exceeding 100 years: - - Paintings, drawings and pastels",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9701.21.00",
+              "description": "Of an age exceeding 100 years: - - Paintings, drawings and pastels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9701.22",
+          "title": "Of an age exceeding 100 years: - - Mosaics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9701.22.00",
+              "description": "Of an age exceeding 100 years: - - Mosaics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9701.29",
+          "title": "Of an age exceeding 100 years: - - Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9701.29.00",
+              "description": "Of an age exceeding 100 years: - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9701.91",
+          "title": "Other: - - Paintings, drawings and pastels",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9701.91.00",
+              "description": "Other: - - Paintings, drawings and pastels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9701.92",
+          "title": "Other: - - Mosaics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9701.92.00",
+              "description": "Other: - - Mosaics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9701.99",
+          "title": "Other: - - Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9701.99.00",
+              "description": "Other: - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9702",
+      "title": "ORIGINAL ENGRAVINGS, PRINTS AND LITHOGRAPHS",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9702.10",
+          "title": "Paintings, drawings and pastels",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9702.10.00",
+              "description": "Paintings, drawings and pastels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9702.90",
+          "title": "Paintings, drawings and pastels",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9702.90.00",
+              "description": "Paintings, drawings and pastels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9703",
+      "title": "Original sculptures and statuary, in any material.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9703.10",
+          "title": "Of an age exceeding 100 years:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9703.10.10",
+              "description": "Of metal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9703.10.20",
+              "description": "Of stone",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9703.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9703.90",
+          "title": "Other:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9703.90.10",
+              "description": "Of metal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9703.90.20",
+              "description": "Of stone",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9703.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9704",
+      "title": "Postage or revenue stamps, stamp-postmarks, first-day covers, postal stationery (stamped paper), and the like, used or unused, other than those of heading 49.07.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9704.00",
+          "title": "Postage or revenue stamps, stamp-post marks, first-day covers, postal stationery (stamped paper), and the like, used or unused, other than those of heading 4907 :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9704.00.10",
+              "description": "Used postal stamp",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9704.00.20",
+              "description": "Used or unused first-day covers for philatelists",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9704.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "9705",
+      "title": "COLLECTIONS AND COLLECTORS PIECES OF ARCHAEOLOGICAL, ETHNOGRAPHIC, HISTORICAL, ZOOLOGICAL, BOTANICAL, MINERALOGICAL, ANATOMICAL, PALEONTOLOGICAL, OR NUMISMATIC INTEREST",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9705.10",
+          "title": "Collections and collectors' pieces of archaeological, ethnographic or historical interest",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9705.10.00",
+              "description": "Collections and collectors' pieces of archaeological, ethnographic or historical interest",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9705.21",
+          "title": "Human specimens and parts thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9705.21.00",
+              "description": "Human specimens and parts thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9705.22",
+          "title": "Extinct or endangered species and parts thereof",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9705.22.00",
+              "description": "Extinct or endangered species and parts thereof",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9705.29",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9705.29.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9705.31",
+          "title": "Collections and collectors' pieces of numismatic interest: - - Of an age exceeding 100 years",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9705.31.00",
+              "description": "Collections and collectors' pieces of numismatic interest: - - Of an age exceeding 100 years",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9705.39",
+          "title": "Collections and collectors' pieces of numismatic interest: - - Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9705.39.00",
+              "description": "Collections and collectors' pieces of numismatic interest: - - Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9706",
+      "title": "ANTIQUES OF AN AGE EXCEEDING 100 YEARS",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9706.10",
+          "title": "Of an age exceeding 250 years",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9706.10.00",
+              "description": "Of an age exceeding 250 years",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "subject to Certificate from the District Magistrate concerned/ Commissioner of Police under whose jurisdiction the replica has been manufactured and has been rendered innocuous."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9706.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9706.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "subject to Certificate from the District Magistrate concerned/ Commissioner of Police under whose jurisdiction the replica has been manufactured and has been rendered innocuous."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

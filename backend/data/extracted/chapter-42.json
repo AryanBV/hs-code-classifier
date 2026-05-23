@@ -1,0 +1,793 @@
+{
+  "chapter": "42",
+  "section": "VIII",
+  "title": "ARTICLES OF LEATHER; SADDLERY AND HARNESS; TRAVEL GOODS, HANDBAGS AND SIMILAR CONTAINERS; ARTICLES OF ANIMAL GUT (OTHER THAN SILK-WORM GUT)",
+  "source_pdf": "Chapter 42 Articles Of Leather; Saddlery And Harness; Travel Goods, Handbags And Similar Containers; Articles Of Animal Gut (Other than silk-worm gut).pdf",
+  "extracted_at": "2026-05-21",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '42021110') and 6-digit subheading codes without dots (e.g., '420211'). Normalized to NNNN.NN.NN format (e.g., '4202.11.10') and NNNN.NN format (e.g., '4202.11') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'Sl.No. Notes Notification Date Notification No', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "PDF contains '?' characters in place of typographic quote marks in the policy condition for tariff 4205.0090 (e.g., '?Shipment Clearance Certificate?', '?Health Certificate?'). These are OCR/encoding artifacts from the source PDF — preserved verbatim as they appear in the source.",
+    "Chapter title on PDF page 1 reads 'Chapter 42 Articles Of Leather; Saddlery And Harness; Travel Goods, Handbags And Similar Containers; Articles Of Animal Gut (Other Than Silk-Worm Gut).' The canonical uppercase form is used in the title field; source_pdf preserves the PDF filename.",
+    "Section VIII 'Main Notes' presented on the PDF as the chapter notes table contain notes 1-4 which are the Chapter 42 chapter notes (not section notes). The PDF heading 'Section VIII, RAW HIDES AND SKINS, LEATHER, FURSKINS AND ARTICLES THEREOF; SADDLERY AND HARNESS; TRAVEL GOODS, HANDBAGS AND SIMILAR CONTAINERS; ARTICLES OF ANIMAL GUT (OTHER THAN SILK-WORM GUT)' appears as a section descriptor only — no separate Section VIII notes are listed in this PDF (Section VIII has no section notes per the WCO HS nomenclature). All four notes are therefore captured as chapter_notes.",
+    "Note 1 has internal spacing artifacts from the PDF: 'Forthe purposes ofthisChapter,the term' is concatenated. Preserved verbatim — intended text is 'For the purposes of this Chapter, the term'.",
+    "Note 2 sub-clause labels (a)-(m) include both '(ij)' (for 'strings, skins for drums or the like, or other parts of musical instruments') and Roman-numeral-style ordering. Preserved verbatim — '(ij)' appears as printed (likely 'ij' is intended as the WCO convention for the letter between (i) and (j) since 'i' and 'j' look similar; this corresponds to clause (i) in some renderings).",
+    "Note 3 in the PDF is split visually across the table boundary into '(A)' and '(B)' segments. Both segments are part of Note 3 and have been concatenated as a single note per the PDF row Sl.No. 3.",
+    "The 'Notification Date' and 'Notification No' columns in the Main Notes table are empty for all four chapter notes — null preserved.",
+    "Heading 4204 is absent from this chapter PDF — per ITC(HS) 2022 schedule, heading 4204 has been deleted/omitted (the 2017 HS nomenclature deleted 4204 'Articles of leather or of composition leather, of a kind used in machinery or mechanical appliances or for other technical uses'). PDF jumps from 4203 directly to 4205. No tariff lines under 4204 are extracted.",
+    "Tariff line 4205.00.90 has a complex Policy Condition relating to export of Dog Chews produced from animal by-products to the EU, with Notification No '34/2015-20' dated '13.01.2017'. This condition spans pages 10-11 of the PDF and is captured both as a tariff_line policy reference and in the policy_conditions metadata.",
+    "Tariff line codes 4205.00.11 (Welt) and 4205.00.19 (Other) appear under subheading 4205.00 in the PDF. The 6-digit subheading is rendered as '420500' in the PDF, normalized to '4205.00'.",
+    "Several subheading headers (e.g., '420211', '420212', '420219', '420221', '420222', '420229', '420231', '420232', '420239') appear as 6-digit codes without an explicit Export Policy value (the policy is set on the underlying tariff lines). Their description fields include the parent heading's wording with '-- With outer surface of...' continuation text, preserved verbatim.",
+    "The 'Export Policy' column for every tariff line in this chapter is 'Free'. No tariff lines are Restricted, Prohibited, or STE in this chapter PDF.",
+    "Unit-of-measure column is NOT shown in this chapter's PDF — unit field set to null for all tariff lines."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "Forthe purposes ofthisChapter,the term\"leather\" includes chamois(including combination chamois) leather, patent leather, patent laminated leather and metallised leather."
+    },
+    {
+      "number": "2",
+      "text": "This Chapter does not cover: (a) sterile surgical catgut or similar sterile suture materials (heading 3006); (b) articles of apparel or clothing accessories (except gloves, mittens and mitts), lined with furskin or artificial fur or to which furskin or artificial fur is attached on the outside except as mere trimming (heading 4303 or 4304); (c) made up articles of netting (5608); (d) articles of Chapter 64; (e) headgear or parts thereof of Chapter 65; (f) whips,riding-crops or articles of heading 6602; (g) cuff-links, bracelets or other imitation jewellery (heading 7117); (h) fittings or trimmings for harness, such as stirrups, bits, horse, brassess and buckles, separately presented (generally Section XV); (ij) strings, skins for drums or the like, or other parts of musical instruments (heading 9209); (k) articles of Chapter 94 (for example, furniture, luminaires and lighting fittings); (l) articles of Chapter 95 (for example, toys, games, sports requisites); or (m)buttons, press-fasteners,snap-fasteners, press-studs, button moulds or other parts of these articles, button blanks, of heading 9606."
+    },
+    {
+      "number": "3",
+      "text": "(A) In addition to the provisions of Note 2 above, heading 4202 does not cover: (a) bags made of sheeting of plastics, whether or not printed, with handles, not designed for prolonged use (heading 3923); (b) articles of plaiting materials (heading 4602). (B) Articles of headings 4202 and 4203 which have parts of precious metal or metal clad with precious metal, of natural or cultured pearls, of precious or semi-precious stones (natural, synthetic or reconstructed) remain classified in those headings even if such parts constitute more than minor fittings or minor ornamentation, provided that these parts do not give the articles their essential character . If, on the other hand, the parts give the articles their essential character, the articles are to be classified in Chapter 71."
+    },
+    {
+      "number": "4",
+      "text": "For the purposes of heading 4203, the expression \"articles of apparel and clothing accessories\" applies, inter alia, to gloves, mittens and mitts (including those for sport or for protection), aprons and other protective clothing, braces, belts, bandoliers and wrist straps, but excluding watch straps (heading 9113)."
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "sterile surgical catgut or similar sterile suture materials",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": "3006",
+      "source_note_number": "Note 2(a)",
+      "source_note_text": "This Chapter does not cover: (a) sterile surgical catgut or similar sterile suture materials (heading 3006)"
+    },
+    {
+      "excluded_product_text": "articles of apparel or clothing accessories (except gloves, mittens and mitts), lined with furskin or artificial fur or to which furskin or artificial fur is attached on the outside except as mere trimming",
+      "redirects_to_chapter": "43",
+      "redirects_to_heading": "4303",
+      "source_note_number": "Note 2(b)",
+      "source_note_text": "(b) articles of apparel or clothing accessories (except gloves, mittens and mitts), lined with furskin or artificial fur or to which furskin or artificial fur is attached on the outside except as mere trimming (heading 4303 or 4304)"
+    },
+    {
+      "excluded_product_text": "made up articles of netting",
+      "redirects_to_chapter": "56",
+      "redirects_to_heading": "5608",
+      "source_note_number": "Note 2(c)",
+      "source_note_text": "(c) made up articles of netting (5608)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 64 (footwear, gaiters and the like; parts of such articles)",
+      "redirects_to_chapter": "64",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(d)",
+      "source_note_text": "(d) articles of Chapter 64"
+    },
+    {
+      "excluded_product_text": "headgear or parts thereof of Chapter 65",
+      "redirects_to_chapter": "65",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(e)",
+      "source_note_text": "(e) headgear or parts thereof of Chapter 65"
+    },
+    {
+      "excluded_product_text": "whips, riding-crops or articles of heading 6602",
+      "redirects_to_chapter": "66",
+      "redirects_to_heading": "6602",
+      "source_note_number": "Note 2(f)",
+      "source_note_text": "(f) whips,riding-crops or articles of heading 6602"
+    },
+    {
+      "excluded_product_text": "cuff-links, bracelets or other imitation jewellery",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": "7117",
+      "source_note_number": "Note 2(g)",
+      "source_note_text": "(g) cuff-links, bracelets or other imitation jewellery (heading 7117)"
+    },
+    {
+      "excluded_product_text": "fittings or trimmings for harness, such as stirrups, bits, horse, brassess and buckles, separately presented",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(h)",
+      "source_note_text": "(h) fittings or trimmings for harness, such as stirrups, bits, horse, brassess and buckles, separately presented (generally Section XV)"
+    },
+    {
+      "excluded_product_text": "strings, skins for drums or the like, or other parts of musical instruments",
+      "redirects_to_chapter": "92",
+      "redirects_to_heading": "9209",
+      "source_note_number": "Note 2(ij)",
+      "source_note_text": "(ij) strings, skins for drums or the like, or other parts of musical instruments (heading 9209)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 94 (for example, furniture, luminaires and lighting fittings)",
+      "redirects_to_chapter": "94",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(k)",
+      "source_note_text": "(k) articles of Chapter 94 (for example, furniture, luminaires and lighting fittings)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 95 (for example, toys, games, sports requisites)",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(l)",
+      "source_note_text": "(l) articles of Chapter 95 (for example, toys, games, sports requisites)"
+    },
+    {
+      "excluded_product_text": "buttons, press-fasteners, snap-fasteners, press-studs, button moulds or other parts of these articles, button blanks",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": "9606",
+      "source_note_number": "Note 2(m)",
+      "source_note_text": "(m)buttons, press-fasteners,snap-fasteners, press-studs, button moulds or other parts of these articles, button blanks, of heading 9606"
+    },
+    {
+      "excluded_product_text": "bags made of sheeting of plastics, whether or not printed, with handles, not designed for prolonged use — excluded from heading 4202",
+      "redirects_to_chapter": "39",
+      "redirects_to_heading": "3923",
+      "source_note_number": "Note 3(A)(a)",
+      "source_note_text": "(A) In addition to the provisions of Note 2 above, heading 4202 does not cover: (a) bags made of sheeting of plastics, whether or not printed, with handles, not designed for prolonged use (heading 3923)"
+    },
+    {
+      "excluded_product_text": "articles of plaiting materials — excluded from heading 4202",
+      "redirects_to_chapter": "46",
+      "redirects_to_heading": "4602",
+      "source_note_number": "Note 3(A)(b)",
+      "source_note_text": "(b) articles of plaiting materials (heading 4602)"
+    },
+    {
+      "excluded_product_text": "articles of headings 4202 and 4203 where parts of precious metal, pearls or precious/semi-precious stones give the articles their essential character",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 3(B)",
+      "source_note_text": "(B) Articles of headings 4202 and 4203 which have parts of precious metal or metal clad with precious metal, of natural or cultured pearls, of precious or semi-precious stones (natural, synthetic or reconstructed) remain classified in those headings even if such parts constitute more than minor fittings or minor ornamentation, provided that these parts do not give the articles their essential character . If, on the other hand, the parts give the articles their essential character, the articles are to be classified in Chapter 71."
+    },
+    {
+      "excluded_product_text": "watch straps — excluded from heading 4203 'articles of apparel and clothing accessories'",
+      "redirects_to_chapter": "91",
+      "redirects_to_heading": "9113",
+      "source_note_number": "Note 4",
+      "source_note_text": "For the purposes of heading 4203, the expression \"articles of apparel and clothing accessories\" applies, inter alia, to gloves, mittens and mitts (including those for sport or for protection), aprons and other protective clothing, braces, belts, bandoliers and wrist straps, but excluding watch straps (heading 9113)."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "4201",
+      "title": "Saddlery and harness for any animal (including traces, leads, knee pads, muzzles, saddle cloths, saddle bags, dog coats and the like), of any material.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4201.00",
+          "title": "Saddlery and harness for any animal (including traces, leads, knee pads, muzzles, saddle cloths, saddle bags, dog coats and the like), of any material.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4201.00.00",
+              "description": "Saddlery and harness for any animal (including traces, leads, knee pads, muzzles, saddle cloths, saddle bags, dog coats and the like), of any material.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "4202",
+      "title": "Trunks, suit-cases, vanity-cases, executive-cases, brief-cases, school satchels, spectacle cases, binocular cases, camera cases, musical instrument cases, gun cases, holsters and similar containers; travelling-bags, insulated food or beverages bags, toilet bags, rucksacks, handbags, shopping-bags, wallets, purses, map-cases, cigarette-cases, tobacco-pouches, tool bags, sports bags, bottle-cases, jewellery boxes, powder-boxes, cutlery cases and similar containers, of leather or of composition leather, of sheeting of plastics, of textile materials, of vulcanised fibre or of paperboard, or wholly or mainly covered with such materials or with paper.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4202.11",
+          "title": "Trunks, suit-cases, vanity-cases, executive-cases, brief-cases, school satchels and similar containers : -- With outer surface of leather or of composition leather",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4202.11.10",
+              "description": "Travel goods (Trunks, suit-cases, sports bags and other similar items ) of leather",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.11.20",
+              "description": "Toilet-bags and cases, of leather",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.11.30",
+              "description": "Satchels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.11.40",
+              "description": "Brief-cases",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.11.50",
+              "description": "Executive-cases",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.11.60",
+              "description": "Vanity-cases",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.11.70",
+              "description": "Attache-cases",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.11.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4202.12",
+          "title": "Trunks, suit-cases, vanity-cases, executive-cases, brief-cases, school satchels and similar containers : -- With outer surface of plastics or of textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4202.12.10",
+              "description": "Toilet cases",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.12.20",
+              "description": "Plastic moulded suit-cases",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.12.30",
+              "description": "Plastic moulded brief-cases",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.12.40",
+              "description": "Satchels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.12.50",
+              "description": "Other Travel goods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.12.60",
+              "description": "Brief-cases",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.12.70",
+              "description": "Executive-cases other than plastic moulded",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.12.80",
+              "description": "Vanity-cases",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4202.19",
+          "title": "Trunks, suit-cases, vanity-cases, executive-cases, brief-cases, school satchels and similar containers : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4202.19.10",
+              "description": "Travel goods (Trunks, suit-cases, sports bags, and other similar items ) of leather",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.19.20",
+              "description": "Toilet-cases",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.19.30",
+              "description": "Satchels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.19.40",
+              "description": "Brief-cases (other than plastic moulded)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.19.50",
+              "description": "Executive-cases",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.19.60",
+              "description": "Vanity-cases",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4202.21",
+          "title": "Handbags, whether or not with shoulder strap, including those without handle : -- With outer surface of leather or of composition leather",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4202.21.10",
+              "description": "Hand-bags for ladies",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.21.20",
+              "description": "Vanity-bags",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.21.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4202.22",
+          "title": "Handbags, whether or not with shoulder strap, including those without handle : -- With outer surface of sheeting of plastics or of textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4202.22.10",
+              "description": "Hand-bags and shopping bags, of artificial plastic material",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.22.20",
+              "description": "Hand-bags and shopping bags, of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.22.30",
+              "description": "Hand-bags and shopping bags, of Jute",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.22.40",
+              "description": "Vanity-bags",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.22.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4202.29",
+          "title": "Handbags, whether or not with shoulder strap, including those without handle : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4202.29.10",
+              "description": "Hand bags of other materials excluding wicker-work or basket work",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4202.31",
+          "title": "Articles of a kind normally carried in the pocket or in the handbag : -- With outer surface of leather or of composition leather",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4202.31.10",
+              "description": "Jewellery box",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.31.20",
+              "description": "Wallets and purses, of leather",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.31.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4202.32",
+          "title": "Articles of a kind normally carried in the pocket or in the handbag : -- With outer surface of sheeting of plastics or of textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4202.32.10",
+              "description": "Jewellery box",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.32.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4202.39",
+          "title": "Articles of a kind normally carried in the pocket or in the handbag : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4202.39.10",
+              "description": "Jewellery box",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4202.39.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4202.91",
+          "title": "Other : -- With outer surface of leather or of composition leather",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4202.91.00",
+              "description": "Other : -- With outer surface of leather or of composition leather",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4202.92",
+          "title": "Other : -- With outer surface of sheeting of plastics or of textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4202.92.00",
+              "description": "Other : -- With outer surface of sheeting of plastics or of textile materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4202.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4202.99.00",
+              "description": "Other : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4203",
+      "title": "Articles of apparel and clothing accessories, of leather or of composition leather.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4203.10",
+          "title": "Articles of apparel",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4203.10.10",
+              "description": "Jackets and jerseys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4203.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4203.21",
+          "title": "Gloves, mittens and mitts : -- Specially designed for use in sports",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4203.21.10",
+              "description": "Gloves",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4203.21.20",
+              "description": "Mittens and mitts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4203.29",
+          "title": "Gloves, mittens and mitts : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4203.29.10",
+              "description": "Gloves for use in industry",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4203.29.20",
+              "description": "Other gloves",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4203.29.30",
+              "description": "Mittens and mitts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4203.30",
+          "title": "Belts and bandoliers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4203.30.00",
+              "description": "Belts and bandoliers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4203.40",
+          "title": "Other clothing accessories",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4203.40.10",
+              "description": "Aprons",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4203.40.20",
+              "description": "Semi-chrome grain garments",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4203.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4205",
+      "title": "Other articles of leather or of composition leather.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4205.00",
+          "title": "Other articles of leather or of composition leather :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4205.00.11",
+              "description": "Welt",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4205.00.19",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4205.00.20",
+              "description": "Leather sofa cover",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4205.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "the exporter, address of the registered plant, 34/2015-20 13.01.2017 IEC of the exporter, plant approval number, nature of export product, quantity, invoice number and date, port of loading (Name of the port) and destination. (ii) After the shipment is made, the exporter shall also provide consignment-wise ?Health Certificate? to the buyer giving details of the product with HS Code, packaging, its origin, destination, vessel name, date of departure, health requirements etc. This Health Certificate would be issued jointly by CAPEXIL and Regional Animal Quarantine Officer, Department of Animal Husbandry &Dairying, Government of India."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4206",
+      "title": "Articles of gut (other than silk-worm gut), of goldbeaters skin, of bladders or of tendons.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4206.00",
+          "title": "Articles of gut (other than silk-worm gut), of goldbeaters skin, of bladders or of tendons.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4206.00.10",
+              "description": "For rackets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4206.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    }
+  ]
+}

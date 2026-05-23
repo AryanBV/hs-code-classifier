@@ -1,0 +1,2736 @@
+{
+  "chapter": "48",
+  "section": "X",
+  "title": "Paper And Paperboard; Articles Of Paper Pulp, Of Paper Or Of Paperboard",
+  "source_pdf": "Chapter 48 Paper And Paperboard; Articles Of Paper Pulp, Of Paper Or Of Paperboard.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "Tariff codes in source PDF use no-dot format (NNNNNNNN). All codes normalized to NNNN.NN.NN by inserting dots after positions 4 and 6.",
+    "Source PDF table rendered Main Notes in non-sequential order (1, 10, 11, 12, 2, 3, 4, 5, 6, 7, 8, 9). Notes have been re-ordered numerically in this JSON.",
+    "Note 2 (the main exclusion note) is split across multiple table rows in the source PDF. Reassembled into a single verbatim block. Sub-clauses (a) through (q) extracted as separate exclusion_clauses entries.",
+    "Section X (PULP OF WOOD OR OF OTHER FIBROUS CELLULOSIC MATERIAL; RECOVERED (WASTE AND SCRAP) PAPER OR PAPERBOARD; PAPER AND PAPERBOARD AND ARTICLES THEREOF) has no Section Notes in Schedule 2 PDFs — confirmed by cross-checking Chapter 47 PDF (also no section notes). section_notes is empty array.",
+    "Source PDF contains apparent OCR artifacts (run-together words and missing spaces): 'consitituting', 'Chaper 46', 'chemicalsulphate orsoda', 'ofthe totalfibre', 'plaitingmaterial', 'asto', 'ofseveral', 'paperboard,suitable', 'asfloor', 'ash content not exceeding 8%', 'vey lightly sized', 'futher printing', 'machinefinished', 'lessthan', 'aCMT2 30', 'amechanical', 'newstape paper', 'Minium tensile', 'g/m' (likely 'g/m2'), '230C' (likely '23 C'). Preserved verbatim; flagged here.",
+    "Sub-Heading Note 1 text contains an internal table for Mullen bursting strength values rendered as inline text: 'Weight g/m2 Minimum Mullen bursting strength (kPa) 115 393 125 417 200 637 300 824 400 961'. Preserved verbatim as inline.",
+    "Sub-Heading Note 2 text contains an internal table for tear/tensile values rendered as inline text. Preserved verbatim as inline.",
+    "Source PDF wraps quoted phrases inside notes with doubled double-quotes (e.g. '\"\"newsprint\"\"', '\"\"Kraft- liner\"\"'). Preserved verbatim.",
+    "Tariff line description for 4823.90.18 spans multiple lines in source PDF with a wrap-line phrase 'compressed together in one or more operations'. Reassembled into single verbatim string.",
+    "Several '480Xnn' sub-heading rows in the source PDF are descriptive labels (no Export Policy value) used as parent prefix for the tariff lines that follow. These have been promoted to subheading objects; tariff lines under each retain the parent's prefix in their description per source PDF formatting (e.g. 'Fluting paper : -- Semi-chemical fluting paper').",
+    "Sub-headings 4802.10, 4802.20, 4802.54-4802.69, 4810.13-4810.39, 4811.10-4811.90, 4816.20-4816.90, 4817.10-4817.30, 4818.10-4818.90, 4819.10-4819.60, 4820.10-4820.90, 4821.10-4821.90, 4822.10-4822.90, 4823.20-4823.90 have been inferred from the 6-digit codes (480210 etc.) shown as section dividers in the source PDF.",
+    "Source PDF heading 4808 description appears truncated as 'Paper and paperboard, corrugated (with or without glued flat or sheets, other than paper of the kind described in' — preserved verbatim. The standard HS text continues 'heading 4803' but the PDF ends mid-sentence.",
+    "Sub-heading 4809.10 appears to be missing from source PDF — only 4809.20 (Self-copy paper) and 4809.90 (Other) are listed as tariff lines (48092000 and 48099000). Preserved verbatim.",
+    "Sub-heading codes 4815 (reserved) and 4824 onwards do not appear in source PDF. Headings present: 4801-4814 and 4816-4823.",
+    "Supplementary Note 1 references 'Note 12' which corresponds to Chapter Note 12 (the Chapter 49 redirect note for printed paper)."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "For the purposes of this Chapter, except where the context otherwise requires, a reference to \"paper\" includes references to paperboard (irrespective of thickness or weight per m2 )."
+    },
+    {
+      "number": "2",
+      "text": "This Chapter does not cover: (a) articles of Chapter 30; (b) stamping foils of heading 3212; (c) perfumed papers or papers impregnated or coated with cosmetics (Chapter 33); (d) paper or cellulose wadding impregnated, coated or covered with soap or detergent (heading 3401), or with polishes, creams or similar preparations (heading 3405); (e) sensitised paper or paperboard of headings 3701 to 3704; (f) paper impregnated with diagnostic or laboratory reagents (heading 3822); (g) paper-reinforced stratified sheeting of plastics, or one layer of paper or paperboard coated or covered with a layer of plastics, the latter consituting more than half the total thickness, or articles of such materials, other than wall coverings of heading 4814 (Chapter 39); (h) articles of heading 4202 (for example, travel goods); (ij) articles of Chaper 46 (manufactures of plaiting material); (k) paper yarn or textile articles of paper yarn (Section XI); (l) articles of Chapter 64 or Chapter 65; (m) abrasive paper or paperboard (heading 6805) or paper or paperboard-backed mica (heading 6814) (paper and paperboard coated with mica powder are, however, to be classified in this Chapter); (n) metal foil backed with paper or paperboard (generally XIV or Section XV); (o) articles of heading 9209; (p) articles of Chapter 95 (for example, toys, games, sports requisites); or (q) articles of Chapter 96 [for example, buttons, sanitary towels (pads) and tampons, napkins (diapers) and napkin liners]."
+    },
+    {
+      "number": "3",
+      "text": "Subject to the provisions of Note 7, headings 4801 to 4805 include paper and paperboard which have been subjected to calendering, super-calendering, glazing or similar finishing, false watermarking or surface sizing , and also paper, paperboard, cellulose wadding and webs of cellulose fibres, coloured or marbled throughout the mass by any method. Except where heading 4803 otherwise requires, these headings do not apply to paper, paperboard, cellulose wadding or webs of cellulose fibres which have been otherwise processed."
+    },
+    {
+      "number": "4",
+      "text": "In this Chapter the expression \"\"newsprint\"\" means uncoated paper of a kind used for the printing of newspapers, of which not less than 50% by weight of the total fibre content consists of wood fibres obtained by a mechanical or chemi-mechanical process, unsized or vey lightly sized, having a surface roughness Parker Print Surf (1 Mpa) on each side exceeding 2.5 micrometres (microns), weighing not less than 40 g/m2 and not more than 65 g/m2 and applies only to paper: (a) in strips or rolls of a width exceeding 28 cm; or (b) in rectangular (including square) sheets with one side exceeding 28 cm and the other side exceeding 15 cm in the unfolded state"
+    },
+    {
+      "number": "5",
+      "text": "For the purposes of heading 4802, the expressions \"\"paper and paperboard, of a kind used for writing, printing or other graphic purposes\"\" and \"\"non-perforated punch-cards and punch tape paper\"\" mean paper and paperboard made mainly from bleached pulp or from pulp obtained by a mechanical or chemi-mechanical process and satisfying any of the following criteria: (A) For paper or paperboard weighing not more than 150 g/m2 : (a) containing 10% or more of fibres obtained by a mechanical or chemi-mechanical process, and 1. weighing not more than 80 g/m2; or 2. coloured throughout the mass; or (b) containing more than 8% ash, and 1. weighing not more than 80 g/m2; or 2. coloured throughout the mass; or (c) containing more than 3% ash and having a brightness of 60% or more ;or (d) containing more than 3% but not more than 8% ash, having a brightness less than 60%, and a burst index equal to or less than 2.5kPa.m2/g; or (e) containing 3% ash or less, having a brightness of 60% or more and a burst index equal to or less than 2.5 kPa.m2/g. (B) For paper or paperboard weighing more than 150 g/m2 : (a) coloured throughout the mass; or (b) having a brightness of 60% or more, and 1. a caliper of 225 micrometres (microns) or less, or 2. a caliper of more than 225 micrometres (microns) but not more than 508 micrometres (microns) and an ash content more than 3%; or (c) having a brightness of less than 60%, a caliper of 254 micrometres (microns) or less and an ash content more than 8%. Heading 4802 does not, however, cover filter paper or paperboard (including tea-bag paper) or felt paper or paperboard."
+    },
+    {
+      "number": "6",
+      "text": "In this Chapter \"kraft paper and paperboard\" means paper and paperboard of which not less than 80% by weight ofthe totalfibre content consists of fibres obtained by the chemicalsulphate or soda processes."
+    },
+    {
+      "number": "7",
+      "text": "Except where the terms of the headings otherwise require, paper, paperboard , cellulose wadding and webs of cellulose fibres answering to a description in two or more of the headings 4801 to 4811 are to be classified under that one of such headings which occurs last in numerical order in this Schedule."
+    },
+    {
+      "number": "8",
+      "text": "Headings 4803 to 4809, apply only to paper, paperboard, cellulose wadding and webs of cellulose fibres: (a) in strips or rolls of a width exceeding 36 cm; or (b) in rectangular (including square) sheets with one side exceeding 36 cm and the other side exceeding 15 cm in the unfolded state."
+    },
+    {
+      "number": "9",
+      "text": "For the purposes of heading 4814, the expression \"\"wall paper and similar wall coverings\"\" applies only to : (a) paper in rolls, of a width of not less than 45 cm and not more than 160 cm suitable for wall or ceiling decoration : (i) grained, embossed,surface-coloured, design-printed or otherwise surface-decorated (for example, with textile flock), whether or not coated or covered with transparent protective plastics; (ii) with an uneven surface resulting from the incorporation of particles of wood, straw, etc.; (iii) coated or covered on the face side with plastics, the layer of plastics being grained, embossed, coloured, design-printed or otherwise decorated; or (iv) covered on the face side with plaitingmaterial, whether or not bound together in parallel strands or woven; (b) borders and friezes, of paper, treated as above whether or not in rolls, suitable for wall or ceiling decoration; (c) wall coverings of paper made up ofseveral panels, in rolls or sheets, printed so asto make up a scene, design or motif when applied to a wall. Products on a base of paper or paperboard,suitable for use both asfloor coverings and as wall coverings, are to be classified in heading 4823."
+    },
+    {
+      "number": "10",
+      "text": "Heading 4820 does not cover loose sheets or cards, cut to size, whether or not printed, embossed or perforated."
+    },
+    {
+      "number": "11",
+      "text": "Heading 4823 applies, inter alia, to perforated paper or paperboard cards for Jacquard or similar machines and paper lace."
+    },
+    {
+      "number": "12",
+      "text": "Except for the goods of heading 4814 or 4821 , paper, paperboard, cellulose wadding and articles thereof, printed with motifs, characters or pictorial representations, which are not merely subsidiary to the primary use of the goods, fall in Chapter 49."
+    },
+    {
+      "number": "Sub-Heading Note 1",
+      "text": "For the purposes of sub-headings 4804 11 and 4804 19, \"\"Kraft- liner\"\" means machine-finished or machine-glazed paper and paperboard, of which not less than 80% by weight of the total fibre content consists of wood fibres obtained by the chemicalsulphate orsoda processes, in rolls, weighing more than 115 g/m2 and having a minimum Mullen bursting strength as indicated in the following table or the linearly interpolated or extrapolated equivalent for any other weight. Weight g/m2 Minimum Mullen bursting strength (kPa) 115 393 125 417 200 637 300 824 400 961"
+    },
+    {
+      "number": "Sub-Heading Note 2",
+      "text": "For the purposes of sub-headings 4804 21 and 4804 29, \"\"sack kraft paper\"\" means machinefinished paper, of which not less than 80% by weight of the total fibre content consists of fibres obtained by the chemical sulphate or soda processes, in rolls, weighing not less than 60 g/m2 but not more than 115 g/m2 and meeting one of the following sets of specifications: (a) having a Mullen burst index of not less than 3.7 kPa m2/g and a stretch factor of more than 4.5% in the cross direction and of more than 2% in the machine direction. (b) having minimum for tear and tensile as indicated in the following table or the linearly interpolated equivalent for any other weight : Weight g/m2 Minimum tear mN Minium tensile kN/m Machine Machine direction Cross Machine direction direction plus cross direction direction plus cross direction 60 700 1,510 1.9 6 70 830 1,790 2.3 7.2 80 965 2,070 2.8 8.3 100 1,230 2,635 3.7 10.6 115 1,425 3,060 4.4 12.3"
+    },
+    {
+      "number": "Sub-Heading Note 3",
+      "text": "For the purposes of sub-heading 4805 11, \"semi-chemical fluting paper\" means paper, in rolls, of which not lessthan 65% by weight of the total fibre content consists of unbleached hardwood fibres obtained by a combination of amechanical and chemical pulping processes, and having aCMT2 30 (corrugated Medium Test with 30 minutes of conditioning) crush resistance exceeding 1.8 newtons/g/m at 50 % relative humidity at 23 C."
+    },
+    {
+      "number": "Sub-Heading Note 4",
+      "text": "Sub-heading 4805 12 covers paper, in rolls, made mainly of straw pulp obtained by a combination of a mechanical and chemical pulping processes, weighing 130 g/m2 or more, and having a CMT 30 (Corrugated Medium Test with 30 minutes of conditioning) crush resistance exceeding 1.4 newtons/g/m2 at 50% relative humidity, at 230C."
+    },
+    {
+      "number": "Sub-Heading Note 5",
+      "text": "Sub-headings 4805 24 and 4805 25 cover paper and paperboard made wholly or mainly of pulp of recovered (waste and scrap) paper or paperboard. Testliner may also have a surface layer of dyed paper or of paper made of bleached or unbleached non-recovered pulp. These products have a Mullen burst index of not less than 2 kPa.m2 /g"
+    },
+    {
+      "number": "Sub-Heading Note 6",
+      "text": "For the purposes of sub-heading 4805 30, \"sulphite wrapping paper\" means machine-glazed paper, of which more than 40% by weight of the total fibre content consists of wood fibres obtained by the chemical sulphite process, having an ash content not exceeding 8% and having a Mullen burst index of not less than 1.47 kPa. m2 /g."
+    },
+    {
+      "number": "Sub-Heading Note 7",
+      "text": "For the purposes of sub-heading 4810 22, \"light-weight coated paper\" means paper, coated on both sides, of a total weight not exceeding 72 g/m2 , with a coating weight not exceeding 15 g/m2 per side, on a base of which not less than 50% by weight of the total fibre content consists of wood fibres obtained by a mechanical process."
+    },
+    {
+      "number": "Supplementary Note 1",
+      "text": "Nothwithstanding anything contained in Note 12, if paper and paper products of heading 4811, 4816 or 4820 are printed with any character, name, logo, motif or format, they shall remain classified under the respective headings as long as such products are intended to be used for futher printing or writing."
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "articles of Chapter 30",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(a)",
+      "source_note_text": "This Chapter does not cover: (a) articles of Chapter 30"
+    },
+    {
+      "excluded_product_text": "stamping foils of heading 3212",
+      "redirects_to_chapter": "32",
+      "redirects_to_heading": "3212",
+      "source_note_number": "Note 2(b)",
+      "source_note_text": "This Chapter does not cover: (b) stamping foils of heading 3212"
+    },
+    {
+      "excluded_product_text": "perfumed papers or papers impregnated or coated with cosmetics (Chapter 33)",
+      "redirects_to_chapter": "33",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(c)",
+      "source_note_text": "This Chapter does not cover: (c) perfumed papers or papers impregnated or coated with cosmetics (Chapter 33)"
+    },
+    {
+      "excluded_product_text": "paper or cellulose wadding impregnated, coated or covered with soap or detergent (heading 3401)",
+      "redirects_to_chapter": "34",
+      "redirects_to_heading": "3401",
+      "source_note_number": "Note 2(d)",
+      "source_note_text": "This Chapter does not cover: (d) paper or cellulose wadding impregnated, coated or covered with soap or detergent (heading 3401), or with polishes, creams or similar preparations (heading 3405)"
+    },
+    {
+      "excluded_product_text": "paper or cellulose wadding impregnated, coated or covered with polishes, creams or similar preparations (heading 3405)",
+      "redirects_to_chapter": "34",
+      "redirects_to_heading": "3405",
+      "source_note_number": "Note 2(d)",
+      "source_note_text": "This Chapter does not cover: (d) paper or cellulose wadding impregnated, coated or covered with soap or detergent (heading 3401), or with polishes, creams or similar preparations (heading 3405)"
+    },
+    {
+      "excluded_product_text": "sensitised paper or paperboard of headings 3701 to 3704",
+      "redirects_to_chapter": "37",
+      "redirects_to_heading": "3701",
+      "source_note_number": "Note 2(e)",
+      "source_note_text": "This Chapter does not cover: (e) sensitised paper or paperboard of headings 3701 to 3704"
+    },
+    {
+      "excluded_product_text": "paper impregnated with diagnostic or laboratory reagents (heading 3822)",
+      "redirects_to_chapter": "38",
+      "redirects_to_heading": "3822",
+      "source_note_number": "Note 2(f)",
+      "source_note_text": "This Chapter does not cover: (f) paper impregnated with diagnostic or laboratory reagents (heading 3822)"
+    },
+    {
+      "excluded_product_text": "paper-reinforced stratified sheeting of plastics, or one layer of paper or paperboard coated or covered with a layer of plastics, the latter consituting more than half the total thickness, or articles of such materials, other than wall coverings of heading 4814 (Chapter 39)",
+      "redirects_to_chapter": "39",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(g)",
+      "source_note_text": "This Chapter does not cover: (g) paper-reinforced stratified sheeting of plastics, or one layer of paper or paperboard coated or covered with a layer of plastics, the latter consituting more than half the total thickness, or articles of such materials, other than wall coverings of heading 4814 (Chapter 39)"
+    },
+    {
+      "excluded_product_text": "articles of heading 4202 (for example, travel goods)",
+      "redirects_to_chapter": "42",
+      "redirects_to_heading": "4202",
+      "source_note_number": "Note 2(h)",
+      "source_note_text": "This Chapter does not cover: (h) articles of heading 4202 (for example, travel goods)"
+    },
+    {
+      "excluded_product_text": "articles of Chaper 46 (manufactures of plaiting material)",
+      "redirects_to_chapter": "46",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(ij)",
+      "source_note_text": "This Chapter does not cover: (ij) articles of Chaper 46 (manufactures of plaiting material)"
+    },
+    {
+      "excluded_product_text": "paper yarn or textile articles of paper yarn (Section XI)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(k)",
+      "source_note_text": "This Chapter does not cover: (k) paper yarn or textile articles of paper yarn (Section XI)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 64 or Chapter 65",
+      "redirects_to_chapter": "64",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(l)",
+      "source_note_text": "This Chapter does not cover: (l) articles of Chapter 64 or Chapter 65"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 65",
+      "redirects_to_chapter": "65",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(l)",
+      "source_note_text": "This Chapter does not cover: (l) articles of Chapter 64 or Chapter 65"
+    },
+    {
+      "excluded_product_text": "abrasive paper or paperboard (heading 6805)",
+      "redirects_to_chapter": "68",
+      "redirects_to_heading": "6805",
+      "source_note_number": "Note 2(m)",
+      "source_note_text": "This Chapter does not cover: (m) abrasive paper or paperboard (heading 6805) or paper or paperboard-backed mica (heading 6814) (paper and paperboard coated with mica powder are, however, to be classified in this Chapter)"
+    },
+    {
+      "excluded_product_text": "paper or paperboard-backed mica (heading 6814)",
+      "redirects_to_chapter": "68",
+      "redirects_to_heading": "6814",
+      "source_note_number": "Note 2(m)",
+      "source_note_text": "This Chapter does not cover: (m) abrasive paper or paperboard (heading 6805) or paper or paperboard-backed mica (heading 6814) (paper and paperboard coated with mica powder are, however, to be classified in this Chapter)"
+    },
+    {
+      "excluded_product_text": "metal foil backed with paper or paperboard (generally XIV or Section XV)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(n)",
+      "source_note_text": "This Chapter does not cover: (n) metal foil backed with paper or paperboard (generally XIV or Section XV)"
+    },
+    {
+      "excluded_product_text": "articles of heading 9209",
+      "redirects_to_chapter": "92",
+      "redirects_to_heading": "9209",
+      "source_note_number": "Note 2(o)",
+      "source_note_text": "This Chapter does not cover: (o) articles of heading 9209"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 95 (for example, toys, games, sports requisites)",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(p)",
+      "source_note_text": "This Chapter does not cover: (p) articles of Chapter 95 (for example, toys, games, sports requisites)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 96 [for example, buttons, sanitary towels (pads) and tampons, napkins (diapers) and napkin liners]",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(q)",
+      "source_note_text": "This Chapter does not cover: (q) articles of Chapter 96 [for example, buttons, sanitary towels (pads) and tampons, napkins (diapers) and napkin liners]"
+    },
+    {
+      "excluded_product_text": "paper, paperboard, cellulose wadding and articles thereof, printed with motifs, characters or pictorial representations, which are not merely subsidiary to the primary use of the goods (except for the goods of heading 4814 or 4821)",
+      "redirects_to_chapter": "49",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 12",
+      "source_note_text": "Except for the goods of heading 4814 or 4821 , paper, paperboard, cellulose wadding and articles thereof, printed with motifs, characters or pictorial representations, which are not merely subsidiary to the primary use of the goods, fall in Chapter 49."
+    },
+    {
+      "excluded_product_text": "filter paper or paperboard (including tea-bag paper) or felt paper or paperboard (heading 4802 does not cover these)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 5",
+      "source_note_text": "Heading 4802 does not, however, cover filter paper or paperboard (including tea-bag paper) or felt paper or paperboard."
+    },
+    {
+      "excluded_product_text": "loose sheets or cards, cut to size, whether or not printed, embossed or perforated (heading 4820 does not cover these)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 10",
+      "source_note_text": "Heading 4820 does not cover loose sheets or cards, cut to size, whether or not printed, embossed or perforated."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "4801",
+      "title": "Newsprint, in rolls or sheets.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4801.00",
+          "title": "Newsprint, in rolls or sheets :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4801.00.10",
+              "description": "Glazed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4801.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "4802",
+      "title": "Uncoated paper and paperboard, of a kind used for writing, printing or other graphic purposes, and non perforated punchcards and punch tape paper, in rolls or rectangular (including square) sheets, of any size, other than paper of heading 48.01 or 48.03; hand-made paper and paperboard.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4802.10",
+          "title": "Hand-made paper and paperboard",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4802.10.10",
+              "description": "Paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.10.20",
+              "description": "Paperboard",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4802.20",
+          "title": "Paper and paperboard of a kind used as a base for photo-sensitive, heat-sensitive or electro-sensitive paper or paperboard",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4802.20.10",
+              "description": "Photographic base paper, uncoated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4802.54",
+          "title": "Other paper and paperboard, not containing fibres obtained by a mechanical or chemi-mechanical process or of which not more than 10 percent by weight of the total fibre content consists of such fibres : -- Weighing less than 40 g/m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4802.54.10",
+              "description": "India Paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.54.20",
+              "description": "Litho and offset paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.54.30",
+              "description": "Duplicating paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.54.40",
+              "description": "Airmail paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.54.50",
+              "description": "Tissue paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.54.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4802.55",
+          "title": "Other paper and paperboard, not containing fibres obtained by a mechanical or chemi-mechanical process or of which not more than 10 percent by weight of the total fibre content consists of such fibres : -- Weighing 40 g/m or more but not more than 150 g/m, in rolls",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4802.55.10",
+              "description": "Litho and offset paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.55.20",
+              "description": "Drawing paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.55.30",
+              "description": "Duplicating paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.55.40",
+              "description": "Account book paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.55.50",
+              "description": "Bank, bond and cheque paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.55.60",
+              "description": "Currency note paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.55.70",
+              "description": "Paper for security printing, currency paper, stamp paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.55.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4802.56",
+          "title": "Other paper and paperboard, not containing fibres obtained by a mechanical or chemi-mechanical process or of which not more than 10 percent by weight of the total fibre content consists of such fibres : -- Weighing 40 g/m or more but not more than 150 g/m, in sheets with one side not exceeding 435 mm and the other side not exceeding 297 mm in the unfolded state",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4802.56.10",
+              "description": "Litho and offset paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.56.20",
+              "description": "Drawing paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.56.30",
+              "description": "Duplicating paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.56.40",
+              "description": "Account book paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.56.50",
+              "description": "Bank, bond and cheque paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.56.60",
+              "description": "Currency note paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.56.70",
+              "description": "Paper for security printing, currency paper, stamp paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.56.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4802.57",
+          "title": "Other paper and paperboard, not containing fibres obtained by a mechanical or chemi-mechanical process or of which not more than 10 percent by weight of the total fibre content consists of such fibres : -- Other, weighing 40 g/m or more but not more than 150 g/m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4802.57.10",
+              "description": "Litho and offset paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.57.20",
+              "description": "Drawing paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.57.30",
+              "description": "Duplicating paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.57.40",
+              "description": "Account book paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.57.50",
+              "description": "Bank, bond and cheque paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.57.60",
+              "description": "Currency note paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.57.70",
+              "description": "Paper for security printing, currency paper, stamp paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.57.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4802.58",
+          "title": "Other paper and paperboard, not containing fibres obtained by a mechanical or chemi-mechanical process or of which not more than 10 percent by weight of the total fibre content consists of such fibres : -- Weighing more than 150 g/m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4802.58.10",
+              "description": "Litho and offset paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.58.20",
+              "description": "Drawing paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.58.30",
+              "description": "Duplicating paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.58.40",
+              "description": "Bank, bond and cheque paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.58.50",
+              "description": "Paper for security printing, currency paper, stamp paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.58.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4802.61",
+          "title": "Other paper and paperboard, of which more than 10 percent by weight of the total fibre content consists of fibres obtained by a mechanical or chemi-mechanical process : -- In rolls",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4802.61.10",
+              "description": "Drawing paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.61.20",
+              "description": "Poster paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.61.30",
+              "description": "Printing paper dyed or marbled in mass",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.61.40",
+              "description": "Account book paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.61.50",
+              "description": "Automatic data processing machine paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.61.60",
+              "description": "Paper for security printing, currency paper, stamp paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.61.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4802.62",
+          "title": "Other paper and paperboard, of which more than 10 percent by weight of the total fibre content consists of fibres obtained by a mechanical or chemi-mechanical process : -- In sheets with one side not exceeding 435 mm and the other side",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4802.62.10",
+              "description": "Drawing paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.62.20",
+              "description": "Poster paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.62.30",
+              "description": "Printing paper dyed or marbled in mass",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.62.40",
+              "description": "Account book paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.62.50",
+              "description": "Automatic data processing machine paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.62.60",
+              "description": "Paper for security printing, currency paper, stamp paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.62.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4802.69",
+          "title": "Other paper and paperboard, of which more than 10 percent by weight of the total fibre content consists of fibres obtained by a mechanical or chemi-mechanical process : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4802.69.10",
+              "description": "Drawing paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.69.20",
+              "description": "Poster paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.69.30",
+              "description": "Printing paper dyed or marbled in mass",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.69.40",
+              "description": "Account book paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.69.50",
+              "description": "Automatic data processing machine paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.69.60",
+              "description": "Paper for security printing, currency paper, stamp paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4802.69.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4803",
+      "title": "Toilet or facial tissue stock, towel or napkin stock and similar paper of a kind used for household or sanitary purposes, cellulose wadding and webs of cellulose fibres, whether or not creped, crinkled, embossed, perforated, surface-coloured, surface- decorated or printed, in rolls or sheets.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4803.00",
+          "title": "Toilet or facial tissue stock, towel or napkin stock and similar paper of a kind used for household or sanitary purposes, cellulose wadding and webs of cellulose fibres, whether or not creped, crinkled, embossed, perforated, surface- coloured, surface-decorated or printed, in rolls or sheets :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4803.00.10",
+              "description": "In commercial size rolls of width size 36 cm and above",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4803.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4804",
+      "title": "Uncoated kraft paper and paperboard, in rolls or sheets, other than that of heading 48.02 or 48.03.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4804.11",
+          "title": "Kraftliner : -- Unbleached",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4804.11.00",
+              "description": "Kraftliner : -- Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4804.19",
+          "title": "Kraftliner : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4804.19.00",
+              "description": "Kraftliner : --Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4804.21",
+          "title": "Sack kraft paper : -- Unbleached",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4804.21.00",
+              "description": "Sack kraft paper : -- Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4804.29",
+          "title": "Sack kraft paper : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4804.29.00",
+              "description": "Sack kraft paper : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4804.31",
+          "title": "Other kraft paper and paperboard weighing 150 g/m or less -- Unbleached",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4804.31.00",
+              "description": "Other kraft paper and paperboard weighing 150 g/m or less -- Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4804.39",
+          "title": "Other kraft paper and paperboard weighing 150 g/m or less -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4804.39.00",
+              "description": "Other kraft paper and paperboard weighing 150 g/m or less -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4804.41",
+          "title": "Other kraft paper and paperboard weighing more than 150 g/m but less than 225 g/m : -- Unbleached",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4804.41.00",
+              "description": "Other kraft paper and paperboard weighing more than 150 g/m but less than 225 g/m : -- Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4804.42",
+          "title": "Other kraft paper and paperboard weighing more than 150 g/m but less than 225 g/m : -- Bleached uniformly throughout the mass and of which more than 95 percent by weight of the total fibre content consists of wood fibres obtained by a chemical process",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4804.42.00",
+              "description": "Other kraft paper and paperboard weighing more than 150 g/m but less than 225 g/m : -- Bleached uniformly throughout the mass and of which more than 95 percent by weight of the total fibre content consists of wood fibres obtained by a chemical process",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4804.49",
+          "title": "Other kraft paper and paperboard weighing more than 150 g/m but less than 225 g/m : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4804.49.00",
+              "description": "Other kraft paper and paperboard weighing more than 150 g/m but less than 225 g/m : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4804.51",
+          "title": "Other kraft paper and paperboard weighing 225 g/m or more : -- Unbleached",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4804.51.00",
+              "description": "Other kraft paper and paperboard weighing 225 g/m or more : -- Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4804.52",
+          "title": "Other kraft paper and paperboard weighing 225 g/m or more : -- Bleached uniformly throughout the mass and of which more than 95 percent by weight of the total fibre content consists of wood obtained by a chemical process",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4804.52.00",
+              "description": "Other kraft paper and paperboard weighing 225 g/m or more : -- Bleached uniformly throughout the mass and of which more than 95 percent by weight of the total fibre content consists of wood obtained by a chemical process",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4804.59",
+          "title": "Other kraft paper and paperboard weighing 225 g/m or more : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4804.59.00",
+              "description": "Other kraft paper and paperboard weighing 225 g/m or more : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4805",
+      "title": "Other uncoated paper and paperboard, in rolls or sheets, not further worked or processed than as specified in Note 3 to this Chapter.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4805.11",
+          "title": "Fluting paper : -- Semi-chemical fluting paper",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4805.11.00",
+              "description": "Fluting paper : -- Semi-chemical fluting paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4805.12",
+          "title": "Fluting paper : -- Straw fluting paper",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4805.12.00",
+              "description": "Fluting paper : -- Straw fluting paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4805.19",
+          "title": "Fluting paper : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4805.19.00",
+              "description": "Fluting paper : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4805.24",
+          "title": "Testliner (recycled liner board) : -- Weighing 150 g/m or less",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4805.24.00",
+              "description": "Testliner (recycled liner board) : -- Weighing 150 g/m or less",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4805.25",
+          "title": "Testliner (recycled liner board) : -- Weighing more than 150 g/m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4805.25.00",
+              "description": "Testliner (recycled liner board) : -- Weighing more than 150 g/m",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4805.30",
+          "title": "Sulphite wrapping paper",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4805.30.00",
+              "description": "Sulphite wrapping paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4805.40",
+          "title": "Filter paper and paperboard",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4805.40.00",
+              "description": "Filter paper and paperboard",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4805.50",
+          "title": "Felt paper and paperboard",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4805.50.00",
+              "description": "Felt paper and paperboard",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4805.91",
+          "title": "Other : -- Weighing 150 g/m or less",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4805.91.00",
+              "description": "Other : -- Weighing 150 g/m or less",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4805.92",
+          "title": "Other : -- Weighing more than 150 g/m but less than 225 g/m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4805.92.00",
+              "description": "Other : -- Weighing more than 150 g/m but less than 225 g/m",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4805.93",
+          "title": "Other : -- Weighing 225 g/m or more",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4805.93.00",
+              "description": "Other : -- Weighing 225 g/m or more",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4806",
+      "title": "Vegetable parchment, greaseproof papers, tracing papers and glassine and other glazed transparent or translucent papers, in rolls or sheets.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4806.10",
+          "title": "Vegetable parchment",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4806.10.00",
+              "description": "Vegetable parchment",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4806.20",
+          "title": "Greaseproof papers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4806.20.00",
+              "description": "Greaseproof papers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4806.30",
+          "title": "Tracing papers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4806.30.00",
+              "description": "Tracing papers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4806.40",
+          "title": "Glassine and other glazed transparent or translucent papers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4806.40.10",
+              "description": "Glassine papers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4806.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4807",
+      "title": "Composite paper and paperboard (made by sticking flat layers of paper or paperboard together with an adhesive), not surfacecoated or impregnated, whether or not internally reinforced, in rolls or sheets.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4807.00",
+          "title": "Composite paper and paperboard (made by sticking flat layers of paper or paperboard together with an adhesive), not surface-coated or impregnated, whether or not internally reinforced, in rolls or sheets :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4807.00.10",
+              "description": "Straw paper and other straw board, whether or not covered with paper other than straw paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4807.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "4808",
+      "title": "Paper and paperboard, corrugated (with or without glued flat or sheets, other than paper of the kind described in",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4808.10",
+          "title": "Corrugated paper and paperboard, whether or not perforated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4808.10.00",
+              "description": "Corrugated paper and paperboard, whether or not perforated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4808.40",
+          "title": "Kraft paper, creped or crinkled, whether or not embossed or perforated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4808.40.10",
+              "description": "Sack kraft paper, creped or crinkled, whether or not embossed or perforated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4808.40.90",
+              "description": "Other kraft paper, creped or crinkled, whether or not embossed or perforated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4808.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4808.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4809",
+      "title": "Carbon paper, self-copy paper and other copying or transfer papers (including coated or impregnated paper for duplicator stencils or offset plates), whether or not printed, in rolls or sheets.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4809.20",
+          "title": "Self-copy paper",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4809.20.00",
+              "description": "Self-copy paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4809.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4809.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4810",
+      "title": "Paper and paperboard, coated on one or both sides with kaolin (China clay) or other inorganic substances, with or without a binder, and with no other coating, whether or not surfacecoloured, surface-decorated or printed, in rolls or rectangular (including square) sheets, of any size.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4810.13",
+          "title": "Paper and paperboard of a kind used for writing, printing or other graphic purposes, not containing fibres obtained by a mechanical or chemi-mechanical process or of which not more than 10 percent by weight of the total fibre content consists of such fibres : -- In rolls",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4810.13.10",
+              "description": "Imitation art paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4810.13.20",
+              "description": "Art paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4810.13.30",
+              "description": "Chrome paper or paper board",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4810.13.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4810.14",
+          "title": "Paper and paperboard of a kind used for writing, printing or other graphic purposes, not containing fibres obtained by a mechanical or chemi-mechanical process or of which not more than 10 percent by weight of the total fibre content consists of such fibres : -- In sheets with one side not exceeding 435 mm and the other side not exceeding 297 mm in the unfolded state",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4810.14.10",
+              "description": "Imitation art paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4810.14.20",
+              "description": "Art paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4810.14.30",
+              "description": "Chrome paper or paper board",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4810.14.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4810.19",
+          "title": "Paper and paperboard of a kind used for writing, printing or other graphic purposes, not containing fibres obtained by a mechanical or chemi-mechanical process or of which not more than 10 percent by weight of the total fibre content consists of such fibres : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4810.19.10",
+              "description": "Imitation art paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4810.19.20",
+              "description": "Art paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4810.19.30",
+              "description": "Chrome paper or paper board",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4810.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4810.22",
+          "title": "Paper and paperboard of a kind used for writing, printing or other graphic purposes, of which more than 10 percent by weight of the total fibre content consists of fibres obtained by a mechanical or chemimechanical process : -- Light-weight coated paper",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4810.22.00",
+              "description": "Paper and paperboard of a kind used for writing, printing or other graphic purposes, of which more than 10 percent by weight of the total fibre content consists of fibres obtained by a mechanical or chemimechanical process : -- Light-weight coated paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4810.29",
+          "title": "Paper and paperboard of a kind used for writing, printing or other graphic purposes, of which more than 10 percent by weight of the total fibre content consists of fibres obtained by a mechanical or chemimechanical process : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4810.29.00",
+              "description": "Paper and paperboard of a kind used for writing, printing or other graphic purposes, of which more than 10 percent by weight of the total fibre content consists of fibres obtained by a mechanical or chemimechanical process : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4810.31",
+          "title": "Kraft paper and paperboard, other than that of a kind used for writing, printing or other graphic purposes : -- Bleached uniformly throughout the mass and of which more than 95 percent by weight of the total fibre content consists of wood fibres obtained by a chemical process, and weighing 150 g/m or less",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4810.31.00",
+              "description": "Kraft paper and paperboard, other than that of a kind used for writing, printing or other graphic purposes : -- Bleached uniformly throughout the mass and of which more than 95 percent by weight of the total fibre content consists of wood fibres obtained by a chemical process, and weighing 150 g/m or less",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4810.32",
+          "title": "Kraft paper and paperboard, other than that of a kind used for writing, printing or other graphic purposes : -- Bleached uniformly throughout the mass and of which more than 95 percent by weight of the total fibre content consists of wood fibres obtained by a chemical process, and weighing more than 150 g/m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4810.32.00",
+              "description": "Kraft paper and paperboard, other than that of a kind used for writing, printing or other graphic purposes : -- Bleached uniformly throughout the mass and of which more than 95 percent by weight of the total fibre content consists of wood fibres obtained by a chemical process, and weighing more than 150 g/m",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4810.39",
+          "title": "Kraft paper and paperboard, other than that of a kind used for writing, printing or other graphic purposes : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4810.39.10",
+              "description": "Insulating paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4810.39.20",
+              "description": "Electric insulating press board",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4810.39.30",
+              "description": "Insulation boards (homogenous)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4810.39.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4810.92",
+          "title": "Other paper and paperboard : -- Multi-ply",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4810.92.00",
+              "description": "Other paper and paperboard : -- Multi-ply",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4810.99",
+          "title": "Other paper and paperboard : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4810.99.00",
+              "description": "Other paper and paperboard : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4811",
+      "title": "Paper, paperboard, cellulose wadding and webs of cellulose fibres, coated, impregnated, covered, surface-coloured, surfacedecorated or printed, in rolls or rectangular (including square) sheets, of any size, other than goods of the kind described in heading 48.03, 48.09 or 48.10.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4811.10",
+          "title": "Tarred, bituminised or asphalted paper and paperboard",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4811.10.00",
+              "description": "Tarred, bituminised or asphalted paper and paperboard",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4811.41",
+          "title": "Gummed or adhesive paper and paperboard : -- Self-adhesive",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4811.41.00",
+              "description": "Gummed or adhesive paper and paperboard : -- Self-adhesive",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4811.49",
+          "title": "Gummed or adhesive paper and paperboard : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4811.49.00",
+              "description": "Gummed or adhesive paper and paperboard : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4811.51",
+          "title": "Paper and paperboard coated, impregnated or covered with plastics (excluding adhesives) : -- Bleached, weighing more than 150 g/m",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4811.51.10",
+              "description": "Aseptic packaging paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4811.51.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4811.59",
+          "title": "Paper and paperboard coated, impregnated or covered with plastics (excluding adhesives) : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4811.59.10",
+              "description": "Aseptic packaging paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4811.59.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4811.60",
+          "title": "Paper and paperboard, coated, impregnated or covered with wax, paraffin wax, stearin, oil or glycerol",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4811.60.00",
+              "description": "Paper and paperboard, coated, impregnated or covered with wax, paraffin wax, stearin, oil or glycerol",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4811.90",
+          "title": "Other paper, paperboard, cellulose wadding and webs of cellulose fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4811.90.11",
+              "description": "Hand made paper and paperboard, rules, lined or squared but not otherwise printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4811.90.12",
+              "description": "Chromo and art paper, coated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4811.90.13",
+              "description": "Building board of paper or pulp, impregnated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4811.90.14",
+              "description": "Chromo board",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4811.90.15",
+              "description": "Raw base paper for sensitising, coated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4811.90.16",
+              "description": "Surface marbled paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4811.90.17",
+              "description": "Leather board and imitation leather board",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4811.90.18",
+              "description": "Matrix board",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4811.90.91",
+              "description": "other ---- Grape guard paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4811.90.93",
+              "description": "other ---- Thermal paper for fax machines",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4811.90.94",
+              "description": "Other:----Thermal paper in jumbo rolls (of size 1 m and above in width and 5,000 m and above in length)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4811.90.95",
+              "description": "Other : ---- Thermal paper in jumbo rolls (of size 1 m and above in width and less than 5,000 m in length)",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            },
+            {
+              "code": "4811.90.96",
+              "description": "Other : ---- Thermal paper in rolls of size less than 1 m in width",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            },
+            {
+              "code": "4811.90.99",
+              "description": "other ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4812",
+      "title": "Filter blocks, slabs and plates, of paper pulp.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4812.00",
+          "title": "Filter blocks, slabs and plates, of paper pulp.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4812.00.00",
+              "description": "Filter blocks, slabs and plates, of paper pulp.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "4813",
+      "title": "Cigarette paper, whether or not cut to size or in the form of booklets or tubes.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4813.10",
+          "title": "In the form of booklets or tubes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4813.10.00",
+              "description": "In the form of booklets or tubes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4813.20",
+          "title": "In rolls of a width not exceeding 5 cm",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4813.20.00",
+              "description": "In rolls of a width not exceeding 5 cm",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4813.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4813.90.10",
+              "description": "Cigarette paper in bulk, or in sheets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4813.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4814",
+      "title": "Wallpaper and similar wall coverings; window transparencies of paper.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4814.20",
+          "title": "Wallpaper and similar wall coverings, consisting of paper coated or covered, on the face side, with a grained, embossed, coloured, design-printed or otherwise decorated layer of plastics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4814.20.00",
+              "description": "Wallpaper and similar wall coverings, consisting of paper coated or covered, on the face side, with a grained, embossed, coloured, design-printed or otherwise decorated layer of plastics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4814.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4814.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4816",
+      "title": "Carbon paper, self-copy paper and other copying or transfer papers (other than those of heading 48.09), duplicator stencils and offset plates, of paper, whether or not put up in boxes.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4816.20",
+          "title": "Self-copy paper",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4816.20.10",
+              "description": "Duplicating paper, cut to size",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4816.20.20",
+              "description": "Paper for Fax machine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4816.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4816.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4816.90.10",
+              "description": "Other copying or transfer papers (excluding printed transfer) cut to size whether or not put up in boxes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4816.90.20",
+              "description": "Calculating machine paper in rolls and strips not exceeding 15 cm in width",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4816.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4817",
+      "title": "Envelopes, letter cards, plain postcards and correspondence cards, of paper or paperboard; boxes, pouches, wallets and writing compendiums, of paper or paperboard, containing an assortment of paper stationery.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4817.10",
+          "title": "Envelopes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4817.10.00",
+              "description": "Envelopes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4817.20",
+          "title": "Letter cards, plain postcards and correspondence cards",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4817.20.00",
+              "description": "Letter cards, plain postcards and correspondence cards",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4817.30",
+          "title": "Boxes, pouches, wallets and writing compendiums, of paper or paperboard, containing an assortment of paper stationery",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4817.30.10",
+              "description": "Writing blocks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4817.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4818",
+      "title": "Toilet paper and similar paper, cellulose wadding or webs of cellulose fibres, of a kind used for household or sanitary purposes, in rolls of a width not exceeding 36 cm, or cut to size or shape; handkerchiefs, cleansing tissues, towels, tablecloths, serviettes, bed sheets and similar household, sanitary or hospital articles, articles of apparel and clothing accessories, of paper pulp, paper, cellulose wadding or webs of cellulose fibres.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4818.10",
+          "title": "Toilet paper",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4818.10.00",
+              "description": "Toilet paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4818.20",
+          "title": "Handkerchiefs, cleansing or facial tissues and towels",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4818.20.00",
+              "description": "Handkerchiefs, cleansing or facial tissues and towels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4818.30",
+          "title": "Tablecloths and serviettes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4818.30.00",
+              "description": "Tablecloths and serviettes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4818.50",
+          "title": "Articles of apparel and clothing accessories",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4818.50.00",
+              "description": "Articles of apparel and clothing accessories",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4818.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4818.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4819",
+      "title": "Cartons, boxes, cases, bags and other packing containers, of paper, paperboard, cellulose wadding or webs of cellulose fibres; ox files, letter trays, and similar articles, of paper or paperboard of a kind used in offices, shops or the like.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4819.10",
+          "title": "Cartons, boxes and cases, of corrugated paper or paperboard",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4819.10.10",
+              "description": "Boxes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4819.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4819.20",
+          "title": "Folding cartons, boxes and cases, of Non-corrugated paper or paperboard",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4819.20.10",
+              "description": "Cartons, boxes, cases, intended for the packing of match sticks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4819.20.20",
+              "description": "Boxes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4819.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4819.30",
+          "title": "Sacks and bags, having a base of a width of 40 cm or more",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4819.30.00",
+              "description": "Sacks and bags, having a base of a width of 40 cm or more",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4819.40",
+          "title": "Other sacks and bags, including cones",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4819.40.00",
+              "description": "Other sacks and bags, including cones",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4819.50",
+          "title": "Other packing containers, including record sleeves",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4819.50.10",
+              "description": "Made of corrugated paper or paperboard",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4819.50.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4819.60",
+          "title": "Box files, letter trays, storage boxes and similar articles, of a kind used in offices, shops or the like",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4819.60.00",
+              "description": "Box files, letter trays, storage boxes and similar articles, of a kind used in offices, shops or the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4820",
+      "title": "Registers, account books, note books, order books, receipt books,letter pads, memorandum pads, diaries and similar articles, exercise books, blotting-pads, binders (loose-leaf or other), folders, file covers, manifold business forms, interleaved carbon sets and other articles of stationery, of paper or paperboard; albums for samples or for collections and book covers, of paper or paperboard.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4820.10",
+          "title": "Registers, account books, note books, order books, receipt books, letter pads, memorandum pads, diaries and similar articles",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4820.10.10",
+              "description": "Registers, account books",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4820.10.20",
+              "description": "Letter pads",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4820.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4820.20",
+          "title": "Exercise books",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4820.20.00",
+              "description": "Exercise books",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4820.30",
+          "title": "Binders (other than book covers), folders and file covers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4820.30.00",
+              "description": "Binders (other than book covers), folders and file covers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4820.40",
+          "title": "Manifold business forms and interleaved carbon sets",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4820.40.00",
+              "description": "Manifold business forms and interleaved carbon sets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4820.50",
+          "title": "Albums for samples or for collections",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4820.50.00",
+              "description": "Albums for samples or for collections",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4820.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4820.90.10",
+              "description": "Blotting paper cut to size",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4820.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4821",
+      "title": "Paper or paperboard labels of all kinds, whether or not printed.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4821.10",
+          "title": "Printed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4821.10.10",
+              "description": "Paper tags",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4821.10.20",
+              "description": "Labels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4821.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4821.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4821.90.10",
+              "description": "Labels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4821.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4822",
+      "title": "Bobbins, spools, cops and similar supports of paper pulp, paper or paperboard (whether or not perforated or hardened).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4822.10",
+          "title": "Of a kind used for winding textile yarn",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4822.10.00",
+              "description": "Of a kind used for winding textile yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4822.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4822.90.10",
+              "description": "Paper tubes",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4822.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "4823",
+      "title": "Other paper, paperboard, cellulose wadding and webs of cellulose fibres, cut to size or shape; other articles of paper pulp, paper, paperboard, cellulose wadding or webs of cellulose fibres.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "4823.20",
+          "title": "Filter paper and paperboard",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4823.20.00",
+              "description": "Filter paper and paperboard",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4823.40",
+          "title": "Rolls, sheets and dials, printed for self-recording apparatus",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4823.40.00",
+              "description": "Rolls, sheets and dials, printed for self-recording apparatus",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4823.61",
+          "title": "Trays, dishes, plates, cups and the like, of paper or paperboard : -- Of bamboo",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4823.61.00",
+              "description": "Trays, dishes, plates, cups and the like, of paper or paperboard : -- Of bamboo",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4823.69",
+          "title": "Trays, dishes, plates, cups and the like, of paper or paperboard : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4823.69.00",
+              "description": "Trays, dishes, plates, cups and the like, of paper or paperboard : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4823.70",
+          "title": "Moulded or pressed articles of paper pulp",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4823.70.10",
+              "description": "Paper pulp moulded trays",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4823.70.20",
+              "description": "Wood pulp board",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4823.70.30",
+              "description": "Articles made of paper mache other than artware and mounded or pressed goods of wood pulp",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4823.70.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "4823.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "4823.90.11",
+              "description": "Braille paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4823.90.12",
+              "description": "Cellulose in sole board or sheet",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4823.90.13",
+              "description": "Packing and wrapping paper",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4823.90.14",
+              "description": "Paper for cigarette filter tips",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4823.90.15",
+              "description": "Paper cone for loud speaker",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4823.90.16",
+              "description": "Patterns made of papers for leather footwear, leather garments and goods",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4823.90.17",
+              "description": "Patterns made of paper for articles of apparel and clothing accessories",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4823.90.18",
+              "description": "Products consisting of sheets of paper or paper board, impregnated, coated or covered with plastics (including thermoset resins or mixtures thereof or chemical formulations containing melamine, phenol or urea formaldehyde with or without curing agents or catalysts), compressed together in one or more operations",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4823.90.19",
+              "description": "Decorative laminates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4823.90.21",
+              "description": "Pre-punched cards; monotype and newstape paper in strips with perforated edges, not exceeding 15 cm in width; typewriting paper cut to size and the like: ---- Pre-punched cards",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4823.90.22",
+              "description": "Pre-punched cards; monotype and newstape paper in strips with perforated edges, not exceeding 15 cm in width; typewriting paper cut to size and the like: ---- Monotype and newstape paper in strips with perforated edges, not exceeding 15cm in width",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4823.90.23",
+              "description": "Pre-punched cards; monotype and newstape paper in strips with perforated edges, not exceeding 15 cm in width; typewriting paper cut to size and the like: ---- Typewriting paper cut to size",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4823.90.30",
+              "description": "Pre-punched cards; monotype and newstape paper in strips with perforated edges, not exceeding 15 cm in width; typewriting paper cut to size and the like: ---- Plain or embossed seals made of paper, laminated paper or paper gaskets",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "4823.90.90",
+              "description": "Pre-punched cards; monotype and newstape paper in strips with perforated edges, not exceeding 15 cm in width; typewriting paper cut to size and the like: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

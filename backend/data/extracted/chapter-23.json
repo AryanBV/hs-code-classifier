@@ -1,0 +1,763 @@
+{
+  "chapter": "23",
+  "section": "IV",
+  "title": "RESIDUES AND WASTE FROM THE FOOD INDUSTRIES; PREPARED ANIMAL FODDER",
+  "source_pdf": "Chapter 23 Residues And Waste From The Food Industries; Prepared Animal Fodder.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses codes without dots (e.g., '23011010' for tariff lines, '230110' for subheadings, '2301' for headings). Normalized to NNNN.NN.NN format (e.g., '2301.10.10') and NNNN.NN (e.g., '2301.10') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'Sub-Heading Notes', 'Policy Condition', 'Product Description and Export Policy', 'SI.No. Notes Notification No Notification Date', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Section IV Main Note about 'pellets' appears on PDF page 1 above the Chapter 23 title and is attributed to section_notes (Section IV, Prepared Foodstuffs etc.), not chapter_notes. Together with the Chapter 23 main note this gives the expected 'Main Notes (2 notes)' audit count.",
+    "Chapter title on PDF page 1 is rendered as 'Chapter 23 Residues And Waste From The Food Industries; Prepared Animal Fodder.' (with trailing period). The 'title' field uses the canonical UPPERCASE form 'RESIDUES AND WASTE FROM THE FOOD INDUSTRIES; PREPARED ANIMAL FODDER'; source_pdf preserves the title-cased filename form.",
+    "The Section IV header reads in full: 'Section IV, PREPARED FOODSTUFFS; BEVERAGES, SPIRITS AND VINEGAR; TOBACCO AND MANUFACTURED TOBACCO SUBSTITUTES; PRODUCTS, WHETHER OR NOT CONTAINING NICOTINE, INTENDED FOR INHALATION WITHOUT COMBUSTION; OTHER NICOTINE CONTAINING PRODUCTS INTENDED FOR THE INTAKE OF NICOTINE INTO THE HUMAN BODY' — preserved verbatim in the section header but not duplicated as a section_note (only the numbered 'pellets' definition is a section_note).",
+    "Policy Condition text in the source PDF contains '?' characters in place of typographic quote marks (e.g., '?Shipment Clearance Certificate?', '?Health Certificate?'). These are OCR/encoding artifacts from the source PDF — preserved verbatim. The intended text is 'Shipment Clearance Certificate' and 'Health Certificate' enclosed in quotation marks.",
+    "Tariff line code 23061010 ('Oil-cake and oil-cake meal, decorticated, expeller variety') appears TWICE in the source PDF: once with Notification No 23/2024-25 dated 16.08.2024 (with Policy Condition 'Export of De-oiled Rice Bran is Prohibited.') and once with Notification No 37/2025-26 dated 03/10/2025 (no policy condition text). This is an inconsistency in the source — the newer 37/2025-26 notification likely supersedes/amends the earlier one. Both notification records are preserved in policy_conditions for completeness; the tariff line itself is listed once in the tariff_lines array.",
+    "Heading 2302 description in the PDF is entirely uppercase ('BRAN, SHARPS AND OTHER RESIDUES...'). Heading 2306 description is also uppercase ('OIL-CAKE AND OTHER SOLID RESIDUES...'). These have been preserved verbatim in the heading title field as they appear in the source.",
+    "Heading 2308 and 2307 in the PDF are represented directly by 8-digit tariff lines 23080000 and 23070000 (no separate heading row showing only '2307' or '2308' before the tariff line). The heading title for 2307 ('Wine lees; Argol') and 2308 (vegetable materials text) is taken from the corresponding 8-digit tariff line description.",
+    "Subheading '2306.41' is represented in the PDF only as 8-digit tariff line 23064100 ('Of rape or colza seeds : --Of low erucic acid rape or colza seeds'). Per WCO HS structure, 23064900 ('Of rape or colza seeds : -- Other') is the sibling under the same '-Of rape or colza seeds' subheading family. The subheading note explicitly references 'sub-heading 2306 41' confirming this code level. Subheadings 2306.41 and 2306.49 are presented as flat 8-digit entries; in the JSON they are grouped under subheadings '2306.41' and '2306.49' respectively for schema consistency.",
+    "Tariff line description prefixes like '----' (four hyphens) and '--' (two hyphens) indicate the dash-level depth of the item within its subheading. These are preserved verbatim in description text per extraction rules.",
+    "Policy Condition column entries reading 'Subject to Policy Condition 01 of the Chapter' on Heading 2309 tariff lines are recorded against the corresponding tariff lines via the chapter-wide policy_condition entry (Notification 34/2015-20, 13.01.2017). The full text of Policy Condition 1 is captured in policy_conditions and applies to all items under Heading 2309."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "Heading 2309 includes products of a kind used in animal feeding, not elsewhere specified or included, obtained by processing vegetable or animal materials to such an extent that they have lost the essential characteristics of the original material, other than vegetable waste, vegetable residues and by-products of such processing."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "In this Section, the term \"pellets\" means products which have been agglomerated either directly by compression or by the addition of a binder in a proportion not exceeding 3 (percent) by weight."
+    }
+  ],
+  "chapter_subheading_notes": [
+    {
+      "number": "1",
+      "text": "For the purposes of sub-heading 2306 41, the expression \"low erucic acid rape or colza seeds\" means seeds as defined in sub-heading Note 1 to Chapter 12."
+    }
+  ],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "vegetable waste, vegetable residues and by-products of vegetable or animal material processing (which retain the essential characteristics of the original material)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1",
+      "source_note_text": "Heading 2309 includes products of a kind used in animal feeding, not elsewhere specified or included, obtained by processing vegetable or animal materials to such an extent that they have lost the essential characteristics of the original material, other than vegetable waste, vegetable residues and by-products of such processing."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "2301",
+      "title": "Flours, meals and pellets, of meat or meat offal, of fish or of crustaceans, molluscs or other aquatic invertebrates, unfit for human consumption; greaves.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2301.10",
+          "title": "Flours, meals and pellets, of meat or meat offal; greaves",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2301.10.10",
+              "description": "Meat meals and pellets (including tankage)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of Meat meals and pellets (including tankage) - Meat and Bone Meal of Buffalo is allowed freely but its export to European Union is allowed subject to the following conditions : (i) A ?Shipment Clearance Certificate? is to be issued consignment-wise by the CAPEXIL indicating details of the name and address of the exporter, address of the registered plant, IEC No. of the exporter, Plant approval number, nature of export product, quantity, invoice number and date, port of loading (name of the port) and destination (ii) After the"
+            },
+            {
+              "code": "2301.10.90",
+              "description": "Other (including greaves)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2301.20",
+          "title": "Flours, meals and pellets, of fish or of crustaceans, molluscs or other aquatic invertebrates",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2301.20.11",
+              "description": "Fish meal, unfit for human consumption:---- In powder form",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2301.20.19",
+              "description": "Fish meal, unfit for human consumption:---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2301.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2302",
+      "title": "BRAN, SHARPS AND OTHER RESIDUES, WHETHER OR NOT IN THE FORM OF PELLETS, DERIVED FROM THE SIFTING, MILLING OR OTHER WORKING OF CEREALS OR OF LEGUMINOUS PLANTS",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2302.10",
+          "title": "Of maize (corn)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2302.10.10",
+              "description": "Maize bran",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            },
+            {
+              "code": "2302.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2302.30",
+          "title": "Of wheat",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2302.30.00",
+              "description": "Of wheat",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2302.40",
+          "title": "Of other cereals",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2302.40.00",
+              "description": "Of other cereals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is 'Prohibited' till 30th September 2025."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2302.50",
+          "title": "Of leguminous plants",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2302.50.00",
+              "description": "Of leguminous plants",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2303",
+      "title": "RESIDUES OF STARCH MANUFACTURE AND SIMILAR RESIDUES, BEET-PULP, BAGASSE AND OTHER WASTE OF SUGAR MANUFACTURE, BREWING OR DISTILLING DREGS AND WASTE, WHETHER OR NOT IN THE FORM OF PELLETS",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2303.10",
+          "title": "Residues of starch manufacture and similar residues",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2303.10.00",
+              "description": "Residues of starch manufacture and similar residues",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2303.20",
+          "title": "Beet-pulp, bagasse and other waste of sugar manufacture",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2303.20.00",
+              "description": "Beet-pulp, bagasse and other waste of sugar manufacture",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2303.30",
+          "title": "Brewing or distilling dregs and waste",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2303.30.00",
+              "description": "Brewing or distilling dregs and waste",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2304",
+      "title": "Oil-cake and other solid residues, whether or not ground or in the form of pellets, resulting from the extraction of soyabean oil.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2304.00",
+          "title": "Oil-cake and other solid residues whether or not ground or in the form of pellets, resulting from the extraction of soyabean oil:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2304.00.10",
+              "description": "Oil-cake and oil-cake meal of soyabean, expeller variety",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2304.00.20",
+              "description": "Oil-cake of soyabean, solvent extracted (defatted) variety",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2304.00.30",
+              "description": "Meal of soyabean, solvent extracted (defatted)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2304.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2305",
+      "title": "Oil-cake and other solid residues, whether or not ground or in the form of pellets, resulting from the extraction of ground-nut oil.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2305.00",
+          "title": "Oil-cake and other solid residues, whether or not ground or in the form of pellets, resulting from the extraction of ground-nut oil:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2305.00.10",
+              "description": "Oil-cake and oil-cake meal of ground-nut, expeller variety",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Exports of De-oiled groundnut cakes containing more than 1% oil and groundnut expeller cakes is restricted."
+            },
+            {
+              "code": "2305.00.20",
+              "description": "Oil-cake and oil-cake meal of ground-nut, solvent extracted variety (defatted)",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Exports of De-oiled groundnut cakes containing more than 1% oil and groundnut expeller cakes is restricted."
+            },
+            {
+              "code": "2305.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": "Exports of De-oiled groundnut cakes containing more than 1% oil and groundnut expeller cakes is restricted."
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2306",
+      "title": "OIL-CAKE AND OTHER SOLID RESIDUES, WHETHER OR NOT GROUND OR IN THE FORM OF PELLETS, RESULTING FROM THE EXTRACTION OF VEGETABLE OR MICROBIAL FATS OR OILS, OTHER THAN THOSE OF HEADING 2304 OR 2305",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2306.10",
+          "title": "Of cotton seeds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2306.10.10",
+              "description": "Oil-cake and oil-cake meal, decorticated, expeller variety",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2306.10.20",
+              "description": "Oil-cake and oil-cake meal, decorticated, solvent extracted (defatted) variety",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.10.30",
+              "description": "Oil-cake and oil-cake meal, undecorticated, expeller variety",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.10.40",
+              "description": "Oil-cake and oil-cake meal, undecorticated, solvent extracted (defatted) variety",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2306.20",
+          "title": "Of linseed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2306.20.10",
+              "description": "Oil-cake and oil-cake meal, expeller variety",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.20.20",
+              "description": "Oil-cake and oil-cake meal, solvent extracted (defatted) variety",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2306.30",
+          "title": "Of sunflower seeds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2306.30.10",
+              "description": "Oil-cake and oil-cake meal, expeller variety",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.30.20",
+              "description": "Oil-cake and oil-cake meal, solvent extracted (defatted) variety",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2306.41",
+          "title": "Of rape or colza seeds : --Of low erucic acid rape or colza seeds",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2306.41.00",
+              "description": "Of rape or colza seeds : --Of low erucic acid rape or colza seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2306.49",
+          "title": "Of rape or colza seeds : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2306.49.00",
+              "description": "Of rape or colza seeds : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2306.50",
+          "title": "Of coconut or copra",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2306.50.10",
+              "description": "Oil-cake and oil-cake meal, expeller variety",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.50.20",
+              "description": "Oil-cake and oil-cake meal, solvent extracted (defatted) variety",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.50.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2306.60",
+          "title": "Of palm nuts or kernels",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2306.60.00",
+              "description": "Of palm nuts or kernels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2306.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2306.90.11",
+              "description": "Oil-cake and oil-cake meal, expeller variety: ---- Of mowra seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.90.12",
+              "description": "Oil-cake and oil-cake meal, expeller variety: ---- Of mustard seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.90.13",
+              "description": "Oil-cake and oil-cake meal, expeller variety: ---- Of niger seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.90.14",
+              "description": "Oil-cake and oil-cake meal, expeller variety: ---- Of seasamum seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.90.15",
+              "description": "Oil-cake and oil-cake meal, expeller variety: ---- Of mango kernel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.90.16",
+              "description": "Oil-cake and oil-cake meal, expeller variety: ---- Of sal (de-oiled)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.90.17",
+              "description": "Oil-cake and oil-cake meal, expeller variety: ---- Of castor seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.90.18",
+              "description": "Oil-cake and oil-cake meal, expeller variety: ---- Of neem seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.90.19",
+              "description": "Oil-cake and oil-cake meal, expeller variety: ---- Of other seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is 'Prohibited' till 30th September 2025."
+            },
+            {
+              "code": "2306.90.21",
+              "description": "Oil-cake and oil-cake meal, solvent extracted (defatted) variety: ---- Of mustard seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.90.22",
+              "description": "Oil-cake and oil-cake meal, solvent extracted (defatted) variety: ---- Of niger seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.90.23",
+              "description": "Oil-cake and oil-cake meal, solvent extracted (defatted) variety: ---- Of cardi seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.90.24",
+              "description": "Oil-cake and oil-cake meal, solvent extracted (defatted) variety: ---- Of seasamum seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.90.25",
+              "description": "Oil-cake and oil-cake meal, solvent extracted (defatted) variety: ---- Of mango kernel",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.90.26",
+              "description": "Oil-cake and oil-cake meal, solvent extracted (defatted) variety: ---- Of sal (de-oiled)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.90.27",
+              "description": "Oil-cake and oil-cake meal, solvent extracted (defatted) variety: ---- Of castor seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.90.28",
+              "description": "Oil-cake and oil-cake meal, solvent extracted (defatted) variety: ---- Of neem seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.90.29",
+              "description": "Oil-cake and oil-cake meal, solvent extracted (defatted) variety: ---- Of other seeds",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is 'Prohibited' till 30th September 2025."
+            },
+            {
+              "code": "2306.90.30",
+              "description": "Oil-cake and oil-cake meal, solvent extracted (defatted) variety: ---- Residues babool seed extraction",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is Prohibited."
+            },
+            {
+              "code": "2306.90.90",
+              "description": "Oil-cake and oil-cake meal, solvent extracted (defatted) variety: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of De-oiled Rice Bran is 'Prohibited' till 30th September 2025."
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2307",
+      "title": "Wine lees; Argol",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2307.00",
+          "title": "Wine lees; Argol",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2307.00.00",
+              "description": "Wine lees; Argol",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2308",
+      "title": "Vegetable materials and vegetable waste, vegetable residues and by-products, whether or not in the form of pellets, of a kind used in animal feeding, not elsewhere specified or included",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2308.00",
+          "title": "Vegetable materials and vegetable waste, vegetable residues and by-products, whether or not in the form of pellets, of a kind used in animal feeding, not elsewhere specified or included",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2308.00.00",
+              "description": "Vegetable materials and vegetable waste, vegetable residues and by-products, whether or not in the form of pellets, of a kind used in animal feeding, not elsewhere specified or included",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2309",
+      "title": "Preparations of a kind used in animal feeding.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2309.10",
+          "title": "Dog or cat food, put up for retail sale",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2309.10.00",
+              "description": "Dog or cat food, put up for retail sale",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 01 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2309.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2309.90.10",
+              "description": "Compounded animal feed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 01 of the Chapter"
+            },
+            {
+              "code": "2309.90.20",
+              "description": "Concentrates for compound animal feed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 01 of the Chapter"
+            },
+            {
+              "code": "2309.90.31",
+              "description": "Feeds for fish (prawn etc.): ---- Prawn and shrimps feed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 01 of the Chapter"
+            },
+            {
+              "code": "2309.90.32",
+              "description": "Feeds for fish (prawn etc.): ---- Fish feed in powdered form",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 01 of the Chapter"
+            },
+            {
+              "code": "2309.90.39",
+              "description": "Feeds for fish (prawn etc.): ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 01 of the Chapter"
+            },
+            {
+              "code": "2309.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Subject to Policy Condition 01 of the Chapter"
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

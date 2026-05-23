@@ -1,0 +1,161 @@
+{
+  "chapter": "54",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings_count": 0,
+  "soft_warnings_count": 0,
+  "wco_patched_notes_skipped": false,
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "54072090",
+        "in_pdf": true,
+        "pdf_context_near_code": "r the like 54072010 Unbleached Free 54072020 Bleached Free 54072030 Dyed Free 54072040 Printed Free 54072090 Other Free 540730 Fabrics specified in Note 9 to Section XI 54073010 Unbleached Free 540730",
+        "json_description": "Other",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "54077120",
+        "in_pdf": true,
+        "pdf_context_near_code": "76120 54076190 Polyester shirtings Free 54076900 Polyester suitings Free 540771 54077110 Other Free 54077120 54077200 Other woven fabrics, containing 85 percent or more by weight of polyester filament",
+        "json_description": "Bleached",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "54082220",
+        "in_pdf": true,
+        "pdf_context_near_code": "82218 Fabrics of rayon: ---- Rayon tafetta Free 54082219 Fabrics of rayon: ---- Rayon suitings Free 54082220 Fabrics of rayon: ---- Rayon shirtings Free 54082290 Fabrics of rayon: ---- Rayon sarees Fa",
+        "json_description": "Fabrics of continuous filament, other than rayon",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "54071033",
+        "in_pdf": true,
+        "pdf_context_near_code": "4071029 Other Free 54071031 Dyed: ---- Parachute Fabrics Free 54071032 Dyed: ---- Tent fabrics Free 54071033 Dyed: ---- Nylon furnishing fabrics Free 54071034 Dyed: ---- Umbrella cloth panel fabrics F",
+        "json_description": "Dyed: ---- Nylon furnishing fabrics",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "54033300",
+        "in_pdf": true,
+        "pdf_context_near_code": " 54033200 Other yarn, single : -- Of viscose rayon, with a twist exceeding 120 turns per metre Free 54033300 Other yarn, single : -- Of cellulose acetate Free 540339 Other 54033910 Cuprammonium rayon ",
+        "json_description": "Other yarn, single : -- Of cellulose acetate",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "54071034",
+        "in_pdf": true,
+        "pdf_context_near_code": "abrics Free 54071032 Dyed: ---- Tent fabrics Free 54071033 Dyed: ---- Nylon furnishing fabrics Free 54071034 Dyed: ---- Umbrella cloth panel fabrics Free 54071035 Dyed: ---- Other nylon and polyamide ",
+        "json_description": "Dyed: ---- Umbrella cloth panel fabrics",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "54071029",
+        "in_pdf": true,
+        "pdf_context_near_code": "r nylon and polyamide fabrics of filament yarn Free 54071026 Bleached: ---- Polyester suitings Free 54071029 Other Free 54071031 Dyed: ---- Parachute Fabrics Free 54071032 Dyed: ---- Tent fabrics Free",
+        "json_description": "Other",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "54034210",
+        "in_pdf": true,
+        "pdf_context_near_code": "l Free 54034190 Other Free 540342 Other yarn, multiple (folded) or cabled : -- Of cellulose acetate 54034210 54034220 Acetate rayon filament yarn, 83 decitex Free 54034230 54034240 Acetate rayon filam",
+        "json_description": "Acetate rayon filament yarn, 83 decitex",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "54078116",
+        "in_pdf": true,
+        "pdf_context_near_code": " Polyester shirtings Free 54078114 Polyester suitings Free 54078115 Terylene and dacron sarees Free 54078116 Polyester dhoti Free 54078119 Other Free 54078121 Bleached: ---- Nylon georgette Free 54078",
+        "json_description": "Polyester dhoti",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      },
+      {
+        "code": "54041910",
+        "in_pdf": true,
+        "pdf_context_near_code": "ofilament : -- Elastomeric Free 54041200 Monofilament : -- Other, of polypropylene Free 540419 Free 54041910 Monofilament : -- Other Free 54041920 Free 54041990 Catgut imitation of synthetic yarn, non",
+        "json_description": "Catgut imitation of synthetic yarn, non-sterile",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": [],
+        "match": "exact"
+      }
+    ],
+    "subheading_spot_check": [
+      {
+        "subheading": "540239",
+        "in_pdf_standalone": true,
+        "any_child_in_pdf": true,
+        "accepted": true,
+        "json_description": "Textured yarn : -- Other",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": []
+      },
+      {
+        "subheading": "540262",
+        "in_pdf_standalone": true,
+        "any_child_in_pdf": true,
+        "accepted": true,
+        "json_description": "Other yarn, multiple (folded) or cabled : -- Of polyesters",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": []
+      },
+      {
+        "subheading": "540831",
+        "in_pdf_standalone": true,
+        "any_child_in_pdf": true,
+        "accepted": true,
+        "json_description": "Other woven fabrics : -- Unbleached or bleached",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": []
+      },
+      {
+        "subheading": "540349",
+        "in_pdf_standalone": true,
+        "any_child_in_pdf": true,
+        "accepted": true,
+        "json_description": "Other yarn, multiple (folded) or cabled : -- Other",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": []
+      },
+      {
+        "subheading": "540261",
+        "in_pdf_standalone": true,
+        "any_child_in_pdf": true,
+        "accepted": true,
+        "json_description": "Other yarn, multiple (folded) or cabled : -- Of nylon or other polyamides",
+        "desc_significant_word_recall": 1.0,
+        "missing_words": []
+      }
+    ],
+    "hierarchy_errors": [],
+    "hierarchy_errors_total": 0,
+    "missed_codes": [],
+    "extra_codes": [],
+    "note_mismatches": [],
+    "count_check": {
+      "headings_in_json": 8,
+      "subheadings_in_json": 72,
+      "tariff_lines_in_json": 247
+    },
+    "notes_count": 2
+  },
+  "warnings": []
+}

@@ -1,0 +1,1070 @@
+{
+  "chapter": "91",
+  "section": "XVIII",
+  "title": "CLOCKS AND WATCHES AND PARTS THEREOF",
+  "source_pdf": "Chapter 91 Clocks And Watches And Parts Thereof.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '91011100') and 6-digit subheading codes without dots (e.g., '910191'). Normalized to NNNN.NN.NN format (e.g., '9101.11.00') and NNNN.NN format (e.g., '9101.91') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'SI.No. Notes Notification Date Notification No', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "Section XVIII ('OPTICAL, PHOTOGRAPHIC, CINEMATOGRAPHIC, MEASURING, CHECKING, PRECISION, MEDICAL OR SURGICAL INSTRUMENTS AND APPARATUS; CLOCKS AND WATCHES; MUSICAL INSTRUMENTS; PARTS AND ACCESSORIES THEREOF') header appears in the PDF but no separate Section Notes table is present in this chapter's PDF. section_notes is therefore an empty array.",
+    "All 4 'Main Notes' in the PDF are Chapter 91 chapter notes (no separate sub-heading note table is present). subheading_notes is an empty array.",
+    "Note 3 is the legally decisive definition of 'watch movements' (max 12 mm thickness, max 50 mm width/length/diameter) which distinguishes goods of headings 9108-9110 from clock movements. Captured verbatim.",
+    "For headings 9101 and 9102, the PDF shows 8-digit tariff lines directly (e.g., 9101.11.00, 9101.19.00, 9101.21.00, 9101.29.00) without an intervening 6-digit subheading row. The 6-digit subheadings (9101.11, 9101.19, 9101.21, 9101.29, 9102.11, 9102.12, 9102.19, 9102.21, 9102.29) are inferred from the 8-digit codes and the structural prefix ('Wrist-watches, electrically operated...' / 'Other wrist-watches...') visible in the description. For 9101.91, 9101.99, 9102.91, 9102.99, 9109.10, 9113.20, 9113.90, 9114.30, 9114.40, 9114.90 the 6-digit subheading row IS explicitly shown in the PDF as a separate row with title ('Other : -- Electrically operated' / 'Other : -- Other' / 'Electrically operated:' / 'Of base metal, whether or not goldor silver-plated' / 'Other' / 'Dials' / 'Plates and bridges' / 'Other'). Both styles preserved.",
+    "Heading 9105 PDF row title 'OTHER CLOCKS' is in ALL CAPS in the source — preserved verbatim. All other heading titles are sentence case in the PDF.",
+    "Heading 9103 description 'Clocks with watch movements, excluding clocks of heading 91.04.' contains '91.04' with a dot (4-digit heading reference style) — preserved verbatim as it appears in the PDF.",
+    "Heading 9106 description spans two lines in the PDF and contains the artifact 'timeregisters' (no space) before 'time-recorders' in the parenthetical example — preserved verbatim.",
+    "Subheading 9113.20 title 'Of base metal, whether or not goldor silver-plated' contains the artifact 'goldor' (no space) — preserved verbatim. Same artifact in tariff line 9111.20.00 description 'Cases of base metal, whether or not goldor silver-plated'.",
+    "PDF code '91019120' has description 'Other: ----Stop watches' (with four hyphens before the term) which is the WCO indent style preserved verbatim across tariff lines under 9101.91, 9101.99, 9102.91, 9102.99, 9105.99 and 9114.90.",
+    "Tariff line 9108.11.00 description spans two PDF rows: 'Electrically operated : -- With mechanical display only or with a device to which a' (row continues onto next page) 'mechanical display can be incorporated'. Concatenated verbatim.",
+    "Note 2 in PDF contains the artifact 'semi-preciousstones' (no space) — preserved verbatim.",
+    "Notification Date and Notification No columns in the Main Notes table are empty in this chapter's PDF — no notification metadata captured.",
+    "Export Policy column shows 'Free' for every tariff line; Policy Condition column is empty for every row. No chapter-level policy conditions appear in the PDF.",
+    "Unit-of-measure column is NOT shown in this chapter's PDF — unit field set to null for all tariff lines.",
+    "Heading 9109 PDF shows subheading row '910910' with title 'Electrically operated:' but no '9109.10.10' tariff line — only '9109.10.90' ('Other') under it. Preserved verbatim. '9109.90.00' ('Other') is a directly-numbered 8-digit code under the second branch of 9109 (no explicit 9109.90 subheading row shown).",
+    "Heading 9114 has 8-digit tariff line numbering that jumps from 9114.30.20 directly to 9114.40.10 (no 9114.30.90 or similar). Subheadings 9114.30 (Dials), 9114.40 (Plates and bridges) and 9114.90 (Other) are each shown as explicit subheading rows in the PDF. Preserved verbatim.",
+    "Tariff line 9114.90.92 ('Other: ----For clocks') is the final tariff line in the chapter — no 9114.90.99 ('Other') tariff line is shown in the PDF. Preserved verbatim."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not cover : (a) clock or watch glasses or weights (classified according to their constituent material); (b) watch chains (heading 7131 or 7117, as the case may be); (c) parts of general use defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics(Chapter 39) or of precious metal or metal clad with precious metal (generally heading 7115); clock or watch springs are, however, to be classified as clock or watch parts (heading 9114); (d) bearing balls (heading 7326 or heading 8482, as the case may be); (e) articles of heading 8412 constructed to work without an escapement; (f) ball bearings (heading 8482); (g) articles of Chapter 85, not yet assembled together or with other components into watch or clock movements or into articles suitable for use solely or principally as parts of such movements (Chapter 85)."
+    },
+    {
+      "number": "2",
+      "text": "Heading 9101 covers only watches with case wholly of precious metal or of metal clad with precious metal, or of the same materials combined with natural or cultured pearls, or precious or semi-preciousstones (natural, synthetic or reconstructed) of headings 7101 to 7104. Watches with case of base metal inlaid with precious metal fall in heading 9102."
+    },
+    {
+      "number": "3",
+      "text": "For the purposes of this Chapter, the expression \"watch movements\" means devices regulated by a balance-wheel and hairspring, quartz crystal or any other system capable of determining intervals of time, with a display or a system to which a mechanical display can be incorporated. Such watch movements shall not exceed 12 mm in thickness and 50 mm in width, length or diameter."
+    },
+    {
+      "number": "4",
+      "text": "Except as provided in Note 1, movements and other parts suitable for use both in clocks or watches and in other articles (for example, precision instruments) are to be classified in this Chapter."
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "clock or watch glasses or weights (classified according to their constituent material)",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(a)",
+      "source_note_text": "This Chapter does not cover : (a) clock or watch glasses or weights (classified according to their constituent material)"
+    },
+    {
+      "excluded_product_text": "watch chains",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": "7113",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "(b) watch chains (heading 7131 or 7117, as the case may be)"
+    },
+    {
+      "excluded_product_text": "watch chains",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": "7117",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "(b) watch chains (heading 7131 or 7117, as the case may be)"
+    },
+    {
+      "excluded_product_text": "watch chains (alternative)",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": "7117",
+      "source_note_number": "Note 1(b)",
+      "source_note_text": "(b) watch chains (heading 7131 or 7117, as the case may be)"
+    },
+    {
+      "excluded_product_text": "parts of general use defined in Note 2 to Section XV, of base metal",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "(c) parts of general use defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics(Chapter 39) or of precious metal or metal clad with precious metal (generally heading 7115); clock or watch springs are, however, to be classified as clock or watch parts (heading 9114)"
+    },
+    {
+      "excluded_product_text": "similar goods of plastics (parts of general use)",
+      "redirects_to_chapter": "39",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "(c) parts of general use defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics(Chapter 39) or of precious metal or metal clad with precious metal (generally heading 7115); clock or watch springs are, however, to be classified as clock or watch parts (heading 9114)"
+    },
+    {
+      "excluded_product_text": "similar goods of precious metal or metal clad with precious metal (parts of general use)",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": "7115",
+      "source_note_number": "Note 1(c)",
+      "source_note_text": "(c) parts of general use defined in Note 2 to Section XV, of base metal (Section XV), or similar goods of plastics(Chapter 39) or of precious metal or metal clad with precious metal (generally heading 7115); clock or watch springs are, however, to be classified as clock or watch parts (heading 9114)"
+    },
+    {
+      "excluded_product_text": "bearing balls",
+      "redirects_to_chapter": "73",
+      "redirects_to_heading": "7326",
+      "source_note_number": "Note 1(d)",
+      "source_note_text": "(d) bearing balls (heading 7326 or heading 8482, as the case may be)"
+    },
+    {
+      "excluded_product_text": "bearing balls (alternative)",
+      "redirects_to_chapter": "84",
+      "redirects_to_heading": "8482",
+      "source_note_number": "Note 1(d)",
+      "source_note_text": "(d) bearing balls (heading 7326 or heading 8482, as the case may be)"
+    },
+    {
+      "excluded_product_text": "articles of heading 8412 constructed to work without an escapement",
+      "redirects_to_chapter": "84",
+      "redirects_to_heading": "8412",
+      "source_note_number": "Note 1(e)",
+      "source_note_text": "(e) articles of heading 8412 constructed to work without an escapement"
+    },
+    {
+      "excluded_product_text": "ball bearings",
+      "redirects_to_chapter": "84",
+      "redirects_to_heading": "8482",
+      "source_note_number": "Note 1(f)",
+      "source_note_text": "(f) ball bearings (heading 8482)"
+    },
+    {
+      "excluded_product_text": "articles of Chapter 85, not yet assembled together or with other components into watch or clock movements or into articles suitable for use solely or principally as parts of such movements",
+      "redirects_to_chapter": "85",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 1(g)",
+      "source_note_text": "(g) articles of Chapter 85, not yet assembled together or with other components into watch or clock movements or into articles suitable for use solely or principally as parts of such movements (Chapter 85)"
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "9101",
+      "title": "Wrist-watches, pocket-watches and other watches, including stop-watches, with case of precious metal or of metal clad with precious metal.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9101.11",
+          "title": "Wrist-watches, electrically operated, whether or not incorporating a stop-watch facility : -- With mechanical display only",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9101.11.00",
+              "description": "Wrist-watches, electrically operated, whether or not incorporating a stop-watch facility : -- With mechanical display only",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9101.19",
+          "title": "Wrist-watches, electrically operated, whether or not incorporating a stop-watch facility : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9101.19.00",
+              "description": "Wrist-watches, electrically operated, whether or not incorporating a stop-watch facility : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9101.21",
+          "title": "Other wrist-watches, whether or not incorporating a stop-watch facility : -- With automatic winding",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9101.21.00",
+              "description": "Other wrist-watches, whether or not incorporating a stop-watch facility : -- With automatic winding",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9101.29",
+          "title": "Other wrist-watches, whether or not incorporating a stop-watch facility : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9101.29.00",
+              "description": "Other wrist-watches, whether or not incorporating a stop-watch facility : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9101.91",
+          "title": "Other : -- Electrically operated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9101.91.10",
+              "description": "Other: ----Pocket watches",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9101.91.20",
+              "description": "Other: ----Stop watches",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9101.91.90",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9101.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9101.99.10",
+              "description": "Other: ----Pocket watches",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9101.99.20",
+              "description": "Other: ----Stop watches",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9101.99.90",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9102",
+      "title": "Wrist-watches, pocket-watches and other watches, including stop-watches, other than those of heading 9101",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9102.11",
+          "title": "Wrist-watches, electrically operated, whether or not incorporating a stop-watch facility : -- With mechanical display only",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9102.11.00",
+              "description": "Wrist-watches, electrically operated, whether or not incorporating a stop-watch facility : -- With mechanical display only",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9102.12",
+          "title": "Wrist-watches, electrically operated, whether or not incorporating a stop-watch facility : -- With opto-electronic display only",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9102.12.00",
+              "description": "Wrist-watches, electrically operated, whether or not incorporating a stop-watch facility : -- With opto-electronic display only",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9102.19",
+          "title": "Wrist-watches, electrically operated, whether or not incorporating a stop-watch facility : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9102.19.00",
+              "description": "Wrist-watches, electrically operated, whether or not incorporating a stop-watch facility : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9102.21",
+          "title": "Other wrist-watches, whether or not incorporating a stop-watch facility : -- With automatic winding",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9102.21.00",
+              "description": "Other wrist-watches, whether or not incorporating a stop-watch facility : -- With automatic winding",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9102.29",
+          "title": "Other wrist-watches, whether or not incorporating a stop-watch facility : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9102.29.00",
+              "description": "Other wrist-watches, whether or not incorporating a stop-watch facility : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9102.91",
+          "title": "Other : -- Electrically operated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9102.91.10",
+              "description": "Other: ----Pocket watches",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9102.91.20",
+              "description": "Other: ----Stop watches",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9102.91.90",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9102.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9102.99.10",
+              "description": "Other: ----Pocket watches",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9102.99.20",
+              "description": "Other: ----Stop watches",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9102.99.90",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9103",
+      "title": "Clocks with watch movements, excluding clocks of heading 91.04.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9103.10",
+          "title": "Electrically operated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9103.10.00",
+              "description": "Electrically operated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9103.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9103.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9104",
+      "title": "Instrument panel clocks and clocks of a similar type for vehicles, aircraft, spacecraft or vessels.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9104.00",
+          "title": "Instrument panel clocks and clocks of a similar type for vehicles, aircraft, spacecraft or vessels.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9104.00.00",
+              "description": "Instrument panel clocks and clocks of a similar type for vehicles, aircraft, spacecraft or vessels.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "9105",
+      "title": "OTHER CLOCKS",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9105.11",
+          "title": "Alarm clocks : -- Electrically operated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9105.11.00",
+              "description": "Alarm clocks : -- Electrically operated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9105.19",
+          "title": "Alarm clocks : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9105.19.00",
+              "description": "Alarm clocks : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9105.21",
+          "title": "Wall clocks : -- Electrically operated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9105.21.00",
+              "description": "Wall clocks : -- Electrically operated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9105.29",
+          "title": "Wall clocks : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9105.29.00",
+              "description": "Wall clocks : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9105.91",
+          "title": "Other : -- Electrically operated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9105.91.00",
+              "description": "Other : -- Electrically operated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9105.99",
+          "title": "Other : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9105.99.10",
+              "description": "Other: ----Time pieces",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9105.99.90",
+              "description": "Other: ----Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9106",
+      "title": "Time of day recording apparatus and apparatus for measuring, recording or otherwise indicating intervals of time, with clock or watch movement or with synchronous motor (for example, timeregisters, time-recorders).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9106.10",
+          "title": "Time-registers; time-recorders",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9106.10.00",
+              "description": "Time-registers; time-recorders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9106.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9106.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9107",
+      "title": "Time switches with clock or watch movement or with synchronous motor.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9107.00",
+          "title": "Time switches with clock or watch movement or with synchronous motor.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9107.00.00",
+              "description": "Time switches with clock or watch movement or with synchronous motor.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "9108",
+      "title": "Watch movements, complete and assembled.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9108.11",
+          "title": "Electrically operated : -- With mechanical display only or with a device to which a mechanical display can be incorporated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9108.11.00",
+              "description": "Electrically operated : -- With mechanical display only or with a device to which a mechanical display can be incorporated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9108.12",
+          "title": "Electrically operated : -- With opto-electronic display only",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9108.12.00",
+              "description": "Electrically operated : -- With opto-electronic display only",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9108.19",
+          "title": "Electrically operated : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9108.19.00",
+              "description": "Electrically operated : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9108.20",
+          "title": "With automatic winding",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9108.20.00",
+              "description": "With automatic winding",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9108.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9108.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9109",
+      "title": "Clock movements, complete and assembled.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9109.10",
+          "title": "Electrically operated:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9109.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9109.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9109.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9110",
+      "title": "Complete watch or clock movements, unassembled or partly assembled (movement sets); incomplete watch or clock movements, assembled; rough watch or clock movements.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9110.11",
+          "title": "Of watches : -- Complete movements, unassembled or partly assembled (movement sets)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9110.11.00",
+              "description": "Of watches : -- Complete movements, unassembled or partly assembled (movement sets)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9110.12",
+          "title": "Of watches : -- Incomplete movements, assembled",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9110.12.00",
+              "description": "Of watches : -- Incomplete movements, assembled",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9110.19",
+          "title": "Of watches : -- Rough movements",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9110.19.00",
+              "description": "Of watches : -- Rough movements",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9110.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9110.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9111",
+      "title": "Watch cases and parts thereof.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9111.10",
+          "title": "Cases of precious metal or of metal clad with precious metal",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9111.10.00",
+              "description": "Cases of precious metal or of metal clad with precious metal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9111.20",
+          "title": "Cases of base metal, whether or not goldor silver-plated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9111.20.00",
+              "description": "Cases of base metal, whether or not goldor silver-plated",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9111.80",
+          "title": "Other cases",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9111.80.00",
+              "description": "Other cases",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9111.90",
+          "title": "Parts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9111.90.00",
+              "description": "Parts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9112",
+      "title": "Clock cases and cases of a similar type for other goods of this Chapter, and parts thereof.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9112.20",
+          "title": "Cases",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9112.20.00",
+              "description": "Cases",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9112.90",
+          "title": "Parts",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9112.90.00",
+              "description": "Parts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9113",
+      "title": "Watch straps, watch bands and watch bracelets, and parts thereof.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9113.10",
+          "title": "Of precious metal or of metal clad with precious metal",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9113.10.00",
+              "description": "Of precious metal or of metal clad with precious metal",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9113.20",
+          "title": "Of base metal, whether or not goldor silver-plated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9113.20.10",
+              "description": "Parts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9113.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9113.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9113.90.10",
+              "description": "Parts",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9113.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "9114",
+      "title": "Other clock or watch parts.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "9114.30",
+          "title": "Dials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9114.30.10",
+              "description": "For watches",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9114.30.20",
+              "description": "For clocks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9114.40",
+          "title": "Plates and bridges",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9114.40.10",
+              "description": "For watches",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9114.40.20",
+              "description": "For clocks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "9114.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "9114.90.30",
+              "description": "Jewels",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9114.90.40",
+              "description": "Springs, including hair-springs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9114.90.91",
+              "description": "Other: ----For watches",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "9114.90.92",
+              "description": "Other: ----For clocks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

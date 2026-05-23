@@ -1,0 +1,2146 @@
+{
+  "chapter": "25",
+  "section": "V",
+  "title": "SALT; SULPHUR; EARTHS AND STONE; PLASTERING MATERIALS, LIME AND CEMENT",
+  "source_pdf": "Chapter 25 Salt; Sulphur; Earths And Stone; Plastering Materials, Lime And Cement.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "Source PDF tariff codes use no-dot 8-digit format (NNNNNNNN). All codes normalized to NNNN.NN.NN per project schema by inserting dots after positions 4 and 6. Subheading codes (e.g. '250100') normalized to NNNN.NN (e.g. '2501.00'); heading codes (e.g. '2501') preserved as 4 digits.",
+    "Chapter 25 opens Section V (Mineral Products). PDF page 1 carries the subtitle 'Section V, MINERAL PRODUCTS' but contains NO separate Section V Main Notes table — only Chapter 25 Main Notes (4 notes) and a Chapter 25 Supplementary Notes table (1 note). Therefore section_notes is empty for this chapter; Section V notes (if any exist at Schedule level) must be captured from the Section V cover page if/when extracted separately.",
+    "Supplementary Notes captured in top-level 'supplementary_notes' array (convention chosen for this chapter; not merged into chapter_notes).",
+    "Note 2 (the main exclusion note) lists sub-clauses (a) through (k) as a single verbatim block. Each sub-clause is extracted as a separate exclusion_clauses entry.",
+    "Note 2 sub-clause (h) contains OCR/spacing artifacts in the source PDF: 'magnesiumoxide' (magnesium oxide), 'ofsodiumchloride' (of sodium chloride). Preserved verbatim in source_note_text; normalized in excluded_product_text where needed for readability.",
+    "Note 2 sub-clause (k) contains an OCR artifact 'tailors? chalks' where '?' is a typographic apostrophe (intended: \"tailors' chalks\"). Preserved verbatim.",
+    "Note 4 contains OCR/spacing artifacts: 'meerschaumand' (meerschaum and), 'rods,sticks' (rods, sticks), 'orsimilar' (or similar). Preserved verbatim.",
+    "PDF table-chrome rows ('Main Notes', 'Supplementary Notes', 'Sl.No. Notes Notification Date Notification No', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table headers and EXCLUDED from the legal notes per extraction rules.",
+    "Several headings in the PDF show a heading-level description row (4-digit code) followed by a subheading-level description row (6-digit code, e.g. '250100') that repeats/rephrases the heading description verbatim. The 6-digit row is the WCO international subheading description; preserved as the subheading title where present.",
+    "Heading 2527 is absent from the source PDF (the heading sequence jumps from 2526 to 2528). 2527 is reserved internationally (Natural cryolite; natural chiolite) but carries no tariff lines in the Indian Schedule 2 PDF for this chapter. Not included in headings array.",
+    "Subheading 2515.11 appears in the source as code '251511' but the PDF shows only the 8-digit tariff line '25151100' (Marble and travertine -- Crude or roughly trimmed) with no separate 6-digit subheading row. Subheading constructed from the 8-digit code; subheading title taken verbatim from the tariff line description. Same pattern for 2515.20 (split label row '251520' provides 'Ecaussine and other calcareous monumental or building stone;'), 2516.11, 2516.12, 2516.20, 2516.90 (label row '251690' present), 2517.10, 2517.20, 2517.30, 2517.41, 2517.49, 2518.10, 2518.20, 2519.10, 2519.90, 2520.10, 2520.20, 2521.00, 2522.10, 2522.20, 2522.30, 2523.10, 2523.21, 2523.29, 2523.30, 2523.90, 2524.10, 2524.90, 2525.10, 2525.20, 2525.30, 2526.10, 2526.20, 2528.00, 2529.10, 2529.21, 2529.22, 2529.30, 2530.10, 2530.20, 2530.90.",
+    "Heading 2502 has a single tariff line '25020000' (UNROASTED IRON PYRITES) with no separate 6-digit subheading row in the PDF. Modelled as subheading '2502.00' with title 'Unroasted iron pyrites.' (heading-level description, verbatim from heading row), with the single tariff line attached.",
+    "Heading 2509 has a single tariff line '25090000' (Chalk) with no separate 6-digit subheading row. Modelled as subheading '2509.00' with title 'Chalk'.",
+    "Heading 2514 has a single tariff line '25140000' (Slate, ...) with no separate 6-digit subheading row. Modelled as subheading '2514.00'.",
+    "Numeric inline expressions in the PDF render with no space: '85percent' (Note 4 / heading 2528), '97 percent' (heading 2529 fluorspar — space preserved in source), '1percent SiO2' (tariff 25210010), '2.5g each' (Note 2 (h)). Preserved verbatim.",
+    "Some heading titles in the PDF are rendered in ALL CAPS (e.g. headings 2503, 2507, 2512, 2518, 2521, 2528) while others are sentence case. Preserved verbatim per source.",
+    "Heading 2503 title in PDF reads 'SULPHUR OF ALL KINDS, OTHER THAN SUBLIMED SULPHUR, PRECIPITATED SULPHUR AND COLLODIAL SULPHUR'. The 6-digit row '250300' provides the sentence-case form 'Sulphur of all kinds, other than sublimed sulphur, precipitated sulphur and colloidal sulphur.' — note that the heading-level uppercase form has 'COLLODIAL' (likely typo) while the subheading form has 'colloidal'. Both preserved verbatim in their respective fields.",
+    "Tariff 25241010 (Crocidolite) carries Export Policy 'Free' with Policy Condition 'Export of Crocidolite is free subject to No Objection Certificate from the Department of Chemicals and Petro-Chemicals, Ministry of Chemicals and Fertilizers, New Delhi'. Captured in policy_conditions array.",
+    "Tariff lines 25085031, 25085032, 25085039 (Sillimanite) and 25132030 (Natural garnet) carry Export Policy 'STE (State Trading Enterprise)' with Policy Condition 'Export is allowed through Indian Rare Earths Limited (IREL) only.' Captured in policy_conditions array.",
+    "Tariff lines under subheading 2505.10 (Silica sands and quartz sands: 25051011, 25051012, 25051019, 25051020) and 2505.90 (25059000 Other) carry Export Policy 'Restricted'. Tariff 25309099 (Other: ---- Other under heading 2530) also 'Restricted'. Captured in policy_conditions array.",
+    "No 'unit' column appears in the source PDF for Chapter 25 tariff lines — units set to null throughout."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "Except where their context or Note 4 to this Chapter otherwise requires, the headings of this Chapter cover only products which are in the crude state or which have been washed (even with chemical substances eliminating the impurities without changing the structure ofthe product), crushed, ground, powdered, levigated, sifted, screened, concentrated by flotation, magnetic separation or other mechanical or physical processes (except crystallization), but not products that have been roasted, calcined, obtained by mixing or subjected to processing beyond that mentioned in each heading. The products of this Chapter may contain an added anti-dusting agent, provided that such addition does not render the product particularly suitable for specific use rather than for general use."
+    },
+    {
+      "number": "2",
+      "text": "This Chapter does not cover : (a) sublimed sulphur, precipitated sulphur and colloidal sulphur (heading 2802); (b) earth colours containing 70% or more by weight of combined iron evaluated as Fe2O3 (heading 2821); (c) medicaments and other products of Chapter 30; (d) perfumery, cosmetic or toilet preparations (Chapter 33); (e) dolomite ramming mix (heading 3816); (f) setts, curbstones and flagstones (heading 6801); mosaic cubes or the like (heading 6802); roofing, facing or damp course slates (heading 6803); (g) precious or semi-precious stones (heading 7102 or 7103); (h) cultured crystals (other than optical elements) weighing not less than 2.5g each, of sodium chloride or of magnesiumoxide, of heading 3824; optical elements ofsodiumchloride or of magnesium oxide (heading 9001); (ij) billiard chalks (heading 9504); or (k) writing or drawing chalks and tailors? chalks (heading 9609)."
+    },
+    {
+      "number": "3",
+      "text": "Any products classifiable in heading 2517 and any other heading of this Chapter are to be classified in heading 2517."
+    },
+    {
+      "number": "4",
+      "text": "Heading 2530 applies, inter alia, to : vermiculite, perlite and chlorites, unexpanded; earth colours, whether or not calcined or mixed together; natural micaceous iron oxides; meerschaum (whether or not in polished pieces); amber; agglomerated meerschaumand agglomerated amber, in plates, rods,sticks orsimilar forms, not worked after moulding; jet; strontianite (whether or not calcined), other than strontium oxide; broken pieces of pottery, brick or concrete."
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [
+    {
+      "number": "1",
+      "text": "In heading 2523, \"sagol\" means cement obtained by heating limestone and burnt coal in a kiln; and \"ashmoh\" means cement obtained by fine grinding of paddy husk, ash and hydrated lime with an additive."
+    }
+  ],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "sublimed sulphur, precipitated sulphur and colloidal sulphur",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": "2802",
+      "source_note_number": "Note 2(a)",
+      "source_note_text": "This Chapter does not cover : (a) sublimed sulphur, precipitated sulphur and colloidal sulphur (heading 2802); (b) earth colours containing 70% or more by weight of combined iron evaluated as Fe2O3 (heading 2821); (c) medicaments and other products of Chapter 30; (d) perfumery, cosmetic or toilet preparations (Chapter 33); (e) dolomite ramming mix (heading 3816); (f) setts, curbstones and flagstones (heading 6801); mosaic cubes or the like (heading 6802); roofing, facing or damp course slates (heading 6803); (g) precious or semi-precious stones (heading 7102 or 7103); (h) cultured crystals (other than optical elements) weighing not less than 2.5g each, of sodium chloride or of magnesiumoxide, of heading 3824; optical elements ofsodiumchloride or of magnesium oxide (heading 9001); (ij) billiard chalks (heading 9504); or (k) writing or drawing chalks and tailors? chalks (heading 9609)."
+    },
+    {
+      "excluded_product_text": "earth colours containing 70% or more by weight of combined iron evaluated as Fe2O3",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": "2821",
+      "source_note_number": "Note 2(b)",
+      "source_note_text": "This Chapter does not cover : (a) sublimed sulphur, precipitated sulphur and colloidal sulphur (heading 2802); (b) earth colours containing 70% or more by weight of combined iron evaluated as Fe2O3 (heading 2821); (c) medicaments and other products of Chapter 30; (d) perfumery, cosmetic or toilet preparations (Chapter 33); (e) dolomite ramming mix (heading 3816); (f) setts, curbstones and flagstones (heading 6801); mosaic cubes or the like (heading 6802); roofing, facing or damp course slates (heading 6803); (g) precious or semi-precious stones (heading 7102 or 7103); (h) cultured crystals (other than optical elements) weighing not less than 2.5g each, of sodium chloride or of magnesiumoxide, of heading 3824; optical elements ofsodiumchloride or of magnesium oxide (heading 9001); (ij) billiard chalks (heading 9504); or (k) writing or drawing chalks and tailors? chalks (heading 9609)."
+    },
+    {
+      "excluded_product_text": "medicaments and other products of Chapter 30",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(c)",
+      "source_note_text": "This Chapter does not cover : (a) sublimed sulphur, precipitated sulphur and colloidal sulphur (heading 2802); (b) earth colours containing 70% or more by weight of combined iron evaluated as Fe2O3 (heading 2821); (c) medicaments and other products of Chapter 30; (d) perfumery, cosmetic or toilet preparations (Chapter 33); (e) dolomite ramming mix (heading 3816); (f) setts, curbstones and flagstones (heading 6801); mosaic cubes or the like (heading 6802); roofing, facing or damp course slates (heading 6803); (g) precious or semi-precious stones (heading 7102 or 7103); (h) cultured crystals (other than optical elements) weighing not less than 2.5g each, of sodium chloride or of magnesiumoxide, of heading 3824; optical elements ofsodiumchloride or of magnesium oxide (heading 9001); (ij) billiard chalks (heading 9504); or (k) writing or drawing chalks and tailors? chalks (heading 9609)."
+    },
+    {
+      "excluded_product_text": "perfumery, cosmetic or toilet preparations",
+      "redirects_to_chapter": "33",
+      "redirects_to_heading": null,
+      "source_note_number": "Note 2(d)",
+      "source_note_text": "This Chapter does not cover : (a) sublimed sulphur, precipitated sulphur and colloidal sulphur (heading 2802); (b) earth colours containing 70% or more by weight of combined iron evaluated as Fe2O3 (heading 2821); (c) medicaments and other products of Chapter 30; (d) perfumery, cosmetic or toilet preparations (Chapter 33); (e) dolomite ramming mix (heading 3816); (f) setts, curbstones and flagstones (heading 6801); mosaic cubes or the like (heading 6802); roofing, facing or damp course slates (heading 6803); (g) precious or semi-precious stones (heading 7102 or 7103); (h) cultured crystals (other than optical elements) weighing not less than 2.5g each, of sodium chloride or of magnesiumoxide, of heading 3824; optical elements ofsodiumchloride or of magnesium oxide (heading 9001); (ij) billiard chalks (heading 9504); or (k) writing or drawing chalks and tailors? chalks (heading 9609)."
+    },
+    {
+      "excluded_product_text": "dolomite ramming mix",
+      "redirects_to_chapter": "38",
+      "redirects_to_heading": "3816",
+      "source_note_number": "Note 2(e)",
+      "source_note_text": "This Chapter does not cover : (a) sublimed sulphur, precipitated sulphur and colloidal sulphur (heading 2802); (b) earth colours containing 70% or more by weight of combined iron evaluated as Fe2O3 (heading 2821); (c) medicaments and other products of Chapter 30; (d) perfumery, cosmetic or toilet preparations (Chapter 33); (e) dolomite ramming mix (heading 3816); (f) setts, curbstones and flagstones (heading 6801); mosaic cubes or the like (heading 6802); roofing, facing or damp course slates (heading 6803); (g) precious or semi-precious stones (heading 7102 or 7103); (h) cultured crystals (other than optical elements) weighing not less than 2.5g each, of sodium chloride or of magnesiumoxide, of heading 3824; optical elements ofsodiumchloride or of magnesium oxide (heading 9001); (ij) billiard chalks (heading 9504); or (k) writing or drawing chalks and tailors? chalks (heading 9609)."
+    },
+    {
+      "excluded_product_text": "setts, curbstones and flagstones",
+      "redirects_to_chapter": "68",
+      "redirects_to_heading": "6801",
+      "source_note_number": "Note 2(f)",
+      "source_note_text": "This Chapter does not cover : (a) sublimed sulphur, precipitated sulphur and colloidal sulphur (heading 2802); (b) earth colours containing 70% or more by weight of combined iron evaluated as Fe2O3 (heading 2821); (c) medicaments and other products of Chapter 30; (d) perfumery, cosmetic or toilet preparations (Chapter 33); (e) dolomite ramming mix (heading 3816); (f) setts, curbstones and flagstones (heading 6801); mosaic cubes or the like (heading 6802); roofing, facing or damp course slates (heading 6803); (g) precious or semi-precious stones (heading 7102 or 7103); (h) cultured crystals (other than optical elements) weighing not less than 2.5g each, of sodium chloride or of magnesiumoxide, of heading 3824; optical elements ofsodiumchloride or of magnesium oxide (heading 9001); (ij) billiard chalks (heading 9504); or (k) writing or drawing chalks and tailors? chalks (heading 9609)."
+    },
+    {
+      "excluded_product_text": "mosaic cubes or the like",
+      "redirects_to_chapter": "68",
+      "redirects_to_heading": "6802",
+      "source_note_number": "Note 2(f)",
+      "source_note_text": "This Chapter does not cover : (a) sublimed sulphur, precipitated sulphur and colloidal sulphur (heading 2802); (b) earth colours containing 70% or more by weight of combined iron evaluated as Fe2O3 (heading 2821); (c) medicaments and other products of Chapter 30; (d) perfumery, cosmetic or toilet preparations (Chapter 33); (e) dolomite ramming mix (heading 3816); (f) setts, curbstones and flagstones (heading 6801); mosaic cubes or the like (heading 6802); roofing, facing or damp course slates (heading 6803); (g) precious or semi-precious stones (heading 7102 or 7103); (h) cultured crystals (other than optical elements) weighing not less than 2.5g each, of sodium chloride or of magnesiumoxide, of heading 3824; optical elements ofsodiumchloride or of magnesium oxide (heading 9001); (ij) billiard chalks (heading 9504); or (k) writing or drawing chalks and tailors? chalks (heading 9609)."
+    },
+    {
+      "excluded_product_text": "roofing, facing or damp course slates",
+      "redirects_to_chapter": "68",
+      "redirects_to_heading": "6803",
+      "source_note_number": "Note 2(f)",
+      "source_note_text": "This Chapter does not cover : (a) sublimed sulphur, precipitated sulphur and colloidal sulphur (heading 2802); (b) earth colours containing 70% or more by weight of combined iron evaluated as Fe2O3 (heading 2821); (c) medicaments and other products of Chapter 30; (d) perfumery, cosmetic or toilet preparations (Chapter 33); (e) dolomite ramming mix (heading 3816); (f) setts, curbstones and flagstones (heading 6801); mosaic cubes or the like (heading 6802); roofing, facing or damp course slates (heading 6803); (g) precious or semi-precious stones (heading 7102 or 7103); (h) cultured crystals (other than optical elements) weighing not less than 2.5g each, of sodium chloride or of magnesiumoxide, of heading 3824; optical elements ofsodiumchloride or of magnesium oxide (heading 9001); (ij) billiard chalks (heading 9504); or (k) writing or drawing chalks and tailors? chalks (heading 9609)."
+    },
+    {
+      "excluded_product_text": "precious or semi-precious stones",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": "7102",
+      "source_note_number": "Note 2(g)",
+      "source_note_text": "This Chapter does not cover : (a) sublimed sulphur, precipitated sulphur and colloidal sulphur (heading 2802); (b) earth colours containing 70% or more by weight of combined iron evaluated as Fe2O3 (heading 2821); (c) medicaments and other products of Chapter 30; (d) perfumery, cosmetic or toilet preparations (Chapter 33); (e) dolomite ramming mix (heading 3816); (f) setts, curbstones and flagstones (heading 6801); mosaic cubes or the like (heading 6802); roofing, facing or damp course slates (heading 6803); (g) precious or semi-precious stones (heading 7102 or 7103); (h) cultured crystals (other than optical elements) weighing not less than 2.5g each, of sodium chloride or of magnesiumoxide, of heading 3824; optical elements ofsodiumchloride or of magnesium oxide (heading 9001); (ij) billiard chalks (heading 9504); or (k) writing or drawing chalks and tailors? chalks (heading 9609)."
+    },
+    {
+      "excluded_product_text": "precious or semi-precious stones",
+      "redirects_to_chapter": "71",
+      "redirects_to_heading": "7103",
+      "source_note_number": "Note 2(g)",
+      "source_note_text": "This Chapter does not cover : (a) sublimed sulphur, precipitated sulphur and colloidal sulphur (heading 2802); (b) earth colours containing 70% or more by weight of combined iron evaluated as Fe2O3 (heading 2821); (c) medicaments and other products of Chapter 30; (d) perfumery, cosmetic or toilet preparations (Chapter 33); (e) dolomite ramming mix (heading 3816); (f) setts, curbstones and flagstones (heading 6801); mosaic cubes or the like (heading 6802); roofing, facing or damp course slates (heading 6803); (g) precious or semi-precious stones (heading 7102 or 7103); (h) cultured crystals (other than optical elements) weighing not less than 2.5g each, of sodium chloride or of magnesiumoxide, of heading 3824; optical elements ofsodiumchloride or of magnesium oxide (heading 9001); (ij) billiard chalks (heading 9504); or (k) writing or drawing chalks and tailors? chalks (heading 9609)."
+    },
+    {
+      "excluded_product_text": "cultured crystals (other than optical elements) weighing not less than 2.5g each, of sodium chloride or of magnesium oxide",
+      "redirects_to_chapter": "38",
+      "redirects_to_heading": "3824",
+      "source_note_number": "Note 2(h)",
+      "source_note_text": "This Chapter does not cover : (a) sublimed sulphur, precipitated sulphur and colloidal sulphur (heading 2802); (b) earth colours containing 70% or more by weight of combined iron evaluated as Fe2O3 (heading 2821); (c) medicaments and other products of Chapter 30; (d) perfumery, cosmetic or toilet preparations (Chapter 33); (e) dolomite ramming mix (heading 3816); (f) setts, curbstones and flagstones (heading 6801); mosaic cubes or the like (heading 6802); roofing, facing or damp course slates (heading 6803); (g) precious or semi-precious stones (heading 7102 or 7103); (h) cultured crystals (other than optical elements) weighing not less than 2.5g each, of sodium chloride or of magnesiumoxide, of heading 3824; optical elements ofsodiumchloride or of magnesium oxide (heading 9001); (ij) billiard chalks (heading 9504); or (k) writing or drawing chalks and tailors? chalks (heading 9609)."
+    },
+    {
+      "excluded_product_text": "optical elements of sodium chloride or of magnesium oxide",
+      "redirects_to_chapter": "90",
+      "redirects_to_heading": "9001",
+      "source_note_number": "Note 2(h)",
+      "source_note_text": "This Chapter does not cover : (a) sublimed sulphur, precipitated sulphur and colloidal sulphur (heading 2802); (b) earth colours containing 70% or more by weight of combined iron evaluated as Fe2O3 (heading 2821); (c) medicaments and other products of Chapter 30; (d) perfumery, cosmetic or toilet preparations (Chapter 33); (e) dolomite ramming mix (heading 3816); (f) setts, curbstones and flagstones (heading 6801); mosaic cubes or the like (heading 6802); roofing, facing or damp course slates (heading 6803); (g) precious or semi-precious stones (heading 7102 or 7103); (h) cultured crystals (other than optical elements) weighing not less than 2.5g each, of sodium chloride or of magnesiumoxide, of heading 3824; optical elements ofsodiumchloride or of magnesium oxide (heading 9001); (ij) billiard chalks (heading 9504); or (k) writing or drawing chalks and tailors? chalks (heading 9609)."
+    },
+    {
+      "excluded_product_text": "billiard chalks",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": "9504",
+      "source_note_number": "Note 2(ij)",
+      "source_note_text": "This Chapter does not cover : (a) sublimed sulphur, precipitated sulphur and colloidal sulphur (heading 2802); (b) earth colours containing 70% or more by weight of combined iron evaluated as Fe2O3 (heading 2821); (c) medicaments and other products of Chapter 30; (d) perfumery, cosmetic or toilet preparations (Chapter 33); (e) dolomite ramming mix (heading 3816); (f) setts, curbstones and flagstones (heading 6801); mosaic cubes or the like (heading 6802); roofing, facing or damp course slates (heading 6803); (g) precious or semi-precious stones (heading 7102 or 7103); (h) cultured crystals (other than optical elements) weighing not less than 2.5g each, of sodium chloride or of magnesiumoxide, of heading 3824; optical elements ofsodiumchloride or of magnesium oxide (heading 9001); (ij) billiard chalks (heading 9504); or (k) writing or drawing chalks and tailors? chalks (heading 9609)."
+    },
+    {
+      "excluded_product_text": "writing or drawing chalks and tailors' chalks",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": "9609",
+      "source_note_number": "Note 2(k)",
+      "source_note_text": "This Chapter does not cover : (a) sublimed sulphur, precipitated sulphur and colloidal sulphur (heading 2802); (b) earth colours containing 70% or more by weight of combined iron evaluated as Fe2O3 (heading 2821); (c) medicaments and other products of Chapter 30; (d) perfumery, cosmetic or toilet preparations (Chapter 33); (e) dolomite ramming mix (heading 3816); (f) setts, curbstones and flagstones (heading 6801); mosaic cubes or the like (heading 6802); roofing, facing or damp course slates (heading 6803); (g) precious or semi-precious stones (heading 7102 or 7103); (h) cultured crystals (other than optical elements) weighing not less than 2.5g each, of sodium chloride or of magnesiumoxide, of heading 3824; optical elements ofsodiumchloride or of magnesium oxide (heading 9001); (ij) billiard chalks (heading 9504); or (k) writing or drawing chalks and tailors? chalks (heading 9609)."
+    },
+    {
+      "excluded_product_text": "metal-bearing sands of Chapter 26 (excluded from heading 2505 'Natural sands of all kinds, whether or not coloured, other than metalbearing sands of Chapter 26.')",
+      "redirects_to_chapter": "26",
+      "redirects_to_heading": null,
+      "source_note_number": "Heading 2505 exclusion",
+      "source_note_text": "Natural sands of all kinds, whether or not coloured, other than metalbearing sands of Chapter 26."
+    },
+    {
+      "excluded_product_text": "expanded clays of heading 6806 (excluded from heading 2508 'Other clays (not including expanded clays of heading 68.06), andalusite, kyanite and sillimanite, whether or not calcined; mullite; chamotte or dinas earths.')",
+      "redirects_to_chapter": "68",
+      "redirects_to_heading": "6806",
+      "source_note_number": "Heading 2508 exclusion",
+      "source_note_text": "Other clays (not including expanded clays of heading 68.06), andalusite, kyanite and sillimanite, whether or not calcined; mullite; chamotte or dinas earths."
+    },
+    {
+      "excluded_product_text": "barium oxide of heading 2816 (excluded from heading 2511 'Natural barium sulphate (barytes); natural barium carbonate (witherite), whether or not calcined, other than barium oxide of heading 28.16.')",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": "2816",
+      "source_note_number": "Heading 2511 exclusion",
+      "source_note_text": "Natural barium sulphate (barytes); natural barium carbonate (witherite), whether or not calcined, other than barium oxide of heading 28.16."
+    },
+    {
+      "excluded_product_text": "calcium oxide and hydroxide of heading 2825 (excluded from heading 2522 'Quicklime, slaked lime and hydraulic lime, other than calcium oxide and hydroxide of heading 28.25.')",
+      "redirects_to_chapter": "28",
+      "redirects_to_heading": "2825",
+      "source_note_number": "Heading 2522 exclusion",
+      "source_note_text": "Quicklime, slaked lime and hydraulic lime, other than calcium oxide and hydroxide of heading 28.25."
+    },
+    {
+      "excluded_product_text": "borates separated from natural brine (excluded from heading 2528 'Natural borates and concentrates thereof (whether or not calcined), but not including borates separated from natural brine; natural boric acid containing not more than 85percent of H3BO3 calculated on the dry weight.')",
+      "redirects_to_chapter": null,
+      "redirects_to_heading": null,
+      "source_note_number": "Heading 2528 exclusion",
+      "source_note_text": "Natural borates and concentrates thereof (whether or not calcined), but not including borates separated from natural brine; natural boric acid containing not more than 85percent of H3BO3 calculated on the dry weight."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "2501",
+      "title": "Salt (including table salt and denatured salt) and pure sodium chloride, whether or not in aqueous solution or containing added anti-caking or free-flowing agents; sea water.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2501.00",
+          "title": "Salt (including table salt and denatured salt) and pure sodium chloride, whether or not in aqueous solution or containing added anticaking or free flowing agents;Sea water :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2501.00.10",
+              "description": "Common Salt (including iodised salt)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2501.00.20",
+              "description": "Rock Salt",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2501.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2502",
+      "title": "Unroasted iron pyrites.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2502.00",
+          "title": "Unroasted iron pyrites.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2502.00.00",
+              "description": "UNROASTED IRON PYRITES",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2503",
+      "title": "SULPHUR OF ALL KINDS, OTHER THAN SUBLIMED SULPHUR, PRECIPITATED SULPHUR AND COLLODIAL SULPHUR",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2503.00",
+          "title": "Sulphur of all kinds, other than sublimed sulphur, precipitated sulphur and colloidal sulphur.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2503.00.10",
+              "description": "Sulphur recovered as by-product in refining of crude oil",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2503.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2504",
+      "title": "Natural graphite.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2504.10",
+          "title": "In powder or in flakes",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2504.10.10",
+              "description": "Graphite, crystalline",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2504.10.20",
+              "description": "Graphite, amorphous",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2504.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2504.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2504.90.10",
+              "description": "Graphite, micronised",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2504.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2505",
+      "title": "Natural sands of all kinds, whether or not coloured, other than metalbearing sands of Chapter 26.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2505.10",
+          "title": "Silica sands and quartz sands",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2505.10.11",
+              "description": "Silica Sands: ---- Processed (White)",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            },
+            {
+              "code": "2505.10.12",
+              "description": "Silica Sands: ---- Processed (Brown)",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            },
+            {
+              "code": "2505.10.19",
+              "description": "Silica Sands: ---- Other",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            },
+            {
+              "code": "2505.10.20",
+              "description": "Silica Sands: --- Quartz sands",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2505.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2505.90.00",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2506",
+      "title": "Quartz (other than natural sands); quartzite, whether or not roughly trimmed or merely cut, by sawing or otherwise, into blocks or slabs of a rectangular (including square) shape.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2506.10",
+          "title": "Quartz",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2506.10.10",
+              "description": "In lumps",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2506.10.20",
+              "description": "In powder",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2506.20",
+          "title": "Quartzite",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2506.20.10",
+              "description": "In lumps",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2506.20.20",
+              "description": "In powder",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2506.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2507",
+      "title": "KAOLIN AND OTHER KAOLINIC CLAYS, WHETHER OR NOT CALCINED",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2507.00",
+          "title": "Kaolin and other kaolinic clays, whether or not calcined",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2507.00.10",
+              "description": "Crude",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2507.00.21",
+              "description": "Other: ---- Pharmaceutical grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2507.00.22",
+              "description": "Other: ---- Ceramic grade",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2507.00.29",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2508",
+      "title": "Other clays (not including expanded clays of heading 68.06), andalusite, kyanite and sillimanite, whether or not calcined; mullite; chamotte or dinas earths.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2508.10",
+          "title": "Bentonite",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2508.10.10",
+              "description": "Crude",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2508.10.90",
+              "description": "Other (includes processed and ground)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2508.30",
+          "title": "Fire-clay",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2508.30.10",
+              "description": "Non-plastic",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2508.30.20",
+              "description": "Semi-plastic",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2508.30.30",
+              "description": "Plastic",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2508.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2508.40",
+          "title": "Other clays",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2508.40.10",
+              "description": "Ball Clay",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2508.40.20",
+              "description": "Earth Clay",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2508.40.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2508.50",
+          "title": "Andalusite, kyanite and sillimanite",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2508.50.10",
+              "description": "Andalusite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2508.50.21",
+              "description": "Kyanite ---- Crude,other than calcined",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2508.50.22",
+              "description": "Kyanite ---- Processed, other than calcined (washed or ground or screened or beneficiated)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2508.50.23",
+              "description": "Kyanite ---- Calcined",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2508.50.31",
+              "description": "Sillimanite ---- Lumps",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Export is allowed through Indian Rare Earths Limited (IREL) only."
+            },
+            {
+              "code": "2508.50.32",
+              "description": "Sillimanite ---- Fines (including sand)",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Export is allowed through Indian Rare Earths Limited (IREL) only."
+            },
+            {
+              "code": "2508.50.39",
+              "description": "Sillimanite ---- Other",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Export is allowed through Indian Rare Earths Limited (IREL) only."
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2508.60",
+          "title": "Mullite",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2508.60.00",
+              "description": "Mullite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2508.70",
+          "title": "Chamotte or dinas earths",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2508.70.00",
+              "description": "Chamotte or dinas earths",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2509",
+      "title": "Chalk",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2509.00",
+          "title": "Chalk",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2509.00.00",
+              "description": "Chalk",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2510",
+      "title": "Natural calcium phosphates, natural aluminium calcium phosphates and phosphatic chalk.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2510.10",
+          "title": "Unground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2510.10.10",
+              "description": "Natural calcium phosphate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2510.10.20",
+              "description": "Natural aluminium calcium phosphate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2510.10.30",
+              "description": "Natural calcium phosphate apatite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2510.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2510.20",
+          "title": "Ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2510.20.10",
+              "description": "Natural calcium phosphates",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2510.20.20",
+              "description": "Natural aluminium calcium phosphate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2510.20.30",
+              "description": "Natural calcium phosphates apatite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2510.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2511",
+      "title": "Natural barium sulphate (barytes); natural barium carbonate (witherite), whether or not calcined, other than barium oxide of heading 28.16.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2511.10",
+          "title": "Natural barium sulphate (barytes)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2511.10.10",
+              "description": "Lumps",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2511.10.20",
+              "description": "Powder",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2511.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2511.20",
+          "title": "Natural barium carbonate (witherite)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2511.20.00",
+              "description": "Natural barium carbonate (witherite)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2512",
+      "title": "SILICEOUS FOSSIL MEALS (FOR EXAMPLE, KIESELGUHR, TRIPOLITE AND DIATOMITE) AND SIMILAR SILICEOUS EARTHS, WHETHER OR NOT CALCINED, OF AN APPARENT SPECIFIC GRAVITY OF 1 OR LESS",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2512.00",
+          "title": "Siliceous fossil meals (for example, kieselguhr, tripolite and diatomite) and similar siliceous earths, whether or not calcined, of an apparent specific gravity of 1 or less.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2512.00.10",
+              "description": "Kieselguhr",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2512.00.20",
+              "description": "Tripolite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2512.00.30",
+              "description": "Diatomite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2512.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2513",
+      "title": "Pumice stone; emery; natural corundum, natural garnet and other natural abrasives, whether or not heat-treated.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2513.10",
+          "title": "Pumice stone",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2513.10.00",
+              "description": "Pumice stone",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2513.20",
+          "title": "Emery, natural corundum, natural garnet and other natural abrasives",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2513.20.10",
+              "description": "Emery",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2513.20.20",
+              "description": "Natural Corundum",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2513.20.30",
+              "description": "Natural garnet",
+              "unit": null,
+              "export_policy": "STE",
+              "policy_condition": "Export is allowed through Indian Rare Earths Limited (IREL) only."
+            },
+            {
+              "code": "2513.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2514",
+      "title": "Slate, whether or not roughly trimmed or merely cut, by sawing or otherwise, into blocks or slabs of a rectangular (including square) shape",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2514.00",
+          "title": "Slate, whether or not roughly trimmed or merely cut, by sawing or otherwise, into blocks or slabs of a rectangular (including square) shape",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2514.00.00",
+              "description": "Slate, whether or not roughly trimmed or merely cut, by sawing or otherwise, into blocks or slabs of a rectangular (including square) shape",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2515",
+      "title": "Marble, travertine, ecaussine and other calcareous monumental or building stone of an apparent specific gravity of 2.5 or more, and alabaster, whether or not roughly trimmed or merely cut, by sawing or otherwise, into blocks or slabs of a rectangular (including square) shape.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2515.11",
+          "title": "Marble and travertine : -- Crude or roughly trimmed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2515.11.00",
+              "description": "Marble and travertine : -- Crude or roughly trimmed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2515.12",
+          "title": "Marble and travertine : -- Merely cut, by sawing or otherwise, into blocks or slabs of a rectangular (including square) shape",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2515.12.10",
+              "description": "Blocks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2515.12.20",
+              "description": "Slabs",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2515.12.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2515.20",
+          "title": "Ecaussine and other calcareous monumental or building stone;",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2515.20.10",
+              "description": "Alabaster",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2515.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2516",
+      "title": "Granite, porphyry, basalt, sandstone and other monumental or building stone, whether or not roughly trimmed or merely cut, by sawing or otherwise, into blocks or slabs of a rectangular (including square) shape.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2516.11",
+          "title": "Granite : -- Crude or roughly trimmed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2516.11.00",
+              "description": "Granite : -- Crude or roughly trimmed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2516.12",
+          "title": "Granite : -- Merely cut, by sawing or otherwise, into blocks or slabs of a rectangular (including square) shape",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2516.12.00",
+              "description": "Granite : -- Merely cut, by sawing or otherwise, into blocks or slabs of a rectangular (including square) shape",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2516.20",
+          "title": "Sandstone",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2516.20.00",
+              "description": "Sandstone",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2516.90",
+          "title": "Other monumental or building stone",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2516.90.10",
+              "description": "Pakur stone",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2516.90.20",
+              "description": "Stone boulders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2516.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2517",
+      "title": "Pebbles, gravel, broken or crushed stone, of a kind commonly used for concrete aggregates, for road metalling or for railway or other ballast, shingle and flint, whether or not heat-treated; macadam of slag, dross or similar industrial waste, whether or not incorporating the materials cited in the first part of the heading; tarred macadam; granules, chippings and powder, of stones of heading 25.15 or 25.16, whether or not heat-treated.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2517.10",
+          "title": "Pebbles, gravel, broken or crushed stone, of a kind commonly used for concrete aggregates, for road metalling or for railway or other ballast, shingle and flint, whether or not heat-treated",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2517.10.10",
+              "description": "Pakur stone, crushed or broken",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2517.10.20",
+              "description": "Flint",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2517.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2517.20",
+          "title": "Macadam of slag, dross or similar industrial waste, whether or not incorporating the materials cited in subheading 2517.10",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2517.20.00",
+              "description": "Macadam of slag, dross or similar industrial waste, whether or not incorporating the materials cited in subheading 2517.10",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2517.30",
+          "title": "Tarred macadam",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2517.30.00",
+              "description": "Tarred macadam",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2517.41",
+          "title": "Granules, chippings and powder, of stones of heading 25.15 or 25.16, whether or not heat-treated : -- Of marble",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2517.41.00",
+              "description": "Granules, chippings and powder, of stones of heading 25.15 or 25.16, whether or not heat-treated : -- Of marble",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2517.49",
+          "title": "Granules, chippings and powder, of stones of heading 25.15 or 25.16, whether or not heat-treated : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2517.49.00",
+              "description": "Granules, chippings and powder, of stones of heading 25.15 or 25.16, whether or not heat-treated : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2518",
+      "title": "DOLOMITE, WHETHER OR NOT CALCINED OR SINTERED, INCLUDING DOLOMITE ROUGHLY TRIMMED OR MERELY CUT, BY SAWING OR OTHERWISE, INTO BLOCKS OR SLABS OF A RECTANGULAR (INCLUDING SQUARE) SHAPE;",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2518.10",
+          "title": "Dolomite, not calcined or sintered",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2518.10.00",
+              "description": "Dolomite, not calcined or sintered",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2518.20",
+          "title": "Calcined or sintered dolomite",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2518.20.00",
+              "description": "Calcined or sintered dolomite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2519",
+      "title": "Natural magnesium carbonate (magnesite); fused magnesia; dead-burned (sintered) magnesia, whether or not containing small quantities of other oxides added before sintering; other magnesium oxide, whether or not pure.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2519.10",
+          "title": "Natural magnesium carbonate (magnesite)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2519.10.00",
+              "description": "Natural magnesium carbonate (magnesite)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2519.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2519.90.10",
+              "description": "Fused magnesia (natural)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2519.90.20",
+              "description": "Dead-burnt (sintered) magnesia",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2519.90.30",
+              "description": "Magnesium calcined (other than dead-burnt) not elsewhere specified or included",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2519.90.40",
+              "description": "Magnesium oxide",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2519.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2520",
+      "title": "Gypsum; anhydrite; plasters (consisting of calcined gypsum or calcium sulphate) whether or not coloured, with or without small quantities of accelerators or retarders.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2520.10",
+          "title": "Gypsum; anhydrite",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2520.10.10",
+              "description": "Natural",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2520.10.20",
+              "description": "Marine",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2520.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2520.20",
+          "title": "Plasters",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2520.20.10",
+              "description": "Calcined",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2520.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2521",
+      "title": "LIMESTONE FLUX; LIMESTONE AND OTHER CALCAREOUS STONES, OF A KIND USED FOR THE MANUFACTURE OF LIME OR CEMENT",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2521.00",
+          "title": "Limestone flux; limestone and other calcareous stone, of a kind used for the manufacture of lime or cement.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2521.00.10",
+              "description": "Limestone flux (L.D., below 1percent SiO2)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2521.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2522",
+      "title": "Quicklime, slaked lime and hydraulic lime, other than calcium oxide and hydroxide of heading 28.25.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2522.10",
+          "title": "Quicklime",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2522.10.00",
+              "description": "Quicklime",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2522.20",
+          "title": "Slaked lime",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2522.20.00",
+              "description": "Slaked lime",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2522.30",
+          "title": "Hydraulic lime",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2522.30.00",
+              "description": "Hydraulic lime",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2523",
+      "title": "Portland cement, aluminous cement, slag cement, supersulphate cement and similar hydraulic cements, whether or not coloured or in the form of clinkers.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2523.10",
+          "title": "Cement clinkers",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2523.10.00",
+              "description": "Cement clinkers",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2523.21",
+          "title": "Portland cement : -- White cement, whether or not artificially coloured",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2523.21.00",
+              "description": "Portland cement : -- White cement, whether or not artificially coloured",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2523.29",
+          "title": "Portland cement : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2523.29.10",
+              "description": "Ordinary portland cement, dry",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2523.29.20",
+              "description": "Ordinary portland cement, coloured",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2523.29.30",
+              "description": "Portland pozzolana Cement",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2523.29.40",
+              "description": "Portland slag cement",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2523.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2523.30",
+          "title": "Aluminous cement",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2523.30.00",
+              "description": "Aluminous cement",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2523.90",
+          "title": "Other hydraulic cements",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2523.90.10",
+              "description": "Sagol, ashmoh",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2523.90.20",
+              "description": "High alumina refractory cement",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2523.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2524",
+      "title": "Asbestos.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2524.10",
+          "title": "Crocidolite",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2524.10.10",
+              "description": "Crocidolite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": "Export of Crocidolite is free subject to No Objection Certificate from the Department of Chemicals and Petro- Chemicals, Ministry of Chemicals and Fertilizers, New Delhi"
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2524.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2524.90.11",
+              "description": "In rock form: ---- Chrysotile",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2524.90.12",
+              "description": "In rock form: ---- Amphibole",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2524.90.13",
+              "description": "In rock form: ---- Crysolite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2524.90.14",
+              "description": "In rock form: ---- Amosite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2524.90.19",
+              "description": "In rock form: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2524.90.21",
+              "description": "Fibre raw, beaten or washed or graded to length: ---- Chrysolite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2524.90.22",
+              "description": "Fibre raw, beaten or washed or graded to length: ---- Amphibole",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2524.90.23",
+              "description": "Fibre raw, beaten or washed or graded to length: ---- Crysolite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2524.90.24",
+              "description": "Fibre raw, beaten or washed or graded to length: ---- Amosite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2524.90.29",
+              "description": "Fibre raw, beaten or washed or graded to length: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2524.90.31",
+              "description": "Flakes or powder: ---- Chrysotile",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2524.90.32",
+              "description": "Flakes or powder: ---- Amphibole",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2524.90.33",
+              "description": "Flakes or powder: ---- Crysolite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2524.90.34",
+              "description": "Flakes or powder: ---- Amosite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2524.90.39",
+              "description": "Flakes or powder: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2524.90.91",
+              "description": "Other: ---- Waste",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2524.90.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2525",
+      "title": "Mica, including splittings; mica waste.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2525.10",
+          "title": "Crude mica and mica rifted into sheets or splittings",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2525.10.10",
+              "description": "Mica blocks",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2525.10.20",
+              "description": "Condensor films trimmed but not cut to shape",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2525.10.30",
+              "description": "Mica splittings, book form",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2525.10.40",
+              "description": "Mica splittings, loose",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2525.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2525.20",
+          "title": "Mica powder",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2525.20.10",
+              "description": "Mica flakes, 2.20 mesh",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2525.20.20",
+              "description": "Mica powder, dry ground",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2525.20.30",
+              "description": "Mica powder, micronised",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2525.20.40",
+              "description": "Mica powder, wet ground",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2525.20.50",
+              "description": "Mica powder, calcined",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2525.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2525.30",
+          "title": "Mica waste",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2525.30.10",
+              "description": "Mica mine scrap and waste",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2525.30.20",
+              "description": "Mica factory scrap",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2525.30.30",
+              "description": "Mica cuttings book form",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2525.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2526",
+      "title": "Natural steatite, whether or not roughly trimmed or merely cut, by sawing or otherwise, into blocks or slabs of a rectangular (including square) shape; talc.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2526.10",
+          "title": "Not crushed, not powdered",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2526.10.10",
+              "description": "Steatite (soap stone, etc.) block",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2526.10.20",
+              "description": "Steatite (soap stone, etc.) lumps",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2526.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2526.20",
+          "title": "Crushed or powdered",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2526.20.00",
+              "description": "Crushed or powdered",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2528",
+      "title": "NATURAL BORATES AND CONCENTRATES THEREOF (WHETHER OR NOT CALCINED), BUT NOT INCLUDING B ORATES SEPA RATED F ROM N ATUR AL B RIN E; NATURAL BORIC ACID CONTAINING NOT MORE THAN 85% OF H3 BO3 CALCULATED ON THE DRY WEIGHT",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2528.00",
+          "title": "Natural borates and concentrates thereof (whether or not calcined), but not including borates separated from natural brine; natural boric acid containing not more than 85percent of H3BO3 calculated on the dry weight.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2528.00.10",
+              "description": "Natural sodium borates and concentrates thereof (whether or not calcined)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2528.00.20",
+              "description": "Natural boric acid containing not more than 85percent of H3BO3 (calculated on the dry weight)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2528.00.30",
+              "description": "Natural calcium borates and concentrates thereof (whether or not calcined)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2528.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "2529",
+      "title": "Feldspar; leucite, nepheline and nepheline syenite; fluorspar.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2529.10",
+          "title": "Feldspar",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2529.10.10",
+              "description": "Lumps",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2529.10.20",
+              "description": "Powder",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2529.21",
+          "title": "Fluorspar : -- Containing by weight 97 percent or less of calcium fluoride",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2529.21.00",
+              "description": "Fluorspar : -- Containing by weight 97 percent or less of calcium fluoride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2529.22",
+          "title": "Fluorspar : -- Containing by weight more than 97 percent of calcium fluoride",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2529.22.00",
+              "description": "Fluorspar : -- Containing by weight more than 97 percent of calcium fluoride",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2529.30",
+          "title": "Leucite; nepheline and nepheline syenite",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2529.30.00",
+              "description": "Leucite; nepheline and nepheline syenite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "2530",
+      "title": "Mineral substances not elsewhere specified or included.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "2530.10",
+          "title": "Vermiculite, perlite and chlorites, unexpanded",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2530.10.10",
+              "description": "Vermiculite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2530.10.20",
+              "description": "Perlite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2530.10.90",
+              "description": "Others (including powder)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2530.20",
+          "title": "Kieserite, epsomite (natural magnesium sulphates)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2530.20.00",
+              "description": "Kieserite, epsomite (natural magnesium sulphates)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "2530.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "2530.90.10",
+              "description": "Meerschaum (whether or not in polished pieces) and amber agglomerated; meerachaum and agglomerated amber in plates, rods, etc. not worked after moulding jet",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2530.90.20",
+              "description": "Natural arsenic sulphides (such as orpiment)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2530.90.30",
+              "description": "Calcite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2530.90.40",
+              "description": "Ores and concentrates of rare earth metals",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2530.90.50",
+              "description": "Wollastonite",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2530.90.60",
+              "description": "Earth colour ochre, crude",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2530.90.70",
+              "description": "Other processed earth colour ochre",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2530.90.91",
+              "description": "Other: ---- Strontium Sulphate (natural ore)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "2530.90.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Restricted",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

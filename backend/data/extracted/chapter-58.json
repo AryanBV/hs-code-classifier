@@ -1,0 +1,1062 @@
+{
+  "chapter": "58",
+  "section": "XI",
+  "title": "SPECIAL WOVEN FABRICS; TUFTED TEXTILE FABRICS; LACE; TAPESTRIES; TRIMMINGS; EMBROIDERY",
+  "source_pdf": "Chapter 58 Special Woven Fabrics; Tufted Textile Fabrics; Lace; Tapestries; Trimmings; Embroidery.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '58011000') and 6-digit subheading codes without dots (e.g., '580122'). Normalized to NNNN.NN.NN format (e.g., '5801.10.00') and NNNN.NN format (e.g., '5801.22') per project schema.",
+    "Section XI 'Main Notes' (15 section notes covering classification of textile mixtures, twine/cordage definitions, yarn put-up for retail, sewing thread, high tenacity yarn, made up, etc.) appear at the front of the PDF (pages 1-4 above the 'Chapter 58' header). Per project extraction policy these Section XI Main Notes are documented in the Chapter 51 / 54 / 62 extractions and are NOT duplicated here. section_notes left empty.",
+    "PDF table-chrome headers ('Main Notes', 'Sl.No. Notes Notification No Notification Date', 'Supplementary Notes', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "Headings 5802, 5803, 5804 (description rows) and parts of 5807 / 5808 appear in ALL CAPS in the PDF (e.g., 'TERRY TOWELLING AND SIMILAR WOVEN TERRY FABRICS...', 'GAUZE, OTHER THAN NARROW FABRICS OF HEADING 5806', 'TULLES AND OTHER NET FABRICS...'). The canonical mixed-case heading description text (matching standard ITC(HS) nomenclature) is used in the heading 'title' field; PDF capitalisation preserved is documented here.",
+    "Supplementary Note 1 in the source PDF reads '1. (a) For the purpose of this chapter, ?Lucknow Chikan craft? refers to a type of embroidery defined and recognized by the Geographical Indication (GI) Registry against the GI no. 119 ...'. The '?' characters are OCR/encoding artefacts in place of typographic double quotes. Preserved verbatim in supplementary_notes.",
+    "Subheading code '580122' (Cut corduroy under 5801, Of cotton) is present as a 6-digit row in the PDF without its own 4-suffix tariff line — instead splits into 5801.22.10 (Solely of cotton) and 5801.22.90 (Other). Both tariff lines preserved verbatim.",
+    "Heading 5803 in the PDF has subheading code '580300' with the heading description repeated, then 8-digit tariff lines 58030011-58030019 (cotton variants) and 58030091-58030099 (other textile materials). Treated as a single 5803.00 subheading with 10 tariff lines (the PDF reflects the post-2007 HS structure where 5803 lacks sub-classification).",
+    "Heading 5805 follows the same pattern as 5803 — '580500' subheading row with three 8-digit tariff lines (58050010 Tapestries hand made or needle worked by hand, of cotton; 58050020 Tapestries of jute; 58050090 Other).",
+    "Heading 5809 PDF text reads 'Woven fabrics of metal thread and woven fabrics of metallised yarn of heading 56.05, of a kind used in apparel...' — note the dotted form '56.05' in the heading description (HS 4-digit cross-reference style). Subheading row 580900 description references 'heading 5605' (without dot). Both preserved verbatim.",
+    "Heading 5808 description in PDF spans two rows: 'Braids in the piece; ornamental trimmings in the piece, without embroidery, other than knitted or crocheted; tassels, pompons and similar articles.' Concatenated verbatim.",
+    "Tariff line 5807.10.20 'Of man-made fibre' uses singular 'fibre' (not 'fibres') in the PDF. Preserved verbatim.",
+    "Tariff line 5808.90.50 'Saree falls, borders (other than zari), frings of cotton' contains the typo 'frings' (should be 'fringes'). Preserved verbatim from source PDF.",
+    "Tariff line 5808.90.60 'Saree falls, borders (other than zari), frings of man-made fibre' — same typo 'frings' preserved verbatim. Also uses singular 'fibre'.",
+    "Tariff line 5801.90.10 'Pile fabrics and chenille fabrics of silk containing more than 50percent by weight of silk, but not containing wool or hair' — '50percent' rendered as one word in PDF (no space). Preserved verbatim.",
+    "Tariff line 5806.20.00 'Other woven fabrics, containing by weight 5percent or more of elastomeric yarn or rubber thread' — '5percent' rendered as one word in PDF. Preserved verbatim.",
+    "Tariff line 5801.36.10 'Carduroys' is misspelled in PDF (should be 'Corduroys'). Preserved verbatim.",
+    "The 'Export Policy' column shows 'Free' for every tariff line in the chapter — captured at the tariff-line level if relevant elsewhere, but not part of the description text. Unit-of-measure column is NOT shown in this chapter's PDF — unit field set to null for all tariff lines.",
+    "Chapter title on the PDF reads 'Chapter 58 Special Woven Fabrics; Tufted Textile Fabrics; Lace; Tapestries; Trimmings; Embroidery.' The canonical ITC(HS) Chapter 58 title (all caps form) is used in the title field; source_pdf preserves the PDF filename.",
+    "Chapter Note 1 says 'This Chapter does not apply to textile fabrics referred to in Note 1 to Chapter 59, impregnated, coated, covered or laminated, or to other goods of Chapter 59.' This is the only formal exclusion in the chapter notes; captured in exclusion_clauses. Chapter Note 4 ('Heading 5804 does not apply to knotted net fabrics of twine, cordage or rope, of heading 5608.') and Chapter Note 6 ('The heading does not apply to needlework tapestry (heading 5805).') are heading-specific exclusions also captured in exclusion_clauses."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "This Chapter does not apply to textile fabrics referred to in Note 1 to Chapter 59, impregnated, coated, covered or laminated, or to other goods of Chapter 59."
+    },
+    {
+      "number": "2",
+      "text": "Heading 5801 also includes woven weft pile fabrics which have not yet had the floats cut, at which stage they have no pile standing up."
+    },
+    {
+      "number": "3",
+      "text": "For the purposes of heading 5803, \"gauze\" means a fabric with a warp composed wholly or in part of standing or ground threads and crossing or doup threads which cross the standing or ground threads making a half turn, a complete turn or more to form loops through which weft threads pass."
+    },
+    {
+      "number": "4",
+      "text": "Heading 5804 does not apply to knotted net fabrics of twine, cordage or rope, of heading 5608."
+    },
+    {
+      "number": "5",
+      "text": "For the purposes of heading 5806, the expression \"\"narrow woven fabrics\"\" means: (a) woven fabrics of a width not exceeding 30 cm, whether woven as such or cut from widerpieces, provided with selvedges (woven, gummed or otherwise made) on both edges; (b) tubular woven fabrics of a flattened width not exceeding 30 cm; and (c) bias binding with folded edges, of a width when unfolded not exceeding 30 cm. Narrow woven fabrics with woven fringes are to be classified in heading 5808."
+    },
+    {
+      "number": "6",
+      "text": "In heading 5810, the expression \"embroidery\" means, inter alia, embroidery with metal or glass thread on a visible ground of textile fabric, and sewn appliqu work of sequins, beads or ornamental motifs of textile or other materials. The heading does not apply to needlework tapestry (heading 5805)."
+    },
+    {
+      "number": "7",
+      "text": "In addition to the products of heading 5809, this Chapter also includes articles made of metal thread and of a kind used in apparel, as furnishing fabrics or for similar purposes."
+    }
+  ],
+  "section_notes": [],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [
+    {
+      "number": "1",
+      "text": "1. (a) For the purpose of this chapter, ?Lucknow Chikan craft? refers to a type of embroidery defined and recognized by the Geographical Indication (GI) Registry against the GI no. 119 under the Geographical Indication of Goods (Registration and Protection) Act, 1999. (b) Produced/Manufactured by a person certified/recognized and mentioned as a user in the Geographical Indication Registry against the said GI no. 119."
+    }
+  ],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "textile fabrics referred to in Note 1 to Chapter 59, impregnated, coated, covered or laminated, or other goods of Chapter 59",
+      "redirects_to_chapter": "59",
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter Note 1",
+      "source_note_text": "This Chapter does not apply to textile fabrics referred to in Note 1 to Chapter 59, impregnated, coated, covered or laminated, or to other goods of Chapter 59."
+    },
+    {
+      "excluded_product_text": "knotted net fabrics of twine, cordage or rope (excluded from heading 5804)",
+      "redirects_to_chapter": "56",
+      "redirects_to_heading": "5608",
+      "source_note_number": "Chapter Note 4",
+      "source_note_text": "Heading 5804 does not apply to knotted net fabrics of twine, cordage or rope, of heading 5608."
+    },
+    {
+      "excluded_product_text": "needlework tapestry (excluded from heading 5810 'embroidery')",
+      "redirects_to_chapter": "58",
+      "redirects_to_heading": "5805",
+      "source_note_number": "Chapter Note 6",
+      "source_note_text": "In heading 5810, the expression \"embroidery\" means, inter alia, embroidery with metal or glass thread on a visible ground of textile fabric, and sewn appliqu work of sequins, beads or ornamental motifs of textile or other materials. The heading does not apply to needlework tapestry (heading 5805)."
+    },
+    {
+      "excluded_product_text": "narrow woven fabrics with woven fringes — re-routed from heading 5806 to heading 5808",
+      "redirects_to_chapter": "58",
+      "redirects_to_heading": "5808",
+      "source_note_number": "Chapter Note 5",
+      "source_note_text": "For the purposes of heading 5806, the expression \"\"narrow woven fabrics\"\" means: (a) woven fabrics of a width not exceeding 30 cm, whether woven as such or cut from widerpieces, provided with selvedges (woven, gummed or otherwise made) on both edges; (b) tubular woven fabrics of a flattened width not exceeding 30 cm; and (c) bias binding with folded edges, of a width when unfolded not exceeding 30 cm. Narrow woven fabrics with woven fringes are to be classified in heading 5808."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "5801",
+      "title": "Woven pile fabrics and chenille fabrics, other than fabrics of heading 58.02 or 58.06.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5801.10",
+          "title": "Of wool or fine animal hair",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5801.10.00",
+              "description": "Of wool or fine animal hair",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5801.21",
+          "title": "Of cotton : -- Uncut weft pile fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5801.21.00",
+              "description": "Of cotton : -- Uncut weft pile fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5801.22",
+          "title": "Of cotton : -- Cut corduroy",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5801.22.10",
+              "description": "Solely of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5801.22.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5801.23",
+          "title": "Of cotton : -- Other weft pile fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5801.23.00",
+              "description": "Of cotton : -- Other weft pile fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5801.26",
+          "title": "Of cotton : -- Chenille fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5801.26.00",
+              "description": "Of cotton : -- Chenille fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5801.27",
+          "title": "Of cotton : -- Warp pile fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5801.27.10",
+              "description": "Warp pile fabrics, epingle (uncut)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5801.27.20",
+              "description": "Warp pile fabrics, cut",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5801.27.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5801.31",
+          "title": "Of man-made fibres : -- Uncut weft pile fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5801.31.00",
+              "description": "Of man-made fibres : -- Uncut weft pile fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5801.32",
+          "title": "Of man-made fibres : -- Cut corduroy",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5801.32.00",
+              "description": "Of man-made fibres : -- Cut corduroy",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5801.33",
+          "title": "Of man-made fibres : -- Other weft pile fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5801.33.00",
+              "description": "Of man-made fibres : -- Other weft pile fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5801.36",
+          "title": "Of man-made fibres : -- Chenille fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5801.36.10",
+              "description": "Carduroys",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5801.36.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5801.37",
+          "title": "Of man-made fibres : -- Warp pile fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5801.37.20",
+              "description": "Warp pile fabrics, cut",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5801.37.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5801.90",
+          "title": "Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5801.90.10",
+              "description": "Pile fabrics and chenille fabrics of silk containing more than 50percent by weight of silk, but not containing wool or hair",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5801.90.90",
+              "description": "Pile fabrics and chenille fabrics not elsewhere specified or included",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5802",
+      "title": "Terry towelling and similar woven terry fabrics, other than narrow fabrics of heading 5806 tufted textile fabrics, other than products of heading 5703",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5802.10",
+          "title": "Terry towelling and similar woven terry fabrics, of cotton:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5802.10.10",
+              "description": "Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5802.10.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5802.10.30",
+              "description": "Piece dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5802.10.40",
+              "description": "Yarn dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5802.10.50",
+              "description": "Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5802.10.60",
+              "description": "Of Handloom",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5802.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5802.20",
+          "title": "Terry towelling and similar woven terry fabrics, of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5802.20.00",
+              "description": "Terry towelling and similar woven terry fabrics, of other textile materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5802.30",
+          "title": "Tufted textile fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5802.30.00",
+              "description": "Tufted textile fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5803",
+      "title": "Gauze, other than narrow fabrics of heading 5806",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5803.00",
+          "title": "Gauze, other than narrow fabrics of heading 5806",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5803.00.11",
+              "description": "Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5803.00.12",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5803.00.13",
+              "description": "Piece dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5803.00.14",
+              "description": "Yarn dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5803.00.15",
+              "description": "Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5803.00.19",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5803.00.91",
+              "description": "Of other textile materials: ---- Of silk or silk waste",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5803.00.92",
+              "description": "Of other textile materials: ---- Of synthetic fibre",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5803.00.93",
+              "description": "Of other textile materials: ---- Of artificial fibre",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5803.00.99",
+              "description": "Of other textile materials: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5804",
+      "title": "Tulles and other net fabrics, not including woven, knitted or crocheted fabrics; lace in the piece, in strips or in motifs, other than fabrics of headings 6002 to 6006",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5804.10",
+          "title": "Tulles and other net fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5804.10.10",
+              "description": "Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5804.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5804.21",
+          "title": "Mechanically made lace : -- Of man-made fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5804.21.00",
+              "description": "Mechanically made lace : -- Of man-made fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5804.29",
+          "title": "Mechanically made lace : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5804.29.10",
+              "description": "Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5804.29.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5804.30",
+          "title": "Hand-made lace",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5804.30.00",
+              "description": "Hand-made lace",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5805",
+      "title": "Hand-woven tapestries of the type Gobelins, Flanders, Aubusson, Beauvais and the like, and needle-worked tapestries (for example, petit point, cross stitch), whether or not made up.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5805.00",
+          "title": "Hand-woven tapestries of the type gobelins, flanders, aubusson, beauvais and the like, and needle-worked tapestries (for example, petit point, cross stitch), whether or not made up :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5805.00.10",
+              "description": "Tapestries hand made or needle worked by hand, of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5805.00.20",
+              "description": "Tapestries of jute",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5805.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "5806",
+      "title": "Narrow woven fabrics, other than goods of heading 5807; narrow fabrics consisting of warp without weft assembled by means of an adhesive (bolducs).",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5806.10",
+          "title": "Woven pile fabrics (including terry towelling and similar terry fabrics) and chenille fabrics",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5806.10.00",
+              "description": "Woven pile fabrics (including terry towelling and similar terry fabrics) and chenille fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5806.20",
+          "title": "Other woven fabrics, containing by weight 5percent or more of elastomeric yarn or rubber thread",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5806.20.00",
+              "description": "Other woven fabrics, containing by weight 5percent or more of elastomeric yarn or rubber thread",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5806.31",
+          "title": "Other woven fabrics : -- Of cotton",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5806.31.10",
+              "description": "Typewriter ribbon cloth",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5806.31.20",
+              "description": "Newar cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5806.31.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5806.32",
+          "title": "Other woven fabrics : -- Of man-made fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5806.32.00",
+              "description": "Other woven fabrics : -- Of man-made fibres",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5806.39",
+          "title": "Other woven fabrics : -- Of other textile materials",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5806.39.10",
+              "description": "Goat hair puttis tape",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5806.39.20",
+              "description": "Jute webbing",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5806.39.30",
+              "description": "Other narrow fabrics of jute",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5806.39.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5806.40",
+          "title": "Fabrics consisting of warp without weft assembled by means of an adhesive (bolducs)",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5806.40.00",
+              "description": "Fabrics consisting of warp without weft assembled by means of an adhesive (bolducs)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5807",
+      "title": "Labels, badges and similar articles of textile materials, in the piece, in strips or cut to shape or size, not embroidered.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5807.10",
+          "title": "Woven",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5807.10.10",
+              "description": "Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5807.10.20",
+              "description": "Of man-made fibre",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5807.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5807.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5807.90.10",
+              "description": "Felt or non-woven",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5807.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5808",
+      "title": "Braids in the piece; ornamental trimmings in the piece, without embroidery, other than knitted or crocheted; tassels, pompons and similar articles.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5808.10",
+          "title": "Braids in the piece",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5808.10.10",
+              "description": "Of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5808.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5808.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5808.90.10",
+              "description": "Tapes, ornamental or cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5808.90.20",
+              "description": "Hair band of narrow fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5808.90.30",
+              "description": "Other braids",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5808.90.40",
+              "description": "Ribbons of rayon with ornamental trimmings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5808.90.50",
+              "description": "Saree falls, borders (other than zari), frings of cotton",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5808.90.60",
+              "description": "Saree falls, borders (other than zari), frings of man-made fibre",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5808.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5809",
+      "title": "Woven fabrics of metal thread and woven fabrics of metallised yarn of heading 56.05, of a kind used in apparel, as furnishing fabrics or for similar purposes, not elsewhere specified or included.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5809.00",
+          "title": "Woven fabrics of metal thread and woven fabrics of metallised yarn of heading 5605, of a kind used in apparel, as furnishing fabrics or for similar purposes, not elsewhere specified or included :",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5809.00.10",
+              "description": "Zari borders",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5809.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "5810",
+      "title": "Embroidery in the piece, in strips or in motifs.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5810.10",
+          "title": "Embroidery without visible ground",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5810.10.00",
+              "description": "Embroidery without visible ground",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5810.91",
+          "title": "Other embroidery : -- Of cotton:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5810.91.10",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5810.91.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5810.92",
+          "title": "Other embroidery : -- Of man-made fibres",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5810.92.10",
+              "description": "Embroidered badges, motifs and the like",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5810.92.20",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5810.92.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5810.99",
+          "title": "Other embroidery : -- Of other textile materials:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5810.99.10",
+              "description": "Embroidered with Lucknow Chikan Craft",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5810.99.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5811",
+      "title": "Quilted textile products in the piece, composed of one or more layers of textile materials assembled with padding by stitching or otherwise, other than embroidery of heading 58.10.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5811.00",
+          "title": "Quilted textile products in the piece, composed of one or more layers of textile materials assembled with padding by stitching or otherwise, other than embroidery of heading 5810:",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5811.00.10",
+              "description": "Kantha (multilayer stitched textile fabrics in piece used for bedding, mattress pads or clothing)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5811.00.20",
+              "description": "Quilted wadding",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5811.00.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

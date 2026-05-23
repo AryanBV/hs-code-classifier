@@ -1,0 +1,150 @@
+{
+  "chapter": "05",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings_count": 0,
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "0501.00.10",
+        "in_pdf": true,
+        "pdf_description": "05010010 Human hair Prohibited However, export is 'Free' if FOB value is US 59/2024-25 10.02.2025 unworked, whether Doll",
+        "json_description": "Human hair unworked, whether or not washed or scoured",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0502.90.90",
+        "in_pdf": true,
+        "pdf_description": "05029090 Other 0504 Badger hair and Free Subject to Policy Condition 1 of the Chapter other brush making 050400 hair Sub",
+        "json_description": "Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0504.00.51",
+        "in_pdf": true,
+        "pdf_description": "05040051 animals for natural Subject to Policy Condition 1 of the Chapter 05040059 food casings :---- Of Subject to Poli",
+        "json_description": "Bladders and stomachs: ---- Of wild animals",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0505.90.31",
+        "in_pdf": true,
+        "pdf_description": "05059031 Powder and waste Free Subject to Policy Condition 1 of the Chapter 05059039 of feathers or parts Subject to Pol",
+        "json_description": "Powder and waste of feathers or parts of feathers: ---- Of wild birds",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0506.10.29",
+        "in_pdf": true,
+        "pdf_description": "05061029 Free 05061031 Bone grist: ---- Of Free Subject to Policy Condition 1, 3 &4 of the 55/2015-2020 30.03.2020 05061",
+        "json_description": "Bone grist: ---- Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0506.90.91",
+        "in_pdf": true,
+        "pdf_description": "05069091 05069099 Ossein: ---- Other Free Subject to Policy Condition 1, 3 &4 of the 55/2015-2020 Chapter Bones, horn co",
+        "json_description": "Other: ---- Of wild animals",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0507.90.40",
+        "in_pdf": true,
+        "pdf_description": "05079040 powder and waste 05079050 of these products. 05079060 Ivory; ivory powder and waste Ivory Free Subject to Polic",
+        "json_description": "Antlers",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0508.00.30",
+        "in_pdf": true,
+        "pdf_description": "05080030 shells and handicrafts made out of those 05080040 Cowries Free species not included in the Schedules of the 050",
+        "json_description": "Cowries",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0510.00.91",
+        "in_pdf": true,
+        "pdf_description": "05100091 cantharides; bile, 05100099 whether or not dried; glands and 0511 other animal products used in the preparation",
+        "json_description": "Other :---- Of wild animals",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0511.91.90",
+        "in_pdf": true,
+        "pdf_description": "05119190 animals of Chapter 051199 3 05119910 05119921 Fish nails Free Subject to Policy Condition 1 of the Chapter 0511",
+        "json_description": "Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      }
+    ],
+    "hierarchy_errors": [],
+    "missed_codes": [],
+    "extra_codes": [],
+    "subheading_checks": [
+      {
+        "subheading": "0501.00",
+        "title": "Human hair, unworked, whether or not washed or scoured; Waste of human hair :",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0504.00",
+        "title": "Guts, bladders and stomachs of animals(other than fish), whole and pieces thereof, fresh, chilled, frozen, salted, in brine, dried or smoked:",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0506.10",
+        "title": "Ossein and bones treated with acid",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0507.90",
+        "title": "Other",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0511.10",
+        "title": "Bovine semen",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      }
+    ],
+    "note_mismatches": [],
+    "count_check": {
+      "json_h": 9,
+      "pdf_h_estimate": 9,
+      "json_sh": 15,
+      "pdf_sh_estimate": 15,
+      "json_tl": 69,
+      "pdf_tl_estimate": 69
+    }
+  },
+  "fix_needed": null
+}

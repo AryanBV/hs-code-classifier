@@ -1,0 +1,150 @@
+{
+  "chapter": "06",
+  "verified_at": "2026-05-22",
+  "verdict": "CLEAN",
+  "findings_count": 0,
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "0601.10.00",
+        "in_pdf": true,
+        "pdf_description": "06011000 Bulbs, tubers, tuberous roots, corms, crowns and rhizomes, dormant Free Chapter 060120 Bulbs, tubers, tuberous ",
+        "json_description": "Bulbs, tubers, tuberous roots, corms, crowns and rhizomes, dormant",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0601.20.21",
+        "in_pdf": true,
+        "pdf_description": "06012021 Chicory plants and roots: ---- Plants Free Condition 1 of the",
+        "json_description": "Chicory plants and roots: ---- Plants",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0601.20.90",
+        "in_pdf": true,
+        "pdf_description": "06012090 Other Free Condition 1 of the 0602 Other live plants (including their roots), cuttings and s",
+        "json_description": "Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0602.20.20",
+        "in_pdf": true,
+        "pdf_description": "06022020 Cactus Free and plants is 06022090 Other",
+        "json_description": "Cactus",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0602.30.00",
+        "in_pdf": true,
+        "pdf_description": "06023000 Rhododendrons and azaleas, grafted or not Free 06024000 Roses, grafted or not",
+        "json_description": "Rhododendrons and azaleas, grafted or not",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0602.90.20",
+        "in_pdf": true,
+        "pdf_description": "06029020 Flowering plants (excluding roses and rhododendrons) 06029030 Tissue culture plant Subject to Policy",
+        "json_description": "Flowering plants (excluding roses and rhododendrons)",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0602.90.90",
+        "in_pdf": true,
+        "pdf_description": "06029090 Other Free Subject to Poliocy",
+        "json_description": "Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0603.12.00",
+        "in_pdf": true,
+        "pdf_description": "06031200 Cut flowers and flower buds of a kind suitable for bouquets or for ornamental purposes, 06031300 fresh, dried, ",
+        "json_description": "Fresh : -- Carnations",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0603.15.00",
+        "in_pdf": true,
+        "pdf_description": "06031500 Fresh : -- Roses Free 06031900 06039000 Fresh : -- Carnations",
+        "json_description": "Fresh : --Lilies (Lilium spp.)",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      },
+      {
+        "code": "0603.90.00",
+        "in_pdf": true,
+        "pdf_description": "06039000 Fresh : -- Carnations Free 0604 Fresh : -- Orchids",
+        "json_description": "Other",
+        "match": "exact",
+        "word_recall": 1,
+        "doc_recall": 1
+      }
+    ],
+    "hierarchy_errors": [],
+    "missed_codes": [],
+    "extra_codes": [],
+    "subheading_checks": [
+      {
+        "subheading": "0601.10",
+        "title": "Bulbs, tubers, tuberous roots, corms, crowns and rhizomes, dormant",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0602.20",
+        "title": "Trees, shrubs and bushes, grafted or not, of kinds which bear edible furit or nuts",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0602.90",
+        "title": "Other",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0603.13",
+        "title": "Fresh : -- Orchids",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      },
+      {
+        "subheading": "0603.19",
+        "title": "Fresh : -- Other",
+        "directly_in_pdf": true,
+        "child_in_pdf": true,
+        "accepted": true
+      }
+    ],
+    "note_mismatches": [],
+    "count_check": {
+      "json_h": 4,
+      "pdf_h_estimate": 4,
+      "json_sh": 16,
+      "pdf_sh_estimate": 16,
+      "json_tl": 24,
+      "pdf_tl_estimate": 24
+    }
+  },
+  "fix_needed": null
+}

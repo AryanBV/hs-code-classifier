@@ -1,0 +1,2644 @@
+{
+  "chapter": "54",
+  "section": "XI",
+  "title": "MAN-MADE FILAMENTS; STRIP AND THE LIKE OF MAN-MADE TEXTILE MATERIALS",
+  "source_pdf": "Chapter 54 Man-Made Filaments.pdf",
+  "extracted_at": "2026-05-22",
+  "extractor_model": "claude-opus-4-7-vision",
+  "extraction_warnings": [
+    "PDF source uses 8-digit codes without dots (e.g., '54011000') and 6-digit subheading codes without dots (e.g., '540219'). Normalized to NNNN.NN.NN format (e.g., '5401.10.00') and NNNN.NN format (e.g., '5402.19') per project schema.",
+    "PDF table-chrome headers ('Main Notes', 'Sl.No. Notes Notification Date Notification No', 'Policy Condition', 'Product Description and Export Policy', 'Itc(hs) Code. Description Export Policy Policy Condition') were recognized as table chrome and EXCLUDED from the legal notes per extraction rules.",
+    "PDF contains '\"\"\"\"' (quadruple/double-double quotes) and '\"\"\"' (triple quotes) in several places where standard double quotes should appear (e.g., '\"\"\"synthetic\"\"\"', '\"\"\"artificia\"\"\"\"', '\"\"\"man-made\"\"\"', '\"\"\"twine, cordage, ropes and cables\"\"\"', '\"\"\"put up for retail sale\"\"\"', '\"\"\"sewing thread\"\"\"', '\"\"\"Z\"\"\" twist', '\"\"\"high tenacity yarn\"\"\"', '\"\"\"made up\"\"\"', '\"\"\"impregnated\"\"\"', '\"\"\"dipped\"\"\"', '\"\"\"polyamides\"\"\"', '\"\"\"aramids\"\"\"', '\"\"\"elastomeric yarn\"\"\"', '\"\"\"textile garments\"\"\"', '\"\"\"textile materials\"\"\"'). These are OCR artifacts; meaning is unambiguous. Preserved verbatim where the artifact appears.",
+    "Section XI Main Notes table (15 numbered notes — full Section XI legal note block governing Chapters 50-63) precedes the Chapter 54 Main Notes. Captured in 'section_notes' (all 15 notes). Cross-verifies Ch.51 (commit 7b5fb90) and Ch.62 which also captured these.",
+    "Section XI notes appear in the PDF in REORDERED form: 1, 10, 11, 12, 13, 14, 15, 2, 3, 4, 5, 6, 7, 8, 9 (Note 1 first, then 10–15, then 2–9). Re-sorted to natural numeric order (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15) in section_notes for this JSON.",
+    "Section XI Note 1 lists exclusions (a) through (v). Sub-clauses preserved verbatim, including the OCR artifact 'Chatper 70' (intended 'Chapter 70') and the run-together word 'travelsetsforsewing,slide' (intended 'travel sets for sewing, slide'). Note 1 sub-clause labels include '(ij)' per WCO convention for the letter between i and j — preserved verbatim. Each sub-item (a)-(v) is also broken out as a separate row in exclusion_clauses.",
+    "Section XI Note 2 spans rows visually (cell wraps multiple pages). Reassembled as a single coherent Note 2 including paragraphs (A), (B) and (C).",
+    "Chapter 54 has TWO main chapter notes (Note 1: definition of 'man made fibres', 'synthetic', 'artificial'; Note 2: Headings 5402/5403 exclude man-made filament tow of Chapter 55). PDF text contains OCR artifact 'man made fibres?' (with question mark, intended 'man-made fibres :') — preserved verbatim. Chapter Note 1 also explicitly states that strip and the like of heading 5404 or 5405 are not considered to be man-made fibres.",
+    "Schedule 2 Policy Condition (Sl.No. 1) regarding Holy Quran imprinted dress materials/garments/fabrics/textile items being Restricted is present in this chapter's PDF. Captured in policy_conditions. PDF spelling 'Restrcited' (intended 'Restricted') preserved verbatim in the source_note_text.",
+    "The 'Export Policy' column for every 8-digit tariff line in this chapter is 'Free'. No tariff lines are Restricted, Prohibited, or STE on a per-line basis. The chapter-wide Holy Quran Policy Condition is separate and applies cross-chapter to dress materials/garments/fabrics/textile items.",
+    "Unit-of-measure column is NOT shown in this chapter's PDF — unit field set to null for all tariff lines. Filament yarn/fabric is customarily 'kg' or 'm' but this is NOT in the source — left as null to avoid fabrication.",
+    "Heading 5405 has only a single 8-digit code 5405.00.00 ('Artificial monofilament of 67 decitex or more and of which no cross-sectional dimension exceeds 1 mm; strip and the like (for example, artificial straw) of artificial textile materials of an apparent width not exceeding 5 mm.') with no separate 6-digit subheading row. Represented as subheading '5405.00' with single tariff line 5405.00.00.",
+    "Heading 5406 has a single 6-digit subheading '5406.00' (description in PDF in ALL CAPS as 'MAN-MADE FILAMENT YARN (OTHER THAN SEWING THREAD), PUT UP FOR RETAIL SALE') with two tariff lines (5406.00.10 Synthetic filament yarn; 5406.00.20 Artificial filament yarn).",
+    "Heading 5407 6-digit subheading 540741 ('Other woven fabrics, containing 85 percent or more by weight of filaments of nylon or other polyamides : -- Unbleached or bleached') has tariff lines numbered 5407.41.11–5407.41.19 (Unbleached: ---- Nylon brasso, Nylon georgette, Nylon tafetta, Nylon sarees, Other) and 5407.41.21–5407.41.29 (Bleached: ---- ...). India-specific granularity preserved verbatim including spelling 'tafetta' (not 'taffeta').",
+    "Tariff line 5407.91 description in PDF reads 'Other woven fabrics : -- Unbleached or bleached x' with a stray trailing 'x'. Preserved verbatim as in source.",
+    "Heading 5408 6-digit subheading 5408.22 (Dyed) contains tariff lines 5408.22.11–5408.22.19 (Fabrics of rayon: ---- Rayon crepe fabrics through ---- Other), 5408.22.20 (Fabrics of continuous filament, other than rayon), and 5408.22.90 (Other than rayon). The non-standard line 5408.22.20 (between rayon series and the 90 'Other') is preserved verbatim from source.",
+    "Subheading 5407.81 (mixed mainly or solely with cotton, Unbleached or bleached) contains 5407.81.11–5407.81.19 (Unbleached: Nylon georgette, Nylon sarees, Polyester shirtings, Polyester suitings, Terylene and dacron sarees, Polyester dhoti, Other) and 5407.81.21–5407.81.29 (Bleached: ---- Nylon georgette, Nylon sarees, Polyester shirtings, Polyester suitings, Terylene and dacron sarees, Polyester dhoti, Other) — India-specific granularity preserved verbatim.",
+    "Spellings preserved verbatim from PDF: 'tafetta' (intended 'taffeta'), 'Of Artificial filaments' (capitalised in source), 'Upto' (one word, in 5403.41.10), 'Terylene and dacron' (lowercase 'dacron')."
+  ],
+  "chapter_notes": [
+    {
+      "number": "1",
+      "text": "Throughout this Schedule, the term man made fibres? means staple fibres and filaments of organic polymers produced by manufacturing processes either: (a) by polymerisation of organic monomers to produce polymers such as polyamides, polyesters, polyolefins or polyurethanes, or by chemical modification of polymers produced by this process (for example, poly(vinyl alcohol)prepared by the hydrolysis of poly(vinyl acetate) ); or (b) by dissolution or chemical treatment of natural organic polymers ( for example, cellulose) to produce polymers such as cuprammonium rayon (cupro) or viscose rayon, or by chemical modification of natural organic polymers (for example, cellulose, casein and other proteins, or alginic acid), to produce polymers such as cellulose acetate or alginates. The terms \"\"synthetic\"\" and \"\"artificia\"\"\", used in relation to fibres, mean: synthetic: fibres as defined at (a); artificial : fibres as defined at (b). Strip and the like of heading 5404 or 5405 are not considered to be man-made fibres. The terms \"\"man-made\"\", \"\"synthetic\"\" and \"\"artificial\"\" shall have the same meaning when used in relation to \"\"textile materials\"\"."
+    },
+    {
+      "number": "2",
+      "text": "Headings 5402 and 5403 do not apply to synthetic or artificial filament tow of Chapter 55."
+    }
+  ],
+  "section_notes": [
+    {
+      "number": "1",
+      "text": "This Section does not cover : (a) animal brush making bristles or hair (heading 0502), horsehair or horsehair waste (heading 0511), (b) human hair or articles of human hair (heading 0501, 6703 or 6704), except straining cloth of a kind commonly used in oil presses or the like (heading 5911), (c) cotton linters or other vegetable materials of Chapter 14, (d) asbestos of heading 2524 or articles of asbestos or other products of heading 6812 or 6813, (e) articles of heading 3005 or 3006, yarn used to clean between the teeth (dental floss), in individual retail packages, of heading 3306, (f) sensitised textiles of headings 3701 to 3704, (g) monofilament of which any cross-sectional dimension exceeds 1 mm or strip or the like (for example, artificial straw) of an apparent width exceeding 5 mm, of plastics (Chapter 39), or plaits or fabrics or other basketware or wickerwork of such monofilament or strip (Chapter 46), (h) woven, knitted or crocheted fabrics, felt or nonwovens, impregnated, coated, covered or laminated with plastics, or articles thereof, of Chapter 39, (ij) woven, knitted or crocheted fabrics, felt or nonwovens, impregnated, coated, covered or laminated with rubber, or articles thereof, of Chapter 40, (k) hides or skins with their hair or wool on (Chapter 41 or 43) or articles of furskin, artificial fur or articles thereof, of heading 4303 or 4304, (l) articles of textile materials of heading 4201 or 4202, (m) products or articles of Chapter 48 (for example, cellulose wadding), (n) footwear or parts of footwear, gaiters or leggings or similar articles of Chapter 64, (o) hair-nets or other headgear or parts thereof of Chapter 65, (p) goods of Chapter 67, (q) abrasive-coated textile material (heading 6805) and also carbon fibres or articles of carbon fibres of heading 6815, (r) glass fibres or articles of glass fibres, other than embroidery with glass thread on a visible ground of fabric (Chatper 70), (s) articles of Chapter 94 (for example, furniture, bedding, luminaires and lighting fittings), (t) articles of Chapter 95 (for example, toys, games, sports requisites and nets), (u) Articles of Chapter 96 [for example, brushes, travelsetsforsewing,slide fasteners, typewriter ribbons, sanitary towels (pads) and tampons, napkins (diapers) and napkin liners], or (v) articles of Chapter 97."
+    },
+    {
+      "number": "2",
+      "text": "(A) Goods classifiable in Chapters 50 to 55 or in heading 5809 or 5902 and of a mixture of two or more textile materials are to be classified asif consistingwholly of that one textile material which predominates by weight over any one single textile materilas. When no one textile material predominates by weight, the goods are to be classified as if consiting wholly of that one textile material whcih is covered by the heading which occurs last in numerical order among those which equally merit consideration. (B) For the purposes of the above rule : (a) gimped horsehair yarn (heading 5110) and metallised yarn (heading 5605) are to be treated as a single textile material the weight of which is to be taken as the aggregate of the weights of its components, for the classification of woven fabrics, metal thread isto be regarded as a textile material, (b) the choice of appropriate heading shall be effected by determining first the Chapter and then the applicable heading within that Chapter, disregarding any materials not classified in that Chapter, (c) when both Chapters 54 and 55 are involved with any other Chapter, Chapters 54 and 55 are to be treated as a single Chapter, (d) where a Chapter or a heading refers to goods of different textile materials, such materials are to be treated as a single textile material. (C) The provisions of paragraphs (A) and (B) above apply also to the yarns referred to in Note 3, 4, 5 or 6 below."
+    },
+    {
+      "number": "3",
+      "text": "(A) For the purposes of this Section, and subject to the exceptions in paragraph (B) below, yarns [single, multiple (folded) or cabled] of the following descriptions are to be treated as \"\"\"twine, cordage, ropes and cables\"\"\"\" : (a) of silk or waste silk, measuring more than 20,000 decitex, (b) of man-made fibres(including yarn of two or more monofilaments of Chapter 54), measuring more than 10,000 decitex, (c) of true hemp or flax : (i) polished or glazed, measuring 1,429 decitex or more, or (ii) not polished or glazed, measuring more than 20,000 decitex, (d) of coir, consisting of three or more plies, (e) of other vegetable fibres, measuring more than 20,000 decitex, or (f) reinforced with metal thread. (B) Exceptions : (a) yarn of wool or other animal hair and paper yarn, other than yarn reinforced with metal thread, (b) man-made filament tow of Chapter 55 and multifilament yarn without twist or with a twist of less than 5 turns per metre of Chapter 54, (c) silk worm gut of heading 5006, and monofilaments of Chapter 54, (d) metallised yarn of heading 5605, yarn reinforced with metal thread issubject to paragraph (A) (f) above, and (e) chenille yarn, gimped yarn and loop wale-yarn of heading 5606."
+    },
+    {
+      "number": "4",
+      "text": "(A) For the purposes of Chapters 50, 51, 52, 54 and 55, the expression \"\"\"put up for retail sale\"\"\"\" in relation to yarn means, subject to the exceptions in paragraph (B) below, yarn [single, multiple (folded) or cabled] put up : (a) on cards, reels, tubes or similar supports, of a weight (including support) not exceeding : (i) 85g in the case of silk, waste silk or man-made filament yarn, or (ii) 125g in other cases, (b) in balls, hanks or skeins of a weight not exceeding : (i) 85g in the case of man-made filament yarn of less than 3,000 decitex, silk or silk waste, (ii) 125g in the case of all other yarns of less than 2,000 decitex, or (iii) 500g in other cases, (c) in hanks or skeins comprising several smaller hanks or skeins separated by dividing threads which render them independent one of the other, each of uniform weight not exceeding : (i) 85g in the case of silk, waste silk or man-made filament yarn, or (ii) 125g in other cases, (B) Exceptions : (a) single yarn of any textile material, except : (i) single yarn of wool or fine animal hair, unbleached, and (ii) single yarn of wool or fine animal hair, bleached, dyed or printed, measuring more than 5,000 decitex, (b) multiple (folded) or cabled yarn, unbleached : (i) of silk or waste silk, however put up, or (ii) of other textile material except wool or fine animal hair, in hanks or skeins, (c) multiple (folded) or cabled yarn of silk or waste silk, bleached, dyed or printed, measuring 133 decitex or less, and (d) single, multiple (folded) or cabled yarn of any textile material : (i) in cross-reeled hanks or skeins, or (ii) put up on supports or in some other manner indicating its use in the textile industry (for example, on cops, twisting mill tubes, pirns, conical bobbins or spindles, or reeled in the form of cocoons for embroidery looms)."
+    },
+    {
+      "number": "5",
+      "text": "For the purposes of headings 5204, 5401 and 5508, the expression \"\"\"sewing thread\"\"\"\" means multiple (folded) or cabled yarn : (a) put up on supports (for example, reels, tubes) of a weight (including support) not exceeding 1,000 g, (b) dressed for use as sewing thread, and (c) with a final \"\"\"Z\"\"\"\" twist"
+    },
+    {
+      "number": "6",
+      "text": "For the purposes of this Section, the expression \"\"\"high tenacity yarn\"\"\" means yarn having a tenacity, expressed in cN/tex (centinewtons per tex), greater than the following : single yarn of nylon or other polyamides, or of polyesters 60 cN/tex multiple (folded) or cabled yarn of nylon or other polyamides, or of polyesters 53 cN/tex single, multiple (folded) or cabled yarn of viscose rayon - 27 cN/tex"
+    },
+    {
+      "number": "7",
+      "text": "For the purposes of this Section, the expression \"\"\"\"made up\"\"\"\" means: (a) cut otherwise than into squares or rectangles; (b) produced in the finished state, ready for use (or merely needing separation by cutting dividing threads) without sewing or other working (for example, certain dusters, towels, table cloths, scarf squares; blankets); (c) Cut to size and with at least one heatsealed edge with a visibly tapered or compressed border and the other edges treated as described in any other sub-clause of this Note, but excluding fabrics the cut edges of which have been prevented from unravelling by hot cutting or by other simple means; (d) hemmed or with rolled edges, or with a knotted fringe at any of the edges, but excluding fabrics the cut edges of which have been prevented from unravelling by whipping or by other simple means; (e) cut to size and having undergone a process of drawn thread work; (f) assembled by sewing, gumming or otherwise (other than piece goods consisting of two or more lengths of identical material joined end to end and piece goods composed of two or more textiles assembled in layers, whether or not padded); (g) knitted or crocheted to shape, whether presented as separate items or in the form of a number of items in the length."
+    },
+    {
+      "number": "8",
+      "text": "For the purposes of Chapters 50 to 60: (a) Chapters 50 to 55 and 60 and, except where the context otherwise requires, Chapters 56 to 59 do not apply to goods made up within the meaning of Note 7 above; and (b) Chapters 50 to 55 and 60 do not apply to goods of Chapters 56 to 59."
+    },
+    {
+      "number": "9",
+      "text": "The woven fabrics of Chapters 50 to 55 include fabrics consisting of layers of parallel textile yarns superimposed on each other at acute or right angles. These layers are bonded at the intersections of the yarns by an adhesive or by thermal bonding."
+    },
+    {
+      "number": "10",
+      "text": "Elastic products consisting of textile materials combined with rubber threads are classified in this Section."
+    },
+    {
+      "number": "11",
+      "text": "For the purposes of this Section, the expression \"impregnated\" includes \"dipped\"."
+    },
+    {
+      "number": "12",
+      "text": "For the purposes of this Section, the expression \"polyamides\" includes \"aramids\""
+    },
+    {
+      "number": "13",
+      "text": "For the purposes of this Section and, where applicable, throughout this schedule, the expression \"elastomeric yarn\" means filament yarn, including monofilament, of synthetic textile material, other than textured yarn, which does not break on being extended to three times its original length and which returns, after being extended to twice its original length, within a period of five minutes, to a length not greater than one and a half times its original length."
+    },
+    {
+      "number": "14",
+      "text": "Unless the context otherwise requires, textile garments of different headings are to be classified in their own headings even if put up in sets for retail sale. For the purposes of this Note, the expression \"textile garments\" means garments of headings 6101 to 6114 and headings 6201 to 6211."
+    },
+    {
+      "number": "15",
+      "text": "Subject to Note 1 of Section XI, textiles, garments and other textile articles, incorporating chemical, mechanical or electronic components for additional functionality, whether incorporated as built-in components or within the fibre or fabric, are classified in their respective headings in Section XI provided that they retain the essential character of the goods of this section."
+    }
+  ],
+  "chapter_subheading_notes": [],
+  "supplementary_notes": [],
+  "export_licensing_notes": [],
+  "exclusion_clauses": [
+    {
+      "excluded_product_text": "Animal brush making bristles or hair",
+      "redirects_to_chapter": "05",
+      "redirects_to_heading": "0502",
+      "source_note_number": "Section XI Note 1(a)",
+      "source_note_text": "This Section does not cover : (a) animal brush making bristles or hair (heading 0502), horsehair or horsehair waste (heading 0511)"
+    },
+    {
+      "excluded_product_text": "Horsehair or horsehair waste",
+      "redirects_to_chapter": "05",
+      "redirects_to_heading": "0511",
+      "source_note_number": "Section XI Note 1(a)",
+      "source_note_text": "(a) animal brush making bristles or hair (heading 0502), horsehair or horsehair waste (heading 0511)"
+    },
+    {
+      "excluded_product_text": "Human hair or articles of human hair (except straining cloth used in oil presses → 5911)",
+      "redirects_to_chapter": "67",
+      "redirects_to_heading": "6703",
+      "source_note_number": "Section XI Note 1(b)",
+      "source_note_text": "(b) human hair or articles of human hair (heading 0501, 6703 or 6704), except straining cloth of a kind commonly used in oil presses or the like (heading 5911)"
+    },
+    {
+      "excluded_product_text": "Cotton linters or other vegetable materials of Chapter 14",
+      "redirects_to_chapter": "14",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(c)",
+      "source_note_text": "(c) cotton linters or other vegetable materials of Chapter 14"
+    },
+    {
+      "excluded_product_text": "Asbestos or articles of asbestos or other products of heading 6812 or 6813",
+      "redirects_to_chapter": "25",
+      "redirects_to_heading": "2524",
+      "source_note_number": "Section XI Note 1(d)",
+      "source_note_text": "(d) asbestos of heading 2524 or articles of asbestos or other products of heading 6812 or 6813"
+    },
+    {
+      "excluded_product_text": "Pharmaceutical articles (wadding, gauze, bandages; dental floss in retail packs)",
+      "redirects_to_chapter": "30",
+      "redirects_to_heading": "3005",
+      "source_note_number": "Section XI Note 1(e)",
+      "source_note_text": "(e) articles of heading 3005 or 3006, yarn used to clean between the teeth (dental floss), in individual retail packages, of heading 3306"
+    },
+    {
+      "excluded_product_text": "Sensitised textiles (photographic)",
+      "redirects_to_chapter": "37",
+      "redirects_to_heading": "3701",
+      "source_note_number": "Section XI Note 1(f)",
+      "source_note_text": "(f) sensitised textiles of headings 3701 to 3704"
+    },
+    {
+      "excluded_product_text": "Monofilament with cross-section >1mm, or plastic strip with apparent width >5mm, of plastics; plaits/fabrics of such monofilament or strip (→ Chapter 46)",
+      "redirects_to_chapter": "39",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(g)",
+      "source_note_text": "(g) monofilament of which any cross-sectional dimension exceeds 1 mm or strip or the like (for example, artificial straw) of an apparent width exceeding 5 mm, of plastics (Chapter 39), or plaits or fabrics or other basketware or wickerwork of such monofilament or strip (Chapter 46)"
+    },
+    {
+      "excluded_product_text": "Woven, knitted or crocheted fabrics, felt or nonwovens, impregnated/coated/covered/laminated with plastics, or articles thereof",
+      "redirects_to_chapter": "39",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(h)",
+      "source_note_text": "(h) woven, knitted or crocheted fabrics, felt or nonwovens, impregnated, coated, covered or laminated with plastics, or articles thereof, of Chapter 39"
+    },
+    {
+      "excluded_product_text": "Woven, knitted or crocheted fabrics, felt or nonwovens, impregnated/coated/covered/laminated with rubber, or articles thereof",
+      "redirects_to_chapter": "40",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(ij)",
+      "source_note_text": "(ij) woven, knitted or crocheted fabrics, felt or nonwovens, impregnated, coated, covered or laminated with rubber, or articles thereof, of Chapter 40"
+    },
+    {
+      "excluded_product_text": "Hides or skins with their hair or wool on (Chapter 41 or 43)",
+      "redirects_to_chapter": "41",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(k)",
+      "source_note_text": "(k) hides or skins with their hair or wool on (Chapter 41 or 43) or articles of furskin, artificial fur or articles thereof, of heading 4303 or 4304"
+    },
+    {
+      "excluded_product_text": "Articles of furskin, artificial fur or articles thereof",
+      "redirects_to_chapter": "43",
+      "redirects_to_heading": "4303",
+      "source_note_number": "Section XI Note 1(k)",
+      "source_note_text": "(k) hides or skins with their hair or wool on (Chapter 41 or 43) or articles of furskin, artificial fur or articles thereof, of heading 4303 or 4304"
+    },
+    {
+      "excluded_product_text": "Articles of textile materials of heading 4201 (saddlery and harness) or 4202 (trunks, suit-cases, handbags, etc.)",
+      "redirects_to_chapter": "42",
+      "redirects_to_heading": "4201",
+      "source_note_number": "Section XI Note 1(l)",
+      "source_note_text": "(l) articles of textile materials of heading 4201 or 4202"
+    },
+    {
+      "excluded_product_text": "Products or articles of Chapter 48 (e.g., cellulose wadding)",
+      "redirects_to_chapter": "48",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(m)",
+      "source_note_text": "(m) products or articles of Chapter 48 (for example, cellulose wadding)"
+    },
+    {
+      "excluded_product_text": "Footwear or parts of footwear, gaiters or leggings or similar articles",
+      "redirects_to_chapter": "64",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(n)",
+      "source_note_text": "(n) footwear or parts of footwear, gaiters or leggings or similar articles of Chapter 64"
+    },
+    {
+      "excluded_product_text": "Hair-nets or other headgear or parts thereof",
+      "redirects_to_chapter": "65",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(o)",
+      "source_note_text": "(o) hair-nets or other headgear or parts thereof of Chapter 65"
+    },
+    {
+      "excluded_product_text": "Goods of Chapter 67 (umbrellas, walking-sticks, feathers, artificial flowers)",
+      "redirects_to_chapter": "67",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(p)",
+      "source_note_text": "(p) goods of Chapter 67"
+    },
+    {
+      "excluded_product_text": "Abrasive-coated textile material (heading 6805); carbon fibres or articles of carbon fibres (heading 6815)",
+      "redirects_to_chapter": "68",
+      "redirects_to_heading": "6805",
+      "source_note_number": "Section XI Note 1(q)",
+      "source_note_text": "(q) abrasive-coated textile material (heading 6805) and also carbon fibres or articles of carbon fibres of heading 6815"
+    },
+    {
+      "excluded_product_text": "Glass fibres or articles of glass fibres, other than embroidery with glass thread on a visible ground of fabric",
+      "redirects_to_chapter": "70",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(r)",
+      "source_note_text": "(r) glass fibres or articles of glass fibres, other than embroidery with glass thread on a visible ground of fabric (Chatper 70)"
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 94 (e.g., furniture, bedding, luminaires and lighting fittings)",
+      "redirects_to_chapter": "94",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(s)",
+      "source_note_text": "(s) articles of Chapter 94 (for example, furniture, bedding, luminaires and lighting fittings)"
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 95 (e.g., toys, games, sports requisites and nets)",
+      "redirects_to_chapter": "95",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(t)",
+      "source_note_text": "(t) articles of Chapter 95 (for example, toys, games, sports requisites and nets)"
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 96 (e.g., brushes, travel sets for sewing, slide fasteners, typewriter ribbons, sanitary towels/pads, tampons, napkins/diapers and napkin liners)",
+      "redirects_to_chapter": "96",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(u)",
+      "source_note_text": "(u) Articles of Chapter 96 [for example, brushes, travelsetsforsewing,slide fasteners, typewriter ribbons, sanitary towels (pads) and tampons, napkins (diapers) and napkin liners]"
+    },
+    {
+      "excluded_product_text": "Articles of Chapter 97 (works of art, collectors' pieces, antiques)",
+      "redirects_to_chapter": "97",
+      "redirects_to_heading": null,
+      "source_note_number": "Section XI Note 1(v)",
+      "source_note_text": "(v) articles of Chapter 97"
+    },
+    {
+      "excluded_product_text": "Synthetic or artificial filament tow of Chapter 55 (excluded from headings 5402 and 5403)",
+      "redirects_to_chapter": "55",
+      "redirects_to_heading": null,
+      "source_note_number": "Chapter 54 Note 2",
+      "source_note_text": "Headings 5402 and 5403 do not apply to synthetic or artificial filament tow of Chapter 55."
+    },
+    {
+      "excluded_product_text": "Strip and the like of heading 5404 or 5405 (not considered to be man-made fibres per Chapter 54 Note 1)",
+      "redirects_to_chapter": "54",
+      "redirects_to_heading": "5404",
+      "source_note_number": "Chapter 54 Note 1",
+      "source_note_text": "Strip and the like of heading 5404 or 5405 are not considered to be man-made fibres."
+    }
+  ],
+  "policy_conditions": [],
+  "headings": [
+    {
+      "heading": "5401",
+      "title": "Sewing thread of man-made filaments, whether or not put up for retail sale.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5401.10",
+          "title": "Of synthetic filaments",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5401.10.00",
+              "description": "of synthetic filaments",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5401.20",
+          "title": "Of Artificial filaments",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5401.20.00",
+              "description": "of Artificial filaments",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5402",
+      "title": "Synthetic filament yarn (other than sewing thread), not put up for retail sale, including synthetic monofilament of less than 67 decitex.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5402.11",
+          "title": "High tenacity yarn of nylon or other polyamides, whether or not textured: -- Of aramids",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.11.00",
+              "description": "High tenacity yarn of nylon or other polyamides, whether or not textured: -- Of aramids",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.19",
+          "title": "High tenacity yarn of nylon or Other polyamides, whether or not textured : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.19.10",
+              "description": "Nylon tyre yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5402.19.20",
+              "description": "Nylon 66 filament yarn confirming to IS 13464",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5402.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.20",
+          "title": "High tenacity yarn of polyesters, whether or not textured",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.20.10",
+              "description": "Of terylene dacron",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5402.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.31",
+          "title": "Textured yarn : -- of nylon or other polyamides, Measuring per single yarn not more than 50 tex",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.31.00",
+              "description": "Textured yarn : -- of nylon or other polyamides, Measuring per single yarn not more than 50 tex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.32",
+          "title": "Textured yarn : -- of nylon or other polyamides, Measuring per single yarn more than 50 tex",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.32.00",
+              "description": "Textured yarn : -- of nylon or other polyamides, Measuring per single yarn more than 50 tex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.33",
+          "title": "Textured yarn : -- Of polyesters",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.33.00",
+              "description": "Textured yarn : -- Of polyesters",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.34",
+          "title": "Textured yarn : -- Of polypropylene",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.34.00",
+              "description": "Textured yarn : -- Of polypropylene",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.39",
+          "title": "Textured yarn : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.39.10",
+              "description": "Polypropylene filament yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5402.39.20",
+              "description": "Acrylic filament yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5402.39.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.44",
+          "title": "Other yarn, single, untwisted or with a twist not exceeding 50 turns per metre : -- Elastomeric",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.44.00",
+              "description": "Other yarn, single, untwisted or with a twist not exceeding 50 turns per metre : -- Elastomeric",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.45",
+          "title": "Other yarn, single, untwisted or with a twist not exceeding 50 turns per metre : -- Other, of nylon or other polyamides",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.45.00",
+              "description": "Other yarn, single, untwisted or with a twist not exceeding 50 turns per metre : -- Other, of nylon or other polyamides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.46",
+          "title": "Other yarn, single, untwisted or with a twist not exceeding 50 turns per metre : -- Other, of polyesters, partially oriented",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.46.00",
+              "description": "Other yarn, single, untwisted or with a twist not exceeding 50 turns per metre : -- Other, of polyesters, partially oriented",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.47",
+          "title": "Other yarn, single, untwisted or with a twist not exceeding 50 turns per metre : -- Other, of polyesters",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.47.00",
+              "description": "Other yarn, single, untwisted or with a twist not exceeding 50 turns per metre : -- Other, of polyesters",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.48",
+          "title": "Other yarn, single, untwisted or with a twist not exceeding 50 turns per metre : -- Other, of polypropylene",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.48.00",
+              "description": "Other yarn, single, untwisted or with a twist not exceeding 50 turns per metre : -- Other, of polypropylene",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.49",
+          "title": "Other yarn, single, untwisted or with a twist not exceeding 50 turns per metre : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.49.00",
+              "description": "Other yarn, single, untwisted or with a twist not exceeding 50 turns per metre : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.51",
+          "title": "Other yarn, single, with a twist exceeding 50 turns per metre : -- Of nylon or other polyamides",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.51.00",
+              "description": "Other yarn, single, with a twist exceeding 50 turns per metre : -- Of nylon or other polyamides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.52",
+          "title": "Of polyesters",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.52.10",
+              "description": "Polyester yarn-Anti Static Filament",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5402.52.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.53",
+          "title": "Other yarn, single, with a twist exceeding 50 turns per metre : -- Of polypropylene",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.53.00",
+              "description": "Other yarn, single, with a twist exceeding 50 turns per metre : -- Of polypropylene",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.59",
+          "title": "Other yarn, single, with a twist exceeding 50 turns per metre : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.59.00",
+              "description": "Other yarn, single, with a twist exceeding 50 turns per metre: -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.61",
+          "title": "Other yarn, multiple (folded) or cabled : -- Of nylon or other polyamides",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.61.00",
+              "description": "Other yarn, multiple (folded) or cabled : -- Of nylon or other polyamides",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.62",
+          "title": "Other yarn, multiple (folded) or cabled : -- Of polyesters",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.62.00",
+              "description": "Other yarn, multiple (folded) or cabled : -- Of polyesters",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.63",
+          "title": "Other yarn, multiple (folded) or cabled : -- Of polypropylene",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.63.00",
+              "description": "Other yarn, multiple (folded) or cabled : -- Of polypropylene",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5402.69",
+          "title": "Other yarn, multiple (folded) or cabled : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5402.69.10",
+              "description": "Polyvinyl acetate filament yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5402.69.20",
+              "description": "Polyvinyl chloride filament yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5402.69.30",
+              "description": "Polypropylene filament yarn",
+              "unit": null,
+              "export_policy": null,
+              "policy_condition": null
+            },
+            {
+              "code": "5402.69.40",
+              "description": "Acrylic filament yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5402.69.50",
+              "description": "Polytetrafluoroethylene yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5402.69.60",
+              "description": "Ultra high molecular weight poly ethylene filament yarn conforming to ASTM F2848",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5402.69.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5403",
+      "title": "Artificial filament yarn (other than sewing thread), not put up for retail sale, including artificial monofilament of less than 67 decitex.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5403.10",
+          "title": "High tenacity yarn of viscose rayon",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5403.10.10",
+              "description": "Viscose rayon tyre yarn - 1,233 decitex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.10.20",
+              "description": "Viscose rayon tyre yarn - 1,833 decitex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.10.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5403.31",
+          "title": "Other yarn, single : -- Of viscose rayon, untwisted or with a twist not exceeding 120",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5403.31.00",
+              "description": "Other yarn, single : -- Of viscose rayon, untwisted or with a twist not exceeding 120",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5403.32",
+          "title": "Other yarn, single : -- Of viscose rayon, with a twist exceeding 120 turns per metre",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5403.32.00",
+              "description": "Other yarn, single : -- Of viscose rayon, with a twist exceeding 120 turns per metre",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5403.33",
+          "title": "Other yarn, single : -- Of cellulose acetate",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5403.33.00",
+              "description": "Other yarn, single : -- Of cellulose acetate",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5403.39",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5403.39.10",
+              "description": "Cuprammonium rayon",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.39.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5403.41",
+          "title": "Other yarn, multiple (folded) or cabled : -- Of viscose rayon",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5403.41.10",
+              "description": "Upto 67 decitex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.41.20",
+              "description": "Of 83 decitex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.41.30",
+              "description": "Of 111 decitex, bright",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.41.40",
+              "description": "Of 111 decitex, dull",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.41.50",
+              "description": "Of 133 decitex, bright",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.41.60",
+              "description": "Of 133 decitex, dull",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.41.70",
+              "description": "Of 167 decitex, bright",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.41.80",
+              "description": "Of 167 decitex, dull",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.41.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5403.42",
+          "title": "Other yarn, multiple (folded) or cabled : -- Of cellulose acetate",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5403.42.10",
+              "description": "Acetate rayon filament yarn, 83 decitex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.42.20",
+              "description": "Acetate rayon filament yarn, 111 decitex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.42.30",
+              "description": "Acetate rayon filament yarn, 133 decitex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.42.40",
+              "description": "Acetate rayon filament yarn, 167 decitex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.42.50",
+              "description": "Acetate rayon filament yarn, 333 decitex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.42.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5403.49",
+          "title": "Other yarn, multiple (folded) or cabled : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5403.49.11",
+              "description": "Cuprammonium filament yarn ---- Of 33 decitex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.49.12",
+              "description": "Cuprammonium filament yarn ---- Of 44 decitex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.49.13",
+              "description": "Cuprammonium filament yarn ---- Of 67 decitex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.49.14",
+              "description": "Cuprammonium filament yarn ---- Of 83 decitex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.49.15",
+              "description": "Cuprammonium filament yarn ---- Of 89 decitex",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.49.19",
+              "description": "Cuprammonium filament yarn ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5403.49.90",
+              "description": "Cuprammonium filament yarn ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5404",
+      "title": "Synthetic monofilament of 67 decitex or more and of which no cross-sectional dimension exceeds 1 mm; strip and the like (for example, artificial straw) of synthetic textile materials of an apparent width not exceeding 5 mm.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5404.11",
+          "title": "Monofilament : -- Elastomeric",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5404.11.00",
+              "description": "Monofilament : -- Elastomeric",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5404.12",
+          "title": "Monofilament : -- Other, of polypropylene",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5404.12.00",
+              "description": "Monofilament : -- Other, of polypropylene",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5404.19",
+          "title": "Monofilament : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5404.19.10",
+              "description": "Catgut imitation of synthetic yarn, non-sterile",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5404.19.20",
+              "description": "Strip and the like of synthetic fibre material",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5404.19.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5404.90",
+          "title": "Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5404.90.10",
+              "description": "Catgut imitation of synthetic yarn, non-sterile",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5404.90.20",
+              "description": "Strip and the like of synthetic fibre materials",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5404.90.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5405",
+      "title": "Artificial monofilament of 67 decitex or more and of which no cross-sectional dimension exceeds 1 mm; strip and the like (for example, artificial straw) of artificial textile materials of an apparent width not exceeding 5 mm.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5405.00",
+          "title": "Artificial monofilament of 67 decitex or more and of which no cross-sectional dimension exceeds 1 mm; strip and the like (for example, artificial straw) of artificial textile materials of an apparent width not exceeding 5 mm.",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5405.00.00",
+              "description": "Artificial monofilament of 67 decitex or more and of which no cross-sectional dimension exceeds 1 mm; strip and the like (for example, artificial straw) of artificial textile materials of an apparent width not exceeding 5 mm.",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "5406",
+      "title": "Man-made filament yarn (other than sewing thread), put up for retail sale.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5406.00",
+          "title": "MAN-MADE FILAMENT YARN (OTHER THAN SEWING THREAD), PUT UP FOR RETAIL SALE",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5406.00.10",
+              "description": "Synthetic filament yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5406.00.20",
+              "description": "Artificial filament yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": false
+        }
+      ]
+    },
+    {
+      "heading": "5407",
+      "title": "Woven fabrics of synthetic filament yarn, including woven fabrics obtained from materials of heading 54.04.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5407.10",
+          "title": "Woven fabrics obtained from high tenacity yarn of nylon or other polyamides or of polyesters",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.10.11",
+              "description": "Unbleached: ----Parachute fabric",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.12",
+              "description": "Unbleached: ----Tent fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.13",
+              "description": "Unbleached: ----Nylon furnishing fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.14",
+              "description": "Unbleached: ----Umbrella cloth panel fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.15",
+              "description": "Unbleached: ----Other nylon and polyamide fabrics (filament)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.16",
+              "description": "Unbleached: ----Polyester suitings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.19",
+              "description": "Unbleached: ----Other polyester fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.21",
+              "description": "Bleached: ---- Parachute fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.22",
+              "description": "Bleached: ---- Tent fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.23",
+              "description": "Bleached: ---- Nylon furnishing fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.24",
+              "description": "Bleached: ---- Umbrella cloth panel fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.25",
+              "description": "Bleached: ---- Other nylon and polyamide fabrics of filament yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.26",
+              "description": "Bleached: ---- Polyester suitings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.29",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.31",
+              "description": "Dyed: ---- Parachute Fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.32",
+              "description": "Dyed: ---- Tent fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.33",
+              "description": "Dyed: ---- Nylon furnishing fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.34",
+              "description": "Dyed: ---- Umbrella cloth panel fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.35",
+              "description": "Dyed: ---- Other nylon and polyamide fabrics (filament)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.36",
+              "description": "Dyed: ---- Polyester suitings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.39",
+              "description": "Dyed: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.41",
+              "description": "Printed: ---- Parachute fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.42",
+              "description": "Printed: ---- Tent fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.43",
+              "description": "Printed: ---- Nylon furnishing fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.44",
+              "description": "Printed: ---- Umbrella cloth panel fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.45",
+              "description": "Printed: ---- Other nylon and polyamide fabrics (filament)",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.46",
+              "description": "Printed: ---- Polyester suitings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.49",
+              "description": "Printed: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.91",
+              "description": "Other: ---- Parachute fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.92",
+              "description": "Other: ---- Tent fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.93",
+              "description": "Other: ---- Nylon furnishing fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.94",
+              "description": "Other: ---- Umbrella cloth panel fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.95",
+              "description": "Other: ---- Other nylon and polyamide fabrics of filament yarn",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.96",
+              "description": "Other: ---- Polyester suitings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.10.99",
+              "description": "Other: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.20",
+          "title": "Woven fabrics obtained from strip or the like",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.20.10",
+              "description": "Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.20.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.20.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.20.40",
+              "description": "Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.20.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.30",
+          "title": "Fabrics specified in Note 9 to Section XI",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.30.10",
+              "description": "Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.30.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.30.30",
+              "description": "Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.30.40",
+              "description": "Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.30.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.41",
+          "title": "Other woven fabrics, containing 85 percent or more by weight of filaments of nylon or other polyamides : -- Unbleached or bleached",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.41.11",
+              "description": "Nylon brasso",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.41.12",
+              "description": "Nylon georgette",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.41.13",
+              "description": "Nylon tafetta",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.41.14",
+              "description": "Nylon sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.41.19",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.41.21",
+              "description": "Bleached: ---- Nylon brasso",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.41.22",
+              "description": "Bleached: ---- Nylon georgette",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.41.23",
+              "description": "Bleached: ---- Nylon tafetta",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.41.24",
+              "description": "Bleached: ---- Nylon sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.41.29",
+              "description": "Bleached: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.42",
+          "title": "Other woven fabrics, containing 85 percent or more by weight of filaments of nylon or other polyamides : -- Dyed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.42.10",
+              "description": "Nylon brasso",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.42.20",
+              "description": "Nylon georgette",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.42.30",
+              "description": "Nylon tafetta",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.42.40",
+              "description": "Nylon sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.42.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.43",
+          "title": "Other woven fabrics, containing 85 percent or more by weight of filaments of nylon or other polyamides : -- Of yarns of different colours",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.43.00",
+              "description": "Other woven fabrics, containing 85 percent or more by weight of filaments of nylon or other polyamides : -- Of yarns of different colours",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.44",
+          "title": "Other woven fabrics, containing 85 percent or more by weight of filaments of nylon or other polyamides : -- Printed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.44.10",
+              "description": "Nylon brasso",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.44.20",
+              "description": "Nylon georgette",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.44.30",
+              "description": "Nylon tafetta",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.44.40",
+              "description": "Nylon sarees,",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.44.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.51",
+          "title": "Other woven fabrics, containing 85 percent or more by weight of textured polyester filaments : -- Unbleached or bleached",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.51.11",
+              "description": "Polyester shirtings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.51.19",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.51.21",
+              "description": "Bleached: ---- Polyester shirtings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.51.29",
+              "description": "Bleached: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.52",
+          "title": "Other woven fabrics, containing 85 percent or more by weight of textured polyester filaments : -- Dyed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.52.10",
+              "description": "Polyester shirtings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.52.20",
+              "description": "Polyester suitings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.52.30",
+              "description": "Terylene and dacron sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.52.40",
+              "description": "Polyester sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.52.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.53",
+          "title": "Other woven fabrics, containing 85 percent or more by weight of textured polyester filaments : -- Of yarns of different colours",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.53.00",
+              "description": "Other woven fabrics, containing 85 percent or more by weight of textured polyester filaments : -- Of yarns of different colours",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.54",
+          "title": "Other woven fabrics, containing 85 percent or more by weight of textured polyester filaments : -- Printed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.54.10",
+              "description": "Terylene and dacron sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.54.20",
+              "description": "Polyester shirtings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.54.30",
+              "description": "Polyester sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.54.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.61",
+          "title": "Other woven fabrics, containing 85 percent or more by weight of polyester filaments : -- Containing 85 percent or more by weight of non-textured polyester filaments",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.61.10",
+              "description": "Polyester shirtings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.61.20",
+              "description": "Polyester suitings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.61.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.69",
+          "title": "Other woven fabrics, containing 85 percent or more by weight of polyester filaments : -- Other",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.69.00",
+              "description": "Other woven fabrics, containing 85 percent or more by weight of polyester filaments : -- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.71",
+          "title": "Other woven fabrics, containing 85 percent or more by weight of synthetic filaments : -- Unbleached or bleached",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.71.10",
+              "description": "Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.71.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.72",
+          "title": "Other woven fabrics, containing 85 percent or more by weight of synthetic filaments : -- Dyed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.72.00",
+              "description": "Other woven fabrics, containing 85 percent or more by weight of synthetic filaments : -- Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.73",
+          "title": "Other woven fabrics, containing 85 percent or more by weight of synthetic filaments : -- Of yarns of different colours",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.73.00",
+              "description": "Other woven fabrics, containing 85 percent or more by weight of synthetic filaments : -- Of yarns of different colours",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.74",
+          "title": "Other woven fabrics, containing 85 percent or more by weight of synthetic filaments : -- Printed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.74.00",
+              "description": "Other woven fabrics, containing 85 percent or more by weight of synthetic filaments : -- Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.81",
+          "title": "Other woven fabrics, containing less than 85 percent by weight of synthetic filaments, mixed mainly or solely with cotton : -- Unbleached or bleached",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.81.11",
+              "description": "Nylon georgette",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.81.12",
+              "description": "Nylon sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.81.13",
+              "description": "Polyester shirtings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.81.14",
+              "description": "Polyester suitings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.81.15",
+              "description": "Terylene and dacron sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.81.16",
+              "description": "Polyester dhoti",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.81.19",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.81.21",
+              "description": "Bleached: ---- Nylon georgette",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.81.22",
+              "description": "Bleached: ---- Nylon sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.81.23",
+              "description": "Bleached: ---- Polyester shirtings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.81.24",
+              "description": "Bleached: ---- Polyester suitings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.81.25",
+              "description": "Bleached: ---- Terylene and dacron sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.81.26",
+              "description": "Bleached: ---- Polyester dhoti",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.81.29",
+              "description": "Bleached: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.82",
+          "title": "Other woven fabrics, containing less than 85 percent by weight of synthetic filaments, mixed mainly or solely with cotton : -- Dyed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.82.10",
+              "description": "Nylon georgette",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.82.20",
+              "description": "Nylon sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.82.30",
+              "description": "Polyester shirtings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.82.40",
+              "description": "Polyester suitings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.82.50",
+              "description": "Terylene and dacron sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.82.60",
+              "description": "Lungies",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.82.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.83",
+          "title": "Other woven fabrics, containing less than 85 percent by weight of synthetic filaments, mixed mainly or solely with cotton : -- Of yarns of different colours",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.83.00",
+              "description": "Other woven fabrics, containing less than 85 percent by weight of synthetic filaments, mixed mainly or solely with cotton : -- Of yarns of different colours",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.84",
+          "title": "Other woven fabrics, containing less than 85 percent by weight of synthetic filaments, mixed mainly or solely with cotton : -- Printed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.84.10",
+              "description": "Nylon georgette",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.84.20",
+              "description": "Nylon sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.84.30",
+              "description": "Polyester shirtings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.84.40",
+              "description": "Polyester suitings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.84.50",
+              "description": "Terylene and dacron sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.84.60",
+              "description": "Lungies",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.84.70",
+              "description": "Polyester sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.84.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.91",
+          "title": "Other woven fabrics : -- Unbleached or bleached x",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.91.10",
+              "description": "Other woven fabrics: ---- Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5407.91.20",
+              "description": "Other woven fabrics: ---- Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.92",
+          "title": "Other woven fabrics : -- Dyed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.92.00",
+              "description": "Other woven fabrics : -- Dyed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.93",
+          "title": "Other woven fabrics : -- Of yarns of different colours",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.93.00",
+              "description": "Other woven fabrics : -- Of yarns of different colours",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5407.94",
+          "title": "Other woven fabrics : -- Printed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5407.94.00",
+              "description": "Other woven fabrics : -- Printed",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    },
+    {
+      "heading": "5408",
+      "title": "Woven fabrics of artificial filament yarn, including woven fabrics obtained from materials of heading 54.05.",
+      "heading_notes": [],
+      "subheadings": [
+        {
+          "subheading": "5408.10",
+          "title": "Woven fabrics obtained from high tenacity yarn of viscose rayon",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5408.10.00",
+              "description": "Woven fabrics obtained from high tenacity yarn of viscose rayon",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5408.21",
+          "title": "Other woven fabrics, containing 85 percent or more by weight of artificial filament or strip or the like : -- Unbleached or bleached",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5408.21.10",
+              "description": "Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.21.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5408.22",
+          "title": "Other woven fabrics, containing 85 percent or more by weight of artificial filament or strip or the like : -- Dyed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5408.22.11",
+              "description": "Fabrics of rayon: ---- Rayon crepe fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.22.12",
+              "description": "Fabrics of rayon: ---- Rayon jacquards",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.22.13",
+              "description": "Fabrics of rayon: ---- Rayon brocades",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.22.14",
+              "description": "Fabrics of rayon: ---- Rayon georgette",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.22.15",
+              "description": "Fabrics of rayon: ---- Rayon tafetta",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.22.16",
+              "description": "Fabrics of rayon: ---- Rayon suitings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.22.17",
+              "description": "Fabrics of rayon: ---- Rayon shirtings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.22.18",
+              "description": "Fabrics of rayon: ---- Rayon sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.22.19",
+              "description": "Fabrics of rayon: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.22.20",
+              "description": "Fabrics of continuous filament, other than rayon",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.22.90",
+              "description": "Other than rayon",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5408.23",
+          "title": "Other woven fabrics, containing 85 percent or more by weight of artificial filament or strip or the like : -- Of yarns of different colours",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5408.23.00",
+              "description": "Other woven fabrics, containing 85 percent or more by weight of artificial filament or strip or the like : -- Of yarns of different colours",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5408.24",
+          "title": "Other woven fabrics, containing 85 percent or more by weight of artificial filament or strip or the like : --Printed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5408.24.11",
+              "description": "Of rayon: ---- Rayon crepe fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.24.12",
+              "description": "Of rayon: ---- Rayon jacquards",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.24.13",
+              "description": "Of rayon: ---- Rayon brocades",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.24.14",
+              "description": "Of rayon: ---- Rayon georgette",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.24.15",
+              "description": "Of rayon: ---- Rayon tafetta",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.24.16",
+              "description": "Of rayon: ---- Rayon suitings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.24.17",
+              "description": "Of rayon: ---- Rayon shirtings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.24.18",
+              "description": "Of rayon: ---- Rayon sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.24.19",
+              "description": "Of rayon: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.24.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5408.31",
+          "title": "Other woven fabrics : -- Unbleached or bleached",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5408.31.10",
+              "description": "Unbleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.31.20",
+              "description": "Bleached",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5408.32",
+          "title": "Other woven fabrics : -- Dyed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5408.32.11",
+              "description": "Fabrics of rayon: ---- Rayon brocades",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.32.12",
+              "description": "Fabrics of rayon: ---- Rayon georgette",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.32.13",
+              "description": "Fabrics of rayon: ---- Rayon tafetta",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.32.14",
+              "description": "Fabrics of rayon: ---- Rayon suitings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.32.15",
+              "description": "Fabrics of rayon: ---- Rayon shirtings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.32.19",
+              "description": "Fabrics of rayon: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.32.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5408.33",
+          "title": "Other woven fabrics : -- Of yarns of different colours",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5408.33.00",
+              "description": "Other woven fabrics : -- Of yarns of different colours",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        },
+        {
+          "subheading": "5408.34",
+          "title": "Other woven fabrics : -- Printed",
+          "subheading_notes": [],
+          "tariff_lines": [
+            {
+              "code": "5408.34.11",
+              "description": "Fabrics of rayon: ---- Rayon crepe fabrics",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.34.12",
+              "description": "Fabrics of rayon: ---- Rayon jacquards",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.34.13",
+              "description": "Fabrics of rayon: ---- Rayon brocades",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.34.14",
+              "description": "Fabrics of rayon: ---- Rayon georgette",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.34.15",
+              "description": "Fabrics of rayon: ---- Rayon tafetta",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.34.16",
+              "description": "Fabrics of rayon: ---- Rayon suitings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.34.17",
+              "description": "Fabrics of rayon: ---- Rayon shirtings",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.34.18",
+              "description": "Fabrics of rayon: ---- Rayon sarees",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.34.19",
+              "description": "Fabrics of rayon: ---- Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.34.20",
+              "description": "Fabrics of continuous filament, other than rayon",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            },
+            {
+              "code": "5408.34.90",
+              "description": "Other",
+              "unit": null,
+              "export_policy": "Free",
+              "policy_condition": null
+            }
+          ],
+          "wco_2022_match": true
+        }
+      ]
+    }
+  ]
+}

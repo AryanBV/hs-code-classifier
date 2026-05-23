@@ -1,0 +1,97 @@
+{
+  "chapter": "31",
+  "verified_at": "2026-05-22",
+  "verdict": "MAJOR",
+  "findings": {
+    "spot_check_codes": [
+      {
+        "code": "3101.00.10",
+        "in_pdf": true,
+        "pdf_description": "Guano — exact",
+        "json_description": "Guano — exact",
+        "match": "exact"
+      },
+      {
+        "code": "3101.00.99",
+        "in_pdf": true,
+        "pdf_description": "Other Other — exact",
+        "json_description": "Other Other — exact",
+        "match": "exact"
+      },
+      {
+        "code": "3102.21.00",
+        "in_pdf": true,
+        "pdf_description": "Ammonium sulphate — exact",
+        "json_description": "Ammonium sulphate — exact",
+        "match": "exact"
+      },
+      {
+        "code": "3102.30.00",
+        "in_pdf": true,
+        "pdf_description": "Ammonium nitrate — exact",
+        "json_description": "Ammonium nitrate — exact",
+        "match": "exact"
+      },
+      {
+        "code": "3102.60.00",
+        "in_pdf": true,
+        "pdf_description": "Ca-nitrate/NH4-nitrate — exact",
+        "json_description": "Ca-nitrate/NH4-nitrate — exact",
+        "match": "exact"
+      },
+      {
+        "code": "3102.90.90",
+        "in_pdf": true,
+        "pdf_description": "Other — exact",
+        "json_description": "Other — exact",
+        "match": "exact"
+      },
+      {
+        "code": "3103.19.00",
+        "in_pdf": true,
+        "pdf_description": "Superphosphates Other — code/description match BUT wrong parent SH",
+        "json_description": "Superphosphates Other — code/description match BUT wrong parent SH",
+        "match": "close"
+      },
+      {
+        "code": "3104.30.00",
+        "in_pdf": true,
+        "pdf_description": "Potassium sulphate — exact",
+        "json_description": "Potassium sulphate — exact",
+        "match": "exact"
+      },
+      {
+        "code": "3105.20.00",
+        "in_pdf": true,
+        "pdf_description": "Three-element NPK — exact",
+        "json_description": "Three-element NPK — exact",
+        "match": "exact"
+      },
+      {
+        "code": "3105.51.00",
+        "in_pdf": true,
+        "pdf_description": "Two-element NP — exact",
+        "json_description": "Two-element NP — exact",
+        "match": "exact"
+      }
+    ],
+    "hierarchy_errors": [
+      "TL 3103.11.00 placed under SH 3103.10 — should be under new SH 3103.11",
+      "TL 3103.19.00 placed under SH 3103.10 — should be under new SH 3103.19"
+    ],
+    "missed_codes": [],
+    "extra_codes": [],
+    "note_mismatches": [],
+    "count_check": {
+      "json_h": 5,
+      "pdf_h_estimate": 5,
+      "json_sh": 23,
+      "pdf_sh_estimate": 23,
+      "json_tl": 32,
+      "pdf_tl_estimate": 32
+    }
+  },
+  "notes_field": "KNOWN BUG CONFIRMED. Tariff lines 3103.11.00 and 3103.19.00 are nested under subheading 3103.10 instead of their own subheadings 3103.11 and 3103.19. PDF unambiguously shows them as separate 6-digit subheadings (310311, 310319) following 310310/31031000 at heading 3103.",
+  "warnings": [],
+  "fix_needed": "In backend/data/extracted/chapter-31.json, split heading 3103 subheadings array: (1) keep subheading 3103.10 with only tariff_line 3103.10.00; (2) add new subheading {subheading: \"3103.11\", title: \"Superphosphates : -- Containing by weight 35 percent or more of diphosphorus pentoxide (P2O5)\"} with one TL 3103.11.00; (3) add new subheading {subheading: \"3103.19\", title: \"Superphosphates : -- Other\"} with one TL 3103.19.00 (carrying current export_policy and policy_condition). After fix: json_sh becomes 25 (currently 23). All other policy/condition data preserved."
+}
