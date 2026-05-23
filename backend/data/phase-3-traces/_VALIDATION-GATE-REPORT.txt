@@ -1,0 +1,637 @@
+(node:2704) ExperimentalWarning: CommonJS module C:\Users\ASUS\AppData\Roaming\nvm\v23.1.0\node_modules\npm\node_modules\debug\src\node.js is loading ES Module C:\Users\ASUS\AppData\Roaming\nvm\v23.1.0\node_modules\npm\node_modules\supports-color\index.js using require().
+Support for loading ES Module in require() is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+======================================================================
+Phase 3 — Embedding validation gate
+======================================================================
+
+Running T1 — identical vectors...
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+    WITH grp AS (
+      SELECT
+        t.subheading,
+        t.description,
+        s.india_specific_note,
+        t.policy_condition,
+        ARRAY_AGG(t.code ORDER BY t.code) AS codes
+      FROM tariff_lines t
+      JOIN subheadings s ON t.subheading = s.subheading
+      WHERE t.embedding IS NOT NULL
+      GROUP BY t.subheading, t.description, s.india_specific_note, t.policy_condition
+      HAVING COUNT(*) > 1
+    )
+    SELECT a.code AS a, b.code AS b
+    FROM grp,
+         unnest(grp.codes) WITH ORDINALITY AS a(code, i),
+         unnest(grp.codes) WITH ORDINALITY AS b(code, j)
+    WHERE i < j
+  
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+    WITH grp AS (
+      SELECT
+        heading,
+        COALESCE(title, '') AS title,
+        COALESCE(india_specific_note, '') AS note,
+        ARRAY_AGG(subheading ORDER BY subheading) AS codes
+      FROM subheadings
+      WHERE embedding IS NOT NULL
+      GROUP BY heading, COALESCE(title, ''), COALESCE(india_specific_note, '')
+      HAVING COUNT(*) > 1
+    )
+    SELECT a.code AS a, b.code AS b
+    FROM grp,
+         unnest(grp.codes) WITH ORDINALITY AS a(code, i),
+         unnest(grp.codes) WITH ORDINALITY AS b(code, j)
+    WHERE i < j
+  
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+    WITH grp AS (
+      SELECT chapter, title, ARRAY_AGG(heading ORDER BY heading) AS codes
+      FROM headings
+      WHERE embedding IS NOT NULL
+      GROUP BY chapter, title
+      HAVING COUNT(*) > 1
+    )
+    SELECT a.code AS a, b.code AS b
+    FROM grp,
+         unnest(grp.codes) WITH ORDINALITY AS a(code, i),
+         unnest(grp.codes) WITH ORDINALITY AS b(code, j)
+    WHERE i < j
+  
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT t.chapter AS a, nn.chapter AS b, (1 - (t.embedding <=> nn.embedding))::float AS cos
+      FROM chapters t
+      CROSS JOIN LATERAL (
+        SELECT chapter, embedding
+        FROM chapters t2
+        WHERE t2.embedding IS NOT NULL AND t2.chapter <> t.chapter
+        ORDER BY t.embedding <=> t2.embedding
+        LIMIT 1
+      ) nn
+      WHERE t.embedding IS NOT NULL
+        AND (1 - (t.embedding <=> nn.embedding)) >= 0.9999
+        AND t.chapter < nn.chapter
+      LIMIT 1000
+    
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT t.heading AS a, nn.heading AS b, (1 - (t.embedding <=> nn.embedding))::float AS cos
+      FROM headings t
+      CROSS JOIN LATERAL (
+        SELECT heading, embedding
+        FROM headings t2
+        WHERE t2.embedding IS NOT NULL AND t2.heading <> t.heading
+        ORDER BY t.embedding <=> t2.embedding
+        LIMIT 1
+      ) nn
+      WHERE t.embedding IS NOT NULL
+        AND (1 - (t.embedding <=> nn.embedding)) >= 0.9999
+        AND t.heading < nn.heading
+      LIMIT 1000
+    
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT t.subheading AS a, nn.subheading AS b, (1 - (t.embedding <=> nn.embedding))::float AS cos
+      FROM subheadings t
+      CROSS JOIN LATERAL (
+        SELECT subheading, embedding
+        FROM subheadings t2
+        WHERE t2.embedding IS NOT NULL AND t2.subheading <> t.subheading
+        ORDER BY t.embedding <=> t2.embedding
+        LIMIT 1
+      ) nn
+      WHERE t.embedding IS NOT NULL
+        AND (1 - (t.embedding <=> nn.embedding)) >= 0.9999
+        AND t.subheading < nn.subheading
+      LIMIT 1000
+    
+prisma:query COMMIT
+prisma:query SELECT 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT t.code AS a, nn.code AS b, (1 - (t.embedding <=> nn.embedding))::float AS cos
+      FROM tariff_lines t
+      CROSS JOIN LATERAL (
+        SELECT code, embedding
+        FROM tariff_lines t2
+        WHERE t2.embedding IS NOT NULL AND t2.code <> t.code
+        ORDER BY t.embedding <=> t2.embedding
+        LIMIT 1
+      ) nn
+      WHERE t.embedding IS NOT NULL
+        AND (1 - (t.embedding <=> nn.embedding)) >= 0.9999
+        AND t.code < nn.code
+      LIMIT 1000
+    
+prisma:query COMMIT
+Running T2 — self-NN... (may take 1-2 min for full corpus)
+prisma:query SELECT 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+    WITH grp AS (
+      SELECT t.subheading, t.description, s.india_specific_note, t.policy_condition,
+             ARRAY_AGG(t.code ORDER BY t.code) AS codes
+      FROM tariff_lines t JOIN subheadings s ON t.subheading = s.subheading
+      WHERE t.embedding IS NOT NULL
+      GROUP BY t.subheading, t.description, s.india_specific_note, t.policy_condition
+      HAVING COUNT(*) > 1
+    )
+    SELECT a.code AS a, b.code AS b FROM grp,
+      unnest(grp.codes) WITH ORDINALITY AS a(code, i),
+      unnest(grp.codes) WITH ORDINALITY AS b(code, j)
+    WHERE i <> j
+  
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+    WITH grp AS (
+      SELECT heading, COALESCE(title, '') AS title, COALESCE(india_specific_note, '') AS note,
+             ARRAY_AGG(subheading ORDER BY subheading) AS codes
+      FROM subheadings WHERE embedding IS NOT NULL
+      GROUP BY heading, COALESCE(title, ''), COALESCE(india_specific_note, '')
+      HAVING COUNT(*) > 1
+    )
+    SELECT a.code AS a, b.code AS b FROM grp,
+      unnest(grp.codes) WITH ORDINALITY AS a(code, i),
+      unnest(grp.codes) WITH ORDINALITY AS b(code, j)
+    WHERE i <> j
+  
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+    WITH grp AS (
+      SELECT chapter, title, ARRAY_AGG(heading ORDER BY heading) AS codes
+      FROM headings WHERE embedding IS NOT NULL
+      GROUP BY chapter, title
+      HAVING COUNT(*) > 1
+    )
+    SELECT a.code AS a, b.code AS b FROM grp,
+      unnest(grp.codes) WITH ORDINALITY AS a(code, i),
+      unnest(grp.codes) WITH ORDINALITY AS b(code, j)
+    WHERE i <> j
+  
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT t.chapter AS pk, nn.chapter AS nn_pk
+      FROM chapters t
+      CROSS JOIN LATERAL (
+        SELECT chapter
+        FROM chapters t2
+        WHERE t2.embedding IS NOT NULL
+        ORDER BY t.embedding <=> t2.embedding
+        LIMIT 1
+      ) nn
+      WHERE t.embedding IS NOT NULL
+        AND t.chapter <> nn.chapter
+      LIMIT 1000
+      
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT t.heading AS pk, nn.heading AS nn_pk
+      FROM headings t
+      CROSS JOIN LATERAL (
+        SELECT heading
+        FROM headings t2
+        WHERE t2.embedding IS NOT NULL
+        ORDER BY t.embedding <=> t2.embedding
+        LIMIT 1
+      ) nn
+      WHERE t.embedding IS NOT NULL
+        AND t.heading <> nn.heading
+      LIMIT 1000
+      
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT t.subheading AS pk, nn.subheading AS nn_pk
+      FROM subheadings t
+      CROSS JOIN LATERAL (
+        SELECT subheading
+        FROM subheadings t2
+        WHERE t2.embedding IS NOT NULL
+        ORDER BY t.embedding <=> t2.embedding
+        LIMIT 1
+      ) nn
+      WHERE t.embedding IS NOT NULL
+        AND t.subheading <> nn.subheading
+      LIMIT 1000
+      
+prisma:query COMMIT
+prisma:query SELECT 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT t.code AS pk, nn.code AS nn_pk
+      FROM tariff_lines t
+      CROSS JOIN LATERAL (
+        SELECT code
+        FROM tariff_lines t2
+        WHERE t2.embedding IS NOT NULL
+        ORDER BY t.embedding <=> t2.embedding
+        LIMIT 1
+      ) nn
+      WHERE t.embedding IS NOT NULL
+        AND t.code <> nn.code
+      LIMIT 1000
+      
+prisma:query COMMIT
+Running T3 — sibling spread...
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+    WITH per_sub AS (
+      SELECT t.subheading, t.code, t.description, s.india_specific_note,
+             t.policy_condition, t.embedding
+      FROM tariff_lines t
+      JOIN subheadings s ON t.subheading = s.subheading
+      WHERE t.embedding IS NOT NULL
+    ),
+    pairs AS (
+      SELECT
+        a.subheading AS subheading,
+        (1 - (a.embedding <=> b.embedding))::float AS cos_sim
+      FROM per_sub a
+      JOIN per_sub b ON a.subheading = b.subheading AND a.code < b.code
+      WHERE NOT (
+        a.description = b.description
+        AND COALESCE(a.india_specific_note, '') = COALESCE(b.india_specific_note, '')
+        AND COALESCE(a.policy_condition, '') = COALESCE(b.policy_condition, '')
+      )
+    )
+    SELECT
+      subheading,
+      COUNT(*)::int AS sibling_count,
+      MAX(cos_sim)::float AS max_sim
+    FROM pairs
+    GROUP BY subheading
+    ORDER BY max_sim DESC
+    LIMIT 50
+  
+prisma:query COMMIT
+Running T4 — cross-chapter "Other" separation...
+prisma:query SELECT 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+    SELECT DISTINCT ON (LEFT(t.code, 2))
+      LEFT(t.code, 2) AS chapter,
+      t.code,
+      t.embedding::text AS embedding_text
+    FROM tariff_lines t
+    WHERE t.embedding IS NOT NULL
+      AND lower(trim(t.description)) = 'other'
+    ORDER BY LEFT(t.code, 2), t.code
+    LIMIT 20
+  
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+    WITH src AS (
+      SELECT code, embedding FROM tariff_lines WHERE code = ANY($1)
+    )
+    SELECT
+      a.code AS a,
+      b.code AS b,
+      (1 - (a.embedding <=> b.embedding))::float AS cos_sim
+    FROM src a
+    JOIN src b ON a.code < b.code
+    ORDER BY cos_sim DESC
+  
+prisma:query COMMIT
+Running T5 — spike-query retrieval...
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT heading AS pk, (1 - (embedding <=> $1::vector))::float AS sim
+      FROM headings
+      WHERE embedding IS NOT NULL
+      ORDER BY embedding <=> $1::vector
+      LIMIT 30
+      
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT heading AS pk
+      FROM headings
+      WHERE title IS NOT NULL
+        AND to_tsvector('english', title) @@ websearch_to_tsquery('english', $1)
+      ORDER BY ts_rank(to_tsvector('english', title), websearch_to_tsquery('english', $1)) DESC
+      LIMIT 30
+      
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT heading AS pk, (1 - (embedding <=> $1::vector))::float AS sim
+      FROM headings
+      WHERE embedding IS NOT NULL
+      ORDER BY embedding <=> $1::vector
+      LIMIT 30
+      
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT heading AS pk
+      FROM headings
+      WHERE title IS NOT NULL
+        AND to_tsvector('english', title) @@ websearch_to_tsquery('english', $1)
+      ORDER BY ts_rank(to_tsvector('english', title), websearch_to_tsquery('english', $1)) DESC
+      LIMIT 30
+      
+prisma:query COMMIT
+  [T5] case-2 "freeze-dried instant coffee powder in ja" → headings: vec rank 2, fts MISS
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT heading AS pk, (1 - (embedding <=> $1::vector))::float AS sim
+      FROM headings
+      WHERE embedding IS NOT NULL
+      ORDER BY embedding <=> $1::vector
+      LIMIT 30
+      
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT heading AS pk
+      FROM headings
+      WHERE title IS NOT NULL
+        AND to_tsvector('english', title) @@ websearch_to_tsquery('english', $1)
+      ORDER BY ts_rank(to_tsvector('english', title), websearch_to_tsquery('english', $1)) DESC
+      LIMIT 30
+      
+prisma:query COMMIT
+  [T5] case-3 "fibre cement boards for construction" → headings: vec rank 2, fts MISS
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT heading AS pk, (1 - (embedding <=> $1::vector))::float AS sim
+      FROM headings
+      WHERE embedding IS NOT NULL
+      ORDER BY embedding <=> $1::vector
+      LIMIT 30
+      
+prisma:query COMMIT
+prisma:query SELECT 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT heading AS pk
+      FROM headings
+      WHERE title IS NOT NULL
+        AND to_tsvector('english', title) @@ websearch_to_tsquery('english', $1)
+      ORDER BY ts_rank(to_tsvector('english', title), websearch_to_tsquery('english', $1)) DESC
+      LIMIT 30
+      
+prisma:query COMMIT
+  [T5] case-4 "mens knitted cotton ensemble" → headings: vec rank 1, fts MISS
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT heading AS pk, (1 - (embedding <=> $1::vector))::float AS sim
+      FROM headings
+      WHERE embedding IS NOT NULL
+      ORDER BY embedding <=> $1::vector
+      LIMIT 30
+      
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT heading AS pk
+      FROM headings
+      WHERE title IS NOT NULL
+        AND to_tsvector('english', title) @@ websearch_to_tsquery('english', $1)
+      ORDER BY ts_rank(to_tsvector('english', title), websearch_to_tsquery('english', $1)) DESC
+      LIMIT 30
+      
+prisma:query COMMIT
+  [T5] case-5 "windscreen wiper motor 12V automotive" → headings: vec rank 1, fts MISS
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT subheading AS pk, (1 - (embedding <=> $1::vector))::float AS sim
+      FROM subheadings
+      WHERE embedding IS NOT NULL
+      ORDER BY embedding <=> $1::vector
+      LIMIT 30
+      
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT subheading AS pk
+      FROM subheadings
+      WHERE title IS NOT NULL
+        AND to_tsvector('english', title) @@ websearch_to_tsquery('english', $1)
+      ORDER BY ts_rank(to_tsvector('english', title), websearch_to_tsquery('english', $1)) DESC
+      LIMIT 30
+      
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT chapter AS pk, (1 - (embedding <=> $1::vector))::float AS sim
+      FROM chapters
+      WHERE embedding IS NOT NULL
+      ORDER BY embedding <=> $1::vector
+      LIMIT 30
+      
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT chapter AS pk
+      FROM chapters
+      WHERE title IS NOT NULL
+        AND to_tsvector('english', title) @@ websearch_to_tsquery('english', $1)
+      ORDER BY ts_rank(to_tsvector('english', title), websearch_to_tsquery('english', $1)) DESC
+      LIMIT 30
+      
+prisma:query COMMIT
+  [T5] case-8 "synthetic leather imitation polyurethane" → chapters: vec rank 8, fts MISS
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT code AS pk, (1 - (embedding <=> $1::vector))::float AS sim
+      FROM tariff_lines
+      WHERE embedding IS NOT NULL
+      ORDER BY embedding <=> $1::vector
+      LIMIT 30
+      
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT code AS pk
+      FROM tariff_lines
+      WHERE description IS NOT NULL
+        AND to_tsvector('english', description) @@ websearch_to_tsquery('english', $1)
+      ORDER BY ts_rank(to_tsvector('english', description), websearch_to_tsquery('english', $1)) DESC
+      LIMIT 30
+      
+prisma:query COMMIT
+  [T5] case-9 "leather shoes with rubber outer sole, le" → tariff_lines: vec rank 5, fts MISS
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT code AS pk, (1 - (embedding <=> $1::vector))::float AS sim
+      FROM tariff_lines
+      WHERE embedding IS NOT NULL
+      ORDER BY embedding <=> $1::vector
+      LIMIT 30
+      
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT code AS pk
+      FROM tariff_lines
+      WHERE description IS NOT NULL
+        AND to_tsvector('english', description) @@ websearch_to_tsquery('english', $1)
+      ORDER BY ts_rank(to_tsvector('english', description), websearch_to_tsquery('english', $1)) DESC
+      LIMIT 30
+      
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT subheading AS pk, (1 - (embedding <=> $1::vector))::float AS sim
+      FROM subheadings
+      WHERE embedding IS NOT NULL
+      ORDER BY embedding <=> $1::vector
+      LIMIT 30
+      
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT subheading AS pk
+      FROM subheadings
+      WHERE title IS NOT NULL
+        AND to_tsvector('english', title) @@ websearch_to_tsquery('english', $1)
+      ORDER BY ts_rank(to_tsvector('english', title), websearch_to_tsquery('english', $1)) DESC
+      LIMIT 30
+      
+prisma:query COMMIT
+  [T5] case-11 "crude petroleum oil" → subheadings: vec rank 1, fts rank 4
+prisma:query SELECT 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT subheading AS pk, (1 - (embedding <=> $1::vector))::float AS sim
+      FROM subheadings
+      WHERE embedding IS NOT NULL
+      ORDER BY embedding <=> $1::vector
+      LIMIT 30
+      
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT subheading AS pk
+      FROM subheadings
+      WHERE title IS NOT NULL
+        AND to_tsvector('english', title) @@ websearch_to_tsquery('english', $1)
+      ORDER BY ts_rank(to_tsvector('english', title), websearch_to_tsquery('english', $1)) DESC
+      LIMIT 30
+      
+prisma:query COMMIT
+  [T5] case-12 "jasmine essential oil" → subheadings: vec rank 1, fts rank 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT heading AS pk, (1 - (embedding <=> $1::vector))::float AS sim
+      FROM headings
+      WHERE embedding IS NOT NULL
+      ORDER BY embedding <=> $1::vector
+      LIMIT 30
+      
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT heading AS pk
+      FROM headings
+      WHERE title IS NOT NULL
+        AND to_tsvector('english', title) @@ websearch_to_tsquery('english', $1)
+      ORDER BY ts_rank(to_tsvector('english', title), websearch_to_tsquery('english', $1)) DESC
+      LIMIT 30
+      
+prisma:query COMMIT
+  [T5] case-14 "engine filter for diesel truck" → headings: vec rank 4, fts MISS
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT code AS pk, (1 - (embedding <=> $1::vector))::float AS sim
+      FROM tariff_lines
+      WHERE embedding IS NOT NULL
+      ORDER BY embedding <=> $1::vector
+      LIMIT 30
+      
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query 
+      SELECT code AS pk
+      FROM tariff_lines
+      WHERE description IS NOT NULL
+        AND to_tsvector('english', description) @@ websearch_to_tsquery('english', $1)
+      ORDER BY ts_rank(to_tsvector('english', description), websearch_to_tsquery('english', $1)) DESC
+      LIMIT 30
+      
+prisma:query COMMIT
+
+======================================================================
+VALIDATION GATE RESULTS
+======================================================================
+
+✗ FAIL  T1 — No UNEXPECTED identical vectors per level (cos < 0.9999)
+        268 unexpected violations (data-level dups: 86).
+        Evidence (first items): {"unexpected_sample":[{"level":"tariff_lines","a":"5702.32.20","b":"5703.10.20","cos":1},{"level":"tariff_lines","a":"8306.21.10","b":"8306.29.10","cos":1},{"level":"tariff_lines","a":"8306.21.20","b":"8306.29.20","cos":1},{"level":"tariff_lines","a":"8459.51.10","b":"8461.30.20","cos":1},{"level":"tariff_lines","a":"8459.51.20","b":"8461.30.10","cos":1},{"level":"tariff_lines","a":"8459.51.30","b":"8459.59.30","cos":1},{"level":"tariff_lines","a":"8459.59.10","b":"8461.30.20","cos":1},{"level":
+
+✗ FAIL  T2 — Self nearest-neighbour (every row's #1 NN is itself OR a known data-duplicate sibling)
+        674 rows have unexpected non-self NN.
+        Evidence (first items): {"unexpected_sample":[{"level":"subheadings","pk":"7017.10","nn":"2839.90"},{"level":"subheadings","pk":"6601.91","nn":"9307.00"},{"level":"subheadings","pk":"9304.00","nn":"8710.00"},{"level":"subheadings","pk":"7322.11","nn":"8415.20"},{"level":"subheadings","pk":"2207.10","nn":"2905.11"},{"level":"subheadings","pk":"2207.20","nn":"2905.11"},{"level":"subheadings","pk":"2303.10","nn":"4401.41"},{"level":"subheadings","pk":"2303.20","nn":"4401.41"},{"level":"tariff_lines","pk":"8407.31.10","nn"
+
+✗ FAIL  T3 — Sibling spread within subheadings, distinct-input pairs only (max cos ≤ 0.97)
+        50 subheadings have distinct-input sibling pairs at cos > 0.97.
+        Evidence (first items): [{"subheading":"4205.00","sibling_count":6,"max_sim":1},{"subheading":"5705.00","sibling_count":91,"max_sim":0.999727487629066},{"subheading":"5403.10","sibling_count":3,"max_sim":0.9996414780830616},{"subheading":"8504.23","sibling_count":6,"max_sim":0.9996209441824742},{"subheading":"9801.00","sibling_count":28,"max_sim":0.9996009765747416},{"subheading":"8410.12","sibling_count":1,"max_sim":0.9994436799651267},{"subheading":"4819.10","sibling_count":1,"max_sim":0.9994163513531493},{"subheadin
+
+✓ PASS  T4 — Cross-chapter "Other" rows: median cos ≤ 0.85
+        Sampled 20 "Other" rows across distinct chapters. Median pairwise cos = 0.3398, max = 1.0000.
+
+✗ FAIL  T5 — Spike-query retrieval (13 cases, target in top-30)
+        4/13 cases failed to find target.
+        Evidence (first items): [{"case":{"caseId":1,"query":"rubber suspension bushings for trucks","expectedHeading":"8708"},"reason":"Expected 8708 NOT found in vec top-30 OR fts top-30 of headings","top5":[{"pk":"4012","sim":0.305796917063652},{"pk":"4011","sim":0.27153583590895036},{"pk":"4003","sim":0.26241594256975387},{"pk":"4002","sim":0.26061476577257503},{"pk":"4009","sim":0.2595604503416973}]},{"case":{"caseId":7,"query":"vintage motorcycle 1939 collectible","expectedSubheading":"8711.00"},"reason":"Expected 8711.0
+
+======================================================================
+GATE FAILED — halt before spike dispatch. Fix root cause first.
+======================================================================
