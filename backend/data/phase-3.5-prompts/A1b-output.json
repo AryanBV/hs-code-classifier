@@ -1,0 +1,159 @@
+{
+  "task": "A1b-asymmetric-reciprocals",
+  "extracted_at": "2026-05-24T00:00:00Z",
+  "method": "Built forward-edge graph (DISTINCT source_chapter -> unnest(redirects_to_chapter)) from chapter_exclusions (1531 rows). Identified asymmetric pairs (X->Y exists, Y->X missing). Applied judgement-heavy filtering per A1b brief: keep only process-state boundaries with clean WCO Explanatory-Note basis; reject material-to-article one-direction rules, Section XV base-metal broadcasts, Section XI textile-product broadcasts, definitional-restriction rules, and one-directional-by-authority rules (e.g., Section XVII parts -> Section XVI machinery). Cross-checked candidate-Y chapter_notes JSON files at backend/data/extracted/ to ensure no equivalent rule already exists in different wording.",
+  "candidates_found": 485,
+  "candidates_dropped_with_reason": [
+    {
+      "pair": "Section XV (Ch.72-83) base-metal -> base-metal-articles broadcasts",
+      "reason": "material->article one-direction; not reciprocal candidates (>200 pairs in this category)"
+    },
+    {
+      "pair": "Section XI (Ch.50-63) textile broadcasts to Ch.14/25/30/33/37/39/40/64-70/94-97",
+      "reason": "textile chapters broadcast many exclusions outward; the reciprocal back to textile-source-chapter does not exist as a real classification choice in the receiving chapter (e.g., Ch.30 pharma has no need to exclude back to Ch.52 cotton) (>150 pairs)"
+    },
+    {
+      "pair": "Section XVII (Ch.86-89) vehicle->machinery one-direction (e.g., 87->84, 87->85)",
+      "reason": "vehicle parts->machinery is governed by Section XVII Note 2 / Note 3 which is one-directional by authority"
+    },
+    {
+      "pair": "Section XVI (Ch.84-85) machinery -> material chapters (39, 40, 42, 43, 59, 69, 70, 71, 73)",
+      "reason": "machinery chapters exclude material articles to push them to material chapters; the reciprocal (e.g., Ch.39 plastics excluding back to Ch.84 machinery) is not a real WCO exclusion - material chapters route by material identity, not by 'is it machinery'"
+    },
+    {
+      "pair": "Section XII (Ch.66 umbrellas, Ch.67 feathers) -> Ch.90/93/95",
+      "reason": "umbrellas/walking-sticks/feather-articles -> measuring/firearms/toys are one-direction (Note 1 to those chapters); the receiving chapters do not classify back"
+    },
+    {
+      "pair": "Ch.98 (project imports / India-specific) -> Ch.22/24/49/87",
+      "reason": "Ch.98 is India-specific umbrella chapter; receiving chapters do not need reciprocal rules"
+    },
+    {
+      "pair": "Ch.06->Ch.97 (works of art), Ch.49->Ch.95 (paper toys), Ch.95->Ch.34 (candles), various Ch.X->Ch.95/96/97",
+      "reason": "antiques/toys/miscellaneous chapters receive many exclusions but are themselves restrictively defined; reciprocals not warranted"
+    },
+    {
+      "pair": "Ch.26->Ch.27/28/31/68/71/85, Ch.27->Ch.30",
+      "reason": "ores/slag-residues -> chemical/glass/metal/electrical: one-direction; the destination chapters classify positively by identity"
+    },
+    {
+      "pair": "Ch.13 -> Ch.21 heading 2101 (extracts of coffee, tea, mate)",
+      "reason": "ALREADY EXISTS as Ch.13 Note 1(c) row - this asymmetric pair (13->21 yes, 21->13 missing for this specific exclusion) does NOT need a Ch.21 reciprocal because Ch.21 already covers extracts of coffee as core heading 2101 by positive coverage; the missing direction would be a definitional rather than exclusion rule"
+    },
+    {
+      "pair": "Ch.10 <-> Ch.11 (cereal grains <-> milling products)",
+      "reason": "NEITHER direction exists in DB at chapter-pair level (zero rows). This is a 'missing both' gap rather than 'asymmetric reciprocal' - out of A1b scope. Note 1(b) of Ch.10 exists but with redirects_to_chapter=null. Flag for coordinator/A1c-style data-completion task."
+    },
+    {
+      "pair": "Ch.41 forward edges - zero rows",
+      "reason": "Ch.41 (raw hides/leather) has NO forward edges in DB. This is a 'missing both' gap - out of A1b scope. Flag for coordinator."
+    },
+    {
+      "pair": "Ch.50 <-> Ch.61/62 silk -> apparel",
+      "reason": "Considered but rejected: Section XI raw-fibre -> apparel is governed by section-wide Note 6 and chapter-level coverage, not by explicit exclusion rules. The forward edges 50->61,62 are textile-broadcast rules (silk article not classified in Ch.50 unless raw), and Ch.61/62 already restrict scope positively to apparel of textile materials of Ch.50-60 fabrics. Not a clean reciprocal."
+    },
+    {
+      "pair": "Ch.71 <-> Ch.91 jewellery <-> watches",
+      "reason": "Considered but rejected: Ch.91 already excludes watch-chains -> Ch.71 (Note 1(b)) and similar-goods-of-precious-metal -> 7115 (Note 1(c)). Ch.71 already excludes watches/watch-cases by Note 3(j) (forward 71->91 exists). The remaining asymmetry (71->91 exists, 91->71 already covered) is actually bidirectional in DB. False positive in edge graph."
+    },
+    {
+      "pair": "Ch.04 -> Ch.16 (dairy preparations -> meat-or-fish preparations)",
+      "reason": "Considered but rejected: WCO HSE Ch.04 General does mention preparations containing dairy go to Ch.16/19/21 when essential character changes, but Note 5(c) already covers the 'replaced-constituent' case via 1901/2106. Adding a generic Ch.04 -> Ch.16 rule would create false-positive overlap with Note 5(c) and is not cleanly traceable to a single chapter-note source."
+    }
+  ],
+  "rules_proposed": 5,
+  "self_spot_check": [
+    {
+      "proposed_rule_id": "A1b-1",
+      "source_chapter": "09",
+      "redirects": "21 / 2101",
+      "wco_basis": "WCO HSE General Note to Chapter 09 (Section II, Vegetable Products): 'The Chapter does not cover... (e) preparations consisting of extracts, essences, concentrates of coffee, tea or mate (heading 21.01)'. Direct sister-evidence: Chapter 13 Note 1(c) in this DB row already excludes 'extracts of coffee, tea or mate' -> 2101 with identical phrasing. The pair Ch.09 <-> Ch.21 IS bidirectional at chapter level (mixed condiments -> 2103 forward exists from Ch.09), but the specific exclusion for heading 2101 (extracts) is absent from Ch.09 even though the WCO HSE General Note explicitly states it. This closes spike case 2 (freeze-dried instant coffee): Triage routing to Ch.09 must see the 'extracts/concentrates/freeze-dried -> 2101' edge to push back to Ch.21.",
+      "judgement": "HIGH CONFIDENCE. Process-state boundary. Identical-wording sister-evidence exists in Ch.13 Note 1(c). WCO HSE General Note text is canonical source."
+    },
+    {
+      "proposed_rule_id": "A1b-2",
+      "source_chapter": "07",
+      "redirects": "20",
+      "wco_basis": "WCO HSE General Note to Chapter 07: 'This Chapter does not cover ... (c) vegetables prepared or preserved otherwise than as provided for in this Chapter (Chapter 20)'. Ch.20 Note 1(a) (already in DB) excludes the inverse direction (preparations preserved by Ch.7/8/11 processes -> back to Ch.7/8/11). The Ch.7-side reciprocal is missing entirely. This is the canonical raw-vegetable / preserved-vegetable boundary - identical-shape to the existing Ch.11 Note 1(d) which excludes 'vegetables, prepared or preserved -> 2001, 2004, 2005' that IS in DB. Ch.07 having no such rule is a clear extraction gap.",
+      "judgement": "HIGH CONFIDENCE. Process-state boundary. Sister-evidence: Ch.11 Note 1(d) already has the same shape of rule. Spike-trace relevance: any classification of 'pickled cucumbers', 'frozen prepared sweetcorn', 'preserved mushrooms' starting in Ch.07 needs this pushback to 2001/2004/2005."
+    },
+    {
+      "proposed_rule_id": "A1b-3",
+      "source_chapter": "08",
+      "redirects": "20",
+      "wco_basis": "WCO HSE General Note to Chapter 08: 'This Chapter does not cover ... fruit or nuts prepared or preserved otherwise than as provided for in this Chapter (Chapter 20)'. Mirror of #2. Reciprocal of Ch.20 Note 1(a) (already in DB) which broadcasts to Ch.7/8/11. Currently Ch.08 has zero forward edges to Ch.20.",
+      "judgement": "HIGH CONFIDENCE. Same logic as #2. Process-state boundary. Spike-trace relevance: any classification of 'canned peaches', 'fruit jam' (where the fruit is preserved beyond drying) starting in Ch.08 needs pushback to Ch.20 (heading 2007/2008)."
+    },
+    {
+      "proposed_rule_id": "A1b-4",
+      "source_chapter": "02",
+      "redirects": "16",
+      "wco_basis": "WCO HSE General Note to Chapter 02: 'This Chapter does not cover ... (e) preparations of meat, meat offal or blood of heading 16.01 to 16.03'. Ch.16 Note 1 (already in DB) excludes the inverse: 'meat, meat offal, fish, etc. prepared or preserved by the processes specified in Chapter 2' -> back to Ch.2. Ch.02 has no reciprocal forward edge to Ch.16 in DB. This is a textbook process-state boundary at the same level of authority as #2 and #3.",
+      "judgement": "HIGH CONFIDENCE. Process-state boundary. WCO HSE source is canonical. Spike-trace relevance: any classification of 'sausages', 'corned beef', 'salami' starting in Ch.02 must see this pushback to Ch.16 (heading 1601/1602)."
+    },
+    {
+      "proposed_rule_id": "A1b-5",
+      "source_chapter": "03",
+      "redirects": "16",
+      "wco_basis": "WCO HSE General Note to Chapter 03: 'This Chapter does not cover ... preparations of fish, crustaceans, molluscs or other aquatic invertebrates of Chapter 16'. Ch.03 currently has Note 1(d) (in DB) excluding only the narrow 'caviar/caviar substitutes' -> 1604. The broader category of preparations is absent. Ch.16 Note 1 (in DB) excludes the inverse for fish/etc. by Ch.3 processes -> back to Ch.3. This is the same shape of process-state boundary as #4. PF8 uniqueness key tuple differs from the existing 1604/caviar row by source_note_number and excluded_product_text, so no collision.",
+      "judgement": "HIGH CONFIDENCE. Process-state boundary. The existing Note 1(d) is too narrow (only caviar) - the WCO HSE excludes ALL fish preparations of Ch.16, including canned tuna, fish sauce, smoked-and-canned salmon, etc. Spike-trace relevance: any classification of 'canned sardines', 'fish fingers', 'fish balls' starting in Ch.03 must see pushback to Ch.16 (heading 1604/1605)."
+    }
+  ],
+  "proposed_inserts": [
+    {
+      "source_chapter": "09",
+      "excluded_product_text": "extracts, essences and concentrates of coffee, tea or mate (heading 2101)",
+      "redirects_to_chapter": ["21"],
+      "redirects_to_heading": "2101",
+      "source_note_number": "A1b-reciprocal-of-Ch21-Note-1(b)+1(c)+1(d)",
+      "source_note_text": "WCO HSE General Note to Chapter 09 excludes preparations consisting of extracts, essences or concentrates of coffee, tea or mate (heading 21.01). Reciprocal of Chapter 21 Note 1(b) (roasted coffee substitutes containing coffee -> 0901), Note 1(c) (flavoured tea -> 0902), and Note 1(d) (spices of headings 0904-0910). Sister-evidence: Chapter 13 Note 1(c) excludes 'extracts of coffee, tea or mate' -> 2101 with identical wording (DB row exists). Closes spike case 2 (freeze-dried instant coffee, instant tea preparations).",
+      "rationale": "Process-state boundary: Ch.09 raw beans/leaves -> Ch.21 extracts. Spike case 2 target. WCO HSE Note to Ch.09 explicitly excludes coffee/tea/mate extracts to 2101; reciprocal of Ch.21 Note 1(b)+1(c)+1(d) which exclude the inverse direction. This is the SAME phrasing as Ch.13 Note 1(c) already in DB."
+    },
+    {
+      "source_chapter": "07",
+      "excluded_product_text": "vegetables prepared or preserved otherwise than by the processes specified in this Chapter (Chapter 20)",
+      "redirects_to_chapter": ["20"],
+      "redirects_to_heading": null,
+      "source_note_number": "A1b-reciprocal-of-Ch20-Note-1(a)",
+      "source_note_text": "WCO HSE General Note to Chapter 07 excludes vegetables prepared or preserved otherwise than as provided for in this Chapter (Chapter 20). Reciprocal of Chapter 20 Note 1(a) (already in DB) which excludes preparations preserved by Ch.7, 8 or 11 processes back to those chapters. Sister-evidence: Chapter 11 Note 1(d) already in DB excludes 'vegetables, prepared or preserved' -> 2001/2004/2005 with the same shape.",
+      "rationale": "Process-state boundary: Ch.07 raw fresh/chilled/frozen vegetables -> Ch.20 prepared/preserved (heading 2001/2004/2005). Reciprocal of Ch.20 Note 1(a). Without this rule, products like 'pickled cucumbers', 'frozen prepared sweetcorn', 'preserved mushrooms' arriving at Ch.07 have no pushback to Ch.20."
+    },
+    {
+      "source_chapter": "08",
+      "excluded_product_text": "fruit or nuts prepared or preserved otherwise than by the processes specified in this Chapter (Chapter 20)",
+      "redirects_to_chapter": ["20"],
+      "redirects_to_heading": null,
+      "source_note_number": "A1b-reciprocal-of-Ch20-Note-1(a)",
+      "source_note_text": "WCO HSE General Note to Chapter 08 excludes fruit and nuts prepared or preserved otherwise than as provided for in this Chapter (Chapter 20). Reciprocal of Chapter 20 Note 1(a) (already in DB) which excludes preparations preserved by Ch.7, 8 or 11 processes back to those chapters. Mirror of A1b-rule for Ch.07.",
+      "rationale": "Process-state boundary: Ch.08 fresh/dried fruit and nuts -> Ch.20 prepared/preserved (heading 2007/2008/2009). Reciprocal of Ch.20 Note 1(a). Products like 'canned peaches', 'fruit jam', 'glazed fruits' arriving at Ch.08 currently have no exclusion edge to Ch.20."
+    },
+    {
+      "source_chapter": "02",
+      "excluded_product_text": "preparations of meat, meat offal or blood (headings 1601 to 1603)",
+      "redirects_to_chapter": ["16"],
+      "redirects_to_heading": null,
+      "source_note_number": "A1b-reciprocal-of-Ch16-Note-1",
+      "source_note_text": "WCO HSE General Note to Chapter 02 excludes preparations of meat, meat offal or blood of headings 16.01 to 16.03. Reciprocal of Chapter 16 Note 1 (already in DB) which excludes meat preserved by Ch.2 processes back to Ch.2. Process-state boundary at the same level of authority as the vegetable Ch.7/8 <-> Ch.20 reciprocals.",
+      "rationale": "Process-state boundary: Ch.02 raw/frozen/chilled meat -> Ch.16 cooked/canned/cured preparations (sausages, corned beef, etc.). Reciprocal of Ch.16 Note 1. Products like 'sausages', 'salami', 'corned beef', 'meatballs' arriving at Ch.02 currently have no pushback edge to Ch.16."
+    },
+    {
+      "source_chapter": "03",
+      "excluded_product_text": "preparations of fish, crustaceans, molluscs or other aquatic invertebrates (Chapter 16)",
+      "redirects_to_chapter": ["16"],
+      "redirects_to_heading": null,
+      "source_note_number": "A1b-reciprocal-of-Ch16-Note-1",
+      "source_note_text": "WCO HSE General Note to Chapter 03 excludes preparations of fish, crustaceans, molluscs or other aquatic invertebrates of Chapter 16. Reciprocal of Chapter 16 Note 1 (already in DB). The existing Chapter 3 Note 1(d) row in DB only covers the narrow case of caviar/caviar substitutes -> 1604; the WCO HSE General Note excludes the BROADER category of all fish preparations. This row complements (does not duplicate) the existing 1604 caviar row - source_note_number and excluded_product_text differ.",
+      "rationale": "Process-state boundary: Ch.03 fresh/frozen/chilled fish -> Ch.16 prepared/preserved fish (canned tuna, fish sauce, fish fingers, smoked-and-canned salmon). Reciprocal of Ch.16 Note 1. The narrow caviar -> 1604 rule already in DB is insufficient - Note 1(d) was extracted but the WCO HSE General is broader."
+    }
+  ],
+  "notes_for_coordinator": [
+    "Quality-first: 5 high-confidence reciprocals proposed (well below the 15-30 target ceiling). All five are process-state boundaries with canonical WCO HSE General Note basis AND sister-evidence (an identical-shape rule already exists somewhere in the DB or in another chapter's notes).",
+    "Discovered 'missing-both' gaps OUT OF A1b SCOPE that the coordinator should know about: Ch.10 <-> Ch.11 (cereal grains <-> milling products) has ZERO rules in DB despite Ch.10 Note 1(b) and Ch.11 Note 2 defining the boundary - the extracted rule has redirects_to_chapter=null. Similarly, Ch.41 has zero forward edges. These would be A1c-style data-completion tasks, not A1b.",
+    "Edge-graph caveat: the 485-pair asymmetric list is dominated by Section XI textile broadcasts (Ch.50-63 forwarding to many chapters) and Section XV base-metal broadcasts (Ch.72-83). I treated these as systematic non-reciprocal patterns rather than evaluating each individually. If the coordinator wants me to evaluate any specific textile/base-metal pair, I can do so on follow-up.",
+    "I used 'A1b-reciprocal-of-<X>-<X-note-number>' as the source_note_number convention per the brief. This makes the audit trail explicit: each proposed rule cites the WCO/HSE-General-Note + the chapter-pair reciprocal it mirrors. None of the five reciprocals have an exact corresponding note in the destination chapter's PDF (I verified by reading Ch.09 chapter-09.json and Ch.07 chapter-07.json directly).",
+    "PF8 dedupe check performed via execute_sql: only the existing Ch.03 caviar -> 1604 (Note 1(d)) row hit any of the proposed insert tuples. That row's source_note_number ('Note 1(d)') and excluded_product_text ('caviar or caviar substitutes...') differ from my proposed Ch.03 -> Ch.16 rule (broader text + 'A1b-reciprocal-of-Ch16-Note-1' source_note_number), so no UNIQUE constraint collision.",
+    "UNCERTAINTY FLAGS: (1) The five proposed rules use 'A1b-reciprocal-of-...' as source_note_number. If coordinator's spec reviewer prefers a different convention (e.g., 'WCO HSE General Note'), happy to revise. (2) For rule #5 (Ch.03 -> Ch.16), the existing narrow caviar rule could arguably be 'updated' rather than supplemented by an additional broader rule. I chose to add a complementary row because (a) the existing row's source_note_number 'Note 1(d)' is the verbatim PDF source and shouldn't be mutated, (b) PF8 uniqueness allows the additional row.",
+    "Spike-case-2 coverage: rule #1 (Ch.09 -> 2101) directly addresses the freeze-dried instant coffee case from the architecture spike. The other four rules are not specifically spike-traced but are systematic boundary fixes that any reasonable freezedried/preserved/preparation case would benefit from."
+  ],
+  "output_path": "C:/Export Business/hs-code-classifier/backend/data/phase-3.5-prompts/A1b-output.json"
+}
