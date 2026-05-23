@@ -1,0 +1,2036 @@
+{
+  "timestamp": "2026-05-23T12:46:52.241Z",
+  "model": "gemini-2.5-flash",
+  "totals": {
+    "cases": 100,
+    "succeeded": 100,
+    "errors": 0,
+    "chapterMatch": 0,
+    "headingMatch": 0,
+    "codeMatch": 0,
+    "cumPromptTok": 24256,
+    "cumOutTok": 357,
+    "costUsd": 0.0081693,
+    "costInr": 0.6780519
+  },
+  "results": [
+    {
+      "case": {
+        "id": "TC101",
+        "query": "arabica coffee beans grade A plantation",
+        "expectedChapter": "09",
+        "expectedHeading": "0901",
+        "expected8Digit": "0901.11.10",
+        "category": "Coffee",
+        "subcategory": "Raw Beans",
+        "difficulty": "easy",
+        "keyDistinction": "raw_not_processed",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 244,
+      "outputTokens": 0,
+      "totalTokens": 529,
+      "elapsedMs": 14004,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC102",
+        "query": "robusta coffee beans raw green",
+        "expectedChapter": "09",
+        "expectedHeading": "0901",
+        "expected8Digit": "0901.11.90",
+        "category": "Coffee",
+        "subcategory": "Raw Beans",
+        "difficulty": "easy",
+        "keyDistinction": "raw_not_processed",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 243,
+      "outputTokens": 9,
+      "totalTokens": 538,
+      "elapsedMs": 2424,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC103",
+        "query": "roasted coffee beans whole not ground",
+        "expectedChapter": "09",
+        "expectedHeading": "0901",
+        "expected8Digit": "0901.21.00",
+        "category": "Coffee",
+        "subcategory": "Roasted",
+        "difficulty": "medium",
+        "keyDistinction": "roasted_still_ch09",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 243,
+      "outputTokens": 8,
+      "totalTokens": 537,
+      "elapsedMs": 2218,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC104",
+        "query": "instant coffee powder spray dried",
+        "expectedChapter": "21",
+        "expectedHeading": "2101",
+        "expected8Digit": "2101.11.00",
+        "category": "Coffee",
+        "subcategory": "Processed",
+        "difficulty": "medium",
+        "keyDistinction": "processed_ch21",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 0,
+      "totalTokens": 527,
+      "elapsedMs": 2728,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC105",
+        "query": "freeze dried soluble coffee granules",
+        "expectedChapter": "21",
+        "expectedHeading": "2101",
+        "expected8Digit": "2101.11.00",
+        "category": "Coffee",
+        "subcategory": "Processed",
+        "difficulty": "medium",
+        "keyDistinction": "processed_ch21",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 6,
+      "totalTokens": 537,
+      "elapsedMs": 2413,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC106",
+        "query": "coffee extract liquid concentrate",
+        "expectedChapter": "21",
+        "expectedHeading": "2101",
+        "expected8Digit": "2101.11.00",
+        "category": "Coffee",
+        "subcategory": "Processed",
+        "difficulty": "medium",
+        "keyDistinction": "processed_ch21",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 7,
+      "totalTokens": 535,
+      "elapsedMs": 2993,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC107",
+        "query": "black pepper whole Malabar grade",
+        "expectedChapter": "09",
+        "expectedHeading": "0904",
+        "expected8Digit": "0904.11.00",
+        "category": "Spices",
+        "subcategory": "Pepper",
+        "difficulty": "easy",
+        "keyDistinction": "none",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 243,
+      "outputTokens": 8,
+      "totalTokens": 538,
+      "elapsedMs": 2523,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC108",
+        "query": "ground black pepper powder",
+        "expectedChapter": "09",
+        "expectedHeading": "0904",
+        "expected8Digit": "0904.12.00",
+        "category": "Spices",
+        "subcategory": "Pepper",
+        "difficulty": "easy",
+        "keyDistinction": "none",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 8,
+      "totalTokens": 535,
+      "elapsedMs": 2718,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC109",
+        "query": "turmeric fingers whole dried",
+        "expectedChapter": "09",
+        "expectedHeading": "0910",
+        "expected8Digit": "0910.30.10",
+        "category": "Spices",
+        "subcategory": "Turmeric",
+        "difficulty": "easy",
+        "keyDistinction": "none",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 0,
+      "totalTokens": 526,
+      "elapsedMs": 2573,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC110",
+        "query": "turmeric powder ground",
+        "expectedChapter": "09",
+        "expectedHeading": "0910",
+        "expected8Digit": "0910.30.20",
+        "category": "Spices",
+        "subcategory": "Turmeric",
+        "difficulty": "easy",
+        "keyDistinction": "none",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 240,
+      "outputTokens": 1,
+      "totalTokens": 525,
+      "elapsedMs": 2973,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC111",
+        "query": "cardamom green whole pods",
+        "expectedChapter": "09",
+        "expectedHeading": "0908",
+        "expected8Digit": "0908.31.00",
+        "category": "Spices",
+        "subcategory": "Cardamom",
+        "difficulty": "easy",
+        "keyDistinction": "none",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 9,
+      "totalTokens": 535,
+      "elapsedMs": 2873,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC112",
+        "query": "cumin seeds whole jeera",
+        "expectedChapter": "09",
+        "expectedHeading": "0909",
+        "expected8Digit": "0909.31.00",
+        "category": "Spices",
+        "subcategory": "Cumin",
+        "difficulty": "easy",
+        "keyDistinction": "none",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 8,
+      "totalTokens": 537,
+      "elapsedMs": 2602,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC113",
+        "query": "cinnamon bark quills Ceylon",
+        "expectedChapter": "09",
+        "expectedHeading": "0906",
+        "expected8Digit": "0906.11.00",
+        "category": "Spices",
+        "subcategory": "Cinnamon",
+        "difficulty": "easy",
+        "keyDistinction": "none",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 1,
+      "totalTokens": 527,
+      "elapsedMs": 2317,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC114",
+        "query": "cloves whole dried flower buds",
+        "expectedChapter": "09",
+        "expectedHeading": "0907",
+        "expected8Digit": "0907.10.00",
+        "category": "Spices",
+        "subcategory": "Cloves",
+        "difficulty": "easy",
+        "keyDistinction": "none",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 0,
+      "totalTokens": 527,
+      "elapsedMs": 2097,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC115",
+        "query": "ginger fresh whole root",
+        "expectedChapter": "09",
+        "expectedHeading": "0910",
+        "expected8Digit": "0910.11.00",
+        "category": "Spices",
+        "subcategory": "Ginger",
+        "difficulty": "medium",
+        "keyDistinction": "fresh_ginger_ch09",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 0,
+      "totalTokens": 526,
+      "elapsedMs": 2844,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC116",
+        "query": "ginger dried sliced",
+        "expectedChapter": "09",
+        "expectedHeading": "0910",
+        "expected8Digit": "0910.12.00",
+        "category": "Spices",
+        "subcategory": "Ginger",
+        "difficulty": "easy",
+        "keyDistinction": "none",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 240,
+      "outputTokens": 0,
+      "totalTokens": 524,
+      "elapsedMs": 3260,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC117",
+        "query": "saffron threads pure Kashmir",
+        "expectedChapter": "09",
+        "expectedHeading": "0910",
+        "expected8Digit": "0910.20.00",
+        "category": "Spices",
+        "subcategory": "Saffron",
+        "difficulty": "easy",
+        "keyDistinction": "none",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 7,
+      "totalTokens": 535,
+      "elapsedMs": 2737,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC118",
+        "query": "curry powder mixed spices",
+        "expectedChapter": "09",
+        "expectedHeading": "0910",
+        "expected8Digit": "0910.91.00",
+        "category": "Spices",
+        "subcategory": "Mixed",
+        "difficulty": "medium",
+        "keyDistinction": "mixed_spices_ch09",
+        "source": "prompt.md",
+        "notes": "Mixtures of Ch.09 spices stay in Ch.09",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 7,
+      "totalTokens": 537,
+      "elapsedMs": 2938,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC119",
+        "query": "green tea leaves loose",
+        "expectedChapter": "09",
+        "expectedHeading": "0902",
+        "expected8Digit": "0902.10.00",
+        "category": "Tea",
+        "subcategory": "Green Tea",
+        "difficulty": "easy",
+        "keyDistinction": "none",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 0,
+      "totalTokens": 526,
+      "elapsedMs": 2960,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC120",
+        "query": "black tea CTC Assam",
+        "expectedChapter": "09",
+        "expectedHeading": "0902",
+        "expected8Digit": "0902.30.00",
+        "category": "Tea",
+        "subcategory": "Black Tea",
+        "difficulty": "easy",
+        "keyDistinction": "none",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 1,
+      "totalTokens": 526,
+      "elapsedMs": 2445,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC001",
+        "query": "mink fur coat full length",
+        "expectedChapter": "43",
+        "expectedHeading": "4303",
+        "expected8Digit": "4303.10.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Fur vs Leather (42/43)",
+        "difficulty": "hard",
+        "keyDistinction": "fur_with_hair_ch43",
+        "source": "confusing-chapter-pairs.ts",
+        "notes": "Furskins with hair attached → Ch.43, not leather Ch.42",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 1,
+      "totalTokens": 527,
+      "elapsedMs": 2865,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC002",
+        "query": "fox fur stole ladies accessory",
+        "expectedChapter": "43",
+        "expectedHeading": "4303",
+        "expected8Digit": "4303.10.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Fur vs Leather (42/43)",
+        "difficulty": "hard",
+        "keyDistinction": "fur_with_hair_ch43",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 1,
+      "totalTokens": 527,
+      "elapsedMs": 3053,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC003",
+        "query": "rabbit pelt jacket with fur",
+        "expectedChapter": "43",
+        "expectedHeading": "4303",
+        "expected8Digit": "4303.10.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Fur vs Leather (42/43)",
+        "difficulty": "hard",
+        "keyDistinction": "fur_with_hair_ch43",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 0,
+      "totalTokens": 528,
+      "elapsedMs": 3008,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC004",
+        "query": "genuine leather jacket brown",
+        "expectedChapter": "42",
+        "expectedHeading": "4203",
+        "expected8Digit": "4203.10.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Fur vs Leather (42/43)",
+        "difficulty": "medium",
+        "keyDistinction": "leather_no_hair_ch42",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 1,
+      "totalTokens": 526,
+      "elapsedMs": 2300,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC005",
+        "query": "cowhide leather handbag",
+        "expectedChapter": "42",
+        "expectedHeading": "4202",
+        "expected8Digit": "4202.21.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Fur vs Leather (42/43)",
+        "difficulty": "easy",
+        "keyDistinction": "leather_no_hair_ch42",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 0,
+      "totalTokens": 526,
+      "elapsedMs": 2776,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC006",
+        "query": "leather belt men genuine hide",
+        "expectedChapter": "42",
+        "expectedHeading": "4203",
+        "expected8Digit": "4203.30.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Fur vs Leather (42/43)",
+        "difficulty": "easy",
+        "keyDistinction": "leather_no_hair_ch42",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 1,
+      "totalTokens": 527,
+      "elapsedMs": 3513,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC007",
+        "query": "tinplate steel sheets for canning",
+        "expectedChapter": "72",
+        "expectedHeading": "7210",
+        "expected8Digit": "7210.12.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Iron Steel vs Tin (72/80)",
+        "difficulty": "hard",
+        "keyDistinction": "tin_coated_steel_ch72",
+        "source": "confusing-chapter-pairs.ts",
+        "notes": "Steel coated with tin is still steel Ch.72",
+        "tier": 1
+      },
+      "promptTokens": 243,
+      "outputTokens": 1,
+      "totalTokens": 528,
+      "elapsedMs": 2320,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC008",
+        "query": "galvanized steel sheet coils",
+        "expectedChapter": "72",
+        "expectedHeading": "7210",
+        "expected8Digit": "7210.49.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Iron Steel vs Tin (72/80)",
+        "difficulty": "easy",
+        "keyDistinction": "coated_steel_ch72",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 9,
+      "totalTokens": 537,
+      "elapsedMs": 2250,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC009",
+        "query": "pure tin ingots 99.9%",
+        "expectedChapter": "80",
+        "expectedHeading": "8001",
+        "expected8Digit": "8001.10.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Iron Steel vs Tin (72/80)",
+        "difficulty": "medium",
+        "keyDistinction": "pure_tin_ch80",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 247,
+      "outputTokens": 9,
+      "totalTokens": 542,
+      "elapsedMs": 2359,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC010",
+        "query": "tin foil pure metal wrapping",
+        "expectedChapter": "80",
+        "expectedHeading": "8007",
+        "expected8Digit": "8007.00.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Iron Steel vs Tin (72/80)",
+        "difficulty": "medium",
+        "keyDistinction": "pure_tin_ch80",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 2,
+      "totalTokens": 528,
+      "elapsedMs": 2583,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC011",
+        "query": "tin solder bar lead-free",
+        "expectedChapter": "80",
+        "expectedHeading": "8003",
+        "expected8Digit": "8003.00.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Iron Steel vs Tin (72/80)",
+        "difficulty": "medium",
+        "keyDistinction": "pure_tin_ch80",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 243,
+      "outputTokens": 2,
+      "totalTokens": 529,
+      "elapsedMs": 3409,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC012",
+        "query": "stainless steel plates flat",
+        "expectedChapter": "72",
+        "expectedHeading": "7219",
+        "expected8Digit": "7219.31.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Iron Steel vs Tin (72/80)",
+        "difficulty": "easy",
+        "keyDistinction": "steel_ch72",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 1,
+      "totalTokens": 526,
+      "elapsedMs": 3199,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC013",
+        "query": "polyester filament yarn continuous",
+        "expectedChapter": "54",
+        "expectedHeading": "5402",
+        "expected8Digit": "5402.33.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Filament vs Staple (54/55)",
+        "difficulty": "hard",
+        "keyDistinction": "continuous_filament_ch54",
+        "source": "confusing-chapter-pairs.ts",
+        "notes": "Continuous uncut strands → Ch.54",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 0,
+      "totalTokens": 526,
+      "elapsedMs": 2727,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC014",
+        "query": "nylon monofilament fishing line",
+        "expectedChapter": "54",
+        "expectedHeading": "5404",
+        "expected8Digit": "5404.11.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Filament vs Staple (54/55)",
+        "difficulty": "medium",
+        "keyDistinction": "continuous_filament_ch54",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 243,
+      "outputTokens": 7,
+      "totalTokens": 538,
+      "elapsedMs": 3108,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC015",
+        "query": "viscose rayon filament thread",
+        "expectedChapter": "54",
+        "expectedHeading": "5403",
+        "expected8Digit": "5403.10.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Filament vs Staple (54/55)",
+        "difficulty": "medium",
+        "keyDistinction": "continuous_filament_ch54",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 1,
+      "totalTokens": 526,
+      "elapsedMs": 2896,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC016",
+        "query": "polyester staple fiber short cut",
+        "expectedChapter": "55",
+        "expectedHeading": "5503",
+        "expected8Digit": "5503.20.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Filament vs Staple (54/55)",
+        "difficulty": "hard",
+        "keyDistinction": "short_cut_staple_ch55",
+        "source": "confusing-chapter-pairs.ts",
+        "notes": "Short cut fibers → Ch.55",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 0,
+      "totalTokens": 527,
+      "elapsedMs": 2406,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC017",
+        "query": "acrylic staple fiber for spinning",
+        "expectedChapter": "55",
+        "expectedHeading": "5503",
+        "expected8Digit": "5503.30.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Filament vs Staple (54/55)",
+        "difficulty": "hard",
+        "keyDistinction": "short_cut_staple_ch55",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 7,
+      "totalTokens": 537,
+      "elapsedMs": 2439,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC018",
+        "query": "viscose staple fiber rayon",
+        "expectedChapter": "55",
+        "expectedHeading": "5504",
+        "expected8Digit": "5504.10.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Filament vs Staple (54/55)",
+        "difficulty": "medium",
+        "keyDistinction": "short_cut_staple_ch55",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 0,
+      "totalTokens": 340,
+      "elapsedMs": 9703,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC019",
+        "query": "leather coat men's long",
+        "expectedChapter": "42",
+        "expectedHeading": "4203",
+        "expected8Digit": "4203.10.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Leather vs Textile Apparel (42/62)",
+        "difficulty": "medium",
+        "keyDistinction": "leather_apparel_ch42",
+        "source": "confusing-chapter-pairs.ts",
+        "notes": "Leather is primary material → Ch.42 not Ch.62",
+        "tier": 1
+      },
+      "promptTokens": 243,
+      "outputTokens": 0,
+      "totalTokens": 528,
+      "elapsedMs": 2696,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC020",
+        "query": "leather vest motorcycle",
+        "expectedChapter": "42",
+        "expectedHeading": "4203",
+        "expected8Digit": "4203.10.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Leather vs Textile Apparel (42/62)",
+        "difficulty": "medium",
+        "keyDistinction": "leather_apparel_ch42",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 240,
+      "outputTokens": 1,
+      "totalTokens": 525,
+      "elapsedMs": 2803,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC021",
+        "query": "leather gloves winter lined",
+        "expectedChapter": "42",
+        "expectedHeading": "4203",
+        "expected8Digit": "4203.21.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Leather vs Textile Apparel (42/62)",
+        "difficulty": "easy",
+        "keyDistinction": "leather_apparel_ch42",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 0,
+      "totalTokens": 526,
+      "elapsedMs": 2879,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC022",
+        "query": "wool coat women woven fabric",
+        "expectedChapter": "62",
+        "expectedHeading": "6202",
+        "expected8Digit": "6202.11.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Leather vs Textile Apparel (42/62)",
+        "difficulty": "easy",
+        "keyDistinction": "textile_apparel_ch62",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 1,
+      "totalTokens": 528,
+      "elapsedMs": 2239,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC023",
+        "query": "cotton jacket men woven",
+        "expectedChapter": "62",
+        "expectedHeading": "6203",
+        "expected8Digit": "6203.32.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Leather vs Textile Apparel (42/62)",
+        "difficulty": "easy",
+        "keyDistinction": "textile_apparel_ch62",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 9,
+      "totalTokens": 536,
+      "elapsedMs": 2835,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC024",
+        "query": "nylon jacket windbreaker woven",
+        "expectedChapter": "62",
+        "expectedHeading": "6201",
+        "expected8Digit": "6201.93.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Leather vs Textile Apparel (42/62)",
+        "difficulty": "easy",
+        "keyDistinction": "textile_apparel_ch62",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 2,
+      "totalTokens": 528,
+      "elapsedMs": 2212,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC025",
+        "query": "knitted polo shirt men cotton",
+        "expectedChapter": "61",
+        "expectedHeading": "6105",
+        "expected8Digit": "6105.10.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Knit vs Woven (61/62)",
+        "difficulty": "medium",
+        "keyDistinction": "knitted_stretchy_ch61",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 8,
+      "totalTokens": 536,
+      "elapsedMs": 2456,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC026",
+        "query": "knitted dress women viscose",
+        "expectedChapter": "61",
+        "expectedHeading": "6104",
+        "expected8Digit": "6104.44.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Knit vs Woven (61/62)",
+        "difficulty": "medium",
+        "keyDistinction": "knitted_stretchy_ch61",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 7,
+      "totalTokens": 536,
+      "elapsedMs": 2403,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC027",
+        "query": "underwear men cotton knitted",
+        "expectedChapter": "61",
+        "expectedHeading": "6107",
+        "expected8Digit": "6107.11.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Knit vs Woven (61/62)",
+        "difficulty": "easy",
+        "keyDistinction": "knitted_stretchy_ch61",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 7,
+      "totalTokens": 536,
+      "elapsedMs": 2721,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC028",
+        "query": "woven dress shirt formal men",
+        "expectedChapter": "62",
+        "expectedHeading": "6205",
+        "expected8Digit": "6205.20.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Knit vs Woven (61/62)",
+        "difficulty": "easy",
+        "keyDistinction": "woven_non_stretch_ch62",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 9,
+      "totalTokens": 536,
+      "elapsedMs": 2410,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC029",
+        "query": "woven trousers men cotton chino",
+        "expectedChapter": "62",
+        "expectedHeading": "6203",
+        "expected8Digit": "6203.42.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Knit vs Woven (61/62)",
+        "difficulty": "easy",
+        "keyDistinction": "woven_non_stretch_ch62",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 8,
+      "totalTokens": 537,
+      "elapsedMs": 2564,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC030",
+        "query": "woven skirt women linen",
+        "expectedChapter": "62",
+        "expectedHeading": "6204",
+        "expected8Digit": "6204.59.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Knit vs Woven (61/62)",
+        "difficulty": "easy",
+        "keyDistinction": "woven_non_stretch_ch62",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 1,
+      "totalTokens": 526,
+      "elapsedMs": 2579,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC031",
+        "query": "roasted coffee ground filter",
+        "expectedChapter": "09",
+        "expectedHeading": "0901",
+        "expected8Digit": "0901.21.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Raw vs Processed Coffee (09/21)",
+        "difficulty": "medium",
+        "keyDistinction": "roasted_ground_ch09",
+        "source": "confusing-chapter-pairs.ts",
+        "notes": "Even ground, roasted coffee stays in Ch.09",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 8,
+      "totalTokens": 536,
+      "elapsedMs": 2511,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC032",
+        "query": "coffee beans decaffeinated roasted",
+        "expectedChapter": "09",
+        "expectedHeading": "0901",
+        "expected8Digit": "0901.22.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Raw vs Processed Coffee (09/21)",
+        "difficulty": "medium",
+        "keyDistinction": "decaf_still_ch09",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 243,
+      "outputTokens": 1,
+      "totalTokens": 528,
+      "elapsedMs": 2503,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC033",
+        "query": "instant coffee 3-in-1 sachets",
+        "expectedChapter": "21",
+        "expectedHeading": "2101",
+        "expected8Digit": "2101.12.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Raw vs Processed Coffee (09/21)",
+        "difficulty": "medium",
+        "keyDistinction": "processed_extract_ch21",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 247,
+      "outputTokens": 6,
+      "totalTokens": 542,
+      "elapsedMs": 2510,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC034",
+        "query": "coffee concentrate cold brew liquid",
+        "expectedChapter": "21",
+        "expectedHeading": "2101",
+        "expected8Digit": "2101.11.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Raw vs Processed Coffee (09/21)",
+        "difficulty": "hard",
+        "keyDistinction": "processed_extract_ch21",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 8,
+      "totalTokens": 536,
+      "elapsedMs": 2201,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC035",
+        "query": "espresso capsules nespresso compatible",
+        "expectedChapter": "09",
+        "expectedHeading": "0901",
+        "expected8Digit": "0901.21.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Raw vs Processed Coffee (09/21)",
+        "difficulty": "hard",
+        "keyDistinction": "roasted_ground_ch09",
+        "source": "confusing-chapter-pairs.ts",
+        "notes": "Capsules with roasted ground coffee → Ch.09",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 0,
+      "totalTokens": 527,
+      "elapsedMs": 2730,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC036",
+        "query": "diesel engine for truck",
+        "expectedChapter": "84",
+        "expectedHeading": "8408",
+        "expected8Digit": "8408.20.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Mechanical vs Electrical (84/85)",
+        "difficulty": "easy",
+        "keyDistinction": "mechanical_ch84",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 6,
+      "totalTokens": 536,
+      "elapsedMs": 2507,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC037",
+        "query": "hydraulic pump industrial",
+        "expectedChapter": "84",
+        "expectedHeading": "8413",
+        "expected8Digit": "8413.60.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Mechanical vs Electrical (84/85)",
+        "difficulty": "easy",
+        "keyDistinction": "mechanical_ch84",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 240,
+      "outputTokens": 1,
+      "totalTokens": 525,
+      "elapsedMs": 3019,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC038",
+        "query": "air compressor piston type",
+        "expectedChapter": "84",
+        "expectedHeading": "8414",
+        "expected8Digit": "8414.40.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Mechanical vs Electrical (84/85)",
+        "difficulty": "easy",
+        "keyDistinction": "mechanical_ch84",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 1,
+      "totalTokens": 526,
+      "elapsedMs": 2956,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC039",
+        "query": "electric motor AC induction 5HP",
+        "expectedChapter": "85",
+        "expectedHeading": "8501",
+        "expected8Digit": "8501.52.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Mechanical vs Electrical (84/85)",
+        "difficulty": "easy",
+        "keyDistinction": "electrical_ch85",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 244,
+      "outputTokens": 0,
+      "totalTokens": 529,
+      "elapsedMs": 2647,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC040",
+        "query": "power transformer 1000KVA",
+        "expectedChapter": "85",
+        "expectedHeading": "8504",
+        "expected8Digit": "8504.23.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Mechanical vs Electrical (84/85)",
+        "difficulty": "easy",
+        "keyDistinction": "electrical_ch85",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 246,
+      "outputTokens": 9,
+      "totalTokens": 541,
+      "elapsedMs": 2396,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC041",
+        "query": "PVC pipe for water supply",
+        "expectedChapter": "39",
+        "expectedHeading": "3917",
+        "expected8Digit": "3917.23.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Plastic vs Rubber (39/40)",
+        "difficulty": "easy",
+        "keyDistinction": "plastic_ch39",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 1,
+      "totalTokens": 527,
+      "elapsedMs": 2506,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC042",
+        "query": "plastic container food grade HDPE",
+        "expectedChapter": "39",
+        "expectedHeading": "3923",
+        "expected8Digit": "3923.30.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Plastic vs Rubber (39/40)",
+        "difficulty": "easy",
+        "keyDistinction": "plastic_ch39",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 9,
+      "totalTokens": 537,
+      "elapsedMs": 2493,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC043",
+        "query": "natural rubber sheet smoked",
+        "expectedChapter": "40",
+        "expectedHeading": "4001",
+        "expected8Digit": "4001.21.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Plastic vs Rubber (39/40)",
+        "difficulty": "easy",
+        "keyDistinction": "rubber_ch40",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 0,
+      "totalTokens": 526,
+      "elapsedMs": 2804,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC044",
+        "query": "rubber hose hydraulic reinforced",
+        "expectedChapter": "40",
+        "expectedHeading": "4009",
+        "expected8Digit": "4009.31.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Plastic vs Rubber (39/40)",
+        "difficulty": "easy",
+        "keyDistinction": "rubber_ch40",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 0,
+      "totalTokens": 526,
+      "elapsedMs": 2448,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "EC045",
+        "query": "rubber gasket seal O-ring",
+        "expectedChapter": "40",
+        "expectedHeading": "4016",
+        "expected8Digit": "4016.93.00",
+        "category": "Confusing Pairs",
+        "subcategory": "Plastic vs Rubber (39/40)",
+        "difficulty": "easy",
+        "keyDistinction": "rubber_ch40",
+        "source": "confusing-chapter-pairs.ts",
+        "tier": 1
+      },
+      "promptTokens": 243,
+      "outputTokens": 0,
+      "totalTokens": 527,
+      "elapsedMs": 2287,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC301",
+        "query": "men's cotton t-shirt knitted",
+        "expectedChapter": "61",
+        "expectedHeading": "6109",
+        "expected8Digit": "6109.10.00",
+        "category": "Garments",
+        "subcategory": "Knitted",
+        "difficulty": "easy",
+        "keyDistinction": "knitted_ch61",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 245,
+      "outputTokens": 7,
+      "totalTokens": 539,
+      "elapsedMs": 2766,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC302",
+        "query": "women's polyester blouse woven",
+        "expectedChapter": "62",
+        "expectedHeading": "6206",
+        "expected8Digit": "6206.40.00",
+        "category": "Garments",
+        "subcategory": "Woven",
+        "difficulty": "easy",
+        "keyDistinction": "woven_ch62",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 243,
+      "outputTokens": 1,
+      "totalTokens": 528,
+      "elapsedMs": 2523,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC303",
+        "query": "men's formal cotton shirt woven",
+        "expectedChapter": "62",
+        "expectedHeading": "6205",
+        "expected8Digit": "6205.20.00",
+        "category": "Garments",
+        "subcategory": "Woven",
+        "difficulty": "easy",
+        "keyDistinction": "woven_ch62",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 244,
+      "outputTokens": 7,
+      "totalTokens": 539,
+      "elapsedMs": 1915,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC304",
+        "query": "denim jeans men's cotton woven",
+        "expectedChapter": "62",
+        "expectedHeading": "6203",
+        "expected8Digit": "6203.42.00",
+        "category": "Garments",
+        "subcategory": "Woven",
+        "difficulty": "easy",
+        "keyDistinction": "woven_ch62",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 244,
+      "outputTokens": 0,
+      "totalTokens": 528,
+      "elapsedMs": 2615,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC305",
+        "query": "wool sweater knitted pullover",
+        "expectedChapter": "61",
+        "expectedHeading": "6110",
+        "expected8Digit": "6110.11.00",
+        "category": "Garments",
+        "subcategory": "Knitted",
+        "difficulty": "easy",
+        "keyDistinction": "knitted_ch61",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 5,
+      "totalTokens": 535,
+      "elapsedMs": 2443,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC306",
+        "query": "silk saree woven traditional",
+        "expectedChapter": "62",
+        "expectedHeading": "6206",
+        "expected8Digit": "6206.10.00",
+        "category": "Garments",
+        "subcategory": "Woven",
+        "difficulty": "medium",
+        "keyDistinction": "woven_ch62",
+        "source": "prompt.md",
+        "notes": "Sarees are woven garments",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 8,
+      "totalTokens": 536,
+      "elapsedMs": 2973,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC307",
+        "query": "cotton socks knitted ankle length",
+        "expectedChapter": "61",
+        "expectedHeading": "6115",
+        "expected8Digit": "6115.95.00",
+        "category": "Garments",
+        "subcategory": "Hosiery",
+        "difficulty": "easy",
+        "keyDistinction": "knitted_ch61",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 0,
+      "totalTokens": 527,
+      "elapsedMs": 2246,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC308",
+        "query": "polyester tracksuit knitted sportswear",
+        "expectedChapter": "61",
+        "expectedHeading": "6112",
+        "expected8Digit": "6112.31.00",
+        "category": "Garments",
+        "subcategory": "Sportswear",
+        "difficulty": "easy",
+        "keyDistinction": "knitted_ch61",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 1,
+      "totalTokens": 526,
+      "elapsedMs": 2481,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC309",
+        "query": "men's wool suit woven two piece",
+        "expectedChapter": "62",
+        "expectedHeading": "6203",
+        "expected8Digit": "6203.11.00",
+        "category": "Garments",
+        "subcategory": "Suits",
+        "difficulty": "easy",
+        "keyDistinction": "woven_ch62",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 245,
+      "outputTokens": 9,
+      "totalTokens": 540,
+      "elapsedMs": 2480,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC310",
+        "query": "baby cotton romper knitted",
+        "expectedChapter": "61",
+        "expectedHeading": "6111",
+        "expected8Digit": "6111.20.00",
+        "category": "Garments",
+        "subcategory": "Baby Clothes",
+        "difficulty": "easy",
+        "keyDistinction": "knitted_ch61",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 9,
+      "totalTokens": 535,
+      "elapsedMs": 1866,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC201",
+        "query": "paracetamol tablets 500mg blister pack",
+        "expectedChapter": "30",
+        "expectedHeading": "3004",
+        "expected8Digit": "3004.90.99",
+        "category": "Pharmaceuticals",
+        "subcategory": "Dosage Form",
+        "difficulty": "easy",
+        "keyDistinction": "dosage_form",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 247,
+      "outputTokens": 9,
+      "totalTokens": 542,
+      "elapsedMs": 2481,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC202",
+        "query": "amoxicillin capsules 250mg",
+        "expectedChapter": "30",
+        "expectedHeading": "3004",
+        "expected8Digit": "3004.10.00",
+        "category": "Pharmaceuticals",
+        "subcategory": "Antibiotics",
+        "difficulty": "easy",
+        "keyDistinction": "dosage_form",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 246,
+      "outputTokens": 1,
+      "totalTokens": 531,
+      "elapsedMs": 3082,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC203",
+        "query": "metformin hydrochloride tablets 500mg",
+        "expectedChapter": "30",
+        "expectedHeading": "3004",
+        "expected8Digit": "3004.90.99",
+        "category": "Pharmaceuticals",
+        "subcategory": "Dosage Form",
+        "difficulty": "easy",
+        "keyDistinction": "dosage_form",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 245,
+      "outputTokens": 1,
+      "totalTokens": 530,
+      "elapsedMs": 2475,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC204",
+        "query": "omeprazole delayed release capsules 20mg",
+        "expectedChapter": "30",
+        "expectedHeading": "3004",
+        "expected8Digit": "3004.90.99",
+        "category": "Pharmaceuticals",
+        "subcategory": "Dosage Form",
+        "difficulty": "easy",
+        "keyDistinction": "dosage_form",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 247,
+      "outputTokens": 1,
+      "totalTokens": 532,
+      "elapsedMs": 2587,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC205",
+        "query": "paracetamol powder bulk API",
+        "expectedChapter": "29",
+        "expectedHeading": "2924",
+        "expected8Digit": "2924.29.00",
+        "category": "Pharmaceuticals",
+        "subcategory": "Bulk API",
+        "difficulty": "hard",
+        "keyDistinction": "bulk_api_ch29",
+        "source": "prompt.md",
+        "notes": "Bulk API without dosage form goes to Ch.29",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 9,
+      "totalTokens": 537,
+      "elapsedMs": 2085,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC206",
+        "query": "ibuprofen raw material powder",
+        "expectedChapter": "29",
+        "expectedHeading": "2918",
+        "expected8Digit": "2918.99.00",
+        "category": "Pharmaceuticals",
+        "subcategory": "Bulk API",
+        "difficulty": "hard",
+        "keyDistinction": "bulk_api_ch29",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 1,
+      "totalTokens": 526,
+      "elapsedMs": 2972,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC207",
+        "query": "insulin injection 100IU/ml vial",
+        "expectedChapter": "30",
+        "expectedHeading": "3004",
+        "expected8Digit": "3004.31.00",
+        "category": "Pharmaceuticals",
+        "subcategory": "Dosage Form",
+        "difficulty": "easy",
+        "keyDistinction": "dosage_form",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 247,
+      "outputTokens": 0,
+      "totalTokens": 532,
+      "elapsedMs": 3749,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC208",
+        "query": "povidone iodine solution 5% antiseptic",
+        "expectedChapter": "30",
+        "expectedHeading": "3004",
+        "expected8Digit": "3004.90.99",
+        "category": "Pharmaceuticals",
+        "subcategory": "Antiseptic",
+        "difficulty": "medium",
+        "keyDistinction": "medicament_retail",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 246,
+      "outputTokens": 6,
+      "totalTokens": 540,
+      "elapsedMs": 2986,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC209",
+        "query": "ayurvedic medicine Chyawanprash",
+        "expectedChapter": "30",
+        "expectedHeading": "3004",
+        "expected8Digit": "3004.90.11",
+        "category": "Pharmaceuticals",
+        "subcategory": "Ayurvedic",
+        "difficulty": "medium",
+        "keyDistinction": "ayurvedic_is_medicament",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 244,
+      "outputTokens": 2,
+      "totalTokens": 530,
+      "elapsedMs": 2799,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC210",
+        "query": "vitamin C tablets 1000mg food supplement",
+        "expectedChapter": "21",
+        "expectedHeading": "2106",
+        "expected8Digit": "2106.90.99",
+        "category": "Pharmaceuticals",
+        "subcategory": "Supplements",
+        "difficulty": "hard",
+        "keyDistinction": "food_supplement_ch21",
+        "source": "prompt.md",
+        "notes": "Food supplements can be Ch.21, not Ch.30",
+        "tier": 1
+      },
+      "promptTokens": 248,
+      "outputTokens": 9,
+      "totalTokens": 544,
+      "elapsedMs": 2651,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC001",
+        "query": "ceramic brake pads for heavy trucks",
+        "expectedChapter": "87",
+        "expectedHeading": "8708",
+        "expected8Digit": "8708.30.00",
+        "category": "Vehicle Parts",
+        "subcategory": "Brakes",
+        "difficulty": "medium",
+        "keyDistinction": "function_over_material",
+        "source": "WCO Classification Opinion",
+        "notes": "Ch.87 Note 2 - parts classified by function regardless of material",
+        "tier": 1
+      },
+      "promptTokens": 243,
+      "outputTokens": 9,
+      "totalTokens": 537,
+      "elapsedMs": 2580,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC002",
+        "query": "steel brake discs for passenger cars",
+        "expectedChapter": "87",
+        "expectedHeading": "8708",
+        "expected8Digit": "8708.30.00",
+        "category": "Vehicle Parts",
+        "subcategory": "Brakes",
+        "difficulty": "easy",
+        "keyDistinction": "function_over_material",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 243,
+      "outputTokens": 1,
+      "totalTokens": 528,
+      "elapsedMs": 2393,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC003",
+        "query": "rubber oil seals for automobile engines",
+        "expectedChapter": "87",
+        "expectedHeading": "8708",
+        "expected8Digit": "8708.99.00",
+        "category": "Vehicle Parts",
+        "subcategory": "Engine Parts",
+        "difficulty": "hard",
+        "keyDistinction": "function_over_material",
+        "source": "prompt.md",
+        "notes": "Could be confused with Ch.40 rubber",
+        "tier": 1
+      },
+      "promptTokens": 243,
+      "outputTokens": 1,
+      "totalTokens": 528,
+      "elapsedMs": 2464,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC004",
+        "query": "aluminium alloy wheels for cars",
+        "expectedChapter": "87",
+        "expectedHeading": "8708",
+        "expected8Digit": "8708.70.00",
+        "category": "Vehicle Parts",
+        "subcategory": "Wheels",
+        "difficulty": "medium",
+        "keyDistinction": "function_over_material",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 0,
+      "totalTokens": 527,
+      "elapsedMs": 2946,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC005",
+        "query": "plastic bumper for Toyota Innova",
+        "expectedChapter": "87",
+        "expectedHeading": "8708",
+        "expected8Digit": "8708.10.00",
+        "category": "Vehicle Parts",
+        "subcategory": "Body Parts",
+        "difficulty": "medium",
+        "keyDistinction": "function_over_material",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 243,
+      "outputTokens": 1,
+      "totalTokens": 528,
+      "elapsedMs": 2472,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC006",
+        "query": "clutch plate assembly for Tata truck",
+        "expectedChapter": "87",
+        "expectedHeading": "8708",
+        "expected8Digit": "8708.93.00",
+        "category": "Vehicle Parts",
+        "subcategory": "Transmission",
+        "difficulty": "easy",
+        "keyDistinction": "none",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 243,
+      "outputTokens": 9,
+      "totalTokens": 538,
+      "elapsedMs": 2413,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC007",
+        "query": "shock absorber for Maruti Swift",
+        "expectedChapter": "87",
+        "expectedHeading": "8708",
+        "expected8Digit": "8708.80.00",
+        "category": "Vehicle Parts",
+        "subcategory": "Suspension",
+        "difficulty": "easy",
+        "keyDistinction": "none",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 9,
+      "totalTokens": 537,
+      "elapsedMs": 2324,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC008",
+        "query": "air filter for diesel engine truck",
+        "expectedChapter": "84",
+        "expectedHeading": "8421",
+        "expected8Digit": "8421.31.00",
+        "category": "Vehicle Parts",
+        "subcategory": "Filters",
+        "difficulty": "hard",
+        "keyDistinction": "could_be_ch84",
+        "source": "prompt.md",
+        "notes": "Filters can be 8421 or 8708 depending on specificity",
+        "tier": 1
+      },
+      "promptTokens": 243,
+      "outputTokens": 2,
+      "totalTokens": 529,
+      "elapsedMs": 2736,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC009",
+        "query": "fuel injection pump for car",
+        "expectedChapter": "87",
+        "expectedHeading": "8708",
+        "expected8Digit": "8708.99.00",
+        "category": "Vehicle Parts",
+        "subcategory": "Fuel System",
+        "difficulty": "medium",
+        "keyDistinction": "function_over_material",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 7,
+      "totalTokens": 537,
+      "elapsedMs": 2663,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC010",
+        "query": "windscreen wiper motor 12V automotive",
+        "expectedChapter": "85",
+        "expectedHeading": "8501",
+        "expected8Digit": "8501.10.00",
+        "category": "Vehicle Parts",
+        "subcategory": "Electrical",
+        "difficulty": "hard",
+        "keyDistinction": "electrical_component",
+        "source": "prompt.md",
+        "notes": "Electric motors go to Ch.85 even if for vehicles",
+        "tier": 1
+      },
+      "promptTokens": 245,
+      "outputTokens": 0,
+      "totalTokens": 529,
+      "elapsedMs": 2505,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC011",
+        "query": "car battery 12V 65Ah",
+        "expectedChapter": "85",
+        "expectedHeading": "8507",
+        "expected8Digit": "8507.10.00",
+        "category": "Vehicle Parts",
+        "subcategory": "Electrical",
+        "difficulty": "medium",
+        "keyDistinction": "electrical_component",
+        "source": "prompt.md",
+        "notes": "Batteries always Ch.85",
+        "tier": 1
+      },
+      "promptTokens": 247,
+      "outputTokens": 2,
+      "totalTokens": 533,
+      "elapsedMs": 2700,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC012",
+        "query": "silicone radiator hose for bus",
+        "expectedChapter": "87",
+        "expectedHeading": "8708",
+        "expected8Digit": "8708.91.00",
+        "category": "Vehicle Parts",
+        "subcategory": "Cooling System",
+        "difficulty": "hard",
+        "keyDistinction": "function_over_material",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 2,
+      "totalTokens": 528,
+      "elapsedMs": 2899,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC013",
+        "query": "truck tyre 315/80R22.5 radial",
+        "expectedChapter": "40",
+        "expectedHeading": "4011",
+        "expected8Digit": "4011.20.00",
+        "category": "Vehicle Parts",
+        "subcategory": "Tyres",
+        "difficulty": "easy",
+        "keyDistinction": "tyres_always_ch40",
+        "source": "prompt.md",
+        "notes": "Tyres are exception - always Ch.40 not Ch.87",
+        "tier": 1
+      },
+      "promptTokens": 252,
+      "outputTokens": 1,
+      "totalTokens": 537,
+      "elapsedMs": 2355,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC014",
+        "query": "inner tube for motorcycle tyre",
+        "expectedChapter": "40",
+        "expectedHeading": "4013",
+        "expected8Digit": "4013.90.00",
+        "category": "Vehicle Parts",
+        "subcategory": "Tyres",
+        "difficulty": "easy",
+        "keyDistinction": "tyres_always_ch40",
+        "source": "prompt.md",
+        "tier": 1
+      },
+      "promptTokens": 242,
+      "outputTokens": 1,
+      "totalTokens": 528,
+      "elapsedMs": 2767,
+      "http_status": 200
+    },
+    {
+      "case": {
+        "id": "TC015",
+        "query": "motorcycle helmet ISI approved",
+        "expectedChapter": "65",
+        "expectedHeading": "6506",
+        "expected8Digit": "6506.10.00",
+        "category": "Vehicle Accessories",
+        "subcategory": "Safety Gear",
+        "difficulty": "medium",
+        "keyDistinction": "headgear_not_vehicle_parts",
+        "source": "prompt.md",
+        "notes": "Helmets are headgear Ch.65, not vehicle parts",
+        "tier": 1
+      },
+      "promptTokens": 241,
+      "outputTokens": 0,
+      "totalTokens": 526,
+      "elapsedMs": 2647,
+      "http_status": 200
+    }
+  ]
+}
