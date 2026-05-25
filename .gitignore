@@ -148,6 +148,10 @@ backend/.env
 backend/.env.local
 backend/.env.production
 
+# Service account credentials (CRITICAL — never commit)
+backend/.gcp/
+*.gcp.json
+
 # Build output
 backend/dist/
 backend/build/
