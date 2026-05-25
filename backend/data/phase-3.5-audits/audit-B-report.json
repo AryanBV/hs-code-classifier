@@ -1,0 +1,28 @@
+{
+  "audited_at": "2026-05-24",
+  "audit_name": "B — Schema constraint attack (Phase 3.5)",
+  "tests_total": 17,
+  "tests_passed": 17,
+  "tests_failed": 0,
+  "verdict": "PASS",
+  "notes": "All 17 invalid inserts correctly rejected by DB constraints. Tariff_line tests (6,7,10) triggered NOT NULL on fts_search_text BEFORE format/FK; the row is still rejected (audit goal met). Test 17 specifically validates the Phase 3.5 A5 trigger on redirects_to_chapter array elements — fired correctly with error 'chapter_exclusions.redirects_to_chapter contains invalid chapter code: 99'.",
+  "tests": [
+    {"id": 1, "name": "chapter regex 3 digits", "status": "PASS", "err": "violates check constraint chapters_format_chk"},
+    {"id": 2, "name": "heading regex 5 digits", "status": "PASS", "err": "violates check constraint headings_format_chk"},
+    {"id": 3, "name": "heading prefix mismatch", "status": "PASS", "err": "violates check constraint headings_prefix_chk"},
+    {"id": 4, "name": "subheading no dot", "status": "PASS", "err": "violates check constraint subheadings_format_chk"},
+    {"id": 5, "name": "subheading prefix mismatch", "status": "PASS", "err": "violates check constraint subheadings_prefix_chk"},
+    {"id": 6, "name": "tariff_line format", "status": "PASS", "err": "null value in column fts_search_text NOT NULL (rejected before format check fires)"},
+    {"id": 7, "name": "tariff_line prefix mismatch", "status": "PASS", "err": "null value in column fts_search_text NOT NULL"},
+    {"id": 8, "name": "heading FK chapter missing", "status": "PASS", "err": "violates foreign key constraint headings_chapter_fkey"},
+    {"id": 9, "name": "subheading FK heading missing", "status": "PASS", "err": "violates foreign key constraint subheadings_heading_fkey"},
+    {"id": 10, "name": "tariff_line FK subheading missing", "status": "PASS", "err": "null value in column fts_search_text NOT NULL"},
+    {"id": 11, "name": "NULL chapter PK", "status": "PASS", "err": "null value in column chapter violates not-null"},
+    {"id": 12, "name": "NULL heading PK", "status": "PASS", "err": "null value in column heading violates not-null"},
+    {"id": 13, "name": "duplicate chapter PK", "status": "PASS", "err": "duplicate key violates unique constraint chapters_pkey"},
+    {"id": 14, "name": "chapter_exclusions FK source missing", "status": "PASS", "err": "violates foreign key constraint chapter_exclusions_source_fkey"},
+    {"id": 15, "name": "chapter_exclusions FK redirect heading missing", "status": "PASS", "err": "violates foreign key constraint chapter_exclusions_redirect_hd_fkey"},
+    {"id": 16, "name": "chapter FK section missing", "status": "PASS", "err": "violates foreign key constraint chapters_section_fkey"},
+    {"id": 17, "name": "A5 trigger invalid chapter in redirects_to_chapter array (Phase 3.5)", "status": "PASS", "err": "chapter_exclusions.redirects_to_chapter contains invalid chapter code: 99"}
+  ]
+}

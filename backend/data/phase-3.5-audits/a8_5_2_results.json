@@ -1,0 +1,20 @@
+{
+  "audited_at": "2026-05-24",
+  "passed": 10,
+  "total": 10,
+  "verdict": "PASS",
+  "method": "10 random tariff_lines pulled with their parent titles; fts_search_text compared against re-computed CONCAT_WS(' ', chapter.title, heading.title, subheading.title, description).",
+  "results": [
+    {"code": "8414.10.90", "status": "PASS"},
+    {"code": "5210.59.90", "status": "PASS"},
+    {"code": "3923.29.10", "status": "PASS"},
+    {"code": "0302.56.00", "status": "PASS"},
+    {"code": "5407.10.49", "status": "PASS"},
+    {"code": "0706.90.30", "status": "PASS"},
+    {"code": "4418.11.00", "status": "PASS"},
+    {"code": "8423.10.00", "status": "PASS_with_cosmetic_diff", "detail": "When subheading.title='' (empty string, 454 such rows total), the trigger produces a double-space artifact (e.g. 'kinds.  Personal' instead of 'kinds. Personal'). Functional impact: ZERO — to_tsvector('english', ...) treats any whitespace run as a token boundary. This is cosmetic only; FTS matching, tokenization, and ranking are unaffected."},
+    {"code": "8447.12.90", "status": "PASS"},
+    {"code": "3926.90.80", "status": "PASS"}
+  ],
+  "follow_up_recommendation": "Optional: tighten the refresh_fts_search_text trigger to use NULLIF(BTRIM(...), '') for each title segment. Not blocking — FTS works correctly today."
+}

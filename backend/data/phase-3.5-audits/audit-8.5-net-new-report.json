@@ -1,0 +1,63 @@
+{
+  "audited_at": "2026-05-24",
+  "audit_name": "A8.5 — Phase 3.5 net-new audits",
+  "summary": {
+    "a8_5_1": {"passed": 10, "total": 10, "verdict": "PASS"},
+    "a8_5_2": {"passed": 10, "total": 10, "verdict": "PASS"},
+    "a8_5_3": {"passed": 5, "total": 5, "verdict": "PASS"},
+    "a8_5_4": {"verdict": "PASS"},
+    "a8_5_5": {"verdict": "PASS"}
+  },
+  "a8_5_1_new_exclusion_rules_spot_check": {
+    "method": "10 random rows with id >= 2646 (post-A1-enrichment) traced to source PDF chapter-NN.json files. A1b 'reciprocal' rules (synthesized from WCO HSE General Notes) accepted without explicit PDF needle, since they're cross-chapter analytical rules.",
+    "results": [
+      {"id": 2800, "chapter": "57", "status": "PASS", "detail": "Section XI Note 1(g) (monofilament -> Ch.39/46) — traced to chapter-50.json (sister chapter in Section XI)"},
+      {"id": 2682, "chapter": "31", "status": "PASS", "detail": "Section VI Note 2 (goods classifiable in 3004 etc.) — traced to chapter-31.json"},
+      {"id": 2737, "chapter": "53", "status": "PASS", "detail": "Section XI Note 1(g) — traced to chapter-53.json"},
+      {"id": 3024, "chapter": "09", "status": "PASS", "detail": "A1b WCO HSE reciprocal rule (extracts/essences of coffee/tea -> 2101). Cross-chapter analytical exclusion; sister evidence in chapter-13 Note 1(c)."},
+      {"id": 2693, "chapter": "50", "status": "PASS", "detail": "Section XI Note 1(e) (articles of 3005/3006) — traced to chapter-50.json"},
+      {"id": 3027, "chapter": "02", "status": "PASS", "detail": "A1b WCO HSE reciprocal (meat preparations -> Ch.16). Cross-chapter analytical exclusion derived from Chapter 16 Note 1."},
+      {"id": 2803, "chapter": "57", "status": "PASS", "detail": "Section XI Note 1(k) (hides/skins -> Ch.41/43) — traced to chapter-50.json"},
+      {"id": 2684, "chapter": "34", "status": "PASS", "detail": "Section VI Note 1(A) (radioactive ores -> 2844/2845) — traced to chapter-34.json"},
+      {"id": 2977, "chapter": "33", "status": "PASS", "detail": "Chapter 33 Note 1(a) (natural oleoresins -> 1301/1302) — traced to chapter-33.json"},
+      {"id": 2709, "chapter": "50", "status": "PASS", "detail": "Section XI Note 1(v) (paintings/drawings/sculpture -> Ch.97). A1 enrichment from canonical WCO HSE Section XI Note 1; Indian PDF didn't capture the (v) subitem locally but the exclusion is authoritative WCO global text. Chapter 97 is correctly identified as the target."}
+    ]
+  },
+  "a8_5_2_fts_search_text_concat": {
+    "method": "10 random tariff_lines; recompute expected concat via CONCAT_WS(' ', chapter.title, heading.title, subheading.title, description) BTRIM and compare against fts_search_text.",
+    "passed": 10,
+    "total": 10,
+    "verdict": "PASS",
+    "cosmetic_finding": "1 row (8423.10.00) has a double-space artifact because subheading.title is empty ('' — 454 such rows). FTS impact: ZERO (to_tsvector treats any whitespace run as a token boundary). Functionally correct. Optional follow-up: tighten trigger to skip empty segments via NULLIF(BTRIM(...), '')."
+  },
+  "a8_5_3_redirects_array_integrity": {
+    "method": "5 random non-NULL redirects_to_chapter rows + global integrity SQL",
+    "verdict": "PASS",
+    "sample_rows": [
+      {"id": 1891, "redirects_to_chapter": ["65"], "all_exist": true},
+      {"id": 2347, "redirects_to_chapter": ["85"], "all_exist": true},
+      {"id": 2241, "redirects_to_chapter": ["97"], "all_exist": true},
+      {"id": 2697, "redirects_to_chapter": ["40"], "all_exist": true},
+      {"id": 1853, "redirects_to_chapter": ["66"], "all_exist": true}
+    ],
+    "global_integrity": {
+      "total_rows": 1505,
+      "null_redirect": 117,
+      "rows_with_text_array_type": 1505,
+      "rows_with_unsorted_array": 0,
+      "rows_with_NULL_element_in_array": 0,
+      "rows_with_invalid_chapter_in_array": 0
+    }
+  },
+  "a8_5_4_trigger_rejects_invalid_chapter": {
+    "method": "Attempt INSERT with ARRAY['99','XX']::text[] into redirects_to_chapter; expect trigger raise.",
+    "result": "Trigger raised exception: 'chapter_exclusions.redirects_to_chapter contains invalid chapter code: 99'",
+    "note": "Trigger validates EACH array element against chapters table; first invalid element '99' caused immediate rejection (XX not even reached, expected behavior).",
+    "verdict": "PASS"
+  },
+  "a8_5_5_pf8_idempotency": {
+    "method": "Insert ('01', 'A8.5.5 dup test', 'TEST') twice with ON CONFLICT ON CONSTRAINT chapter_exclusions_idempotent_key DO NOTHING; expect first insert to succeed and second to be skipped.",
+    "result": "INSERT_1 returned id=3032 (succeeded), INSERT_2 returned no row (correctly suppressed by ON CONFLICT). Cleanup DELETE confirmed remaining=0.",
+    "verdict": "PASS"
+  }
+}

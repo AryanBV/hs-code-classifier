@@ -1,0 +1,1 @@
+SELECT chapter, section, title, notes, chapter_subheading_notes, supplementary_notes, export_licensing_notes, definitions, notes_sources FROM chapters WHERE chapter IN ('05','07','08','10','27','33','37','39','41','53','54','61','63','69','70','84','94','96','97','98');

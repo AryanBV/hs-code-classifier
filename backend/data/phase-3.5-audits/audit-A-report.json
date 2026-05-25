@@ -1,0 +1,67 @@
+{
+  "audited_at": "2026-05-24",
+  "audit_name": "A — DB <-> canonical JSON spot-check (Phase 3.5 re-run)",
+  "samples_total": 220,
+  "matches": 214,
+  "raw_mismatches": 6,
+  "phase_3_5_caused_mismatches": 0,
+  "pre_existing_data_quirks": 6,
+  "verdict": "PASS",
+  "interpretation": "All 6 mismatches are pre-existing data quirks (PDF OCR artifacts, double-encoded UTF-8 in source JSONs, source_note_text quote escapes) that pre-date Phase 3.5. Phase 3.5 introduces ZERO new drift. The Phase 2 baseline reported 220/220 because that baseline ran a different random seed (20260523) that didn't sample any of these specific cells; the Phase 3.5 seed (20260524) happened to hit them.",
+  "pre_existing_quirks": [
+    {
+      "table": "tariff_lines",
+      "key": "0506.10.39",
+      "field": "policy_condition",
+      "db_value": "Subject to Policy Condition 1, 3 &4 Chapter",
+      "json_value": "Subject to Policy Condition 1, 3 &4 of the Chapter",
+      "type": "PDF extraction OCR - DB missing 'of the' words from source PDF column",
+      "phase_3_5_responsibility": false
+    },
+    {
+      "table": "tariff_lines",
+      "key": "1006.30.19",
+      "field": "policy_condition",
+      "type": "OCR mangle - DB has 'I c e l a n Liechtenstein' (missing 'd' and comma), JSON has 'I c e l a n d , Liechtenstein'. Same PDF-rip artifact; minor letter dropout.",
+      "phase_3_5_responsibility": false
+    },
+    {
+      "table": "chapters",
+      "key": "70",
+      "field": "chapter_subheading_notes",
+      "db_value": "<list len=1>",
+      "json_value": "<list len=0>",
+      "detail": "DB has 1 subheading note for 7013 lead crystal definition; canonical JSON has empty list. The DB row was an enrichment from Phase 2 PDF re-extraction; the JSON file was not updated to match.",
+      "phase_3_5_responsibility": false
+    },
+    {
+      "table": "chapter_exclusions",
+      "key": "89/Joints,washers...",
+      "field": "source_note_text",
+      "type": "Quote-escape difference - DB has '\"\"parts\"\"' (double-double-quote artifact from CSV-like source); JSON has '\"parts\"'. Cosmetic only.",
+      "phase_3_5_responsibility": false
+    },
+    {
+      "table": "chapter_exclusions",
+      "key": "63/carpets (when worn)",
+      "field": "ROW match (excluded_product_text encoding)",
+      "type": "Double-encoded UTF-8 mojibake in source chapter-63.json. The em-dash 'EM-DASH' is stored as latin-1-of-utf-8 in the JSON file. DB has proper UTF-8. JSON-side defect, not DB-side.",
+      "phase_3_5_responsibility": false
+    },
+    {
+      "table": "chapter_exclusions",
+      "key": "95/Radio remote control",
+      "field": "source_note_text",
+      "type": "Quote-escape difference - DB has '\"\"\"smart cards\"\"\"' (triple-double-quote); JSON has '\"smart cards\"'. Cosmetic.",
+      "phase_3_5_responsibility": false
+    }
+  ],
+  "table_breakdown": {
+    "tariff_lines": {"sampled": 100, "matches": 98, "quirks": 2},
+    "subheadings": {"sampled": 50, "matches": 50, "quirks": 0},
+    "headings": {"sampled": 20, "matches": 20, "quirks": 0},
+    "chapters": {"sampled": 20, "matches": 19, "quirks": 1},
+    "chapter_exclusions": {"sampled": 30, "matches": 27, "quirks": 3}
+  },
+  "follow_up_recommendation": "Optional cleanup: regenerate the chapter-NN.json source files with strict UTF-8 (chapter-63 in particular) and clean up the CSV double-quote artifacts in chapter-89 and chapter-95 source_note_text. None are blockers for Phase 4."
+}

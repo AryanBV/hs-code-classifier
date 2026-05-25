@@ -1,0 +1,11 @@
+{
+  "audited_at": "2026-05-24",
+  "audit_name": "C — PDF (canonical JSON) ↔ DB cross-check",
+  "chapters_sampled": 30,
+  "codes_sampled": 298,
+  "matches": 298,
+  "mismatches": 0,
+  "verdict": "PASS",
+  "method": "30 random chapters, ~10 random tariff_lines each from extracted/*.json canonical (PDF-derived), compared against DB tariff_lines.description and export_policy via SQL VALUES WHERE-IS-DISTINCT-FROM diff. Zero mismatches.",
+  "sampling_seed": 20260524
+}
