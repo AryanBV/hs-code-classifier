@@ -1,3 +1,6 @@
+> ⚠️ **RESEARCH ARTIFACT — SUPERSEDED BY D1 LOCK 2026-05-25**
+> Locked Phase 4 Deep-think uses Gemini 3.5 Flash with `thinking_level=high` @ Vertex `global`. Active spec: `backend/docs/ARCHITECTURE.md`. Preserved as Deep-think OSS fallback option for 2027 cutover.
+
 # Deep-think OSS Reasoning Research — 2026-05-25
 
 ## Decision under evaluation

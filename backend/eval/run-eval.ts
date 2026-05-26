@@ -3,8 +3,21 @@
  *
  * Walks all 168 cases in `backend/eval/cases.json`, calls `classifyStub()` for
  * each query, scores predictions at 2/4/6/8-digit granularity, and writes a
- * baseline JSON report. Phase 4 will swap the stub for the real classifier and
- * this same runner will produce the first real baseline.
+ * baseline JSON report.
+ *
+ * Phase 4 will swap the stub for the real v2 classifier at
+ * `backend/src/classifier-v2/` (locked spec: `backend/docs/ARCHITECTURE.md`,
+ * 2026-05-26) and this same runner will produce the first real baseline.
+ *
+ * v2 metrics to capture (added at Phase 4 wiring time — runner shape supports them):
+ *   - Layer 5 Mechanical Verifier rule-failure rates: count per-case how often
+ *     the verifier rejected/flagged the Select output (chapter_exclusions hit,
+ *     section-note conflict, GIR mis-application). Surfaces classifier
+ *     over-confidence at the rule layer without re-running the LLM.
+ *   - Per-chapter accuracy segmentation: bucket case results by
+ *     `chapterOf(expected_code)` so weak chapters (e.g. 84 machinery, 87
+ *     vehicle parts) can be identified post-eval and addressed via targeted
+ *     rule / notes-injection work rather than blanket prompt tweaks.
  *
  * Run: cd backend && npx tsx eval/run-eval.ts
  *

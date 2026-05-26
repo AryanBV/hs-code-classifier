@@ -1,3 +1,6 @@
+> ⚠️ **RESEARCH ARTIFACT — SUPERSEDED BY D1 LOCK 2026-05-25**
+> Locked Phase 4 stack is all-Gemini-3.5-Flash @ Vertex `global`. Active spec: `backend/docs/ARCHITECTURE.md`. Preserved for the post-credit-expiry (2027) OSS cutover plan.
+
 # Open-Source Model Stack Research — 2026-05-25
 
 **Workload context:** HS-code classifier for Indian SME exporters. ~100K queries/month target. Five distinct LLM stages with strict-JSON-schema enforcement on every stage (Select is the highest-stakes regulatory-text interpretation node). Current proprietary stack costs ~$437/mo and the models we're already using (GPT-4.1 mini, Gemini 2.5 Flash) are being deprecated Oct 2026.

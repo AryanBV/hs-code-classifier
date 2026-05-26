@@ -18,6 +18,8 @@ API router: `backend/src/api/classify.ts` — 3 endpoints:
 
 ### Classification Pipeline
 
+**Note (2026-05-26):** This describes the LEGACY classifier in `backend/src/classifier/`. The new Phase 4 v2 architecture (in `backend/src/classifier-v2/`, not yet implemented) is documented at `backend/docs/ARCHITECTURE.md`.
+
 5-stage pipeline orchestrated by `backend/src/classifier/index.ts` (exports `classify()`, `continueWithAnswer()`):
 
 **Stage 0 — Specificity Analysis** (`backend/src/classifier/specificity-analyzer.ts`)
@@ -60,8 +62,8 @@ API client: `frontend/src/lib/api-client.ts` — Axios client pointing to `NEXT_
 | `chapters` | 97 | 2-digit, FK→sections, with 7 JSONB note columns (notes, chapter_subheading_notes, supplementary_notes, export_licensing_notes, definitions, extraction_warnings, notes_sources) |
 | `headings` | 1,232 | 4-digit, FK→chapters |
 | `subheadings` | 5,613 | 6-digit "NNNN.NN", FK→headings, flags: india_specific, wco_2022_match, india_specific_note |
-| `tariff_lines` | 12,460 | 8-digit "NNNN.NN.NN", FK→subheadings, columns: description, unit (NULL for now), export_policy, policy_condition, embedding (vector 1536, populated in Phase 5) |
-| `chapter_exclusions` | 1,153 | Structured "Ch.X does not cover Y → redirects to Z" rules with tsvector FTS on excluded_product_text |
+| `tariff_lines` | 12,460 | 8-digit "NNNN.NN.NN", FK→subheadings, columns: description, unit (NULL for now), export_policy, policy_condition, embedding (vector 1536, 19,402 hierarchical embeddings populated per 2026-05-26 DB inspection) |
+| `chapter_exclusions` | 1,505 | Structured "Ch.X does not cover Y → redirects to Z" rules (Phase 3.5 +352 net after cleanup). `redirects_to_chapter` is text[] (Phase 3.5 A5); trigger-validated against chapters table. |
 | `policy_conditions` | 0 | Sidecar; current Indian policy data lives at tariff_line level via `policy_condition` field |
 
 **Code formats (DB-enforced via CHECK constraints):**
@@ -75,8 +77,11 @@ API client: `frontend/src/lib/api-client.ts` — Axios client pointing to `NEXT_
 **Legacy `hs_codes` table dropped.** Backup at `backend/backups/legacy-tables-2026-05-22T20-01-56.json` (156 MB, gitignored).
 
 ### External APIs
-- OpenAI: GPT-4o-mini for classification LLM calls, text-embedding-3-small for vector embeddings
-- Supabase: PostgreSQL database + pgvector for semantic search
+- **Vertex AI (Gemini)** — Phase 4 v2 runtime LLM stack. Auth via service-account JSON at `backend/.gcp/vertex-sa.json` (`GOOGLE_APPLICATION_CREDENTIALS`). Models: `gemini-3.5-flash` (Triage+Select) and `gemini-3.1-pro` (Tiebreak+Deep-Think). GDP Premium GenAI Credit-covered through 2027-05-08.
+- **Cohere** — embeddings (embed-v4) + rerank (Rerank 4 Pro). Via own `COHERE_API_KEY` env var on Cohere's billing (NOT through Vertex; NOT credit-covered; ~$300/mo cash at 100K queries).
+- **OpenAI** — `OPENAI_API_KEY` available in env. Used by LEGACY classifier (GPT-4o-mini + text-embedding-3-small). For v2 runtime use: ASK USER FIRST before invoking — default v2 plan does NOT use OpenAI at runtime.
+- **Anthropic (Claude)** — via user's Claude Max subscription, NOT via API key (no Anthropic API key in env). Build-time only (offline data engineering jobs O1-O5 using Opus 4.7). Not deployable as a runtime service.
+- **Supabase** — PostgreSQL database + pgvector for semantic search.
 
 ## Key Data Files
 
@@ -130,7 +135,7 @@ The `hs_codes.notes` JSONB field contains: chapterNotes (array), sectionNotes (a
 Data quality status (post-Phase-2):
 - All 97 chapters have verified notes (4 outlier chapters Ch.50/53/64/81 patched from WCO HS 2022 / UK HMRC trade-tariff)
 - 99.4% export_policy coverage at tariff_line level (76 PDF-blank NULLs verified legitimate)
-- 1,153 chapter_exclusion rules with FK redirects (rules-aware foundation for Phase 6)
+- 1,505 chapter_exclusion rules with array-redirects + trigger validation (Phase 3.5 enriched +352 net; rules-aware foundation for Phase 6)
 - 7 india_specific subheadings flagged where India retained pre-HS-2022 codes
 
 ### 3. OpenAI Response Format
@@ -158,15 +163,17 @@ Test case format:
 ```
 
 ## Current Status (May 2026)
-- **Phase 2 (data foundation) COMPLETE** — 97 chapters / 12,460 tariff_lines / 1,153 exclusions, 7-audit verified, FK+CHECK constraints enforced
-- Legacy `hs_codes` table dropped; backend classifier code in `backend/src/classifier/` still references it and will break until Phase 4 rebuild
-- **Operative resume brief:** `C:\Users\ASUS\.claude\plans\eager-napping-dijkstra-resume.md` (single source of truth across sessions)
-- Next: Phase 3 architecture spike — manually trace 10-20 hard cases through the new pipeline design before building Phase 4-7
+- **Phase 2 + 3 + 3.5 COMPLETE** — 97 chapters / 12,460 tariff_lines / 1,505 chapter_exclusions, fts_search_text + GIN, sections.notes JSONB, all spike-fix rules verified
+- Legacy `hs_codes` table dropped; legacy classifier in `backend/src/classifier/` transitively depends on `backend/src/database/hs-codes.ts` and will be replaced by Phase 4's `backend/src/classifier-v2/`
+- **Locked Phase 4 spec:** `backend/docs/ARCHITECTURE.md` — **v2 LOCKED 2026-05-26 (supersedes v1 2026-05-25)**. Runtime is all-Gemini with cross-MODEL diversity within the Gemini family: `gemini-3.5-flash` (Triage + Select, `thinking_level=low`) and `gemini-3.1-pro` (Tiebreak + Deep-Think, `thinking_level=high`). Cohere (embed + rerank) integrated via own `COHERE_API_KEY` — NOT via Vertex, NOT credit-covered. 8-layer pipeline adds Layer 0 Input Normalization, Layer 5 Mechanical Verifier (10 rules, pure SQL+code), Layer 8 Active Learning (case_law table). Build-time offline jobs (O1-O5) use Opus 4.7 via Claude Max subscription.
+- **Operative resume brief:** `C:\Users\ASUS\.claude\plans\ultrathink-i-m-resuming-the-zesty-candle.md` (v1→v2 transition rationale)
+- Next: Phase 4 v2 brain rebuild — implementer awaits user authorization to begin; first work is build-time offline jobs (notes_claims, tariff_line_attributes, QGS templates, India alias map) in parallel with runtime skeleton on `feat/phase-4-pipeline-build`.
 
 ## Roadmap
 - ✓ Phase 1: Eval harness (168 cases, on `feat/phase-1-eval-harness`)
 - ✓ Phase 2: Data foundation (normalized schema + canonical data + 7-audit verified)
-- → Phase 3: Architecture spike (validate pipeline on 15 hard cases on paper)
-- Phase 4: Brain rebuild — flip refuse-when-uncertain, fix 8 diagnosed legacy bugs
+- ✓ Phase 3: Architecture spike — 30 paper-traces, 29/30 CORRECT, verdict PROCEED_TO_PHASE_4
+- ✓ Phase 3.5 (May 2026): Data completion + architecture lock-in — chapter_exclusions +352 rules, fts_search_text + text[] + sections.notes, A9 empirical proof 10/10 CORRECT, D1 model stack LOCKED. 8 carryforwards in ARCHITECTURE.md §12.
+- → Phase 4: Brain rebuild — v2 architecture (8-layer pipeline with Mechanical Verifier + Active Learning + QGS), implementer awaits user authorization to begin
 - M4: Trade intelligence — duty rates, export policy on every result
 - M5: Ship — PDF reports, CI, feedback, investor demo

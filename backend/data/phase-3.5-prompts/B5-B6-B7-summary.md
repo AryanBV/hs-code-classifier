@@ -1,3 +1,5 @@
+_Summary written pre-D1 lock; prompts have since been updated to all-Gemini stack._
+
 # B5/B6/B7 — Phase 4 Runtime Prompts Summary
 
 **Date:** 2026-05-25

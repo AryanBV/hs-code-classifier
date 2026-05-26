@@ -1,3 +1,6 @@
+> ⚠️ **SUPERSEDED BY D1 LOCK 2026-05-25**
+> B3 measurement was on the deprecated GPT-4.1 mini + Gemini 2.5 Flash stack. Phase 4 cost/correctness measurement happens via the 168-case eval against the locked Gemini 3.5 Flash stack. Active spec: `backend/docs/ARCHITECTURE.md`.
+
 # B3 — Cost-Model 5 End-to-End Traces
 
 ## Run metadata

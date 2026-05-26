@@ -3,10 +3,47 @@
 Walkthrough to provision a GCP service-account JSON key so we can call Gemini 3.x via Vertex AI Platform API. Replaces the API-key path (which only reaches Gemini 2.5).
 
 - **Project ID**: `gen-lang-client-0962892937`
-- **Region**: `us-central1`
-- **Target model**: `gemini-3.5-flash`
+- **Region**: `global` (Gemini 3.x endpoint availability)
+- **Target models (v2 architecture)**: `gemini-3.5-flash` AND `gemini-3.1-pro`
 - **Time**: ~10 minutes
 - **Cost**: smoke test ≈ $0.0001, billed against existing credits (Free Trial $326 / GenAI App Builder $1,130)
+
+---
+
+## v2 architecture model tiers + SDK + auth scope (READ FIRST)
+
+The locked v2 architecture (`backend/docs/ARCHITECTURE.md`, 2026-05-26) uses TWO Gemini tiers — this single service-account auth path covers both:
+
+| Tier | Model | Used by | Notes |
+|---|---|---|---|
+| Flash | `gemini-3.5-flash` | Triage + Select | Fast, low cost. Use `thinking_level: 'low'`. |
+| Pro | `gemini-3.1-pro` | Tiebreak + Deep-Think | Higher reasoning. Use `thinking_level: 'high'`. |
+
+**Both tiers are reachable from the same SA + the same `roles/aiplatform.user` role** — no extra IAM grants needed when promoting from Flash-only smoke tests to the full v2 pipeline.
+
+### SDK choice
+
+- **USE** `@google/genai` (the modern unified Google GenAI SDK) for new code.
+- **DO NOT USE** `@google-cloud/vertexai` — it is deprecated.
+- The existing smoke test (`scripts/verify-vertex-sa.ts`) uses raw HTTP via `google-auth-library`, which is fine for the smoke path. Phase 4 classifier code should be on `@google/genai`.
+
+### Request-shape gotcha (thinking config)
+
+Gemini 3.x is a "thinking model". The request payload accepts **either**:
+- The `thinking_level` enum: `'low' | 'high'` (preferred — used everywhere in the v2 pipeline)
+- The integer `thinkingBudget` (legacy)
+
+**Never mix them in the same call** — the API returns HTTP 400 INVALID_ARGUMENT. Pick one (enum) and stay on it.
+
+### Other API keys / auth in the v2 stack (NOT through Vertex)
+
+| Provider | Auth | Env var | Notes |
+|---|---|---|---|
+| Cohere (Rerank) | API key | `COHERE_API_KEY` | NOT through Vertex — billed on Cohere's own platform. |
+| OpenAI | API key | `OPENAI_API_KEY` | Available but ask the user before any runtime use. |
+| Anthropic Opus 4.7 / Sonnet 4.6 | Claude Max subscription | (none — uses Claude Code subagents) | Build-time correctness work only; no API key needed. |
+
+The Vertex service account JSON in this guide covers ONLY the Gemini calls.
 
 ---
 
@@ -116,10 +153,12 @@ Open `backend/.env` and append:
 # Vertex AI service-account auth (Gemini 3.x)
 GOOGLE_APPLICATION_CREDENTIALS=./.gcp/vertex-sa.json
 GCP_PROJECT_ID=gen-lang-client-0962892937
-GCP_LOCATION=us-central1
+GCP_LOCATION=global
 ```
 
 The relative path resolves from whatever cwd the script runs in. The smoke test and any classifier code must be invoked from `backend/` (which is already the convention).
+
+**Note:** Gemini 3.5 Flash is available globally via `projects/{project}/locations/global/endpoints/...` endpoint URLs. Regional endpoints (`us-central1`, etc.) are deprecated for this model.
 
 ---
 
@@ -199,7 +238,7 @@ If charges hit the underlying card instead of credits, STOP and surface to coord
 | `ENOENT: no such file or directory ... vertex-sa.json` | Relative path resolving from wrong cwd | Run from `backend/`. Or hardcode absolute path in `.env`: `GOOGLE_APPLICATION_CREDENTIALS=C:\Export Business\hs-code-classifier\backend\.gcp\vertex-sa.json` (use forward slashes or escape backslashes). |
 | `403 PERMISSION_DENIED ... aiplatform.endpoints.predict` | SA missing role | Re-open IAM: https://console.cloud.google.com/iam-admin/iam?project=gen-lang-client-0962892937 → find `hs-classifier-vertex-sa@…` → edit → add `Vertex AI User`. |
 | `403 Vertex AI API has not been used in project …` | API not enabled | Enable: https://console.cloud.google.com/apis/library/aiplatform.googleapis.com?project=gen-lang-client-0962892937 → click **Enable**. Wait ~30s. |
-| `404 Publisher Model … was not found` | Wrong model name or region | Confirm exact spelling `gemini-3.5-flash`. If Gemini 3.x not yet GA in `us-central1`, try `gemini-2.5-flash` first to prove auth path, then re-test 3.5 once available. Check model list: https://console.cloud.google.com/vertex-ai/model-garden?project=gen-lang-client-0962892937 |
+| `404 Publisher Model … was not found` | Wrong model name or region | Confirm exact spelling `gemini-3.5-flash` and use `GCP_LOCATION=global`. Regional endpoints (e.g., `us-central1`) are not supported for Gemini 3.x. Check model list: https://console.cloud.google.com/vertex-ai/model-garden?project=gen-lang-client-0962892937 |
 | `429 RESOURCE_EXHAUSTED` | Per-project quota for Gemini 3.x not yet granted | Request quota: https://console.cloud.google.com/iam-admin/quotas?project=gen-lang-client-0962892937 (filter by service `aiplatform.googleapis.com`). |
 | `Billing account … is in state CLOSED` or similar | Billing not linked to project | Check: https://console.cloud.google.com/billing/linkedaccount?project=gen-lang-client-0962892937 — should show billing account `01735A-7C1CE5-E75B14`. |
 

@@ -1,3 +1,5 @@
+> **⚠️ v1 SUPERSEDED 2026-05-26.** This document records the Phase 3.5 sprint and the v1 architecture lock from 2026-05-25. On 2026-05-26 the architecture was re-audited and locked as v2 — see `backend/docs/ARCHITECTURE.md` (v2) and `C:/Users/ASUS/.claude/plans/ultrathink-i-m-resuming-the-zesty-candle.md` for the transition rationale. Phase 3.5 deliverables (DB schema, hierarchical embeddings, chapter_exclusions, prompts as seeds) carry forward to v2 unchanged.
+
 # Phase 3.5 Progress Log
 
 **Started:** 2026-05-24

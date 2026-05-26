@@ -1,3 +1,6 @@
+> ⚠️ **PARTIALLY SUPERSEDED BY D1 LOCK 2026-05-25**
+> Final D1 stack diverges from this plan: ALL 5 stages on Gemini 3.5 Flash @ Vertex `global` (not the multi-model split this doc proposed). Active spec: `backend/docs/ARCHITECTURE.md`. Credit observation remains accurate.
+
 # Vertex Credit Window Plan — 2026-05-25 → 2026-06-10
 
 **Decision-grade artifact.** This file supersedes the cash-only model picks in `D1-model-stack-reassessment.md` for the duration of the credit window. The post-window plan reverts to the OSS-hybrid in `D1-opensource-research.md` and `D1-deepthink-oss-research.md`.

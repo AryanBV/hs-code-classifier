@@ -1,3 +1,5 @@
+_Summary written pre-D1 lock; canonical spec is `backend/docs/ARCHITECTURE.md` (post-lock, all-Gemini stack)._
+
 # B4 — ARCHITECTURE.md Summary
 
 Authored `backend/docs/ARCHITECTURE.md` as the locked Phase 4 spec for the HS-code classifier rebuild. Lean (~250 lines, 13 sections) — references the Phase 3 spike report and A9 empirical proof rather than duplicating them. Captures all Phase 3.5 deltas as LOCKED (fts_search_text + GIN index, redirects_to_chapter text[], sections.notes JSONB, +352 chapter_exclusions enrichment, Stage 3 tsquery built from Triage head_nouns_for_fts OR-joined, 6-digit subheading return permitted, Select schema requiring export_policy + policy_condition). Model stack (D1) marked PROVISIONAL pending T14 B3 measurement with explicit D1.5 lock criterion. Refusal contract, previousAnswers schema, per-stage I/O contracts, failure-mode/escalation matrix, cost model, and 7-item carryforward list all enumerated. Phase 4 implementers can build directly against this without re-reading the spike report; the prompt files (triage-v1.md, select-v1.md, verify-router-v1.ts) remain the canonical schema source.

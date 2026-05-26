@@ -1,3 +1,6 @@
+> ⚠️ **RESEARCH ARTIFACT — SUPERSEDED BY D1 LOCK 2026-05-25**
+> Locked Phase 4 stack is all-Gemini-3.5-Flash @ Vertex `global`. Active spec: `backend/docs/ARCHITECTURE.md`. Preserved for historical context.
+
 # D1 — Model Stack Reassessment — 2026-05-25
 
 **Status:** Reassessment of provisional D1 lock. Surfacing CRITICAL deprecation issue with both anchor models in the current proposed stack.

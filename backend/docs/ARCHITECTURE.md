@@ -1,164 +1,350 @@
-# ARCHITECTURE.md — Phase 4 Pipeline Spec (LOCKED)
+# ARCHITECTURE.md — Phase 4 Pipeline Spec (LOCKED v2)
 
-**Status:** LOCKED 2026-05-25 (Phase 3.5 exit).
-**Branch:** `feat/phase-3-arch-spike` → cut `feat/phase-4-pipeline-build` from this.
-**Source-of-record for design rationale:** `backend/data/phase-3-spike-report.md` (this doc does NOT duplicate).
-**Source-of-record for empirical proof:** `backend/data/phase-3.5-audits/A9-regression-comparison.md`.
+**Status:** LOCKED v2 2026-05-26 (supersedes v1 2026-05-25 lock).
+**Branch:** still on `feat/phase-3-arch-spike`; cut `feat/phase-4-pipeline-build` from this.
+**Source-of-record for the v1 → v2 transition rationale:** `C:/Users/ASUS/.claude/plans/ultrathink-i-m-resuming-the-zesty-candle.md`.
+**Source-of-record for design rationale (Phase 3 spike):** `backend/data/phase-3-spike-report.md`.
+**Source-of-record for empirical proof (A9):** `backend/data/phase-3.5-audits/A9-regression-comparison.md`.
 
-This is the contract Phase 4 implementers build against. Every locked decision below traces to spike traces, A9 empirical re-run, or B2 live measurement — no design is invented here.
+This is the contract Phase 4 implementers build against. Every locked decision below traces to spike traces, A9 empirical re-run, B2 live measurement, the v2 senior-engineer architecture audit (2026-05-26), or live Supabase DB inspection (2026-05-26) — no design is invented here.
+
+---
+
+## 0. Why this is v2 (and not just v1+patches)
+
+v1 (2026-05-25) used same-family verify (V1+V2 both Gemini 3.5 Flash), prompt-level notes integration, free-form question generation, and assumed Cohere/Claude were credit-covered. v2 fixes five structural defects surfaced by adversarial audit + DB grounding:
+
+1. **Same-family verify collapse** — V1+V2 share weights/tokenizer/training. Replaced with cross-MODEL tiebreak (Gemini 3.5 Flash Select → Gemini 3.1 Pro Tiebreak — different post-training, genuine 4-5pp divergence on reasoning-heavy items).
+2. **Notes as prompt context only** — LLM can ignore notes in long prompts. Replaced with mechanical notes_claims predicate enforcement in the verifier.
+3. **Free-form question generation** — LLM drifts into code-language options. Replaced with Question Generation Subsystem (QGS): offline attribute extraction + curated template library + runtime information-gain selection.
+4. **Multi-destination cardinality silent truncation** — 102 of 1,505 exclusion rules redirect to 2-3+ chapters. Replaced with explicit collapse algorithm + backtrack gate.
+5. **Cohere/Claude assumed credit-covered** — false. GDP Premium GenAI Credit is Gemini + Imagen only. Cohere = ~$200/mo cash (or substitute Gemini-rerank for $0 cash, slightly worse quality). Claude unavailable on this Vertex account (Indian SME reseller restriction). Runtime is **single-family Gemini, all credit-covered except Cohere**.
+
+v2 also adds two new capabilities that v1 didn't have:
+- **Active-learning flywheel** (Layer 8 case_law) — every classification provisionally cached; user confirmation promotes to authoritative; closes the no-Indian-rulings data gap.
+- **Build-time Opus 4.7 jobs** via Claude Max subscription — one-time offline data engineering (notes_claims extraction, tariff_line_attributes, QGS templates, India alias map). Runtime stays all-Gemini.
 
 ---
 
 ## 1. Intent
 
-Classify Indian-exporter product descriptions into 8-digit ITC-HS codes (6-digit fallback when DB-orphan), with `export_policy` + `policy_condition` surfaced on every CLASSIFY outcome. Refuse rather than mis-classify under uncertainty. The pipeline is a 6-stage cascade: an LLM-light Triage gates a deterministic retrieval cascade, a programmatic rules-filter prunes legally-excluded candidates, an LLM Select makes the final pick, an LLM Verify cross-checks, and a Deep-Think escalation handles the residual uncertainty.
+Classify Indian-exporter product descriptions into 8-digit ITC-HS codes (6-digit fallback when DB-orphan), with `export_policy` + `policy_condition` surfaced on every CLASSIFY outcome. **Refuse rather than mis-classify under uncertainty.** Adapt to variable input quality (30-100% clarity); ask one sharpest question when ambiguous; surface verbatim legal evidence on every classification.
+
+Pipeline shape: **Verified Cascade with Multi-Signal Synthesis (VCMS)** — a top-down tree walk over the 5-level hierarchy (Section → Chapter → Heading → Subheading → 8-digit), with per-stage Gemini calls, deterministic retrieval + rules, mechanical post-Select verifier, and cross-MODEL Gemini tiebreak on disagreement. Every decision uses multiple signals (retrieval scores + chapter notes + section notes + chapter_exclusions + GIRs + tariff_line_attributes + DGFT policy) with no single signal dominating.
 
 ---
 
-## 2. Pipeline overview (6 stages)
-
-Design rationale per stage → see spike report §"Architecture under test — final spec" (lines 218-262). Phase 3.5 deltas are catalogued in §4 below; everything else inherits unchanged.
+## 2. Pipeline overview (8 layers)
 
 ```
-Stage 1 — TRIAGE          (LLM, Gemini 3.5 Flash @ Vertex global, responseSchema, thinkingBudget=0)
-   → attributes + head_nouns_for_fts + decision {CLASSIFY|ASK|REFUSE} + 1-3 candidate_chapters
+┌─────────────────────────────────────────────────────────────────────┐
+│ BUILD-TIME (offline, one-time + on DB updates) — Opus 4.7 / Max sub │
+│   O1 Notes Claims Extraction    → notes_claims table                │
+│   O2 Tariff Line Attribute Extraction → tariff_line_attributes table│
+│   O3 QGS Template Library (~50 curated) → question_templates table  │
+│   O4 India Alias Map (~200 entries) → tokenizer alias dict          │
+│   O5 Confusing Pairs Documentation (8 known pairs)                  │
+└─────────────────────────────────────────────────────────────────────┘
+                                  │
+                                  ▼  (one-time at deploy + on DB updates)
 
-Stage 2 — HYBRID RETRIEVAL (no LLM, deterministic)
-   2.1 Chapter cosine top-10  (Cohere embed-v4 hierarchical)
-   2.2 Heading cosine top-15 filtered to top-10 chapters
-   2.3 Subheading cosine top-20 filtered to top-15 headings
-   2.4 Tariff cosine top-30 UNION (subheading-filter, heading-membership fallback)   ← LOAD-BEARING
-   2.5 Parallel FTS leg on `tariff_lines.fts_search_text` GIN index, tsquery built from
-       head_nouns_for_fts OR-joined                                                   ← Phase 3.5 Δ
-   2.6 Cohere Rerank 4 Fast on the union top-N → top-5 (with caveats per B2; see §5)
-
-Stage 3 — RULES FILTER     (programmatic SQL, no LLM)
-   - For each surviving candidate, check `chapter_exclusions` rows where source_chapter
-     matches the candidate's chapter; tsquery is constructed from Triage head_nouns_for_fts
-     (OR-joined), NOT from the raw user query.                                         ← Phase 3.5 Δ
-   - When a rule fires, drop the candidate and consider rule's redirects_to_chapter[]
-     entries as side-channel suggestions to Stage 4.
-
-Stage 4 — SELECT           (LLM, Gemini 3.5 Flash @ Vertex global, responseSchema, thinkingBudget=0)
-   → exactly one candidate code OR refusal. Required fields: export_policy, policy_condition.
-   → 6-digit subheading return permitted when subheading has no 8-digit children.        ← Phase 3.5 Δ
-   → All chapter + section notes + matched exclusions + GIRs + current_year injected.
-
-Stage 5 — VERIFY           (router, then V1 OR V2 OR skip; per `backend/prompts/verify-router-v1.ts`)
-   - Routing tree: ASK/REFUSE → SKIP; LOW → escalate; HIGH → V1; tight+disambiguated → V1;
-     MEDIUM → V2 ANTAGONISTIC arguing the runner-up.
-   - V1 + V2 both use Gemini 3.5 Flash @ Vertex global (responseSchema, thinkingBudget=0).
-     Same-family correlation is a carryforward risk — see §5 note and §12 carryforward #8.
-
-Stage 6 — DEEP-THINK       (LLM, Gemini 3.5 Flash @ Vertex global, thinking_level=high)
-   Triggered by Verify disagreement (Q-budget exhausted) OR Select LOW confidence.
-   Returns AUTOCLASSIFY OR structured REFUSAL. One shot, no recursion into ASK.
+┌─────────────────────────────────────────────────────────────────────┐
+│ RUNTIME (per query) — all Gemini, all credit-covered (Cohere cash)  │
+│                                                                      │
+│ Layer 0  Input Normalization      (deterministic, no LLM)           │
+│            • Apply India alias map (M.S.→mild steel, channa dal→…)  │
+│            • Composite-product keyword detector (and, with, set)    │
+│                                                                      │
+│ Layer 1  TRIAGE                   (Gemini 3.5 Flash, thinking=low)  │
+│            • CLASSIFY | ASK | REFUSE decision                       │
+│            • Extract attributes + per-attribute confidence          │
+│            • Emit head_nouns + raw_tokens (BOTH, not just lemma)    │
+│            • Multi-turn state machine, 3-round ASK cap              │
+│                                                                      │
+│ Layer 2  HYBRID RETRIEVAL         (no LLM, deterministic)           │
+│            • Cohere embed-v4 query embedding (~$0.60/mo cash)       │
+│            • HNSW cosine top-K at chapter→heading→subheading→leaf   │
+│            • PostgreSQL GIN-FTS on tariff_lines.fts_search_text     │
+│            • GIN-FTS on chapter_exclusions.excluded_product_text    │
+│              (underused pre-filter for Stage 3 work)                │
+│            • Cohere Rerank 4 Fast → top-5 (~$200/mo cash)           │
+│            • SHORTCUT: 60% of subheadings have 1 tariff_line child  │
+│              → skip rerank for the leaf step                        │
+│                                                                      │
+│ Layer 3  RULES FILTER + COLLAPSE  (deterministic SQL)               │
+│            • Apply chapter_exclusions per candidate                 │
+│            • Multi-destination collapse: top-5 by rerank, log drops │
+│            • If 0 survive: BACKTRACK GATE (re-enter L1, single shot)│
+│                                                                      │
+│ Layer 4  SELECT                   (Gemini 3.5 Flash, thinking=low)  │
+│            • Level-by-level constrained enum (chapter→heading→8dig) │
+│            • REQUIRED: selected_code + citation.primary             │
+│              (note_id|exclusion_id+verbatim_text) + gir_applied     │
+│              + export_policy + policy_condition + india_specific    │
+│              + self_confidence                                      │
+│            • GIR/Exclusion/Policy precedence matrix in prompt       │
+│                                                                      │
+│ Layer 5  MECHANICAL VERIFIER      (pure SQL+code, no LLM)           │
+│            10 verifier rules including:                             │
+│            • Code-exists DB check                                   │
+│            • Exclusions completeness (all matching rules checked)   │
+│            • Verbatim citation TF-IDF≥0.6 match against DB          │
+│            • Per-GIR validator (gir-1..gir-6, each with own rule)   │
+│            • Notes-conformance (notes_claims predicate evaluation)  │
+│            • Cross-chapter section notes (Section XVI Note 2 etc.)  │
+│            • Policy consistency vs chapter.export_licensing_notes   │
+│            On PASS: emit + write provisional case_law               │
+│            On FAIL: structured repair → Select loop (max 3)         │
+│                                                                      │
+│ Layer 6  TIEBREAK                 (Gemini 3.1 Pro, thinking=high)   │
+│            Triggered: verifier fails 3× OR composite OR LOW conf    │
+│            Different MODEL = genuine cross-model diversity          │
+│            Goes through verifier again                              │
+│                                                                      │
+│ Layer 7  DEEP-THINK               (Gemini 3.1 Pro, thinking=high)   │
+│            Triggered: Tiebreak verifier also fails                  │
+│            Extended-thinking with full filtered knowledge pack      │
+│            Output: AUTOCLASSIFY or REFUSAL                          │
+│                                                                      │
+│ Layer 8  ACTIVE LEARNING          (post-emit, no LLM)               │
+│            • Every L4-L7 emission → provisional case_law            │
+│            • User confirmation in wizard → authoritative            │
+│            • Per-chapter coverage tracking                          │
+│            • Low-coverage REFUSE for OOD queries                    │
+│            • L1 case_law lookup added later when N≥1k confirmed     │
+│                                                                      │
+│ Question Generation Subsystem (QGS) — invoked from L1 ASK or        │
+│ L4-L7 ambiguity. Computes info-gain per attribute across alive      │
+│ candidates → looks up template → emits natural-language Q + opts.   │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 3. Per-stage I/O schemas
+## 3. Per-layer I/O schemas
 
-Full prompt + schema text is canonical in the prompt files; this section enumerates the contract only.
-
-| Stage | Input | Output schema source | Output highlights |
+| Layer | Input | Output | Notes |
 |---|---|---|---|
-| 1 Triage | `{query, previousAnswers, q_budget_remaining}` | `backend/prompts/triage-v1.md` §RESPONSE JSON SCHEMA | `decision`, `extracted_attributes` (incl. `head_nouns_for_fts: string[1..5]`), `candidate_chapters: string[0..3]`, `completeness_signal: 0..1`, `clarifying_question`, `refusal_reason`, `out_of_scope_class` |
-| 2 Retrieval | Stage 1 output | (no LLM — internal types) | Array of ≤5 candidate codes with full row (`code`, `description`, `chapter/heading/subheading`, `export_policy`, `policy_condition`, `india_specific_note`, `retrieval_score`) |
-| 3 Rules Filter | Stage 2 candidates + Triage attrs | (no LLM — internal types) | Filtered candidates + `matched_exclusion_rules[]` (source_chapter, redirects_to_chapter[], excluded_product_text, source_note_reference, source_note_text) |
-| 4 Select | Filtered candidates + chapter_notes + section_notes + matched_exclusion_rules + applicable_GIRs + `current_year` | `backend/prompts/select-v1.md` §RESPONSE JSON SCHEMA | `selected_code` (string\|null, regex `^\d{4}\.\d{2}(\.\d{2})?$`), `selected_code_is_six_digit: boolean`, `export_policy`, `policy_condition` (REQUIRED — verbatim from chosen row), `reasoning_chain[2..5]`, `cited_notes`, `self_confidence` HIGH\|MEDIUM\|LOW, `alternatives_considered[]`, `refusal` |
-| 5 Verify-router | Triage + Select signals | `backend/prompts/verify-router-v1.ts` `VerifyDecision` | `{route: SKIP\|V1_RUBBER_STAMP\|V2_ANTAGONISTIC\|ESCALATE_DEEP_THINK}` |
-| 5a V1 | Select output + key notes | inline in `verify-router-v1.ts` | `{agree: boolean, disagree_reason: string\|null}` |
-| 5b V2 | Select output + full notes both candidates + `argue_for_runner_up` | inline in `verify-router-v1.ts` | `{agree_with_select: boolean, why_runner_up_might_be_better, deciding_consideration}` |
-| 6 Deep-Think | Full trace from Stages 1-5 | (to be specified in Phase 4 prompt iteration) | AUTOCLASSIFY (with full Select schema) OR REFUSAL |
+| 0 Normalization | `{query, previousAnswers}` | `{normalized_query, raw_tokens, composite_flag}` | Deterministic; ~10ms |
+| 1 Triage | `{normalized_query, previousAnswers, q_budget_remaining}` | per `backend/prompts/triage-v2.md` schema | Multi-turn state object emitted alongside |
+| 2 Retrieval | Stage 1 output | `{candidates[≤5], retrieval_scores, fts_matches, exclusion_pre_filter[]}` | No LLM |
+| 3 Rules Filter | Stage 2 output | `{filtered_candidates[≤5], matched_exclusions[], dropped_log[], backtrack_signal: boolean}` | No LLM; multi-dest collapse here |
+| 4 Select | filtered_candidates + chapter_notes + section_notes + matched_exclusions + applicable_GIRs + notes_claims_for_candidates + tariff_line_attributes_for_candidates + `current_year` + composite_flag | per `backend/prompts/select-v2.md` schema (REQUIRED: selected_code, citation.primary, citation.gir_applied, exclusions_checked[], export_policy, policy_condition, india_specific_flag, self_confidence) | Level-by-level constrained enum |
+| 5 Verifier | Select output + full state | `{passed: boolean, failed_rules: VerifierRuleFailure[], repair_feedback: string}` | No LLM; 10 rule checks |
+| 6 Tiebreak | Select output + verifier failures + extended context | Same schema as Select | Gemini 3.1 Pro, thinking=high |
+| 7 Deep-Think | Full Layer 1-6 trace + filtered knowledge pack | AUTOCLASSIFY (Select schema) or REFUSAL | Gemini 3.1 Pro, extended thinking |
+| 8 Active Learning | Final emission | provisional case_law row | No LLM |
+| QGS | Candidate set + missing attributes | `{question_text, options[2-4], discriminating_attribute}` | Looks up curated template; runtime; no LLM |
+
+Full prompt + schema text is canonical in the prompt files (`backend/prompts/triage-v2.md`, `select-v2.md`, `verify-tiebreak-v2.md`, `deep-think-v2.md`). This doc enumerates the contract only.
 
 ---
 
-## 4. Phase 3.5 deltas vs spike report
+## 4. v2 deltas vs v1 (with database grounding from 2026-05-26 inspection)
 
-These overlay the spike-report architecture. Each is sourced from a Phase 3.5 audit; A9 (`backend/data/phase-3.5-audits/A9-regression-comparison.md`) is the empirical proof.
+### 4.1 Single-family runtime, multi-tier diversity within Gemini (✓ LOCKED 2026-05-26)
 
-### 4.1 `tariff_lines.fts_search_text` denormalized column + GIN index (A4) (✓ LOCKED 2026-05-25)
+v1 assumed cross-family verify (Gemini Triage + GPT Select originally; degraded to all-Gemini under D1 lock with same-family carryforward). v2 confirms Claude/GPT unavailable on this Vertex account (Indian SME reseller restriction; empirically verified by user). Runtime is **all-Gemini**:
+- **Triage + Select:** `gemini-3.5-flash` with `thinking_level=low`
+- **Tiebreak + Deep-Think:** `gemini-3.1-pro` with `thinking_level=high`
 
-Generated-always column on `tariff_lines`: `chapter.title || ' ' || heading.title || ' ' || COALESCE(subheading.title, '') || ' ' || description`. GIN index `tariff_lines_fts_search_text_gin USING gin (to_tsvector('english', fts_search_text))` confirmed live. Stage 2.5 FTS leg queries against this — NOT bare `description`. A9 proved this single change closed retrieval gaps on cases 5, 7, 8, 10, 14, 15. Empty-subheading-title rows (454, mostly Ch.72-73) are absorbed by COALESCE; no separate fallback path needed.
+3.5 Flash vs 3.1 Pro provides genuine cross-model diversity (different post-training: 3.5 Flash is agent-tuned, 3.1 Pro is reasoning-tuned; 4-5pp divergence on reasoning-heavy benchmarks).
 
-### 4.2 `chapter_exclusions.redirects_to_chapter` → `text[]` (A5) (✓ LOCKED 2026-05-25)
+Per `@google/genai` SDK (the new unified SDK; legacy `@google-cloud/vertexai` is deprecated). `thinking_level` is the modern API ("minimal" | "low" | "medium" | "high"); do NOT mix with `thinkingBudget` integer in the same call (400 error). Setting `thinking_level=low` gives Triage real reasoning budget (fixes v1 thinking-budget-paradox: thinkingBudget=0 on a Triage stage with 250+ lines of decision trees).
 
-Schema confirmed: `redirects_to_chapter` is `ARRAY` (Postgres `text[]`). Multi-destination rules supported (e.g., Ch.71 Note 3(l) → ['90','91','92']; Ch.42 Note 1 → ['39','59']). 1,505 rules total; 102 multi-destination; 1,288 single-destination. Stage 3 reads the full array and surfaces all destinations as side-channel suggestions to Stage 4 — not as hard redirects (correctness depends on chapter notes, not the redirect array alone).
+### 4.2 Mechanical Verifier with notes_claims predicate enforcement (✓ LOCKED 2026-05-26)
 
-### 4.3 `sections.notes` JSONB (A7) (✓ LOCKED 2026-05-25)
+v1 treated notes as prompt context — LLM could (and would) ignore them. v2 adds a **mechanical post-Select verifier** that runs 10 deterministic checks. Critically:
 
-Column added on `sections` table, populated for all 21 sections. Stage 4 Select prompt injects `section_notes` for every section that owns a chapter in the candidate set. Critical for Section XVII (Ch.86-89 vehicles) and Section XV (Ch.72-83 base metals) cross-chapter routing.
+- **Notes Claims (Rule 7):** Offline Opus 4.7 extraction converts free-text chapter/section notes into structured predicates stored in `notes_claims` table. At Select-time, verifier evaluates predicates against the candidate's product attributes. Predicate FAIL → verifier FAIL → repair loop. This makes notes **constraints**, not just context.
+- **Per-GIR validators (Rule 5):** Each of GIR 1, 2(a), 2(b), 3(a), 3(b), 3(c), 4, 5(a), 5(b), 6 has its own validator with semantic-specific checks (e.g., gir-3(a) requires ≥2 competing headings exist; gir-3(b) requires composite_flag set; gir-4 requires gir-1..gir-3 enumerated as having failed).
+- **Verbatim citation (Rule 3):** `citation.primary.verbatim_text` must appear in the DB on the cited source. Fuzzy TF-IDF match ≥ 0.6 (accommodates paraphrased Indian descriptions). Catches hallucinated citations as eval signal.
 
-### 4.4 `chapter_exclusions` enrichment (A1) (✓ LOCKED 2026-05-25)
+See §6 for full verifier rule table.
 
-+352 rules added across A1a (section-level → chapter exclusions), A1b (asymmetric reciprocal), A1c (positive-definition-by-restriction), A1d (cross-candidate heading-code references). Total now 1,505. Spot-check spike traces 5, 8 cleared from RULES_GAP → NONE after enrichment.
+### 4.3 Question Generation Subsystem (✓ LOCKED 2026-05-26)
 
-### 4.5 Stage 3 tsquery construction (✓ LOCKED 2026-05-25)
+v1 had Triage generate clarification questions free-form — LLM drifts into code-language ("Is this 8407 or 8408?") or generic options. v2 introduces **QGS** with three components:
 
-**Stage 3 MUST build tsquery from Triage-extracted `head_nouns_for_fts` OR-joined,** NOT from `websearch_to_tsquery(raw_query)`. A9 proved AND-semantics on raw query blackholes rule firing on cases 5, 8, 10 (e.g., rule 2428 doesn't fire on "windscreen wiper motor 12V automotive" because "windscreen" / "12V" tokens aren't in the rule text). Triage already emits 1-5 head nouns; Stage 3 joins them: `to_tsquery('english', head_nouns_for_fts.join(' | '))`.
+1. **Offline `tariff_line_attributes`** — for each of 12,460 codes, structured product attributes extracted by Opus 4.7 with chapter notes context. Stored as JSONB.
+2. **Curated `question_templates` library** — ~50 templates per attribute type, each with natural-language question + user-friendly `value_labels` mapping. Hand-curated against the 8 confusing-pair examples.
+3. **Runtime discrimination** — when ambiguity arises (Triage insufficient OR Select competing candidates), QGS computes information gain per attribute, picks highest-IG attribute, looks up template, builds options from distinct candidate values. Guarantees: natural-language Q, 2-4 user-comprehensible options, provably disambiguating.
 
-### 4.6 6-digit subheading return permitted (✓ LOCKED 2026-05-25)
+If no template exists for the highest-IG attribute → REFUSE with structured guidance ("please describe the [attribute]"). This is the "ask the right question with the right options" doctrine enforced architecturally.
 
-When the correct subheading has zero 8-digit children in `tariff_lines` (Indian Schedule-2 structural gap; documented case: 3301.22 jasmine essential oil), Select returns the 6-digit code with `selected_code_is_six_digit = true`. Not a refusal. `selected_code` regex permits both `^\d{4}\.\d{2}$` and `^\d{4}\.\d{2}\.\d{2}$`. See `backend/prompts/select-v1.md` Test 2 for the worked example.
+### 4.4 Multi-destination exclusion collapse algorithm (✓ LOCKED 2026-05-26)
 
-### 4.7 Select schema requires `export_policy` + `policy_condition` (✓ LOCKED 2026-05-25)
+v1 deferred this as a carryforward. v2 specifies it: 102 of 1,505 chapter_exclusions have `redirects_to_chapter text[]` with multiple destinations (up to 11). Stage 3 algorithm:
 
-Closes spike case 11 SELECT_GAP. Both fields REQUIRED in Select's JSON output; copied verbatim from the chosen candidate's `tariff_lines` row. `null` is permitted when the DB row is null; fabrication is not. See `backend/prompts/select-v1.md` §HARD RULES.
+1. For each surviving candidate after exclusion filter, attach its rerank score.
+2. Sort by rerank score desc.
+3. Take top-5; **log dropped candidates with their scores** for eval audit.
+4. If `< 2` candidates survive after filter → set `backtrack_signal = true` → re-enter Stage 1 once with a constraint hint (`exclude chapter X; try Y, Z from redirects`).
 
----
+Backtracking is **single-shot bounded** (not a loop) to prevent oscillation.
 
-## 5. Model stack (D1) (✓ LOCKED 2026-05-25)
+### 4.5 Multi-signal synthesis (✓ LOCKED 2026-05-26 — operative principle)
 
-All LLM stages run on **Vertex AI Gemini 3.5 Flash** at region `global` (Gemini 3.x is served from the global endpoint, NOT us-central1). Auth: service-account JSON at `backend/.gcp/vertex-sa.json` via `GOOGLE_APPLICATION_CREDENTIALS` env var. Structured outputs use `generationConfig.responseSchema` + `generationConfig.responseMimeType = 'application/json'` (Vertex Gemini's equivalent of OpenAI `response_format: json_schema strict`).
+At every decision point, multiple signals contribute. Per-signal weight is tuned via prompt and verifier rules, not free-form LLM judgment:
 
-Endpoint shape:
-`https://aiplatform.googleapis.com/v1/projects/gen-lang-client-0962892937/locations/global/publishers/google/models/gemini-3.5-flash:generateContent`
+| # | Signal | Layer |
+|---|---|---|
+| 1 | User description ↔ tariff_lines.description (semantic + lexical) | L2 |
+| 2 | User attributes ↔ chapter/heading/subheading/leaf titles | L2, L4 |
+| 3 | Chapter notes (positive constraints / definitions / inclusions) | L4 prompt, L5 Rule 7 |
+| 4 | Section notes (cross-cutting; Section XVI Note 2 is load-bearing for Ch.84-85 parts) | L4 prompt, L5 Rule 8 |
+| 5 | Subheading notes (rare — only 3 populated DB rows, but binding when present) | L4 prompt, L5 Rule 9 |
+| 6 | Chapter exclusions (negative constraints + redirects) | L2 pre-filter, L3 filter, L5 Rule 2 |
+| 7 | GIRs 1-6 (rule precedence resolver) | L4 prompt, L5 Rule 5 (per-GIR) |
+| 8 | tariff_line_attributes (offline-extracted product attrs) | L4 prompt, L5 candidate matching |
+| 9 | Export policy / policy_condition (India-specific output) | L4 REQUIRED output, L5 Rule 10 |
+| 10 | india_specific_flag (7 subheadings; 217 more with wco_2022_match=false) | L4 REQUIRED output, L5 Rule 6 |
 
-| Stage | Model | Region | Temp | Mode | thinkingBudget | Per-call cost | Credit? | Locked? |
-|---|---|---|---|---|---|---|---|---|
-| 1 Triage | `gemini-3.5-flash` | global | 0.1 | responseSchema | 0 (disabled) | ~$0.00045 | ✅ GenAI Builder | ✓ LOCKED 2026-05-25 |
-| 2 Retrieval (embed) | `cohere embed-v4` (asymmetric: `search_query` / `search_document`) | n/a | n/a | — | n/a | n/a | n/a | ✓ LOCKED (validated in Phase 3 + A9) |
-| 2.6 Rerank | `cohere rerank-english-v3.0` (Rerank 4 Fast) | n/a | n/a | — | n/a | n/a | n/a | ◐ ADOPT WITH CAVEATS (B2: 5/10 raw, 6/10 trace-corrected; useful as confidence-amplifier + tie-revealer, NOT sole top-1 selector — see B2 §"Revised recommendation") |
-| 3 Rules filter | (programmatic, no LLM) | — | — | — | — | $0 | — | ✓ LOCKED |
-| 4 Select | `gemini-3.5-flash` | global | 0.1 | responseSchema | 0 (disabled) | ~$0.0066 | ✅ | ✓ LOCKED 2026-05-25 |
-| 5a Verify V1 (rubber-stamp) | `gemini-3.5-flash` | global | 0.0-0.1 | responseSchema | 0 (disabled) | ~$0.00165 | ✅ | ✓ LOCKED 2026-05-25 |
-| 5b Verify V2 (antagonistic) | `gemini-3.5-flash` | global | 0.5-0.7 | responseSchema | 0 (disabled) | ~$0.0057 | ✅ | ✓ LOCKED 2026-05-25 (same-family carryforward — see note + §12 #8) |
-| 6 Deep-Think | `gemini-3.5-flash` with `thinking_level=high` | global | 0.1 | responseSchema | high (generous) | ~$0.015 | ✅ | ✓ LOCKED 2026-05-25 |
+**No single signal dominates.** Each contributes to the final emission decision. If any signal is silent (notes don't speak to this product) or unreliable (subheading notes mostly empty), others compensate via the verifier's multi-rule pass. **Hard timeouts per stage** prevent stuck loops; **bounded clarification** (3-round cap) prevents infinite ASK.
 
-**CRITICAL — thinking model behavior:** Gemini 3.x is a "thinking model" — by default it spends internal reasoning tokens before producing output, which adds latency + cost. For non-Deep-Think stages, set `generationConfig.thinkingConfig.thinkingBudget = 0` to disable internal reasoning. For Deep-Think, set `thinking_level=high` (or equivalent generous `thinkingBudget`) to invoke the heavy reasoning path.
+### 4.6 Build-time Opus 4.7 jobs (✓ LOCKED 2026-05-26)
 
-**Verify V2 same-family note:** V1 and V2 both run Gemini 3.5 Flash — same model family. The spike report's V2 design rationale assumed cross-family independence (Gemini Triage + GPT Select + Gemini V1 + GPT V2). Under D1 LOCKED, V2's "adversarial independence" is reduced to **prompt-level adversariality only** (different temperature, antagonistic instructions, forced runner-up argument). If Phase 4 eval shows V2 systematically rubber-stamping Select instead of catching genuine errors, the swap-out is a 1-line config change — either enable Claude quota on Vertex (deferred per T17) or route V2 to GPT-5.4 mini. Tracked as carryforward #8 (§12).
+Per user's Claude Max subscription authorization: Opus 4.7 is used for one-time offline data engineering tasks where reasoning capacity matters most. These are NOT runtime calls (no API spend; Max subscription covers freely).
 
-**Credit-coverage finding (T17, 2026-05-25):** Three Gemini models confirmed accessible under the GenAI Builder credit window (~$960/mo at 100K queries fully covered). Claude on Vertex requires a quota request (HTTP 429 on first call) — deferred per user direction. Llama / Mistral are not on Vertex Garden for this project. Post-credit-expiry plan: OSS hybrid documented in `D1-opensource-research.md` is the 2027 cutover path.
-
-**D1 lock criterion (originally D1.5):** SUPERSEDED by 2026-05-25 lock. The 5-trace B3 measurement was not required because the credit window covers worst-case cost (~$960/mo at 100K queries on the all-Gemini stack), and provider plurality has been deliberately traded for credit coverage during the runway window.
-
----
-
-## 6. Cost model (✓ LOCKED 2026-05-25 — all-Gemini stack)
-
-| Stage | Calls | Tokens/call (est.) | Cash cost (Gemini 3.5 Flash @ Vertex global) |
+| Job | Input | Output | Estimated effort |
 |---|---|---|---|
-| 1 Triage | 1 (CLASSIFY/ASK/REFUSE) | ~1.5K in + 500 out, thinking=0 | ~$0.00045 |
-| 2 Retrieval | 4-5 cosine queries + 1 FTS + 1 Rerank | n/a + 1 Rerank call | ~$0.0001 + Rerank ($0 on Cohere trial) |
-| 3 Rules filter | 0 LLM | — | $0 |
-| 4 Select | 1 (HIGH/MEDIUM/LOW path) | ~6K in + 1K out (notes-heavy), thinking=0 | ~$0.0066 |
-| 5a Verify V1 | 0-1 (router) | ~3K in + 300 out, thinking=0 | ~$0.00165 |
-| 5b Verify V2 | 0-1 (router) | ~6K in + 1K out, thinking=0 | ~$0.0057 |
-| 6 Deep-Think | 0-1 (rare) | ~8K in + 2K out reasoning, thinking_level=high | ~$0.015 |
-| **Total per query (baseline CLASSIFY HIGH path: Triage+Select+V1)** | | | **~$0.0087** |
-| Per query EXPENSIVE path (Triage+Select+V2+Deep-Think) | | | ~$0.027 |
+| O1 Notes Claims Extraction | All chapter notes (89/97 populated) + section notes (21/21) + sparse heading/subheading notes | `notes_claims` table with structured predicates | 1-2 days |
+| O2 Tariff Line Attribute Extraction | All 12,460 tariff_lines + parent chain + chapter notes context | `tariff_line_attributes` table | 1-2 days |
+| O3 Question Template Library | Curated against confusing pairs + chapter structure | `question_templates` library (~50 entries) | 2-3 days |
+| O4 India Alias Map | Curated against common Indian English / Hindi terms | Alias dictionary (~200 entries) | 1-2 days |
+| O5 Confusing Pairs Documentation | 8 known pairs (42/43, 09/21, 61/62, etc.) | Discriminating attributes per pair | 1 day |
 
-**Aggregate at 100K queries/month (mixed path distribution, ~80% HIGH / 15% MEDIUM / 5% LOW-escalation):**
-- Estimated monthly spend: **~$960/mo** at full retail Gemini 3.5 Flash rates
-- **Fully credit-covered** during the GenAI Builder credit window
-- Post-credit cutover plan: OSS hybrid per `D1-opensource-research.md` (2027 horizon)
-- Revisit cost model if Phase 4 eval reveals systematic Deep-Think escalation > 10% (would push monthly spend ~2×)
+Re-runs only when DGFT issues a tariff update OR when a chapter's notes change. The `pg_cron` + `pg_net` extensions are available (not installed) and provide a clean path for scheduled re-runs.
 
-**B3 empirical measurement table — DEFERRED:**
+### 4.7 Inherited from v1 (still LOCKED)
 
-The original D1.5 lock criterion required ≥4/5 B3 cost-model traces with CORRECT outcomes. Superseded by 2026-05-25 lock: credit coverage makes per-call cost a non-blocking concern within the window, and Phase 4's 168-case eval will produce the authoritative cost+correctness measurement on real traffic shape.
+- **`tariff_lines.fts_search_text`** trigger-maintained denormalized column + GIN index `tariff_lines_fts_search_text_gin` (note: it's a trigger, not a generated column — parent-title changes need manual `refresh_fts_search_text()` call) ← v1 §4.1.
+- **`chapter_exclusions.redirects_to_chapter text[]`** (102 multi-destination rules) — trigger-validated against chapters table ← v1 §4.2.
+- **`sections.notes` JSONB** populated for all 21 sections — load-bearing for Section XVI / Section XVII cross-cutting ← v1 §4.3.
+- **`chapter_exclusions` enrichment** to 1,505 rules (+352 from A1 Phase 3.5) ← v1 §4.4.
+- **Stage 3 tsquery from `head_nouns_for_fts OR raw_tokens`** (NOT `websearch_to_tsquery(raw_query)`) ← v1 §4.5, extended with `raw_tokens` to mitigate v1 head-noun lemmatization brittleness.
+- **6-digit subheading return permitted** when subheading has no 8-digit children ← v1 §4.6.
+- **Select schema REQUIRES `export_policy` + `policy_condition`** (verbatim from DB row; never fabricate) ← v1 §4.7.
+
+---
+
+## 5. Model stack (D1 v2) (✓ LOCKED 2026-05-26)
+
+All runtime LLM stages run on **Vertex AI Gemini** at region `global` via `@google/genai` SDK. Auth: service-account JSON at `backend/.gcp/vertex-sa.json` via `GOOGLE_APPLICATION_CREDENTIALS` env var.
+
+**Vertex was renamed to "Gemini Enterprise Agent Platform" in 2026** — old `aiplatform.googleapis.com` endpoints still work; docs are migrating. `asia-south1` (Mumbai) serves Gemini-only.
+
+| Layer | Model | Region | thinking_level | Cost/call (est) | Credit? |
+|---|---|---|---|---|---|
+| 0 Normalization | (none) | — | — | $0 | — |
+| 1 Triage | `gemini-3.5-flash` | global | low | ~$0.00050 | ✅ GDP Premium |
+| 2 Retrieval — query embed | Cohere embed-v4 (via `COHERE_API_KEY` env) | n/a | — | ~$0.000006 | ❌ cash (own Cohere billing) |
+| 2 Retrieval — rerank | Cohere Rerank 4 **Pro** (via `COHERE_API_KEY` env) | n/a | — | ~$0.003 | ❌ cash (own Cohere billing) |
+| 3 Rules Filter | (none) | — | — | $0 | — |
+| 4 Select | `gemini-3.5-flash` | global | low | ~$0.0073 | ✅ GDP Premium |
+| 5 Verifier | (none — pure code) | — | — | $0 | — |
+| 6 Tiebreak | `gemini-3.1-pro` | global | high | ~$0.020 (when triggered, ~10% of queries) | ✅ GDP Premium |
+| 7 Deep-Think | `gemini-3.1-pro` | global | high (extended) | ~$0.045 (when triggered, ~3%) | ✅ GDP Premium |
+| 8 Active Learning | (none — DB write) | — | — | $0 | — |
+| QGS | (none — template lookup) | — | — | $0 | — |
+| Build-time O1-O5 | `claude-opus-4-7` via Max sub | n/a | — | $0 (subscription, one-time) | n/a |
+
+**Modern API note:** Use `@google/genai` SDK (the new unified SDK), not legacy `@google-cloud/vertexai`. `thinking_level` enum is the modern API; do NOT mix with integer `thinkingBudget` in the same call (400 error). Default for 3.5 Flash = "medium"; we explicitly set "low" for cost; "high" reserved for Tiebreak + Deep-Think.
+
+**Cohere via own API key (NOT Vertex):** Cohere is NOT on Vertex Model Garden AND NOT covered by GDP Premium GenAI Credit (confirmed via official SKU group page). Cohere is integrated via the project's own `COHERE_API_KEY` env var on Cohere's billing. Lock decision: use **Cohere Rerank 4 Pro** (specialist quality, best-in-class) for runtime rerank. At 100K queries/month: ~$0.60 query embedding + ~$300 rerank-Pro = **~$300/mo cash on Cohere's own billing**. User explicitly authorized "best models only" — Rerank Pro is the choice over Fast despite ~$100/mo delta. Gemini-rerank substitution remains as a fallback if cash pressure ever bites, but is not the default.
+
+**Claude on Vertex:** technically GA on Vertex Model Garden (Sonnet 4.6, Opus 4.7, Opus 4.6) but functionally unavailable for this account due to Indian SME reseller restriction (Anthropic prohibits resale through certain GCP resellers). Do NOT plan around at runtime.
+
+**Anthropic via Claude Max subscription (build-time only):** unrestricted Opus 4.7 / Sonnet 4.6 access via the user's Claude Max subscription (NOT via API key — there is no Anthropic API key in env). Used for ALL offline build-time jobs (O1-O5) and for the Claude Code conversation that produces this architecture, code, and prompts. NOT used at runtime — subscriptions are not deployable as a service.
+
+**OpenAI via own API key (runtime escalation, ASK FIRST):** `OPENAI_API_KEY` is present in env. Available for runtime use ONLY with explicit user authorization. Default plan does NOT use OpenAI at runtime. Reserved as an authorized-on-request alternative if Gemini 3.1 Pro Tiebreak proves systematically wrong on a specific failure class (e.g., user could authorize GPT-5.4 mini as Tiebreak for that class).
+
+---
+
+## 6. Mechanical Verifier — the 10 rules (✓ LOCKED 2026-05-26)
+
+The verifier runs after every L4 Select emission (and L6 Tiebreak emission). Pure SQL+TypeScript, no LLM. Each rule fails → `failed_rules[]` populates with structured feedback; L4 loops with the feedback up to 3 times; on the 4th attempt → escalate to L6 Tiebreak.
+
+```
+Rule 1 — Code existence
+  Check: SELECT 1 FROM tariff_lines WHERE code = selected_code
+  Fail mode: hallucinated code (Vertex guarantees schema syntax, NOT catalog membership)
+
+Rule 2 — Exclusions completeness
+  Pre-filter chapter_exclusions via GIN-FTS on excluded_product_text:
+    SELECT id, source_chapter, ... FROM chapter_exclusions
+    WHERE source_chapter = candidate.chapter
+      AND to_tsvector('english', excluded_product_text)
+          @@ to_tsquery('english', head_nouns | raw_tokens)
+  Check: every matching exclusion is in selected.exclusions_checked[]
+  Fail mode: LLM didn't see / acknowledge a fired exclusion
+
+Rule 3 — Verbatim citation
+  Check: citation.primary.verbatim_text appears in DB text at cited source
+    (chapter_id|section_id|exclusion_id|note_number → resolve to DB row)
+  Match: fuzzy TF-IDF ≥ 0.6 (accommodates paraphrased Indian text)
+  Fail mode: fabricated citation
+
+Rule 4 — Embedding cosine floor
+  Check: cosine(tariff_lines.embedding[selected_code], query_embedding) ≥ 0.55
+  Fail mode: retrieval-poisoned selection
+
+Rule 5 — Per-GIR validator
+  Dispatch on citation.gir_applied:
+    'GIR-1':    must cite chapter/section note (not just heading text)
+    'GIR-2(a)': product must be marked incomplete/unfinished in attrs
+    'GIR-2(b)': mixture/composite — composite_flag must be set
+    'GIR-3(a)': ≥2 competing headings must exist in alive_set with overlap
+    'GIR-3(b)': composite_flag set; ≥2 components enumerated in reasoning
+    'GIR-3(c)': enumerate which gir-3(a) and gir-3(b) failed
+    'GIR-4':    enumerate which gir-1..gir-3 failed; cite analogy
+    'GIR-5(a)': fitted case/container scenario; product must be packaging
+    'GIR-5(b)': packing material scenario; product must be packaging
+    'GIR-6':    only between same-level subheadings; both must exist
+  Fail mode: GIR claimed but semantic preconditions absent
+
+Rule 6 — india_specific consistency
+  Check: india_specific_flag == subheadings.india_specific WHERE code = selected_code
+  Fail mode: missed Indian-specific subheading flag
+
+Rule 7 — Notes-Conformance (chapter notes)
+  For each notes_claim WHERE applies_to ∋ candidate.chapter
+    AND claim_type IN ('inclusion','definition','condition'):
+    Evaluate predicate against tariff_line_attributes[candidate.code]
+    Fail → repair feedback with quoted claim
+  Fail mode: candidate violates a chapter note constraint
+
+Rule 8 — Cross-chapter Section Notes
+  For each notes_claim WHERE source = 'section:X'
+    AND X covers candidate.chapter:
+    Evaluate predicate (Section XVI Note 2 — "parts and accessories" rules — is the canonical case)
+  Fail mode: cross-cutting section rule violated
+
+Rule 9 — Subheading Notes
+  For each notes_claim WHERE source = 'subheading:X'
+    AND X = candidate.subheading:
+    Evaluate predicate
+  Fail mode: narrow subheading constraint violated (rare; only 3 populated)
+
+Rule 10 — Policy Consistency
+  Check: export_policy == DB row's export_policy
+  Check: policy_condition does NOT contradict chapter.export_licensing_notes
+  Fail mode: fabricated or wrong policy text
+```
+
+**Predicate DSL (for notes_claims):**
+
+```typescript
+type Predicate =
+  | { op: '=='|'!='|'>'|'<'|'>='|'<='; var: string; value: string|number|boolean }
+  | { op: 'IN'|'NOT_IN'; var: string; values: (string|number)[] }
+  | { op: 'AND'|'OR'; clauses: Predicate[] }
+  | { op: 'NOT'; clause: Predicate }
+  | { op: 'IMPLIES'; antecedent: Predicate; consequent: Predicate }
+  | { op: 'EXISTS'; var: string };
+```
+
+Evaluator: ~150 lines TypeScript. Extraction job (O1) is the harder part — Opus 4.7 with a 50-claim manual validation set.
 
 ---
 
@@ -166,69 +352,72 @@ The original D1.5 lock criterion required ≥4/5 B3 cost-model traces with CORRE
 
 | Failure | Trigger | Handling |
 |---|---|---|
-| Triage REFUSE | `decision: "REFUSE"` from Stage 1 | Return refusal payload to user. No retrieval, no escalation. |
-| Triage ASK | `decision: "ASK"` from Stage 1, Q-budget > 0 | Surface `clarifying_question` to user. On user reply, runtime calls Triage again with `previousAnswers` populated and `q_budget_remaining--`. Q-budget=2 max. |
-| Triage ASK + Q-budget = 0 | Triage wants to ASK but no budget | Triage MUST itself REFUSE with `out_of_scope_class: "function_only_no_substance"` (spec'd in `triage-v1.md` §"Q-budget exhaustion"). |
-| Triage invalid JSON | Gemini returns malformed JSON despite json_schema (rare) | Runtime retries once at temp=0.0; if still invalid → fall back to REFUSE with `out_of_scope_class: "incoherent_query"`. |
-| Retrieval returns 0 candidates | All cosine + FTS legs empty after rules-filter | Runtime escalates directly to Deep-Think with empty candidate set. Deep-Think likely REFUSES. |
-| Select hallucinates code not in candidate set | `selected_code ∉ candidates[].code ∪ {null}` | Runtime rejects, retries Select once with explicit "your previous response had a hallucinated code" instruction. On second failure → REFUSE. |
-| Select returns `selected_code: null` (refusal) | Genuine refusal path per `select-v1.md` Step 6 | Return refusal to user. No Verify. No Deep-Think unless caller explicitly opts in. |
-| Verify V1 disagrees | `agree: false` from V1 | If Q-budget remaining > 0 → restart pipeline at Triage with `previousAnswers` updated to seed an ASK route. Else → Deep-Think. |
-| Verify V2 disagrees | `agree_with_select: false` from V2 | Same as V1 disagree. |
-| Deep-Think AUTOCLASSIFY | Returns full Select-shaped output | Surface to user as the final classification (mark `escalated_to_deep_think: true`). |
-| Deep-Think REFUSE | Returns refusal | Return refusal to user; no further escalation. |
+| Triage REFUSE | L1 `decision: "REFUSE"` | Return refusal payload. No retrieval. |
+| Triage ASK | L1 `decision: "ASK"`, Q-budget > 0 | QGS generates the question with structured options; surface to user; on reply, re-enter L1 with `previousAnswers++`. **3-round cap** (was 2). |
+| Triage ASK + Q-budget = 0 | Triage wants to ASK but no budget | Triage forces REFUSE with `out_of_scope_class: "function_only_no_substance"`. |
+| Triage invalid JSON | rare | Retry once at temp=0.0; if still invalid → REFUSE with `out_of_scope_class: "incoherent_query"`. |
+| Retrieval 0 candidates | All cosine + FTS empty after rules filter | Backtrack gate (L3) fires once; if still 0 → escalate to L7 Deep-Think. |
+| Select hallucinated code | `selected_code ∉ candidates` | Verifier Rule 1 fails; repair feedback to L4; loop max 3. |
+| Select 6-digit | `selected_code_is_six_digit=true` (no 8-digit children in DB) | Authorized path (e.g., 3301.22 jasmine essential oil); verifier passes; emit at 6-digit. |
+| Select REFUSE | `selected_code: null` | Return refusal to user. No L6 unless caller explicitly opts in. |
+| Verifier fail × 3 | L4 + L5 loop exhausted | Escalate to L6 Tiebreak. |
+| Tiebreak verifier fail | L6 + L5 also failed | Escalate to L7 Deep-Think. |
+| Deep-Think AUTOCLASSIFY | L7 returns Select-shaped output | Surface with `escalated_to_deep_think: true`. |
+| Deep-Think REFUSE | L7 cannot defend any answer | Return refusal. No further escalation. |
+| QGS no template | Highest-IG attribute has no `question_templates` entry | REFUSE with structured guidance ("please describe [attribute]"). |
+| Vertex 5xx | Provider error | Exponential backoff retry (max 3); if persistent, surface system-error to user (NOT a misclassification). |
+| Cohere down | Rerank API unavailable | Fall back to raw retrieval scores (no rerank); flag in audit log. |
 
 ---
 
-## 8. `previousAnswers` schema (✓ LOCKED 2026-05-25)
+## 8. `previousAnswers` schema (✓ LOCKED 2026-05-26)
 
-`previousAnswers: Record<questionId: string, answerId: string>`.
+Unchanged from v1: `previousAnswers: Record<questionId: string, answerId: string>` where both match `^[a-z][a-z0-9_]*$`. Max 3 entries (Q-budget = 3, up from 2 in v1). Triage replay rule: fold each as binding fact into `extracted_attributes`; do not re-ask.
 
-- `questionId`: stable token assigned by Triage on the round that emitted the question (e.g., `"q_rubber_composition"`). Snake_case, matches `^[a-z][a-z0-9_]*$`.
-- `answerId`: the `id` of the option the user selected (e.g., `"metal_sleeve"`). Matches `^[a-z][a-z0-9_]*$`.
-- Empty `{}` on round 1; max 2 entries (Q-budget = 2).
-- Triage replay rule (per `triage-v1.md` §`previousAnswers`): on rounds 2+, fold each entry as a binding fact into `extracted_attributes`; do not re-ask the same question; treat as definitive.
-- Runtime is responsible for the Q-budget counter; Triage reads `q_budget_remaining` (integer) as an input each round.
+QGS provides the `questionId` (template ID) and `answerId` (selected option ID).
 
 ---
 
-## 9. Refusal contract (✓ LOCKED 2026-05-25)
+## 9. Refusal contract (✓ LOCKED 2026-05-26)
 
 The system MUST refuse (rather than guess) under any of:
 
-1. **Triage out-of-scope** — `out_of_scope_class ∈ {extraterrestrial, fictional, services_not_goods, contraband, weapons_restricted_class, function_only_no_substance, incoherent_query}` (per `triage-v1.md` Rule 1).
-2. **Triage Q-budget exhausted** — completeness still insufficient after 2 ASK rounds → REFUSE with `out_of_scope_class: "function_only_no_substance"`.
-3. **Select unfaithful candidates** — no Stage 4 candidate is a faithful classification under strict reading of notes + GIRs + exclusions → Select returns `selected_code: null` + `refusal.reason` (per `select-v1.md` Step 6).
-4. **Deep-Think refusal** — final escalation determines no defensible answer exists.
+1. **Triage out-of-scope** — `out_of_scope_class ∈ {extraterrestrial, fictional, services_not_goods, contraband, weapons_restricted_class, function_only_no_substance, incoherent_query}` (per `triage-v2.md` Rule 1).
+2. **Triage Q-budget exhausted** — 3 ASK rounds used; REFUSE with `out_of_scope_class: "function_only_no_substance"`.
+3. **Select unfaithful** — no candidate is a faithful classification → `selected_code: null` + `refusal.reason`.
+4. **QGS no template** — when ambiguity needs clarifying but no template for the discriminating attribute → REFUSE with structured guidance.
+5. **L7 Deep-Think refusal** — no defensible answer.
+6. **L8 Low-coverage flag** (post-MVP) — query falls outside trained case_law distribution; refuse rather than guess.
 
-Refusal payload returned to user contains (minimum):
+Refusal payload (minimum):
 - `decision: "REFUSE"`
-- `refusal_reason: string` — one-sentence diagnostic the user can read
-- `out_of_scope_class: string | null` — when known
-- `escalation_path: string[]` — which stages were traversed before refusing (for audit)
-- HTTP semantics: 200 OK with refusal in body (NOT 4xx); the classifier successfully evaluated and concluded "refuse".
+- `refusal_reason: string` (one-sentence diagnostic)
+- `out_of_scope_class: string | null`
+- `escalation_path: string[]` (stages traversed)
+- `verifier_failures: VerifierRuleFailure[]` (when refusal was verifier-triggered)
+- HTTP semantics: 200 OK with refusal in body (NOT 4xx).
 
 ---
 
 ## 10. Phase 4 prompt iteration cycle
 
-B5/B6/B7 (`triage-v1.md`, `select-v1.md`, `verify-router-v1.ts`) are **seed drafts**, not final. Phase 4 iterates against the 168-case eval harness (B1). The loop:
+`triage-v2.md`, `select-v2.md`, `verify-tiebreak-v2.md`, `deep-think-v2.md` are **seed drafts**, not final. Phase 4 iterates against the 168-case eval harness (B1):
 
-1. Run `backend/eval/run-eval.ts` over all 168 cases with the current prompt version.
-2. Diff predictions vs `expected_code` per case. Group failures by stage and failure mode (Triage routing wrong, Select picked wrong sibling, Verify over-disagreed, etc.).
-3. Update one prompt at a time. Tag the new version `triage-v2.md` / `select-v2.md` etc.; do not overwrite v1.
-4. Re-run eval. Accept the new version when ≥80% of the targeted failure class resolves AND no regression > 2 cases across non-targeted classes.
-5. Lock prompts at Phase 4 exit (≥85% overall correctness target on the 168-case eval).
+1. Run `backend/eval/run-eval.ts` over all 168 cases.
+2. Group failures by stage and failure mode (Triage routing wrong, Select picked wrong sibling, Verifier over-rejected, etc.).
+3. Update one prompt at a time; tag the new version (`triage-v3.md`); do not overwrite previous.
+4. Re-run; accept when ≥80% of targeted class resolves AND no regression > 2 cases elsewhere.
+5. Lock prompts at Phase 4 exit (target ≥85% overall correctness on 168 cases).
 
-Prompts and eval cases are the contract; the runtime (the classifier code in `backend/src/classifier/`) is the iterable artifact.
+Prompts and eval cases are the contract; the runtime (`backend/src/classifier-v2/`) is the iterable artifact.
 
 ---
 
 ## 11. Eval infrastructure (B1)
 
-Eval runner: `backend/eval/run-eval.ts`. Reads `feat/phase-1-eval-harness:backend/src/eval/cases.json` (168 cases). Calls a stub `classifyStub()` returning null today; Phase 4 swaps in the real classifier function from `backend/src/classifier/`. Output: per-case prediction JSON + summary stats (correctness, refusal rate, mean cost, mean latency). Phase 1 expected-code field is the ground truth.
+Eval runner: `backend/eval/run-eval.ts`. Reads 168-case harness. Calls `classify()` from `backend/src/classifier-v2/index.ts`. Output: per-case prediction + summary stats (correctness segmented by chapter, refusal rate, mean cost, mean latency, verifier-failure-rate per rule).
 
-Baseline run (stub) writes to `backend/eval/baseline-stub.json`. See `backend/data/phase-3.5-prompts/B1-eval-skeleton-summary.md` for the skeleton's current shape.
+Baseline: `backend/eval/baseline-stub.json`. Phase 4 v2 baseline replaces the stub.
 
 ---
 
@@ -236,42 +425,85 @@ Baseline run (stub) writes to `backend/eval/baseline-stub.json`. See `backend/da
 
 | # | Item | Source | Severity | Resolves in |
 |---|---|---|---|---|
-| 1 | 5 borderline multi-destination chapter_exclusions rows pending review | `backend/data/phase-3.5-prompts/A1-multidest-sweep.md` | Low | Phase 4 prompt iteration OR Phase 5 |
-| 2 | 6 pre-existing OCR data quirks | A8 Audit A finding | Low | Phase 5 data cleanup |
-| 3 | 454 empty-subheading-title rows (cosmetic double-space in fts_search_text concat) | A8 finding | Cosmetic (zero FTS impact) | Phase 5 |
-| 4 | vertex-baseline-eval defect (0 output tokens) | D4 | Deferred | Phase 4/M3 |
-| 5 | `policy_conditions` sidecar table empty | CLAUDE.md known issue | UX | Phase 8 (frontend) |
-| 6 | `tariff_lines.unit` column NULL on all rows | CLAUDE.md known issue | M3 blocker | M3 trade-intelligence |
-| 7 | Legacy `backend/src/rules/chapter-rules.ts` legal_basis comments | Spike §Phase 2 fixes | Replaced by Phase 4 rebuild | Phase 4 |
-| 8 | **Verify V2 same-family correlation** — V1 and V2 both run Gemini 3.5 Flash under D1 LOCKED. Adversarial independence is reduced to prompt-level only. Revisit if Phase 4 eval shows V2 rubber-stamping Select instead of catching genuine errors. | T20 D1 lock | Medium | Phase 4 eval — 1-line config swap to Claude (pending quota) or GPT-5.4 mini |
-| 9 | Claude on Vertex requires quota request (HTTP 429 on first call) — deferred per T17 | T17 credit-coverage test | Low | Phase 4 if V2 swap needed |
-| 10 | Post-credit-expiry OSS hybrid cutover plan | `D1-opensource-research.md` | Long-horizon | 2027 |
+| 1 | 5 borderline multi-destination chapter_exclusions rows pending review | A1-multidest-sweep.md | Low | Phase 5 |
+| 2 | 6 pre-existing OCR data quirks | A8 finding | Low | Phase 5 data cleanup |
+| 3 | 454 empty-subheading-title rows (cosmetic) | A8 finding | Cosmetic | Phase 5 |
+| 4 | `policy_conditions` sidecar table empty | CLAUDE.md known issue | UX | Phase 8 (frontend) |
+| 5 | `tariff_lines.unit` column 100% NULL | DB inspection 2026-05-26 | M3 blocker | M3 trade-intelligence |
+| 6 | `policy_condition` unreliable (1,104/12,460 populated, truncated mid-sentence) | DB inspection 2026-05-26 | Phase 5 | Phase 5 data refresh from DGFT |
+| 7 | 217 subheadings have `wco_2022_match=false` without rationale text | DB inspection 2026-05-26 | Low | Phase 5 data backfill |
+| 8 | Legacy `backend/src/rules/chapter-rules.ts` | Spike §Phase 2 fixes | Replaced by Phase 4 rebuild | Phase 4 |
+| 9 | Cohere on Vertex unavailable / not credit-covered | Vertex availability research 2026-05-26 | Long-horizon | 2027+ (substitute Gemini rerank if Cohere $200/mo pinches budget) |
+| 10 | Claude on Vertex blocked by Indian SME reseller restriction | Vertex availability research 2026-05-26 | Out-of-scope | Long-horizon (re-link billing through different reseller if ever needed) |
+| 11 | `pg_cron` + `pg_net` extensions available but not installed | DB inspection 2026-05-26 | Nice-to-have | Phase 5 (for scheduled offline-job re-runs) |
+| 12 | Post-credit-expiry OSS hybrid cutover plan | `D1-opensource-research.md` | Long-horizon | 2027 |
+
+**Resolved from v1:** Carryforwards #8 (same-family verify) and #9 (Claude on Vertex) are no longer open — addressed by cross-MODEL Gemini diversity (3.5 Flash vs 3.1 Pro) and acknowledgment that Claude is unavailable on this account.
 
 ---
 
-## 13. References (single-click navigation)
+## 13. References
 
-- Phase 3 spike report (design rationale, traces): `backend/data/phase-3-spike-report.md`
-- Phase 3.5 plan (operative session plan): `C:/Users/ASUS/.claude/plans/bubbly-foraging-catmull.md`
+- Architecture decision log (v1→v2 transition): `C:/Users/ASUS/.claude/plans/ultrathink-i-m-resuming-the-zesty-candle.md`
+- Phase 3 spike report: `backend/data/phase-3-spike-report.md`
+- Phase 3.5 plan: `C:/Users/ASUS/.claude/plans/bubbly-foraging-catmull.md`
 - A9 empirical proof: `backend/data/phase-3.5-audits/A9-regression-comparison.md`
 - B2 Cohere Rerank live-test: `backend/data/phase-3.5-prompts/B2-cohere-rerank-test.md`
 - T17 credit-coverage test: `backend/data/phase-3.5-prompts/T17-credit-coverage-test.md`
 - D1 open-source post-credit plan: `backend/data/phase-3.5-prompts/D1-opensource-research.md`
-- Triage prompt: `backend/prompts/triage-v1.md`
-- Select prompt: `backend/prompts/select-v1.md`
-- Verify router: `backend/prompts/verify-router-v1.ts`
-- Eval skeleton: `backend/eval/run-eval.ts` (per B1)
+- Triage prompt: `backend/prompts/triage-v2.md` (was `triage-v1.md`)
+- Select prompt: `backend/prompts/select-v2.md` (was `select-v1.md`)
+- Tiebreak prompt: `backend/prompts/verify-tiebreak-v2.md` (was `verify-router-v1.ts`)
+- Deep-Think prompt: `backend/prompts/deep-think-v2.md` (new)
+- Eval skeleton: `backend/eval/run-eval.ts`
 - Project context: `CLAUDE.md` (root)
+- SDK migration notes: `backend/docs/SETUP-vertex-service-account.md`
 
 ---
 
-## 14. Phase 4 next steps (handoff to implementer)
+## 14. Phase 4 v2 next steps (handoff to implementer)
 
-The Phase 3.5 exit gate is GREEN; D1 model stack is LOCKED 2026-05-25. Next-session implementer picks up here:
+The Phase 3.5 exit gate is GREEN; Phase 4 v2 architecture is LOCKED 2026-05-26. **DO NOT proceed to implementation until the user explicitly authorizes.** The locked-architecture deliverable is the documentation + plan; implementation is the next gate.
 
-1. **Cut branch:** `git checkout -b feat/phase-4-pipeline-build` off `feat/phase-3-arch-spike`.
-2. **First build task:** write `backend/src/classifier-v2/index.ts` that calls Vertex Gemini 3.5 Flash via the service-account JSON at `backend/.gcp/vertex-sa.json`. Use `GOOGLE_APPLICATION_CREDENTIALS` env var; endpoint region `global`; structured output via `generationConfig.responseSchema` + `responseMimeType: 'application/json'`; thinkingBudget=0 for all stages except Deep-Think.
-3. **Eval wiring:** `backend/eval/run-eval.ts` is ready as a stub — swap `classifyStub` for the real classifier function from `backend/src/classifier-v2/`.
-4. **First eval gate:** ≥80% chapter-match correctness on the 168-case Phase 1 harness. Heading-match and code-match thresholds tighter (target ≥70% heading, ≥60% code on initial Phase 4 build; iterate prompts toward ≥85% / ≥75% / ≥70% at Phase 4 exit).
-5. **If Verify V2 same-family proves problematic** (V2 systematically agreeing with Select instead of catching genuine errors — track via eval-harness disagreement-rate metric): enable Claude quota on Vertex (1-line config) OR switch V2 to GPT-5.4 mini (1-line config). Both are reversible if eval regresses.
-6. **Cost monitoring:** add per-call cost logging from day 1 in `classifier-v2/`; eval runner aggregates mean/p95 cost. Trigger AskUserQuestion if mean exceeds $0.012/query (≈40% over the ~$0.0087 estimate).
+Build sequence under v2:
+
+### Phase 4.0 — Build-time offline jobs (Opus 4.7 via Max subscription) — ~5-7 days
+1. **O1 Notes Claims Extraction** → populate `notes_claims` table
+2. **O2 Tariff Line Attribute Extraction** → populate `tariff_line_attributes` table
+3. **O3 Question Template Library** → populate `question_templates` table (curated)
+4. **O4 India Alias Map** → populate alias dictionary
+5. **O5 Confusing Pairs Documentation** → discriminating attributes per pair
+
+### Phase 4.1 — Runtime skeleton — ~1 week
+6. **Cut branch:** `git checkout -b feat/phase-4-pipeline-build` off `feat/phase-3-arch-spike`
+7. **`backend/src/classifier-v2/index.ts`** entry point + Vertex client setup (`@google/genai`, `thinking_level` wiring, response_schema)
+8. **L0 Normalization** module (deterministic, fast)
+9. **L1 Triage** wiring with `triage-v2.md` prompt (refined from v1)
+10. **L2 Hybrid Retrieval** wiring (reuses Phase 3.5 work; adds GIN-FTS on exclusions pre-filter)
+
+### Phase 4.2 — Decision + verification — ~1 week
+11. **L3 Rules Filter** + multi-destination collapse algorithm + backtrack gate
+12. **L4 Select** with `select-v2.md` prompt (level-by-level constrained enum)
+13. **L5 Mechanical Verifier** (10 rules, including notes_claims predicate evaluator)
+14. **QGS** wiring (template lookup + info-gain calc)
+
+### Phase 4.3 — Escalation + integration — ~1 week
+15. **L6 Tiebreak** (Gemini 3.1 Pro, thinking=high)
+16. **L7 Deep-Think** with `deep-think-v2.md` prompt
+17. **L8 Active Learning** write-back (provisional case_law, confirmation hooks for wizard)
+18. **Rewire `backend/src/api/classify.ts`** to call classifier-v2
+19. **Swap `backend/eval/run-eval.ts`** from stub to real classifier import
+
+### Phase 4.4 — Eval + iteration — ~1-2 weeks
+20. **First eval gate:** ≥80% chapter-match correctness on 168 cases. Segment failures by chapter + failure-mode class.
+21. **Iterate prompts** on weak chapters (orchestrator-quality-cycle: implementer → spec-reviewer → quality-reviewer).
+22. **Target at Phase 4 exit:** ≥85% chapter / ≥75% heading / ≥70% code; cost ≤$0.012/query mean; latency ≤8s p95.
+
+**Total estimated Phase 4 effort:** ~4-5 weeks. Build-time jobs (Phase 4.0) can run in parallel with runtime skeleton (Phase 4.1).
+
+**STOP-AND-SURFACE triggers during Phase 4:**
+- Mean cost exceeds $0.015/query → review pricing assumptions
+- Tiebreak triggered on >20% of queries → review Select prompt
+- Verifier Rule 7 (notes-conformance) fails on >30% of cases → review notes_claims extraction quality
+- Cohere $200/mo cash creates budget pressure → review substitute-Gemini-rerank decision
+- Any verifier rule fails identically across many cases → architectural review (not prompt iteration)
