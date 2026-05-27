@@ -4,7 +4,7 @@ Walkthrough to provision a GCP service-account JSON key so we can call Gemini 3.
 
 - **Project ID**: `gen-lang-client-0962892937`
 - **Region**: `global` (Gemini 3.x endpoint availability)
-- **Target models (v2 architecture)**: `gemini-3.5-flash` AND `gemini-3.1-pro`
+- **Target models (v2 architecture)**: `gemini-3.5-flash` AND `gemini-3.1-pro-preview`
 - **Time**: ~10 minutes
 - **Cost**: smoke test ≈ $0.0001, billed against existing credits (Free Trial $326 / GenAI App Builder $1,130)
 
@@ -17,7 +17,7 @@ The locked v2 architecture (`backend/docs/ARCHITECTURE.md`, 2026-05-26) uses TWO
 | Tier | Model | Used by | Notes |
 |---|---|---|---|
 | Flash | `gemini-3.5-flash` | Triage + Select | Fast, low cost. Use `thinking_level: 'low'`. |
-| Pro | `gemini-3.1-pro` | Tiebreak + Deep-Think | Higher reasoning. Use `thinking_level: 'high'`. |
+| Pro | `gemini-3.1-pro-preview` | Tiebreak + Deep-Think | Higher reasoning. Use `thinking_level: 'high'`. |
 
 **Both tiers are reachable from the same SA + the same `roles/aiplatform.user` role** — no extra IAM grants needed when promoting from Flash-only smoke tests to the full v2 pipeline.
 

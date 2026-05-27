@@ -5,7 +5,10 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
-    include: ['src/tests/**/*.test.ts'],
+    include: [
+      'src/tests/**/*.test.ts',
+      'src/classifier-v2/**/*.test.ts',
+    ],
     exclude: [
       'node_modules',
       'dist',

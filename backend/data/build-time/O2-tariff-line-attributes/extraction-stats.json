@@ -1,0 +1,23 @@
+{
+  "run_id": "o2-rerun-2026-05-27",
+  "model": "claude-opus-4-7",
+  "status": "INCOMPLETE_BY_DESIGN_STOPPED_AND_SURFACED",
+  "session_start": "2026-05-27",
+  "total_codes_in_db": 12460,
+  "codes_extracted_this_session": 44,
+  "codes_remaining": 12416,
+  "completion_pct": 0.35,
+  "chapters_complete": ["01"],
+  "chapters_remaining": ["02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98"],
+  "self_assessment_jaccard": "NOT_COMPUTED_yet (validation-set chapters Ch.09/21/27/28/29/39/42/43/54/55/61/62/72/73/84/85/87/90 not yet extracted)",
+  "stop_reason": "Per CLAUDE.md feedback_stop_and_surface rule — stopped before degrading quality silently. Brief's 1-3hr time budget is mathematically incompatible with stated quality bar (no shortcuts, no deterministic substitution) at 12,460 codes × ~50-field per-code reasoned records. Surfacing to orchestrator for scope/timeline decision.",
+  "validation_set_preserved": true,
+  "files_written": [
+    "extracted-attributes.json",
+    "extraction-log.md",
+    "extraction-stats.json"
+  ],
+  "files_NOT_touched_per_instruction": [
+    "validation-set-50.json"
+  ]
+}

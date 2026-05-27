@@ -33,7 +33,8 @@
     "gt-fix:invalid": "npx tsx --require dotenv/config src/eval/gt-fix/fix-invalid-codes.ts",
     "gt-fix:missing": "npx tsx --require dotenv/config src/eval/gt-fix/fix-missing-gt.ts",
     "gt-fix:llm": "npx tsx --require dotenv/config src/eval/gt-fix/flag-llm-cases.ts",
-    "gt-fix:merge": "npx tsx src/eval/gt-fix/merge-and-review.ts"
+    "gt-fix:merge": "npx tsx src/eval/gt-fix/merge-and-review.ts",
+    "smoke:v2": "npx ts-node scripts/smoke-classifier-v2.ts"
   },
   "keywords": [
     "hs-code",

@@ -1,7 +1,7 @@
-# Verify Tiebreak Prompt v2 (Layer 6 — Gemini 3.1 Pro on Vertex @ global)
+# Verify Tiebreak Prompt v2 (Layer 6 — Gemini 3.1 Pro Preview on Vertex @ global)
 
 **Pipeline stage:** 6 of 8 — TIEBREAK (cross-MODEL verify-after-failure)
-**Model:** `gemini-3.1-pro` on Vertex AI, region `global` (temperature: 0.1) — ✓ LOCKED 2026-05-26
+**Model:** `gemini-3.1-pro-preview` on Vertex AI, region `global` (temperature: 0.1) — ✓ LOCKED 2026-05-26
 **SDK:** `@google/genai` (unified SDK; legacy `@google-cloud/vertexai` is deprecated).
 **Response format:** Vertex Gemini structured outputs via `generationConfig.responseSchema` + `generationConfig.responseMimeType = 'application/json'` — Vertex-native equivalent of OpenAI's `response_format: { type: "json_schema", strict: true }`. Do NOT use raw `json_object` mode.
 **Thinking level:** `thinking_level: "high"` — this is the modern `@google/genai` enum API. Do NOT mix with the legacy integer `thinkingBudget` field in the same call (Vertex returns 400). High thinking is REQUIRED here: Tiebreak is invoked precisely because Select's cheap reasoning failed; we are paying for a deeper internal trace.
@@ -14,7 +14,7 @@
 
 You are the **Tiebreak stage** of an Indian ITC-HS (Harmonized System) code classifier. The Select stage (`gemini-3.5-flash`, thinking=low) emitted a code, and the Mechanical Verifier (10 deterministic SQL+code rules) rejected it three iterations in a row — OR the runtime flagged the product as composite (GIR-3(b) territory, requires deeper reasoning) — OR Select itself emitted `self_confidence: "LOW"`. You are now the re-decider.
 
-You are a **DIFFERENT model** from Select. Select runs `gemini-3.5-flash` (agent-tuned post-training). You run `gemini-3.1-pro` with `thinking_level=high` (reasoning-tuned post-training, ~4-5pp divergence on reasoning-heavy benchmarks). This cross-model gap is the architectural reason you exist: same-family verify collapses (the v1 failure mode) because two same-family models share the same convergent priors. You must bring genuine independent judgment.
+You are a **DIFFERENT model** from Select. Select runs `gemini-3.5-flash` (agent-tuned post-training). You run `gemini-3.1-pro-preview` with `thinking_level=high` (reasoning-tuned post-training, ~4-5pp divergence on reasoning-heavy benchmarks). This cross-model gap is the architectural reason you exist: same-family verify collapses (the v1 failure mode) because two same-family models share the same convergent priors. You must bring genuine independent judgment.
 
 Your output will be re-checked by the same Mechanical Verifier. If your output also fails verification, the runtime escalates to Layer 7 Deep-Think. **Your goal is not to defend Select — it is to get the right code given the verifier's evidence.** Picking the same code Select picked, when the verifier rejected it for a stated reason you cannot rebut, is a regression, not a tiebreak.
 
@@ -436,7 +436,7 @@ Remember:
 
 - **Strict mode (Vertex Gemini):** use `generationConfig: { responseSchema: <schema>, responseMimeType: 'application/json' }`. The OpenAI `response_format: { type: "json_schema", strict: true }` shape does NOT apply — Vertex Gemini's API surface is different. The JSON Schema body itself is portable (`allOf`/`if`/`then`/`else` constructs work the same).
 - **Thinking level MUST be "high" for Tiebreak.** Set `thinking_level: "high"` via `@google/genai`. Do NOT mix with the legacy integer `thinkingBudget` field in the same call (Vertex returns 400). High thinking is the reason we pay ~$0.020/Tiebreak-call vs ~$0.0073/Select-call — the budget is justified because Tiebreak is invoked precisely when Select's cheap reasoning failed.
-- **Endpoint:** `https://aiplatform.googleapis.com/v1/projects/gen-lang-client-0962892937/locations/global/publishers/google/models/gemini-3.1-pro:generateContent`. Region MUST be `global` (Gemini 3.x is not on `us-central1`; `asia-south1` Mumbai is Gemini-only and acceptable but `global` is the lock).
+- **Endpoint:** `https://aiplatform.googleapis.com/v1/projects/gen-lang-client-0962892937/locations/global/publishers/google/models/gemini-3.1-pro-preview:generateContent`. Region MUST be `global` (Gemini 3.x is not on `us-central1`; `asia-south1` Mumbai is Gemini-only and acceptable but `global` is the lock).
 - **Candidate-set validation:** after parsing the response, the runtime MUST validate `selected_code ∈ candidates[].code ∪ {<6-digit parent of any candidate>} ∪ {null}`. Reject hallucinations at runtime; do not surface to user.
 - **Verifier re-check:** Tiebreak's output goes through the SAME 10-rule Mechanical Verifier. If it also fails, escalate to Layer 7 Deep-Think with the full Layer 1-6 trace.
 - **Cost guardrail:** Tiebreak should trigger on ~10% of queries (per ARCHITECTURE.md §5 cost table). If Phase 4 eval shows Tiebreak triggered on >20% of queries, the Select prompt needs review (STOP-AND-SURFACE trigger per ARCHITECTURE.md §14).

@@ -3,7 +3,7 @@
 **Pipeline stage:** 4 of 8 — SELECT (see `backend/docs/ARCHITECTURE.md` §2 for the full 8-layer pipeline and §6 for the Mechanical Verifier rules that consume this prompt's output).
 **Model:** `gemini-3.5-flash` on Vertex AI, region `global` (temperature: 0.1) — ✓ LOCKED 2026-05-26
 **Response format:** Vertex Gemini structured outputs via `generationConfig.responseSchema` + `generationConfig.responseMimeType = 'application/json'` — **this is the Vertex-native equivalent of OpenAI's `response_format: { type: "json_schema", json_schema: { strict: true } }`**. Use this; do NOT use raw `json_object` mode (unconstrained).
-**Thinking level:** `generationConfig.thinkingConfig.thinkingLevel = "low"` (NOT `thinkingBudget = 0`). Gemini 3.x defaults to high thinking; Select uses `"low"` to preserve a minimal reasoning pass for note/exclusion arbitration without paying for deep-think tokens. The externalized `reasoning_chain` is the contract surface — `"low"` keeps the internal trace bounded and the per-call cost inside the Select budget.
+**Thinking level:** `generationConfig.thinkingConfig.thinking_level = "low"` (NOT `thinkingBudget = 0`). Gemini 3.x defaults to high thinking; Select uses `"low"` to preserve a minimal reasoning pass for note/exclusion arbitration without paying for deep-think tokens. The externalized `reasoning_chain` is the contract surface — `"low"` keeps the internal trace bounded and the per-call cost inside the Select budget.
 **SDK:** Use `@google/genai` (the modern unified Google GenAI SDK that supports Vertex's `responseSchema`, `thinkingConfig`, and `global` region). The older `@google-cloud/vertexai` and `@google/generative-ai` packages are legacy; do not use them for new Phase-4 code.
 **Auth:** service-account JSON at `backend/.gcp/vertex-sa.json` via `GOOGLE_APPLICATION_CREDENTIALS` env var.
 **Status:** v2 seed prompt. LOCKED architecture 2026-05-26 — replaces v1 (which lacked notes_claims, tariff_line_attributes, composite_product_flag, structured citation, exclusions_checked, india_specific_flag, GIR/exclusion precedence matrix, level-by-level constrained decoding, and the repair-loop contract).
@@ -305,6 +305,22 @@ If no candidate matches under strict reading of notes + notes_claims + GIRs + ex
       "items": {"type": "string", "pattern": "^\\d{4}\\.\\d{2}(\\.\\d{2})?$"},
       "maxItems": 4
     },
+    "components": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "material", "role"],
+        "properties": {
+          "name":     { "type": "string", "minLength": 1 },
+          "material": { "type": "string", "minLength": 1 },
+          "role":     { "type": "string", "enum": ["primary", "secondary", "auxiliary"] }
+        }
+      },
+      "minItems": 2,
+      "maxItems": 8,
+      "description": "REQUIRED when GIR-3(b) applied. Null otherwise."
+    },
     "refusal": {
       "type": ["object", "null"],
       "additionalProperties": false,
@@ -332,6 +348,11 @@ If no candidate matches under strict reading of notes + notes_claims + GIRs + ex
           "refusal": {"const": null}
         }
       }
+    },
+    {
+      "if": { "properties": { "citation": { "properties": { "gir_applied": { "const": "GIR-3(b)" } } } } },
+      "then": { "required": ["components"], "properties": { "components": { "type": "array", "minItems": 2 } } },
+      "else": { "properties": { "components": { "type": ["array", "null"] } } }
     }
   ]
 }
@@ -590,7 +611,7 @@ Remember:
 
 - **Strict mode (Vertex Gemini):** use `generationConfig: { responseSchema: <schema>, responseMimeType: 'application/json' }` — Vertex Gemini's strict structured-outputs mode, enforced at decode time. The JSON Schema body itself is portable (`allOf`/`if`/`then`/`else` constructs work the same).
 - **Level-by-level constrained decoding:** the runtime calls Select with `responseSchema` whose `selected_code` enum is constrained to the retrieved candidate set, AND the per-level retrieval stages (chapter retrieval, heading retrieval, 8-digit retrieval) each use enum-constrained responseSchemas of their own. The level budgets are: chapter enum ≤ 97 values (full universe), heading enum ≤ 30 (top-30 within chosen chapter), 8-digit enum ≤ 20 (top-20 within chosen heading). **Vertex's enum cap is ~120 — all three levels fit comfortably.** This makes out-of-set hallucinations decode-time-impossible, not just runtime-rejected.
-- **Thinking level MUST be `"low"` for Select.** Set `generationConfig.thinkingConfig.thinkingLevel = "low"` (the v2 lock — superseding v1's `thinkingBudget = 0`). This preserves a small reasoning pass for note/exclusion arbitration without paying for the deep-think token tail. Deep-Think (Stage 7 escalation) uses the same model with `thinkingLevel = "high"`.
+- **Thinking level MUST be `"low"` for Select.** Set `generationConfig.thinkingConfig.thinking_level = "low"` (the v2 lock — superseding v1's `thinkingBudget = 0`). This preserves a small reasoning pass for note/exclusion arbitration without paying for the deep-think token tail. Deep-Think (Stage 7 escalation) uses the same model with `thinking_level = "high"`.
 - **Endpoint:** `https://aiplatform.googleapis.com/v1/projects/gen-lang-client-0962892937/locations/global/publishers/google/models/gemini-3.5-flash:generateContent`. Region MUST be `global` (Gemini 3.x is not on `us-central1`).
 - **SDK:** `@google/genai` (modern unified Google GenAI SDK). The older `@google-cloud/vertexai` and `@google/generative-ai` are legacy.
 - **Candidate-set validation:** runtime double-checks `selected_code ∈ candidates[].code ∪ {null}` after parsing (belt-and-suspenders alongside the responseSchema enum). Hallucinations are rejected; do not surface to user.
@@ -603,4 +624,4 @@ Remember:
 - **`india_specific_note` injection:** when any candidate's subheading has `india_specific=true`, inject that subheading's `india_specific_note` field as a top-level context block, not buried inside the candidate row — it changes the legal reading. Your output's `india_specific_flag` echoes the chosen candidate's subheading flag verbatim (MV-03 cross-check).
 - **Year fact:** the runtime injects `current_year` as integer. Do not let the LLM derive year from training-data knowledge of "current date" — the system fact is authoritative.
 - **Reasoning_chain length:** 2-5 bullets is the contract (MV-09). The verifier rejects responses with 0-1 or 6+ bullets.
-- **Deep-Think escalation:** when Select returns LOW self_confidence, when the Mechanical Verifier rejects after the max repair iterations, or when downstream Verify disagrees, the runtime escalates to Deep-Think — same model (`gemini-3.5-flash` @ Vertex global) but with `thinkingLevel = "high"`. The Deep-Think prompt is a separate seed (TBD in Phase 4 iteration).
+- **Deep-Think escalation:** when Select returns LOW self_confidence, when the Mechanical Verifier rejects after the max repair iterations, or when downstream Verify disagrees, the runtime escalates to Deep-Think — same model (`gemini-3.5-flash` @ Vertex global) but with `thinking_level = "high"`. The Deep-Think prompt is a separate seed (TBD in Phase 4 iteration).

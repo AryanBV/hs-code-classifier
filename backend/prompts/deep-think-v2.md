@@ -1,7 +1,7 @@
-# Deep-Think Prompt v2 (Layer 7 — Gemini 3.1 Pro on Vertex @ global, extended thinking)
+# Deep-Think Prompt v2 (Layer 7 — Gemini 3.1 Pro Preview on Vertex @ global, extended thinking)
 
 **Pipeline stage:** 7 of 8 — DEEP-THINK (final escalation; AUTOCLASSIFY or REFUSAL)
-**Model:** `gemini-3.1-pro` on Vertex AI, region `global` (temperature: 0.1) — ✓ LOCKED 2026-05-26
+**Model:** `gemini-3.1-pro-preview` on Vertex AI, region `global` (temperature: 0.1) — ✓ LOCKED 2026-05-26
 **SDK:** `@google/genai` (unified SDK; legacy `@google-cloud/vertexai` is deprecated).
 **Response format:** Vertex Gemini structured outputs via `generationConfig.responseSchema` + `generationConfig.responseMimeType = 'application/json'` — Vertex-native equivalent of OpenAI's `response_format: { type: "json_schema", strict: true }`. Do NOT use raw `json_object` mode.
 **Thinking level:** `thinking_level: "high"` with **extended thinking** — this is the modern `@google/genai` enum API. Do NOT mix with the legacy integer `thinkingBudget` field in the same call (Vertex returns 400). Extended thinking is REQUIRED here: Deep-Think is the runtime's last call before refusal; it is the most expensive call we make (~$0.045 when triggered, ~3% of queries) and exists precisely to spend reasoning budget the cheaper stages could not afford.
@@ -15,7 +15,7 @@
 You are the **Deep-Think escalation** of an Indian ITC-HS (Harmonized System) code classifier. By the time you are invoked, the pipeline has spent significant reasoning budget on this query and failed:
 
 1. Layer 4 Select (`gemini-3.5-flash`, thinking=low) emitted a code and the Mechanical Verifier (10 deterministic SQL+code rules — see ARCHITECTURE.md §6) rejected it three iterations in a row.
-2. Layer 6 Tiebreak (`gemini-3.1-pro`, thinking=high — same model you are now, different prompt) re-decided and emitted a code, and the Mechanical Verifier rejected that too.
+2. Layer 6 Tiebreak (`gemini-3.1-pro-preview`, thinking=high — same model you are now, different prompt) re-decided and emitted a code, and the Mechanical Verifier rejected that too.
 
 That is a collective **4+ verifier-rejected attempts** across two model configurations. This query is genuinely hard — it is in one of these classes:
 
@@ -482,7 +482,7 @@ Remember:
 
 - **Strict mode (Vertex Gemini):** use `generationConfig: { responseSchema: <schema>, responseMimeType: 'application/json' }`. The OpenAI `response_format: { type: "json_schema", strict: true }` shape does NOT apply — Vertex Gemini's API surface is different. The JSON Schema body itself is portable.
 - **Thinking level MUST be "high" with extended thinking for Deep-Think.** Set `thinking_level: "high"` via `@google/genai`. The ~$0.045/call budget is justified because this is the runtime's last LLM call before refusal; we are paying for the reasoning budget L4 and L6 could not afford. Do NOT mix with the legacy integer `thinkingBudget` field in the same call (Vertex returns 400).
-- **Endpoint:** `https://aiplatform.googleapis.com/v1/projects/gen-lang-client-0962892937/locations/global/publishers/google/models/gemini-3.1-pro:generateContent`. Region MUST be `global`.
+- **Endpoint:** `https://aiplatform.googleapis.com/v1/projects/gen-lang-client-0962892937/locations/global/publishers/google/models/gemini-3.1-pro-preview:generateContent`. Region MUST be `global`.
 - **Candidate-set validation:** after parsing the response, the runtime MUST validate `selected_code ∈ candidates[].code ∪ {<6-digit parent of any candidate>} ∪ {null}`. Reject hallucinations at runtime; do not surface to user. Deep-Think hallucinations are catastrophic because there is no further LLM check.
 - **No verifier re-check loop on Deep-Think.** Unlike Select (3 verifier loops) and Tiebreak (1 verifier loop), Deep-Think's output is the final word — the verifier runs ONCE on Deep-Think output, and on failure the runtime emits the result with `verifier_failed_after_deep_think: true` (NOT another LLM escalation; the user sees the result with an explicit "classification contested" warning) OR forces a refusal if the user-facing policy is "refuse over warn." Phase 4 implementer decides which policy ships in MVP.
 - **Cost guardrail:** Deep-Think should trigger on ~3% of queries (per ARCHITECTURE.md §5 cost table). If Phase 4 eval shows Deep-Think triggered on >8% of queries, the Tiebreak prompt OR the verifier rule calibration needs review (STOP-AND-SURFACE per ARCHITECTURE.md §14).

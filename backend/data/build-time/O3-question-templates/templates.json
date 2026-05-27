@@ -1,0 +1,675 @@
+[
+  {
+    "discriminating_attribute": "material",
+    "chapter_scope": ["42", "43"],
+    "question_text": "Does the product still have hair, fur or wool on the hide, or has the hair been removed?",
+    "value_labels": {
+      "leather": "Leather only - hair/wool has been removed (smooth tanned hide)",
+      "furskin": "Furskin - hide still has hair, fur or wool attached (mink, fox, rabbit, sheepskin with wool, etc.)",
+      "artificial_fur": "Artificial fur - imitation fur made by gumming/sewing hair onto a backing (NOT knitted/woven imitations)"
+    },
+    "notes": "Disambiguates Ch.42 (leather) vs Ch.43 (furskin/fur). Ch.43 Note 1 defines furskin as 'tanned or dressed with the hair or wool on'. The hair-on/hair-off distinction is the legal bright line.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "material",
+    "chapter_scope": ["42", "61", "62"],
+    "question_text": "What is the main material of the garment or accessory?",
+    "value_labels": {
+      "leather": "Leather (cowhide, lambskin, etc.) or composition leather",
+      "textile_woven": "Textile fabric that is woven (e.g. cotton shirt, polyester suit)",
+      "textile_knitted": "Textile fabric that is knitted or crocheted (e.g. T-shirt, sweater)",
+      "synthetic_leather": "Synthetic / faux leather (PU- or PVC-coated fabric, plastic surface)"
+    },
+    "notes": "Disambiguates Ch.42 (leather apparel 4203) vs Ch.61/62 (textile apparel). Faux leather routes to Ch.39 or Ch.62 depending on coating thickness; treat as textile branch for this question.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "material",
+    "chapter_scope": null,
+    "question_text": "Which broad material family best describes the product?",
+    "value_labels": {
+      "metal": "Metal (iron / steel / aluminium / copper / brass / other base metal)",
+      "polymer_rubber": "Plastic, rubber or polymer",
+      "natural_origin": "Natural material (wood, leather, textile, paper, cork, stone)",
+      "other_inorganic": "Other (glass, ceramic, mineral, chemical, or composite — please describe)"
+    },
+    "notes": "Universal material discriminator (4-bucket top level). Used when info-gain on `material` ranks highest across candidates. Refined by chapter-scoped templates (e.g. predominant_element for Ch.72-81, textile-specific for Ch.50-53).",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "material",
+    "chapter_scope": ["72", "73", "74", "75", "76", "78", "79", "80", "81"],
+    "question_text": "Which metal makes up most of the product by weight?",
+    "value_labels": {
+      "iron": "Iron or steel (Fe) — including stainless and alloy steels",
+      "aluminium": "Aluminium (Al)",
+      "copper": "Copper, brass or bronze (Cu)",
+      "other_base_metal": "Other base metal (nickel, zinc, tin, lead, titanium, tungsten, magnesium, etc.) — please specify in next step"
+    },
+    "notes": "Used when product is clearly metallic but the chapter (72-81) needs disambiguation. Maps to predominant_element internally. 'other_base_metal' triggers a follow-up template (`predominant_element` chapter-specific) for further refinement.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "material",
+    "chapter_scope": ["42"],
+    "question_text": "What type of leather is the product made from?",
+    "value_labels": {
+      "full_grain_leather": "Full-grain or top-grain leather (intact natural surface)",
+      "split_leather": "Split leather or suede (under-layer of the hide)",
+      "composition_leather": "Composition leather / bonded leather (bonded leather fibres)",
+      "patent_leather": "Patent leather (varnished, glossy finish)",
+      "chamois_leather": "Chamois leather (soft, oil-tanned)"
+    },
+    "notes": "Refines material within Ch.42 (heading 4115 vs 4203 vs 4107 etc.). Optional; only invoked when Ch.42 candidates span multiple leather sub-types.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "form",
+    "chapter_scope": null,
+    "question_text": "What is the physical form of the product as exported?",
+    "value_labels": {
+      "raw_bulk": "Raw bulk material (granules, powder, lump, ingot, billet)",
+      "semi_finished": "Semi-finished shape (sheet, plate, strip, foil, wire, rod, bar, tube, pipe)",
+      "finished_part": "Finished part or component ready for use / assembly",
+      "complete_product": "Complete product / machine / appliance ready for end-use",
+      "fabric_or_yarn": "Fabric, yarn, fibre or textile material"
+    },
+    "notes": "Universal form bucket. Helps separate raw-material chapters from semi-finished and finished-good chapters.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "form",
+    "chapter_scope": ["54", "55"],
+    "question_text": "Is the synthetic / artificial fibre continuous (filament) or cut into short lengths (staple)?",
+    "value_labels": {
+      "filament": "Continuous filament - one long strand of indefinite length (filament yarn, monofilament, multifilament)",
+      "staple": "Staple - short cut lengths typically 20-150 mm (cut staple, carded or combed staple fibre)",
+      "tow_long": "Filament tow longer than 2 metres (treated as filament - Ch.54)",
+      "tow_short": "Filament tow 2 metres or shorter (treated as staple - Ch.55)"
+    },
+    "notes": "Disambiguates Ch.54 (filament) vs Ch.55 (staple). Ch.55 Note 1: tow >2m = filament side; ≤2m = staple side. Same chemistry, form decides.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "form",
+    "chapter_scope": ["72", "73", "74", "75", "76", "78", "79", "80", "81", "82", "83"],
+    "question_text": "What metallurgical shape is the product?",
+    "value_labels": {
+      "ingot_billet": "Ingot, billet, slab or other primary cast form",
+      "bar_rod_wire": "Bar, rod or wire",
+      "sheet_plate_strip": "Sheet, plate, strip or foil",
+      "tube_pipe": "Tube, pipe or hollow profile",
+      "structural_section": "Structural section (angle, channel, beam, I-section)",
+      "finished_article": "Finished article (fastener, hand tool, fitting, container, etc.)"
+    },
+    "notes": "Within metal chapters, the heading is largely determined by form. Heading 7208-7212 (flat-rolled) vs 7213-7217 (bars/rods/wire) vs 7304-7306 (tubes) etc.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "form",
+    "chapter_scope": ["29", "30", "38"],
+    "question_text": "How is the product presented to the buyer?",
+    "value_labels": {
+      "bulk_powder": "Bulk powder, crystals or granules in large containers (drums, sacks, IBCs)",
+      "bulk_liquid": "Bulk liquid in drums or tankers",
+      "dosage_tablet_capsule": "Tablets, capsules or pills",
+      "dosage_ampoule_vial": "Ampoules, vials or pre-filled syringes (injectable)",
+      "dosage_syrup_cream": "Syrup, suspension, ointment, cream or other measured dosage form",
+      "retail_pack": "Other retail-ready measured-dose packaging"
+    },
+    "notes": "Disambiguates Ch.29 (bulk API) vs Ch.30 (formulated pharmaceutical). Once put up in measured doses or for retail sale, the product moves to Ch.30 (per Ch.29 Note 1).",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "form",
+    "chapter_scope": ["09", "21"],
+    "question_text": "What is the physical form of the coffee product?",
+    "value_labels": {
+      "whole_bean": "Whole roasted or unroasted beans",
+      "ground_bean": "Ground coffee (still the roasted bean, just milled - needs brewing)",
+      "soluble_powder": "Soluble powder or granules that dissolve directly in water (instant coffee)",
+      "freeze_dried": "Freeze-dried or spray-dried crystals (instant coffee)",
+      "liquid_concentrate": "Liquid coffee concentrate or extract"
+    },
+    "notes": "Reinforces processing_state for Ch.09 vs Ch.21. Ground coffee (Ch.09) and instant coffee powder (Ch.21) can both look like 'powder' to a user; this question clarifies.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "function_",
+    "chapter_scope": null,
+    "question_text": "What is the primary function or purpose of the product?",
+    "value_labels": {
+      "machine_or_equipment": "Machine, mechanical or electrical equipment / appliance",
+      "consumable_or_material": "Consumable, food, chemical, or raw / processed material",
+      "article_or_finished_goods": "Finished article — apparel, container, tool, furniture, decorative or household item",
+      "part_or_component": "Part, component or accessory of a larger product (please describe what it goes into)"
+    },
+    "notes": "Universal function discriminator (4-bucket top level). Used when the candidate set spans multiple Sections. Refined by chapter-scoped function templates (Ch.84/85, Ch.73/82/83, Ch.38, Ch.09/21).",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "function_",
+    "chapter_scope": ["84", "85"],
+    "question_text": "What is the main role of the machine or appliance?",
+    "value_labels": {
+      "mechanical_processing": "Mechanical processing - pump, compressor, engine, turbine, motor, hydraulic/pneumatic",
+      "production_machine": "Production machinery - machine tool, textile machine, food-processing machine, printing press",
+      "electrical_generation": "Electrical generation, conversion or distribution (transformers, generators, switchgear)",
+      "electronic_device": "Electronic device - communication, computing, control, signal processing",
+      "domestic_appliance": "Domestic / household appliance (washing machine, refrigerator, microwave)"
+    },
+    "notes": "Disambiguates within Ch.84/85. Engines and mechanical parts stay in Ch.84 even when vehicle-destined (Section XVII Note 2(e)).",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "function_",
+    "chapter_scope": ["82", "73", "83"],
+    "question_text": "What is the primary function of this metal article?",
+    "value_labels": {
+      "hand_tool_cutting": "Hand tool with a cutting / chiselling / drilling action (Ch.82)",
+      "fastener": "Fastener - bolt, screw, nut, rivet, washer, nail",
+      "fitting_fixture": "Fitting or fixture - hinge, lock, hook, bracket, mounting",
+      "structural_part": "Structural part - tube, pipe, plate, structural section ready for use",
+      "kitchenware_household": "Kitchenware, household article or sanitary ware",
+      "container": "Container, drum, tank or pressurised vessel"
+    },
+    "notes": "Disambiguates within base-metal Section XV. Hand tools route to Ch.82; misc base-metal articles to Ch.83; structural to Ch.73-76 depending on metal.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "intended_use",
+    "chapter_scope": null,
+    "question_text": "Where will the product mainly be used?",
+    "value_labels": {
+      "industrial_manufacturing": "Industrial / factory / manufacturing / construction use",
+      "vehicle_or_transport": "For motor vehicles, aircraft, ships, railways or other transport",
+      "household_personal": "Household, personal or wearable use (clothing, footwear, kitchenware, furniture)",
+      "medical_or_specialised": "Medical, dental, scientific, agricultural or other specialised end-use"
+    },
+    "notes": "Universal intended_use bucket (4-bucket top level). Refined by chapter-scoped intended_use templates (Ch.84/85/87 vehicle test, Ch.30 therapeutic purpose, Ch.61/62/63 gender, Ch.71 precious metal, Ch.94 furniture, Ch.95 toy).",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "intended_use",
+    "chapter_scope": ["84", "85", "87"],
+    "question_text": "Is the part designed solely or principally for use in a motor vehicle?",
+    "value_labels": {
+      "vehicle_specific": "Yes - designed solely or principally for vehicles of Ch.87 (cars, trucks, buses, two-wheelers, tractors)",
+      "general_industrial": "No - it is general-purpose machinery usable across many applications",
+      "engine_or_part_of_engine": "It is an engine or an integral part of an engine (these always stay in Ch.84 even when vehicle-destined)",
+      "bearing_valve_transmission": "It is a ball/roller bearing, valve, or transmission shaft (these stay in Ch.84 even when vehicle-destined)"
+    },
+    "notes": "Implements Section XVII Note 3 'solely or principally' test. Even vehicle-bound engines (8407/8408), bearings (8482), valves (8481), and transmission shafts (8483) stay in Ch.84. chapter_exclusion ids 2424-2427.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "intended_use",
+    "chapter_scope": ["61", "62", "63"],
+    "question_text": "Who is the garment intended for?",
+    "value_labels": {
+      "mens_or_boys": "Men's or boys' wear",
+      "womens_or_girls": "Women's or girls' wear",
+      "babies": "Babies' garments and accessories",
+      "unisex_or_industrial": "Unisex, workwear, or industrial / technical use"
+    },
+    "notes": "Within apparel Ch.61/62, gender split drives the heading (e.g. 6103 men's vs 6104 women's suits). Babies' garments have a dedicated heading 6111/6209.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "intended_use",
+    "chapter_scope": ["30"],
+    "question_text": "What is the therapeutic purpose of the pharmaceutical?",
+    "value_labels": {
+      "therapeutic_human": "Therapeutic or prophylactic for human use",
+      "veterinary": "Veterinary medicine for animal use",
+      "diagnostic": "Diagnostic reagent or in-vitro diagnostic kit",
+      "wound_care": "Wound dressing, plaster, bandage or related"
+    },
+    "notes": "Within Ch.30, the heading (3001 vs 3002 vs 3003 vs 3004 vs 3005 vs 3006) is partly driven by therapeutic purpose.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "processing_state",
+    "chapter_scope": null,
+    "question_text": "What is the processing state of the product?",
+    "value_labels": {
+      "raw_unprocessed": "Raw or unprocessed (e.g. fresh, untanned, unrefined, crude)",
+      "semi_processed": "Semi-processed (e.g. dried, frozen, hot-rolled, tanned, refined)",
+      "finished": "Fully finished and ready for use",
+      "formulated_or_mixed": "Formulated, mixed, or compounded (e.g. retail-ready preparation)"
+    },
+    "notes": "Universal processing-state bucket. Useful for separating raw-material chapters (Ch.01-15, 25-27, 41, 44, 50-53) from finished-product chapters.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "processing_state",
+    "chapter_scope": ["09", "21"],
+    "question_text": "Has the coffee been extracted (water/solvent extraction to produce instant/soluble coffee), or is it still in bean or ground form?",
+    "value_labels": {
+      "roasted_bean": "Roasted bean or ground roasted coffee (still requires brewing)",
+      "decaffeinated_bean": "Decaffeinated roasted bean or ground (still Ch.09 - only the caffeine was extracted)",
+      "extracted_soluble": "Extract, essence or concentrate - dissolves directly in water (instant / soluble coffee)",
+      "preparation_with_coffee": "Preparation with a basis of coffee extract (3-in-1 mix, coffee+milk powder, coffee+sugar)"
+    },
+    "notes": "Disambiguates Ch.09 (roasted/ground bean) vs Ch.21 (extracts and preparations of extracts). Decaffeination is Ch.09-resident because only the caffeine was extracted, not the coffee solids.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "processing_state",
+    "chapter_scope": ["29", "30"],
+    "question_text": "Is the chemical compound in unformulated bulk form, or has it been formulated for end-use?",
+    "value_labels": {
+      "bulk_unformulated": "Bulk unformulated API or chemical (powder/crystal/granules in industrial packs)",
+      "stabilised_or_in_water_transport": "Bulk with a minor stabiliser, anti-caking agent, or dissolved in water purely for safe transport",
+      "formulated_dosage": "Formulated dosage form - tablet, capsule, ampoule, vial, syrup, ointment",
+      "retail_mixed_preparation": "Mixed preparation in measured doses or retail pack (combination tablets, multivitamin formulas)"
+    },
+    "notes": "Disambiguates Ch.29 (separate compound or near-pure with Note 1(d)-(g) carve-outs) vs Ch.30 (formulated medicament or mixed preparation). chapter_exclusion 2678 encodes the redirect.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "processing_state",
+    "chapter_scope": ["02", "03", "16", "20"],
+    "question_text": "What is the preservation or cooking state of the food product?",
+    "value_labels": {
+      "fresh": "Fresh, chilled or live",
+      "frozen": "Frozen",
+      "dried_salted_smoked": "Dried, salted, in brine, or smoked",
+      "cooked_or_prepared": "Cooked, otherwise prepared, or preserved (e.g. canned, marinated, breaded)"
+    },
+    "notes": "Within food chapters, preservation state often drives the heading or sub-chapter (e.g. Ch.02/03 = fresh/frozen, Ch.16 = prepared/preserved meat/fish, Ch.20 = preserved vegetables/fruit).",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "processing_state",
+    "chapter_scope": ["72"],
+    "question_text": "How has the steel or iron product been rolled or worked?",
+    "value_labels": {
+      "hot_rolled": "Hot-rolled",
+      "cold_rolled": "Cold-rolled (cold-reduced)",
+      "plated_or_coated": "Plated or coated (zinc-galvanised, tin-coated tinplate, painted, plastic-coated)",
+      "drawn_or_extruded": "Drawn or extruded (cold-finished bars, drawn wire)",
+      "cast_or_forged": "Cast or forged (not rolled)"
+    },
+    "notes": "Within Ch.72, sub-chapter heading routing depends on rolling/working state (7208 hot-rolled flat vs 7209 cold-rolled flat vs 7210 plated/coated flat).",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "composition",
+    "chapter_scope": null,
+    "question_text": "Is the product made of a single material, or is it a combination of materials?",
+    "value_labels": {
+      "single_material": "Single material (e.g. all steel, all cotton, all polyester)",
+      "composite_essential_character": "Composite of two or more materials, but one clearly gives the product its essential character",
+      "mixture_or_set": "Mixture, set, or kit with no single dominant material",
+      "coated_or_laminated": "Layered, coated or laminated (one material gives the surface, another the substrate)"
+    },
+    "notes": "Drives GIR-3(b) essential character analysis. Composite_components field is populated when one material is primary and others are secondary/auxiliary.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "composition",
+    "chapter_scope": ["72"],
+    "question_text": "Is the product carbon steel, stainless steel, or another alloy steel?",
+    "value_labels": {
+      "non_alloy_carbon_steel": "Non-alloy / plain carbon steel (mostly Fe + C)",
+      "stainless_steel": "Stainless steel (≥10.5% chromium)",
+      "other_alloy_steel": "Other alloy steel (significant Cr, Ni, Mn, Mo, V, etc. but not stainless)",
+      "iron_not_steel": "Cast iron, pig iron, or other non-steel iron"
+    },
+    "notes": "Within Ch.72, alloy class drives the heading (7208-7212 carbon, 7218-7223 stainless, 7224-7229 other alloy). Maps to chemical composition percentages populated by O2.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "fabric_construction",
+    "chapter_scope": ["61", "62"],
+    "question_text": "Is the garment made from knitted (or crocheted) fabric, or from woven fabric?",
+    "value_labels": {
+      "knitted_or_crocheted": "Yes - the fabric is knitted or crocheted (stretches, has visible loops; e.g. T-shirt, sweater, jersey)",
+      "woven": "No - the fabric is woven (rigid weave, e.g. dress shirt, denim, suiting fabric)",
+      "non_woven": "Non-woven (spunbond, felt, bonded fibre - treat as Ch.62)",
+      "wadding_only": "Wholly of wadding (e.g. quilted only, no outer shell)"
+    },
+    "notes": "The exemplar binary discriminator: fully resolves Ch.61 vs Ch.62 except for heading 6212 (brassieres, etc.) which is always Ch.62. Note: 'non-woven' is in the 'not knit/crochet, not wadding' bucket = Ch.62.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "fabric_construction",
+    "chapter_scope": ["50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60"],
+    "question_text": "How was the fabric constructed?",
+    "value_labels": {
+      "woven": "Woven (warp + weft interlaced on a loom)",
+      "knitted": "Knitted (interlocked loops on knitting machine)",
+      "crocheted": "Crocheted",
+      "non_woven": "Non-woven (spunbond, felt, bonded, needled fibre)",
+      "wadding": "Wadding or batting"
+    },
+    "notes": "Within textile-fabric chapters (Ch.50-60), construction routes to specific chapter (woven Ch.50-55, knitted Ch.60, non-woven Ch.56).",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "made_up",
+    "chapter_scope": ["61", "62", "63"],
+    "question_text": "Is the article a finished (made-up) item ready to use, or is it fabric on a roll?",
+    "value_labels": {
+      "made_up_yes": "Yes - made-up finished article (hemmed, sewn, assembled, ready to use - e.g. shirt, towel, curtain, bedsheet)",
+      "made_up_no_fabric": "No - it is fabric sold by the metre / on a bolt / roll (not hemmed or finished)"
+    },
+    "notes": "Pre-filter for Ch.61/62/63. If made_up=false, the product is in Ch.50-60 fabric chapters. Boolean attribute.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "wearable",
+    "chapter_scope": ["85"],
+    "question_text": "Is the electrical/electronic item worn on the body, or used independently?",
+    "value_labels": {
+      "wearable_yes": "Yes - worn on the body (smart watch, hearing aid, wearable sensor band, headphones)",
+      "wearable_no": "No - used independently or fixed in place (TV, refrigerator, charger, lamp)"
+    },
+    "notes": "Boolean attribute used for Ch.85 sub-routing where wearable status influences heading choice (e.g. hearing aids heading 9021 vs headphones 8518).",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "electrically_warmed",
+    "chapter_scope": ["63", "85"],
+    "question_text": "Does the product use electricity to provide heating as its primary function?",
+    "value_labels": {
+      "electric_heating_primary": "Yes - electric heating is the main function (electric blanket, heating pad, kettle, water heater)",
+      "no_electric_heating": "No - any electrical aspect is secondary (or the product has no electrical components)"
+    },
+    "notes": "Boolean attribute. Distinguishes textile blanket (Ch.63) from electrically-heated blanket (Ch.85, heading 8516). Routes textile + electric → Ch.85.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "electrically_heated",
+    "chapter_scope": ["85"],
+    "question_text": "Does the appliance generate heat electrically as its primary purpose?",
+    "value_labels": {
+      "electric_heating_primary": "Yes - electric heating is the main purpose (electric oven, toaster, iron, immersion heater, kettle)",
+      "electric_heating_incidental": "No - any heat is incidental to another primary purpose (motor warms up, IC chip warms up)"
+    },
+    "notes": "Boolean attribute used to route electrothermic appliances to heading 8516 (electric heating appliances).",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "chemical_class",
+    "chapter_scope": ["28", "29"],
+    "question_text": "Is the chemical a single chemically-defined compound, a mixture of isomers, or a formulation/mixture?",
+    "value_labels": {
+      "separate_inorganic_compound": "Single inorganic compound (e.g. NaCl, H2SO4, CuSO4) - chapter Ch.28",
+      "separate_organic_compound": "Single organic compound (e.g. paracetamol, ethanol, glucose) - chapter Ch.29",
+      "isomer_mixture": "Mixture of isomers of the same compound (e.g. mixed xylenes) - still Ch.29",
+      "sugar_derivative": "Sugar ether, ester, or other sugar derivative - Ch.29 heading 2940",
+      "diazonium_salt": "Diazonium salt or coupling intermediate - Ch.29",
+      "mixed_formulation": "Mixture of different compounds, formulation, or preparation - NOT Ch.28/29 (likely Ch.30/32/33/35/38)"
+    },
+    "notes": "Implements Ch.29 Note 1 eligibility tests. The chemical_class enum directly mirrors notes-claim sub-bullets.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "predominant_element",
+    "chapter_scope": ["72", "74", "75", "76", "78", "79", "80", "81"],
+    "question_text": "Which metal predominates by weight in this product?",
+    "value_labels": {
+      "iron": "Iron / steel (Fe) — including all steels (carbon, stainless, alloy). NOTE: tin-coated steel sheet ('tinplate') is iron-predominant.",
+      "copper_or_aluminium": "Copper (Cu, including brass and bronze) or aluminium (Al)",
+      "tin_zinc_lead_nickel": "Tin (Sn ≥ 50%), zinc, lead, or nickel — please specify in next step which one",
+      "other_base_metal": "Other base metal (titanium, tungsten, magnesium, beryllium, antimony, etc.)"
+    },
+    "notes": "Resolves Ch.72 vs Ch.80 trade-name confusion: 'tinplate' = tin-COATED steel sheet = Ch.72 (Fe predominant); pure tin metal = Ch.80 (Sn predominant). Section XV General Note 5 applies. The 'tin_zinc_lead_nickel' bucket triggers a follow-up specialisation if needed.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "intended_role",
+    "chapter_scope": ["39", "48", "70"],
+    "question_text": "What is the role of the article in the final use?",
+    "value_labels": {
+      "packaging": "Packaging - container, bag, box, bottle to hold or protect another product",
+      "structural_support": "Structural or supporting role in an assembly (sheet, panel, profile)",
+      "independent_product": "An independent finished product (kitchenware, tableware, decorative object)",
+      "technical_part": "Technical part incorporated in machinery, apparatus or instrument"
+    },
+    "notes": "Used for Ch.39 (plastics) and Ch.48 (paper) and Ch.70 (glass) where the role drives heading selection (e.g. plastic packaging 3923 vs plastic structural 3925 vs plastic kitchenware 3924).",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "intended_role",
+    "chapter_scope": ["90"],
+    "question_text": "What is the optical or instrument-related role of the product?",
+    "value_labels": {
+      "optical_element": "Optical element (lens, prism, mirror, filter)",
+      "measuring_instrument": "Measuring, checking or testing instrument",
+      "medical_surgical_dental": "Medical, surgical or dental instrument/apparatus",
+      "implant": "Implantable orthopaedic or prosthetic device",
+      "technical_use": "Technical-use instrument or apparatus (non-medical)"
+    },
+    "notes": "Ch.90 is high-SKIP-risk; this template helps route within optical/precision instrument headings.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "in_solution",
+    "chapter_scope": ["29"],
+    "question_text": "Is the organic compound supplied dissolved in a solvent (e.g. water, alcohol)?",
+    "value_labels": {
+      "in_solution_yes": "Yes - dissolved in a solvent",
+      "in_solution_no": "No - solid (powder, crystal, granular) or neat liquid"
+    },
+    "notes": "Combined with solution_purpose to apply Ch.29 Note 1(d)/(e) test. If in solution AND purpose=safety/transport → stays Ch.29; if purpose=specific_use → moves to Ch.30 (or other formulation chapter).",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "solution_purpose",
+    "chapter_scope": ["29", "30"],
+    "question_text": "Why is the compound supplied in solution?",
+    "value_labels": {
+      "safety_transport": "For safe transport or storage only (e.g. concentrated formaldehyde in water; the solution is purely a handling convenience)",
+      "specific_use": "For a particular end-use (e.g. saline IV bag, pharmaceutical injection) - the solution form is what the user buys to use",
+      "none": "Not in solution"
+    },
+    "notes": "Applies Ch.29 Note 1(e). 'Safety/transport' solutions stay Ch.29; 'specific use' solutions move to the appropriate formulation chapter (Ch.30 for pharma, Ch.38 for industrial).",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "function_",
+    "chapter_scope": ["09", "21"],
+    "question_text": "How is the coffee consumed?",
+    "value_labels": {
+      "brewed_or_percolated": "Must be brewed or percolated with hot water (filter through grounds)",
+      "dissolves_directly": "Dissolves directly in water without filtering (instant)",
+      "ingredient_in_preparation": "Used as a flavour base in another preparation (3-in-1, RTD beverage, dessert)"
+    },
+    "notes": "Function confirms processing_state for Ch.09 vs Ch.21. Solubility-in-water is a useful runtime probe but downstream of extraction state.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "intended_use",
+    "chapter_scope": ["86", "87", "88", "89"],
+    "question_text": "What kind of vehicle or transport equipment is the product or part for?",
+    "value_labels": {
+      "rail_tram": "Railway or tramway vehicles or fixed rail equipment (Ch.86)",
+      "road_motor_vehicle": "Road motor vehicles, two-wheelers, tractors, trailers (Ch.87)",
+      "aircraft_or_spacecraft": "Aircraft, helicopter, spacecraft, drone (Ch.88)",
+      "ship_or_boat": "Ship, boat or floating structure (Ch.89)"
+    },
+    "notes": "Routes within Section XVII transport chapters. Each chapter has its own 'parts and accessories' rules and Section XVII Note 3 'solely or principally' test.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "material",
+    "chapter_scope": ["44", "45", "46"],
+    "question_text": "What kind of wood or plant material is the product made of?",
+    "value_labels": {
+      "wood_solid": "Solid wood (timber, lumber, sawn wood)",
+      "wood_panel": "Wood panel (plywood, particleboard, MDF, OSB, veneer)",
+      "cork": "Cork or articles of cork",
+      "plait_basket": "Plaiting material (bamboo, rattan, straw, palm leaf, willow basketwork)"
+    },
+    "notes": "Disambiguates within wood/cork/plaiting chapters (Ch.44 wood, Ch.45 cork, Ch.46 plaiting).",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "material",
+    "chapter_scope": ["50", "51", "52", "53"],
+    "question_text": "What natural fibre is the textile made from?",
+    "value_labels": {
+      "silk": "Silk (Ch.50)",
+      "wool_animal_hair": "Wool or fine/coarse animal hair (Ch.51)",
+      "cotton": "Cotton (Ch.52)",
+      "other_vegetable_fibre": "Other vegetable fibre - jute, flax, hemp, ramie, sisal, coir (Ch.53)"
+    },
+    "notes": "Routes within natural-fibre textile chapters (Ch.50-53).",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "material",
+    "chapter_scope": ["39", "40"],
+    "question_text": "Is the product made of plastic or of rubber?",
+    "value_labels": {
+      "plastic_thermoplastic": "Plastic / polymer - rigid or flexible thermoplastic (PVC, PE, PP, PS, ABS, PET, PC, PA, etc.)",
+      "rubber_natural": "Natural rubber (latex or vulcanised)",
+      "rubber_synthetic": "Synthetic rubber (SBR, NBR, EPDM, silicone rubber)",
+      "thermoset_resin": "Thermosetting resin (epoxy, phenolic, polyester resin)"
+    },
+    "notes": "Disambiguates Ch.39 (plastics, including thermosets) vs Ch.40 (rubber, natural and synthetic). Silicone elastomers go to Ch.40 even though chemically silicone; silicone resins/oils go to Ch.39 / Ch.34.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "intended_use",
+    "chapter_scope": ["94"],
+    "question_text": "Where is the lamp/luminaire or furniture article designed to be used?",
+    "value_labels": {
+      "household": "Household / domestic use",
+      "office_commercial": "Office or commercial use",
+      "outdoor_streetlight": "Outdoor, street, garden or specialised commercial lighting",
+      "medical_surgical": "Medical, surgical or dental furniture (Ch.94 heading 9402)"
+    },
+    "notes": "Routes within Ch.94 (furniture, lamps, lighting fittings).",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "form",
+    "chapter_scope": ["48"],
+    "question_text": "In what form is the paper or paperboard product?",
+    "value_labels": {
+      "rolls_or_sheets_blank": "Rolls or sheets - blank, uncoated or simply coated (Ch.48 heading 4801-4811)",
+      "envelopes_stationery": "Envelopes, letter pads, stationery (4817)",
+      "boxes_cartons_packaging": "Boxes, cartons, bags, packaging containers (4819)",
+      "registers_books_blank": "Registers, ledgers, exercise books, diaries (4820)",
+      "labels_printed_or_blank": "Labels (4821)",
+      "other_articles": "Other articles of paper (cups, plates, hygiene items, filter paper, etc.)"
+    },
+    "notes": "Within Ch.48, form drives heading selection.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "intended_use",
+    "chapter_scope": ["32", "33"],
+    "question_text": "What is the end-use of the chemical preparation?",
+    "value_labels": {
+      "paint_varnish_coating": "Paint, varnish, coating, ink (Ch.32)",
+      "dye_pigment": "Dye, pigment or colouring matter (Ch.32)",
+      "perfume_cosmetic": "Perfume, cosmetic or personal toiletry (Ch.33)",
+      "essential_oil_aroma": "Essential oil, resinoid or aroma chemical (Ch.33)"
+    },
+    "notes": "Disambiguates Ch.32 (paints, dyes, tanning) vs Ch.33 (perfumes, cosmetics, essential oils). Both have similar 'preparation' structure.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "function_",
+    "chapter_scope": ["38"],
+    "question_text": "What is the primary function of the chemical product?",
+    "value_labels": {
+      "lubricant_oil": "Lubricant or lubricating preparation",
+      "cleaning_solvent": "Cleaning agent, solvent, polish (NOT soap - soaps are Ch.34)",
+      "agricultural_chemical": "Pesticide, herbicide, fungicide, plant growth regulator",
+      "industrial_reagent": "Industrial chemical reagent, additive or auxiliary",
+      "biodiesel_fuel": "Biodiesel or chemically modified fuel"
+    },
+    "notes": "Within Ch.38 (miscellaneous chemical products), function drives heading.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "material",
+    "chapter_scope": ["64"],
+    "question_text": "What is the primary material of the footwear's upper, and what of the sole?",
+    "value_labels": {
+      "leather_upper_rubber_sole": "Leather upper with rubber/plastic outer sole (6403)",
+      "leather_upper_leather_sole": "Leather upper with leather outer sole (6403)",
+      "textile_upper_rubber_sole": "Textile upper with rubber/plastic outer sole (6404)",
+      "rubber_or_plastic_upper": "Rubber or plastic upper (6401/6402)",
+      "wood_or_other": "Wood-soled or other (6405)"
+    },
+    "notes": "Within Ch.64, footwear heading is driven by upper material AND outer sole material combined.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "form",
+    "chapter_scope": ["70"],
+    "question_text": "In what form is the glass article?",
+    "value_labels": {
+      "raw_glass_cullet": "Glass in primary form (cullet, mass, balls, rods)",
+      "flat_glass": "Flat glass (drawn, float, rolled, plate)",
+      "container_bottle": "Glass containers (bottles, jars, vials, ampoules)",
+      "tableware_kitchenware": "Glass tableware, kitchenware, decorative ware",
+      "technical_fibre_optical": "Glass fibre, optical fibre, technical glass"
+    },
+    "notes": "Within Ch.70, form drives heading.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "intended_use",
+    "chapter_scope": ["95"],
+    "question_text": "What is the intended use of the article?",
+    "value_labels": {
+      "toy_for_children": "Toy intended for amusement of children (9503)",
+      "sports_equipment": "Sports or outdoor equipment (9506)",
+      "video_game_console": "Video games or coin-operated amusement (9504)",
+      "festive_decoration": "Festive, carnival or Christmas decoration (9505)",
+      "fishing_hunting": "Fishing tackle or hunting equipment (9507)"
+    },
+    "notes": "Within Ch.95, intended use drives heading.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "form",
+    "chapter_scope": ["28"],
+    "question_text": "In what form is the inorganic chemical?",
+    "value_labels": {
+      "element_pure": "Pure element (e.g. iodine, sulphur, phosphorus, halogen gas)",
+      "acid_or_base": "Inorganic acid or base (HCl, H2SO4, NaOH)",
+      "salt_or_oxide": "Inorganic salt, oxide, hydroxide, peroxide",
+      "isotope_or_radioactive": "Radioactive element or isotope"
+    },
+    "notes": "Within Ch.28, sub-chapter routing depends on chemical form.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "intended_use",
+    "chapter_scope": ["71"],
+    "question_text": "What is the end-use of the precious-metal or stone article?",
+    "value_labels": {
+      "jewellery": "Jewellery for personal adornment (7113)",
+      "coin_or_bullion": "Coin, bullion bar, or investment-grade metal (7118/7108)",
+      "industrial_technical": "Industrial or technical use (e.g. platinum catalyst, electronic contact)",
+      "unworked_natural_stone": "Unworked or worked natural / synthetic precious or semi-precious stone (7102-7104)",
+      "pearl": "Pearl - natural or cultured (7101)"
+    },
+    "notes": "Within Ch.71, intended use drives heading.",
+    "validated": false
+  },
+  {
+    "discriminating_attribute": "material",
+    "chapter_scope": ["68", "69"],
+    "question_text": "Is the product made of natural stone, cement-based material, or ceramic?",
+    "value_labels": {
+      "stone_natural": "Natural stone (granite, marble, sandstone, slate) - Ch.68",
+      "cement_concrete": "Cement, concrete or artificial-stone composition - Ch.68",
+      "ceramic_unfired_or_refractory": "Refractory ceramic or building brick - Ch.69 heading 6901-6906",
+      "ceramic_tableware_sanitary": "Ceramic tableware, sanitary ware, or fine porcelain - Ch.69 heading 6907-6914",
+      "abrasive_or_mica": "Abrasive product, mica, or asbestos-based - Ch.68"
+    },
+    "notes": "Disambiguates Ch.68 (stone/cement/abrasives) from Ch.69 (ceramics).",
+    "validated": false
+  }
+]

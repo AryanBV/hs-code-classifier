@@ -1,7 +1,7 @@
 # Triage Prompt v2 (Stage 1 — Gemini 3.5 Flash on Vertex @ global)
 
 **Pipeline stage:** 1 of 8 — TRIAGE. See `backend/docs/ARCHITECTURE.md §2` for the full 8-layer pipeline overview.
-**Model:** `gemini-3.5-flash` on Vertex AI, region `global` (temperature: 0.1) — ✓ LOCKED 2026-05-26
+**Model:** `gemini-3.5-flash` on Vertex AI, region `global` (temperature: 0.0) — ✓ LOCKED 2026-05-26 (updated 2026-05-26: 0.1→0.0 for retry stability; deterministic classification benefits from temp=0.0)
 **SDK:** Use the modern `@google/genai` SDK (the unified Google Gen AI SDK that supersedes the legacy `@google-cloud/vertexai` client). The classic `@google-cloud/aiplatform` REST client also still works.
 **Response format:** Vertex Gemini structured outputs via `generationConfig.responseSchema` + `generationConfig.responseMimeType = 'application/json'` (the Vertex-native equivalent of OpenAI's `response_format: json_schema` strict mode — NOT raw `json_object` mode, which is unconstrained).
 **Thinking level:** `generationConfig.thinkingConfig.thinking_level = "low"` (NOT the legacy `thinkingBudget: 0`). Gemini 3.x defaults to `medium`; we EXPLICITLY set `low` for Triage to keep latency + cost in budget on this short-context routing task. Use `"low"` rather than disabling thinking entirely — small amounts of internal reasoning measurably improve REFUSE-class detection on edge cases.
@@ -192,6 +192,30 @@ And `decision: "CLASSIFY"` with `candidate_chapters: ["87"]` (because Section XV
 
 ---
 
+## `constraint_hint` — backtrack input (v2, single-shot)
+
+`constraint_hint` is supplied to you when Layer 3 (Rules Filter) drops ALL candidate chapters routed by Triage because each one is excluded by a `chapter_exclusions` rule. The runtime constructs a backtrack hint from the matched exclusions and re-invokes Triage with `constraint_hint != null`. This is a **single-shot** mechanism: the runtime enforces at most one backtrack per query (state-tracked via `runState.backtrack_attempted`); a second consecutive Layer-3 wipeout escalates to Layer 7 Deep-Think.
+
+**TypeScript shape (per `backend/docs/sub-specs/02-qgs-and-backtrack.md` §B.1):**
+
+```typescript
+interface ConstraintHint {
+  exclude_chapters:    string[];   // ["39"]            — chapters of zero-surviving candidates
+  prefer_chapters:     string[];   // ["29", "34"]      — flattened from exclusion redirects_to_chapter[]
+  reason:              string;     // human-readable diagnostic, ≤200 chars
+  source_exclusion_id: number;     // chapter_exclusions.id (highest-confidence rule)
+}
+```
+
+**How to respect it:**
+1. **MUST NOT** include any `exclude_chapters` value in `candidate_chapters[]` on this round — this is a hard constraint.
+2. **Prefer** `prefer_chapters` when they plausibly fit the query — this is a soft bias, not absolute (the redirects may not all be relevant to THIS product).
+3. If no chapter outside `exclude_chapters` fits → REFUSE with `out_of_scope_class: "backtrack_no_fit"` and a `refusal_reason` quoting the constraint hint's `reason`.
+
+`constraint_hint` is `null` on the first Triage invocation for a query. Treat absent/null `constraint_hint` as "no constraint" — proceed normally.
+
+---
+
 ## RESPONSE JSON SCHEMA
 
 ```json
@@ -301,6 +325,8 @@ And `decision: "CLASSIFY"` with `candidate_chapters: ["87"]` (because Section XV
         "weapons_restricted_class",
         "function_only_no_substance",
         "incoherent_query",
+        "genuinely_indistinguishable",
+        "backtrack_no_fit",
         null
       ]
     }
@@ -348,7 +374,7 @@ And `decision: "CLASSIFY"` with `candidate_chapters: ["87"]` (because Section XV
 
 ## USER PROMPT TEMPLATE
 
-The runtime fills `{query}`, `{previousAnswers}`, and `{q_budget_remaining}` and sends:
+The runtime fills `{query}`, `{previousAnswers}`, `{q_budget_remaining}`, and (optionally) `{constraint_hint}` and sends:
 
 ```
 Classify the route for this Indian-exporter product description.
@@ -358,6 +384,19 @@ QUERY: {query}
 PREVIOUS_ANSWERS: {previousAnswers}    // {} on round 1
 
 Q_BUDGET_REMAINING: {q_budget_remaining}    // 3 on round 1, 2 on round 2, 1 on round 3, 0 on round 4
+
+{{#if constraint_hint}}
+=== BACKTRACK CONSTRAINT (single-shot) ===
+The previous classification attempt routed to a chapter that was legally excluded.
+- EXCLUDED CHAPTERS (do NOT use): {{constraint_hint.exclude_chapters}}
+- SUGGESTED CHAPTERS (prefer these): {{constraint_hint.prefer_chapters}}
+- REASON: {{constraint_hint.reason}}
+
+Re-classify with these constraints:
+  1. MUST NOT include any EXCLUDED CHAPTER in candidate_chapters[].
+  2. Prefer SUGGESTED CHAPTERS when they plausibly fit; this is a bias, not absolute.
+  3. If no chapter fits → REFUSE with out_of_scope_class "backtrack_no_fit".
+{{/if}}
 
 Respond strictly per the JSON schema. No prose outside the JSON.
 ```

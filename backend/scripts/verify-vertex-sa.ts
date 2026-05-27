@@ -2,9 +2,14 @@
  * Smoke test: Vertex AI service-account auth + Gemini 3.x calls (BOTH tiers).
  *
  * v2 ARCHITECTURE MODEL TIERS (locked 2026-05-26, see backend/docs/ARCHITECTURE.md):
- *   - gemini-3.5-flash  → Triage + Select stages (thinking_level: 'low')
- *   - gemini-3.1-pro    → Tiebreak + Deep-Think stages (thinking_level: 'high')
+ *   - gemini-3.5-flash          → Triage + Select stages (thinking_level: 'low')
+ *   - gemini-3.1-pro-preview    → Tiebreak + Deep-Think stages (thinking_level: 'high')
  * This script smoke-tests BOTH so we catch tier-availability regressions early.
+ *
+ * 2026-05-26 fix: ID was gemini-3.1-pro (404); correct ID is gemini-3.1-pro-preview.
+ * Per Google Blog (Feb 19 2026), the publicly-listed Pro model literally carries
+ * the `-preview` suffix. Re-probe via probe-vertex-gemini.ts when Google revs the
+ * suffix (e.g., drops `-preview` at GA).
  *
  * Prereqs:
  *   - Service account JSON at backend/.gcp/vertex-sa.json
@@ -27,15 +32,15 @@
  * EMPIRICAL FINDING (2026-05-25, verified via probe-vertex-gemini.ts):
  *   - gemini-3.5-flash is ONLY accessible via region "global" on this project
  *     (not us-central1, us-east5, europe-west1).
- *   - gemini-3.1-pro is also reachable at "global" on this project.
+ *   - gemini-3.1-pro-preview is also reachable at "global" on this project.
  *   - The "global" region uses host `aiplatform.googleapis.com` (no region prefix).
  *   - Gemini 3.x is a "thinking model" — set thinking_level='low' for fast Flash
  *     calls so most of maxOutputTokens lands on the visible answer, and
  *     thinking_level='high' for Pro deep-think calls where reasoning is required.
  *   - Verified accessible to this SA:
- *       gemini-3.5-flash       @ global       (HTTP 200)
- *       gemini-3.1-pro         @ global       (HTTP 200)
- *       gemini-3.1-flash-lite  @ global       (HTTP 200)
+ *       gemini-3.5-flash         @ global       (HTTP 200)
+ *       gemini-3.1-pro-preview   @ global       (HTTP 200)
+ *       gemini-3.1-flash-lite    @ global       (HTTP 200)
  *       gemini-2.5-flash       @ us-central1  (HTTP 200)
  *       gemini-2.5-pro         @ us-central1  (HTTP 200)
  *       gemini-2.5-flash-lite  @ us-central1  (HTTP 200)
@@ -51,7 +56,7 @@ const LOCATION = 'global';
 
 // v2 architecture model tiers (see header comment).
 const MODEL_FLASH = 'gemini-3.5-flash';
-const MODEL_PRO = 'gemini-3.1-pro';
+const MODEL_PRO = 'gemini-3.1-pro-preview';
 
 type ThinkingLevel = 'low' | 'high';
 

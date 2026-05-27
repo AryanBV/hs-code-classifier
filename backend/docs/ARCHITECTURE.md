@@ -146,7 +146,7 @@ Full prompt + schema text is canonical in the prompt files (`backend/prompts/tri
 
 v1 assumed cross-family verify (Gemini Triage + GPT Select originally; degraded to all-Gemini under D1 lock with same-family carryforward). v2 confirms Claude/GPT unavailable on this Vertex account (Indian SME reseller restriction; empirically verified by user). Runtime is **all-Gemini**:
 - **Triage + Select:** `gemini-3.5-flash` with `thinking_level=low`
-- **Tiebreak + Deep-Think:** `gemini-3.1-pro` with `thinking_level=high`
+- **Tiebreak + Deep-Think:** `gemini-3.1-pro-preview` with `thinking_level=high`
 
 3.5 Flash vs 3.1 Pro provides genuine cross-model diversity (different post-training: 3.5 Flash is agent-tuned, 3.1 Pro is reasoning-tuned; 4-5pp divergence on reasoning-heavy benchmarks).
 
@@ -209,12 +209,14 @@ Per user's Claude Max subscription authorization: Opus 4.7 is used for one-time 
 | Job | Input | Output | Estimated effort |
 |---|---|---|---|
 | O1 Notes Claims Extraction | All chapter notes (89/97 populated) + section notes (21/21) + sparse heading/subheading notes | `notes_claims` table with structured predicates | 1-2 days |
-| O2 Tariff Line Attribute Extraction | All 12,460 tariff_lines + parent chain + chapter notes context | `tariff_line_attributes` table | 1-2 days |
+| O2 Tariff Line Attribute Extraction | All 12,460 tariff_lines + parent chain + chapter notes context | `tariff_line_attributes` table | 2-3 days |
 | O3 Question Template Library | Curated against confusing pairs + chapter structure | `question_templates` library (~50 entries) | 2-3 days |
 | O4 India Alias Map | Curated against common Indian English / Hindi terms | Alias dictionary (~200 entries) | 1-2 days |
 | O5 Confusing Pairs Documentation | 8 known pairs (42/43, 09/21, 61/62, etc.) | Discriminating attributes per pair | 1 day |
 
 Re-runs only when DGFT issues a tariff update OR when a chapter's notes change. The `pg_cron` + `pg_net` extensions are available (not installed) and provide a clean path for scheduled re-runs.
+
+**O2 scope expansion (2026-05-26):** Per sub-spec 04 DSL audit, O2 must extract ~30 fields (was ~6): numeric composition percentages (carbon_pct, chromium_pct, manganese_pct, nickel_pct, silicon_pct, phosphorus_pct, aluminum_pct, boron_pct, cobalt_pct, copper_pct, lead_pct, molybdenum_pct, niobium_pct, titanium_pct, tungsten_pct, vanadium_pct, zirconium_pct, iron_pct) for metals (Ch.71-83), `predominant_element` for cast-iron-vs-steel discrimination (Ch.73), granule sieve fields (Ch.72 Note 1(h)), textile fields (made_up, fabric_construction), electrical flags (electrically_warmed, wearable, electrically_heated), chemical class (chemical_class, in_solution, solution_purpose), and intent fields (intended_role; SKIP-prone). Manual validation set: 50 codes spanning Ch.39, Ch.72, Ch.85 before bulk run.
 
 ### 4.7 Inherited from v1 (still LOCKED)
 
@@ -243,8 +245,8 @@ All runtime LLM stages run on **Vertex AI Gemini** at region `global` via `@goog
 | 3 Rules Filter | (none) | — | — | $0 | — |
 | 4 Select | `gemini-3.5-flash` | global | low | ~$0.0073 | ✅ GDP Premium |
 | 5 Verifier | (none — pure code) | — | — | $0 | — |
-| 6 Tiebreak | `gemini-3.1-pro` | global | high | ~$0.020 (when triggered, ~10% of queries) | ✅ GDP Premium |
-| 7 Deep-Think | `gemini-3.1-pro` | global | high (extended) | ~$0.045 (when triggered, ~3%) | ✅ GDP Premium |
+| 6 Tiebreak | `gemini-3.1-pro-preview` | global | high | ~$0.020 (when triggered, ~10% of queries) | ✅ GDP Premium |
+| 7 Deep-Think | `gemini-3.1-pro-preview` | global | high (extended) | ~$0.045 (when triggered, ~3%) | ✅ GDP Premium |
 | 8 Active Learning | (none — DB write) | — | — | $0 | — |
 | QGS | (none — template lookup) | — | — | $0 | — |
 | Build-time O1-O5 | `claude-opus-4-7` via Max sub | n/a | — | $0 (subscription, one-time) | n/a |
@@ -466,6 +468,40 @@ Baseline: `backend/eval/baseline-stub.json`. Phase 4 v2 baseline replaces the st
 The Phase 3.5 exit gate is GREEN; Phase 4 v2 architecture is LOCKED 2026-05-26. **DO NOT proceed to implementation until the user explicitly authorizes.** The locked-architecture deliverable is the documentation + plan; implementation is the next gate.
 
 Build sequence under v2:
+
+### Required reading for implementers (added 2026-05-26 post-recon)
+
+Before implementing any Phase 4 layer, read the relevant sub-spec:
+
+- `backend/docs/sub-specs/01-verifier-rules.md` — Mechanical Verifier Rules 3, 5, 7/8/9 + Predicate DSL evaluator
+- `backend/docs/sub-specs/02-qgs-and-backtrack.md` — QGS info-gain formula + backtrack constraint hint schema
+- `backend/docs/sub-specs/03-thinking-level.md` — `thinking_level` naming + model-conditional helper for 2.5-pro vs 3.x
+- `backend/docs/sub-specs/04-dsl-audit.md` — Predicate DSL expressiveness audit + O2 schema additions
+- `backend/docs/sub-specs/05-vertex-model-id.md` — `gemini-3.1-pro-preview` correct ID + fallback strategy
+
+### Implementation status as of 2026-05-27
+
+**Branch:** `feat/phase-4-pipeline-build` (uncommitted; significant work in tree)
+
+**Phase 4.0 build-time data:**
+- O1 Notes Claims: COMPLETE — 253 rows ingested into `notes_claims` table (50 validated=true sampled).
+- O2 Tariff Line Attributes: PARTIAL — Ch.01 only extracted to JSON (44/12,460 codes). DB table empty. 35-agent rolling-cadence dispatch plan saved on Task #28; resumes on user signal post-limit-reset.
+- O3 Question Templates: COMPLETE — 51 rows ingested into `question_templates` table; all 8 confusing pairs covered.
+- O4 India Alias Map: COMPLETE — 299 entries on disk at `backend/data/build-time/O4-india-alias-map/aliases.json` (consumed by L0 at runtime).
+- O5 Confusing Pairs: COMPLETE — 8 pairs documented at `backend/data/build-time/O5-confusing-pairs/`.
+
+**Phase 4.1 runtime layers (L0-L5): COMPLETE — 302/302 vitest passing**
+- L0 Normalization, L1 Triage, L2 Hybrid Retrieval, L3 Rules Filter, L4 Select, L5 Mechanical Verifier all implemented under `backend/src/classifier-v2/layers/`.
+- Shared libs: vertex-client (raw HTTPS + retry + MaxTokensError), cohere-client, supabase-client (with withRetry), thinking-config (model-conditional), predicate-evaluator (three-valued), source-ref-resolver, tfidf-citation-check, verifier-constants.
+- 5 Supabase migrations applied (`20260526120000`-`20260526120400`): notes_claims, tariff_line_attributes (41 cols), question_templates, TLA additional GIN indexes, chemical_class enum extension.
+
+**Phase 4.2 remaining:** QGS wiring only (info-gain computation + template lookup for L1 ASK path). L3, L4, L5 from the original Phase 4.2 plan below are done.
+
+**Phase 4.3, 4.4:** unchanged from original plan — pending.
+
+**Continuation prompt for fresh session:** `backend/docs/PHASE-4-CONTINUATION-PROMPT.md`.
+
+---
 
 ### Phase 4.0 — Build-time offline jobs (Opus 4.7 via Max subscription) — ~5-7 days
 1. **O1 Notes Claims Extraction** → populate `notes_claims` table

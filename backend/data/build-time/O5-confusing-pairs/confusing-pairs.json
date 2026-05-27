@@ -1,0 +1,564 @@
+[
+  {
+    "pair_id": "Ch42_vs_Ch43",
+    "chapters": ["42", "43"],
+    "pair_label": "Leather articles (Ch.42) vs Fur articles (Ch.43)",
+    "short_description": "Ch.42 covers articles made from tanned hides/skins with hair removed (leather). Ch.43 covers articles made from hides/skins tanned-or-dressed with the hair or wool ON (furskins), plus artificial fur. The single deciding fact is whether hair/wool is retained on the substrate.",
+    "discriminating_attributes": [
+      {
+        "attribute_key": "material",
+        "discrimination_pattern": "cleanly_splits",
+        "chapter_A_values": ["leather", "tanned hide", "chamois leather", "patent leather", "metallised leather", "composition leather"],
+        "chapter_B_values": ["furskin", "fur", "mink", "fox fur", "rabbit fur", "sheepskin with wool on", "artificial fur"],
+        "confidence": "HIGH",
+        "notes": "Ch.43 Note 1: 'furskins ... apply to hides or skins of all animals which have been tanned or dressed with the hair or wool on.' Ch.42 Note 1 definition of 'leather' is silent on hair, but Note 2(b) explicitly excludes furskin-lined apparel to Ch.43. Pure material disambiguation works for >95% of cases."
+      },
+      {
+        "attribute_key": "processing_state",
+        "discrimination_pattern": "partial_signal",
+        "chapter_A_values": ["tanned and dehaired", "tanned without hair", "split leather"],
+        "chapter_B_values": ["tanned with hair on", "dressed with wool on", "raw with hair on (only if not 41xx)"],
+        "confidence": "MEDIUM",
+        "notes": "Reinforces material signal. Note: raw hides WITH hair on go to Ch.41 not 43 (Ch.43 Note 2(b) carve-out) — processing_state alone is not sufficient."
+      },
+      {
+        "attribute_key": "composite_components",
+        "discrimination_pattern": "requires_combination",
+        "chapter_A_values": ["leather primary, no fur lining/trim"],
+        "chapter_B_values": ["fur lining or fur outer attachment (not mere trim)"],
+        "confidence": "HIGH",
+        "notes": "Ch.42 Note 2(b) → apparel/accessories (except gloves) lined with furskin/artificial fur or with fur attached on outside (not mere trim) reclassify to Ch.43 (4303/4304). The trim threshold is the decisive boundary for composite garments. Encoded as chapter_exclusion id 1849 / 2995."
+      }
+    ],
+    "legal_basis": "Ch.42 Note 1 (defines leather), Ch.42 Note 2(b) (excludes fur-lined apparel to 4303/4304), Ch.43 Note 1 (defines furskin as hides with hair/wool on), Ch.43 Note 2(c) (gloves of leather+fur go to 4203 = Ch.42). chapter_exclusion ids 1849, 2995 (Ch.42 → Ch.43); 1867 (Ch.43 → Ch.42).",
+    "worked_examples": [
+      {
+        "product_description": "tanned cowhide leather jacket",
+        "expected_chapter": "42",
+        "rationale": "material=leather (hair removed); no fur lining or outer fur attachment → Ch.42 (heading 4203)."
+      },
+      {
+        "product_description": "mink fur coat with silk lining",
+        "expected_chapter": "43",
+        "rationale": "material=furskin (mink hide with hair on, Ch.43 Note 1) → Ch.43 (heading 4303)."
+      },
+      {
+        "product_description": "leather glove with rabbit fur lining inside",
+        "expected_chapter": "42",
+        "rationale": "Ch.43 Note 2(c) carve-out: gloves/mittens/mitts of leather+furskin or leather+artificial fur are explicitly classified in heading 4203 (Ch.42). Exclusion id 1867."
+      },
+      {
+        "product_description": "sheepskin coat with wool retained on outer surface",
+        "expected_chapter": "43",
+        "rationale": "Sheepskin tanned with wool on = furskin per Ch.43 Note 1 → 4303 (Ch.43). NOT Ch.42, despite being a hide."
+      },
+      {
+        "product_description": "wool-pile imitation fur coat (knitted wool pile on knitted backing)",
+        "expected_chapter": "43",
+        "rationale": "Artificial fur definition per Ch.43 Note 5 EXCLUDES knit/woven imitations (those go to 5801/6001). However the finished GARMENT made of such fabric still classifies in apparel chapters 61/62. Edge case — see edge_cases."
+      }
+    ],
+    "edge_cases": [
+      "Imitation furskin produced by WEAVING or KNITTING is excluded from Ch.43 'artificial fur' definition (Ch.43 Note 5) and routes to 5801/6001 (the fabric) or 61/62 (the garment) — Ch.43 only covers gummed/sewn imitations.",
+      "Leather garment with mere trim of furskin (e.g. fur cuff edging) stays in Ch.42 — the 'except as mere trimming' phrase in Ch.42 Note 2(b) preserves Ch.42 classification.",
+      "Raw hides with hair on (not tanned, not dressed) go to Ch.41, NOT Ch.43 (Ch.43 Note 2(b))."
+    ]
+  },
+  {
+    "pair_id": "Ch09_vs_Ch21",
+    "chapters": ["09", "21"],
+    "pair_label": "Raw/roasted coffee (Ch.09) vs Coffee extracts & preparations (Ch.21)",
+    "short_description": "Ch.09 covers coffee in raw, roasted, decaffeinated, ground or roasted+ground forms — the bean / ground bean itself. Ch.21 (heading 2101) covers extracts, essences and concentrates of coffee, and preparations with a basis of those extracts (instant coffee, soluble coffee, coffee mixes). Discriminator is processing_state: presence of an extraction step.",
+    "discriminating_attributes": [
+      {
+        "attribute_key": "processing_state",
+        "discrimination_pattern": "cleanly_splits",
+        "chapter_A_values": ["raw", "green", "roasted", "decaffeinated", "ground", "roasted and ground"],
+        "chapter_B_values": ["extracted", "soluble", "freeze-dried extract", "spray-dried extract", "concentrated", "instant"],
+        "confidence": "HIGH",
+        "notes": "Extraction (water/solvent extraction → soluble solids → dried) is the legal bright line. Ch.21 Note 1(b) excludes 'roasted coffee substitutes containing coffee in any proportion' which go BACK to Ch.09 — but Note 2 confirms EXTRACTS of those substitutes go to 2101. chapter_exclusion ids 3024, 1632."
+      },
+      {
+        "attribute_key": "form",
+        "discrimination_pattern": "partial_signal",
+        "chapter_A_values": ["whole bean", "ground", "powder of roasted beans"],
+        "chapter_B_values": ["soluble powder", "granules (agglomerated from extract)", "freeze-dried crystals", "liquid concentrate", "paste"],
+        "confidence": "MEDIUM",
+        "notes": "Form alone is ambiguous: 'ground coffee' (Ch.09) and 'instant coffee powder' (Ch.21) can both be presented as 'powder' in a query. Must combine with processing_state."
+      },
+      {
+        "attribute_key": "function_",
+        "discrimination_pattern": "partial_signal",
+        "chapter_A_values": ["brewing material", "to be brewed/percolated"],
+        "chapter_B_values": ["dissolves in water directly", "ready to consume after rehydration", "flavouring base for other preparations"],
+        "confidence": "MEDIUM",
+        "notes": "Solubility-in-water is a useful runtime probe but is downstream of processing_state. Use as confirmation, not primary discriminator."
+      }
+    ],
+    "legal_basis": "Ch.09 Note 1 (coffee mixtures stay in Ch.09 if essential character retained, else go to 2103), Ch.21 Note 1(b) (coffee substitutes containing coffee → 0901), Ch.21 Note 2 (extracts of those substitutes → 2101). chapter_exclusion ids 3024 (Ch.09 → Ch.21 for extracts/essences/concentrates), 1632 (Ch.21 → Ch.09 for roasted substitutes), 1639 (extracts INCLUDED in Ch.21).",
+    "worked_examples": [
+      {
+        "product_description": "roasted arabica coffee beans, whole, 1kg bag",
+        "expected_chapter": "09",
+        "rationale": "processing_state=roasted (not extracted) → 0901 (Ch.09)."
+      },
+      {
+        "product_description": "freeze-dried instant coffee, 200g jar, dissolves in hot water",
+        "expected_chapter": "21",
+        "rationale": "processing_state=extracted+freeze-dried; function=dissolves in water → 2101.11 (Ch.21)."
+      },
+      {
+        "product_description": "ground roasted coffee for filter brewing, 250g",
+        "expected_chapter": "09",
+        "rationale": "processing_state=ground roasted (no extraction step) → 0901 (Ch.09). Form 'powder/ground' alone would be ambiguous — processing_state breaks the tie."
+      },
+      {
+        "product_description": "coffee concentrate liquid for cold brew dispensers, 1L",
+        "expected_chapter": "21",
+        "rationale": "processing_state=concentrated extract → 2101.11/2101.12 (Ch.21). chapter_exclusion 3024 confirms."
+      },
+      {
+        "product_description": "decaffeinated roasted coffee beans",
+        "expected_chapter": "09",
+        "rationale": "Decaffeination is a Ch.09-resident process (subheadings 0901.12/0901.22) — solvent extraction of caffeine doesn't make it a coffee 'extract' for Ch.21 purposes. Edge case worth a question_template."
+      }
+    ],
+    "edge_cases": [
+      "Decaffeinated coffee: extraction process is involved but product is still Ch.09 (the caffeine, not the coffee solids, is extracted). Discriminator: WHAT was extracted, not whether extraction occurred.",
+      "Coffee with milk powder / sugar (3-in-1 instant mixes): Ch.21 (2101.12) because the basis is the coffee EXTRACT.",
+      "Coffee-flavoured confectionery using actual coffee extract: Ch.17 or Ch.18, not Ch.09 or Ch.21. Out of pair scope.",
+      "Roasted chicory or roasted coffee substitutes that CONTAIN some coffee: Ch.09 (0901) per Ch.21 Note 1(b). EXTRACTS of those same substitutes: Ch.21 (2101) per Ch.21 Note 2."
+    ]
+  },
+  {
+    "pair_id": "Ch61_vs_Ch62",
+    "chapters": ["61", "62"],
+    "pair_label": "Knitted/crocheted apparel (Ch.61) vs Woven (non-knitted) apparel (Ch.62)",
+    "short_description": "Both chapters cover MADE-UP articles of apparel and clothing accessories. The sole boundary is fabric construction: Ch.61 = knitted or crocheted; Ch.62 = NOT knitted or crocheted (i.e., woven, including non-woven made-ups other than wadding). Heading 6212 (brassieres, girdles, corsets, etc.) is in Ch.62 regardless of construction.",
+    "discriminating_attributes": [
+      {
+        "attribute_key": "fabric_construction",
+        "discrimination_pattern": "cleanly_splits",
+        "chapter_A_values": ["knitted", "crocheted"],
+        "chapter_B_values": ["woven", "wadding (Note 1 carve-out)"],
+        "confidence": "HIGH",
+        "notes": "Ch.61 Note 1: 'This Chapter applies only to made up knitted or crocheted articles.' Ch.62 Note 1: 'This Chapter applies only to made up articles of any textile fabric other than wadding, excluding knitted or crocheted (other than those of heading 6212).' This is the exemplar binary discriminator — single boolean fully resolves except for the 6212 carve-out. chapter_exclusion ids 2059 (Ch.61→Ch.62 for 6212), 2095/2096 (cross-construction reciprocal)."
+      },
+      {
+        "attribute_key": "made_up",
+        "discrimination_pattern": "partial_signal",
+        "chapter_A_values": [true],
+        "chapter_B_values": [true],
+        "confidence": "HIGH",
+        "notes": "Both chapters require made_up=true. If false, the product is a fabric (Ch.50-60), NOT apparel — this rules out Ch.61/62 entirely but does NOT discriminate between them. Used as a pre-filter."
+      },
+      {
+        "attribute_key": "function_",
+        "discrimination_pattern": "cleanly_splits",
+        "chapter_A_values": ["apparel", "clothing accessory", "garment"],
+        "chapter_B_values": ["apparel", "clothing accessory", "garment"],
+        "confidence": "LOW",
+        "notes": "Function does NOT discriminate Ch.61 from Ch.62 — both are apparel. Use only to confirm the candidate set is correct (i.e., not 6309 worn clothing or 9021 orthopaedic)."
+      }
+    ],
+    "legal_basis": "Ch.61 Note 1 (knit-only), Ch.62 Note 1 (non-knit), Ch.61 Note 2(a) (heading 6212 → Ch.62 even if knitted), Ch.62 Note 1 in-parens (heading 6212 exception). chapter_exclusion ids 2059, 2095, 2096.",
+    "worked_examples": [
+      {
+        "product_description": "men's cotton knit t-shirt, single jersey",
+        "expected_chapter": "61",
+        "rationale": "fabric_construction=knitted + made_up=true + function=apparel → 6109 (Ch.61)."
+      },
+      {
+        "product_description": "men's woven cotton dress shirt with collar and buttons",
+        "expected_chapter": "62",
+        "rationale": "fabric_construction=woven → 6205 (Ch.62)."
+      },
+      {
+        "product_description": "ladies' knitted brassiere",
+        "expected_chapter": "62",
+        "rationale": "Heading 6212 carve-out: brassieres go to Ch.62 EVEN IF knitted (Ch.61 Note 2(a), Ch.62 Note 1 parens). chapter_exclusion 2059."
+      },
+      {
+        "product_description": "100% polyester crocheted shawl",
+        "expected_chapter": "61",
+        "rationale": "fabric_construction=crocheted (treated identically to knitted by Ch.61) → 6117 (Ch.61)."
+      },
+      {
+        "product_description": "men's woven polyester suit (jacket + trousers)",
+        "expected_chapter": "62",
+        "rationale": "fabric_construction=woven, suit definition Ch.62 Note 3 met → 6203 (Ch.62)."
+      },
+      {
+        "product_description": "wadded ski jacket with woven outer shell",
+        "expected_chapter": "62",
+        "rationale": "Ch.62 Note 1 explicitly covers articles 'other than wadding' — meaning wadding-content garments with woven shell are in Ch.62 (6211 ski suit subdivisions). Wadding only EXCLUDES garments wholly made of wadding."
+      }
+    ],
+    "edge_cases": [
+      "Bonded knit-and-woven composites (e.g. knit lining bonded to woven outer): essential character governs — typically classified by the outer shell construction.",
+      "Heading 6212 (bras, girdles, corsets, braces, suspenders) is ALWAYS in Ch.62 even if knitted — the only legitimate cross-chapter exception.",
+      "Knit fabric impregnated with PVC: routes to Ch.39 not Ch.61 (chapter_exclusion 2077). The 'coated fabric' carve-out matters when material attribute includes 'PVC-coated knit'.",
+      "Non-woven (e.g. spunbond) PPE coveralls: Ch.62 (non-knit, non-crochet, non-wadding) — common ambiguity since 'non-woven' colloquially sounds like 'not woven', but for tariff purposes non-wovens are in the 'not knit/crochet, not wadding' bucket = Ch.62."
+    ]
+  },
+  {
+    "pair_id": "Ch72_vs_Ch80",
+    "chapters": ["72", "80"],
+    "pair_label": "Iron and steel (Ch.72, including tin-coated steel) vs Tin metal (Ch.80)",
+    "short_description": "Ch.72 covers iron and steel — including tin-coated steel sheet ('tinplate', heading 7210.12). Ch.80 covers tin AS THE BASE METAL (pure tin or tin alloys where tin predominates). The trigger word 'tin' is a frequent classifier confusion: 'tin plate' in trade usage almost always means tin-COATED STEEL (Ch.72), not pure tin (Ch.80).",
+    "discriminating_attributes": [
+      {
+        "attribute_key": "predominant_element",
+        "discrimination_pattern": "cleanly_splits",
+        "chapter_A_values": ["iron", "Fe"],
+        "chapter_B_values": ["tin", "Sn"],
+        "confidence": "HIGH",
+        "notes": "Per Ch.72 Note 2 ('ferrous metals clad with another ferrous metal classified by the predominating ferrous metal') and Section XV General Note 7 (alloys classified by predominant metal by weight). Iron-predominant = Ch.72; tin-predominant = Ch.80. This is the unambiguous bright line. Requires O2 to populate predominant_element field."
+      },
+      {
+        "attribute_key": "composition",
+        "discrimination_pattern": "requires_combination",
+        "chapter_A_values": ["steel substrate + tin coating", "iron base + tin layer", "Sn ≤ 50% by weight", "Fe ≥ 50% by weight"],
+        "chapter_B_values": ["Sn ≥ 50% by weight", "pure tin", "tin alloy with Sn predominant", "tin solder (Sn/Pb where Sn ≥ Pb)"],
+        "confidence": "HIGH",
+        "notes": "Composition reinforces predominant_element. Tinplate (Ch.72) is typically 99.5%+ steel with a coating layer <1% tin by weight. Pure tin metal goods (Ch.80) are 95%+ Sn. Composition gives quantitative confirmation."
+      },
+      {
+        "attribute_key": "function_",
+        "discrimination_pattern": "partial_signal",
+        "chapter_A_values": ["food can body stock", "structural sheet", "construction"],
+        "chapter_B_values": ["soldering", "babbit bearing", "pewter craftwork", "tinning alloy stock"],
+        "confidence": "MEDIUM",
+        "notes": "End-use hints help disambiguate trade-name confusion (e.g. 'tin foil' in cooking is usually aluminium foil → Ch.76, but the QUERY might literally use 'tin')."
+      }
+    ],
+    "legal_basis": "Ch.72 Note 1(d) (steel definition), Ch.72 Note 2 (predominating ferrous metal), Section XV General Note 5 (alloys by predominant metal). Ch.80 has no chapter notes (notes=[]) — discrimination relies on Section XV rules. The KEY trade confusion is that 'tinplate' = thin tin-coated STEEL sheet for canning = Ch.72 (heading 7210.12), NOT Ch.80.",
+    "worked_examples": [
+      {
+        "product_description": "electrolytic tinplate sheet, 0.21mm, for food can manufacture",
+        "expected_chapter": "72",
+        "rationale": "predominant_element=iron (steel substrate ~99%); composition: steel + thin Sn coating → 7210.12 (Ch.72). The trade name 'tinplate' is a Ch.72 product despite containing 'tin' in name."
+      },
+      {
+        "product_description": "pure tin bars 99.85% Sn for solder manufacturing",
+        "expected_chapter": "80",
+        "rationale": "predominant_element=tin (Sn ≥ 99%) → 8001.10 (Ch.80)."
+      },
+      {
+        "product_description": "tin-lead solder wire, 60% Sn / 40% Pb",
+        "expected_chapter": "80",
+        "rationale": "predominant_element=tin (Sn>50%); function=soldering → 8003 (Ch.80). Note: if Pb>Sn it would go to Ch.78."
+      },
+      {
+        "product_description": "galvanized steel sheet (zinc-coated)",
+        "expected_chapter": "72",
+        "rationale": "predominant_element=iron; zinc is a coating not the base → 7210.41/7210.49 (Ch.72). Mentioned because 'galvanized' often co-triggers Ch.72 confusion alongside tin examples."
+      },
+      {
+        "product_description": "tin foil for capacitor manufacture, 99.9% Sn, 6 micron",
+        "expected_chapter": "80",
+        "rationale": "predominant_element=tin; form=foil → 8007 (Ch.80). Distinguish from 'aluminium foil colloquially called tin foil' which is Ch.76."
+      }
+    ],
+    "edge_cases": [
+      "Aluminium foil sold colloquially as 'tin foil' for kitchen use: Ch.76 (NOT Ch.80, NOT Ch.72). Layer 0 input normalisation should alias 'tin foil (kitchen)' → 'aluminium foil'.",
+      "Tin-lead solder where Pb > Sn: Ch.78 (lead) not Ch.80 — strict predominant-metal rule.",
+      "Pewter (Sn/Sb/Cu): if Sn predominant (typically 85-95% Sn) → Ch.80. Otherwise Ch.81.",
+      "Tinplate scrap: Ch.72 (heading 7204) NOT Ch.80, because the steel substrate dominates by weight."
+    ]
+  },
+  {
+    "pair_id": "Ch42_vs_Ch62",
+    "chapters": ["42", "62"],
+    "pair_label": "Leather apparel (Ch.42, heading 4203) vs Textile woven apparel (Ch.62)",
+    "short_description": "Leather garments (jackets, coats, vests, gloves, belts of leather) go to Ch.42 heading 4203. The SAME garment types made of textile fabric go to Ch.61 (knit) or Ch.62 (woven). Pure material discriminator unless garment is composite leather + textile, in which case essential character (GIR-3(b)) decides.",
+    "discriminating_attributes": [
+      {
+        "attribute_key": "material",
+        "discrimination_pattern": "cleanly_splits",
+        "chapter_A_values": ["leather", "composition leather", "chamois", "patent leather", "metallised leather"],
+        "chapter_B_values": ["cotton", "polyester", "wool", "silk", "viscose", "woven textile", "any textile fabric"],
+        "confidence": "HIGH",
+        "notes": "Ch.42 heading 4203 covers 'articles of apparel and clothing accessories of leather or of composition leather' (Ch.42 Note 4). When material=leather and product is wearable garment/accessory → 4203. When material=textile → Ch.61/62."
+      },
+      {
+        "attribute_key": "fabric_construction",
+        "discrimination_pattern": "partial_signal",
+        "chapter_A_values": [],
+        "chapter_B_values": ["woven", "knitted", "crocheted"],
+        "confidence": "MEDIUM",
+        "notes": "fabric_construction is meaningful only for the textile branch (then splits Ch.61 vs Ch.62 — see Ch61_vs_Ch62 pair). For leather it should be NULL. NULL fabric_construction combined with material=leather is the most reliable Ch.42 signal."
+      },
+      {
+        "attribute_key": "composite_components",
+        "discrimination_pattern": "requires_combination",
+        "chapter_A_values": ["leather primary (>50% by surface or essential character)"],
+        "chapter_B_values": ["textile primary; leather merely as trim/patches"],
+        "confidence": "HIGH",
+        "notes": "GIR-3(b) essential character test for mixed leather+textile garments. Encoded in composite_components JSONB with role=primary/secondary/auxiliary; Ch.42 if primary component has material=leather and role=primary."
+      }
+    ],
+    "legal_basis": "Ch.42 heading 4203 + Ch.42 Note 4 (defines apparel scope for 4203). Ch.62 Note 1 (covers all non-knit textile apparel). GIR-3(b) for composite leather+textile items. NO direct exclusion rule between 42 and 62 in chapter_exclusions table — the boundary is constructive (material attribute).",
+    "worked_examples": [
+      {
+        "product_description": "men's full-grain leather biker jacket",
+        "expected_chapter": "42",
+        "rationale": "material=leather; function=apparel → 4203.10 (Ch.42)."
+      },
+      {
+        "product_description": "men's woven polyester windbreaker jacket",
+        "expected_chapter": "62",
+        "rationale": "material=polyester; fabric_construction=woven → 6201/6203 (Ch.62)."
+      },
+      {
+        "product_description": "men's woven cotton jacket with small leather elbow patches",
+        "expected_chapter": "62",
+        "rationale": "composite: primary=woven cotton, secondary=leather patch (trim only). Essential character is textile → Ch.62."
+      },
+      {
+        "product_description": "leather vest with cotton lining",
+        "expected_chapter": "42",
+        "rationale": "Outer shell material=leather (primary, essential character); cotton lining is auxiliary → 4203.10 (Ch.42)."
+      },
+      {
+        "product_description": "leather gloves (driving gloves, full leather)",
+        "expected_chapter": "42",
+        "rationale": "material=leather; Ch.42 Note 4 explicitly enumerates gloves under 4203 scope → 4203.21/4203.29 (Ch.42)."
+      },
+      {
+        "product_description": "denim jacket with woven cotton outer (no leather)",
+        "expected_chapter": "62",
+        "rationale": "material=cotton woven → 6203/6201 (Ch.62). Contrast with 'denim-look PU faux-leather jacket' which would be Ch.39 or Ch.62 depending on coating thickness — separate edge case."
+      }
+    ],
+    "edge_cases": [
+      "Leather + furskin garment: routes to Ch.43 (NOT Ch.42 or Ch.62) per Ch.42 Note 2(b) — see Ch42_vs_Ch43 pair.",
+      "Faux-leather (PU-coated woven fabric) jacket: Ch.62 (textile substrate with plastic coating) per Ch.61/62 Note 2 carve-outs, UNLESS the plastic coating dominates (then Ch.39). Common confusion when query says 'leather' colloquially.",
+      "Leather glove with textile cuff: still Ch.42 4203 (gloves explicitly Ch.42 scope regardless of textile cuff).",
+      "Belt of leather with textile back: Ch.42 (4203.30) — leather is the wearing surface and essential character."
+    ]
+  },
+  {
+    "pair_id": "Ch54_vs_Ch55",
+    "chapters": ["54", "55"],
+    "pair_label": "Man-made FILAMENTS (Ch.54) vs Man-made STAPLE fibres (Ch.55)",
+    "short_description": "Same chemistry (polyester, nylon, viscose, etc.) — discriminator is form: continuous strands of indefinite length = filament (Ch.54); short cut/discontinuous fibres = staple (Ch.55). Most common SME confusion since both are 'synthetic fibre'.",
+    "discriminating_attributes": [
+      {
+        "attribute_key": "form",
+        "discrimination_pattern": "cleanly_splits",
+        "chapter_A_values": ["filament", "continuous filament", "monofilament", "multifilament", "filament yarn", "filament tow >2m"],
+        "chapter_B_values": ["staple fibre", "cut staple", "discontinuous fibre", "tow ≤2m", "carded staple", "combed staple", "staple yarn"],
+        "confidence": "HIGH",
+        "notes": "Ch.55 Note 1: 'Headings 5501 and 5502 apply only to man-made filament tow ... length of tow exceeding 2 m ... Tow of a length not exceeding 2 m is to be classified in heading 5503 or 5504' (i.e. moves to staple). Ch.54 Note 2: filament TOW is excluded FROM Ch.54 to Ch.55 (5501/5502). Filament YARN stays in Ch.54 (5402/5403). The form attribute (filament vs staple) is the canonical binary."
+      },
+      {
+        "attribute_key": "processing_state",
+        "discrimination_pattern": "partial_signal",
+        "chapter_A_values": ["spun as continuous filament", "extruded continuous"],
+        "chapter_B_values": ["cut from tow", "carded", "combed", "crimped staple"],
+        "confidence": "MEDIUM",
+        "notes": "Reinforces form. Helpful when query mentions process ('staple spun yarn', 'air-textured filament')."
+      },
+      {
+        "attribute_key": "material",
+        "discrimination_pattern": "partial_signal",
+        "chapter_A_values": ["polyester", "nylon", "polypropylene", "viscose", "acrylic", "acetate"],
+        "chapter_B_values": ["polyester", "nylon", "polypropylene", "viscose", "acrylic", "acetate"],
+        "confidence": "LOW",
+        "notes": "Material is IDENTICAL across the pair — both Ch.54 and Ch.55 cover synthetic and artificial polymer fibres. Material is useful for confirming it's a Ch.54/55 candidate (vs Ch.50-53 natural fibres) but does NOT discriminate within the pair."
+      }
+    ],
+    "legal_basis": "Ch.54 Note 1 (defines 'man-made fibres' shared between Ch.54 and Ch.55 — synthetic vs artificial sub-classification). Ch.54 Note 2 (filament tow excluded to Ch.55). Ch.55 Note 1 (length-of-tow >2m threshold defines what belongs in 5501/5502 vs 5503/5504). chapter_exclusion 1976 (filament tow Ch.54 → Ch.55).",
+    "worked_examples": [
+      {
+        "product_description": "100% polyester staple fibre 1.4 denier x 38mm, for spinning",
+        "expected_chapter": "55",
+        "rationale": "form=staple (cut to 38mm); material=polyester → 5503.20 (Ch.55)."
+      },
+      {
+        "product_description": "polyester continuous filament yarn (POY), 150 denier, for weaving",
+        "expected_chapter": "54",
+        "rationale": "form=filament; product=yarn (5402); processing_state=continuous extruded → 5402.47 (Ch.54)."
+      },
+      {
+        "product_description": "nylon monofilament 0.5mm diameter for fishing line",
+        "expected_chapter": "54",
+        "rationale": "form=monofilament (continuous) → 5404.11 (Ch.54)."
+      },
+      {
+        "product_description": "acrylic staple fibre, raw, for blending with cotton",
+        "expected_chapter": "55",
+        "rationale": "form=staple → 5503.30 (Ch.55)."
+      },
+      {
+        "product_description": "viscose rayon filament tow, length 3.5 metres",
+        "expected_chapter": "55",
+        "rationale": "Tow >2m + filament tow is explicitly redirected from Ch.54 to Ch.55 per Ch.54 Note 2 / Ch.55 Note 1 → 5502 (Ch.55). chapter_exclusion 1976."
+      },
+      {
+        "product_description": "polyester filament tow, length 1.5 metres, cut",
+        "expected_chapter": "55",
+        "rationale": "Tow ≤2m → routes to 5503/5504 (Ch.55) per Ch.55 Note 1 (treated as staple)."
+      }
+    ],
+    "edge_cases": [
+      "Filament tow boundary at exactly 2m: Ch.55 Note 1 uses 'exceeding 2m' — exactly 2m or less goes to Ch.55 (staple side). A 2.0m tow would route to Ch.55.",
+      "'Staple yarn' (yarn spun FROM staple fibres) stays in Ch.55 (heading 5509/5510/5511). Don't confuse 'staple yarn' (Ch.55) with 'filament yarn' (Ch.54).",
+      "Microfibre filament fabrics: still Ch.54 (filament) for the fabric — Ch.55 only applies to the fibre/yarn level if staple. Once woven the fabric goes to Ch.55 fabric chapters (5512-5516) only if from staple.",
+      "Strip / split-film yarn of plastic: NOT Ch.54 nor Ch.55 per Ch.54 Note 1 last sentence — strip of 5404/5405 is not 'man-made fibre' — but heading 5404/5405 IS in Ch.54. Minor textual subtlety."
+    ]
+  },
+  {
+    "pair_id": "Ch84_vs_Ch87",
+    "chapters": ["84", "87"],
+    "pair_label": "Industrial machinery (Ch.84) vs Vehicles and vehicle parts (Ch.87)",
+    "short_description": "Ch.84 covers nuclear reactors, boilers, machinery and mechanical appliances generally — the universe of industrial machines that aren't electrical (Ch.85), aren't vehicles (Ch.87), and aren't optical/measurement (Ch.90). Ch.87 covers vehicles (other than rail/tram) and PARTS AND ACCESSORIES of such vehicles. The boundary is: 'is the article SOLELY OR PRINCIPALLY for use with a Ch.87 vehicle (per Section XVII Note 3)?' If yes → Ch.87. If it's a general-purpose machine usable across many applications → Ch.84.",
+    "discriminating_attributes": [
+      {
+        "attribute_key": "intended_use",
+        "discrimination_pattern": "cleanly_splits",
+        "chapter_A_values": ["industrial general purpose", "factory machinery", "stand-alone machine", "non-vehicle use", "agricultural machinery (non-tractor)", "manufacturing"],
+        "chapter_B_values": ["motor vehicle part", "automotive", "for vehicles of 8701-8705", "for two-wheelers", "vehicle accessory"],
+        "confidence": "HIGH",
+        "notes": "Section XVII Note 3: 'References in Chapters 86 to 88 to parts ... do not apply to parts or accessories which are not suitable for use solely or principally with the articles of those Chapters.' Solely-or-principally vehicle use → Ch.87. Otherwise the part falls to its constituent-material chapter or to Ch.84 if it's machinery. The discriminating attribute is intended_use."
+      },
+      {
+        "attribute_key": "function_",
+        "discrimination_pattern": "partial_signal",
+        "chapter_A_values": ["pump", "compressor", "engine (general)", "machine tool", "boiler", "valve", "bearing"],
+        "chapter_B_values": ["vehicle body", "chassis frame", "suspension", "brake assembly", "transmission gearbox for vehicle", "tractor mainframe"],
+        "confidence": "MEDIUM",
+        "notes": "Function helps but is not decisive on its own. 'Engine' could be Ch.84 (industrial diesel) or Ch.87 (NOT — engines are always Ch.84 per Section XVII Note 2(e), even for vehicles). 'Pump' could be Ch.84 (industrial), or routed by intended_use to Ch.87 only as a 'part' if vehicle-specific. Combine with intended_use."
+      },
+      {
+        "attribute_key": "intended_role",
+        "discrimination_pattern": "requires_combination",
+        "chapter_A_values": ["technical_use", "general industrial"],
+        "chapter_B_values": ["support (vehicle structural)", "other (vehicle-specific)"],
+        "confidence": "LOW",
+        "notes": "Loosely correlated. Most useful in combination with intended_use to detect vehicle-specific structural parts."
+      }
+    ],
+    "legal_basis": "Section XVII Note 2 (excludes from 'parts': articles of Ch.82, Ch.84/85 machinery, Ch.90, etc.), Section XVII Note 3 (solely-or-principally-with-vehicle test), Ch.84 Note 1 (Ch.84 exclusions list — does not list Ch.87 directly, but Ch.84 covers general machinery; Section XVII drives the boundary). chapter_exclusion 2424 (Ch.87 → Ch.84 for machines of 8401-8479), 2425 (Ch.87 → Ch.84 for valves of 8481), 2426 (Ch.87 → Ch.84 for bearings of 8482), 2427 (Ch.87 → Ch.84 for transmission shafts/gears of 8483).",
+    "worked_examples": [
+      {
+        "product_description": "industrial centrifugal pump 50 HP for chemical plant",
+        "expected_chapter": "84",
+        "rationale": "intended_use=industrial general purpose; function=pump; not a vehicle part → 8413 (Ch.84)."
+      },
+      {
+        "product_description": "fuel injection pump for diesel engines of motor vehicles",
+        "expected_chapter": "84",
+        "rationale": "Even though vehicle-related, fuel injection pumps are explicitly Ch.84 (heading 8413.30) per Section XVII Note 2(e) — engines and their integral parts stay in Ch.84 even when destined for vehicles."
+      },
+      {
+        "product_description": "automotive shock absorber assembly for passenger cars",
+        "expected_chapter": "87",
+        "rationale": "intended_use=motor vehicle part; suitable solely/principally for vehicles of 8703 → 8708.80 (Ch.87)."
+      },
+      {
+        "product_description": "tractor (agricultural, 75 HP, 4WD)",
+        "expected_chapter": "87",
+        "rationale": "Vehicle proper, not part — heading 8701 (Ch.87). Note Ch.87 Note 2 defines 'tractor' here."
+      },
+      {
+        "product_description": "tractor power take-off shaft (used solely on agricultural tractors of 8701)",
+        "expected_chapter": "87",
+        "rationale": "Vehicle-specific accessory → 8708 / 8716 region. BUT per chapter_exclusion 2427, if it's an article of heading 8483 (transmission shaft) that constitutes integral part of engine/motor, it stays Ch.84. Boundary requires checking whether it's primarily a 'transmission shaft' (8483, Ch.84) or a 'tractor-specific drawbar/PTO' (Ch.87). This is the canonical edge case."
+      },
+      {
+        "product_description": "ball bearing 6205 ZZ, general industrial",
+        "expected_chapter": "84",
+        "rationale": "Heading 8482 ball bearings are explicitly Ch.84 even if used in vehicles (chapter_exclusion 2426). intended_use=industrial confirms."
+      }
+    ],
+    "edge_cases": [
+      "Vehicle engines: ALWAYS Ch.84 (8407/8408) even though they go into vehicles. Per Section XVII Note 2(e).",
+      "Vehicle radiators: Section XVII Note 2(e) carves them BACK INTO Ch.87 as exception (radiators for articles of Section XVII go to Ch.87, NOT 8419).",
+      "Ball/roller bearings (8482), valves (8481), transmission shafts (8483): always Ch.84 even when vehicle-destined. chapter_exclusion 2424-2427.",
+      "Filters: hydraulic/air filters for industrial use → Ch.84 (8421). Same filter solely for use in motor vehicles → Ch.87 (8708.99) only if vehicle-specific. The 'solely or principally' test bites.",
+      "85 vs 87 (NOT in this pair but adjacent): electrical motors/generators in vehicles go to Ch.85 (8501, 8511) — chapter_exclusion 2428."
+    ]
+  },
+  {
+    "pair_id": "Ch29_vs_Ch30",
+    "chapters": ["29", "30"],
+    "pair_label": "Organic chemicals / bulk APIs (Ch.29) vs Pharmaceutical preparations (Ch.30)",
+    "short_description": "Ch.29 covers separate chemically-defined organic compounds (including bulk active pharmaceutical ingredients (APIs) in powder/granule form). Ch.30 covers pharmaceutical PREPARATIONS — formulated dosage forms (tablets, capsules, ampoules, injections, syrups) AND mixed pharmaceutical products. Discriminator is processing_state / form: unformulated bulk chemical → Ch.29; measured doses or retail-ready dosage forms → Ch.30.",
+    "discriminating_attributes": [
+      {
+        "attribute_key": "processing_state",
+        "discrimination_pattern": "cleanly_splits",
+        "chapter_A_values": ["unformulated", "bulk powder", "bulk granular", "crystalline API", "industrial intermediate", "with stabiliser only (Note 1(f))", "in water (Note 1(d))"],
+        "chapter_B_values": ["formulated", "tableted", "capsuled", "in ampoules", "in vials", "in measured doses", "retail-packed", "mixed preparation"],
+        "confidence": "HIGH",
+        "notes": "Ch.29 Note 1 admits only separate compounds (with controlled minor additions for safety/transport/preservation/identification — Notes 1(d) through 1(g)). The MOMENT a product is 'put up in measured doses or in forms or packings for retail sale' as a medicament, it leaves Ch.29 for Ch.30. chapter_exclusion 2678 / 1727 encode this. Ch.29 Note 1(e) carves out 'solutions for safety/transport' (stays Ch.29) from solutions 'particularly suitable for specific use' (moves to Ch.30)."
+      },
+      {
+        "attribute_key": "form",
+        "discrimination_pattern": "partial_signal",
+        "chapter_A_values": ["powder", "crystalline", "granules", "bulk solid", "bulk liquid"],
+        "chapter_B_values": ["tablet", "capsule", "ampoule", "vial", "syrup", "ointment", "cream", "transdermal patch", "suppository", "injection"],
+        "confidence": "HIGH",
+        "notes": "Form is a strong proxy for processing_state. Dosage forms are explicit Ch.30 indicators (heading 3004). Bulk forms point to Ch.29."
+      },
+      {
+        "attribute_key": "intended_use",
+        "discrimination_pattern": "partial_signal",
+        "chapter_A_values": ["intermediate for synthesis", "API for tablet manufacture", "reagent grade", "industrial"],
+        "chapter_B_values": ["therapeutic/prophylactic for human use", "veterinary medicine", "patient administration", "OTC retail"],
+        "confidence": "MEDIUM",
+        "notes": "Intended_use confirms processing_state when both are known. A 'paracetamol API powder for tablet manufacture' is clearly Ch.29 (2922.29) even though end-use is pharmaceutical — because it's still unformulated."
+      },
+      {
+        "attribute_key": "chemical_class",
+        "discrimination_pattern": "partial_signal",
+        "chapter_A_values": ["separate_organic_compound", "isomer_mixture", "sugar_derivative", "diazonium_salt"],
+        "chapter_B_values": ["other"],
+        "confidence": "MEDIUM",
+        "notes": "chemical_class field (per O2 schema) directly mirrors Ch.29 Note 1(a)-(h) eligibility. If chemical_class IS NULL (i.e., not a separate compound), it's NOT Ch.29 — likely Ch.30 mixed preparation or another chapter."
+      }
+    ],
+    "legal_basis": "Ch.29 Note 1 (defines eligible forms — single compound, isomer mixture, sugar derivatives, dissolved in water or specific solvents for safety/transport, with stabiliser/anti-caking, with anti-dust/colour/odour/emetic for identification, diluted azo intermediates). Ch.30 Note 1 (exclusions — foods, plasters, cosmetics, soaps), Ch.30 Note 3 (heading 3003 'unmixed products' definition). chapter_exclusion 2678 (Ch.29 → Ch.30/32/33/35/37/38 if put up in measured doses), 1722 / 1723 cross-references, 1727 (Ch.30 → 3004/3005/3006/etc by retail-sale criterion).",
+    "worked_examples": [
+      {
+        "product_description": "paracetamol bulk powder, 25kg drum, 99% pure, USP grade",
+        "expected_chapter": "29",
+        "rationale": "processing_state=unformulated bulk; chemical_class=separate_organic_compound (Ch.29 Note 1(a)); form=powder → 2922.29 (Ch.29). Even though it IS used to manufacture pharmaceuticals, the BULK form is Ch.29."
+      },
+      {
+        "product_description": "paracetamol 500mg tablets, blister pack of 10",
+        "expected_chapter": "30",
+        "rationale": "processing_state=formulated; form=tablet; intended_use=retail/patient administration → 3004.90 (Ch.30). chapter_exclusion 2678 redirects Ch.29 → Ch.30 once 'put up in measured doses'."
+      },
+      {
+        "product_description": "amoxicillin trihydrate API powder, bulk 25kg, pharmaceutical grade",
+        "expected_chapter": "29",
+        "rationale": "Bulk separate compound → 2941.10 (Ch.29). Antibiotic raw materials specifically have headings under 2941."
+      },
+      {
+        "product_description": "amoxicillin 500mg capsules, retail blister pack",
+        "expected_chapter": "30",
+        "rationale": "Formulated dosage form, measured doses, retail-ready → 3004.10 (Ch.30)."
+      },
+      {
+        "product_description": "ibuprofen sodium salt, bulk crystalline, 50kg lot",
+        "expected_chapter": "29",
+        "rationale": "Separate chemically-defined organic compound (salt form of ibuprofen is still a single compound) per Ch.29 Note 1(a) → Ch.29 (2916)."
+      },
+      {
+        "product_description": "insulin injection 100 IU/ml in 10ml vials, retail pack",
+        "expected_chapter": "30",
+        "rationale": "Hormone preparation, formulated, in measured doses → 3004.31 (Ch.30). Insulin per Ch.30 Note 2 — even though the API itself (insulin powder bulk) would be Ch.29 (2937)."
+      }
+    ],
+    "edge_cases": [
+      "Saline solution (sodium chloride in water) for IV use: Ch.30 (3003/3004) if put up in measured doses for IV; Ch.29 if bulk sodium chloride dissolved in water purely for transport (Note 1(d)). The 'specific use' carve-out in Ch.29 Note 1(e) is where ambiguity bites. solution_purpose attribute (per O2) is the discriminating sub-attribute.",
+      "Vitamins in bulk: Ch.29 if separate compound (e.g. ascorbic acid bulk → 2936). Vitamin tablets/capsules → Ch.30 (3004).",
+      "Immunological products (monoclonal antibodies, interferons, growth factors): Ch.30 heading 3002 always — chapter_exclusion 1703 explicitly redirects Ch.29 → Ch.30 for these.",
+      "Herbal extracts standardised but unmixed: Ch.30 Note 3(a)(3) treats them as 'unmixed products' for 3003/3004 purposes — moves to Ch.30 even though not chemically a single compound. Boundary lies on whether the extract is 'a medicament' or 'an extract for industrial use' (Ch.13).",
+      "Combination tablets (paracetamol + caffeine): Ch.30 heading 3004 (mixed preparation in measured doses). Never Ch.29 (Ch.29 Note 1 admits only single compounds and isomer mixtures of the SAME compound)."
+    ]
+  }
+]

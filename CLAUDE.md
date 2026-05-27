@@ -77,7 +77,7 @@ API client: `frontend/src/lib/api-client.ts` — Axios client pointing to `NEXT_
 **Legacy `hs_codes` table dropped.** Backup at `backend/backups/legacy-tables-2026-05-22T20-01-56.json` (156 MB, gitignored).
 
 ### External APIs
-- **Vertex AI (Gemini)** — Phase 4 v2 runtime LLM stack. Auth via service-account JSON at `backend/.gcp/vertex-sa.json` (`GOOGLE_APPLICATION_CREDENTIALS`). Models: `gemini-3.5-flash` (Triage+Select) and `gemini-3.1-pro` (Tiebreak+Deep-Think). GDP Premium GenAI Credit-covered through 2027-05-08.
+- **Vertex AI (Gemini)** — Phase 4 v2 runtime LLM stack. Auth via service-account JSON at `backend/.gcp/vertex-sa.json` (`GOOGLE_APPLICATION_CREDENTIALS`). Models: `gemini-3.5-flash` (Triage+Select) and `gemini-3.1-pro-preview` (Tiebreak+Deep-Think). GDP Premium GenAI Credit-covered through 2027-05-08.
 - **Cohere** — embeddings (embed-v4) + rerank (Rerank 4 Pro). Via own `COHERE_API_KEY` env var on Cohere's billing (NOT through Vertex; NOT credit-covered; ~$300/mo cash at 100K queries).
 - **OpenAI** — `OPENAI_API_KEY` available in env. Used by LEGACY classifier (GPT-4o-mini + text-embedding-3-small). For v2 runtime use: ASK USER FIRST before invoking — default v2 plan does NOT use OpenAI at runtime.
 - **Anthropic (Claude)** — via user's Claude Max subscription, NOT via API key (no Anthropic API key in env). Build-time only (offline data engineering jobs O1-O5 using Opus 4.7). Not deployable as a runtime service.
@@ -162,18 +162,56 @@ Test case format:
 { query: 'ceramic brake pads for heavy trucks', expectedChapter: '87', expectedHeading: '8708', category: 'Vehicle Parts' }
 ```
 
-## Current Status (May 2026)
-- **Phase 2 + 3 + 3.5 COMPLETE** — 97 chapters / 12,460 tariff_lines / 1,505 chapter_exclusions, fts_search_text + GIN, sections.notes JSONB, all spike-fix rules verified
-- Legacy `hs_codes` table dropped; legacy classifier in `backend/src/classifier/` transitively depends on `backend/src/database/hs-codes.ts` and will be replaced by Phase 4's `backend/src/classifier-v2/`
-- **Locked Phase 4 spec:** `backend/docs/ARCHITECTURE.md` — **v2 LOCKED 2026-05-26 (supersedes v1 2026-05-25)**. Runtime is all-Gemini with cross-MODEL diversity within the Gemini family: `gemini-3.5-flash` (Triage + Select, `thinking_level=low`) and `gemini-3.1-pro` (Tiebreak + Deep-Think, `thinking_level=high`). Cohere (embed + rerank) integrated via own `COHERE_API_KEY` — NOT via Vertex, NOT credit-covered. 8-layer pipeline adds Layer 0 Input Normalization, Layer 5 Mechanical Verifier (10 rules, pure SQL+code), Layer 8 Active Learning (case_law table). Build-time offline jobs (O1-O5) use Opus 4.7 via Claude Max subscription.
-- **Operative resume brief:** `C:\Users\ASUS\.claude\plans\ultrathink-i-m-resuming-the-zesty-candle.md` (v1→v2 transition rationale)
-- Next: Phase 4 v2 brain rebuild — implementer awaits user authorization to begin; first work is build-time offline jobs (notes_claims, tariff_line_attributes, QGS templates, India alias map) in parallel with runtime skeleton on `feat/phase-4-pipeline-build`.
+## Current Status (2026-05-27)
+
+**Branch:** `feat/phase-4-pipeline-build` — significant untracked work, no commits made yet.
+
+### Phase 4.0 build-time data (DB-backed unless noted)
+- Done O1 Notes Claims: 253 rows in `notes_claims` table (50 marked `validated=true`)
+- Partial O2 Tariff Line Attributes: Ch.01 ONLY ingested into JSON (44/12,460); remaining 12,416 codes pending — 35-agent rolling-cadence dispatch planned (see Task #28)
+- Done O3 Question Templates: 51 rows in `question_templates` table (all 8 confusing pairs covered)
+- Done O4 India Alias Map: 299 entries at `backend/data/build-time/O4-india-alias-map/aliases.json`
+- Done O5 Confusing Pairs: 8 pairs documented at `backend/data/build-time/O5-confusing-pairs/`
+
+### Phase 4.0 schema additions (via Supabase migrations)
+- `notes_claims` table (predicate-DSL claims with three-valued evaluator support)
+- `tariff_line_attributes` table (41 columns: 6 string-arrays + 18 numeric metal pcts + textile/electrical/chemical/role flags + metadata)
+- `question_templates` table (QGS template library)
+- Additional GIN indexes on tariff_line_attributes.processing_state + composition
+- chemical_class CHECK enum extended with 'separate_inorganic_compound'
+
+### Phase 4.1 runtime layers (302/302 v2 tests passing)
+- Done L0 Input Normalization (`layers/L0-normalization.ts`) — alias map + composite-flag
+- Done L1 Triage (`layers/L1-triage.ts`) — Gemini 3.5 Flash, thinking_level=low, constraint_hint-aware
+- Done L2 Hybrid Retrieval (`layers/L2-retrieval.ts`) — Cohere embed-v4 + Rerank 4 Pro + Postgres HNSW cosine + GIN-FTS dual; direct-leaf-lookup shortcut
+- Done L3 Rules Filter (`layers/L3-rules-filter.ts`) — exclusions, multi-dest collapse, single-shot backtrack gate
+- Done L4 Select (`layers/L4-select.ts`) — Gemini 3.5 Flash with multi-signal context (chapter_notes + section_notes + notes_claims + tariff_line_attributes + GIRs), components[] for GIR-3(b)
+- Done L5 Mechanical Verifier (`layers/L5-verifier.ts`) — all 10 rules + predicate DSL evaluator (three-valued PASS/FAIL/SKIP) + source-ref resolver + ts_rank_cd TF-IDF citation check
+- Shared libs: `lib/vertex-client.ts` (raw HTTPS + retry + MaxTokensError), `lib/cohere-client.ts`, `lib/supabase-client.ts` (with withRetry wrapper), `lib/thinking-config.ts` (model-conditional helper for 2.5-pro vs 3.x)
+
+### Phase 4.2 — IN PROGRESS
+- QGS wiring (info-gain computation + template lookup) — needed for Layer 1 ASK path
+
+### Phase 4.3 — PENDING
+- L6 Tiebreak (gemini-3.1-pro-preview, thinking_level=high)
+- L7 Deep-Think (gemini-3.1-pro-preview with extended thinking)
+- L8 Active Learning (case_law write-back; table not yet created)
+- Rewire `backend/src/api/classify.ts` from legacy classifier to classifier-v2
+- Swap `backend/eval/run-eval.ts` from stub to real classifier import
+
+### Phase 4.4 — PENDING
+- 168-case eval harness gate (>=85% chapter / >=75% heading / >=70% code targets)
+- Prompt iteration on weak chapters
+- Calibration of CITATION_TFIDF_THRESHOLD (0.6) and EMBEDDING_COSINE_FLOOR (0.55) against empirical distribution
+
+**Operative resume brief:** `C:\Users\ASUS\.claude\plans\ultrathink-i-m-resuming-the-zesty-candle.md` (v1->v2 transition rationale)
+**Continuation prompt for fresh session:** `backend/docs/PHASE-4-CONTINUATION-PROMPT.md`
 
 ## Roadmap
-- ✓ Phase 1: Eval harness (168 cases, on `feat/phase-1-eval-harness`)
-- ✓ Phase 2: Data foundation (normalized schema + canonical data + 7-audit verified)
-- ✓ Phase 3: Architecture spike — 30 paper-traces, 29/30 CORRECT, verdict PROCEED_TO_PHASE_4
-- ✓ Phase 3.5 (May 2026): Data completion + architecture lock-in — chapter_exclusions +352 rules, fts_search_text + text[] + sections.notes, A9 empirical proof 10/10 CORRECT, D1 model stack LOCKED. 8 carryforwards in ARCHITECTURE.md §12.
-- → Phase 4: Brain rebuild — v2 architecture (8-layer pipeline with Mechanical Verifier + Active Learning + QGS), implementer awaits user authorization to begin
+- DONE Phase 1: Eval harness (168 cases, on `feat/phase-1-eval-harness`)
+- DONE Phase 2: Data foundation (normalized schema + canonical data + 7-audit verified)
+- DONE Phase 3: Architecture spike — 30 paper-traces, 29/30 CORRECT, verdict PROCEED_TO_PHASE_4
+- DONE Phase 3.5 (May 2026): Data completion + architecture lock-in — chapter_exclusions +352 rules, fts_search_text + text[] + sections.notes, A9 empirical proof 10/10 CORRECT, D1 model stack LOCKED. 8 carryforwards in ARCHITECTURE.md §12.
+- IN PROGRESS Phase 4: Brain rebuild — v2 architecture (8-layer pipeline). Phase 4.0 mostly done (O2 partial). Phase 4.1 complete (L0-L5, 302/302 tests). Phase 4.2 QGS remaining. Phase 4.3 + 4.4 pending.
 - M4: Trade intelligence — duty rates, export policy on every result
 - M5: Ship — PDF reports, CI, feedback, investor demo
