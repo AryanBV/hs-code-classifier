@@ -66,6 +66,123 @@ export interface GenerateContentOptions {
   region?:             Region;
 }
 
+/* ---------------------------------------------------------------------------
+ * responseSchema sanitizer — JSON-Schema-draft → Vertex OpenAPI-3.0 subset
+ *
+ * Vertex's `generationConfig.responseSchema` is a restricted OpenAPI-3.0-subset
+ * proto, NOT full JSON-Schema-draft. The v2 prompt schemas (triage-v2.md,
+ * select-v2.md) are authored in draft-07 and contain constructs Vertex's proto
+ * REJECTS with HTTP 400 "Invalid JSON payload received":
+ *   - `$schema`                       — unknown proto field.
+ *   - `type: ["string", "null"]`      — proto `type` is a scalar enum, not a
+ *                                       list ("Proto field is not repeating").
+ *   - top-level `allOf`/`if`/`then`/`else` conditional composition — unknown
+ *                                       proto fields.
+ *   - `additionalProperties` / `const`— not in the OpenAPI subset.
+ *
+ * This sanitizer normalizes ANY incoming schema into the accepted subset so both
+ * L1 Triage and L4 Select (which load draft-07 schemas verbatim from markdown)
+ * work against the live API. The DROPPED conditional invariants (allOf/if/then)
+ * are NOT lost functionally: each layer re-enforces those exact cross-field rules
+ * AFTER parsing via its hand-rolled guard (isTriageOutput / isSelectOutput) and
+ * its Zod schema. The wire schema's job is shape + enum + nullability, which the
+ * subset fully expresses.
+ *
+ * Allowlist approach: only keywords known to be in the Vertex OpenAPI subset are
+ * retained; everything else is dropped. `type: [...,"null"]` is rewritten to a
+ * scalar type plus `nullable: true`; a bare `"null"` member of an `enum` array
+ * is stripped (it is implied by `nullable`).
+ * --------------------------------------------------------------------------- */
+
+/** Keywords retained on a schema node (Vertex OpenAPI-3.0 subset). */
+const VERTEX_SCHEMA_KEYWORDS = new Set<string>([
+  'type',
+  'format',
+  'description',
+  'nullable',
+  'enum',
+  'properties',
+  'items',
+  'required',
+  'minItems',
+  'maxItems',
+  'minLength',
+  'maxLength',
+  'minimum',
+  'maximum',
+  'pattern',
+  'propertyOrdering',
+]);
+
+function isPlainObject(v: unknown): v is Record<string, unknown> {
+  return v !== null && typeof v === 'object' && !Array.isArray(v);
+}
+
+/**
+ * Recursively convert a JSON-Schema(-draft) node into the Vertex OpenAPI subset.
+ * Returns a NEW object — never mutates the input (the prompt cache must stay
+ * pristine across calls/tests).
+ */
+export function sanitizeResponseSchema(schema: unknown): VertexResponseSchema {
+  if (!isPlainObject(schema)) {
+    // Defensive: non-object node (shouldn't occur for our schemas). Return as-is
+    // wrapped so the type checker is satisfied; Vertex would reject anyway.
+    return {} as VertexResponseSchema;
+  }
+
+  const out: Record<string, unknown> = {};
+
+  // --- type + nullability ------------------------------------------------
+  // draft uses `type: ["string","null"]` for nullable; Vertex needs a scalar
+  // type + `nullable: true`.
+  const rawType = schema.type;
+  if (Array.isArray(rawType)) {
+    const nonNull = rawType.filter((t) => t !== 'null');
+    if (rawType.includes('null')) out.nullable = true;
+    // Vertex accepts a single scalar type. If somehow >1 non-null type remains
+    // (none of our schemas do this), take the first — the post-parse guards are
+    // the real enforcement.
+    if (nonNull.length > 0) out.type = nonNull[0];
+  } else if (typeof rawType === 'string') {
+    out.type = rawType;
+  }
+
+  // --- enum: strip a bare null member (implied by nullable) --------------
+  if (Array.isArray(schema.enum)) {
+    const filtered = schema.enum.filter((e) => e !== null);
+    if (schema.enum.length !== filtered.length) out.nullable = true;
+    out.enum = filtered;
+  }
+
+  // --- recurse into properties ------------------------------------------
+  if (isPlainObject(schema.properties)) {
+    const props: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(schema.properties)) {
+      props[k] = sanitizeResponseSchema(v);
+    }
+    out.properties = props;
+  }
+
+  // --- recurse into items -----------------------------------------------
+  if (schema.items !== undefined) {
+    out.items = sanitizeResponseSchema(schema.items);
+  }
+
+  // --- copy through remaining allowlisted scalar/array keywords ----------
+  for (const key of VERTEX_SCHEMA_KEYWORDS) {
+    if (key in out) continue; // already handled (type/enum/properties/items)
+    if (key === 'properties' || key === 'items') continue;
+    if (key in schema) out[key] = schema[key];
+  }
+
+  // Preserve an existing `nullable: true` if the source set it explicitly and
+  // the type wasn't an array (the allowlist copy above handles it, but guard the
+  // case where nullable was already set by the type-array branch).
+  if (schema.nullable === true) out.nullable = true;
+
+  return out as VertexResponseSchema;
+}
+
 export interface GenerateContentUsage {
   promptTokens:   number;
   outputTokens:   number;
@@ -186,7 +303,10 @@ export async function generateContent(opts: GenerateContentOptions): Promise<Gen
   };
 
   if (opts.responseSchema) {
-    generationConfig.responseSchema = opts.responseSchema;
+    // Normalize JSON-Schema-draft → Vertex OpenAPI subset (drops $schema /
+    // allOf / if-then, rewrites nullable type-arrays). Required: the v2 prompt
+    // schemas are draft-07 and Vertex rejects them verbatim with HTTP 400.
+    generationConfig.responseSchema = sanitizeResponseSchema(opts.responseSchema);
     generationConfig.responseMimeType = opts.responseMimeType ?? 'application/json';
   } else if (opts.responseMimeType) {
     generationConfig.responseMimeType = opts.responseMimeType;
