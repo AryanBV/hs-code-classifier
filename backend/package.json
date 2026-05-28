@@ -34,7 +34,9 @@
     "gt-fix:missing": "npx tsx --require dotenv/config src/eval/gt-fix/fix-missing-gt.ts",
     "gt-fix:llm": "npx tsx --require dotenv/config src/eval/gt-fix/flag-llm-cases.ts",
     "gt-fix:merge": "npx tsx src/eval/gt-fix/merge-and-review.ts",
-    "smoke:v2": "npx ts-node scripts/smoke-classifier-v2.ts"
+    "smoke:v2": "npx ts-node scripts/smoke-classifier-v2.ts",
+    "classify:trace": "npx tsx --require dotenv/config src/classifier-v2/trace-cli.ts",
+    "smoke:pipeline": "npx tsx --require dotenv/config scripts/smoke-classifier-v2.ts --pipeline"
   },
   "keywords": [
     "hs-code",
@@ -60,7 +62,8 @@
     "pdf-parse": "^2.4.5",
     "pdfjs-dist": "^5.4.394",
     "pg": "^8.16.3",
-    "unpdf": "^1.4.0"
+    "unpdf": "^1.4.0",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
