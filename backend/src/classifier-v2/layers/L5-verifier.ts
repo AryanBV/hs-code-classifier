@@ -13,7 +13,7 @@
  *   MV-01 Code existence
  *   MV-02 Exclusions completeness
  *   MV-03 Verbatim citation TF-IDF >= 0.6
- *   MV-04 Embedding cosine floor (>= 0.55)
+ *   MV-04 Embedding cosine floor (>= EMBEDDING_COSINE_FLOOR; empirically 0.22)
  *   MV-05 Per-GIR validator (10 GIR enum values)
  *   MV-06 india_specific flag consistency
  *   MV-07 Notes-conformance (chapter notes_claims predicates)

@@ -39,6 +39,7 @@ import {
   _setVerifierQueryRunnerForTesting,
   verify,
 } from './L5-verifier';
+import { EMBEDDING_COSINE_FLOOR } from '../lib/verifier-constants';
 
 /* ---------------------------------------------------------------------------
  * Injected QueryRunner — interceptor with per-test SQL routing
@@ -382,20 +383,25 @@ describe('L5 verifier — Rule 3 (verbatim citation TF-IDF)', () => {
  * =========================================================================== */
 
 describe('L5 verifier — Rule 4 (embedding cosine floor)', () => {
-  it('PASS when cosine >= 0.55', async () => {
+  it('PASS when cosine is comfortably above the floor', async () => {
+    // setHappySql() returns cosine 0.85, well above EMBEDDING_COSINE_FLOOR.
+    expect(0.85).toBeGreaterThanOrEqual(EMBEDDING_COSINE_FLOOR);
     setHappySql();
     const out = await verify(l5Input());
     expect(out.failed_rules.find((f) => f.rule_id === 'MV-04')).toBeUndefined();
   });
 
-  it('FAILs LOW_COSINE_SIMILARITY at 0.4', async () => {
+  it('FAILs LOW_COSINE_SIMILARITY just below the floor', async () => {
+    // Use a cosine strictly below the (empirically-calibrated) floor so this
+    // test tracks the constant rather than a stale literal.
+    const belowFloor = Math.max(0, EMBEDDING_COSINE_FLOOR - 0.05);
     setSqlRoutes([
       { match: 'FROM tariff_lines WHERE code = $1 LIMIT 1', rows: [{ one: 1 }] },
       { match: 'SELECT notes FROM chapters',
         rows: [{ notes: [{ number: '1', text: 'Articles of iron or steel — screws bolts and similar fasteners.' }] }] },
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
       { match: "WITH src AS", rows: [{ raw_score: 0.9, self_score: 1.0 }] },
-      { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.4 }] },
+      { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: belowFloor }] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
       { match: 'tl.export_policy', rows: [{ export_policy: 'Free', policy_condition: null, export_licensing_notes: [] }] },
     ]);
