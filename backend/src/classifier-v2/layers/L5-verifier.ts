@@ -588,7 +588,10 @@ async function ruleIndiaSpecific(input: L5Input): Promise<RuleResult> {
  * Rule 7 — Notes-Conformance (chapter notes)
  *
  * Evaluates every notes_claim row whose source_kind = 'chapter_note' AND
- * applies_to ∋ candidate.chapter AND claim_type ∈ {inclusion, definition, condition}.
+ * applies_to ∋ candidate.chapter AND claim_type ∈ {inclusion, definition,
+ * condition, exclusion, redirect (and scope if ever added)}. The PASS-vs-FAIL
+ * polarity of "what counts as a violation" depends on claim_type — see
+ * INVERTING_CLAIM_TYPES + evalNotesClaims().
  * --------------------------------------------------------------------------- */
 
 interface NotesClaimRowLike {
@@ -615,6 +618,40 @@ function parsePredicate(raw: unknown): Predicate | null {
   return null;
 }
 
+/**
+ * claim_type → predicate polarity. The predicate of a notes_claim describes
+ * something about the product; whether a PASS or a FAIL is the VIOLATION depends
+ * on the kind of claim:
+ *
+ *  - 'inclusion' / 'definition' / 'condition': the predicate encodes the rule the
+ *    product MUST satisfy to sit in this chapter/heading (often an IMPLIES whose
+ *    consequent is the requirement). Predicate FAIL ⇒ the product violates the
+ *    rule ⇒ VIOLATION. (Normal polarity.)
+ *
+ *  - 'exclusion': the predicate describes the EXCLUDED thing (e.g. material ==
+ *    'cotton_linters'). Predicate PASS ⇒ the product IS the excluded thing ⇒ it
+ *    does NOT belong here ⇒ VIOLATION. Predicate FAIL/SKIP ⇒ the product is NOT
+ *    the excluded thing ⇒ fine. (INVERTED polarity.) This was the MV-07 bug:
+ *    treating exclusion FAIL as a violation flagged essentially every product
+ *    (most products FAIL most exclusion predicates) and rejected correct codes.
+ *
+ *  - 'redirect': describes a product that should be classified under a DIFFERENT
+ *    heading by a priority/redirect rule (e.g. "printed pictorial ⇒ Chapter 49"
+ *    unless candidate ∈ {3918,3919}). Predicate PASS ⇒ this candidate should
+ *    have been redirected elsewhere ⇒ VIOLATION. Same inverted polarity as
+ *    exclusion. (Also fixes the `__SKIP_PRIORITY_RULE__` sentinel rows, whose
+ *    EXISTS-on-an-absent-var evaluates FAIL → no violation, as intended.)
+ *
+ *  - 'scope': NOT present in the current notes_claims data (verified 2026-05-28:
+ *    distinct claim_types are exclusion/definition/condition/redirect/inclusion).
+ *    Semantically "scope" narrows what the chapter covers, i.e. it behaves like
+ *    an exclusion ("this chapter does not extend to X"). If it is ever added we
+ *    treat it as INVERTED. Documented so the inversion set is explicit.
+ *
+ * INVERTING_CLAIM_TYPES = the set where predicate PASS (not FAIL) is the violation.
+ */
+const INVERTING_CLAIM_TYPES = new Set<string>(['exclusion', 'redirect', 'scope']);
+
 function evalNotesClaims(
   rows:        NotesClaimRowLike[],
   sourceKind:  'chapter_note' | 'section_note' | 'subheading_note',
@@ -630,7 +667,9 @@ function evalNotesClaims(
   let anyEvaluated = false;
   const attrs = tla[candidateCode] ?? null;
 
-  const allowedClaimTypes = new Set(['inclusion', 'definition', 'condition', 'exclusion', 'scope']);
+  const allowedClaimTypes = new Set([
+    'inclusion', 'definition', 'condition', 'exclusion', 'scope', 'redirect',
+  ]);
 
   for (const row of rows) {
     if (row.source_kind !== sourceKind) continue;
@@ -650,16 +689,29 @@ function evalNotesClaims(
     const verdict = evalPredicate(pred, { attrs, candidate: candidateCtx }, localSkipped, row.id);
     for (const s of localSkipped) skipped.push(s);
 
-    if (verdict === 'FAIL') {
+    // SKIP (missing data, three-valued) is NEVER a violation, for any claim_type.
+    if (verdict === 'SKIP') continue;
+
+    // Polarity branch: inverted types violate on PASS, normal types violate on FAIL.
+    const inverted = INVERTING_CLAIM_TYPES.has(row.claim_type);
+    const isViolation = inverted ? verdict === 'PASS' : verdict === 'FAIL';
+
+    if (isViolation) {
+      const detail = inverted
+        ? `Notes-claim #${row.id} (${row.claim_type}) predicate MATCHED for code ${candidateCode} — the product falls under an exclusion/redirect that bars this code: "${row.claim_text.slice(0, 120)}"`
+        : `Notes-claim #${row.id} (${row.claim_type}) predicate FAILED for code ${candidateCode}: "${row.claim_text.slice(0, 120)}"`;
+      const fix = inverted
+        ? `This product is excluded/redirected by claim #${row.id}. Pick the code/chapter the rule redirects to, or cite a counter-rule from the same chapter that overrides #${row.id}.`
+        : `Either pick a code that satisfies the claim, or cite a counter-rule from the same chapter that overrides #${row.id}.`;
       failures.push({
         rule_id:        ruleId,
         rule_name:      ruleName,
         failure_code:   sourceKind === 'chapter_note' ? 'CHAPTER_NOTE_VIOLATED' :
                         sourceKind === 'section_note' ? 'SECTION_NOTE_VIOLATED' :
                                                         'SUBHEADING_NOTE_VIOLATED',
-        failure_detail: `Notes-claim #${row.id} (${row.claim_type}) predicate FAILED for code ${candidateCode}: "${row.claim_text.slice(0, 120)}"`,
+        failure_detail: detail,
         field_path:     'selected_code',
-        suggested_fix:  `Either pick a code that satisfies the claim, or cite a counter-rule from the same chapter that overrides #${row.id}.`,
+        suggested_fix:  fix,
       });
     }
   }
@@ -958,6 +1010,8 @@ export const _internal = {
   formatRepairFeedback,
   reasoningMentionsGIR,
   parsePredicate,
+  evalNotesClaims,
+  INVERTING_CLAIM_TYPES,
 };
 
 /** Re-export for orchestrator wiring. */

@@ -153,13 +153,12 @@ function setHappySql(): void {
     // Rule 1 — code exists
     { match: 'FROM tariff_lines WHERE code = $1 LIMIT 1', rows: [{ one: 1 }] },
     { match: 'FROM subheadings WHERE subheading = $1 LIMIT 1', rows: [{ one: 1 }] },
-    // Rule 3 — source-ref resolves
+    // Rule 3 — source-ref resolves; verbatim_text (from validSelect) is a
+    // faithful copy of this note text → token-set containment = 1.0 → PASS.
     { match: 'SELECT notes FROM chapters',
       rows: [{ notes: [{ number: '1', text: 'Articles of iron or steel — screws bolts and similar fasteners under chapter 73.' }] }] },
     { match: 'SELECT notes FROM sections',
       rows: [{ notes: [{ number: '1', text: 'Section XV base metals notes.' }] }] },
-    // Rule 3 — tfidf score (PASS @ 1.0/1.0)
-    { match: "WITH src AS", rows: [{ raw_score: 0.9, self_score: 1.0 }] },
     // Rule 4 — cosine
     { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.85 }] },
     // Rule 6 — india_specific
@@ -247,7 +246,6 @@ describe('L5 verifier — Rule 1 (code existence)', () => {
       { match: 'FROM tariff_lines WHERE code = $1 LIMIT 1', rows: [] },
       { match: 'SELECT notes FROM chapters', rows: [{ notes: [] }] },
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
-      { match: "WITH src AS", rows: [{ raw_score: 0, self_score: 1 }] },
       { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.85 }] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
       { match: 'tl.export_policy', rows: [{ export_policy: 'Free', policy_condition: null, export_licensing_notes: [] }] },
@@ -262,7 +260,6 @@ describe('L5 verifier — Rule 1 (code existence)', () => {
       { match: 'FROM subheadings WHERE subheading = $1 LIMIT 1', rows: [{ one: 1 }] },
       { match: 'SELECT notes FROM chapters', rows: [{ notes: [{ number: '1', text: 'Articles of iron or steel — screws bolts and similar fasteners.' }] }] },
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
-      { match: "WITH src AS", rows: [{ raw_score: 0.9, self_score: 1.0 }] },
       { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.85 }] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
       { match: 'tl.export_policy', rows: [] },
@@ -319,28 +316,101 @@ describe('L5 verifier — Rule 2 (exclusions completeness)', () => {
  * Rule 3 — verbatim citation TF-IDF
  * =========================================================================== */
 
-describe('L5 verifier — Rule 3 (verbatim citation TF-IDF)', () => {
-  it('PASS at high score', async () => {
+describe('L5 verifier — Rule 3 (verbatim citation fidelity / token-set containment)', () => {
+  it('PASS when verbatim_text is a faithful copy of the resolved source', async () => {
+    // validSelect.verbatim_text is contained in the happy-path chapter note →
+    // containment = 1.0 ≥ 0.8 threshold → PASS.
     setHappySql();
     const out = await verify(l5Input());
     expect(out.failed_rules.find((f) => f.rule_id === 'MV-03')).toBeUndefined();
   });
 
-  it('FAILs CITATION_FUZZY_MATCH_FAIL when normalized score < 0.6', async () => {
+  it('PASS when verbatim_text is a contiguous near-verbatim SLICE of the source', async () => {
+    // A real citation often copies only the relevant clause of a long note.
+    // Every word of the slice is in the source → containment = 1.0 → PASS.
+    setSqlRoutes([
+      { match: 'FROM tariff_lines WHERE code = $1 LIMIT 1', rows: [{ one: 1 }] },
+      { match: 'SELECT notes FROM chapters',
+        rows: [{ notes: [{ number: '1', text: 'This Chapter covers articles of iron or steel such as screws, bolts, nuts, washers and similar threaded fasteners of base metal.' }] }] },
+      { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
+      { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.85 }] },
+      { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
+      { match: 'tl.export_policy', rows: [{ export_policy: 'Free', policy_condition: null, export_licensing_notes: [] }] },
+    ]);
+    const out = await verify(l5Input({
+      select_output: validSelect({
+        citation: {
+          primary: {
+            type:                 'note',
+            source_ref:           'chapters.notes:chapter=73:notes[0].text',
+            verbatim_text:        'screws, bolts, nuts, washers and similar threaded fasteners',
+            note_or_exclusion_id: null,
+          },
+          gir_applied: 'GIR-1',
+        },
+      }),
+    }));
+    expect(out.failed_rules.find((f) => f.rule_id === 'MV-03')).toBeUndefined();
+  });
+
+  it('FAILs CITATION_FUZZY_MATCH_FAIL when verbatim_text is fabricated (not in the source)', async () => {
+    // The cited note is about iron/steel fasteners but the verbatim_text is an
+    // unrelated sentence → containment ≈ 0 → FAIL.
     setSqlRoutes([
       { match: 'FROM tariff_lines WHERE code = $1 LIMIT 1', rows: [{ one: 1 }] },
       { match: 'SELECT notes FROM chapters',
         rows: [{ notes: [{ number: '1', text: 'Articles of iron or steel — screws bolts and similar fasteners.' }] }] },
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
-      { match: "WITH src AS", rows: [{ raw_score: 0.1, self_score: 1.0 }] },
       { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.85 }] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
       { match: 'tl.export_policy', rows: [{ export_policy: 'Free', policy_condition: null, export_licensing_notes: [] }] },
     ]);
-    const out = await verify(l5Input());
+    const out = await verify(l5Input({
+      select_output: validSelect({
+        citation: {
+          primary: {
+            type:                 'note',
+            source_ref:           'chapters.notes:chapter=73:notes[0].text',
+            verbatim_text:        'Fresh tropical fruit packed in cartons for retail sale.',
+            note_or_exclusion_id: null,
+          },
+          gir_applied: 'GIR-1',
+        },
+      }),
+    }));
     const r3 = out.failed_rules.find((f) => f.rule_id === 'MV-03');
     expect(r3?.failure_code).toBe('CITATION_FUZZY_MATCH_FAIL');
-    expect(r3?.failure_detail).toContain('0.10');
+    // normalized_score reported in the detail is well below the 0.80 threshold.
+    expect(r3?.failure_detail).toContain('< 0.80');
+  });
+
+  it('FAILs CITATION_FUZZY_MATCH_FAIL when verbatim_text is a loose paraphrase', async () => {
+    // Paraphrase swaps most content words → low containment → FAIL (catches
+    // "paraphrased-too-loose" citations the old metric was supposed to catch).
+    setSqlRoutes([
+      { match: 'FROM tariff_lines WHERE code = $1 LIMIT 1', rows: [{ one: 1 }] },
+      { match: 'SELECT notes FROM chapters',
+        rows: [{ notes: [{ number: '1', text: 'Articles of iron or steel such as screws, bolts and similar threaded fasteners.' }] }] },
+      { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
+      { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.85 }] },
+      { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
+      { match: 'tl.export_policy', rows: [{ export_policy: 'Free', policy_condition: null, export_licensing_notes: [] }] },
+    ]);
+    const out = await verify(l5Input({
+      select_output: validSelect({
+        citation: {
+          primary: {
+            type:                 'note',
+            source_ref:           'chapters.notes:chapter=73:notes[0].text',
+            verbatim_text:        'Metal hardware components manufactured primarily from ferrous alloys.',
+            note_or_exclusion_id: null,
+          },
+          gir_applied: 'GIR-1',
+        },
+      }),
+    }));
+    const r3 = out.failed_rules.find((f) => f.rule_id === 'MV-03');
+    expect(r3?.failure_code).toBe('CITATION_FUZZY_MATCH_FAIL');
   });
 
   it('FAILs MALFORMED_SOURCE_REF on grammar mismatch', async () => {
@@ -367,7 +437,6 @@ describe('L5 verifier — Rule 3 (verbatim citation TF-IDF)', () => {
       { match: 'FROM tariff_lines WHERE code = $1 LIMIT 1', rows: [{ one: 1 }] },
       { match: 'SELECT notes FROM chapters', rows: [] }, // not found
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
-      { match: "WITH src AS", rows: [{ raw_score: 0, self_score: 1 }] },
       { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.85 }] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
       { match: 'tl.export_policy', rows: [{ export_policy: 'Free', policy_condition: null, export_licensing_notes: [] }] },
@@ -400,7 +469,6 @@ describe('L5 verifier — Rule 4 (embedding cosine floor)', () => {
       { match: 'SELECT notes FROM chapters',
         rows: [{ notes: [{ number: '1', text: 'Articles of iron or steel — screws bolts and similar fasteners.' }] }] },
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
-      { match: "WITH src AS", rows: [{ raw_score: 0.9, self_score: 1.0 }] },
       { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: belowFloor }] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
       { match: 'tl.export_policy', rows: [{ export_policy: 'Free', policy_condition: null, export_licensing_notes: [] }] },
@@ -416,7 +484,6 @@ describe('L5 verifier — Rule 4 (embedding cosine floor)', () => {
       { match: 'SELECT notes FROM chapters',
         rows: [{ notes: [{ number: '1', text: 'Articles of iron or steel — screws bolts and similar fasteners.' }] }] },
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
-      { match: "WITH src AS", rows: [{ raw_score: 0.9, self_score: 1.0 }] },
       { match: '1 - (embedding <=> $1::vector)', rows: [] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
       { match: 'tl.export_policy', rows: [{ export_policy: 'Free', policy_condition: null, export_licensing_notes: [] }] },
@@ -670,7 +737,6 @@ describe('L5 verifier — Rule 6 (india_specific consistency)', () => {
       { match: 'SELECT notes FROM chapters',
         rows: [{ notes: [{ number: '1', text: 'Articles of iron or steel — screws bolts and similar fasteners.' }] }] },
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
-      { match: "WITH src AS", rows: [{ raw_score: 0.9, self_score: 1.0 }] },
       { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.85 }] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: true }] }, // DB true
       { match: 'tl.export_policy', rows: [{ export_policy: 'Free', policy_condition: null, export_licensing_notes: [] }] },
@@ -746,6 +812,169 @@ describe('L5 verifier — Rule 7 (chapter notes-conformance)', () => {
     notesClaimsMock.mockResolvedValueOnce([]);
     const out = await verify(l5Input());
     expect(out.failed_rules.find((f) => f.rule_id === 'MV-07')).toBeUndefined();
+  });
+});
+
+/* ===========================================================================
+ * Rule 7 — claim_type POLARITY (MV-07 inversion fix)
+ *
+ * For an 'exclusion' (or 'redirect'/'scope') claim, predicate PASS means "the
+ * product IS the excluded/redirected thing" → VIOLATION. Predicate FAIL/SKIP
+ * means "the product is NOT the excluded thing" → fine. For inclusion/
+ * definition/condition, FAIL is the violation (normal polarity).
+ * =========================================================================== */
+
+describe('L5 verifier — Rule 7 claim_type polarity (MV-07)', () => {
+  it('exclusion claim whose predicate FAILs (product is NOT excluded) → NO violation', async () => {
+    // This is exactly the case the old code wrongly rejected: a bolt (material
+    // = steel) is NOT cotton_linters, so the exclusion predicate FAILs, which
+    // (under correct polarity) means the product is NOT excluded → PASS.
+    setHappySql();
+    notesClaimsMock.mockResolvedValueOnce([{
+      id:          810,
+      source_ref:  'chapters.notes:chapter=73:notes[0].text',
+      source_kind: 'chapter_note',
+      claim_type:  'exclusion',
+      claim_text:  'This chapter does not cover cotton linters of Chapter 14.',
+      predicate:   JSON.stringify({ op: 'ARRAY_CONTAINS', var: 'material', value: 'cotton_linters' } as Predicate),
+      applies_to:  ['73'],
+    }]);
+    tlaMock.mockResolvedValueOnce({
+      '7318.15.00': { material: ['steel'], form: [], function: [], intended_use: [], processing_state: [], composition: [] },
+    });
+    const out = await verify(l5Input());
+    expect(out.failed_rules.find((f) => f.rule_id === 'MV-07')).toBeUndefined();
+  });
+
+  it('exclusion claim whose predicate PASSes (product IS excluded) → VIOLATION', async () => {
+    // A product made of cotton_linters DOES match the exclusion → it is barred
+    // from chapter 73 → CHAPTER_NOTE_VIOLATED.
+    setHappySql();
+    notesClaimsMock.mockResolvedValueOnce([{
+      id:          811,
+      source_ref:  'chapters.notes:chapter=73:notes[0].text',
+      source_kind: 'chapter_note',
+      claim_type:  'exclusion',
+      claim_text:  'This chapter does not cover cotton linters of Chapter 14.',
+      predicate:   JSON.stringify({ op: 'ARRAY_CONTAINS', var: 'material', value: 'cotton_linters' } as Predicate),
+      applies_to:  ['73'],
+    }]);
+    tlaMock.mockResolvedValueOnce({
+      '7318.15.00': { material: ['cotton_linters'], form: [], function: [], intended_use: [], processing_state: [], composition: [] },
+    });
+    const out = await verify(l5Input());
+    const r7 = out.failed_rules.find((f) => f.rule_id === 'MV-07');
+    expect(r7?.failure_code).toBe('CHAPTER_NOTE_VIOLATED');
+    expect(r7?.failure_detail).toContain('exclusion');
+  });
+
+  it('exclusion claim with missing attrs (predicate SKIP) → NO violation', async () => {
+    // O2 not yet extracted for this code: the exclusion predicate SKIPs. SKIP
+    // is never a violation, regardless of polarity.
+    setHappySql();
+    notesClaimsMock.mockResolvedValueOnce([{
+      id:          812,
+      source_ref:  'chapters.notes:chapter=73:notes[0].text',
+      source_kind: 'chapter_note',
+      claim_type:  'exclusion',
+      claim_text:  'This chapter does not cover cotton linters of Chapter 14.',
+      predicate:   JSON.stringify({ op: 'ARRAY_CONTAINS', var: 'material', value: 'cotton_linters' } as Predicate),
+      applies_to:  ['73'],
+    }]);
+    tlaMock.mockResolvedValueOnce({}); // no attrs → SKIP
+    const out = await verify(l5Input());
+    expect(out.failed_rules.find((f) => f.rule_id === 'MV-07')).toBeUndefined();
+    expect(out.skipped_predicates.some((s) => s.notes_claim_id === 812)).toBe(true);
+  });
+
+  it('redirect claim whose predicate PASSes (product belongs elsewhere) → VIOLATION', async () => {
+    // "printed pictorial paper ⇒ Chapter 49" unless heading ∈ {3918,3919}. A
+    // printed_pictorial product on heading 7318 matches → should have been
+    // redirected → VIOLATION.
+    setHappySql();
+    notesClaimsMock.mockResolvedValueOnce([{
+      id:          813,
+      source_ref:  'chapters.notes:chapter=73:notes[0].text',
+      source_kind: 'chapter_note',
+      claim_type:  'redirect',
+      claim_text:  'Printed pictorial articles fall in Chapter 49.',
+      predicate:   JSON.stringify({ op: 'ARRAY_CONTAINS', var: 'processing_state', value: 'printed_pictorial' } as Predicate),
+      applies_to:  ['73'],
+    }]);
+    tlaMock.mockResolvedValueOnce({
+      '7318.15.00': { material: ['steel'], form: [], function: [], intended_use: [], processing_state: ['printed_pictorial'], composition: [] },
+    });
+    const out = await verify(l5Input());
+    const r7 = out.failed_rules.find((f) => f.rule_id === 'MV-07');
+    expect(r7?.failure_code).toBe('CHAPTER_NOTE_VIOLATED');
+  });
+
+  it('redirect claim with __SKIP_PRIORITY_RULE__ sentinel (EXISTS → FAIL) → NO violation', async () => {
+    // The priority-rule placeholder rows use EXISTS on a never-present var, which
+    // evaluates FAIL. Under inverted polarity FAIL → no violation (these rows are
+    // informational priority rules, not mechanical violations).
+    setHappySql();
+    notesClaimsMock.mockResolvedValueOnce([{
+      id:          814,
+      source_ref:  'chapters.notes:chapter=73:notes[0].text',
+      source_kind: 'chapter_note',
+      claim_type:  'redirect',
+      claim_text:  'Goods classifiable in two headings go to the last in numerical order.',
+      predicate:   JSON.stringify({ op: 'EXISTS', var: '__SKIP_PRIORITY_RULE__' } as Predicate),
+      applies_to:  ['73'],
+    }]);
+    tlaMock.mockResolvedValueOnce({
+      '7318.15.00': { material: ['steel'], form: [], function: [], intended_use: [], processing_state: [], composition: [] },
+    });
+    const out = await verify(l5Input());
+    expect(out.failed_rules.find((f) => f.rule_id === 'MV-07')).toBeUndefined();
+  });
+
+  it('inclusion claim keeps NORMAL polarity: FAIL → violation', async () => {
+    // Sanity: a non-inverted claim_type still violates on FAIL.
+    setHappySql();
+    notesClaimsMock.mockResolvedValueOnce([{
+      id:          815,
+      source_ref:  'chapters.notes:chapter=73:notes[0].text',
+      source_kind: 'chapter_note',
+      claim_type:  'inclusion',
+      claim_text:  'Heading must contain pure iron.',
+      predicate:   JSON.stringify({ op: 'ARRAY_CONTAINS', var: 'material', value: 'pure_iron' } as Predicate),
+      applies_to:  ['73'],
+    }]);
+    tlaMock.mockResolvedValueOnce({
+      '7318.15.00': { material: ['steel'], form: [], function: [], intended_use: [], processing_state: [], composition: [] },
+    });
+    const out = await verify(l5Input());
+    const r7 = out.failed_rules.find((f) => f.rule_id === 'MV-07');
+    expect(r7?.failure_code).toBe('CHAPTER_NOTE_VIOLATED');
+  });
+
+  it('inclusion claim keeps NORMAL polarity: PASS → no violation', async () => {
+    setHappySql();
+    notesClaimsMock.mockResolvedValueOnce([{
+      id:          816,
+      source_ref:  'chapters.notes:chapter=73:notes[0].text',
+      source_kind: 'chapter_note',
+      claim_type:  'inclusion',
+      claim_text:  'Heading covers steel articles.',
+      predicate:   JSON.stringify({ op: 'ARRAY_CONTAINS', var: 'material', value: 'steel' } as Predicate),
+      applies_to:  ['73'],
+    }]);
+    tlaMock.mockResolvedValueOnce({
+      '7318.15.00': { material: ['steel'], form: [], function: [], intended_use: [], processing_state: [], composition: [] },
+    });
+    const out = await verify(l5Input());
+    expect(out.failed_rules.find((f) => f.rule_id === 'MV-07')).toBeUndefined();
+  });
+
+  it('INVERTING_CLAIM_TYPES contains exclusion, redirect, scope (and NOT the normal types)', () => {
+    expect(_internal.INVERTING_CLAIM_TYPES.has('exclusion')).toBe(true);
+    expect(_internal.INVERTING_CLAIM_TYPES.has('redirect')).toBe(true);
+    expect(_internal.INVERTING_CLAIM_TYPES.has('scope')).toBe(true);
+    expect(_internal.INVERTING_CLAIM_TYPES.has('inclusion')).toBe(false);
+    expect(_internal.INVERTING_CLAIM_TYPES.has('definition')).toBe(false);
+    expect(_internal.INVERTING_CLAIM_TYPES.has('condition')).toBe(false);
   });
 });
 
@@ -840,7 +1069,6 @@ describe('L5 verifier — Rule 10 (policy consistency)', () => {
       { match: 'SELECT notes FROM chapters',
         rows: [{ notes: [{ number: '1', text: 'Articles of iron or steel — screws bolts and similar fasteners.' }] }] },
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
-      { match: "WITH src AS", rows: [{ raw_score: 0.9, self_score: 1.0 }] },
       { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.85 }] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
       { match: 'tl.export_policy', rows: [{
@@ -860,7 +1088,6 @@ describe('L5 verifier — Rule 10 (policy consistency)', () => {
       { match: 'SELECT notes FROM chapters',
         rows: [{ notes: [{ number: '1', text: 'Articles of iron or steel — screws bolts and similar fasteners.' }] }] },
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
-      { match: "WITH src AS", rows: [{ raw_score: 0.9, self_score: 1.0 }] },
       { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.85 }] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
       { match: 'tl.export_policy', rows: [{

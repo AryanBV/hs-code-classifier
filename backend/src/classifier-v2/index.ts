@@ -481,7 +481,10 @@ export async function classify(
   }
 
   let currentVerifyOut = await verify(buildL5Input(currentSelectOut));
-  recordLayer(state, 'L5', 'verify', { passed: currentVerifyOut.passed });
+  recordLayer(state, 'L5', 'verify', {
+    passed:       currentVerifyOut.passed,
+    failed_rules: currentVerifyOut.failed_rules.map((f) => f.rule_id),
+  });
 
   if (currentVerifyOut.passed) {
     return finalize(selectToClassifyResult(currentSelectOut, state, { escalated_to_deep_think: false }), state, captureTrace);
@@ -521,7 +524,11 @@ export async function classify(
 
     // Re-verify the repaired output (L5 is NOT an LLM call — no llm_calls increment).
     currentVerifyOut = await verify(buildL5Input(currentSelectOut));
-    recordLayer(state, 'L5', 'verify', { passed: currentVerifyOut.passed, repair_iteration: i + 1 });
+    recordLayer(state, 'L5', 'verify', {
+      passed:           currentVerifyOut.passed,
+      failed_rules:     currentVerifyOut.failed_rules.map((f) => f.rule_id),
+      repair_iteration: i + 1,
+    });
 
     if (currentVerifyOut.passed) {
       return finalize(selectToClassifyResult(currentSelectOut, state, { escalated_to_deep_think: false }), state, captureTrace);

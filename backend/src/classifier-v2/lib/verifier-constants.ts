@@ -14,20 +14,36 @@
  */
 
 /**
- * TF-IDF normalized-score floor for Rule 3 (verbatim citation match).
+ * Citation-fidelity floor for Rule 3 / MV-03 (verbatim citation match).
  *
- * The verifier computes `ts_rank_cd / max_ts_rank_cd` per sub-spec 01 SQL:
- * see source-ref-resolver + tfidf-citation-check. Anything below this value is
- * treated as a hallucinated / paraphrased-too-loose citation and fails.
+ * The verifier now computes TOKEN-SET CONTAINMENT (see tfidf-citation-check.ts):
+ *     score = |verbatim_tokens ∩ source_tokens| / |verbatim_tokens|
+ * i.e. the fraction of the cited verbatim_text's words that actually appear in
+ * the resolved DB source text. A faithful (near-verbatim) copy → ~1.0; a
+ * fabricated / mismatched citation → low. The old `ts_rank_cd`-ratio metric was
+ * mathematically broken (an all-AND numerator over a 10-OR denominator gave
+ * ~0.004 even for verbatim copies, rejecting essentially every legitimate
+ * citation) and was rewritten on 2026-05-28. The constant name is kept to avoid
+ * churn across imports; it is now a containment floor, NOT a TF-IDF ratio.
  *
- * Initial value: 0.6 (sub-spec 01 §"Rule 3" lock).
+ * Empirically recalibrated 2026-05-28 (scripts/calibrate-citation-containment.ts)
+ * over 1,161 real DB source texts (chapter notes + chapter_exclusions
+ * source_note_text + tariff_lines descriptions). FAITHFUL citations (exact full
+ * copies AND contiguous near-verbatim slices) scored containment = 1.000 at
+ * EVERY percentile (min..max). FABRICATED citations (verbatim text taken from an
+ * unrelated row) had median 0.119, P90 0.350. Threshold sweep:
+ *     t=0.60 → faithful PASS 100.0%, fabricated REJECT 98.7%
+ *     t=0.80 → faithful PASS 100.0%, fabricated REJECT 99.7%
+ *     t=0.90 → faithful PASS 100.0%, fabricated REJECT 99.7%
  *
- * Calibration plan (Phase 4.4): log every normalized_score on the 168-case
- * run, labelled `{known_good | suspected_hallucinated}`. Plot distributions;
- * set operational threshold at the gap. If overlap > 0.1 Bhattacharyya, lower
- * to 0.45 and add a `verbatim_text.length >= 20` floor.
+ * Chosen floor 0.80: passes 100% of faithful citations while rejecting 99.7% of
+ * fabricated ones, sitting in the flat 0.80–0.90 optimum. We pick the LOW end of
+ * that plateau so minor model-introduced typos / whitespace / hyphenation noise
+ * in an otherwise-faithful copy do not trip a false reject. pg_trgm is NOT
+ * installed on this DB (verified 2026-05-28), so token-set containment (pure JS,
+ * no extension) is the metric rather than trigram similarity.
  */
-export const CITATION_TFIDF_THRESHOLD = 0.6;
+export const CITATION_TFIDF_THRESHOLD = 0.8;
 
 /**
  * Minimum cosine similarity between the query embedding and the

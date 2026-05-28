@@ -349,6 +349,30 @@ describe('classify() — verifier repair loop (Task 7)', () => {
     expect(res.diagnostics.escalation_path).toContain('L5:repair1');
   });
 
+  it('FIX 3: L5 verify trace events surface failed_rules ids (not just passed)', async () => {
+    selectMock
+      .mockResolvedValueOnce(selectOut)
+      .mockResolvedValueOnce(selectOutRepair2);
+    verifyMock
+      .mockResolvedValueOnce(verifierFail)  // attempt 0 fails (failed_rules: [MV-01])
+      .mockResolvedValueOnce(verifierPass); // repair 1 passes (no failures)
+
+    const res = await classify('stainless steel hex bolts M10', { captureTrace: true });
+    const trace = res.diagnostics.trace ?? [];
+    const l5Events = trace.filter((t) => t.layer === 'L5' && t.event === 'verify');
+    expect(l5Events.length).toBeGreaterThanOrEqual(2);
+
+    // First L5 verify failed → payload carries the failed rule ids.
+    const firstFail = l5Events[0];
+    expect(firstFail?.payload?.passed).toBe(false);
+    expect(firstFail?.payload?.failed_rules).toEqual(['MV-01']);
+
+    // Passing L5 verify → empty failed_rules list (still present, observable).
+    const lastPass = l5Events[l5Events.length - 1];
+    expect(lastPass?.payload?.passed).toBe(true);
+    expect(lastPass?.payload?.failed_rules).toEqual([]);
+  });
+
   it('invokes BaselineEscalation.onVerifierExhausted after 3 repair failures (4 total verify failures)', async () => {
     // select: initial + 3 repairs (4 total)
     selectMock
