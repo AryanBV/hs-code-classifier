@@ -26,7 +26,19 @@ function pct(num: number, den: number): string { return den === 0 ? 'N/A' : (num
 // Compute all numbers
 // ---------------------------------------------------------------------------
 
-const classifyCases = details.filter(d => d.routing_correct && d.expected_routing === 'classify');
+// v2 reports set `is_error: true` on per-case infra failures (Vertex/Cohere/
+// Supabase transport failures, timeouts). These are NOT model decisions and
+// MUST be excluded from all routing/accuracy buckets — scoring them as model
+// 'reject' (the old `|| d.error` behaviour) corrupts the failure map.
+//
+// We use `d.is_error` as the canonical discriminator (mirrors runner.ts
+// `buildReport`). Legacy v1 report records never set `is_error`, so this
+// filter is a no-op for them and backward-compat is preserved.
+const infraErrors = details.filter(d => d.is_error);
+// Scored = non-error cases only.
+const scored = details.filter(d => !d.is_error);
+
+const classifyCases = scored.filter(d => d.routing_correct && d.expected_routing === 'classify');
 const n = classifyCases.length;
 const casesWithHeadingGT = classifyCases.filter(d => d.expected_heading);
 const casesWithCodeGT = classifyCases.filter(d => d.expected_code);
@@ -39,8 +51,10 @@ const cGTwithCorrectH = casesWithCodeGT.filter(d => d.heading_correct);
 const cCorrect = cGTwithCorrectH.filter(d => d.code_correct);
 const cWrong = cGTwithCorrectH.filter(d => !d.code_correct);
 
-const classifyAsAsk = details.filter(d => d.expected_routing === 'classify' && d.actual_routing === 'ask');
-const classifyAsReject = details.filter(d => d.expected_routing === 'classify' && (d.actual_routing === 'reject' || d.error));
+const classifyAsAsk = scored.filter(d => d.expected_routing === 'classify' && d.actual_routing === 'ask');
+// classify_as_reject: genuine model REFUSE only — infra errors are already
+// excluded from `scored`, so no `|| d.error` needed (that was the old bug).
+const classifyAsReject = scored.filter(d => d.expected_routing === 'classify' && d.actual_routing === 'reject');
 
 // Chapter patterns
 const chPatterns: Record<string, EvalDetail[]> = {};
@@ -103,9 +117,11 @@ w(`### Routing`);
 w(`| Metric | Count | Percentage |`);
 w(`|--------|-------|------------|`);
 w(`| Total cases | ${details.length} | — |`);
-w(`| Routing correct | ${details.filter(d => d.routing_correct).length} | ${pct(details.filter(d => d.routing_correct).length, details.length)}% |`);
+w(`| Infra errors (excluded from metrics) | ${infraErrors.length} | — |`);
+w(`| Scored (non-error) | ${scored.length} | — |`);
+w(`| Routing correct (of scored) | ${scored.filter(d => d.routing_correct).length} | ${pct(scored.filter(d => d.routing_correct).length, scored.length)}% |`);
 w(`| classify → ask (lost accuracy) | ${classifyAsAsk.length} | — |`);
-w(`| classify → reject/error | ${classifyAsReject.length} | — |`);
+w(`| classify → reject (model decision) | ${classifyAsReject.length} | — |`);
 w(``);
 w(`### Ground Truth Coverage`);
 w(`| Level | Cases with GT | Missing GT |`);

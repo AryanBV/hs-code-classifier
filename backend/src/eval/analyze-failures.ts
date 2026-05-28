@@ -80,26 +80,47 @@ const totalDQIssues = chapterCodeMismatches.length + headingCodeMismatches.lengt
 console.log(`\nTotal data quality issues: ${totalDQIssues}`);
 
 // ---------------------------------------------------------------------------
+// INFRA ERROR SEPARATION
+// ---------------------------------------------------------------------------
+//
+// v2 reports set `is_error: true` on per-case infra failures (Vertex/Cohere/
+// Supabase transport failures, timeouts). These are NOT model decisions and
+// MUST be excluded from all routing/accuracy buckets — scoring them as model
+// 'reject' (the old `|| d.error` behaviour) corrupts the failure map.
+//
+// We use `d.is_error` as the canonical discriminator (matches runner.ts
+// `buildReport`). Legacy v1 report records never set `is_error`, so this
+// filter is a no-op for them and backward-compat is preserved.
+//
+const infraErrors = details.filter(d => d.is_error);
+// Scored = non-error cases only — mirrors runner.ts buildReport convention.
+const scored = details.filter(d => !d.is_error);
+
+// ---------------------------------------------------------------------------
 // ROUTING
 // ---------------------------------------------------------------------------
 
 console.log(`\n=== ROUTING ===\n`);
 
-const routingCorrect = details.filter(d => d.routing_correct);
-const routingWrong = details.filter(d => !d.routing_correct);
-const classifyAsClassify = details.filter(d => d.expected_routing === 'classify' && d.actual_routing === 'classify');
-const classifyAsAsk = details.filter(d => d.expected_routing === 'classify' && d.actual_routing === 'ask');
-const classifyAsReject = details.filter(d => d.expected_routing === 'classify' && (d.actual_routing === 'reject' || d.error));
-const askAsAsk = details.filter(d => d.expected_routing === 'ask' && d.actual_routing === 'ask');
-const askAsClassify = details.filter(d => d.expected_routing === 'ask' && d.actual_routing === 'classify');
-const rejectAsAsk = details.filter(d => d.expected_routing === 'reject' && d.actual_routing === 'ask');
+const routingCorrect = scored.filter(d => d.routing_correct);
+const routingWrong = scored.filter(d => !d.routing_correct);
+const classifyAsClassify = scored.filter(d => d.expected_routing === 'classify' && d.actual_routing === 'classify');
+const classifyAsAsk = scored.filter(d => d.expected_routing === 'classify' && d.actual_routing === 'ask');
+// classify_as_reject: genuine model REFUSE only — infra errors are already
+// excluded from `scored`, so no `|| d.error` needed (that was the old bug).
+const classifyAsReject = scored.filter(d => d.expected_routing === 'classify' && d.actual_routing === 'reject');
+const askAsAsk = scored.filter(d => d.expected_routing === 'ask' && d.actual_routing === 'ask');
+const askAsClassify = scored.filter(d => d.expected_routing === 'ask' && d.actual_routing === 'classify');
+const rejectAsAsk = scored.filter(d => d.expected_routing === 'reject' && d.actual_routing === 'ask');
 
 console.log(`Total cases:              ${details.length}`);
-console.log(`Routing correct:          ${routingCorrect.length} / ${details.length} (${pct(routingCorrect.length, details.length)}%)`);
-console.log(`\nRouting breakdown:`);
+console.log(`  Infra errors (excluded):  ${infraErrors.length}`);
+console.log(`  Scored (non-error):       ${scored.length}`);
+console.log(`Routing correct:          ${routingCorrect.length} / ${scored.length} (${pct(routingCorrect.length, scored.length)}%)`);
+console.log(`\nRouting breakdown (scored cases only):`);
 console.log(`  classify_as_classify:   ${classifyAsClassify.length}`);
 console.log(`  classify_as_ask:        ${classifyAsAsk.length} <-- LOST ACCURACY (Brain asks when should classify)`);
-console.log(`  classify_as_reject/err: ${classifyAsReject.length}`);
+console.log(`  classify_as_reject:     ${classifyAsReject.length}`);
 console.log(`  ask_as_ask:             ${askAsAsk.length}`);
 console.log(`  ask_as_classify:        ${askAsClassify.length}`);
 console.log(`  reject_as_ask:          ${rejectAsAsk.length}`);
@@ -112,11 +133,10 @@ if (classifyAsAsk.length > 0) {
   }
 }
 
-// List errors
-const errorCases = details.filter(d => d.error);
-if (errorCases.length > 0) {
-  console.log(`\n--- Error cases (${errorCases.length}) ---`);
-  for (const d of errorCases) {
+// Infra errors reported separately — never mixed into routing buckets.
+if (infraErrors.length > 0) {
+  console.log(`\n--- Infra error cases (${infraErrors.length}) — EXCLUDED from all metrics ---`);
+  for (const d of infraErrors) {
     console.log(`  ${d.test_case_id}: "${d.query}" — ${d.error}`);
   }
 }
