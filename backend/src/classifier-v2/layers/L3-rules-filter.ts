@@ -1,22 +1,38 @@
 /**
- * Layer 3 — Rules Filter + Multi-Destination Collapse + Backtrack Gate (Phase 4 v2)
+ * Layer 3 — Rules Surfacer + Multi-Destination Collapse + Backtrack Gate (Phase 4 v2)
  *
  * Pure deterministic. NO LLM.
  *
  * Responsibilities (per ARCHITECTURE.md §2 Layer 3 + §4.4 + sub-spec 02 §B.2):
- *   1. EXCLUSION FILTER — for each L2 candidate, drop it if any
- *      `chapter_exclusions` row (a) targets the candidate's chapter AND
- *      (b) matched the query via GIN-FTS on `excluded_product_text`.
+ *   1. EXCLUSION SURFACING — for each L2 candidate, find any
+ *      `chapter_exclusions` row that (a) targets the candidate's chapter AND
+ *      (b) matched the query via GIN-FTS on `excluded_product_text`. We RECORD
+ *      these in `matched_exclusions[]` (with the candidate codes they touch) so
+ *      Layer 4 can ADJUDICATE whether the exclusion actually applies to this
+ *      product. We do NOT delete candidates here.
+ *
+ *      WHY (over-exclusion fix, 2026-05): the upstream GIN-FTS query OR-joins
+ *      every query token, so an exclusion fires on a single shared lexeme with
+ *      no check that the product is actually within the exclusion's scope (e.g.
+ *      "PVC pipe" trips a "smoking pipes" exclusion → would wrongly delete all
+ *      of Ch.39). Deleting on a keyword collision destroyed the correct chapter
+ *      and forced spurious REFUSEs. L3 is a SURFACER, not a JUDGE; L4 (which
+ *      receives matched_exclusions via the orchestrator) adjudicates with the
+ *      full product context.
  *      Pre-filter rows come from L2 (`exclusion_pre_filter[]`); if empty we
  *      fall back to a direct secondary query as a safety net.
- *   2. MULTI-DESTINATION COLLAPSE — if more than 5 survivors remain, sort by
+ *   2. MULTI-DESTINATION COLLAPSE — if more than 5 candidates remain, sort by
  *      rerank_score desc (cosine_score fallback when rerank is null) and keep
- *      the top-5; log the rest in `dropped_log[]`.
+ *      the top-5; log the rest in `dropped_log[]` (reason 'collapsed_below_top5').
+ *      Capacity-trimming is the only legitimate L3 drop.
  *   3. BACKTRACK GATE — if fewer than 2 candidates survive AND the pipeline
  *      has NOT yet attempted backtrack, set `backtrack_signal = true` and
- *      build a `ConstraintHint` per sub-spec 02 §B.2 so Triage can re-enter
- *      with explicit exclude/prefer chapter lists. Single-shot enforcement is
- *      the orchestrator's responsibility (we just honour the input flag).
+ *      build a `ConstraintHint` per sub-spec 02 §B.2 so Triage can re-enter.
+ *      Since exclusions no longer delete candidates, this now fires ONLY on a
+ *      genuine retrieval famine (L2 returned <2 real candidates) — a real
+ *      safety net, not a side effect of keyword collisions. Single-shot
+ *      enforcement is the orchestrator's responsibility (we honour the input
+ *      flag).
  *
  * Spec references:
  *   - backend/docs/ARCHITECTURE.md §2 (Layer 3 box), §3 (I/O row), §4.4
@@ -134,14 +150,18 @@ export async function rulesFilter(input: RulesFilterInput): Promise<RulesFilterO
   }
 
   /* ------------------------------------------------------------------------
-   * Step 2: Exclusion filter per candidate.
+   * Step 2: Exclusion SURFACING per candidate (over-exclusion fix).
    *
    * For each candidate, find the FIRST exclusion whose source_chapter ==
-   * candidate.parent_chain.chapter. That's a fire. Candidate is dropped on
-   * first hit (we don't keep evaluating once a candidate is already out).
+   * candidate.parent_chain.chapter. That is a keyword MATCH (not a verdict):
+   * we RECORD it in `matched_exclusions[]` so Layer 4 can adjudicate whether
+   * the exclusion truly applies to the product. We do NOT drop the candidate.
    * Multiple candidates may share an exclusion → record all affected codes.
+   *
+   * Every candidate becomes a survivor here; the only candidates removed later
+   * are by the top-5 capacity collapse (Step 3), never by exclusion.
    * ------------------------------------------------------------------------ */
-  const tFilter = now();
+  const tSurface = now();
   // Group exclusions by source_chapter for O(1) lookup.
   const exclusionsByChapter = new Map<ChapterCode, ExclusionPreFilterHit[]>();
   for (const e of exclusions) {
@@ -150,36 +170,27 @@ export async function rulesFilter(input: RulesFilterInput): Promise<RulesFilterO
     exclusionsByChapter.set(e.source_chapter, bucket);
   }
 
-  const survivors: RetrievalCandidate[] = [];
+  // All candidates survive exclusion surfacing — exclusions are surfaced for
+  // L4 adjudication, not used to delete here.
+  const survivors: RetrievalCandidate[] = [...candidates];
   const exclusionMatchById = new Map<number, ExclusionMatch>();
-  const droppedByExclusion: DroppedCandidate[] = [];
 
   for (const cand of candidates) {
     const chapter = cand.parent_chain.chapter;
     if (chapter === null) {
-      // No chapter context — can't match an exclusion against it; let it
-      // through (Layer 4/5 will catch any structural issue).
-      survivors.push(cand);
+      // No chapter context — nothing to surface against it.
       continue;
     }
     const ruleSet = exclusionsByChapter.get(chapter);
     if (!ruleSet || ruleSet.length === 0) {
-      survivors.push(cand);
       continue;
     }
-    // First hit wins — candidate is dropped on first fired exclusion.
+    // First matching exclusion wins for surfacing (one row per chapter is
+    // enough for L4 to reason about; the affected codes still aggregate).
     const firedRule = ruleSet[0];
     if (firedRule === undefined) {
-      survivors.push(cand);
       continue;
     }
-    droppedByExclusion.push({
-      code:                  cand.code,
-      chapter,
-      reason:                'excluded',
-      matched_exclusion_id:  firedRule.exclusion_id,
-      rerank_score:          cand.rerank_score,
-    });
 
     const existing = exclusionMatchById.get(firedRule.exclusion_id);
     if (existing) {
@@ -195,9 +206,9 @@ export async function rulesFilter(input: RulesFilterInput): Promise<RulesFilterO
     }
   }
   trace.push({
-    step:      'exclusion_filter',
-    latencyMs: now() - tFilter,
-    count:     survivors.length,
+    step:      'exclusion_surface',
+    latencyMs: now() - tSurface,
+    count:     exclusionMatchById.size,
   });
 
   /* ------------------------------------------------------------------------
@@ -227,14 +238,19 @@ export async function rulesFilter(input: RulesFilterInput): Promise<RulesFilterO
   });
 
   const matched_exclusions: ExclusionMatch[] = Array.from(exclusionMatchById.values());
-  const dropped_log: DroppedCandidate[] = [...droppedByExclusion, ...droppedByCollapse];
+  // Exclusions never drop candidates anymore, so the only drops are capacity
+  // (top-5) trims.
+  const dropped_log: DroppedCandidate[] = [...droppedByCollapse];
 
   /* ------------------------------------------------------------------------
    * Step 4: Backtrack gate — single-shot.
    *
-   * Trigger condition: <2 surviving candidates. If backtrack has already been
-   * attempted (single-shot enforcement per sub-spec 02 §B.5), do NOT re-fire
-   * — the orchestrator will escalate to L7 Deep-Think instead.
+   * Trigger condition: <2 surviving candidates. Because exclusions no longer
+   * delete candidates, this now fires ONLY on a genuine retrieval famine
+   * (L2 returned <2 real candidates) — not because a keyword collision removed
+   * the correct chapter. If backtrack has already been attempted (single-shot
+   * enforcement per sub-spec 02 §B.5), do NOT re-fire — the orchestrator will
+   * escalate to L7 Deep-Think instead.
    * ------------------------------------------------------------------------ */
   const tGate = now();
   let backtrack_signal = false;
@@ -242,7 +258,7 @@ export async function rulesFilter(input: RulesFilterInput): Promise<RulesFilterO
 
   if (collapsed.length < MIN_SURVIVORS && !input.backtrack_attempted) {
     backtrack_signal = true;
-    constraint_hint = buildConstraintHint(matched_exclusions, droppedByExclusion);
+    constraint_hint = buildConstraintHint(matched_exclusions);
   }
   trace.push({
     step:      'backtrack_gate',
@@ -267,32 +283,26 @@ export async function rulesFilter(input: RulesFilterInput): Promise<RulesFilterO
 /**
  * Build the ConstraintHint emitted alongside backtrack_signal=true.
  *
- * - `exclude_chapters` = distinct chapters of every candidate that was
- *   dropped by exclusion (NOT collapsed). We do not exclude chapters where
- *   a candidate merely lost the rerank bake-off — only the chapters proven
- *   structurally wrong by a legal exclusion rule.
- * - `prefer_chapters` = the flattened `redirects_to_chapter[]` of every
- *   matched exclusion, deduped. (102 of 1,505 exclusions are multi-dest,
- *   so an exclusion can contribute 2-3+ destinations.)
- * - `source_exclusion_id` = the exclusion that dropped the most candidates,
- *   with lowest id as tiebreak (deterministic).
+ * Backtrack now fires ONLY on a genuine retrieval famine (<2 real candidates
+ * from L2), never because an exclusion deleted a candidate (it no longer does).
+ * So there are no "structurally proven wrong" chapters to exclude here — L3
+ * does not judge exclusions anymore. We therefore emit an EMPTY
+ * `exclude_chapters`: the correct chapter must never be forbidden from
+ * re-triage just because a keyword collided with an exclusion.
  *
- * Spec note (sub-spec 02 §B.2 step 4): "highest-confidence exclusion (or
- * lowest id as tiebreaker)". The sub-spec doesn't define "highest-confidence"
- * for a row in chapter_exclusions (there is no confidence column). We
- * interpret it as "the exclusion with the largest impact on the alive set"
- * (i.e., the one that dropped the most candidates); ties broken by lowest id.
- * If no exclusions fired but backtrack still triggered (e.g., 0 candidates
- * from L2), we return a no-op-ish hint with `source_exclusion_id = 0`.
+ * - `exclude_chapters` = [] (L3 no longer proves any chapter wrong).
+ * - `prefer_chapters` = the flattened `redirects_to_chapter[]` of every
+ *   surfaced exclusion, deduped. These are still useful soft hints for the
+ *   re-triage even though we don't forbid anything. (102 of 1,505 exclusions
+ *   are multi-dest, so an exclusion can contribute 2-3+ destinations.)
+ * - `source_exclusion_id` = the surfaced exclusion touching the most
+ *   candidates, with lowest id as tiebreak (deterministic). 0 when none.
  */
 function buildConstraintHint(
   matched_exclusions: ExclusionMatch[],
-  dropped: DroppedCandidate[],
 ): ConstraintHint {
-  // exclude_chapters from dropped (by exclusion only) candidates' chapters.
-  const excludeChapters = Array.from(
-    new Set(dropped.map((d) => d.chapter).filter((c) => c.length > 0)),
-  ).sort();
+  // L3 no longer proves any chapter structurally wrong → never forbid a chapter.
+  const excludeChapters: ChapterCode[] = [];
 
   // prefer_chapters: flatten redirects, dedup, sort for stability.
   const preferSet = new Set<ChapterCode>();
@@ -301,12 +311,10 @@ function buildConstraintHint(
       preferSet.add(ch);
     }
   }
-  // Remove any chapter that's also in exclude_chapters (no contradiction).
-  for (const ec of excludeChapters) preferSet.delete(ec);
   const preferChapters = Array.from(preferSet).sort();
 
-  // Pick the highest-impact exclusion (most affected_codes); tiebreak by
-  // lowest id.
+  // Pick the highest-impact surfaced exclusion (most affected_codes); tiebreak
+  // by lowest id.
   let chosen: ExclusionMatch | null = null;
   for (const m of matched_exclusions) {
     if (chosen === null) { chosen = m; continue; }
@@ -321,22 +329,20 @@ function buildConstraintHint(
   }
 
   if (chosen === null) {
-    // No exclusions actually fired (backtrack triggered by retrieval famine,
-    // not by rule filtering). Emit a minimal hint so Triage still sees the
-    // signal; orchestrator may opt to skip backtrack in this case.
+    // No exclusions surfaced — backtrack triggered purely by retrieval famine.
     return {
       exclude_chapters:    excludeChapters,
       prefer_chapters:     preferChapters,
-      reason:              'No surviving candidate after L2 retrieval + L3 exclusion filter.',
+      reason:              'Fewer than 2 candidates returned by L2 retrieval.',
       source_exclusion_id: 0,
     };
   }
 
   const reason =
-    `Ch.${chosen.source_chapter} excluded per rule ${chosen.exclusion_id} ` +
+    `Possible exclusion on Ch.${chosen.source_chapter} per rule ${chosen.exclusion_id} ` +
     `(${truncateForReason(chosen.excluded_product_text)})` +
     (preferChapters.length > 0
-      ? `; try ${preferChapters.join(', ')}.`
+      ? `; consider ${preferChapters.join(', ')}.`
       : '.');
 
   return {
