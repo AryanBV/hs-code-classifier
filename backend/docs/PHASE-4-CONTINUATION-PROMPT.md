@@ -1,3 +1,5 @@
+> ⚠️ **SUPERSEDED (2026-05-28).** This doc describes O2 as pending/Ch.01-only — that is now STALE. O2 extraction is COMPLETE (12,406 records, all F4-audited PASS). For the current resume point use **`backend/docs/O2-FINALE-CONTINUATION-PROMPT.md`** (F5 normalization + F6 report + Supabase ingest). The historical content below is retained for reference only.
+
 # Phase 4 Continuation Prompt — Session N (2026-05-27 handoff)
 
 Paste this entire block into a NEW Claude Code session at `C:\Export Business\hs-code-classifier` to resume Phase 4 work.
@@ -53,21 +55,19 @@ Via Supabase MCP project `waowoznsvaosgcgiivzo`:
 - **NEVER use Anthropic at runtime** (subscription not deployable)
 - OpenAI in env but ASK USER FIRST before any runtime use
 
-## Branch & uncommitted state
-Currently on `feat/phase-4-pipeline-build` off `feat/phase-3-arch-spike`. Significant uncommitted work:
-- Entire `backend/src/classifier-v2/` tree untracked (29 files: 6 layers + 6 layer tests + lib/ + db/ + types.ts + index.ts)
-- 5 untracked Prisma migrations under `backend/prisma/migrations/2026052612*`
-- 5 untracked sub-specs under `backend/docs/sub-specs/`
-- Untracked `backend/data/build-time/` (O1-O5 outputs)
-- Untracked `backend/scripts/smoke-classifier-v2.ts`
-- Modified: `CLAUDE.md`, `backend/docs/ARCHITECTURE.md`, `backend/docs/SETUP-vertex-service-account.md`, `backend/package.json`, `backend/prompts/{deep-think,select,triage,verify-tiebreak}-v2.md`, `backend/scripts/verify-vertex-sa.ts`, `backend/vitest.config.ts`
+## Branch & commit state
+Currently on `feat/phase-4-pipeline-build` off `feat/phase-3-arch-spike`. **Phase 4 v2 work committed at `002365e`** (74 files, 26,102 insertions). Working tree clean at handoff.
 
-No commits made — per user's standing rule "no commit unless explicitly asked". User can choose to commit before resuming OR continue accumulating.
+Latest commits:
+- `002365e` feat(phase-4): implement v2 8-layer classifier L0-L5 + Phase 4.0 build-time data + sub-specs
+- `c4c1a08` feat(phase-4): lock v2 architecture — VCMS (Verified Cascade with Multi-Signal Synthesis)
+- `0a75ac6` feat(phase-3.5): B workstream + D1 lock + Vertex SA setup — Phase 3.5 EXIT GATE
+
+Future dispatches (O2 35-agent extraction, Phase 4.2 QGS, Phase 4.3 layers, eval) will land as subsequent commits.
 
 ## Quick sanity-check questions to ask user on resume:
-1. "Limit reset? Ready to dispatch O2 35-agent plan?"
-2. "Want to commit the Phase 4.1 + scaffolding work to a checkpoint commit before O2 dispatches (so any failures during O2 don't muddy the diff)?"
-3. "Any change in priorities since handoff, or stay the course on O2 → QGS → P4.3 → P4.4?"
+1. "Limit reset? Ready to dispatch O2 35-agent rolling-cadence plan?"
+2. "Any change in priorities since handoff, or stay the course on O2 → QGS → P4.3 → P4.4?"
 
 ---
 End of continuation prompt.

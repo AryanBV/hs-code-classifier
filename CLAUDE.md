@@ -168,7 +168,7 @@ Test case format:
 
 ### Phase 4.0 build-time data (DB-backed unless noted)
 - Done O1 Notes Claims: 253 rows in `notes_claims` table (50 marked `validated=true`)
-- Partial O2 Tariff Line Attributes: Ch.01 ONLY ingested into JSON (44/12,460); remaining 12,416 codes pending — 35-agent rolling-cadence dispatch planned (see Task #28)
+- DONE (2026-05-28) O2 Tariff Line Attributes: ALL 12,406 records extracted across 41 chunks + Ch.01 base (12,362 + 44), corpus-verified (0 missing/dup). 100% independently F4-audited PASS (3 defects found & fixed: BIG-72a chromium, BIG-84a refrigeration, SM-12 part-enum). F2 forensics 94.9% sig-diversity. F3 gold-accuracy 95.5% enum / 0.62 array-Jaccard (vs templating-failure 0.12-0.24). Output files in `backend/data/build-time/O2-tariff-line-attributes/chunks/output/` (41 canonical; intermediates in `chunks/_archive/`). NOT YET INGESTED to `tariff_line_attributes` table (still 0 rows) — finale (F5 normalization decisions + F6 report + ingest) pending in fresh session per `backend/docs/O2-FINALE-CONTINUATION-PROMPT.md`.
 - Done O3 Question Templates: 51 rows in `question_templates` table (all 8 confusing pairs covered)
 - Done O4 India Alias Map: 299 entries at `backend/data/build-time/O4-india-alias-map/aliases.json`
 - Done O5 Confusing Pairs: 8 pairs documented at `backend/data/build-time/O5-confusing-pairs/`
