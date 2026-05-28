@@ -1,4 +1,8 @@
 /**
+ * ⚠️ DEPRECATED 2026-05-28 — FROZEN Phase-1 stub. Do NOT use for Phase 4+.
+ * The canonical eval is `backend/src/eval/runner.ts` (real classifier, ~386-case
+ * master suite). See `backend/eval/DEPRECATED.md` and ARCHITECTURE.md §11.
+ *
  * Phase 1 eval runner skeleton — T12 / B1 deliverable.
  *
  * Walks all 168 cases in `backend/eval/cases.json`, calls `classifyStub()` for

@@ -1,3 +1,9 @@
+# ✅ O2 FINALE COMPLETE (2026-05-28) — this prompt is OBSOLETE
+
+> **DONE.** O2 was finalized and INGESTED: 12,406 rows in `tariff_line_attributes` (MCP-verified). F1–F6 all passed; F5 normalization applied; 5 ingest-path defects fixed. Final report: `backend/data/build-time/O2-tariff-line-attributes/FINAL-AUDIT-REPORT.md`. **Do NOT re-run this finale.** Next work is Phase 4.2a — see `backend/docs/PHASE-4.2-CONTINUATION-PROMPT.md`. The original prompt is kept below for history only.
+
+---
+
 # O2 Finale — Fresh-Session Continuation Prompt (2026-05-28, updated)
 
 Paste into a NEW Claude Code session at `C:\Export Business\hs-code-classifier`. O2 extraction + verification are DONE; only F5 normalization decisions + F6 report + Supabase ingest remain.

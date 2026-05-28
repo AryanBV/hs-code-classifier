@@ -403,23 +403,27 @@ Refusal payload (minimum):
 
 ## 10. Phase 4 prompt iteration cycle
 
-`triage-v2.md`, `select-v2.md`, `verify-tiebreak-v2.md`, `deep-think-v2.md` are **seed drafts**, not final. Phase 4 iterates against the 168-case eval harness (B1):
+`triage-v2.md`, `select-v2.md`, `verify-tiebreak-v2.md`, `deep-think-v2.md` are **seed drafts**, not final. Phase 4 iterates against the canonical `backend/src/eval/` harness (~386-case master suite — see §11):
 
-1. Run `backend/eval/run-eval.ts` over all 168 cases.
-2. Group failures by stage and failure mode (Triage routing wrong, Select picked wrong sibling, Verifier over-rejected, etc.).
-3. Update one prompt at a time; tag the new version (`triage-v3.md`); do not overwrite previous.
-4. Re-run; accept when ≥80% of targeted class resolves AND no regression > 2 cases elsewhere.
-5. Lock prompts at Phase 4 exit (target ≥85% overall correctness on 168 cases).
+1. Run `npm run eval` (master suite) — or `eval:quick` during tight loops.
+2. Group failures via `analyze-failures.ts` by stage and failure mode (Triage routing wrong, Select picked wrong sibling, Verifier over-rejected, etc.) + per-chapter via `measure-brain-chapters.ts`.
+3. Update one prompt at a time; tag the new version (`triage-v3.md`); do not overwrite previous. Fix the ROOT CAUSE, never a per-case patch.
+4. Re-run; use `compare.ts` to diff vs the prior run; accept when ≥80% of the targeted class resolves AND no regression > 2 cases elsewhere.
+5. Lock prompts at Phase 4 exit (targets in §14.4 — measured on the master suite).
 
 Prompts and eval cases are the contract; the runtime (`backend/src/classifier-v2/`) is the iterable artifact.
 
 ---
 
-## 11. Eval infrastructure (B1)
+## 11. Eval infrastructure (B1) — CORRECTED 2026-05-28
 
-Eval runner: `backend/eval/run-eval.ts`. Reads 168-case harness. Calls `classify()` from `backend/src/classifier-v2/index.ts`. Output: per-case prediction + summary stats (correctness segmented by chapter, refusal rate, mean cost, mean latency, verifier-failure-rate per rule).
+**Canonical eval system: `backend/src/eval/`** (the active, real-classifier-wired harness — NOT the frozen `backend/eval/` Phase-1 stub; see note).
+- **Runner:** `backend/src/eval/runner.ts` (`npm run eval` / `eval:quick` / `--category X`); reads `test-suites/master-suite.ts` (~386 cases: 351 classify / 30 ask / 5 reject) + `quick-suite.ts`.
+- **Scoring:** `scorer.ts` — routing 3×3 confusion matrix + classification (chapter 40% / heading 30% / code 30% weighted) + question-quality (0–2). Output: `backend/eval-results/{run_id}.json`.
+- **Tooling (build on, do not recreate):** `compare.ts` (before/after diff), `analyze-failures.ts` (failure taxonomy), `measure-brain-chapters.ts` (per-chapter accuracy), `gt-fix/` (ground-truth QA: validate codes vs DB, fill missing GT, flag LLM cases).
+- **Wiring v2:** `runner.ts` currently imports legacy `../classifier`. Phase 4 introduces `backend/src/eval/v2-adapter.ts` exporting `classifyForEval()` which calls v2 `classify()` and maps `ClassifyResult → ClassificationResult` (`mapV2ToLegacy`), so the entire scorer/compare/analyze stack works unchanged. `runner.ts` changes only its import.
 
-Baseline: `backend/eval/baseline-stub.json`. Phase 4 v2 baseline replaces the stub.
+> **Note — `backend/eval/run-eval.ts` + `cases.json` (168) is a FROZEN Phase-1 artifact** (stub runner; deprecated 2026-05-28 — see `backend/eval/DEPRECATED.md`). Retained only as a candidate source of cases to merge into the master suite. **Do NOT wire v2 there.**
 
 ---
 
@@ -527,11 +531,11 @@ Before implementing any Phase 4 layer, read the relevant sub-spec:
 15. **L6 Tiebreak** (Gemini 3.1 Pro, thinking=high)
 16. **L7 Deep-Think** with `deep-think-v2.md` prompt
 17. **L8 Active Learning** write-back (provisional case_law, confirmation hooks for wizard)
-18. **Rewire `backend/src/api/classify.ts`** to call classifier-v2
-19. **Swap `backend/eval/run-eval.ts`** from stub to real classifier import
+18. **Rewire `backend/src/api/classify.ts`** to call classifier-v2 (AFTER the eval gate passes — never replace the running classifier with an unvalidated one)
+19. **Wire v2 into `backend/src/eval/runner.ts`** via a new `src/eval/v2-adapter.ts` (`classifyForEval` → `mapV2ToLegacy`); the ~386-case master suite is canonical. (`backend/eval/run-eval.ts` is the FROZEN 168-case Phase-1 artifact — do NOT use; see §11.)
 
 ### Phase 4.4 — Eval + iteration — ~1-2 weeks
-20. **First eval gate:** ≥80% chapter-match correctness on 168 cases. Segment failures by chapter + failure-mode class.
+20. **First eval gate:** ≥80% chapter-match correctness on the ~386-case master suite. Segment failures by chapter + failure-mode class (`analyze-failures.ts`, `measure-brain-chapters.ts`).
 21. **Iterate prompts** on weak chapters (orchestrator-quality-cycle: implementer → spec-reviewer → quality-reviewer).
 22. **Target at Phase 4 exit:** ≥85% chapter / ≥75% heading / ≥70% code; cost ≤$0.012/query mean; latency ≤8s p95.
 

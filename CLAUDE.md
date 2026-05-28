@@ -168,7 +168,7 @@ Test case format:
 
 ### Phase 4.0 build-time data (DB-backed unless noted)
 - Done O1 Notes Claims: 253 rows in `notes_claims` table (50 marked `validated=true`)
-- DONE (2026-05-28) O2 Tariff Line Attributes: ALL 12,406 records extracted across 41 chunks + Ch.01 base (12,362 + 44), corpus-verified (0 missing/dup). 100% independently F4-audited PASS (3 defects found & fixed: BIG-72a chromium, BIG-84a refrigeration, SM-12 part-enum). F2 forensics 94.9% sig-diversity. F3 gold-accuracy 95.5% enum / 0.62 array-Jaccard (vs templating-failure 0.12-0.24). Output files in `backend/data/build-time/O2-tariff-line-attributes/chunks/output/` (41 canonical; intermediates in `chunks/_archive/`). NOT YET INGESTED to `tariff_line_attributes` table (still 0 rows) — finale (F5 normalization decisions + F6 report + ingest) pending in fresh session per `backend/docs/O2-FINALE-CONTINUATION-PROMPT.md`.
+- DONE (2026-05-28) O2 Tariff Line Attributes: ALL 12,406 records extracted across 41 chunks + Ch.01 base (12,362 + 44), corpus-verified (0 missing/dup). 100% independently F4-audited PASS (3 defects found & fixed: BIG-72a chromium, BIG-84a refrigeration, SM-12 part-enum). F2 forensics 94.9% sig-diversity. F3 gold-accuracy 95.5% enum / 0.62 array-Jaccard (vs templating-failure 0.12-0.24). Output files in `backend/data/build-time/O2-tariff-line-attributes/chunks/output/` (41 canonical; intermediates in `chunks/_archive/`). INGESTED 2026-05-28: **12,406 rows** in `tariff_line_attributes` (MCP-verified: 0 orphan-FK; composite_components stored as proper jsonb). F5 normalization applied (kept chemical_class='other' 977 recs; dropped 55 OEM-component tokens; Si→silicon). F6 report: `backend/data/build-time/O2-tariff-line-attributes/FINAL-AUDIT-REPORT.md`. 5 ingest-path defects found & fixed (fabric_construction bool→text; 8 BIG→SC filename renames; composite_components jsonb stringify; DATABASE_URL pooled connection; pre-ingest enum hardening).
 - Done O3 Question Templates: 51 rows in `question_templates` table (all 8 confusing pairs covered)
 - Done O4 India Alias Map: 299 entries at `backend/data/build-time/O4-india-alias-map/aliases.json`
 - Done O5 Confusing Pairs: 8 pairs documented at `backend/data/build-time/O5-confusing-pairs/`
@@ -196,22 +196,24 @@ Test case format:
 - L6 Tiebreak (gemini-3.1-pro-preview, thinking_level=high)
 - L7 Deep-Think (gemini-3.1-pro-preview with extended thinking)
 - L8 Active Learning (case_law write-back; table not yet created)
-- Rewire `backend/src/api/classify.ts` from legacy classifier to classifier-v2
-- Swap `backend/eval/run-eval.ts` from stub to real classifier import
+- Rewire `backend/src/api/classify.ts` from legacy classifier to classifier-v2 (AFTER eval gate passes)
+- Wire v2 into canonical `backend/src/eval/runner.ts` via new `src/eval/v2-adapter.ts` (`mapV2ToLegacy`); ~386-case master suite. (`backend/eval/` 168-case stub is DEPRECATED — see `backend/eval/DEPRECATED.md`.)
 
 ### Phase 4.4 — PENDING
-- 168-case eval harness gate (>=85% chapter / >=75% heading / >=70% code targets)
+- Eval gate on canonical `backend/src/eval/` ~386-case master suite (>=85% chapter / >=75% heading / >=70% code targets)
 - Prompt iteration on weak chapters
 - Calibration of CITATION_TFIDF_THRESHOLD (0.6) and EMBEDDING_COSINE_FLOOR (0.55) against empirical distribution
 
 **Operative resume brief:** `C:\Users\ASUS\.claude\plans\ultrathink-i-m-resuming-the-zesty-candle.md` (v1->v2 transition rationale)
-**Continuation prompt for fresh session:** `backend/docs/PHASE-4-CONTINUATION-PROMPT.md`
+**Phase 4.2-4.4 design spec:** `backend/docs/PHASE-4.2-4.4-BUILD-DESIGN.md`
+**Phase 4.2a implementation plan:** `backend/docs/plans/2026-05-28-phase-4.2a-spine-baseline.md`
+**Continuation prompt for fresh session (Phase 4.2a build — spine+instrument+baseline):** `backend/docs/PHASE-4.2-CONTINUATION-PROMPT.md`
 
 ## Roadmap
 - DONE Phase 1: Eval harness (168 cases, on `feat/phase-1-eval-harness`)
 - DONE Phase 2: Data foundation (normalized schema + canonical data + 7-audit verified)
 - DONE Phase 3: Architecture spike — 30 paper-traces, 29/30 CORRECT, verdict PROCEED_TO_PHASE_4
 - DONE Phase 3.5 (May 2026): Data completion + architecture lock-in — chapter_exclusions +352 rules, fts_search_text + text[] + sections.notes, A9 empirical proof 10/10 CORRECT, D1 model stack LOCKED. 8 carryforwards in ARCHITECTURE.md §12.
-- IN PROGRESS Phase 4: Brain rebuild — v2 architecture (8-layer pipeline). Phase 4.0 mostly done (O2 partial). Phase 4.1 complete (L0-L5, 302/302 tests). Phase 4.2 QGS remaining. Phase 4.3 + 4.4 pending.
+- IN PROGRESS Phase 4: Brain rebuild — v2 (8-layer). Phase 4.0 DONE (O1-O5; O2 12,406 ingested 2026-05-28). Phase 4.1 complete (L0-L5, 302/302). Phase 4.2-4.4: orchestrator + L6/L7/L8 + QGS + API rewire + eval-wiring pending — design spec + Phase-4.2a plan ready. Eval canonical = `backend/src/eval/` ~386-case master suite (168-stub DEPRECATED). Build approach: measurement-driven (spine+eval first, then quality-build each layer by failure map).
 - M4: Trade intelligence — duty rates, export policy on every result
 - M5: Ship — PDF reports, CI, feedback, investor demo
