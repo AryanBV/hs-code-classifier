@@ -346,10 +346,14 @@ function isTriageOutput(v: unknown): v is TriageOutput {
  * JSON in stray prose, even though `responseSchema` should prevent that).
  *
  * After JSON decoding, validates the parsed value against `TriageOutputZ` via
- * `parseOrThrow`. On `LlmOutputValidationError` (schema mismatch) or JSON
- * parse failure, returns null — triggering the caller's retry-then-REFUSE path.
- * The `LlmOutputValidationError` type lets the caller (or a later error-handling
- * task §7) distinguish validation failures from network/transport errors.
+ * `parseOrThrow` (structural shape), THEN the hand-rolled `isTriageOutput`
+ * guard (decision-conditional cross-field invariants). On
+ * `LlmOutputValidationError` (schema mismatch), failed cross-field guard, or
+ * JSON parse failure, returns null — triggering the caller's retry-then-REFUSE
+ * path. The `LlmOutputValidationError` type lets the caller (or a later
+ * error-handling task §7) distinguish validation failures from network/transport
+ * errors. This Zod → isTriageOutput chaining mirrors L4's
+ * Zod → isSelectOutput parse site exactly.
  */
 function tryParseTriageJSON(text: string): TriageOutput | null {
   if (typeof text !== 'string' || text.trim().length === 0) return null;
@@ -369,10 +373,11 @@ function tryParseTriageJSON(text: string): TriageOutput | null {
     }
   }
 
-  // Zod validation at the parse site — replaces the bare isTriageOutput check.
+  // Zod validation at the parse site — structural shape check.
   // Returns null on schema mismatch so the caller's retry-then-REFUSE path fires.
+  let zodParsed: unknown;
   try {
-    return parseOrThrow(TriageOutputZ, parsed, 'L1-triage');
+    zodParsed = parseOrThrow(TriageOutputZ, parsed, 'L1-triage');
   } catch (err) {
     if (err instanceof LlmOutputValidationError) {
       // eslint-disable-next-line no-console
@@ -381,6 +386,13 @@ function tryParseTriageJSON(text: string): TriageOutput | null {
     }
     throw err;
   }
+
+  // Cross-field invariants (decision-conditional rules from triage-v2.md allOf)
+  // enforced by the hand-rolled isTriageOutput guard. Zod handles structural
+  // shape only; isTriageOutput rejects e.g. CLASSIFY with empty candidate_chapters
+  // or ASK with null clarifying_question. Returning null here triggers the
+  // caller's retry-then-REFUSE path. Mirrors L4's Zod → isSelectOutput chaining.
+  return isTriageOutput(zodParsed) ? zodParsed : null;
 }
 
 /* ---------------------------------------------------------------------------

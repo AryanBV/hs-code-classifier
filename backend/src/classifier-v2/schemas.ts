@@ -14,13 +14,17 @@
  * - On Zod failure we throw `LlmOutputValidationError` — a DISTINGUISHABLE
  *   error class that lets a later task (§7 error handling) catch validation
  *   failures specifically (retry-then-REFUSE) vs transport/network errors.
- * - The conditional allOf invariants from the prompt schemas (CLASSIFY must
- *   have candidate_chapters ≥1, REFUSE must have refusal_reason + out_of_scope_class,
- *   null selected_code → refusal populated, GIR-3(b) → components non-null) are
- *   intentionally NOT encoded in Zod here. The hand-rolled guards in L1/L4 and
- *   the Mechanical Verifier (L5) are the authoritative enforcers of those
- *   cross-field invariants. Zod handles structural shape only — field presence,
- *   types, and enum values — to keep the schema minimal and readable.
+ * - The conditional allOf invariants from the prompt schemas (Triage: CLASSIFY
+ *   must have candidate_chapters ≥1 + null clarifying_question/refusal; ASK must
+ *   have non-null clarifying_question; REFUSE must have refusal_reason +
+ *   out_of_scope_class. Select: null selected_code → refusal populated, GIR-3(b)
+ *   → components non-null) are intentionally NOT encoded in Zod here. Both parse
+ *   sites enforce them AFTER Zod via their hand-rolled guards — L1-triage.ts
+ *   chains `parseOrThrow(TriageOutputZ)` → `isTriageOutput`, and L4-select.ts
+ *   chains `parseOrThrow(SelectOutputZ)` → `isSelectOutput`. The Mechanical
+ *   Verifier (L5) is the authoritative DB-truth enforcer downstream. Zod handles
+ *   structural shape only — field presence, types, enum values, array bounds —
+ *   to keep the schema minimal and readable.
  */
 import { z } from 'zod';
 
