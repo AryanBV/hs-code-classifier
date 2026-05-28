@@ -695,3 +695,177 @@ describe('classify() — ASK path (Task 9)', () => {
     expect(verifyMock).not.toHaveBeenCalled();
   });
 });
+
+/* ---------------------------------------------------------------------------
+ * REFUSE paths + §7 system-error contract (Task 10)
+ * --------------------------------------------------------------------------- */
+
+/** A triage REFUSE (services-not-goods) — a genuine model decision. */
+const triageOutRefuseServices: TriageOutput = {
+  decision: 'REFUSE',
+  extracted_attributes: mkAttributes(),
+  candidate_chapters: [],
+  completeness_signal: 0,
+  clarifying_question: null,
+  refusal_reason: 'services',
+  out_of_scope_class: 'services_not_goods',
+};
+
+/** The synthetic REFUSE L1 emits internally after its invalid-JSON retry path. */
+const triageOutRefuseIncoherent: TriageOutput = {
+  decision: 'REFUSE',
+  extracted_attributes: mkAttributes(),
+  candidate_chapters: [],
+  completeness_signal: 0,
+  clarifying_question: null,
+  refusal_reason: 'Triage produced invalid JSON twice; refusing to guess.',
+  out_of_scope_class: 'incoherent_query',
+};
+
+/**
+ * Mirror of the error vertex-client throws after exhausting its own backoff
+ * (lib/vertex-client.ts: `[vertex-client] After 3 retry attempts: ...` with the
+ * original error on `.cause`). The orchestrator narrows its catch to THIS shape.
+ */
+function mkVertexTransportError(cause?: unknown): Error {
+  const err = new Error('[vertex-client] After 3 retry attempts: 503 Service Unavailable');
+  (err as Error & { cause?: unknown }).cause = cause ?? { response: { status: 503 } };
+  return err;
+}
+
+/** A SelectOutput refusal (null code) — a genuine model REFUSE from L4. */
+const selectOutRefuse: SelectOutput = {
+  ...selectOut,
+  selected_code: null,
+  export_policy: null,
+  policy_condition: null,
+  refusal: { reason: 'no faithful match' },
+};
+
+describe('classify() — REFUSE paths + §7 system error (Task 10)', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    normalizeMock.mockResolvedValue(normalizedOut);
+    retrieveMock.mockResolvedValue(retrievalOut);
+    rulesFilterMock.mockResolvedValue(rulesFilterOut);
+    selectMock.mockResolvedValue(selectOut);
+    verifyMock.mockResolvedValue(verifierPass);
+  });
+
+  // (a) Triage REFUSE → ClassifyResult REFUSE; no system_error; downstream not called.
+  it('(a) maps a triage REFUSE to a ClassifyResult REFUSE without invoking downstream layers', async () => {
+    triageMock.mockResolvedValue(triageOutRefuseServices);
+
+    const res = await classify('legal consulting services');
+
+    expect(res.decision).toBe('REFUSE');
+    expect(res.refusal?.out_of_scope_class).toBe('services_not_goods');
+    expect(res.refusal?.reason).toBe('services');
+    expect(res.refusal?.verifier_failures).toEqual([]);
+    // The discriminator must NOT be set for a normal model REFUSE.
+    expect(res.system_error).toBeUndefined();
+    expect(res.classification).toBeUndefined();
+
+    // Pipeline stopped at L1 — no retrieval / select / verify.
+    expect(retrieveMock).not.toHaveBeenCalled();
+    expect(rulesFilterMock).not.toHaveBeenCalled();
+    expect(selectMock).not.toHaveBeenCalled();
+    expect(verifyMock).not.toHaveBeenCalled();
+
+    // diagnostics always present
+    expect(res.diagnostics.escalation_path).toContain('L1');
+  });
+
+  // (b) Transport error from triage → result carries system_error, NOT a CLASSIFY.
+  it('(b) surfaces a system_error (NOT a fabricated CLASSIFY) when a vertex transport error escapes triage', async () => {
+    const transportErr = mkVertexTransportError();
+    triageMock.mockRejectedValue(transportErr);
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    // The hard invariant: no fabricated classification.
+    expect(res.decision).not.toBe('CLASSIFY');
+    expect(res.classification).toBeUndefined();
+
+    // system_error SET and retryable — distinguishable from a normal REFUSE.
+    expect(res.system_error).toBeDefined();
+    expect(res.system_error?.retryable).toBe(true);
+    expect(res.system_error?.stage).toBe('L1');
+    // The cause message is carried through for diagnosis.
+    expect(res.system_error?.message).toContain('[vertex-client] After 3 retry attempts');
+
+    // decision is REFUSE (graceful surface), but discriminated by system_error.
+    expect(res.decision).toBe('REFUSE');
+    expect(res.refusal?.reason).toContain('System error');
+
+    // downstream layers never ran
+    expect(retrieveMock).not.toHaveBeenCalled();
+    expect(selectMock).not.toHaveBeenCalled();
+  });
+
+  // (b') Programming errors must NOT be swallowed as system_error.
+  it("(b') does NOT swallow a non-transport programming error — it propagates", async () => {
+    triageMock.mockRejectedValue(new TypeError('cannot read property foo of undefined'));
+
+    await expect(classify('stainless steel hex bolts M10')).rejects.toThrow(
+      /cannot read property foo/,
+    );
+  });
+
+  // (c) Invalid-JSON path arrives as an L1 synthetic REFUSE incoherent_query.
+  it('(c) maps L1 post-retry synthetic REFUSE incoherent_query through to a ClassifyResult REFUSE', async () => {
+    // NOTE: the actual invalid-JSON retry happens INSIDE L1 (tested in L1's own
+    // suite). Here we simulate L1 having already produced the synthetic refuse.
+    triageMock.mockResolvedValue(triageOutRefuseIncoherent);
+
+    const res = await classify('asdkjfh qwerty zzz');
+
+    expect(res.decision).toBe('REFUSE');
+    expect(res.refusal?.out_of_scope_class).toBe('incoherent_query');
+    expect(res.system_error).toBeUndefined();
+    expect(retrieveMock).not.toHaveBeenCalled();
+  });
+
+  // (d) Select REFUSE (null code) on the INITIAL select → ClassifyResult REFUSE.
+  it('(d) maps an initial Select REFUSE (null code) to a ClassifyResult REFUSE with the reason carried', async () => {
+    triageMock.mockResolvedValue(triageOut);
+    selectMock.mockResolvedValue(selectOutRefuse);
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    expect(res.decision).toBe('REFUSE');
+    expect(res.refusal?.reason).toBe('no faithful match');
+    expect(res.refusal?.out_of_scope_class).toBeNull();
+    expect(res.refusal?.verifier_failures).toEqual([]);
+    expect(res.system_error).toBeUndefined();
+    expect(res.classification).toBeUndefined();
+
+    // Initial select ran; verify must NOT run on a refusal (no code to verify).
+    expect(selectMock).toHaveBeenCalledTimes(1);
+    expect(verifyMock).not.toHaveBeenCalled();
+  });
+
+  // (d') Select REFUSE on a REPAIR-loop select → REFUSE (Task-7 null-code gap closed, no crash).
+  it("(d') maps a REPAIR-loop Select REFUSE (null code) to a ClassifyResult REFUSE without crashing", async () => {
+    triageMock.mockResolvedValue(triageOut);
+
+    // initial select → valid code; verify fails → repair; repair select → REFUSE (null code).
+    selectMock
+      .mockResolvedValueOnce(selectOut)        // attempt 0
+      .mockResolvedValueOnce(selectOutRefuse); // repair 1 → refusal
+
+    verifyMock.mockResolvedValueOnce(verifierFail); // attempt 0 fails → enter repair
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    expect(res.decision).toBe('REFUSE');
+    expect(res.refusal?.reason).toBe('no faithful match');
+    expect(res.system_error).toBeUndefined();
+    expect(res.classification).toBeUndefined();
+
+    // select ran twice (initial + repair 1); verify ran once (initial only —
+    // the repair refusal has no code to verify).
+    expect(selectMock).toHaveBeenCalledTimes(2);
+    expect(verifyMock).toHaveBeenCalledTimes(1);
+  });
+});

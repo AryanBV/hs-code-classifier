@@ -534,6 +534,13 @@ export interface PipelineRunState {
 
 export type ClassifyDecision = 'CLASSIFY' | 'ASK' | 'REFUSE';
 
+/** Infra/transport failure surfaced by the orchestrator per ARCHITECTURE §7 — NOT a model decision. */
+export interface PipelineSystemError {
+  stage: string;       // 'L1' | 'L4' | 'pipeline'
+  message: string;     // human-readable
+  retryable: boolean;  // true for 5xx/transport
+}
+
 /** Wizard-facing clarifying question (built by QGS from Triage's discriminating_attribute). */
 export interface ClarifyingQuestion {
   question_id:              string;
@@ -569,6 +576,15 @@ export interface ClassifyResult {
     out_of_scope_class: OutOfScopeClass | null;
     verifier_failures: VerifierRuleFailure[];
   };
+
+  /**
+   * Set ONLY when a persistent infra/transport failure escaped the layers after
+   * vertex-client's own backoff (ARCHITECTURE §7 "Vertex 5xx persistent" row).
+   * This is the discriminator that distinguishes a system error from a normal
+   * model REFUSE — a model decision NEVER sets this field. Eval (Task 12) must
+   * treat a result carrying `system_error` as a per-case ERROR, not score it.
+   */
+  system_error?: PipelineSystemError;
 
   /** Pipeline diagnostics — always present. */
   diagnostics: {

@@ -21,6 +21,8 @@ import { select } from './layers/L4-select';
 import { verify } from './layers/L5-verifier';
 import { selectToClassifyResult, buildDiagnostics } from './select-to-result';
 import { BaselineEscalation } from './escalation';
+import { MaxTokensError } from './lib/vertex-client';
+import { LlmOutputValidationError } from './schemas';
 import type {
   ChapterCode,
   ClarifyingQuestion,
@@ -28,6 +30,7 @@ import type {
   L4Input,
   L5Input,
   PipelineRunState,
+  PipelineSystemError,
   PipelineTraceEvent,
   RulesFilterInput,
   SelectOutput,
@@ -109,6 +112,104 @@ function triageToAsk(t: TriageOutput, state: PipelineRunState): ClassifyResult {
   };
 }
 
+/**
+ * Map a TriageOutput with decision:'REFUSE' to a ClassifyResult REFUSE.
+ *
+ * Mirrors {@link triageToAsk}: a single canonical mapping reused at BOTH triage
+ * sites (first-pass and backtrack re-entry). Handles every model-originated
+ * triage refusal uniformly — genuine out-of-scope (`services_not_goods`, etc.),
+ * the invalid-JSON synthetic refuse (`incoherent_query`, produced INSIDE L1 after
+ * its own retry per ARCHITECTURE §7), and Q-budget exhaustion
+ * (`function_only_no_substance`). This is a MODEL decision, so `system_error` is
+ * deliberately NOT set — that field is the orchestrator's infra-failure
+ * discriminator only.
+ *
+ * @param reasonOverride Optional reason to substitute (used by the defensive
+ *   incoherent-ASK guard, which synthesizes a refusal from an inconsistent ASK).
+ */
+function triageToRefuse(
+  t: TriageOutput,
+  state: PipelineRunState,
+  reasonOverride?: string,
+): ClassifyResult {
+  return {
+    decision: 'REFUSE',
+    refusal: {
+      reason: reasonOverride ?? t.refusal_reason ?? '',
+      out_of_scope_class: t.out_of_scope_class,
+      verifier_failures: [],
+    },
+    diagnostics: buildDiagnostics(state),
+  };
+}
+
+/**
+ * Map a Select REFUSE (`selected_code === null`) to a ClassifyResult REFUSE.
+ *
+ * Reused for BOTH the initial select AND every repair-loop select (closes the
+ * Task-7 gap: a repair select returning null must REFUSE here, never fall
+ * through to `chapterOf('')`/verify on an empty code). A select refusal is a
+ * MODEL decision — `system_error` is NOT set. `out_of_scope_class` is null
+ * because a select refusal is a "no faithful classification" outcome, not a
+ * triage scope classification.
+ */
+function selectToRefuse(selectOut: SelectOutput, state: PipelineRunState): ClassifyResult {
+  return {
+    decision: 'REFUSE',
+    refusal: {
+      reason: selectOut.refusal?.reason ?? 'No faithful classification',
+      out_of_scope_class: null,
+      verifier_failures: [],
+    },
+    diagnostics: buildDiagnostics(state),
+  };
+}
+
+/**
+ * Narrow an escaped error to a genuine Vertex transport/system failure per
+ * ARCHITECTURE §7 ("Vertex 5xx persistent").
+ *
+ * vertex-client does its OWN exponential backoff (max 3) on 5xx/429/transient
+ * network errors; when that is exhausted it rethrows a generic `Error` whose
+ * message is prefixed `[vertex-client] After N retry attempts:` (original on
+ * `.cause`). We match THAT prefix exactly so the catch is surgical:
+ *   - `MaxTokensError` (budget config, not transport) is excluded → propagates.
+ *   - `LlmOutputValidationError` is never thrown to the orchestrator (the layers
+ *     swallow it → incoherent_query REFUSE) but is excluded here defensively.
+ *   - Programming bugs (TypeError, plain Errors without the prefix) are NOT
+ *     matched → they propagate and surface in tests, never masked as a clean
+ *     system_error.
+ */
+function isVertexTransportError(err: unknown): err is Error {
+  if (!(err instanceof Error)) return false;
+  if (err instanceof MaxTokensError) return false;
+  if (err instanceof LlmOutputValidationError) return false;
+  return err.message.startsWith('[vertex-client] After ');
+}
+
+/**
+ * Build a ClassifyResult that surfaces a persistent infra/transport failure to
+ * the user as a system error (ARCHITECTURE §7) — never a fabricated
+ * classification. `system_error` is the discriminator: a normal model REFUSE
+ * does not set it, so eval can treat this as a per-case ERROR.
+ */
+function systemErrorResult(
+  stage: PipelineSystemError['stage'],
+  err: Error,
+  state: PipelineRunState,
+): ClassifyResult {
+  return {
+    decision: 'REFUSE',
+    refusal: {
+      reason: `System error during classification: ${err.message}`,
+      out_of_scope_class: null,
+      verifier_failures: [],
+    },
+    system_error: { stage, message: err.message, retryable: true },
+    diagnostics: buildDiagnostics(state),
+  };
+}
+
 /* ---------------------------------------------------------------------------
  * Public API
  * --------------------------------------------------------------------------- */
@@ -144,6 +245,15 @@ export async function classify(
     llm_calls: 0,
   };
 
+  // §7 system-error contract: track the LLM stage currently executing so that if
+  // a persistent Vertex transport error escapes (after vertex-client's own
+  // backoff), we attribute it to the right stage. The whole pipeline body runs
+  // inside the try; ONLY genuine transport errors are converted to a
+  // system_error result (see isVertexTransportError) — everything else (incl.
+  // programming bugs) propagates so it surfaces in tests rather than masking as
+  // a clean infra failure.
+  let currentStage: PipelineSystemError['stage'] = 'pipeline';
+  try {
   /* ---- L0 — Input Normalization (deterministic) ----------------------- */
   const normalized = await normalize(query, previousAnswers);
   state.normalized_query = normalized.normalized_query;
@@ -156,19 +266,19 @@ export async function classify(
     q_budget_remaining,
     constraint_hint: null,
   };
+  currentStage = 'L1';
   const triageOut = await triage(triageInput);
   state.llm_calls = (state.llm_calls ?? 0) + 1;
   recordLayer(state, 'L1', 'triage', { decision: triageOut.decision });
 
-  // ASK → Task 9 (implemented). REFUSE → Task 10 (placeholder below).
+  // ASK → Task 9. REFUSE → Task 10 (maps every model refusal, incl. the L1
+  // invalid-JSON synthetic incoherent_query refuse and Q-budget exhaustion).
   if (triageOut.decision === 'ASK') {
     return triageToAsk(triageOut, state);
   }
-  if (triageOut.decision !== 'CLASSIFY') {
-    // REFUSE — Task 10 not yet implemented.
-    throw new Error(
-      `classifier-v2: Triage decision '${triageOut.decision}' not yet handled (REFUSE=Task 10).`,
-    );
+  if (triageOut.decision === 'REFUSE') {
+    recordLayer(state, 'L1', 'refuse', { out_of_scope_class: triageOut.out_of_scope_class });
+    return triageToRefuse(triageOut, state);
   }
 
   const head_nouns_for_fts = triageOut.extracted_attributes.head_nouns_for_fts;
@@ -227,19 +337,22 @@ export async function classify(
       q_budget_remaining,
       constraint_hint: activeRulesOut.constraint_hint,
     };
+    currentStage = 'L1';
     const backtrackTriageOut = await triage(backtrackTriageInput);
     state.llm_calls = (state.llm_calls ?? 0) + 1;
     recordLayer(state, 'L1', 'triage', { decision: backtrackTriageOut.decision, backtrack: true });
 
-    // ASK → Task 9 (implemented). REFUSE → Task 10 (placeholder).
+    // ASK → Task 9. REFUSE → Task 10 (same canonical mapping; naturally covers
+    // the L3 backtrack_no_fit REFUSE L1 emits when the constraint can't be met).
     if (backtrackTriageOut.decision === 'ASK') {
       return triageToAsk(backtrackTriageOut, state);
     }
-    if (backtrackTriageOut.decision !== 'CLASSIFY') {
-      // REFUSE — Task 10 not yet implemented.
-      throw new Error(
-        `classifier-v2: Backtrack re-triage decision '${backtrackTriageOut.decision}' not yet handled (REFUSE=Task 10).`,
-      );
+    if (backtrackTriageOut.decision === 'REFUSE') {
+      recordLayer(state, 'L1', 'refuse', {
+        out_of_scope_class: backtrackTriageOut.out_of_scope_class,
+        backtrack: true,
+      });
+      return triageToRefuse(backtrackTriageOut, state);
     }
 
     // Re-retrieve with the updated candidate_chapters from re-triage.
@@ -319,6 +432,7 @@ export async function classify(
     filtered_candidates: activeRulesOut.filtered_candidates,
     matched_exclusions: activeRulesOut.matched_exclusions,
   };
+  currentStage = 'L4';
   let currentSelectOut = await select(baseL4Input);
   state.llm_calls = (state.llm_calls ?? 0) + 1;
   recordLayer(state, 'L4', 'select', {
@@ -326,9 +440,11 @@ export async function classify(
     self_confidence: currentSelectOut.self_confidence,
   });
 
-  // Select REFUSE (null code) is Task 10. Happy path expects a selected code.
+  // Select REFUSE (null code) → ClassifyResult REFUSE (no verify — there is no
+  // code to check). A model decision, so system_error is not set.
   if (currentSelectOut.selected_code === null) {
-    throw new Error('classifier-v2: Select REFUSE not yet handled (Task 10).');
+    recordLayer(state, 'L4', 'refuse');
+    return selectToRefuse(currentSelectOut, state);
   }
 
   let currentVerifyOut = await verify(buildL5Input(currentSelectOut));
@@ -354,6 +470,7 @@ export async function classify(
       verifier_failures: lastFailures,
       repair_iteration: i + 1,
     };
+    currentStage = 'L4';
     currentSelectOut = await select(repairL4Input);
     state.llm_calls = (state.llm_calls ?? 0) + 1;
     recordLayer(state, 'L4', 'select', {
@@ -361,6 +478,13 @@ export async function classify(
       self_confidence: currentSelectOut.self_confidence,
       repair_iteration: i + 1,
     });
+
+    // A repair select may itself refuse (null code). Close the Task-7 gap: REFUSE
+    // here rather than feed an empty code into chapterOf('')/verify.
+    if (currentSelectOut.selected_code === null) {
+      recordLayer(state, 'L4', 'refuse', { repair_iteration: i + 1 });
+      return selectToRefuse(currentSelectOut, state);
+    }
 
     // Re-verify the repaired output (L5 is NOT an LLM call — no llm_calls increment).
     currentVerifyOut = await verify(buildL5Input(currentSelectOut));
@@ -375,6 +499,22 @@ export async function classify(
 
   // All 3 repairs exhausted — hand off to escalation policy.
   return BaselineEscalation.onVerifierExhausted(state, currentSelectOut, lastFailures);
+  } catch (err) {
+    // §7 "Vertex 5xx persistent": surface a system-error to the user, NEVER a
+    // fabricated classification. We narrow to GENUINE transport failures only
+    // (isVertexTransportError) — MaxTokensError, LlmOutputValidationError (the
+    // layers swallow these anyway), and any programming bug propagate untouched
+    // so real defects surface in tests instead of masquerading as clean infra
+    // failures. `currentStage` records the LLM stage that was executing.
+    if (isVertexTransportError(err)) {
+      recordLayer(state, currentStage === 'L4' ? 'L4' : 'L1', 'system_error', {
+        stage: currentStage,
+        message: err.message,
+      });
+      return systemErrorResult(currentStage, err, state);
+    }
+    throw err;
+  }
 }
 
 /**
