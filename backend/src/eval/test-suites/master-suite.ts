@@ -291,6 +291,105 @@ function applyConfidenceOverrides(cases: EvalTestCase[]): EvalTestCase[] {
 }
 
 // ---------------------------------------------------------------------------
+// Gold-answer remediation overrides (2026-05-28)
+// ---------------------------------------------------------------------------
+//
+// A full-suite consistency audit (src/eval/gold-consistency-audit.ts) found that
+// the hand-authored S5-* block and some LLM-seeded comprehensive (TC*/EC*) cases
+// had gold codes that mapped to the WRONG product, or expected_heading/chapter
+// placeholders that contradicted the code. Because ~296 of the 386 cases are
+// sourced from comprehensive-test-set.json (which is owned by a different agent),
+// ALL corrections are applied here as a single override layer keyed by case id.
+//
+// Each override carries the corrected 8-digit `code` plus a `reason`. The applier
+// re-derives expected_chapter = code[0:2] and expected_heading = code[0:4] so the
+// three fields are always mutually consistent. Every code below was verified to
+// exist in tariff_lines and re-derived via tariff_lines.description + HS GIRs.
+// Full evidence: src/eval/GOLD-REMEDIATION-LOG.md.
+interface GoldOverride {
+  code: string;       // corrected 8-digit tariff line ('NNNN.NN.NN'), verified in DB
+  reason: string;
+  confidence?: 'high' | 'medium' | 'low';
+}
+
+const GOLD_OVERRIDES: Record<string, GoldOverride> = {
+  // ── Comprehensive (JSON-sourced) wrong-code fixes ──
+  TC103: { code: '0901.21.90', reason: 'Roasted coffee beans: 0901.11 is "not roasted"; roasted not-decaf coffee = 0901.21. Old 0901.11.44 = Rob cherry (raw).' },
+  TC109: { code: '0910.30.20', reason: 'Turmeric fingers whole DRIED -> 0910.30.20 "Dried". Old 0910.30.10 = "Fresh".' },
+  TC110: { code: '0910.30.30', reason: 'Turmeric POWDER ground -> 0910.30.30 "Powder". Old 0910.30.20 = "Dried".' },
+  TC114: { code: '0907.10.20', reason: 'Whole dried cloves (flower buds) -> 0907.10.20 "Not Extracted (other than stem)". Old 0907.10.30 = "Stem".' },
+  TC206: { code: '2942.00.12', reason: 'Ibuprofen bulk API powder -> 2942.00.12 "Ibuprofane" (Ch.29 organic compound). Old 2918.11.10 = Lactic acid.' },
+  TC303: { code: '6205.20.90', reason: "Men's formal woven cotton shirt -> 6205.20.90 'Other'. Old 6205.20.10 = 'Handloom' (unwarranted)." },
+  TC308: { code: '6112.12.00', reason: 'Polyester knitted tracksuit -> 6112.12.00 "Track suits: synthetic fibres". Old 6112.31.00 = mens swimwear.' },
+  EC017: { code: '5503.30.90', reason: 'Acrylic staple fibre -> 5503.30.90 (acrylic/modacrylic, Other). Old 5503.11.10 = Aramid.' },
+  EC019: { code: '4203.10.90', reason: "Men's long leather coat -> 4203.10.90 (apparel, Other). Old 4203.40.20 = clothing accessories (wrong subheading)." },
+  EC021: { code: '4203.29.20', reason: 'Winter lined leather gloves -> 4203.29.20 "Other gloves". Old 4203.21.20 = sports gloves (mittens).' },
+  EC023: { code: '6203.32.90', reason: "Men's woven cotton jacket -> 6203.32.90 'Other'. Old 6203.32.00 not in DB (subheading splits .10/.90)." },
+  EC024: { code: '6201.40.90', reason: 'Nylon windbreaker/anorak (man-made) -> 6201.40.90 "Other". Old 6201.40.10 = overcoats/raincoats.' },
+  EC028: { code: '6205.20.90', reason: "Men's formal woven cotton dress shirt -> 6205.20.90 'Other'. Old 6205.20.10 = 'Handloom'." },
+  EC031: { code: '0901.21.90', reason: 'Roasted ground coffee -> 0901.21.90 (roasted, not decaf, Other). Old 0901.11.32 = not-roasted Rob parchment.' },
+  EC032: { code: '0901.22.90', reason: 'Roasted + decaffeinated coffee -> 0901.22.90. Old 0901.11.44 = not roasted/not decaf.' },
+  EC034: { code: '2101.12.00', reason: 'Coffee concentrate/extract -> 2101.12.00 (preparations w/ basis of coffee extracts). Old 2101.20.20 = tea.' },
+  EC035: { code: '0901.21.90', reason: 'Espresso capsules (ground roasted coffee) -> 0901.21.90. Old 0901.90.10 = coffee husks/skins.' },
+  EC003: { code: '4303.90.90', reason: 'Farmed rabbit fur jacket -> 4303.90.90 "Other". Old 4303.90.10 = wild animals (Wildlife Protection Act).' },
+  EC010: { code: '8007.00.90', reason: 'Tin foil wrapping -> 8007.00.90 "Other" (article of tin). Old 8007.00.10 = "Blanks".' },
+  EC041: { code: '3917.23.10', reason: 'Rigid PVC water-supply pipe -> 3917.23.10 (rigid, of vinyl chloride polymers, seamless). Old 3917.31.00 = flexible.' },
+  EC042: { code: '3923.30.90', reason: 'Food-grade HDPE container -> 3923.30.90 "Other". Old 3923.30.10 = "Insulated ware".' },
+
+  // ── Session5 automotive (inline) ──
+  'S5-AUTO-002': { code: '8708.30.00', reason: 'Brake drum is a brake part -> 8708.30.00. Code already correct; expected_heading was placeholder 8709 -> 8708.' },
+  'S5-AUTO-003': { code: '8708.30.00', reason: 'Disc brake rotor -> 8708.30.00. Code already correct; expected_heading placeholder 8713 -> 8708.' },
+  'S5-AUTO-005': { code: '8409.99.13', reason: 'Piston rings -> 8409.99.13 (engine parts, piston rings). Old 8706.00.42 = chassis fitted with engines.' },
+  'S5-AUTO-012': { code: '8708.80.00', reason: 'Vehicle suspension coil spring -> 8708.80.00 (suspension systems). Old 8705.20.00 = mobile drilling derricks.' },
+  'S5-AUTO-014': { code: '8708.94.00', reason: 'Steering rack -> 8708.94.00 (steering wheels/columns/boxes). Old 8715.00.20 = baby carriages.' },
+  'S5-AUTO-015': { code: '8708.93.00', reason: 'Clutch plate -> 8708.93.00 (clutches). Code already correct; expected_heading placeholder 8709 -> 8708.' },
+  'S5-AUTO-016': { code: '8708.50.00', reason: 'Drive/propeller shaft -> 8708.50.00 (drive-axles & transmission components). Old 8709.90.00 = works-truck parts.' },
+  'S5-AUTO-020': { code: '8421.23.00', reason: 'Oil filter for engine -> 8421.23.00. Code already correct; expected_heading placeholder 8408 -> 8421.' },
+  'S5-AUTO-021': { code: '4011.40.10', reason: 'Motorcycle tyre -> 4011.40.10 (new pneumatic tyres, motorcycles). Old 4013.90.20 = inner tubes.' },
+  'S5-AUTO-022': { code: '8511.50.00', reason: 'Car alternator -> 8511.50.00 (other generators for engines). Old 8502.13.60 = gensets >10000 kVA.' },
+
+  // ── Session5 ambiguous (inline) ──
+  'S5-AMB-003': { code: '4016.91.00', reason: 'Rubber car floor mat -> 4016.91.00 (floor coverings/mats of rubber). Old 4013.10.10 = inner tubes.' },
+  'S5-AMB-005': { code: '4205.00.90', reason: 'Leather car seat cover -> 4205.00.90 (other articles of leather). Old 4201.00.00 = animal saddlery/harness.' },
+  'S5-AMB-008': { code: '9404.29.90', reason: 'Polyurethane memory-foam mattress -> 9404.29.90 "Other". Old 9404.29.20 = rubberized coir.' },
+  'S5-AMB-010': { code: '6212.10.00', reason: 'Sports bra (brassiere) -> 6212.10.00 (heading 6212 covers brassieres knitted or not). Old 6104.43.00 = dresses. alternative_chapters already lists 62.' },
+  'S5-AMB-013': { code: '8507.60.00', reason: 'Lithium power bank -> 8507.60.00 (lithium-ion accumulator). Old 8513.10.90 = portable electric lamps.' },
+  'S5-AMB-014': { code: '9506.99.90', reason: 'PVC yoga/exercise mat -> 9506.99.90 "Other" (general exercise equipment). Old 9506.99.20 = cricket leg pads/bats.' },
+
+  // ── Session5 simple (inline) ──
+  'S5-SIMP-009': { code: '0306.17.90', reason: 'Frozen shrimps/prawns, species unspecified -> 0306.17.90 "Other". Old 0306.17.50 = "Flower shrimp" (arbitrary species); expected_heading 0304 also wrong.' },
+  'S5-SIMP-021': { code: '8528.72.19', reason: 'Finished LED/smart television -> 8528.72.19 (TV reception apparatus, Other). Old 8524.92.90 = bare flat-panel display module.' },
+  'S5-SIMP-022': { code: '8418.10.90', reason: 'Double-door (combined) household refrigerator -> 8418.10.90. Old 8418.30.90 = chest-type freezer.' },
+  'S5-SIMP-032': { code: '3924.90.90', reason: 'Plastic bucket 20L household -> 3924.90.90 (household articles of plastic, Other). Old 3925.10.00 = tanks/reservoirs >300L.' },
+  'S5-SIMP-037': { code: '9608.10.19', reason: 'Ordinary blue-ink plastic ballpoint -> 9608.10.19 "Other". Old 9608.10.11 = high-value pens (US$100+).' },
+  'S5-SIMP-039': { code: '9102.11.00', reason: 'Quartz steel wristwatch -> 9102.11.00 (electrically operated, base-metal case). Old 9101.21.00 = precious-metal case + automatic winding.' },
+  'S5-SIMP-040': { code: '9202.90.00', reason: 'Acoustic guitar (plucked) -> 9202.90.00 "Other". Old 9202.10.00 = "Played with a bow".' },
+};
+
+function deriveChapter(code: string): string {
+  return code.replace(/\./g, '').substring(0, 2);
+}
+function deriveHeading(code: string): string {
+  return code.replace(/\./g, '').substring(0, 4);
+}
+
+// Apply gold overrides: set corrected code and re-derive chapter/heading so all
+// three expected_* fields are mutually consistent.
+function applyGoldOverrides(cases: EvalTestCase[]): EvalTestCase[] {
+  return cases.map(tc => {
+    const ov = GOLD_OVERRIDES[tc.id];
+    if (!ov) return tc;
+    return {
+      ...tc,
+      expected_code: ov.code,
+      expected_chapter: deriveChapter(ov.code),
+      expected_heading: deriveHeading(ov.code),
+      ground_truth_confidence: ov.confidence ?? tc.ground_truth_confidence,
+    };
+  });
+}
+
+// ---------------------------------------------------------------------------
 // Combine and deduplicate
 // ---------------------------------------------------------------------------
 
@@ -306,16 +405,18 @@ function deduplicateSuite(cases: EvalTestCase[]): EvalTestCase[] {
   return Array.from(seen.values());
 }
 
-const allCases: EvalTestCase[] = applyConfidenceOverrides([
-  ...comprehensiveCases,
-  ...ambiguousCases,
-  ...automotiveSupplemental.filter(c => isUnique(c.query)),
-  ...simpleSupplemental.filter(c => isUnique(c.query)),
-  ...askCases,
-  ...askCasesSingleWord,
-  ...askCasesMultiWord,
-  ...rejectCases,
-]);
+const allCases: EvalTestCase[] = applyGoldOverrides(
+  applyConfidenceOverrides([
+    ...comprehensiveCases,
+    ...ambiguousCases,
+    ...automotiveSupplemental.filter(c => isUnique(c.query)),
+    ...simpleSupplemental.filter(c => isUnique(c.query)),
+    ...askCases,
+    ...askCasesSingleWord,
+    ...askCasesMultiWord,
+    ...rejectCases,
+  ])
+);
 
 export const masterSuite: EvalTestCase[] = deduplicateSuite(allCases);
 
