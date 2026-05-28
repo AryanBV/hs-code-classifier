@@ -95,8 +95,6 @@ const FTS_LIMIT         = 40;   // was 20 — fetch deeper so #20–#40 reach th
 const EXCL_FTS_LIMIT    = 30;
 const RERANK_TOP_N      = 15;   // was 5 — Cohere rerank returns more candidates
 const L2_EMIT_CAP       = 8;    // was 5 — emit up to 8 so rank #6–#8 reaches L3/L4
-/** @deprecated kept for backwards-compat trace/exports; emission uses L2_EMIT_CAP. */
-const FINAL_TOP_K       = 5;
 
 /* ---------------------------------------------------------------------------
  * tsquery escaping
@@ -153,11 +151,14 @@ export function escapeTsQueryToken(token: string): string {
  * on the document side (re-deriving per-column weights), which is out of scope and
  * risky. Modifier-drop is the clean, safe lever.
  */
+// Conservative generic-filler list; NEEDS empirical tuning (Phase 4.x) once
+// Cohere quota is restored — terms like 'powder'/'bulk'/'API' can be
+// discriminating (e.g. "powder" distinguishes milk powder from liquid milk;
+// "bulk"/"api" distinguish bulk active ingredient from formulation) and were
+// intentionally NOT dropped here. Only clearly-non-discriminating filler stays.
 const GENERIC_FTS_MODIFIERS: ReadonlySet<string> = new Set([
-  'bulk', 'powder', 'raw', 'material', 'grade', 'pure', 'high', 'quality',
-  'for', 'export', 'made', 'india', 'ladies', 'luxury', 'men', 'mens',
-  'women', 'womens', 'kg', 'piece', 'set', 'full', 'length', 'api',
-  'other', 'article', 'articles', 'type', 'kind', 'new', 'used',
+  'for', 'export', 'made', 'india', 'quality', 'high', 'other', 'article',
+  'articles', 'piece', 'set', 'kg', 'new', 'used', 'type', 'kind',
 ]);
 
 /**
@@ -563,6 +564,5 @@ export const _internal = {
   EXCL_FTS_LIMIT,
   RERANK_TOP_N,
   L2_EMIT_CAP,
-  FINAL_TOP_K,
   topNCosine,
 };

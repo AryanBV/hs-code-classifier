@@ -236,36 +236,42 @@ describe('escapeTsQueryToken / buildTsQuery', () => {
 
   /* ----- FIX-B: drop generic modifier noise from raw_tokens ----- */
 
-  it('drops generic modifier stopwords from raw_tokens so the noun dominates', () => {
-    // "powder","bulk" are generic modifiers → dropped; "paracetamol" survives.
-    expect(buildTsQuery(['paracetamol'], ['paracetamol', 'powder', 'bulk']))
+  it('drops generic filler stopwords from raw_tokens so the noun dominates', () => {
+    // "quality","high" are clearly-non-discriminating filler → dropped;
+    // "paracetamol" survives. (Conservative list: "powder"/"bulk" are NOT
+    // dropped — they can be discriminating; see GENERIC_FTS_MODIFIERS comment.)
+    expect(buildTsQuery(['paracetamol'], ['paracetamol', 'quality', 'high']))
       .toBe('paracetamol');
   });
 
-  it('NEVER drops head_nouns even if they are in the modifier list', () => {
-    // "powder" appears as a head noun here → it is the discriminating term and
-    // must be kept; only its raw_token duplicate is suppressed.
-    expect(buildTsQuery(['powder'], ['powder', 'bulk', 'cocoa']))
-      .toBe('powder | cocoa');
+  it('NEVER drops head_nouns even if they are in the filler list', () => {
+    // "quality" appears as a head noun here → kept; only its raw_token duplicate
+    // (which would otherwise be filler) is suppressed.
+    expect(buildTsQuery(['quality'], ['quality', 'high', 'cocoa']))
+      .toBe('quality | cocoa');
   });
 
-  it('drops common corpus-noise modifiers ("ladies","luxury","full","length")', () => {
+  it('does NOT drop potentially-discriminating tokens (powder/bulk/ladies/luxury/full/length)', () => {
+    // Conservative list (FIX 7): these were previously dropped without empirical
+    // validation; they can discriminate (milk powder vs liquid, bulk API vs
+    // formulation, ladies vs mens garments) so they now SURVIVE.
     expect(buildTsQuery(['coat', 'fur'], ['mink', 'fur', 'coat', 'full', 'length', 'ladies', 'luxury']))
-      .toBe('coat | fur | mink');
+      .toBe('coat | fur | mink | full | length | ladies | luxury');
   });
 
-  it('falls back to raw_tokens (unfiltered) when head_nouns empty AND every raw token is a modifier', () => {
+  it('falls back to raw_tokens (unfiltered) when head_nouns empty AND every raw token is filler', () => {
     // Robustness: must never emit an empty query when usable input exists.
-    expect(buildTsQuery([], ['bulk', 'powder'])).toBe('bulk | powder');
+    expect(buildTsQuery([], ['quality', 'high'])).toBe('quality | high');
   });
 
-  it('keeps non-modifier raw_tokens when head_nouns empty', () => {
-    expect(buildTsQuery([], ['ibuprofen', 'powder', 'bulk'])).toBe('ibuprofen');
+  it('keeps non-filler raw_tokens when head_nouns empty', () => {
+    expect(buildTsQuery([], ['ibuprofen', 'quality', 'high'])).toBe('ibuprofen');
   });
 
-  it('still OR-joins head_nouns with surviving (non-modifier) raw_tokens, deduped', () => {
+  it('still OR-joins head_nouns with surviving (non-filler) raw_tokens, deduped', () => {
+    // "ladies" is no longer filler (conservative list) so it now survives.
     expect(buildTsQuery(['t-shirt', 'cotton'], ['cotton', 't-shirt', 'knitted', 'ladies']))
-      .toBe('(t & shirt) | cotton | knitted');
+      .toBe('(t & shirt) | cotton | knitted | ladies');
   });
 });
 

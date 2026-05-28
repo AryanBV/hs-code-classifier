@@ -393,9 +393,9 @@ const SELF_CONFIDENCES: ReadonlySet<SelfConfidence> = new Set<SelfConfidence>([
  * the orchestrator routes back through the repair loop. We accept any non-empty
  * string here.
  */
-const SOURCE_REF_RE = /^[a-z_.]+:[a-z_]+=[\w.]+(:[\w[\].]+)?$/;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _SOURCE_REF_RE_AUTHORITATIVE = SOURCE_REF_RE;
+// (The authoritative source_ref grammar/regex lives in
+// lib/source-ref-resolver.ts, where MV-03 enforces it; L4 accepts any
+// non-empty string, so no regex is needed here.)
 
 /** Code regex — 8-digit OR 6-digit. */
 const CODE_RE = /^\d{4}\.\d{2}(\.\d{2})?$/;

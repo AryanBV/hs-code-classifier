@@ -59,7 +59,15 @@ export interface PredicateCandidateContext {
   heading:    string;
   subheading: string;
   code:       string;
-  section:    string;
+  /**
+   * Roman-numeral section. OPTIONAL: when the caller cannot derive it (no
+   * sections join), leave it absent so `resolveVar('candidate.section')` returns
+   * `{found:false}` → the predicate SKIPs (never a vacuous PASS/FAIL). Do NOT
+   * pass `''` — an empty string resolves as `{found:true, value:''}` and would
+   * make `EXISTS(candidate.section)` PASS and `candidate.section=='XVI'` FAIL,
+   * the opposite of the intended "section is mostly SKIPpable" behavior.
+   */
+  section?:   string;
 }
 
 /** Evaluation context — attrs may be null when no O2 row exists for the code. */

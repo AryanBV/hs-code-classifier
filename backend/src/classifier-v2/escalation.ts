@@ -7,6 +7,20 @@ import type {
 import { selectToClassifyResult, buildDiagnostics } from './select-to-result';
 
 /**
+ * Shared escalation_path markers. PRODUCED here (onVerifierExhausted) and in the
+ * orchestrator repair loop (index.ts), CONSUMED by src/eval/runner.ts to compute
+ * `verifier_rejected_but_correct`. Defined once so producer and consumer cannot
+ * drift apart on the string convention.
+ *
+ *   - ESCALATION_REPAIR_PREFIX: each repair attempt records `${prefix}${i}`
+ *     (i = 0,1,2), e.g. 'L5:repair0'. Consumer matches via startsWith.
+ *   - ESCALATION_WOULD_ESCALATE_MARKER: pushed when the verifier rejected 3x with
+ *     no repair and a real system WOULD escalate to L6.
+ */
+export const ESCALATION_REPAIR_PREFIX = 'L5:repair';
+export const ESCALATION_WOULD_ESCALATE_MARKER = 'L6:would_escalate';
+
+/**
  * EscalationPolicy — permanent seam for escalation handlers.
  *
  * BaselineEscalation (this file) is the minimal stub used until L6 (Tiebreak)
@@ -47,7 +61,7 @@ export const BaselineEscalation: EscalationPolicy = {
   ): ClassifyResult {
     // Mutate escalation_path BEFORE building diagnostics so the flag appears in
     // diagnostics.escalation_path in the returned result.
-    state.escalation_path.push('L6:would_escalate');
+    state.escalation_path.push(ESCALATION_WOULD_ESCALATE_MARKER);
 
     return selectToClassifyResult(best, state, { escalated_to_deep_think: false });
   },

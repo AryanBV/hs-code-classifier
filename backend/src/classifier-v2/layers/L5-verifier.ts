@@ -12,7 +12,7 @@
  * The 10 rules (ARCHITECTURE.md §6, sub-spec 01):
  *   MV-01 Code existence
  *   MV-02 Exclusions completeness
- *   MV-03 Verbatim citation TF-IDF >= 0.6
+ *   MV-03 Verbatim citation fidelity (token-set containment >= 0.80)
  *   MV-04 Embedding cosine floor (>= EMBEDDING_COSINE_FLOOR; empirically 0.22)
  *   MV-05 Per-GIR validator (10 GIR enum values)
  *   MV-06 india_specific flag consistency
@@ -148,7 +148,7 @@ function fail(...failures: VerifierRuleFailure[]): RuleResult {
 const RULE_META: Record<string, string> = {
   'MV-01': 'code_existence',
   'MV-02': 'exclusions_completeness',
-  'MV-03': 'verbatim_citation_tfidf',
+  'MV-03': 'verbatim_citation_containment',
   'MV-04': 'embedding_cosine_floor',
   'MV-05': 'per_gir_validator',
   'MV-06': 'india_specific_consistency',
@@ -229,7 +229,7 @@ async function ruleExclusionsCompleteness(input: L5Input): Promise<RuleResult> {
 }
 
 /* ---------------------------------------------------------------------------
- * Rule 3 — Verbatim citation TF-IDF
+ * Rule 3 — Verbatim citation fidelity (token-set containment >= 0.80)
  * --------------------------------------------------------------------------- */
 
 async function ruleVerbatimCitation(input: L5Input): Promise<RuleResult> {
@@ -919,14 +919,18 @@ export async function verify(input: L5Input): Promise<L5Output> {
     heading,
     subheading,
     code,
-    // Section is derived from chapter — without a join we don't have it. Set
-    // to "" — predicates referencing candidate.section will mostly be SKIPpable.
-    section: '',
+    // Section is derived from chapter via a sections join we don't perform here.
+    // Leave `section` ABSENT (not '') so predicates referencing candidate.section
+    // resolve to {found:false} → SKIP (never a vacuous PASS/FAIL). A real section
+    // lookup is a roadmap enhancement; SKIP is the safe behavior until then.
   };
 
   // Fetch notes_claims + tariff_line_attributes ONCE (Rules 5/7/8/9 share).
-  const claimsRows = await getNotesClaimsForChapters([chapter]);
-  const tlaRaw = await getTariffLineAttributesForCodes([code]);
+  // Independent queries (no data dependency) → run in parallel.
+  const [claimsRows, tlaRaw] = await Promise.all([
+    getNotesClaimsForChapters([chapter]),
+    getTariffLineAttributesForCodes([code]),
+  ]);
   // Cast tlaRaw values to our local typed form.
   const tla: Record<string, Record<string, unknown> | undefined> = {};
   for (const [k, v] of Object.entries(tlaRaw)) {

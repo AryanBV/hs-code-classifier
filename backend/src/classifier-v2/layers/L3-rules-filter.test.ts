@@ -452,7 +452,7 @@ describe('rulesFilter — multi-destination collapse (top-CANDIDATE_CAP=8, FIX-A
       '6109.50.00', '6109.60.00', '6109.70.00', '6109.80.00',
     ]);
     expect(out.dropped_log.length).toBe(2);
-    expect(out.dropped_log.every((d) => d.reason === 'collapsed_below_top5')).toBe(true);
+    expect(out.dropped_log.every((d) => d.reason === 'collapsed_below_cap')).toBe(true);
     const droppedCodes = out.dropped_log.map((d) => d.code).sort();
     expect(droppedCodes).toEqual(['6109.90.00', '6109.91.00']);
   });

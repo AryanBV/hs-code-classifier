@@ -6,6 +6,10 @@ dotenv.config();
 
 import { classifyForEval, isSystemError } from './v2-adapter';
 import type { ClassifyResult } from '../classifier-v2/types';
+import {
+  ESCALATION_REPAIR_PREFIX,
+  ESCALATION_WOULD_ESCALATE_MARKER,
+} from '../classifier-v2/escalation';
 import { estimateCostUsd } from '../classifier-v2/cost';
 import { EvalTestCase, EvalReport, EvalDetail } from './types';
 import {
@@ -96,7 +100,7 @@ export function extractDiagnostics(
   // verifier rejected-then-recovered: a repair (L5:repair*) or a would-escalate
   // (L6:would_escalate) appears in the path AND the answer was ultimately correct.
   const verifierRejected = path.some(
-    (p) => p.startsWith('L5:repair') || p === 'L6:would_escalate',
+    (p) => p.startsWith(ESCALATION_REPAIR_PREFIX) || p === ESCALATION_WOULD_ESCALATE_MARKER,
   );
 
   return {
@@ -146,10 +150,21 @@ function buildErrorDetail(
 export async function runTestCase(tc: EvalTestCase): Promise<EvalDetail> {
   const startTime = Date.now();
 
+  // Per-case timeout. The timer handle is captured so it can be cleared once the
+  // race settles — otherwise every fast case (the majority) would leave a live
+  // 90s timer keeping the process alive long after the eval visibly finishes, and
+  // the timeout promise would reject an already-settled race (unhandledRejection).
+  // `.unref()` ensures a stray timer never blocks process exit on its own.
+  let timeoutHandle: NodeJS.Timeout | undefined;
+
   try {
-    const timeoutPromise = new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error(`Timeout: ${CASE_TIMEOUT_MS / 1000} seconds`)), CASE_TIMEOUT_MS)
-    );
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      timeoutHandle = setTimeout(
+        () => reject(new Error(`Timeout: ${CASE_TIMEOUT_MS / 1000} seconds`)),
+        CASE_TIMEOUT_MS,
+      );
+      timeoutHandle.unref?.();
+    });
 
     const { legacy: result, raw } = await Promise.race([
       classifyForEval(tc.query),
@@ -241,6 +256,11 @@ export async function runTestCase(tc: EvalTestCase): Promise<EvalDetail> {
     // an INFRA failure, tolerated and EXCLUDED from accuracy. Record it as a
     // per-case ERROR, NOT a 'reject', and NEVER abort the whole run.
     return buildErrorDetail(tc, String(err), Date.now() - startTime);
+  } finally {
+    // Clear the per-case timer regardless of which side of the race won, so a
+    // settled-but-still-pending timeout neither keeps the process alive nor
+    // rejects an already-resolved promise (unhandledRejection).
+    if (timeoutHandle) clearTimeout(timeoutHandle);
   }
 }
 

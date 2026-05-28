@@ -366,4 +366,24 @@ describe('predicate-evaluator — candidate.* context vars', () => {
     const pred: Predicate = { op: '==', var: 'candidate.heading', value: '7218' };
     expect(evalPredicate(pred, ctx({}, { heading: '7218' }), [], 1)).toBe('PASS');
   });
+
+  // FIX 8: the L5 verifier does NOT populate candidate.section (no sections
+  // join), so it is ABSENT (not ''). A scalar section-scoped predicate must
+  // therefore SKIP — never the vacuous PASS/FAIL that an empty-string value
+  // would have produced (EXISTS('') → PASS, =='XVI' → FAIL).
+  it('candidate.section ABSENT → == SKIPs (not a vacuous FAIL)', () => {
+    const pred: Predicate = { op: '==', var: 'candidate.section', value: 'XVI' };
+    expect(evalPredicate(pred, ctx({}, { section: undefined }), [], 1)).toBe('SKIP');
+  });
+  it('candidate.section ABSENT → != SKIPs (not a vacuous PASS)', () => {
+    const pred: Predicate = { op: '!=', var: 'candidate.section', value: 'XVI' };
+    expect(evalPredicate(pred, ctx({}, { section: undefined }), [], 1)).toBe('SKIP');
+  });
+  // EXISTS retains its documented "absence = FAIL" contract (it is the ONLY op
+  // where absence is a violation). With the OLD '' value EXISTS PASSed vacuously;
+  // absent → FAIL is the correct, non-vacuous outcome.
+  it('candidate.section ABSENT → EXISTS FAILs (documented absence=FAIL contract)', () => {
+    const pred: Predicate = { op: 'EXISTS', var: 'candidate.section' };
+    expect(evalPredicate(pred, ctx({}, { section: undefined }), [], 1)).toBe('FAIL');
+  });
 });

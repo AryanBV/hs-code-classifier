@@ -8,8 +8,8 @@
  * them in one place against the 168-case eval harness.
  *
  * Spec references:
- *   - backend/docs/sub-specs/01-verifier-rules.md §"Rule 3" (citation TF-IDF)
- *     and §"Calibration plan (Phase 4.4)"
+ *   - backend/docs/sub-specs/01-verifier-rules.md §"Rule 3" (citation fidelity —
+ *     now token-set containment, not TF-IDF) and §"Calibration plan (Phase 4.4)"
  *   - backend/docs/ARCHITECTURE.md §6 Rule 4 (embedding cosine floor)
  */
 

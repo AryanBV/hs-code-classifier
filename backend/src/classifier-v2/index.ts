@@ -20,7 +20,7 @@ import { rulesFilter } from './layers/L3-rules-filter';
 import { select } from './layers/L4-select';
 import { verify } from './layers/L5-verifier';
 import { selectToClassifyResult, buildDiagnostics } from './select-to-result';
-import { BaselineEscalation } from './escalation';
+import { BaselineEscalation, ESCALATION_REPAIR_PREFIX } from './escalation';
 import { MaxTokensError } from './lib/vertex-client';
 import { LlmOutputValidationError } from './schemas';
 import type {
@@ -495,7 +495,7 @@ export async function classify(
 
   for (let i = 0; i < 3; i++) {
     // Push a trace event for this repair attempt (before re-selecting).
-    recordLayer(state, `L5:repair${i}` as PipelineTraceEvent['layer'], 'repair', {
+    recordLayer(state, `${ESCALATION_REPAIR_PREFIX}${i}` as PipelineTraceEvent['layer'], 'repair', {
       repair_iteration: i + 1,
       failed_rules: lastFailures.length,
     });

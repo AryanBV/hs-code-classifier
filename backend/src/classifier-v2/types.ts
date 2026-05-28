@@ -240,7 +240,7 @@ export interface ExclusionMatch {
 }
 
 /** Reason taxonomy for an L3 candidate drop. */
-export type L3DropReason = 'excluded' | 'collapsed_below_top5';
+export type L3DropReason = 'excluded' | 'collapsed_below_cap';
 
 /** A candidate dropped by L3, recorded for audit + dropped_log emission. */
 export interface DroppedCandidate {

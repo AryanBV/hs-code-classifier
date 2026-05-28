@@ -1213,7 +1213,7 @@ describe('L5 verifier — _internal helpers', () => {
   it('formatRepairFeedback produces newline-joined entries', () => {
     const fb = _internal.formatRepairFeedback([
       { rule_id: 'MV-01', rule_name: 'code_existence', failure_code: 'HALLUCINATED_CODE', failure_detail: 'no such code' },
-      { rule_id: 'MV-03', rule_name: 'verbatim_citation_tfidf', failure_code: 'CITATION_FUZZY_MATCH_FAIL', failure_detail: 'low score' },
+      { rule_id: 'MV-03', rule_name: 'verbatim_citation_containment', failure_code: 'CITATION_FUZZY_MATCH_FAIL', failure_detail: 'low score' },
     ]);
     expect(fb.split('\n')).toHaveLength(2);
   });

@@ -24,7 +24,7 @@
  *   2. MULTI-DESTINATION COLLAPSE — if more than CANDIDATE_CAP (8) candidates
  *      remain, sort by rerank_score desc (cosine_score fallback when rerank is
  *      null) and keep the top-CANDIDATE_CAP; log the rest in `dropped_log[]`
- *      (reason 'collapsed_below_top5'). Capacity-trimming is the only legitimate
+ *      (reason 'collapsed_below_cap'). Capacity-trimming is the only legitimate
  *      L3 drop. (FIX-A 2026-05-28: cap raised 5→8 to recover rank #6–#8 codes.)
  *   3. BACKTRACK GATE — if fewer than 2 candidates survive AND the pipeline
  *      has NOT yet attempted backtrack, set `backtrack_signal = true` and
@@ -165,7 +165,7 @@ export async function rulesFilter(input: RulesFilterInput): Promise<RulesFilterO
    * Multiple candidates may share an exclusion → record all affected codes.
    *
    * Every candidate becomes a survivor here; the only candidates removed later
-   * are by the top-5 capacity collapse (Step 3), never by exclusion.
+   * are by the CANDIDATE_CAP (8) capacity collapse (Step 3), never by exclusion.
    * ------------------------------------------------------------------------ */
   const tSurface = now();
   // Group exclusions by source_chapter for O(1) lookup.
@@ -218,7 +218,7 @@ export async function rulesFilter(input: RulesFilterInput): Promise<RulesFilterO
   });
 
   /* ------------------------------------------------------------------------
-   * Step 3: Multi-destination collapse — top-5 by rerank score.
+   * Step 3: Multi-destination collapse — top-CANDIDATE_CAP (8) by rerank score.
    * ------------------------------------------------------------------------ */
   const tCollapse = now();
   const droppedByCollapse: DroppedCandidate[] = [];
@@ -230,7 +230,7 @@ export async function rulesFilter(input: RulesFilterInput): Promise<RulesFilterO
       droppedByCollapse.push({
         code:         c.code,
         chapter:      (c.parent_chain.chapter ?? '') as ChapterCode,
-        reason:       'collapsed_below_top5',
+        reason:       'collapsed_below_cap',
         rerank_score: c.rerank_score,
       });
     }
@@ -245,7 +245,7 @@ export async function rulesFilter(input: RulesFilterInput): Promise<RulesFilterO
 
   const matched_exclusions: ExclusionMatch[] = Array.from(exclusionMatchById.values());
   // Exclusions never drop candidates anymore, so the only drops are capacity
-  // (top-5) trims.
+  // (CANDIDATE_CAP) trims.
   const dropped_log: DroppedCandidate[] = [...droppedByCollapse];
 
   /* ------------------------------------------------------------------------
