@@ -7,13 +7,9 @@ dotenv.config();
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { searchWithinChapter } from '../../database/hs-codes';
-import { generateEmbedding } from '../../classifier/attribute-extractor';
+import { searchHeadings, searchTariffLines, closeClient } from './db';
 import { masterSuite } from '../test-suites/master-suite';
 import { GTFixProposal, GTFixReport, DBCandidate, ConfidenceLevel } from './types';
-import { prisma } from '../../utils/prisma';
-
-const delay = (ms: number) => new Promise(r => setTimeout(r, ms));
 
 async function main() {
   // Cases with chapter but missing heading or code
@@ -33,19 +29,15 @@ async function main() {
 
     console.log(`[${i + 1}/${missingGT.length}] ${tc.id}: "${tc.query}" (Ch.${chapter}) heading=${tc.expected_heading || 'MISSING'} code=${tc.expected_code || 'MISSING'}`);
 
-    // Generate embedding for query
-    const embedding = await generateEmbedding(tc.query);
-    await delay(500); // Rate limit
-
     const candidates: DBCandidate[] = [];
     let proposedHeading: string | undefined = tc.expected_heading;
     let proposedCode: string | undefined = tc.expected_code;
     let headingSimilarity: number | undefined;
     let codeSimilarity: number | undefined;
 
-    // Step 1: Find heading if missing
+    // Step 1: Find heading if missing (FTS over headings table; embedding-free)
     if (!tc.expected_heading) {
-      const headingResults = await searchWithinChapter(embedding, chapter, 4, 5);
+      const headingResults = await searchHeadings(tc.query, chapter, 5);
       if (headingResults.length > 0) {
         const topHeading = headingResults[0]!;
         proposedHeading = topHeading.code;
@@ -63,7 +55,7 @@ async function main() {
 
     // Step 2: Find code if missing
     if (!tc.expected_code && proposedHeading) {
-      const tariffResults = await searchWithinChapter(embedding, chapter, 10, 10);
+      const tariffResults = await searchTariffLines(tc.query, chapter, 10);
 
       // Filter to codes under the proposed heading
       const headingNorm = proposedHeading.replace(/\./g, '').substring(0, 4);
@@ -167,10 +159,10 @@ async function main() {
   console.log(`Proposals: HIGH=${byConfidence.HIGH}, MEDIUM=${byConfidence.MEDIUM}, LOW=${byConfidence.LOW}`);
   console.log(`Written to: ${outputPath}`);
 
-  await prisma.$disconnect();
+  await closeClient();
 }
 
 main().catch(err => {
   console.error('Fatal:', err);
-  process.exit(1);
+  closeClient().finally(() => process.exit(1));
 });

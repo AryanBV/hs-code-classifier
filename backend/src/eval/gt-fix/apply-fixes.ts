@@ -100,10 +100,13 @@ async function main() {
   console.log(`\nUnique codes to verify: ${allCodes.size}`);
 
   // ── 3. Batch DB query (ONE call) ────────────────────────
+  // Schema migrated: legacy `hs_codes` table was dropped. 8-digit codes now live
+  // in `tariff_lines` (format 'NNNN.NN.NN'). chapter/heading are derived from the
+  // code prefix (chapter = LEFT(code,2), heading = LEFT(code,4)).
   const codeArray = Array.from(allCodes);
   const dbResults = await prisma.$queryRaw<DBCode[]>`
-    SELECT code, description, chapter, heading
-    FROM hs_codes
+    SELECT code, description, LEFT(code, 2) AS chapter, LEFT(code, 4) AS heading
+    FROM tariff_lines
     WHERE code = ANY(${codeArray})
   `;
 
@@ -379,10 +382,11 @@ async function main() {
   console.log(`\n── Checking quick-suite.ts ──`);
 
   const quickContent = fs.readFileSync(QUICK_SUITE_PATH, 'utf-8');
-  const invalidOldCodes = new Set(
+  const invalidOldCodes = new Set<string>(
     changes
       .filter(c => c.category === 'invalid_code' && c.action === 'accept')
       .map(c => c.old_code)
+      .filter((c): c is string => c !== null)
   );
 
   const codePattern = /expected_code:\s*'([^']+)'/g;
@@ -391,6 +395,7 @@ async function main() {
 
   for (const m of quickMatches) {
     const foundCode = m[1];
+    if (foundCode === undefined) continue;
     if (invalidOldCodes.has(foundCode)) {
       const fix = changes.find(c => c.old_code === foundCode && c.action === 'accept');
       quickIssues.push(`Has invalid code ${foundCode} -> should be ${fix?.new_code}`);

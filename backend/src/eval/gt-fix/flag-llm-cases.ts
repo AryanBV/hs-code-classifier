@@ -7,9 +7,8 @@ dotenv.config();
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { getCodeByCode } from '../../database/hs-codes';
+import { getTariffLine, closeClient } from './db';
 import { GTFixProposal, GTFixReport, ConfidenceLevel } from './types';
-import { prisma } from '../../utils/prisma';
 
 interface ComprehensiveCase {
   id: string;
@@ -49,7 +48,7 @@ async function main() {
     const tc = llmCases[i]!;
 
     // Check code existence in DB
-    const dbResult = await getCodeByCode(tc.expected8Digit);
+    const dbResult = await getTariffLine(tc.expected8Digit);
     const codeExists = !!dbResult;
 
     // Check internal consistency
@@ -146,10 +145,10 @@ async function main() {
   console.log(`  LOW:    ${byConfidence.LOW}`);
   console.log(`Written to: ${outputPath}`);
 
-  await prisma.$disconnect();
+  await closeClient();
 }
 
 main().catch(err => {
   console.error('Fatal:', err);
-  process.exit(1);
+  closeClient().finally(() => process.exit(1));
 });

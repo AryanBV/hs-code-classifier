@@ -7,13 +7,9 @@ dotenv.config();
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { getCodeByCode, getCodesUnderHeading, searchWithinChapter } from '../../database/hs-codes';
-import { generateEmbedding } from '../../classifier/attribute-extractor';
+import { getTariffLine, getCodesUnderHeading, searchTariffLines, closeClient } from './db';
 import { masterSuite } from '../test-suites/master-suite';
 import { GTFixProposal, GTFixReport, DBCandidate, ConfidenceLevel } from './types';
-import { prisma } from '../../utils/prisma';
-
-const delay = (ms: number) => new Promise(r => setTimeout(r, ms));
 
 async function main() {
   const casesWithCode = masterSuite.filter(
@@ -30,7 +26,7 @@ async function main() {
     const code = tc.expected_code!;
 
     // Check if code exists in DB
-    const dbResult = await getCodeByCode(code);
+    const dbResult = await getTariffLine(code);
 
     if (dbResult) {
       validCount++;
@@ -50,32 +46,29 @@ async function main() {
     // Get all codes under same heading
     const headingCodes = await getCodesUnderHeading(heading);
 
-    // Generate embedding for semantic search
-    const embedding = await generateEmbedding(tc.query);
-    await delay(500); // Rate limit OpenAI API
+    // Full-text candidate search within chapter (embedding-free; the legacy
+    // pgvector/OpenAI path queried the dropped hs_codes table).
+    const semanticResults = await searchTariffLines(tc.query, chapter, 10);
 
-    // Semantic search within chapter at tariff level (LENGTH=10)
-    const semanticResults = await searchWithinChapter(embedding, chapter, 10, 10);
-
-    // Build candidate list: heading codes first, then semantic results
+    // Build candidate list: heading codes first, then FTS results
     const candidates: DBCandidate[] = [];
 
     for (const hc of headingCodes) {
-      const semMatch = semanticResults.find((sr: any) => sr.code === hc.code);
+      const semMatch = semanticResults.find((sr) => sr.code === hc.code);
       candidates.push({
         code: hc.code,
         description: hc.description,
-        similarity: semMatch ? Number(semMatch.similarity) : undefined,
+        similarity: semMatch?.similarity,
       });
     }
 
-    // Add semantic results not already in candidates
+    // Add FTS results not already in candidates
     for (const sr of semanticResults) {
       if (!candidates.find(c => c.code === sr.code)) {
         candidates.push({
           code: sr.code,
           description: sr.description,
-          similarity: Number(sr.similarity),
+          similarity: sr.similarity,
         });
       }
     }
@@ -177,10 +170,10 @@ async function main() {
   console.log(`  LOW:    ${byConfidence.LOW}`);
   console.log(`Written to: ${outputPath}`);
 
-  await prisma.$disconnect();
+  await closeClient();
 }
 
 main().catch(err => {
   console.error('Fatal:', err);
-  process.exit(1);
+  closeClient().finally(() => process.exit(1));
 });
