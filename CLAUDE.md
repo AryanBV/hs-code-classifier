@@ -78,7 +78,7 @@ API client: `frontend/src/lib/api-client.ts` — Axios client pointing to `NEXT_
 
 ### External APIs
 - **Vertex AI (Gemini)** — Phase 4 v2 runtime LLM stack. Auth via service-account JSON at `backend/.gcp/vertex-sa.json` (`GOOGLE_APPLICATION_CREDENTIALS`). Models: `gemini-3.5-flash` (Triage+Select) and `gemini-3.1-pro-preview` (Tiebreak+Deep-Think). GDP Premium GenAI Credit-covered through 2027-05-08.
-- **Cohere** — embeddings (embed-v4) + rerank (Rerank 4 Pro). Via own `COHERE_API_KEY` env var on Cohere's billing (NOT through Vertex; NOT credit-covered; ~$300/mo cash at 100K queries).
+- **Cohere** — embeddings (embed-v4) + rerank (Rerank 4 Pro). Via own `COHERE_API_KEY` env var on Cohere's billing (NOT through Vertex; NOT credit-covered; ~$300/mo cash at 100K queries). ⚠️ **The current key is a TRIAL key (1,000 calls/month) and was EXHAUSTED on 2026-05-28** — every v2 classification embeds via Cohere (L2), so all evals/traces/`smoke:pipeline` return HTTP 429 until the key is upgraded to a Production key. Conserve Cohere calls; FTS is pure Postgres (no Cohere). See `backend/docs/PHASE-4.2a-BASELINE.md`.
 - **OpenAI** — `OPENAI_API_KEY` available in env. Used by LEGACY classifier (GPT-4o-mini + text-embedding-3-small). For v2 runtime use: ASK USER FIRST before invoking — default v2 plan does NOT use OpenAI at runtime.
 - **Anthropic (Claude)** — via user's Claude Max subscription, NOT via API key (no Anthropic API key in env). Build-time only (offline data engineering jobs O1-O5 using Opus 4.7). Not deployable as a runtime service.
 - **Supabase** — PostgreSQL database + pgvector for semantic search.
@@ -180,7 +180,7 @@ Test case format:
 - Additional GIN indexes on tariff_line_attributes.processing_state + composition
 - chemical_class CHECK enum extended with 'separate_inorganic_compound'
 
-### Phase 4.1 runtime layers (302/302 v2 tests passing)
+### Phase 4.1 runtime layers (491 v2/eval tests passing as of 2026-05-28; was 302)
 - Done L0 Input Normalization (`layers/L0-normalization.ts`) — alias map + composite-flag
 - Done L1 Triage (`layers/L1-triage.ts`) — Gemini 3.5 Flash, thinking_level=low, constraint_hint-aware
 - Done L2 Hybrid Retrieval (`layers/L2-retrieval.ts`) — Cohere embed-v4 + Rerank 4 Pro + Postgres HNSW cosine + GIN-FTS dual; direct-leaf-lookup shortcut
@@ -214,6 +214,6 @@ Test case format:
 - DONE Phase 2: Data foundation (normalized schema + canonical data + 7-audit verified)
 - DONE Phase 3: Architecture spike — 30 paper-traces, 29/30 CORRECT, verdict PROCEED_TO_PHASE_4
 - DONE Phase 3.5 (May 2026): Data completion + architecture lock-in — chapter_exclusions +352 rules, fts_search_text + text[] + sections.notes, A9 empirical proof 10/10 CORRECT, D1 model stack LOCKED. 8 carryforwards in ARCHITECTURE.md §12.
-- IN PROGRESS Phase 4: Brain rebuild — v2 (8-layer). Phase 4.0 DONE (O1-O5; O2 12,406 ingested 2026-05-28). Phase 4.1 complete (L0-L5, 302/302). Phase 4.2-4.4: orchestrator + L6/L7/L8 + QGS + API rewire + eval-wiring pending — design spec + Phase-4.2a plan ready. Eval canonical = `backend/src/eval/` ~386-case master suite (168-stub DEPRECATED). Build approach: measurement-driven (spine+eval first, then quality-build each layer by failure map).
+- IN PROGRESS Phase 4: Brain rebuild — v2 (8-layer). Phase 4.0 DONE (O1-O5; O2 12,406 ingested). **Phase 4.2a DONE (2026-05-28):** orchestrator wired (L0-L5 + repair loop + backtrack + ASK/REFUSE + §7 errors + continueWithAnswer), eval wired to v2, trace CLI + smoke. Many root-cause fixes (L3 over-exclusion, MV-03/04/07 + sentinel verifier bugs, L2 recall funnel/FTS/typo, timeout). Brain strong: on completed classify cases **chapter/heading 93.5%, 8-digit 58.1%**. Security review CLEAN + code review done. **BLOCKER: clean full baseline pending Cohere Trial-key upgrade (1000/mo quota exhausted → 269/386 cases 429'd).** Full state + prioritized roadmap to "ultimate": `backend/docs/PHASE-4.2a-BASELINE.md`. Next: L6/L7/L8 + QGS + L2 synonym layer + leaf precision + API rewire — measurement-gated. Eval canonical = `backend/src/eval/` ~386-case master suite (168-stub DEPRECATED).
 - M4: Trade intelligence — duty rates, export policy on every result
 - M5: Ship — PDF reports, CI, feedback, investor demo

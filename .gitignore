@@ -163,6 +163,9 @@ backend/*.tsbuildinfo
 backend/coverage/
 backend/.nyc_output/
 
+# Eval run artifacts (regenerable via `npm run eval`)
+backend/eval-results/
+
 # ========================================
 # Data files (Phase 0)
 # ========================================
