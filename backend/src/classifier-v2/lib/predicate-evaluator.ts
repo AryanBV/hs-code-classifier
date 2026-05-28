@@ -22,6 +22,18 @@
  *     in `skipped` so the verifier can audit O2 coverage gaps.
  *   - EXISTS is the ONE operator where absence => FAIL (it tests presence).
  *
+ * Sentinel variables (`__SKIP_*`):
+ *   A small set of notes_claims rows are NOT machine-checkable (purposive,
+ *   definitional, or priority-rule text). The build-time extractor encodes these
+ *   with a sentinel predicate `EXISTS(__SKIP_<reason>)` — e.g. `__SKIP_PURPOSIVE__`,
+ *   `__SKIP_DEFINITION__`, `__SKIP_PRIORITY_RULE__`. A `__SKIP_*` variable is never
+ *   an attribute and never present, so under the normal EXISTS rule it would FAIL
+ *   on every product — and a FAIL on a normal-polarity claim (condition/definition/
+ *   inclusion) becomes a false violation on EVERY product. Any reference to a
+ *   `__SKIP_*` var therefore resolves to SKIP (three-valued: never PASS, never
+ *   FAIL), so it propagates harmlessly through AND/OR/NOT/IMPLIES and is recorded
+ *   in the skip audit trail. SKIP is never a violation for any claim_type.
+ *
  * Special variable resolution:
  *   Variable names starting with `candidate.` resolve from `ctx.candidate`
  *   rather than `ctx.attrs`. The reserved vars are:
@@ -57,6 +69,23 @@ export interface PredicateEvalContext {
 }
 
 export type Eval = PredicateEvalResult;
+
+/* ---------------------------------------------------------------------------
+ * Sentinel variables
+ * --------------------------------------------------------------------------- */
+
+/**
+ * Prefix marking a NON-machine-checkable claim. notes_claims rows that encode
+ * purposive / definitional / priority-rule text use a predicate of the form
+ * `EXISTS(__SKIP_<reason>)`. Any var with this prefix resolves to SKIP so the
+ * claim never produces a violation (see module header).
+ */
+const SKIP_SENTINEL_PREFIX = '__SKIP';
+
+/** True iff `varName` is a `__SKIP_*` sentinel (e.g. `__SKIP_PURPOSIVE__`). */
+function isSkipSentinelVar(varName: string): boolean {
+  return varName.startsWith(SKIP_SENTINEL_PREFIX);
+}
 
 /* ---------------------------------------------------------------------------
  * Variable resolution
@@ -140,6 +169,15 @@ function evalLeaf(
   skipped: PredicateRef[],
   claimId: number,
 ): Eval {
+  // Sentinel short-circuit: a `__SKIP_*` var marks a non-machine-checkable
+  // claim. It resolves to SKIP for EVERY op (never PASS, never FAIL) so it can
+  // never become a violation under any claim_type/polarity. We record the skip
+  // for the audit trail (O2 coverage / unverifiable-claim visibility).
+  if (isSkipSentinelVar(pred.var)) {
+    recordSkip(pred, skipped, claimId);
+    return 'SKIP';
+  }
+
   const resolution = resolveVar(pred.var, ctx);
 
   switch (pred.op) {

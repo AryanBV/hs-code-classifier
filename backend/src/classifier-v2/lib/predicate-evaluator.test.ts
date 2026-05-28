@@ -160,6 +160,30 @@ describe('predicate-evaluator — EXISTS', () => {
     const pred: Predicate = { op: 'EXISTS', var: 'predominant_element' };
     expect(evalPredicate(pred, ctx({ predominant_element: 'iron' }), [], 1)).toBe('PASS');
   });
+
+  // ---- __SKIP_* sentinel vars (NOT machine-checkable claims) ----
+  // notes_claims rows whose predicate is EXISTS(__SKIP_*) are sentinels meaning
+  // "this claim is unverifiable → SKIP". They must NEVER FAIL (a FAIL on a
+  // normal-polarity claim becomes a false violation on every product).
+  it('SKIP (not FAIL) on __SKIP_PURPOSIVE__ sentinel var even when absent', () => {
+    const pred: Predicate = { op: 'EXISTS', var: '__SKIP_PURPOSIVE__' };
+    const skipped: PredicateRef[] = [];
+    expect(evalPredicate(pred, ctx({}), skipped, 43)).toBe('SKIP');
+    expect(skipped).toHaveLength(1);
+    expect(skipped[0]).toMatchObject({ notes_claim_id: 43, var: '__SKIP_PURPOSIVE__', op: 'EXISTS' });
+  });
+  it('SKIP on __SKIP_DEFINITION__ sentinel var', () => {
+    const pred: Predicate = { op: 'EXISTS', var: '__SKIP_DEFINITION__' };
+    expect(evalPredicate(pred, ctx(null), [], 88)).toBe('SKIP');
+  });
+  it('SKIP on __SKIP_PRIORITY_RULE__ sentinel var', () => {
+    const pred: Predicate = { op: 'EXISTS', var: '__SKIP_PRIORITY_RULE__' };
+    expect(evalPredicate(pred, ctx({}), [], 121)).toBe('SKIP');
+  });
+  it('REGRESSION: real EXISTS still FAILs on a genuinely absent attribute', () => {
+    const pred: Predicate = { op: 'EXISTS', var: 'material' };
+    expect(evalPredicate(pred, ctx({}), [], 1)).toBe('FAIL');
+  });
 });
 
 /* ===========================================================================

@@ -909,10 +909,10 @@ describe('L5 verifier — Rule 7 claim_type polarity (MV-07)', () => {
     expect(r7?.failure_code).toBe('CHAPTER_NOTE_VIOLATED');
   });
 
-  it('redirect claim with __SKIP_PRIORITY_RULE__ sentinel (EXISTS → FAIL) → NO violation', async () => {
-    // The priority-rule placeholder rows use EXISTS on a never-present var, which
-    // evaluates FAIL. Under inverted polarity FAIL → no violation (these rows are
-    // informational priority rules, not mechanical violations).
+  it('redirect claim with __SKIP_PRIORITY_RULE__ sentinel → SKIP → NO violation', async () => {
+    // Priority-rule placeholder rows use a __SKIP_* sentinel var. The sentinel
+    // resolves to SKIP (never PASS/FAIL), so it is never a violation regardless
+    // of polarity, AND it is recorded in skipped_predicates for audit.
     setHappySql();
     notesClaimsMock.mockResolvedValueOnce([{
       id:          814,
@@ -928,6 +928,68 @@ describe('L5 verifier — Rule 7 claim_type polarity (MV-07)', () => {
     });
     const out = await verify(l5Input());
     expect(out.failed_rules.find((f) => f.rule_id === 'MV-07')).toBeUndefined();
+    expect(out.skipped_predicates.some((s) => s.notes_claim_id === 814)).toBe(true);
+  });
+
+  // ---- THE BUG: NORMAL-polarity claims with a __SKIP_* sentinel ----
+  // condition/definition/inclusion claims violate on predicate FAIL. Before the
+  // fix, EXISTS(__SKIP_*) → FAIL → violation on EVERY product (12 chapters: 04,
+  // 25, 29, 37, 39, 60). The sentinel must SKIP so it is never a violation.
+  it('condition claim with __SKIP_PURPOSIVE__ sentinel → SKIP → NO violation (the bug)', async () => {
+    setHappySql();
+    notesClaimsMock.mockResolvedValueOnce([{
+      id:          43,
+      source_ref:  'chapters.notes:chapter=39:notes[0].text',
+      source_kind: 'chapter_note',
+      claim_type:  'condition',
+      claim_text:  'Goods of this chapter must be of plastics as defined in note 1.',
+      predicate:   JSON.stringify({ op: 'EXISTS', var: '__SKIP_PURPOSIVE__' } as Predicate),
+      applies_to:  ['73'],
+    }]);
+    tlaMock.mockResolvedValueOnce({
+      '7318.15.00': { material: ['steel'], form: [], function: [], intended_use: [], processing_state: [], composition: [] },
+    });
+    const out = await verify(l5Input());
+    expect(out.failed_rules.find((f) => f.rule_id === 'MV-07')).toBeUndefined();
+    expect(out.skipped_predicates.some((s) => s.notes_claim_id === 43)).toBe(true);
+  });
+
+  it('definition claim with __SKIP_DEFINITION__ sentinel → SKIP → NO violation', async () => {
+    setHappySql();
+    notesClaimsMock.mockResolvedValueOnce([{
+      id:          88,
+      source_ref:  'chapters.notes:chapter=29:notes[0].text',
+      source_kind: 'chapter_note',
+      claim_type:  'definition',
+      claim_text:  'For the purposes of this chapter "separate chemically defined compound" means ...',
+      predicate:   JSON.stringify({ op: 'EXISTS', var: '__SKIP_DEFINITION__' } as Predicate),
+      applies_to:  ['73'],
+    }]);
+    tlaMock.mockResolvedValueOnce({
+      '7318.15.00': { material: ['steel'], form: [], function: [], intended_use: [], processing_state: [], composition: [] },
+    });
+    const out = await verify(l5Input());
+    expect(out.failed_rules.find((f) => f.rule_id === 'MV-07')).toBeUndefined();
+    expect(out.skipped_predicates.some((s) => s.notes_claim_id === 88)).toBe(true);
+  });
+
+  it('REGRESSION: condition claim with a REAL EXISTS predicate still FAILs when attr absent', async () => {
+    // Guard: only __SKIP_* sentinels get SKIP treatment. A genuine existence
+    // check on a missing attribute must still FAIL → violation (normal polarity).
+    setHappySql();
+    notesClaimsMock.mockResolvedValueOnce([{
+      id:          900,
+      source_ref:  'chapters.notes:chapter=73:notes[0].text',
+      source_kind: 'chapter_note',
+      claim_type:  'condition',
+      claim_text:  'Goods of this chapter must have a stated material.',
+      predicate:   JSON.stringify({ op: 'EXISTS', var: 'material' } as Predicate),
+      applies_to:  ['73'],
+    }]);
+    tlaMock.mockResolvedValueOnce({}); // material absent → real EXISTS FAILs
+    const out = await verify(l5Input());
+    const r7 = out.failed_rules.find((f) => f.rule_id === 'MV-07');
+    expect(r7?.failure_code).toBe('CHAPTER_NOTE_VIOLATED');
   });
 
   it('inclusion claim keeps NORMAL polarity: FAIL → violation', async () => {
