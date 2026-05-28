@@ -19,7 +19,6 @@ import { retrieve } from './layers/L2-retrieval';
 import { rulesFilter } from './layers/L3-rules-filter';
 import { select } from './layers/L4-select';
 import { verify } from './layers/L5-verifier';
-import { embed } from './lib/cohere-client';
 import { selectToClassifyResult } from './select-to-result';
 import type {
   ChapterCode,
@@ -161,17 +160,6 @@ export async function classify(
   // here, between L3 and L4. Happy path assumes ≥1 surviving candidate and no
   // backtrack signal.
 
-  /* ---- Query embedding for L5 Rule-4 cosine floor --------------------- *
-   * RetrievalOutput does NOT carry the query embedding (L2 consumes it
-   * internally for the cosine cascade and discards it). L5's Rule-4 cosine
-   * floor needs the genuine Cohere embed-v4 query vector, so the orchestrator
-   * obtains it here from the SAME source L2 uses (cohere-client.embed with
-   * inputType 'search_query'). Passing an empty array would silently disable
-   * Rule-4 (it SKIPs on empty), so we wire the real embedding. */
-  const queryEmbedding = (
-    await embed(normalized.normalized_query, { inputType: 'search_query' })
-  ).embedding;
-
   /* ---- L4 — Select + L5 — Verify -------------------------------------- *
    * This block becomes the repair loop in Task 7 (re-invoke L4 with
    * verifier_failures up to 3×). For the happy path we run each exactly once
@@ -202,7 +190,9 @@ export async function classify(
     select_output: selectOut,
     candidate_code: candidateCode,
     candidate_chapter: chapterOf(candidateCode),
-    query_embedding: queryEmbedding,
+    // Reuse L2's query vector — the single Cohere embed lives in L2 (avoids the
+    // redundant orchestrator re-embed that doubled cash-billed embed spend).
+    query_embedding: retrievalOut.query_embedding,
     filtered_candidates: rulesOut.filtered_candidates,
     matched_exclusions: rulesOut.matched_exclusions,
     composite_flag: normalized.composite_flag,

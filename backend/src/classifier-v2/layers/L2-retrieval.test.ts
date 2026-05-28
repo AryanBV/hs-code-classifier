@@ -262,6 +262,10 @@ describe('retrieve() — direct_leaf_lookup shortcut', () => {
     expect(out.candidates.map((c) => c.code)).toEqual(['6109.10.00', '6109.90.00']);
     expect(out.candidates.every((c) => c.rerank_score === null)).toBe(true);
     expect(out.trace.some((t) => t.step === 'direct_leaf_fetch')).toBe(true);
+    // The query embedding MUST be surfaced even on the direct-leaf path so L5
+    // Rule-4 cosine floor never silently SKIPs (it embeds once, at Step 1).
+    expect(out.query_embedding).toEqual(fixedEmbedding());
+    expect(out.query_embedding.length).toBeGreaterThan(0);
   });
 });
 
@@ -274,6 +278,9 @@ describe('retrieve() — cascade_full strategy', () => {
     // Top candidate should be the one rerank put first.
     expect(out.candidates[0].code).toBe('6109.10.00');
     expect(out.candidates[0].rerank_score).toBe(0.99);
+    // The cosine-cascade query embedding is surfaced on the output (reused by L5).
+    expect(out.query_embedding).toEqual(fixedEmbedding());
+    expect(out.query_embedding.length).toBeGreaterThan(0);
   });
 
   it('still runs full cascade when composite_flag set', async () => {

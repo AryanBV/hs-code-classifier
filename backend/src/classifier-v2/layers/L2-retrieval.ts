@@ -477,6 +477,10 @@ export async function retrieve(input: L2Input): Promise<L2Output> {
     fts_matches,
     exclusion_pre_filter,
     retrieval_strategy,
+    // The query embedding is computed once at Step 1 and runs for BOTH
+    // strategies (direct_leaf_lookup is decided later, in Step 4). Surface it so
+    // L5 Rule-4 cosine floor reuses this vector instead of re-embedding.
+    query_embedding: embedRes.embedding,
     trace,
   };
 }

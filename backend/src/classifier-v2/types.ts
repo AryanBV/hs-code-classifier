@@ -215,6 +215,13 @@ export interface RetrievalOutput {
   fts_matches:            FtsMatch[];
   exclusion_pre_filter:   ExclusionPreFilterHit[];
   retrieval_strategy:     RetrievalStrategy;
+  /**
+   * Cohere embed-v4 query vector (inputType 'search_query'), computed once by L2
+   * for the cosine cascade. Reused by L5 Rule-4 cosine floor — avoids a
+   * redundant re-embed in the orchestrator (the one cash-billed dependency).
+   * Always a real, non-empty vector for both retrieval strategies.
+   */
+  query_embedding:        number[];
   trace:                  L2TraceEntry[];
 }
 

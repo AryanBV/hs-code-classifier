@@ -1,10 +1,11 @@
 /**
  * Integration test for the v2 classifier orchestrator — CLASSIFY happy path.
  *
- * Mocks all 6 layers (L0..L5) plus the Cohere client (query-embedding source for
- * L5Input.query_embedding) so no network / DB calls happen. Asserts that a query
- * whose L1→…→L5 returns `passed:true` produces a `decision:'CLASSIFY'` result
- * with the selected code and the full escalation_path L0→L5.
+ * Mocks all 6 layers (L0..L5) so no network / DB calls happen. The orchestrator
+ * no longer embeds the query itself — it reuses the query vector L2 surfaces on
+ * `RetrievalOutput.query_embedding` (the single Cohere embed lives in L2). Asserts
+ * that a query whose L1→…→L5 returns `passed:true` produces a `decision:'CLASSIFY'`
+ * result with the selected code and the full escalation_path L0→L5.
  *
  * Run:
  *   cd backend && npx vitest run src/classifier-v2/index.test.ts
@@ -31,7 +32,6 @@ const retrieveMock   = vi.fn();
 const rulesFilterMock = vi.fn();
 const selectMock     = vi.fn();
 const verifyMock     = vi.fn();
-const embedMock      = vi.fn();
 
 vi.mock('./layers/L0-normalization', () => ({
   normalize: (...args: unknown[]) => normalizeMock(...args),
@@ -50,9 +50,6 @@ vi.mock('./layers/L4-select', () => ({
 }));
 vi.mock('./layers/L5-verifier', () => ({
   verify: (...args: unknown[]) => verifyMock(...args),
-}));
-vi.mock('./lib/cohere-client', () => ({
-  embed: (...args: unknown[]) => embedMock(...args),
 }));
 
 // Import the SUT AFTER mocks are registered.
@@ -117,12 +114,16 @@ const triageOut: TriageOutput = {
 
 const SELECTED = '7318.15.00';
 
+/** The query vector L2 surfaces; the orchestrator must reuse THIS for L5. */
+const L2_QUERY_EMBEDDING = [0.11, 0.22, 0.33, 0.44];
+
 const retrievalOut: RetrievalOutput = {
   candidates: [mkCandidate(SELECTED), mkCandidate('7318.16.00')],
   retrieval_scores: {},
   fts_matches: [],
   exclusion_pre_filter: [],
   retrieval_strategy: 'cascade_full',
+  query_embedding: L2_QUERY_EMBEDDING,
   trace: [],
 };
 
@@ -179,7 +180,6 @@ describe('classify() — CLASSIFY happy path', () => {
     rulesFilterMock.mockResolvedValue(rulesFilterOut);
     selectMock.mockResolvedValue(selectOut);
     verifyMock.mockResolvedValue(verifierPass);
-    embedMock.mockResolvedValue({ embedding: [0.1, 0.2, 0.3], latencyMs: 1 });
   });
 
   it('returns a CLASSIFY decision with the selected code', async () => {
@@ -247,8 +247,10 @@ describe('classify() — CLASSIFY happy path', () => {
     expect(l5Input.query_embedding.length).toBeGreaterThan(0);
   });
 
-  it('obtains the query embedding from the Cohere client for L5Input', async () => {
+  it('reuses L2 query embedding for L5Input (no orchestrator re-embed)', async () => {
     await classify('stainless steel hex bolts M10');
-    expect(embedMock).toHaveBeenCalledTimes(1);
+    const l5Input = verifyMock.mock.calls[0][0];
+    // Proves reuse, not re-embed: the vector must be the exact one L2 surfaced.
+    expect(l5Input.query_embedding).toBe(L2_QUERY_EMBEDDING);
   });
 });
