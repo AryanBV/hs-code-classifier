@@ -28,8 +28,9 @@ import * as path from 'path';
 /** Max test cases classified concurrently (bounded pool). */
 const CONCURRENCY = 8;
 
-/** Per-case wall-clock timeout (ms). */
-const CASE_TIMEOUT_MS = 30000;
+/** Per-case wall-clock timeout (ms). A genuine 4x-Select repair/escalation case
+ * runs ~60-75s (each L4 Select ~13-20s); 90s gives headroom without masking hangs. */
+const CASE_TIMEOUT_MS = 90000;
 
 /**
  * APPROXIMATE flat USD cost per LLM call, used for `est_cost_usd`.
