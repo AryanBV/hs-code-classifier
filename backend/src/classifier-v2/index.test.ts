@@ -53,7 +53,7 @@ vi.mock('./layers/L5-verifier', () => ({
 }));
 
 // Import the SUT AFTER mocks are registered.
-import { classify } from './index';
+import { classify, continueWithAnswer } from './index';
 
 /* ---------------------------------------------------------------------------
  * Fixtures
@@ -867,5 +867,112 @@ describe('classify() — REFUSE paths + §7 system error (Task 10)', () => {
     // the repair refusal has no code to verify).
     expect(selectMock).toHaveBeenCalledTimes(2);
     expect(verifyMock).toHaveBeenCalledTimes(1);
+  });
+});
+
+/* ---------------------------------------------------------------------------
+ * continueWithAnswer — multi-turn ASK (Task 11)
+ * --------------------------------------------------------------------------- */
+
+describe('continueWithAnswer() — multi-turn (Task 11)', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    normalizeMock.mockResolvedValue(normalizedOut);
+    triageMock.mockResolvedValue(triageOut);       // returns CLASSIFY by default
+    retrieveMock.mockResolvedValue(retrievalOut);
+    rulesFilterMock.mockResolvedValue(rulesFilterOut);
+    selectMock.mockResolvedValue(selectOut);
+    verifyMock.mockResolvedValue(verifierPass);
+  });
+
+  // Test 1: Round 1 — folds answer into previousAnswers, decrements budget to 2,
+  // and re-enters classify (which calls triage with previousAnswers + q_budget_remaining=2).
+  it('round 1: folds questionId+answerId into previousAnswers, calls triage with q_budget_remaining=2', async () => {
+    const res = await continueWithAnswer('stainless bolts', 'q_form', 'hex', {
+      previousAnswers: {},
+    });
+
+    // Pipeline ran to completion (triage returned CLASSIFY → happy path)
+    expect(res.decision).toBe('CLASSIFY');
+
+    // L1 (triage) was called once with the folded previousAnswers and decremented budget
+    expect(triageMock).toHaveBeenCalledTimes(1);
+    const triageCallInput = triageMock.mock.calls[0][0];
+    expect(triageCallInput.previousAnswers).toEqual({ q_form: 'hex' });
+    expect(triageCallInput.q_budget_remaining).toBe(2);
+  });
+
+  // Test 2: 3-round cap — if previousAnswers already has 3 entries, adding a 4th
+  // must short-circuit BEFORE any triage/LLM call and return REFUSE function_only_no_substance.
+  it('3-round cap: refuses with function_only_no_substance when previousAnswers already has 3 entries — NO triage call', async () => {
+    const res = await continueWithAnswer('stainless bolts', 'q_fourth', 'x', {
+      previousAnswers: { a: '1', b: '2', c: '3' },
+    });
+
+    // Must REFUSE — Q-budget exhausted
+    expect(res.decision).toBe('REFUSE');
+    expect(res.refusal?.out_of_scope_class).toBe('function_only_no_substance');
+    expect(res.refusal?.reason).toBeTruthy();
+    // Defense-in-depth: no LLM calls whatsoever (short-circuited before classify)
+    expect(triageMock).not.toHaveBeenCalled();
+    expect(selectMock).not.toHaveBeenCalled();
+    expect(verifyMock).not.toHaveBeenCalled();
+    // system_error must NOT be set (this is a model/policy decision, not an infra error)
+    expect(res.system_error).toBeUndefined();
+    // diagnostics always present
+    expect(res.diagnostics).toBeDefined();
+  });
+
+  // Test 3: Mid-round — when previousAnswers has 1 entry and triage returns ASK again
+  // (q_budget still > 0), continueWithAnswer returns ASK (multi-turn continues).
+  it('mid-round: returns ASK when triage still asks a follow-up (q_budget > 0)', async () => {
+    // Triage returns ASK again on this round (asking a second question)
+    const triageOutAsk2: TriageOutput = {
+      decision: 'ASK',
+      extracted_attributes: mkAttributes(),
+      candidate_chapters: [],
+      completeness_signal: 0.5,
+      clarifying_question: {
+        discriminating_attribute: 'material',
+        fallback_question_text: 'What is the material?',
+        fallback_options: [
+          { id: 'steel', label: 'Steel' },
+          { id: 'plastic', label: 'Plastic' },
+        ],
+      },
+      refusal_reason: null,
+      out_of_scope_class: null,
+    };
+    triageMock.mockResolvedValue(triageOutAsk2);
+
+    const res = await continueWithAnswer('cotton fabric', 'q_form', 'woven', {
+      previousAnswers: { q_knit: 'no' },
+    });
+
+    // Returns ASK — multi-turn continues
+    expect(res.decision).toBe('ASK');
+    expect(res.question?.discriminating_attribute).toBe('material');
+    expect(res.question?.question_id).toBe('ask_material');
+
+    // Triage was called with the accumulated previousAnswers (both q_knit + q_form)
+    // and q_budget_remaining = 3 - 2 = 1
+    expect(triageMock).toHaveBeenCalledTimes(1);
+    const triageCallInput = triageMock.mock.calls[0][0];
+    expect(triageCallInput.previousAnswers).toEqual({ q_knit: 'no', q_form: 'woven' });
+    expect(triageCallInput.q_budget_remaining).toBe(1);
+
+    // Pipeline stopped at L1 (ASK)
+    expect(selectMock).not.toHaveBeenCalled();
+    expect(verifyMock).not.toHaveBeenCalled();
+  });
+
+  // Test 4: no previousAnswers opts at all — defaults to empty, budget stays at 2 after fold.
+  it('handles missing opts (no previousAnswers provided) — treats as empty, q_budget=2 after fold', async () => {
+    const res = await continueWithAnswer('stainless bolts', 'q_form', 'hex');
+
+    expect(res.decision).toBe('CLASSIFY');
+    const triageCallInput = triageMock.mock.calls[0][0];
+    expect(triageCallInput.previousAnswers).toEqual({ q_form: 'hex' });
+    expect(triageCallInput.q_budget_remaining).toBe(2);
   });
 });

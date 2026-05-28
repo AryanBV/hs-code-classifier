@@ -518,15 +518,69 @@ export async function classify(
 }
 
 /**
- * Multi-turn continuation entry point (Task 11). Not yet implemented — kept on
- * the module surface so the export shape is stable for downstream importers.
+ * Multi-turn continuation entry point (Task 11).
+ *
+ * Folds the user's answer to a clarifying question back into `previousAnswers`
+ * and re-enters `classify` from L1 (triage replays all prior answers as binding
+ * facts and does NOT re-ask). The 3-round Q-budget cap (ARCHITECTURE §8, §7) is
+ * enforced here as a short-circuit BEFORE any LLM call — if adding this answer
+ * would produce a 4th distinct answer (`newPreviousAnswers.length > 3`), we
+ * immediately REFUSE with `function_only_no_substance` rather than waste an L1
+ * call that triage would also refuse.
+ *
+ * Signature mirrors the legacy API route body `{ originalQuery, answerId,
+ * answerLabel }` but drops `answerLabel` (not needed for previousAnswers keying;
+ * QGS guarantees both ids match `^[a-z][a-z0-9_]*$`). The wizard carries the
+ * full `previousAnswers` map from round to round, so it passes it in via `opts`.
+ *
+ * @param originalQuery  The original user query (unchanged across all rounds).
+ * @param questionId     The id of the question being answered (e.g. `'ask_form'`).
+ * @param answerId       The id of the selected option (e.g. `'hex'`).
+ * @param opts.previousAnswers  Answers accumulated from earlier rounds (default: {}).
  */
 export async function continueWithAnswer(
-  _originalQuery: string,
-  _answerId: string,
-  _answerLabel: string,
+  originalQuery: string,
+  questionId: string,
+  answerId: string,
+  opts?: { previousAnswers?: Record<string, string> },
 ): Promise<ClassifyResult> {
-  throw new Error('continueWithAnswer not implemented (Task 11)');
+  const prior = opts?.previousAnswers ?? {};
+
+  // Build the merged answers map (adds this round's answer to prior rounds).
+  const newPreviousAnswers: Record<string, string> = { ...prior, [questionId]: answerId };
+
+  // 3-round cap: if we now have more than 3 distinct answers, the Q-budget is
+  // exhausted. Short-circuit here so zero LLM calls are made for this hopeless
+  // 4th round — triage also enforces this, but defense-in-depth is cheap here.
+  if (Object.keys(newPreviousAnswers).length > 3) {
+    const capState: PipelineRunState = {
+      query: originalQuery,
+      normalized_query: '',
+      previousAnswers: newPreviousAnswers,
+      q_budget_remaining: 0,
+      backtrack_attempted: false,
+      escalation_path: [],
+      trace: [],
+      started_at: Date.now(),
+      llm_calls: 0,
+    };
+    return {
+      decision: 'REFUSE',
+      refusal: {
+        reason: 'Q-budget exhausted after 3 clarifying rounds',
+        out_of_scope_class: 'function_only_no_substance',
+        verifier_failures: [],
+      },
+      diagnostics: buildDiagnostics(capState),
+    };
+  }
+
+  // Compute the remaining Q-budget AFTER consuming this answer (each answer uses
+  // one slot; budget starts at DEFAULT_Q_BUDGET = 3).
+  const q_budget = DEFAULT_Q_BUDGET - Object.keys(newPreviousAnswers).length;
+
+  // Delegate entirely to classify — no pipeline logic lives here.
+  return classify(originalQuery, { previousAnswers: newPreviousAnswers, q_budget });
 }
 
 export type { ClassifyResult } from './types';
