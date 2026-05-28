@@ -592,5 +592,11 @@ export interface ClassifyResult {
     latency_ms:      number;
     /** Sum across L1, L4, L6, L7 calls. */
     llm_calls:       number;
+    /**
+     * Full per-event trace with payloads. ONLY populated when classify() is
+     * called with `captureTrace: true` (debug/CLI use only). Never set in
+     * normal prod calls — absent from the object entirely when not requested.
+     */
+    trace?: PipelineTraceEvent[];
   };
 }

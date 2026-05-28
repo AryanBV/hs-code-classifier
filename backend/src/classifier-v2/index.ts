@@ -47,6 +47,38 @@ export interface ClassifyOptions {
   previousAnswers?: Record<string, string>;
   /** Override the clarifying-question budget. Defaults to {@link DEFAULT_Q_BUDGET}. */
   q_budget?: number;
+  /**
+   * When true, attach the full `state.trace` (every layer event + payload) to
+   * `result.diagnostics.trace` before returning. For debug/CLI use only.
+   * Has ZERO effect on prod behavior when unset — the field is absent entirely.
+   */
+  captureTrace?: boolean;
+}
+
+/* ---------------------------------------------------------------------------
+ * Trace seam helpers
+ * --------------------------------------------------------------------------- */
+
+/**
+ * When `captureTrace` is true, clone the result and attach the full trace
+ * snapshot to `diagnostics.trace`. This is the ONLY place trace is attached —
+ * every return path in classify() routes through this helper so prod code
+ * (captureTrace unset) is never touched. The field is absent from the object
+ * entirely when captureTrace is false/undefined.
+ */
+function finalize(
+  result: ClassifyResult,
+  state: PipelineRunState,
+  captureTrace: boolean,
+): ClassifyResult {
+  if (!captureTrace) return result;
+  return {
+    ...result,
+    diagnostics: {
+      ...result.diagnostics,
+      trace: [...state.trace],
+    },
+  };
 }
 
 /* ---------------------------------------------------------------------------
@@ -232,6 +264,7 @@ export async function classify(
 ): Promise<ClassifyResult> {
   const previousAnswers = opts.previousAnswers ?? {};
   const q_budget_remaining = opts.q_budget ?? DEFAULT_Q_BUDGET;
+  const captureTrace = opts.captureTrace ?? false;
 
   const state: PipelineRunState = {
     query,
@@ -274,11 +307,11 @@ export async function classify(
   // ASK → Task 9. REFUSE → Task 10 (maps every model refusal, incl. the L1
   // invalid-JSON synthetic incoherent_query refuse and Q-budget exhaustion).
   if (triageOut.decision === 'ASK') {
-    return triageToAsk(triageOut, state);
+    return finalize(triageToAsk(triageOut, state), state, captureTrace);
   }
   if (triageOut.decision === 'REFUSE') {
     recordLayer(state, 'L1', 'refuse', { out_of_scope_class: triageOut.out_of_scope_class });
-    return triageToRefuse(triageOut, state);
+    return finalize(triageToRefuse(triageOut, state), state, captureTrace);
   }
 
   const head_nouns_for_fts = triageOut.extracted_attributes.head_nouns_for_fts;
@@ -345,14 +378,14 @@ export async function classify(
     // ASK → Task 9. REFUSE → Task 10 (same canonical mapping; naturally covers
     // the L3 backtrack_no_fit REFUSE L1 emits when the constraint can't be met).
     if (backtrackTriageOut.decision === 'ASK') {
-      return triageToAsk(backtrackTriageOut, state);
+      return finalize(triageToAsk(backtrackTriageOut, state), state, captureTrace);
     }
     if (backtrackTriageOut.decision === 'REFUSE') {
       recordLayer(state, 'L1', 'refuse', {
         out_of_scope_class: backtrackTriageOut.out_of_scope_class,
         backtrack: true,
       });
-      return triageToRefuse(backtrackTriageOut, state);
+      return finalize(triageToRefuse(backtrackTriageOut, state), state, captureTrace);
     }
 
     // Re-retrieve with the updated candidate_chapters from re-triage.
@@ -394,7 +427,7 @@ export async function classify(
 
   // --- Zero-candidate escalation (after gate, before L4) ------------------
   if (activeRulesOut.filtered_candidates.length === 0) {
-    return BaselineEscalation.onZeroCandidates(state);
+    return finalize(BaselineEscalation.onZeroCandidates(state), state, captureTrace);
   }
 
   /* ---- L4 — Select + L5 — Verify (with repair loop, Task 7) ----------- *
@@ -444,14 +477,14 @@ export async function classify(
   // code to check). A model decision, so system_error is not set.
   if (currentSelectOut.selected_code === null) {
     recordLayer(state, 'L4', 'refuse');
-    return selectToRefuse(currentSelectOut, state);
+    return finalize(selectToRefuse(currentSelectOut, state), state, captureTrace);
   }
 
   let currentVerifyOut = await verify(buildL5Input(currentSelectOut));
   recordLayer(state, 'L5', 'verify', { passed: currentVerifyOut.passed });
 
   if (currentVerifyOut.passed) {
-    return selectToClassifyResult(currentSelectOut, state, { escalated_to_deep_think: false });
+    return finalize(selectToClassifyResult(currentSelectOut, state, { escalated_to_deep_think: false }), state, captureTrace);
   }
 
   // --- Repair loop: up to 3 repair iterations (i = 0, 1, 2) -------------
@@ -483,7 +516,7 @@ export async function classify(
     // here rather than feed an empty code into chapterOf('')/verify.
     if (currentSelectOut.selected_code === null) {
       recordLayer(state, 'L4', 'refuse', { repair_iteration: i + 1 });
-      return selectToRefuse(currentSelectOut, state);
+      return finalize(selectToRefuse(currentSelectOut, state), state, captureTrace);
     }
 
     // Re-verify the repaired output (L5 is NOT an LLM call — no llm_calls increment).
@@ -491,14 +524,14 @@ export async function classify(
     recordLayer(state, 'L5', 'verify', { passed: currentVerifyOut.passed, repair_iteration: i + 1 });
 
     if (currentVerifyOut.passed) {
-      return selectToClassifyResult(currentSelectOut, state, { escalated_to_deep_think: false });
+      return finalize(selectToClassifyResult(currentSelectOut, state, { escalated_to_deep_think: false }), state, captureTrace);
     }
 
     lastFailures = currentVerifyOut.failed_rules;
   }
 
   // All 3 repairs exhausted — hand off to escalation policy.
-  return BaselineEscalation.onVerifierExhausted(state, currentSelectOut, lastFailures);
+  return finalize(BaselineEscalation.onVerifierExhausted(state, currentSelectOut, lastFailures), state, captureTrace);
   } catch (err) {
     // §7 "Vertex 5xx persistent": surface a system-error to the user, NEVER a
     // fabricated classification. We narrow to GENUINE transport failures only
@@ -511,7 +544,7 @@ export async function classify(
         stage: currentStage,
         message: err.message,
       });
-      return systemErrorResult(currentStage, err, state);
+      return finalize(systemErrorResult(currentStage, err, state), state, captureTrace);
     }
     throw err;
   }
