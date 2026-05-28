@@ -20,6 +20,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { generateContent } from '../lib/vertex-client';
+import { LlmOutputValidationError, TriageOutputZ, parseOrThrow } from '../schemas';
 import type {
   AttributeKey,
   ConstraintHint,
@@ -343,6 +344,12 @@ function isTriageOutput(v: unknown): v is TriageOutput {
  * Parse Triage JSON. Tries strict JSON.parse first; falls back to extracting
  * the first balanced `{...}` block (handles cases where the model wraps the
  * JSON in stray prose, even though `responseSchema` should prevent that).
+ *
+ * After JSON decoding, validates the parsed value against `TriageOutputZ` via
+ * `parseOrThrow`. On `LlmOutputValidationError` (schema mismatch) or JSON
+ * parse failure, returns null — triggering the caller's retry-then-REFUSE path.
+ * The `LlmOutputValidationError` type lets the caller (or a later error-handling
+ * task §7) distinguish validation failures from network/transport errors.
  */
 function tryParseTriageJSON(text: string): TriageOutput | null {
   if (typeof text !== 'string' || text.trim().length === 0) return null;
@@ -361,7 +368,19 @@ function tryParseTriageJSON(text: string): TriageOutput | null {
       return null;
     }
   }
-  return isTriageOutput(parsed) ? parsed : null;
+
+  // Zod validation at the parse site — replaces the bare isTriageOutput check.
+  // Returns null on schema mismatch so the caller's retry-then-REFUSE path fires.
+  try {
+    return parseOrThrow(TriageOutputZ, parsed, 'L1-triage');
+  } catch (err) {
+    if (err instanceof LlmOutputValidationError) {
+      // eslint-disable-next-line no-console
+      console.log(`[L1] Zod validation failed: ${err.message}`);
+      return null;
+    }
+    throw err;
+  }
 }
 
 /* ---------------------------------------------------------------------------

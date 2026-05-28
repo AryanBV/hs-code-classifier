@@ -29,6 +29,7 @@ import {
   getNotesClaimsForChapters,
   getTariffLineAttributesForCodes,
 } from '../lib/supabase-client';
+import { LlmOutputValidationError, SelectOutputZ, parseOrThrow } from '../schemas';
 import { getAllGIRRules } from '../../data/gir-rules';
 import type {
   ChapterCode,
@@ -539,6 +540,14 @@ export function isSelectOutput(v: unknown): v is SelectOutput {
  * JSON parsing helper (mirrors L1)
  * --------------------------------------------------------------------------- */
 
+/**
+ * Parse Select JSON. Tries strict JSON.parse first; falls back to extracting
+ * the first balanced `{...}` block.
+ *
+ * After JSON decoding, validates the parsed value against `SelectOutputZ` via
+ * `parseOrThrow`. On `LlmOutputValidationError` (schema mismatch) or JSON
+ * parse failure, returns null — triggering the caller's retry-then-REFUSE path.
+ */
 function tryParseSelectJSON(text: string): SelectOutput | null {
   if (typeof text !== 'string' || text.trim().length === 0) return null;
 
@@ -555,7 +564,24 @@ function tryParseSelectJSON(text: string): SelectOutput | null {
       return null;
     }
   }
-  return isSelectOutput(parsed) ? parsed : null;
+
+  // Zod validation at the parse site — replaces the bare isSelectOutput check.
+  // Returns null on schema mismatch so the caller's retry-then-REFUSE path fires.
+  let zodParsed: unknown;
+  try {
+    zodParsed = parseOrThrow(SelectOutputZ, parsed, 'L4-select');
+  } catch (err) {
+    if (err instanceof LlmOutputValidationError) {
+      // eslint-disable-next-line no-console
+      console.log(`[L4] Zod validation failed: ${err.message}`);
+      return null;
+    }
+    throw err;
+  }
+
+  // Cross-field invariants (allOf conditional rules from select-v2.md) enforced
+  // by the hand-rolled isSelectOutput guard. Zod handles structural shape only.
+  return isSelectOutput(zodParsed) ? zodParsed : null;
 }
 
 /* ---------------------------------------------------------------------------
