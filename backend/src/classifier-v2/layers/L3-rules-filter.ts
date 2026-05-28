@@ -21,10 +21,11 @@
  *      full product context.
  *      Pre-filter rows come from L2 (`exclusion_pre_filter[]`); if empty we
  *      fall back to a direct secondary query as a safety net.
- *   2. MULTI-DESTINATION COLLAPSE — if more than 5 candidates remain, sort by
- *      rerank_score desc (cosine_score fallback when rerank is null) and keep
- *      the top-5; log the rest in `dropped_log[]` (reason 'collapsed_below_top5').
- *      Capacity-trimming is the only legitimate L3 drop.
+ *   2. MULTI-DESTINATION COLLAPSE — if more than CANDIDATE_CAP (8) candidates
+ *      remain, sort by rerank_score desc (cosine_score fallback when rerank is
+ *      null) and keep the top-CANDIDATE_CAP; log the rest in `dropped_log[]`
+ *      (reason 'collapsed_below_top5'). Capacity-trimming is the only legitimate
+ *      L3 drop. (FIX-A 2026-05-28: cap raised 5→8 to recover rank #6–#8 codes.)
  *   3. BACKTRACK GATE — if fewer than 2 candidates survive AND the pipeline
  *      has NOT yet attempted backtrack, set `backtrack_signal = true` and
  *      build a `ConstraintHint` per sub-spec 02 §B.2 so Triage can re-enter.
@@ -56,7 +57,12 @@ import type {
  * Tunables
  * --------------------------------------------------------------------------- */
 
-const FINAL_TOP_K        = 5;
+// FIX-A (2026-05-28, recall): decouple the L3 collapse cap from the old top-5
+// funnel. Correct codes were landing at retrieval rank #6–#8 and getting dropped
+// by a DOUBLE top-5 funnel (Cohere rerank topN=5 AND this collapse=5). L2 now
+// emits up to 8; L3 keeps up to 8 so those candidates reach L4 (whose prompt
+// handles a few more candidates fine). Capacity-trim is still the ONLY L3 drop.
+const CANDIDATE_CAP      = 8;   // was 5 (FINAL_TOP_K)
 const MIN_SURVIVORS      = 2;
 const SECONDARY_FTS_LIMIT = 50;
 
@@ -217,10 +223,10 @@ export async function rulesFilter(input: RulesFilterInput): Promise<RulesFilterO
   const tCollapse = now();
   const droppedByCollapse: DroppedCandidate[] = [];
   let collapsed: RetrievalCandidate[];
-  if (survivors.length > FINAL_TOP_K) {
+  if (survivors.length > CANDIDATE_CAP) {
     const sorted = [...survivors].sort(compareForCollapse);
-    collapsed = sorted.slice(0, FINAL_TOP_K);
-    for (const c of sorted.slice(FINAL_TOP_K)) {
+    collapsed = sorted.slice(0, CANDIDATE_CAP);
+    for (const c of sorted.slice(CANDIDATE_CAP)) {
       droppedByCollapse.push({
         code:         c.code,
         chapter:      (c.parent_chain.chapter ?? '') as ChapterCode,
@@ -361,6 +367,6 @@ export const _internal = {
   buildConstraintHint,
   compareForCollapse,
   truncateForReason,
-  FINAL_TOP_K,
+  CANDIDATE_CAP,
   MIN_SURVIVORS,
 };

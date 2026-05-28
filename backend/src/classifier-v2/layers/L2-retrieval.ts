@@ -87,8 +87,15 @@ const TOP_K_CHAPTERS    = 3;
 const TOP_K_HEADINGS    = 5;
 const TOP_K_SUBHEADINGS = 5;
 const TOP_K_TARIFF      = 10;
-const FTS_LIMIT         = 20;
+// FIX-A (2026-05-28, recall): widen the L2 funnel. Diagnosis found correct
+// codes landing at FTS rank #6–#15 and being dropped by a DOUBLE top-5 funnel
+// (Cohere rerank topN=5 AND L3 collapse=5). Widen each stage so rank #6–#8
+// survives to L4 (whose prompt handles a few more candidates fine).
+const FTS_LIMIT         = 40;   // was 20 — fetch deeper so #20–#40 reach the union
 const EXCL_FTS_LIMIT    = 30;
+const RERANK_TOP_N      = 15;   // was 5 — Cohere rerank returns more candidates
+const L2_EMIT_CAP       = 8;    // was 5 — emit up to 8 so rank #6–#8 reaches L3/L4
+/** @deprecated kept for backwards-compat trace/exports; emission uses L2_EMIT_CAP. */
 const FINAL_TOP_K       = 5;
 
 /* ---------------------------------------------------------------------------
@@ -127,9 +134,41 @@ export function escapeTsQueryToken(token: string): string {
 }
 
 /**
+ * Generic modifier stopwords that dilute FTS ranking.
+ *
+ * FIX-B (2026-05-28, recall): the OLD buildTsQuery flat-OR-joined head_nouns AND
+ * raw_tokens with equal weight, so generic modifiers ("bulk","powder","ladies",
+ * "luxury","other", etc.) that co-occur in HS descriptions inflated `ts_rank_cd`
+ * and pushed the discriminating noun's row down (empirically confirmed: dropping
+ * "other","article" reordered Ch.73 screw results around the noun).
+ *
+ * We drop these ONLY from raw_tokens — head_nouns (the discriminating signal
+ * chosen by L0/L1) are NEVER dropped, even if a head noun happens to be in this
+ * list (e.g. a product literally named "powder").
+ *
+ * NOTE on the rejected alternative: Postgres query-side weight labels (`:A`/`:C`)
+ * were tested empirically and FILTER OUT every hit — a weighted query lexeme only
+ * matches a tsvector lexeme of that weight class, and the document tsvector is
+ * built unweighted (default weight 'D'). Using weights would require `setweight()`
+ * on the document side (re-deriving per-column weights), which is out of scope and
+ * risky. Modifier-drop is the clean, safe lever.
+ */
+const GENERIC_FTS_MODIFIERS: ReadonlySet<string> = new Set([
+  'bulk', 'powder', 'raw', 'material', 'grade', 'pure', 'high', 'quality',
+  'for', 'export', 'made', 'india', 'ladies', 'luxury', 'men', 'mens',
+  'women', 'womens', 'kg', 'piece', 'set', 'full', 'length', 'api',
+  'other', 'article', 'articles', 'type', 'kind', 'new', 'used',
+]);
+
+/**
  * Build an OR-joined tsquery from head_nouns + raw_tokens per ARCHITECTURE.md
- * §4.7: `head_a | head_b | raw_a | raw_b`. Returns empty string if all tokens
- * are unusable after escaping.
+ * §4.7: `head_a | head_b | raw_a | raw_b`.
+ *
+ * FIX-B: head_nouns are kept verbatim (discriminating signal); raw_tokens that
+ * are generic modifiers (see GENERIC_FTS_MODIFIERS) are dropped so the noun
+ * dominates `ts_rank_cd`. Robustness: if head_nouns is empty AND every raw_token
+ * was a modifier, we fall back to the raw_tokens UNFILTERED so we never emit an
+ * empty query when usable input exists. Returns '' only when no usable tokens.
  */
 export function buildTsQuery(
   headNouns:   string[],
@@ -137,15 +176,38 @@ export function buildTsQuery(
 ): string {
   const seen = new Set<string>();
   const terms: string[] = [];
-  const allRaw = [...headNouns, ...rawTokens];
-  for (const t of allRaw) {
+
+  // Head nouns first — always kept (the discriminating term).
+  for (const t of headNouns) {
     const safe = escapeTsQueryToken(t);
-    if (safe.length === 0) continue;
-    if (seen.has(safe)) continue;
+    if (safe.length === 0 || seen.has(safe)) continue;
     seen.add(safe);
     terms.push(safe);
   }
-  return terms.join(' | ');
+
+  // Raw tokens — drop generic modifiers so the noun dominates ts_rank_cd.
+  for (const t of rawTokens) {
+    const lower = typeof t === 'string' ? t.toLowerCase().trim() : '';
+    if (GENERIC_FTS_MODIFIERS.has(lower)) continue;
+    const safe = escapeTsQueryToken(t);
+    if (safe.length === 0 || seen.has(safe)) continue;
+    seen.add(safe);
+    terms.push(safe);
+  }
+
+  if (terms.length > 0) return terms.join(' | ');
+
+  // Robustness fallback: head_nouns empty AND every raw token was a modifier.
+  // Use raw_tokens unfiltered so we don't lose retrieval entirely.
+  const seenFb = new Set<string>();
+  const fallback: string[] = [];
+  for (const t of rawTokens) {
+    const safe = escapeTsQueryToken(t);
+    if (safe.length === 0 || seenFb.has(safe)) continue;
+    seenFb.add(safe);
+    fallback.push(safe);
+  }
+  return fallback.join(' | ');
 }
 
 /* ---------------------------------------------------------------------------
@@ -388,7 +450,7 @@ export async function retrieve(input: L2Input): Promise<L2Output> {
         try {
           const tRrStart = now();
           const rerankRes = await rerank(input.normalized_query, rerankDocs, {
-            topN: FINAL_TOP_K,
+            topN: RERANK_TOP_N,
           });
           trace.push({
             step:      'cohere_rerank',
@@ -415,7 +477,7 @@ export async function retrieve(input: L2Input): Promise<L2Output> {
                 const eb = scoreMap.get(b) ?? { cosine_score: 0, fts_rank: null, rerank_score: null };
                 return eb.cosine_score - ea.cosine_score;
               })
-              .slice(0, FINAL_TOP_K);
+              .slice(0, L2_EMIT_CAP);
           } else {
             throw err;
           }
@@ -449,7 +511,7 @@ export async function retrieve(input: L2Input): Promise<L2Output> {
   });
 
   const candidates: RetrievalCandidate[] = [];
-  for (const code of finalCodes.slice(0, FINAL_TOP_K)) {
+  for (const code of finalCodes.slice(0, L2_EMIT_CAP)) {
     const chain = chainByCode.get(code);
     const score = scoreMap.get(code);
     if (!chain) continue;                                        // DB lookup miss; skip
@@ -492,12 +554,15 @@ export async function retrieve(input: L2Input): Promise<L2Output> {
 export const _internal = {
   buildTsQuery,
   escapeTsQueryToken,
+  GENERIC_FTS_MODIFIERS,
   TOP_K_CHAPTERS,
   TOP_K_HEADINGS,
   TOP_K_SUBHEADINGS,
   TOP_K_TARIFF,
   FTS_LIMIT,
   EXCL_FTS_LIMIT,
+  RERANK_TOP_N,
+  L2_EMIT_CAP,
   FINAL_TOP_K,
   topNCosine,
 };

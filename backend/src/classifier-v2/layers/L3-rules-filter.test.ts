@@ -411,26 +411,50 @@ describe('rulesFilter — multiple exclusions on same candidate', () => {
  * 9 & 10. Multi-destination collapse (top-5 capacity trim — the only real drop)
  * =========================================================================== */
 
-describe('rulesFilter — multi-destination collapse (top-5)', () => {
-  it('collapses 7 candidates → top 5 by rerank_score; logs the 2 dropped', async () => {
+describe('rulesFilter — multi-destination collapse (top-CANDIDATE_CAP=8, FIX-A)', () => {
+  it('exposes the widened collapse cap (FIX-A): CANDIDATE_CAP=8', () => {
+    expect(_internal.CANDIDATE_CAP).toBe(8);
+  });
+
+  it('keeps up to 8 candidates (no drop at 7 — decoupled from old top-5 funnel)', async () => {
     const cands = [
       candidate('6109.10.00', '61', { rerank_score: 0.99 }),
       candidate('6109.20.00', '61', { rerank_score: 0.92 }),
       candidate('6109.30.00', '61', { rerank_score: 0.85 }),
       candidate('6109.40.00', '61', { rerank_score: 0.78 }),
       candidate('6109.50.00', '61', { rerank_score: 0.70 }),
-      candidate('6109.60.00', '61', { rerank_score: 0.61 }),    // dropped
-      candidate('6109.70.00', '61', { rerank_score: 0.55 }),    // dropped
+      candidate('6109.60.00', '61', { rerank_score: 0.61 }),
+      candidate('6109.70.00', '61', { rerank_score: 0.55 }),
     ];
     const out = await rulesFilter(input(cands, []));
-    expect(out.filtered_candidates.length).toBe(5);
+    // 7 ≤ 8 → all survive (these used to be collapsed to 5).
+    expect(out.filtered_candidates.length).toBe(7);
+    expect(out.dropped_log).toEqual([]);
+  });
+
+  it('collapses 10 candidates → top 8 by rerank_score; logs the 2 dropped', async () => {
+    const cands = [
+      candidate('6109.10.00', '61', { rerank_score: 0.99 }),
+      candidate('6109.20.00', '61', { rerank_score: 0.92 }),
+      candidate('6109.30.00', '61', { rerank_score: 0.85 }),
+      candidate('6109.40.00', '61', { rerank_score: 0.78 }),
+      candidate('6109.50.00', '61', { rerank_score: 0.70 }),
+      candidate('6109.60.00', '61', { rerank_score: 0.61 }),
+      candidate('6109.70.00', '61', { rerank_score: 0.55 }),
+      candidate('6109.80.00', '61', { rerank_score: 0.50 }),
+      candidate('6109.90.00', '61', { rerank_score: 0.45 }),    // dropped
+      candidate('6109.91.00', '61', { rerank_score: 0.40 }),    // dropped
+    ];
+    const out = await rulesFilter(input(cands, []));
+    expect(out.filtered_candidates.length).toBe(8);
     expect(out.filtered_candidates.map((c) => c.code)).toEqual([
-      '6109.10.00', '6109.20.00', '6109.30.00', '6109.40.00', '6109.50.00',
+      '6109.10.00', '6109.20.00', '6109.30.00', '6109.40.00',
+      '6109.50.00', '6109.60.00', '6109.70.00', '6109.80.00',
     ]);
     expect(out.dropped_log.length).toBe(2);
     expect(out.dropped_log.every((d) => d.reason === 'collapsed_below_top5')).toBe(true);
     const droppedCodes = out.dropped_log.map((d) => d.code).sort();
-    expect(droppedCodes).toEqual(['6109.60.00', '6109.70.00']);
+    expect(droppedCodes).toEqual(['6109.90.00', '6109.91.00']);
   });
 
   it('falls back to cosine_score when rerank_score is null on all candidates', async () => {
@@ -441,14 +465,16 @@ describe('rulesFilter — multi-destination collapse (top-5)', () => {
       candidate('6109.40.00', '61', { rerank_score: null, cosine_score: 0.70 }),
       candidate('6109.50.00', '61', { rerank_score: null, cosine_score: 0.60 }),
       candidate('6109.60.00', '61', { rerank_score: null, cosine_score: 0.40 }),
+      candidate('6109.70.00', '61', { rerank_score: null, cosine_score: 0.30 }),
+      candidate('6109.80.00', '61', { rerank_score: null, cosine_score: 0.20 }),
+      candidate('6109.90.00', '61', { rerank_score: null, cosine_score: 0.10 }),
     ];
     const out = await rulesFilter(input(cands, []));
-    expect(out.filtered_candidates.length).toBe(5);
+    expect(out.filtered_candidates.length).toBe(8);
     expect(out.filtered_candidates[0].code).toBe('6109.20.00'); // highest cosine
-    expect(out.filtered_candidates.map((c) => c.code)).toEqual([
-      '6109.20.00', '6109.30.00', '6109.40.00', '6109.50.00', '6109.10.00',
-    ]);
-    expect(out.dropped_log[0].code).toBe('6109.60.00');
+    // Lowest cosine (0.10) is the one dropped.
+    expect(out.dropped_log.length).toBe(1);
+    expect(out.dropped_log[0].code).toBe('6109.90.00');
   });
 
   it('prefers candidates with rerank_score over null even when cosine is higher', async () => {
@@ -459,9 +485,15 @@ describe('rulesFilter — multi-destination collapse (top-5)', () => {
       candidate('D', '61', { rerank_score: 0.70, cosine_score: 0.10 }),
       candidate('E', '61', { rerank_score: 0.80, cosine_score: 0.10 }),
       candidate('F', '61', { rerank_score: 0.90, cosine_score: 0.10 }),
+      candidate('G', '61', { rerank_score: 0.95, cosine_score: 0.10 }),
+      candidate('H', '61', { rerank_score: 0.97, cosine_score: 0.10 }),
+      candidate('I', '61', { rerank_score: 0.98, cosine_score: 0.10 }),
     ];
     const out = await rulesFilter(input(cands, []));
-    expect(out.filtered_candidates.map((c) => c.code)).toEqual(['F', 'E', 'D', 'C', 'B']);
+    // Top 8 by rerank; the null-rerank candidate 'A' is dropped despite high cosine.
+    expect(out.filtered_candidates.map((c) => c.code)).toEqual(
+      ['I', 'H', 'G', 'F', 'E', 'D', 'C', 'B'],
+    );
     expect(out.dropped_log[0].code).toBe('A');
   });
 });

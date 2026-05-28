@@ -233,6 +233,40 @@ describe('escapeTsQueryToken / buildTsQuery', () => {
     expect(buildTsQuery([], [])).toBe('');
     expect(buildTsQuery(['!!!', '   '], [''])).toBe('');
   });
+
+  /* ----- FIX-B: drop generic modifier noise from raw_tokens ----- */
+
+  it('drops generic modifier stopwords from raw_tokens so the noun dominates', () => {
+    // "powder","bulk" are generic modifiers → dropped; "paracetamol" survives.
+    expect(buildTsQuery(['paracetamol'], ['paracetamol', 'powder', 'bulk']))
+      .toBe('paracetamol');
+  });
+
+  it('NEVER drops head_nouns even if they are in the modifier list', () => {
+    // "powder" appears as a head noun here → it is the discriminating term and
+    // must be kept; only its raw_token duplicate is suppressed.
+    expect(buildTsQuery(['powder'], ['powder', 'bulk', 'cocoa']))
+      .toBe('powder | cocoa');
+  });
+
+  it('drops common corpus-noise modifiers ("ladies","luxury","full","length")', () => {
+    expect(buildTsQuery(['coat', 'fur'], ['mink', 'fur', 'coat', 'full', 'length', 'ladies', 'luxury']))
+      .toBe('coat | fur | mink');
+  });
+
+  it('falls back to raw_tokens (unfiltered) when head_nouns empty AND every raw token is a modifier', () => {
+    // Robustness: must never emit an empty query when usable input exists.
+    expect(buildTsQuery([], ['bulk', 'powder'])).toBe('bulk | powder');
+  });
+
+  it('keeps non-modifier raw_tokens when head_nouns empty', () => {
+    expect(buildTsQuery([], ['ibuprofen', 'powder', 'bulk'])).toBe('ibuprofen');
+  });
+
+  it('still OR-joins head_nouns with surviving (non-modifier) raw_tokens, deduped', () => {
+    expect(buildTsQuery(['t-shirt', 'cotton'], ['cotton', 't-shirt', 'knitted', 'ladies']))
+      .toBe('(t & shirt) | cotton | knitted');
+  });
 });
 
 /* ===========================================================================
@@ -437,9 +471,30 @@ describe('retrieve() — trace + scores', () => {
   });
 });
 
-describe('retrieve() — caps and limits', () => {
-  it('emits at most FINAL_TOP_K candidates', async () => {
-    // Stretch the candidate set well above 5.
+describe('retrieve() — caps and limits (FIX-A: widened funnel)', () => {
+  it('exposes the widened tunables (FIX-A): FTS_LIMIT=40, RERANK_TOP_N=15, L2_EMIT_CAP=8', () => {
+    expect(_internal.FTS_LIMIT).toBe(40);
+    expect(_internal.RERANK_TOP_N).toBe(15);
+    expect(_internal.L2_EMIT_CAP).toBe(8);
+  });
+
+  it('requests topN=RERANK_TOP_N (15) candidates from Cohere rerank', async () => {
+    await retrieve(baseInput());
+    expect(rerankMock).toHaveBeenCalledOnce();
+    const [, , opts] = rerankMock.mock.calls[0];
+    expect(opts).toMatchObject({ topN: _internal.RERANK_TOP_N });
+  });
+
+  it('passes FTS_LIMIT (40) to the tariff-line FTS query', async () => {
+    await retrieve(baseInput());
+    expect(ftsTlMock).toHaveBeenCalledOnce();
+    const [, , limit] = ftsTlMock.mock.calls[0];
+    expect(limit).toBe(_internal.FTS_LIMIT);
+  });
+
+  it('emits up to L2_EMIT_CAP (8) candidates so rank #6-8 reach L4', async () => {
+    // Stretch the candidate set well above 5 — rerank returns up to 15, L2
+    // emits up to 8 (decoupled from the old top-5 funnel).
     cosineTlMock.mockResolvedValue([
       cosineRow('6109.10.00', 0.95),
       cosineRow('6109.10.10', 0.93),
@@ -448,10 +503,11 @@ describe('retrieve() — caps and limits', () => {
       cosineRow('6109.90.20', 0.83),
       cosineRow('6109.90.30', 0.80),
       cosineRow('6109.90.40', 0.78),
+      cosineRow('6109.90.50', 0.76),
+      cosineRow('6109.90.60', 0.74),
+      cosineRow('6109.90.70', 0.72),
     ]);
-    ftsTlMock.mockResolvedValue([
-      ftsHit('6109.10.30', 0.5),
-    ]);
+    ftsTlMock.mockResolvedValue([ftsHit('6109.10.30', 0.5)]);
     rerankMock.mockResolvedValue({
       ranked: [
         { id: '6109.10.00', relevance_score: 0.99 },
@@ -459,10 +515,34 @@ describe('retrieve() — caps and limits', () => {
         { id: '6109.10.20', relevance_score: 0.91 },
         { id: '6109.90.10', relevance_score: 0.85 },
         { id: '6109.90.20', relevance_score: 0.80 },
+        { id: '6109.90.30', relevance_score: 0.78 },
+        { id: '6109.90.40', relevance_score: 0.76 },
+        { id: '6109.90.50', relevance_score: 0.74 },
+        { id: '6109.90.60', relevance_score: 0.72 },
       ],
       latencyMs: 80,
     });
     const out = await retrieve(baseInput());
-    expect(out.candidates.length).toBeLessThanOrEqual(_internal.FINAL_TOP_K);
+    expect(out.candidates.length).toBe(_internal.L2_EMIT_CAP);
+    expect(out.candidates.length).toBeLessThanOrEqual(_internal.L2_EMIT_CAP);
+  });
+
+  it('cosine-fallback path also emits up to L2_EMIT_CAP candidates', async () => {
+    cosineTlMock.mockResolvedValue([
+      cosineRow('6109.10.00', 0.95),
+      cosineRow('6109.10.10', 0.93),
+      cosineRow('6109.10.20', 0.91),
+      cosineRow('6109.90.10', 0.85),
+      cosineRow('6109.90.20', 0.83),
+      cosineRow('6109.90.30', 0.80),
+      cosineRow('6109.90.40', 0.78),
+      cosineRow('6109.90.50', 0.76),
+      cosineRow('6109.90.60', 0.74),
+    ]);
+    ftsTlMock.mockResolvedValue([]);
+    rerankMock.mockRejectedValue(new CohereError('503 Unavailable', 503, '...'));
+    const out = await retrieve(baseInput());
+    expect(out.candidates.length).toBe(_internal.L2_EMIT_CAP);
+    expect(out.candidates.every((c) => c.rerank_score === null)).toBe(true);
   });
 });
