@@ -69,19 +69,32 @@ const NUMERIC_FIELDS: ReadonlySet<string> = new Set([
 
 /** Fields that are boolean | null. */
 const BOOL_FIELDS: ReadonlySet<string> = new Set([
-  'made_up', 'fabric_construction', 'electrically_warmed', 'wearable', 'electrically_heated',
+  'made_up', 'electrically_warmed', 'wearable', 'electrically_heated',
   'in_solution',
 ]);
 
-/** Fields that are string | null. */
+/** Fields that are string | null. (fabric_construction is a controlled-vocab TEXT
+ *  column in the DB — knitted/crocheted/woven/wadding/other — NOT a boolean.) */
 const STRING_NULLABLE_FIELDS: ReadonlySet<string> = new Set([
   'predominant_element', 'chemical_class', 'solution_purpose', 'intended_role',
+  'fabric_construction',
   'extracted_at', 'extraction_model', 'extraction_notes', 'validation_status',
   'extraction_confidence',
 ]);
 
 /** composite_components is jsonb (array of objects) | null. */
 const JSONB_FIELDS: ReadonlySet<string> = new Set(['composite_components']);
+
+/** Controlled-vocabulary TEXT fields → DB CHECK-constraint allowed values.
+ *  Enforced in the dry-run so it is a true pre-ingest gate: without this, a bad
+ *  vocab value passes the type check and only fails mid-transaction at --ingest. */
+const ENUM_FIELDS: ReadonlyMap<string, ReadonlySet<string>> = new Map([
+  ['chemical_class', new Set(['separate_organic_compound', 'separate_inorganic_compound', 'isomer_mixture', 'sugar_derivative', 'diazonium_salt', 'other'])],
+  ['fabric_construction', new Set(['knitted', 'crocheted', 'woven', 'wadding', 'other'])],
+  ['intended_role', new Set(['packaging', 'support', 'technical_use', 'implant', 'optical_element', 'other'])],
+  ['solution_purpose', new Set(['safety_transport', 'specific_use', 'none'])],
+  ['validation_status', new Set(['pending', 'validated', 'flagged'])],
+]);
 
 /** DB columns: same as EXPECTED_FIELDS minus extraction_confidence. */
 const DB_COLUMNS: ReadonlyArray<string> = EXPECTED_FIELDS.filter(
@@ -181,6 +194,14 @@ function validateRecord(rec: RawRecord, source: string): string[] {
     const val = rec[field];
     if (val !== null && !Array.isArray(val) && typeof val !== 'object') {
       errors.push(`field "${field}" must be object|array|null, got ${typeof val}`);
+    }
+  }
+
+  // Enum membership (mirrors DB CHECK constraints) — catches bad vocab pre-ingest.
+  for (const [field, allowed] of ENUM_FIELDS) {
+    const val = rec[field];
+    if (typeof val === 'string' && !allowed.has(val)) {
+      errors.push(`field "${field}" value "${val}" violates DB CHECK (allowed: ${[...allowed].join(', ')})`);
     }
   }
 
@@ -413,22 +434,29 @@ function pct(n: number, total: number): string {
 function buildRowParams(rec: MergedRecord): unknown[] {
   return DB_COLUMNS.map((col) => {
     const val = rec[col];
+    if (val === undefined || val === null) return null;
 
-    // composite_components is JSONB — pg driver accepts JS objects/arrays natively
-    // (it will call JSON.stringify internally), so no manual stringify needed.
-    // Arrays for TEXT[] columns are also passed as JS arrays — pg handles them.
+    // composite_components is JSONB (array of objects). node-postgres serializes a
+    // JS ARRAY parameter as a Postgres array literal — NOT as JSON — which makes
+    // Postgres reject it ("invalid input syntax for type json"). Stringify it so it
+    // is sent as text and parsed into jsonb. (TEXT[] columns are left as JS arrays,
+    // which pg correctly serializes to Postgres arrays.)
+    if (JSONB_FIELDS.has(col)) return JSON.stringify(val);
 
-    if (val === undefined) return null;
     return val;
   });
 }
 
 async function ingest(merged: Map<string, MergedRecord>): Promise<void> {
-  const directUrl = process.env.DIRECT_URL;
-  if (!directUrl) die('DIRECT_URL is not set in env', 2);
+  // Prefer the pooled DATABASE_URL (Supavisor, port 6543) — the correct, working
+  // connection for app-level DML. DIRECT_URL (port 5432) is migration-only and
+  // currently rejects auth (it carries the pooler-style username against the
+  // direct host, which Postgres rejects with 28P01).
+  const connStr = process.env.DATABASE_URL ?? process.env.DIRECT_URL;
+  if (!connStr) die('Neither DATABASE_URL nor DIRECT_URL is set in env', 2);
 
   const pool = new Pool({
-    connectionString: directUrl,
+    connectionString: connStr,
     ssl: { rejectUnauthorized: false },
     max: 3,
   });
