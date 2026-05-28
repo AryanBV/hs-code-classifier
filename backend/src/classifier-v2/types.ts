@@ -515,6 +515,10 @@ export interface PipelineRunState {
   /** Layer ids the query has passed through ('L0','L1',...,'L7'). */
   escalation_path:       string[];
   trace:                 PipelineTraceEvent[];
+  /** Epoch ms when the pipeline started; orchestrator sets it. Used for diagnostics.latency_ms. */
+  started_at?:           number;
+  /** Running count of LLM calls (L1/L4/L6/L7); orchestrator increments. Used for diagnostics.llm_calls. */
+  llm_calls?:            number;
 }
 
 /* ============================================================================
