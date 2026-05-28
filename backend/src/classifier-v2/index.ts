@@ -144,24 +144,100 @@ export async function classify(
     candidates: retrievalOut.candidates.length,
   });
 
-  /* ---- L3 — Rules Filter + Collapse + Backtrack Gate (deterministic) --- */
+  /* ---- L3 — Rules Filter + Collapse + Backtrack Gate (deterministic) --- *
+   * The effective triage/retrieval/rules outputs below start as the first-pass
+   * values and are reassigned inside the single-shot backtrack gate if the gate
+   * fires. Using `let` here (not `const`) is intentional — the gate mutates them
+   * exactly once.                                                               */
+
+  // First-pass L3 run.
+  let activeTriageOut = triageOut;
+  let activeRetrievalOut = retrievalOut;
+  let activeHeadNouns  = head_nouns_for_fts;
+
   const rulesFilterInput: RulesFilterInput = {
     l2_output: retrievalOut,
     normalized_query: normalized.normalized_query,
     raw_tokens: normalized.raw_tokens,
-    head_nouns_for_fts,
+    head_nouns_for_fts: activeHeadNouns,
     candidate_chapters: triageOut.candidate_chapters,
     backtrack_attempted: state.backtrack_attempted,
   };
-  const rulesOut = await rulesFilter(rulesFilterInput);
+  let activeRulesOut = await rulesFilter(rulesFilterInput);
   recordLayer(state, 'L3', 'rules_filter', {
-    survivors: rulesOut.filtered_candidates.length,
-    backtrack_signal: rulesOut.backtrack_signal,
+    survivors: activeRulesOut.filtered_candidates.length,
+    backtrack_signal: activeRulesOut.backtrack_signal,
   });
 
-  // Single-shot backtrack (Task 8) + zero-candidate escalation (Task 10) slot
-  // here, between L3 and L4. Happy path assumes ≥1 surviving candidate and no
-  // backtrack signal.
+  // --- Single-shot backtrack gate (Task 8) --------------------------------
+  // When L3 cannot find enough candidates it emits backtrack_signal:true with a
+  // constraint_hint. The orchestrator re-enters triage ONCE with that hint, then
+  // re-retrieves and re-filters. The `state.backtrack_attempted` flag enforces
+  // single-shot: even if the 2nd rulesFilter also returns backtrack_signal:true,
+  // the block is never entered again (the flag was set to true before re-entry).
+  if (activeRulesOut.backtrack_signal && !state.backtrack_attempted) {
+    state.backtrack_attempted = true;
+
+    // Re-call triage with the constraint_hint from L3 (counts as an LLM call).
+    const backtrackTriageInput: TriageInput = {
+      normalized_query: normalized.normalized_query,
+      previousAnswers,
+      q_budget_remaining,
+      constraint_hint: activeRulesOut.constraint_hint,
+    };
+    const backtrackTriageOut = await triage(backtrackTriageInput);
+    state.llm_calls = (state.llm_calls ?? 0) + 1;
+    recordLayer(state, 'L1', 'triage', { decision: backtrackTriageOut.decision, backtrack: true });
+
+    if (backtrackTriageOut.decision !== 'CLASSIFY') {
+      // Re-triage returned ASK or REFUSE — Task 9/10 stubs not yet implemented.
+      throw new Error(
+        `classifier-v2: Backtrack re-triage decision '${backtrackTriageOut.decision}' not yet handled ` +
+          '(ASK=Task 9, REFUSE=Task 10).',
+      );
+    }
+
+    // Re-retrieve with the updated candidate_chapters from re-triage.
+    const backtrackRetrievalOut = await retrieve({
+      normalized_query: normalized.normalized_query,
+      raw_tokens: normalized.raw_tokens,
+      composite_flag: normalized.composite_flag,
+      candidate_chapters: backtrackTriageOut.candidate_chapters,
+      head_nouns_for_fts: backtrackTriageOut.extracted_attributes.head_nouns_for_fts,
+    });
+    recordLayer(state, 'L2', 'retrieve', {
+      strategy: backtrackRetrievalOut.retrieval_strategy,
+      candidates: backtrackRetrievalOut.candidates.length,
+      backtrack: true,
+    });
+
+    // Re-filter; backtrack_attempted is now true → L3 will NOT re-signal.
+    const backtrackRulesFilterInput: RulesFilterInput = {
+      l2_output: backtrackRetrievalOut,
+      normalized_query: normalized.normalized_query,
+      raw_tokens: normalized.raw_tokens,
+      head_nouns_for_fts: backtrackTriageOut.extracted_attributes.head_nouns_for_fts,
+      candidate_chapters: backtrackTriageOut.candidate_chapters,
+      backtrack_attempted: state.backtrack_attempted, // true — single-shot enforced
+    };
+    const backtrackRulesOut = await rulesFilter(backtrackRulesFilterInput);
+    recordLayer(state, 'L3', 'rules_filter', {
+      survivors: backtrackRulesOut.filtered_candidates.length,
+      backtrack_signal: backtrackRulesOut.backtrack_signal,
+      backtrack: true,
+    });
+
+    // Promote backtrack outputs — these are what L4/L5 will see.
+    activeTriageOut    = backtrackTriageOut;
+    activeRetrievalOut = backtrackRetrievalOut;
+    activeHeadNouns    = backtrackTriageOut.extracted_attributes.head_nouns_for_fts;
+    activeRulesOut     = backtrackRulesOut;
+  }
+
+  // --- Zero-candidate escalation (after gate, before L4) ------------------
+  if (activeRulesOut.filtered_candidates.length === 0) {
+    return BaselineEscalation.onZeroCandidates(state);
+  }
 
   /* ---- L4 — Select + L5 — Verify (with repair loop, Task 7) ----------- *
    * Attempt 0 = initial select+verify. On failure, up to 3 repair iterations
@@ -169,7 +245,7 @@ export async function classify(
    * the new output. First pass wins; after 3 failed repairs (4 total verify
    * failures) hand off to BaselineEscalation.onVerifierExhausted.            */
 
-  /** Build the L5Input for the current select output. Reuse L2 query vector. */
+  /** Build the L5Input for the current select output. Reuse active L2 query vector. */
   function buildL5Input(currentSelectOut: SelectOutput): L5Input {
     const code = currentSelectOut.selected_code ?? '';
     return {
@@ -178,12 +254,13 @@ export async function classify(
       candidate_chapter: chapterOf(code),
       // Reuse L2's query vector — the single Cohere embed lives in L2 (avoids
       // the redundant orchestrator re-embed that doubled cash-billed embed spend).
-      query_embedding: retrievalOut.query_embedding,
-      filtered_candidates: rulesOut.filtered_candidates,
-      matched_exclusions: rulesOut.matched_exclusions,
+      // After backtrack, this is the re-retrieve's vector (correct for re-triage scope).
+      query_embedding: activeRetrievalOut.query_embedding,
+      filtered_candidates: activeRulesOut.filtered_candidates,
+      matched_exclusions: activeRulesOut.matched_exclusions,
       composite_flag: normalized.composite_flag,
       raw_tokens: normalized.raw_tokens,
-      head_nouns_for_fts,
+      head_nouns_for_fts: activeHeadNouns,
     };
   }
 
@@ -192,10 +269,10 @@ export async function classify(
     normalized_query: normalized.normalized_query,
     raw_tokens: normalized.raw_tokens,
     composite_flag: normalized.composite_flag,
-    extracted_attributes: triageOut.extracted_attributes,
-    candidate_chapters: triageOut.candidate_chapters,
-    filtered_candidates: rulesOut.filtered_candidates,
-    matched_exclusions: rulesOut.matched_exclusions,
+    extracted_attributes: activeTriageOut.extracted_attributes,
+    candidate_chapters: activeTriageOut.candidate_chapters,
+    filtered_candidates: activeRulesOut.filtered_candidates,
+    matched_exclusions: activeRulesOut.matched_exclusions,
   };
   let currentSelectOut = await select(baseL4Input);
   state.llm_calls = (state.llm_calls ?? 0) + 1;

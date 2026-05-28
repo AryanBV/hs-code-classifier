@@ -388,3 +388,208 @@ describe('classify() — verifier repair loop (Task 7)', () => {
     expect(res.diagnostics.llm_calls).toBe(5);
   });
 });
+
+/* ---------------------------------------------------------------------------
+ * Single-shot backtrack gate tests (Task 8)
+ * --------------------------------------------------------------------------- */
+
+/**
+ * A ConstraintHint emitted by L3 when all candidates are excluded and backtrack
+ * has not yet been attempted.
+ */
+const CONSTRAINT_HINT = {
+  exclude_chapters: ['73'],
+  prefer_chapters: ['82'],
+  reason: 'All Ch.73 codes excluded by exclusion rule 42',
+  source_exclusion_id: 42,
+};
+
+/**
+ * L3 output that fires the backtrack signal (first pass — backtrack_attempted=false).
+ */
+const rulesFilterBacktrack: RulesFilterOutput = {
+  filtered_candidates: [],
+  matched_exclusions: [],
+  dropped_log: [],
+  backtrack_signal: true,
+  constraint_hint: CONSTRAINT_HINT,
+  trace: [],
+};
+
+/**
+ * A second TriageOutput that L1 returns after receiving the constraint_hint.
+ * Models a different candidate chapter from the re-triage.
+ */
+const triageOutBacktrack: TriageOutput = {
+  decision: 'CLASSIFY',
+  extracted_attributes: mkAttributes(),
+  candidate_chapters: ['82'],
+  completeness_signal: 0.80,
+  clarifying_question: null,
+  refusal_reason: null,
+  out_of_scope_class: null,
+};
+
+/**
+ * A second RetrievalOutput returned on the backtrack re-retrieve.
+ */
+const retrievalOutBacktrack: RetrievalOutput = {
+  candidates: [mkCandidate('8204.11.00')],
+  retrieval_scores: {},
+  fts_matches: [],
+  exclusion_pre_filter: [],
+  retrieval_strategy: 'cascade_full',
+  query_embedding: [0.55, 0.66, 0.77, 0.88],
+  trace: [],
+};
+
+/**
+ * L3 output after the successful backtrack re-filter — candidates present,
+ * backtrack_signal=false (because backtrack_attempted will be true this time).
+ */
+const rulesFilterAfterBacktrack: RulesFilterOutput = {
+  filtered_candidates: [mkCandidate('8204.11.00')],
+  matched_exclusions: [],
+  dropped_log: [],
+  backtrack_signal: false,
+  constraint_hint: null,
+  trace: [],
+};
+
+/** SelectOutput for the backtrack-chosen code. */
+const selectOutBacktrack: SelectOutput = {
+  ...selectOut,
+  selected_code: '8204.11.00',
+  self_confidence: 'HIGH',
+};
+
+describe('classify() — single-shot backtrack gate (Task 8)', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    normalizeMock.mockResolvedValue(normalizedOut);
+    selectMock.mockResolvedValue(selectOutBacktrack);
+    verifyMock.mockResolvedValue(verifierPass);
+  });
+
+  it('re-enters triage once with constraint_hint when L3 fires backtrack_signal', async () => {
+    // 1st triage → CLASSIFY (no constraint_hint)
+    // 2nd triage → CLASSIFY with constraint_hint
+    triageMock
+      .mockResolvedValueOnce(triageOut)
+      .mockResolvedValueOnce(triageOutBacktrack);
+
+    // 1st retrieve → original candidates
+    // 2nd retrieve → backtrack candidates
+    retrieveMock
+      .mockResolvedValueOnce(retrievalOut)
+      .mockResolvedValueOnce(retrievalOutBacktrack);
+
+    // 1st rulesFilter → fires backtrack_signal
+    // 2nd rulesFilter → candidates present, no backtrack
+    rulesFilterMock
+      .mockResolvedValueOnce(rulesFilterBacktrack)
+      .mockResolvedValueOnce(rulesFilterAfterBacktrack);
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    // Decision is CLASSIFY with the backtrack-chosen code
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.classification?.code).toBe('8204.11.00');
+
+    // triage called TWICE
+    expect(triageMock).toHaveBeenCalledTimes(2);
+
+    // 2nd triage call receives the constraint_hint
+    const triage2ndInput = triageMock.mock.calls[1][0];
+    expect(triage2ndInput.constraint_hint).toEqual(CONSTRAINT_HINT);
+    // Other TriageInput fields are unchanged
+    expect(triage2ndInput.normalized_query).toBe(normalizedOut.normalized_query);
+    expect(triage2ndInput.previousAnswers).toEqual({});
+    expect(triage2ndInput.q_budget_remaining).toBe(3);
+
+    // 1st triage has constraint_hint=null
+    const triage1stInput = triageMock.mock.calls[0][0];
+    expect(triage1stInput.constraint_hint).toBeNull();
+
+    // retrieve called TWICE
+    expect(retrieveMock).toHaveBeenCalledTimes(2);
+
+    // rulesFilter called TWICE
+    expect(rulesFilterMock).toHaveBeenCalledTimes(2);
+
+    // 2nd rulesFilter receives backtrack_attempted=true (single-shot enforcement)
+    const l3_2ndInput = rulesFilterMock.mock.calls[1][0];
+    expect(l3_2ndInput.backtrack_attempted).toBe(true);
+
+    // 1st rulesFilter received backtrack_attempted=false
+    const l3_1stInput = rulesFilterMock.mock.calls[0][0];
+    expect(l3_1stInput.backtrack_attempted).toBe(false);
+
+    // state.backtrack_attempted reflected in diagnostics
+    // (not directly in ClassifyResult, but we verify via call counts)
+
+    // LLM calls: 1 (triage-1) + 1 (triage-2) + 1 (select) = 3
+    expect(res.diagnostics.llm_calls).toBe(3);
+  });
+
+  it('does NOT re-enter triage a 2nd time even if 2nd rulesFilter fires backtrack_signal again', async () => {
+    // Both rulesFilter calls return backtrack_signal:true — but the gate must be single-shot.
+    const rulesFilterStillBacktrack: RulesFilterOutput = {
+      ...rulesFilterBacktrack,
+      // Even with backtrack_signal=true on 2nd call, triage must NOT be called again.
+    };
+
+    triageMock
+      .mockResolvedValueOnce(triageOut)
+      .mockResolvedValueOnce(triageOutBacktrack);
+
+    retrieveMock
+      .mockResolvedValueOnce(retrievalOut)
+      .mockResolvedValueOnce(retrievalOutBacktrack);
+
+    // Both filter calls return backtrack_signal:true — 2nd should be ignored.
+    rulesFilterMock
+      .mockResolvedValueOnce(rulesFilterBacktrack)
+      .mockResolvedValueOnce(rulesFilterStillBacktrack);
+
+    // The 2nd rulesFilter still has 0 candidates → zero-candidate path (REFUSE).
+    // We only care about triage call count here, not decision.
+    const res = await classify('stainless steel hex bolts M10');
+
+    // triage was called EXACTLY TWICE — not a 3rd time
+    expect(triageMock).toHaveBeenCalledTimes(2);
+
+    // The result is REFUSE/backtrack_no_fit because candidates are still empty
+    expect(res.decision).toBe('REFUSE');
+    expect(res.refusal?.out_of_scope_class).toBe('backtrack_no_fit');
+  });
+
+  it('returns REFUSE with backtrack_no_fit when filtered_candidates is empty after backtrack', async () => {
+    // Only one triage call, but filter returns empty candidates immediately (no backtrack signal
+    // on first call — just zero candidates).
+    const rulesFilterZero: RulesFilterOutput = {
+      filtered_candidates: [],
+      matched_exclusions: [],
+      dropped_log: [],
+      backtrack_signal: false,   // no backtrack signal — still zero candidates
+      constraint_hint: null,
+      trace: [],
+    };
+
+    triageMock.mockResolvedValueOnce(triageOut);
+    retrieveMock.mockResolvedValueOnce(retrievalOut);
+    rulesFilterMock.mockResolvedValueOnce(rulesFilterZero);
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    expect(res.decision).toBe('REFUSE');
+    expect(res.refusal?.out_of_scope_class).toBe('backtrack_no_fit');
+    expect(res.refusal?.verifier_failures).toEqual([]);
+
+    // triage called only once (no backtrack signal)
+    expect(triageMock).toHaveBeenCalledTimes(1);
+    // select and verify never called
+    expect(selectMock).not.toHaveBeenCalled();
+    expect(verifyMock).not.toHaveBeenCalled();
+  });
+});
