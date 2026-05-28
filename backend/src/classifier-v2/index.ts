@@ -547,6 +547,9 @@ export async function continueWithAnswer(
   const prior = opts?.previousAnswers ?? {};
 
   // Build the merged answers map (adds this round's answer to prior rounds).
+  // Answers are keyed by questionId: re-answering the same question OVERWRITES
+  // the prior answer and does NOT consume a new Q-budget slot (the 3-round cap
+  // counts distinct questionIds in Object.keys(newPreviousAnswers), not calls).
   const newPreviousAnswers: Record<string, string> = { ...prior, [questionId]: answerId };
 
   // 3-round cap: if we now have more than 3 distinct answers, the Q-budget is

@@ -20,7 +20,9 @@ import type {
   VerifierOutput,
   RetrievalCandidate,
   TriageExtractedAttributes,
+  VerifierRuleFailure,
 } from './types';
+import { MaxTokensError } from './lib/vertex-client';
 
 /* ---------------------------------------------------------------------------
  * Layer mocks (registered BEFORE importing the SUT)
@@ -260,13 +262,13 @@ describe('classify() — CLASSIFY happy path', () => {
  * --------------------------------------------------------------------------- */
 
 /** A verifier failure object to inject as a repair signal. */
-const VERIFIER_FAILURE = {
-  rule_id: 'R01',
+const VERIFIER_FAILURE: VerifierRuleFailure = {
+  rule_id: 'MV-01',
   rule_name: 'CHAPTER_MATCH',
-  status: 'FAIL' as const,
-  predicate: null,
-  evidence: 'Chapter mismatch',
-  skipped_reason: null,
+  failure_code: 'CHAPTER_MISMATCH',
+  failure_detail: 'Selected code chapter 73 does not match candidate chapter 82',
+  field_path: 'selected_code',
+  suggested_fix: 'Choose a code in chapter 82',
 };
 
 const verifierFail: VerifierOutput = {
@@ -974,5 +976,198 @@ describe('continueWithAnswer() — multi-turn (Task 11)', () => {
     const triageCallInput = triageMock.mock.calls[0][0];
     expect(triageCallInput.previousAnswers).toEqual({ q_form: 'hex' });
     expect(triageCallInput.q_budget_remaining).toBe(2);
+  });
+});
+
+/* ---------------------------------------------------------------------------
+ * New edge-case tests (orchestrator hardening)
+ * --------------------------------------------------------------------------- */
+
+describe('classify() — backtrack re-entry REFUSE', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    normalizeMock.mockResolvedValue(normalizedOut);
+  });
+
+  it('returns REFUSE (not system_error) when backtrack 2nd triage returns REFUSE', async () => {
+    // A REFUSE that L1 may return when the constraint_hint cannot be satisfied.
+    const triageOutRefuseBacktrackNoFit: TriageOutput = {
+      decision: 'REFUSE',
+      extracted_attributes: mkAttributes(),
+      candidate_chapters: [],
+      completeness_signal: 0,
+      clarifying_question: null,
+      refusal_reason: 'No chapter satisfies the constraint hint',
+      out_of_scope_class: 'backtrack_no_fit',
+    };
+
+    // First triage → CLASSIFY, first L3 → backtrack_signal:true.
+    triageMock
+      .mockResolvedValueOnce(triageOut)
+      .mockResolvedValueOnce(triageOutRefuseBacktrackNoFit);
+
+    retrieveMock
+      .mockResolvedValueOnce(retrievalOut)
+      .mockResolvedValueOnce(retrievalOutBacktrack);
+
+    rulesFilterMock
+      .mockResolvedValueOnce(rulesFilterBacktrack);
+    // 2nd rulesFilter is never reached because 2nd triage returns REFUSE.
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    // Must be a model REFUSE, NOT a system error.
+    expect(res.decision).toBe('REFUSE');
+    expect(res.system_error).toBeUndefined();
+    expect(res.refusal?.out_of_scope_class).toBe('backtrack_no_fit');
+
+    // triage was called twice (first pass + backtrack re-entry).
+    expect(triageMock).toHaveBeenCalledTimes(2);
+    // select and verify must not have run.
+    expect(selectMock).not.toHaveBeenCalled();
+    expect(verifyMock).not.toHaveBeenCalled();
+  });
+});
+
+describe('classify() — system error from L4 select (stage L4)', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    normalizeMock.mockResolvedValue(normalizedOut);
+    triageMock.mockResolvedValue(triageOut);
+    retrieveMock.mockResolvedValue(retrievalOut);
+    rulesFilterMock.mockResolvedValue(rulesFilterOut);
+    verifyMock.mockResolvedValue(verifierPass);
+  });
+
+  it('surfaces system_error with stage L4 (not a fabricated CLASSIFY) when select throws vertex transport error', async () => {
+    const transportErr = mkVertexTransportError();
+    selectMock.mockRejectedValue(transportErr);
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    // Hard invariant: never a fabricated classification.
+    expect(res.decision).not.toBe('CLASSIFY');
+    expect(res.classification).toBeUndefined();
+
+    // system_error must be set and attributed to L4.
+    expect(res.system_error).toBeDefined();
+    expect(res.system_error?.stage).toBe('L4');
+    expect(res.system_error?.retryable).toBe(true);
+    expect(res.system_error?.message).toContain('[vertex-client] After');
+
+    // result is REFUSE with system discriminator.
+    expect(res.decision).toBe('REFUSE');
+    expect(res.refusal?.reason).toContain('System error');
+
+    // verify never ran (error during select).
+    expect(verifyMock).not.toHaveBeenCalled();
+  });
+});
+
+describe('classify() — system error during backtrack re-triage (stage L1, 2nd triage)', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    normalizeMock.mockResolvedValue(normalizedOut);
+  });
+
+  it('surfaces system_error (stage L1) when backtrack 2nd triage throws vertex transport error', async () => {
+    const transportErr = mkVertexTransportError();
+
+    // First triage → CLASSIFY; first L3 → backtrack_signal:true.
+    triageMock
+      .mockResolvedValueOnce(triageOut)
+      .mockRejectedValueOnce(transportErr); // 2nd triage (backtrack) throws.
+
+    retrieveMock
+      .mockResolvedValueOnce(retrievalOut)
+      .mockResolvedValueOnce(retrievalOutBacktrack);
+
+    rulesFilterMock.mockResolvedValueOnce(rulesFilterBacktrack);
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    // Must NOT be CLASSIFY — no code was selected.
+    expect(res.decision).not.toBe('CLASSIFY');
+    expect(res.classification).toBeUndefined();
+
+    // system_error set, attributed to L1 (where the backtrack triage lives).
+    expect(res.system_error).toBeDefined();
+    expect(res.system_error?.stage).toBe('L1');
+    expect(res.system_error?.retryable).toBe(true);
+
+    // result is REFUSE with system discriminator.
+    expect(res.decision).toBe('REFUSE');
+    expect(res.refusal?.reason).toContain('System error');
+
+    // downstream never ran.
+    expect(selectMock).not.toHaveBeenCalled();
+    expect(verifyMock).not.toHaveBeenCalled();
+  });
+});
+
+describe('classify() — MaxTokensError propagation (not swallowed as system_error)', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    normalizeMock.mockResolvedValue(normalizedOut);
+    retrieveMock.mockResolvedValue(retrievalOut);
+    rulesFilterMock.mockResolvedValue(rulesFilterOut);
+    selectMock.mockResolvedValue(selectOut);
+    verifyMock.mockResolvedValue(verifierPass);
+  });
+
+  it('propagates MaxTokensError thrown by triage — does NOT convert to system_error', async () => {
+    const maxTokensErr = new MaxTokensError(
+      '',
+      { promptTokens: 100000, outputTokens: 0, thoughtsTokens: 99000, totalTokens: 100000 },
+      'gemini-3.5-flash',
+    );
+    triageMock.mockRejectedValue(maxTokensErr);
+
+    // Must reject (propagate), NOT resolve with a system_error REFUSE.
+    await expect(classify('stainless steel hex bolts M10')).rejects.toThrow(MaxTokensError);
+
+    // Confirm downstream never ran.
+    expect(retrieveMock).not.toHaveBeenCalled();
+    expect(selectMock).not.toHaveBeenCalled();
+  });
+});
+
+describe('classify() — post-backtrack L5 uses 2nd retrieve embedding (not 1st)', () => {
+  beforeEach(() => {
+    // Use resetAllMocks to clear both call history AND the Once-queue — this
+    // guarantees no leftover Once values leak in from previous tests.
+    vi.resetAllMocks();
+    normalizeMock.mockResolvedValue(normalizedOut);
+    selectMock.mockResolvedValue(selectOutBacktrack);
+    verifyMock.mockResolvedValue(verifierPass);
+  });
+
+  it('passes the post-backtrack (2nd) retrieve query_embedding to L5, not the original', async () => {
+    // First triage → CLASSIFY; second triage → CLASSIFY.
+    triageMock
+      .mockResolvedValueOnce(triageOut)
+      .mockResolvedValueOnce(triageOutBacktrack);
+
+    // 1st retrieve → L2_QUERY_EMBEDDING = [0.11, ...]; 2nd retrieve → [0.55, ...].
+    retrieveMock
+      .mockResolvedValueOnce(retrievalOut)          // query_embedding = [0.11, 0.22, 0.33, 0.44]
+      .mockResolvedValueOnce(retrievalOutBacktrack); // query_embedding = [0.55, 0.66, 0.77, 0.88]
+
+    rulesFilterMock
+      .mockResolvedValueOnce(rulesFilterBacktrack)
+      .mockResolvedValueOnce(rulesFilterAfterBacktrack);
+
+    const res = await classify('stainless steel hex bolts M10');
+    expect(res.decision).toBe('CLASSIFY');
+
+    // Verify retrieve was called exactly twice (first pass + backtrack).
+    expect(retrieveMock).toHaveBeenCalledTimes(2);
+
+    // L5 (verify) must have received the SECOND (backtrack) embedding, not the first.
+    expect(verifyMock).toHaveBeenCalledTimes(1);
+    const l5Input = verifyMock.mock.calls[0][0];
+    expect(l5Input.query_embedding).toEqual([0.55, 0.66, 0.77, 0.88]);
+    // Negative assertion: must NOT be the original embedding.
+    expect(l5Input.query_embedding).not.toEqual(L2_QUERY_EMBEDDING);
   });
 });
