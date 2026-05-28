@@ -28,7 +28,9 @@ I'm implementing **Phase 4.2a — Spine + Instrument + Baseline** of the v2 HS-c
 ## Execution method (get the best out of Opus 4.7 + Claude Code)
 - Use **superpowers:subagent-driven-development** (recommended) — fresh subagent per task + two-stage review — or **executing-plans** for batch.
 - **TDD**: failing test first, then minimal impl, then green, then commit (the plan's steps are already in this shape).
-- Independent layers later (L6/L7/QGS) → **parallel Opus subagents in git worktrees** + **adversarial review before locking** each.
+- **4.2a is MOSTLY SEQUENTIAL** — the spine builds in dependency order (orchestrator Task 6→7→8…). Do NOT over-parallelize dependent tasks. Heavy parallelism (parallel Opus subagents in git worktrees, concurrency up to ~10) applies to the LATER plans (L6/L7/QGS are independent once the seams exist) — not here.
+- **Adversarial review before locking** each layer/prompt (independent subagent; self-reports not trusted).
+- **Verify each layer's REAL interface** by reading the layer file before wiring it — `types.ts` is the contract, but the plan has explicit read-then-implement lookups (L2's input type; the L1/L4 parse site for Zod; the system-error result shape). Confirm, don't assume.
 - **Root-cause fixes only** — never a per-case patch to make the eval green (false pass). Use **systematic-debugging** on non-obvious failures; the `classify:trace` CLI (plan Task 14) is your debugging tool.
 - Act as **orchestrator** — delegate bulk impl to subagents; keep your own context lean.
 
@@ -38,10 +40,11 @@ I'm implementing **Phase 4.2a — Spine + Instrument + Baseline** of the v2 HS-c
 - node-postgres serializes JS arrays as Postgres arrays — jsonb columns need `JSON.stringify` (already handled in the O2 ingest script; relevant if you touch DB writes).
 
 ## First actions
-1. Read the bootstrap docs above.
-2. Confirm git state / commit any pending planning work if not already committed (see below).
-3. Begin plan Task 1. Run the **full-pipeline smoke (Task 13)** early-ish once the orchestrator exists — it surfaces real-API reality the mocked tests can't.
-4. End state of 4.2a: a runnable `classify()`, the eval wired to it, and `backend/docs/PHASE-4.2a-BASELINE.md` with the first real accuracy numbers + failure map.
+1. Read the bootstrap docs above. **Ignore the older `backend/data/phase-3.5-prompts/PHASE-4-RESUME-PROMPT.md`** — it predates implementation (says "cut the branch", "max 6 concurrent"); we are ALREADY on `feat/phase-4-pipeline-build` and the concurrency cap is ~10. THIS prompt + the plan are current.
+2. `git status` — the tree was clean as of the planning session's last commit (`4190f91`). No new branch needed.
+3. **Sanity-check the eval gold BEFORE trusting the baseline as a gate:** the 386-case master suite's gold answers were not personally audited in planning. Spot-check ~15-20 cases (do the expected codes exist in `tariff_lines`? are the "correct" answers defensible?). If gold is shaky on hard cases, fix it (extend `gt-fix/`) before treating the % as truth — a wrong gold makes a correct classifier look wrong.
+4. Begin plan Task 1. Run the **full-pipeline smoke (Task 13)** early once the orchestrator exists — it surfaces real-API reality the mocked tests can't.
+5. End state of 4.2a: a runnable `classify()`, the eval wired to it, and `backend/docs/PHASE-4.2a-BASELINE.md` with the first real accuracy numbers + a prioritized failure map.
 
 ## Uncommitted work from the planning session (commit first if not done)
 The prior session left (in the working tree, branch `feat/phase-4-pipeline-build`): the O2 finale (8 `BIG→SC` renames, ingest-script fixes, F5 data normalizations, `FINAL-AUDIT-REPORT.md`, audit scripts), and the Phase 4.2-4.4 docs (this continuation prompt, the design spec, the plan, ARCHITECTURE/CLAUDE.md/eval-deprecation edits). Verify with `git status`; commit as a clean checkpoint before implementing.
