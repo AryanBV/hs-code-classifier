@@ -8,6 +8,7 @@ export default defineConfig({
     include: [
       'src/tests/**/*.test.ts',
       'src/classifier-v2/**/*.test.ts',
+      'src/eval/**/*.test.ts',
     ],
     exclude: [
       'node_modules',
