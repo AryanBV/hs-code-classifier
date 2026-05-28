@@ -20,6 +20,7 @@ import { rulesFilter } from './layers/L3-rules-filter';
 import { select } from './layers/L4-select';
 import { verify } from './layers/L5-verifier';
 import { selectToClassifyResult } from './select-to-result';
+import { BaselineEscalation } from './escalation';
 import type {
   ChapterCode,
   ClassifyResult,
@@ -28,7 +29,9 @@ import type {
   PipelineRunState,
   PipelineTraceEvent,
   RulesFilterInput,
+  SelectOutput,
   TriageInput,
+  VerifierRuleFailure,
 } from './types';
 
 /** Default Q-budget per the v2 lock (sub-spec 02 §B.5). */
@@ -160,11 +163,32 @@ export async function classify(
   // here, between L3 and L4. Happy path assumes ≥1 surviving candidate and no
   // backtrack signal.
 
-  /* ---- L4 — Select + L5 — Verify -------------------------------------- *
-   * This block becomes the repair loop in Task 7 (re-invoke L4 with
-   * verifier_failures up to 3×). For the happy path we run each exactly once
-   * and require verify.passed === true. */
-  const l4Input: L4Input = {
+  /* ---- L4 — Select + L5 — Verify (with repair loop, Task 7) ----------- *
+   * Attempt 0 = initial select+verify. On failure, up to 3 repair iterations
+   * re-call select with verifier_failures + repair_iteration, then re-verify
+   * the new output. First pass wins; after 3 failed repairs (4 total verify
+   * failures) hand off to BaselineEscalation.onVerifierExhausted.            */
+
+  /** Build the L5Input for the current select output. Reuse L2 query vector. */
+  function buildL5Input(currentSelectOut: SelectOutput): L5Input {
+    const code = currentSelectOut.selected_code ?? '';
+    return {
+      select_output: currentSelectOut,
+      candidate_code: code,
+      candidate_chapter: chapterOf(code),
+      // Reuse L2's query vector — the single Cohere embed lives in L2 (avoids
+      // the redundant orchestrator re-embed that doubled cash-billed embed spend).
+      query_embedding: retrievalOut.query_embedding,
+      filtered_candidates: rulesOut.filtered_candidates,
+      matched_exclusions: rulesOut.matched_exclusions,
+      composite_flag: normalized.composite_flag,
+      raw_tokens: normalized.raw_tokens,
+      head_nouns_for_fts,
+    };
+  }
+
+  // --- Initial select (attempt 0, no repair metadata) --------------------
+  const baseL4Input: L4Input = {
     normalized_query: normalized.normalized_query,
     raw_tokens: normalized.raw_tokens,
     composite_flag: normalized.composite_flag,
@@ -173,44 +197,62 @@ export async function classify(
     filtered_candidates: rulesOut.filtered_candidates,
     matched_exclusions: rulesOut.matched_exclusions,
   };
-  const selectOut = await select(l4Input);
+  let currentSelectOut = await select(baseL4Input);
   state.llm_calls = (state.llm_calls ?? 0) + 1;
   recordLayer(state, 'L4', 'select', {
-    selected_code: selectOut.selected_code,
-    self_confidence: selectOut.self_confidence,
+    selected_code: currentSelectOut.selected_code,
+    self_confidence: currentSelectOut.self_confidence,
   });
 
   // Select REFUSE (null code) is Task 10. Happy path expects a selected code.
-  if (selectOut.selected_code === null) {
+  if (currentSelectOut.selected_code === null) {
     throw new Error('classifier-v2: Select REFUSE not yet handled (Task 10).');
   }
 
-  const candidateCode = selectOut.selected_code;
-  const l5Input: L5Input = {
-    select_output: selectOut,
-    candidate_code: candidateCode,
-    candidate_chapter: chapterOf(candidateCode),
-    // Reuse L2's query vector — the single Cohere embed lives in L2 (avoids the
-    // redundant orchestrator re-embed that doubled cash-billed embed spend).
-    query_embedding: retrievalOut.query_embedding,
-    filtered_candidates: rulesOut.filtered_candidates,
-    matched_exclusions: rulesOut.matched_exclusions,
-    composite_flag: normalized.composite_flag,
-    raw_tokens: normalized.raw_tokens,
-    head_nouns_for_fts,
-  };
-  const verifyOut = await verify(l5Input);
-  recordLayer(state, 'L5', 'verify', { passed: verifyOut.passed });
+  let currentVerifyOut = await verify(buildL5Input(currentSelectOut));
+  recordLayer(state, 'L5', 'verify', { passed: currentVerifyOut.passed });
 
-  // Verifier failure → repair loop (Task 7) → escalation (BaselineEscalation,
-  // Task 7). Happy path requires a clean pass.
-  if (!verifyOut.passed) {
-    throw new Error(
-      'classifier-v2: Verifier rejection / repair loop not yet handled (Task 7).',
-    );
+  if (currentVerifyOut.passed) {
+    return selectToClassifyResult(currentSelectOut, state, { escalated_to_deep_think: false });
   }
 
-  return selectToClassifyResult(selectOut, state, { escalated_to_deep_think: false });
+  // --- Repair loop: up to 3 repair iterations (i = 0, 1, 2) -------------
+  let lastFailures: VerifierRuleFailure[] = currentVerifyOut.failed_rules;
+
+  for (let i = 0; i < 3; i++) {
+    // Push a trace event for this repair attempt (before re-selecting).
+    recordLayer(state, `L5:repair${i}` as PipelineTraceEvent['layer'], 'repair', {
+      repair_iteration: i + 1,
+      failed_rules: lastFailures.length,
+    });
+
+    // Re-call select with repair feedback (this IS an LLM call).
+    const repairL4Input: L4Input = {
+      ...baseL4Input,
+      verifier_failures: lastFailures,
+      repair_iteration: i + 1,
+    };
+    currentSelectOut = await select(repairL4Input);
+    state.llm_calls = (state.llm_calls ?? 0) + 1;
+    recordLayer(state, 'L4', 'select', {
+      selected_code: currentSelectOut.selected_code,
+      self_confidence: currentSelectOut.self_confidence,
+      repair_iteration: i + 1,
+    });
+
+    // Re-verify the repaired output (L5 is NOT an LLM call — no llm_calls increment).
+    currentVerifyOut = await verify(buildL5Input(currentSelectOut));
+    recordLayer(state, 'L5', 'verify', { passed: currentVerifyOut.passed, repair_iteration: i + 1 });
+
+    if (currentVerifyOut.passed) {
+      return selectToClassifyResult(currentSelectOut, state, { escalated_to_deep_think: false });
+    }
+
+    lastFailures = currentVerifyOut.failed_rules;
+  }
+
+  // All 3 repairs exhausted — hand off to escalation policy.
+  return BaselineEscalation.onVerifierExhausted(state, currentSelectOut, lastFailures);
 }
 
 /**

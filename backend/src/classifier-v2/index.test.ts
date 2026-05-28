@@ -254,3 +254,137 @@ describe('classify() — CLASSIFY happy path', () => {
     expect(l5Input.query_embedding).toBe(L2_QUERY_EMBEDDING);
   });
 });
+
+/* ---------------------------------------------------------------------------
+ * Repair loop tests (Task 7)
+ * --------------------------------------------------------------------------- */
+
+/** A verifier failure object to inject as a repair signal. */
+const VERIFIER_FAILURE = {
+  rule_id: 'R01',
+  rule_name: 'CHAPTER_MATCH',
+  status: 'FAIL' as const,
+  predicate: null,
+  evidence: 'Chapter mismatch',
+  skipped_reason: null,
+};
+
+const verifierFail: VerifierOutput = {
+  passed: false,
+  failed_rules: [VERIFIER_FAILURE],
+  skipped_predicates: [],
+  repair_feedback: 'Chapter does not match selected code.',
+  trace: [],
+};
+
+/** Second SelectOutput with a different code (repair attempt 1 output). */
+const selectOutRepair1: SelectOutput = {
+  ...selectOut,
+  selected_code: '7318.16.00',
+  self_confidence: 'MEDIUM',
+};
+
+/** Third SelectOutput (repair attempt 2 output — the one that passes). */
+const selectOutRepair2: SelectOutput = {
+  ...selectOut,
+  selected_code: '7318.15.00',
+  self_confidence: 'HIGH',
+};
+
+describe('classify() — verifier repair loop (Task 7)', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    normalizeMock.mockResolvedValue(normalizedOut);
+    triageMock.mockResolvedValue(triageOut);
+    retrieveMock.mockResolvedValue(retrievalOut);
+    rulesFilterMock.mockResolvedValue(rulesFilterOut);
+  });
+
+  it('retries select up to 3× on verifier fail, stops at first pass (fail, fail, pass)', async () => {
+    // select: initial → repair1 → repair2
+    selectMock
+      .mockResolvedValueOnce(selectOut)       // attempt 0 (initial)
+      .mockResolvedValueOnce(selectOutRepair1) // repair iteration 1
+      .mockResolvedValueOnce(selectOutRepair2); // repair iteration 2
+
+    // verify: fail, fail, pass
+    verifyMock
+      .mockResolvedValueOnce(verifierFail) // attempt 0 fails
+      .mockResolvedValueOnce(verifierFail) // repair 1 fails
+      .mockResolvedValueOnce(verifierPass); // repair 2 passes
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    // 1. Decision is CLASSIFY (successful repair)
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.classification?.code).toBe('7318.15.00');
+
+    // 2. select called 3 times total (initial + 2 repairs)
+    expect(selectMock).toHaveBeenCalledTimes(3);
+
+    // 3. verify called 3 times (one per select call)
+    expect(verifyMock).toHaveBeenCalledTimes(3);
+
+    // 4. repair select calls carry verifier_failures and incrementing repair_iteration
+    const l4Call1 = selectMock.mock.calls[1][0]; // repair iteration 1
+    expect(l4Call1.verifier_failures).toEqual([VERIFIER_FAILURE]);
+    expect(l4Call1.repair_iteration).toBe(1);
+
+    const l4Call2 = selectMock.mock.calls[2][0]; // repair iteration 2
+    expect(l4Call2.verifier_failures).toEqual([VERIFIER_FAILURE]);
+    expect(l4Call2.repair_iteration).toBe(2);
+
+    // 5. initial select call has no repair metadata (or null/undefined)
+    const l4Call0 = selectMock.mock.calls[0][0]; // initial attempt
+    expect(l4Call0.verifier_failures == null).toBe(true);
+    expect(l4Call0.repair_iteration == null).toBe(true);
+
+    // 6. LLM calls = 1 (triage) + 3 (select×3) = 4
+    expect(res.diagnostics.llm_calls).toBe(4);
+
+    // 7. Trace includes repair events
+    expect(res.diagnostics.escalation_path).toContain('L5:repair0');
+    expect(res.diagnostics.escalation_path).toContain('L5:repair1');
+  });
+
+  it('invokes BaselineEscalation.onVerifierExhausted after 3 repair failures (4 total verify failures)', async () => {
+    // select: initial + 3 repairs (4 total)
+    selectMock
+      .mockResolvedValueOnce(selectOut)        // attempt 0
+      .mockResolvedValueOnce(selectOutRepair1) // repair 1
+      .mockResolvedValueOnce(selectOutRepair2) // repair 2
+      .mockResolvedValueOnce(selectOut);       // repair 3
+
+    // verify: fail all 4 times
+    verifyMock
+      .mockResolvedValueOnce(verifierFail) // attempt 0
+      .mockResolvedValueOnce(verifierFail) // repair 1
+      .mockResolvedValueOnce(verifierFail) // repair 2
+      .mockResolvedValueOnce(verifierFail); // repair 3
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    // 1. Still returns CLASSIFY (BaselineEscalation emits best result, not REFUSE)
+    expect(res.decision).toBe('CLASSIFY');
+
+    // 2. select called 4 times total (initial + 3 repairs)
+    expect(selectMock).toHaveBeenCalledTimes(4);
+
+    // 3. verify called 4 times
+    expect(verifyMock).toHaveBeenCalledTimes(4);
+
+    // 4. escalation_path has the would_escalate marker from BaselineEscalation
+    expect(res.diagnostics.escalation_path).toContain('L6:would_escalate');
+
+    // 5. repair_iteration on each repair call
+    const l4Call1 = selectMock.mock.calls[1][0];
+    expect(l4Call1.repair_iteration).toBe(1);
+    const l4Call2 = selectMock.mock.calls[2][0];
+    expect(l4Call2.repair_iteration).toBe(2);
+    const l4Call3 = selectMock.mock.calls[3][0];
+    expect(l4Call3.repair_iteration).toBe(3);
+
+    // 6. LLM calls = 1 (triage) + 4 (select×4) = 5
+    expect(res.diagnostics.llm_calls).toBe(5);
+  });
+});
