@@ -19,10 +19,11 @@ import { retrieve } from './layers/L2-retrieval';
 import { rulesFilter } from './layers/L3-rules-filter';
 import { select } from './layers/L4-select';
 import { verify } from './layers/L5-verifier';
-import { selectToClassifyResult } from './select-to-result';
+import { selectToClassifyResult, buildDiagnostics } from './select-to-result';
 import { BaselineEscalation } from './escalation';
 import type {
   ChapterCode,
+  ClarifyingQuestion,
   ClassifyResult,
   L4Input,
   L5Input,
@@ -31,6 +32,7 @@ import type {
   RulesFilterInput,
   SelectOutput,
   TriageInput,
+  TriageOutput,
   VerifierRuleFailure,
 } from './types';
 
@@ -68,6 +70,43 @@ function recordLayer(
 /** Derive the 2-digit chapter from a 6- or 8-digit ITC-HS code. */
 function chapterOf(code: string): ChapterCode {
   return code.slice(0, 2);
+}
+
+/**
+ * Map a TriageOutput with decision:'ASK' to a ClassifyResult with decision:'ASK'.
+ *
+ * Synthesizes a stable `question_id` from the discriminating_attribute so the
+ * API surface is consistent across calls. QGS (Task QGS wiring) will later
+ * replace the *selection* of the question — this seam remains unchanged.
+ *
+ * Defensive guard: if the triage output somehow arrives here with a null
+ * clarifying_question despite decision==='ASK' (incoherent triage — the L1
+ * isTriageOutput guard should prevent this), we throw a clear error rather than
+ * emitting an ASK with an empty question.
+ */
+function triageToAsk(t: TriageOutput, state: PipelineRunState): ClassifyResult {
+  const cq = t.clarifying_question;
+  if (cq === null) {
+    // Should be unreachable: L1 cross-field guard enforces ASK ⇒ non-null.
+    throw new Error(
+      'classifier-v2: Triage returned ASK with null clarifying_question (incoherent triage output).',
+    );
+  }
+
+  const question: ClarifyingQuestion = {
+    question_id: `ask_${cq.discriminating_attribute}`,
+    question_text: cq.fallback_question_text,
+    discriminating_attribute: cq.discriminating_attribute,
+    options: cq.fallback_options,
+  };
+
+  recordLayer(state, 'L1', 'ask', { discriminating_attribute: cq.discriminating_attribute });
+
+  return {
+    decision: 'ASK',
+    question,
+    diagnostics: buildDiagnostics(state),
+  };
 }
 
 /* ---------------------------------------------------------------------------
@@ -121,11 +160,14 @@ export async function classify(
   state.llm_calls = (state.llm_calls ?? 0) + 1;
   recordLayer(state, 'L1', 'triage', { decision: triageOut.decision });
 
-  // ASK / REFUSE branches are Task 9 / Task 10. Happy path requires CLASSIFY.
+  // ASK → Task 9 (implemented). REFUSE → Task 10 (placeholder below).
+  if (triageOut.decision === 'ASK') {
+    return triageToAsk(triageOut, state);
+  }
   if (triageOut.decision !== 'CLASSIFY') {
+    // REFUSE — Task 10 not yet implemented.
     throw new Error(
-      `classifier-v2: Triage decision '${triageOut.decision}' not yet handled ` +
-        '(ASK=Task 9, REFUSE=Task 10).',
+      `classifier-v2: Triage decision '${triageOut.decision}' not yet handled (REFUSE=Task 10).`,
     );
   }
 
@@ -189,11 +231,14 @@ export async function classify(
     state.llm_calls = (state.llm_calls ?? 0) + 1;
     recordLayer(state, 'L1', 'triage', { decision: backtrackTriageOut.decision, backtrack: true });
 
+    // ASK → Task 9 (implemented). REFUSE → Task 10 (placeholder).
+    if (backtrackTriageOut.decision === 'ASK') {
+      return triageToAsk(backtrackTriageOut, state);
+    }
     if (backtrackTriageOut.decision !== 'CLASSIFY') {
-      // Re-triage returned ASK or REFUSE — Task 9/10 stubs not yet implemented.
+      // REFUSE — Task 10 not yet implemented.
       throw new Error(
-        `classifier-v2: Backtrack re-triage decision '${backtrackTriageOut.decision}' not yet handled ` +
-          '(ASK=Task 9, REFUSE=Task 10).',
+        `classifier-v2: Backtrack re-triage decision '${backtrackTriageOut.decision}' not yet handled (REFUSE=Task 10).`,
       );
     }
 

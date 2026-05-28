@@ -593,3 +593,105 @@ describe('classify() — single-shot backtrack gate (Task 8)', () => {
     expect(verifyMock).not.toHaveBeenCalled();
   });
 });
+
+/* ---------------------------------------------------------------------------
+ * ASK path tests (Task 9)
+ * --------------------------------------------------------------------------- */
+
+/** TriageOutput with decision:'ASK' and a clarifying question. */
+const triageOutAsk: TriageOutput = {
+  decision: 'ASK',
+  extracted_attributes: mkAttributes(),
+  candidate_chapters: [],
+  completeness_signal: 0.4,
+  clarifying_question: {
+    discriminating_attribute: 'form',
+    fallback_question_text: 'Knitted or woven?',
+    fallback_options: [
+      { id: 'knit', label: 'Knitted' },
+      { id: 'woven', label: 'Woven' },
+    ],
+  },
+  refusal_reason: null,
+  out_of_scope_class: null,
+};
+
+describe('classify() — ASK path (Task 9)', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    normalizeMock.mockResolvedValue(normalizedOut);
+    // retrieve/rulesFilter/select/verify should never be called on ASK
+    retrieveMock.mockResolvedValue(retrievalOut);
+    rulesFilterMock.mockResolvedValue(rulesFilterOut);
+    selectMock.mockResolvedValue(selectOut);
+    verifyMock.mockResolvedValue(verifierPass);
+  });
+
+  it('returns decision:ASK with correctly mapped question on first-pass triage ASK', async () => {
+    triageMock.mockResolvedValue(triageOutAsk);
+
+    const res = await classify('cotton fabric');
+
+    // Top-level decision
+    expect(res.decision).toBe('ASK');
+
+    // question must be present and fully mapped
+    expect(res.question).toBeDefined();
+    expect(res.question?.question_text).toBe('Knitted or woven?');
+    expect(res.question?.discriminating_attribute).toBe('form');
+    expect(res.question?.options).toEqual([
+      { id: 'knit', label: 'Knitted' },
+      { id: 'woven', label: 'Woven' },
+    ]);
+    // question_id is the stable synthesized id
+    expect(res.question?.question_id).toBe('ask_form');
+
+    // classification must not be set
+    expect(res.classification).toBeUndefined();
+
+    // diagnostics always present
+    expect(res.diagnostics).toBeDefined();
+    expect(res.diagnostics.escalation_path).toContain('L0');
+    expect(res.diagnostics.escalation_path).toContain('L1');
+
+    // Pipeline stopped at L1 — layers after triage must not have been called
+    expect(retrieveMock).not.toHaveBeenCalled();
+    expect(rulesFilterMock).not.toHaveBeenCalled();
+    expect(selectMock).not.toHaveBeenCalled();
+    expect(verifyMock).not.toHaveBeenCalled();
+  });
+
+  it('returns decision:ASK on backtrack re-triage ASK (same triageToAsk mapping)', async () => {
+    // First triage → CLASSIFY (triggers backtrack path)
+    // Second triage (backtrack re-entry) → ASK
+    triageMock
+      .mockResolvedValueOnce(triageOut)        // first pass → CLASSIFY
+      .mockResolvedValueOnce(triageOutAsk);     // backtrack re-entry → ASK
+
+    // First rulesFilter fires backtrack_signal; second never called
+    rulesFilterMock
+      .mockResolvedValueOnce(rulesFilterBacktrack)
+      .mockResolvedValue(rulesFilterOut);       // fallback (should not be reached)
+
+    retrieveMock
+      .mockResolvedValueOnce(retrievalOut)      // first retrieve
+      .mockResolvedValue(retrievalOutBacktrack); // backtrack retrieve (called)
+
+    const res = await classify('cotton fabric');
+
+    expect(res.decision).toBe('ASK');
+    expect(res.question?.question_text).toBe('Knitted or woven?');
+    expect(res.question?.discriminating_attribute).toBe('form');
+    expect(res.question?.question_id).toBe('ask_form');
+    expect(res.question?.options).toEqual([
+      { id: 'knit', label: 'Knitted' },
+      { id: 'woven', label: 'Woven' },
+    ]);
+
+    // triage called twice (first pass + backtrack)
+    expect(triageMock).toHaveBeenCalledTimes(2);
+    // select/verify must not have been called
+    expect(selectMock).not.toHaveBeenCalled();
+    expect(verifyMock).not.toHaveBeenCalled();
+  });
+});
