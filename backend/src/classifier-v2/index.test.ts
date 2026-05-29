@@ -1369,19 +1369,28 @@ describe('classify() — post-backtrack L5 uses 2nd retrieve embedding (not 1st)
 });
 
 /* ---------------------------------------------------------------------------
- * SIBLING-ASK lever (env-gated; default OFF → byte-identical)
+ * SIBLING-ASK lever (POST-L4 uncertainty gate; env-gated; default OFF →
+ * byte-identical). The lever now runs AFTER L4 (Select) + its L5/repair loop:
+ * it asks ONE targeted question ONLY when L4 itself signalled it was uncertain
+ * (self_confidence below SIBLING_ASK_CONF_THRESHOLD) AND the winning leaf sits
+ * in a same-subheading sibling group whose discriminating attribute the user
+ * never pinned. Everything else finalizes L4's classification unchanged.
  * --------------------------------------------------------------------------- */
 
-/** A QGS-style sibling batch whose top question discriminates on processing_state. */
+/**
+ * A QGS-style sibling batch whose top question discriminates on `form` — the
+ * SELECTED group's differing field (so the question is built on the SPECIFIC
+ * discriminator of the sibling group the L4 winner belongs to).
+ */
 const siblingBatch = {
   questions: [
     {
-      question_id: 'ask_processing_state',
-      question_text: 'Is the product roasted or not roasted?',
-      discriminating_attribute: 'processing_state' as const,
+      question_id: 'ask_form',
+      question_text: 'Which best describes the product form?',
+      discriminating_attribute: 'form' as const,
       options: [
-        { id: 'roasted', label: 'Roasted' },
-        { id: 'green', label: 'Not roasted (green)' },
+        { id: 'hex', label: 'Hex' },
+        { id: 'socket', label: 'Socket' },
         { id: 'other', label: 'Other' },
         { id: 'none', label: 'None' },
       ],
@@ -1392,18 +1401,24 @@ const siblingBatch = {
   total_ig_potential: 1.0,
 };
 
+/** A LOW-confidence L4 output (below the default 0.65 threshold → eligible). */
+const selectOutLowConf: SelectOutput = { ...selectOut, self_confidence: 'LOW' };
+/** A MEDIUM-confidence L4 output (below 0.65 → eligible; above 0.55). */
+const selectOutMedConf: SelectOutput = { ...selectOut, self_confidence: 'MEDIUM' };
+
 describe('classify() — SIBLING-ASK lever GATE OFF (default → byte-identical)', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     delete process.env.SIBLING_ASK_ENABLED; // explicit: gate OFF
+    delete process.env.SIBLING_ASK_CONF_THRESHOLD;
     normalizeMock.mockResolvedValue(normalizedOut);
     triageMock.mockResolvedValue(triageOut);          // CLASSIFY
     retrieveMock.mockResolvedValue(retrievalOut);
     rulesFilterMock.mockResolvedValue(rulesFilterOut); // 2 sibling candidates
-    selectMock.mockResolvedValue(selectOut);
+    // LOW confidence + a would-be sibling group + usable batch + unpinned attr so
+    // that ONLY the gate suppresses the lever (proves the gate, not conditions).
+    selectMock.mockResolvedValue(selectOutLowConf);
     verifyMock.mockResolvedValue(verifierPass);
-    // Arrange a would-be sibling group + usable batch + unpinned attr so that ONLY
-    // the gate suppresses the lever (proves the gate, not the trigger conditions).
     computeSiblingDiscriminatorsMock.mockReturnValue([
       { subheading: '7318.15', codes: [SELECTED, '7318.16.00'], differing_fields: ['form'], values_by_field: {} },
     ] as unknown[]);
@@ -1414,15 +1429,18 @@ describe('classify() — SIBLING-ASK lever GATE OFF (default → byte-identical)
 
   afterEach(() => {
     delete process.env.SIBLING_ASK_ENABLED;
+    delete process.env.SIBLING_ASK_CONF_THRESHOLD;
   });
 
   it('returns the unchanged CLASSIFY result and never touches the lever deps', async () => {
     const res = await classify('stainless steel hex bolts M10');
 
-    // Byte-identical CLASSIFY outcome (same as the happy-path suite).
+    // Byte-identical CLASSIFY outcome (same as the happy-path suite): L4's LOW-conf
+    // classification is finalized verbatim — the post-L4 gate never engaged.
     expect(res.decision).toBe('CLASSIFY');
     expect(res.classification?.code).toBe(SELECTED);
-    // Pipeline proceeds straight to L4/L5 — no SIBLING-ASK hop.
+    expect(res.classification?.self_confidence).toBe('LOW');
+    // Escalation path is the unchanged L0→L5 — no SIBLING-ASK hop.
     expect(res.diagnostics.escalation_path).toEqual(['L0', 'L1', 'L2', 'L3', 'L4', 'L5']);
 
     // CRITICAL: with the gate off, the lever does ZERO work — no DB/QGS/pin calls.
@@ -1436,15 +1454,16 @@ describe('classify() — SIBLING-ASK lever GATE OFF (default → byte-identical)
   });
 });
 
-describe('classify() — SIBLING-ASK lever GATE ON', () => {
+describe('classify() — SIBLING-ASK lever GATE ON (post-L4 uncertainty gate)', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     process.env.SIBLING_ASK_ENABLED = 'true';
+    delete process.env.SIBLING_ASK_CONF_THRESHOLD; // default 0.65
     normalizeMock.mockResolvedValue(normalizedOut);
-    triageMock.mockResolvedValue(triageOut);          // CLASSIFY → reaches L3/L4 seam
+    triageMock.mockResolvedValue(triageOut);          // CLASSIFY → reaches L4
     retrieveMock.mockResolvedValue(retrievalOut);
     rulesFilterMock.mockResolvedValue(rulesFilterOut); // 2 sibling candidates
-    selectMock.mockResolvedValue(selectOut);
+    selectMock.mockResolvedValue(selectOutLowConf);    // LOW → below threshold
     verifyMock.mockResolvedValue(verifierPass);
     computeSiblingDiscriminatorsMock.mockReturnValue([
       { subheading: '7318.15', codes: [SELECTED, '7318.16.00'], differing_fields: ['form'], values_by_field: {} },
@@ -1456,27 +1475,32 @@ describe('classify() — SIBLING-ASK lever GATE ON', () => {
 
   afterEach(() => {
     delete process.env.SIBLING_ASK_ENABLED;
+    delete process.env.SIBLING_ASK_CONF_THRESHOLD;
   });
 
-  it('fires an ASK (trigger=sibling) when a sibling group has an UNPINNED attribute', async () => {
+  it('fires an ASK (trigger=sibling) when L4 is LOW-conf on an UNPINNED sibling group', async () => {
     const res = await classify('coffee beans', { captureTrace: true });
 
     expect(res.decision).toBe('ASK');
-    expect(res.question?.discriminating_attribute).toBe('processing_state');
+    expect(res.question?.discriminating_attribute).toBe('form');
     expect(res.question?.trigger).toBe('sibling');
     // Full batch surfaced + every question tagged.
     expect(res.questions?.questions).toHaveLength(1);
     expect(res.questions?.questions[0]?.trigger).toBe('sibling');
 
-    // It fired BEFORE L4/L5 — Select/Verify never ran.
-    expect(selectMock).not.toHaveBeenCalled();
-    expect(verifyMock).not.toHaveBeenCalled();
+    // L4 + L5 ran FIRST (post-L4 gate) — Select/Verify executed before the ASK.
+    expect(selectMock).toHaveBeenCalledTimes(1);
+    expect(verifyMock).toHaveBeenCalledTimes(1);
 
-    // SIBLING-ASK trace step recorded.
+    // SIBLING-ASK trace step recorded AFTER L4/L5.
     const trace = res.diagnostics.trace ?? [];
     const step = trace.find((t) => t.layer === 'SIBLING-ASK' && t.event === 'ask');
     expect(step).toBeDefined();
-    expect(step?.payload?.discriminating_attribute).toBe('processing_state');
+    expect(step?.payload?.discriminating_attribute).toBe('form');
+    expect(step?.payload?.self_confidence).toBe('LOW');
+    // The gate ran after L5 in the escalation path.
+    const path = res.diagnostics.escalation_path;
+    expect(path[path.length - 1]).toBe('SIBLING-ASK');
 
     // Reused the pre-fetched TLA: getTLAForCodes called exactly once (no duplicate
     // fetch inside QGS — it received the deps.fetchTLA seam).
@@ -1484,7 +1508,55 @@ describe('classify() — SIBLING-ASK lever GATE ON', () => {
     expect(qgsMock).toHaveBeenCalledTimes(1);
   });
 
-  it('does NOT fire (→ proceeds to L4) when the top attribute is PINNED', async () => {
+  it('also fires for MEDIUM confidence (below the default 0.65 threshold)', async () => {
+    selectMock.mockResolvedValue(selectOutMedConf);
+
+    const res = await classify('coffee beans');
+
+    expect(res.decision).toBe('ASK');
+    expect(res.question?.trigger).toBe('sibling');
+  });
+
+  it('does NOT fire when L4 is HIGH-conf (≥ threshold) → finalizes L4 classification', async () => {
+    selectMock.mockResolvedValue(selectOut); // HIGH (0.9) ≥ 0.65
+
+    const res = await classify('coffee beans');
+
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.classification?.code).toBe(SELECTED);
+    expect(res.classification?.self_confidence).toBe('HIGH');
+    // The confidence gate short-circuits BEFORE any DB/QGS/pin work.
+    expect(getTLAForCodesMock).not.toHaveBeenCalled();
+    expect(computeSiblingDiscriminatorsMock).not.toHaveBeenCalled();
+    expect(qgsMock).not.toHaveBeenCalled();
+    expect(isAttributePinnedMock).not.toHaveBeenCalled();
+    expect(selectMock).toHaveBeenCalledTimes(1);
+    expect(verifyMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('SIBLING_ASK_CONF_THRESHOLD=0.55 excludes MEDIUM (0.6) → finalizes classification', async () => {
+    process.env.SIBLING_ASK_CONF_THRESHOLD = '0.55';
+    selectMock.mockResolvedValue(selectOutMedConf); // MEDIUM (0.6) ≥ 0.55 → no ask
+
+    const res = await classify('coffee beans');
+
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.classification?.self_confidence).toBe('MEDIUM');
+    expect(getTLAForCodesMock).not.toHaveBeenCalled();
+    expect(qgsMock).not.toHaveBeenCalled();
+  });
+
+  it('SIBLING_ASK_CONF_THRESHOLD=0.55 still fires for LOW (0.3 < 0.55)', async () => {
+    process.env.SIBLING_ASK_CONF_THRESHOLD = '0.55';
+    selectMock.mockResolvedValue(selectOutLowConf);
+
+    const res = await classify('coffee beans');
+
+    expect(res.decision).toBe('ASK');
+    expect(res.question?.trigger).toBe('sibling');
+  });
+
+  it('does NOT fire (→ finalize) when the discriminating attribute is PINNED', async () => {
     isAttributePinnedMock.mockReturnValue(true); // user already specified it
 
     const res = await classify('coffee beans');
@@ -1495,12 +1567,12 @@ describe('classify() — SIBLING-ASK lever GATE ON', () => {
     expect(getTLAForCodesMock).toHaveBeenCalledTimes(1);
     expect(qgsMock).toHaveBeenCalledTimes(1);
     expect(isAttributePinnedMock).toHaveBeenCalledTimes(1);
-    // Fell through to L4 + L5.
+    // L4 + L5 already ran (post-L4 gate).
     expect(selectMock).toHaveBeenCalledTimes(1);
     expect(verifyMock).toHaveBeenCalledTimes(1);
   });
 
-  it('does NOT fire when there is no sibling group (S1 fails) → proceeds to L4', async () => {
+  it('does NOT fire when there is no sibling group (S1 fails) → finalize', async () => {
     computeSiblingDiscriminatorsMock.mockReturnValue([] as unknown[]);
 
     const res = await classify('coffee beans');
@@ -1513,7 +1585,23 @@ describe('classify() — SIBLING-ASK lever GATE ON', () => {
     expect(selectMock).toHaveBeenCalledTimes(1);
   });
 
-  it('does NOT fire when QGS returns null (S3 fails / over-ask guard) → proceeds to L4', async () => {
+  it('does NOT fire when the selected leaf is NOT in any sibling group → finalize', async () => {
+    // Sibling group exists but for a DIFFERENT subheading than the L4 winner.
+    computeSiblingDiscriminatorsMock.mockReturnValue([
+      { subheading: '7320.10', codes: ['7320.10.10', '7320.10.20'], differing_fields: ['form'], values_by_field: {} },
+    ] as unknown[]);
+
+    const res = await classify('coffee beans');
+
+    expect(res.decision).toBe('CLASSIFY');
+    // The selected code's subheading has no sibling group → no QGS / pin work.
+    expect(getTLAForCodesMock).toHaveBeenCalledTimes(1);
+    expect(qgsMock).not.toHaveBeenCalled();
+    expect(isAttributePinnedMock).not.toHaveBeenCalled();
+    expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('does NOT fire when QGS returns null (S3 fails / over-ask guard) → finalize', async () => {
     qgsMock.mockResolvedValue(null);
 
     const res = await classify('coffee beans');
@@ -1524,12 +1612,43 @@ describe('classify() — SIBLING-ASK lever GATE ON', () => {
     expect(selectMock).toHaveBeenCalledTimes(1);
   });
 
-  it('degrades to L4 (never throws) when the lever internals throw', async () => {
+  it('does NOT fire when the QGS question is NOT on the sibling discriminator → finalize', async () => {
+    // QGS surfaces a question on `material`, but the SELECTED group differs on
+    // `form` only — there is no question built on the group's discriminator.
+    qgsMock.mockResolvedValue({
+      questions: [
+        {
+          question_id: 'ask_material',
+          question_text: 'Which material?',
+          discriminating_attribute: 'material' as const,
+          options: [
+            { id: 'steel', label: 'Steel' },
+            { id: 'brass', label: 'Brass' },
+            { id: 'other', label: 'Other' },
+            { id: 'none', label: 'None' },
+          ],
+          info_gain_score: 0.9,
+          qgs_used: true,
+        },
+      ],
+      total_ig_potential: 0.9,
+    });
+
+    const res = await classify('coffee beans');
+
+    expect(res.decision).toBe('CLASSIFY');
+    expect(qgsMock).toHaveBeenCalledTimes(1);
+    // No question matched the group's differing field → no pin-check, finalize.
+    expect(isAttributePinnedMock).not.toHaveBeenCalled();
+    expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('degrades to L4 classification (never throws) when the lever internals throw', async () => {
     getTLAForCodesMock.mockRejectedValue(new Error('DB hiccup'));
 
     const res = await classify('coffee beans');
 
-    // Graceful degrade: a thrown error inside the lever yields null → L4 runs.
+    // Graceful degrade: a thrown error inside the lever yields the L4 classification.
     expect(res.decision).toBe('CLASSIFY');
     expect(res.classification?.code).toBe(SELECTED);
     expect(selectMock).toHaveBeenCalledTimes(1);
@@ -1545,5 +1664,16 @@ describe('classify() — SIBLING-ASK lever GATE ON', () => {
     expect(getTLAForCodesMock).not.toHaveBeenCalled();
     expect(qgsMock).not.toHaveBeenCalled();
     expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('does NOT fire on a Select REFUSE (null selected_code) → REFUSE unchanged', async () => {
+    selectMock.mockResolvedValue({ ...selectOutLowConf, selected_code: null, refusal: { reason: 'no faithful match' } });
+
+    const res = await classify('coffee beans');
+
+    expect(res.decision).toBe('REFUSE');
+    // The gate never engages without a selected_code.
+    expect(getTLAForCodesMock).not.toHaveBeenCalled();
+    expect(qgsMock).not.toHaveBeenCalled();
   });
 });

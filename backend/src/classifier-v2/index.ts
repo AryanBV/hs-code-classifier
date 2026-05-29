@@ -265,19 +265,34 @@ async function handleTriageAsk(
 }
 
 /* ---------------------------------------------------------------------------
- * SIBLING-ASK elicitation lever (env-gated; default OFF → byte-identical)
+ * SIBLING-ASK elicitation lever (POST-L4 uncertainty gate; env-gated; default
+ * OFF → byte-identical)
  *
  * ~50% of leaf-sibling selection errors are genuine query UNDER-SPECIFICATION:
  * the deciding attribute exists in tariff_line_attributes but NOT in the
- * exporter's query, so L4 (even a stronger model) can only GUESS it. The fix is
- * to ask ONE targeted question whose options come from the candidate siblings'
- * actual TLA values, then resolve to the right leaf on the answer.
+ * exporter's query, so L4 can only GUESS it. The earlier PRE-L4 trigger over-
+ * fired (~33% ask-rate) because it asked on EVERY sibling group regardless of
+ * whether L4 would have nailed it — tanking outright accuracy. This redesign
+ * lets L4 SELECT first (+ run its L5/repair loop), then asks ONE targeted
+ * question ONLY when L4's OWN self-confidence says it is genuinely stuck on a
+ * sibling. The question is built on the SPECIFIC discriminating attribute of the
+ * sibling group the chosen leaf belongs to, with options drawn from the competing
+ * siblings' actual TLA values — so the gold leaf's value is always among the
+ * options (this fixes the prior 65% recoverability ceiling).
  *
  * GATE: the entire lever is behind `SIBLING_ASK_ENABLED === 'true'`. When that
- * env var is unset/anything else, `checkSiblingAskTrigger` returns null BEFORE
+ * env var is unset/anything else, `maybeSiblingAskPostL4` returns null BEFORE
  * doing any DB/QGS/compute work — so the committed default pipeline is
- * byte-for-byte unchanged. This is opt-in for A/B measurement; it is flipped on
- * only after the milestone gate passes.
+ * byte-for-byte unchanged (L4's classification is finalized verbatim). This is
+ * opt-in for A/B measurement; it is flipped on only after the milestone gate
+ * passes.
+ *
+ * Tunability (for threshold sweeps without code changes):
+ *   - SIBLING_ASK_ENABLED          'true' → on; anything else → off (default).
+ *   - SIBLING_ASK_CONF_THRESHOLD   float, default 0.65. L4's self_confidence
+ *     (HIGH/MEDIUM/LOW) is mapped to a numeric score (see SELF_CONFIDENCE_SCORE)
+ *     and the lever is eligible only when score < threshold. Sweep 0.55/0.65/0.75
+ *     to find the ask-rate ≤15% / recoverability ≥75% operating point.
  * --------------------------------------------------------------------------- */
 
 /** True only when the lever is explicitly enabled for this process. */
@@ -285,27 +300,59 @@ function siblingAskEnabled(): boolean {
   return process.env.SIBLING_ASK_ENABLED === 'true';
 }
 
+/** Default confidence cutoff: L4 below this is "uncertain enough to ask". */
+const DEFAULT_SIBLING_ASK_CONF_THRESHOLD = 0.65;
+
 /**
- * Decide whether to fire a SIBLING-ASK between L3 and L4. Returns a `ClassifyResult`
- * (decision:'ASK', `question.trigger='sibling'`) when ALL trigger conditions hold,
- * else `null` (⇒ the orchestrator proceeds to L4 unchanged). NEVER throws — any
- * internal error is swallowed and yields null (graceful degrade to L4).
+ * Map L4's `self_confidence` ENUM (the only confidence signal SelectOutput
+ * carries) to a numeric score so it can be compared against the float
+ * `SIBLING_ASK_CONF_THRESHOLD`. With the default 0.65: LOW(0.30) and MEDIUM(0.60)
+ * are below (eligible), HIGH(0.90) is above (not eligible). A 0.55 threshold
+ * excludes MEDIUM; a 0.75 threshold keeps both LOW and MEDIUM eligible.
+ */
+const SELF_CONFIDENCE_SCORE: Record<SelectOutput['self_confidence'], number> = {
+  HIGH:   0.9,
+  MEDIUM: 0.6,
+  LOW:    0.3,
+};
+
+/** Read + parse the (sweepable) confidence threshold; falls back to the default. */
+function siblingAskConfThreshold(): number {
+  const raw = process.env.SIBLING_ASK_CONF_THRESHOLD;
+  if (raw === undefined) return DEFAULT_SIBLING_ASK_CONF_THRESHOLD;
+  const parsed = Number.parseFloat(raw);
+  return Number.isFinite(parsed) ? parsed : DEFAULT_SIBLING_ASK_CONF_THRESHOLD;
+}
+
+/**
+ * POST-L4 SIBLING-ASK uncertainty gate. Called AFTER L4 (Select) + its L5/repair
+ * loop produced a CLASSIFY-bound `SelectOutput`. Returns a `ClassifyResult`
+ * (decision:'ASK', `question.trigger='sibling'`) when ALL conditions hold, else
+ * `null` (⇒ the orchestrator finalizes L4's classification UNCHANGED). NEVER
+ * throws — any internal error is swallowed and yields null (keep L4's result).
  *
- * Trigger (fire iff ALL hold), per the blueprint:
- *   - GATE  env `SIBLING_ASK_ENABLED === 'true'` (else null, no work).
- *   - skip  `q_budget_remaining === 0` (shared Q-budget) OR `candidates < 2`.
- *   - S1    a sibling group exists: `computeSiblingDiscriminators` yields ≥1 group
- *           with ≥2 codes AND ≥1 differing field (over the pre-fetched TLA).
- *   - S3    L4 not already decisive: `selectQGSBatch` returns a non-null batch
- *           (its built-in SILENT-DISCRIMINATOR guard returns null on
- *           indistinguishable / <2-option sets — the over-ask guard).
- *   - S2    the top-IG discriminating attribute is NOT pinned by the query
- *           (`isAttributePinnedByQuery` is false) — i.e. the user did not say it.
+ * Fire iff ALL hold:
+ *   - GATE  env `SIBLING_ASK_ENABLED === 'true'` (else null, ZERO work).
+ *   - skip  `qBudgetRemaining <= 0` (shared Q-budget) OR `candidates < 2`.
+ *   - C1    L4 returned a CLASSIFY with a non-null `selectedCode`.
+ *   - C2    L4's `self_confidence` score < `SIBLING_ASK_CONF_THRESHOLD` (default
+ *           0.65) — i.e. L4 is genuinely unsure (the over-fire fix vs PRE-L4).
+ *   - S1    the SELECTED leaf is in a same-subheading sibling group:
+ *           `computeSiblingDiscriminators` yields a group whose 6-digit subheading
+ *           equals the selected code's subheading (≥2 codes, ≥1 differing field).
+ *   - S3    `selectQGSBatch` returns a non-null batch (SILENT-DISCRIMINATOR guard).
+ *   - S3b   the batch contains a question on a field that the SELECTED group
+ *           actually DIFFERS on (the SPECIFIC discriminator) — options then come
+ *           from the competing siblings' real TLA values (recoverability fix).
+ *   - S2    that question's attribute is NOT pinned by the query
+ *           (`isAttributePinnedByQuery` is false).
  *
  * On a fire, records a `SIBLING-ASK` trace step and surfaces BOTH the full batch
- * (`questions`) and the primary question (`question`, with `trigger='sibling'`).
+ * (`questions`) and the chosen question (`question`, with `trigger='sibling'`).
  */
-async function checkSiblingAskTrigger(params: {
+async function maybeSiblingAskPostL4(params: {
+  selectedCode:         string;
+  selfConfidence:       SelectOutput['self_confidence'];
   candidates:           RetrievalCandidate[];
   extractedAttributes:  TriageExtractedAttributes;
   rawTokens:            string[];
@@ -317,22 +364,37 @@ async function checkSiblingAskTrigger(params: {
   if (!siblingAskEnabled()) return null;
 
   try {
-    const { candidates, extractedAttributes, rawTokens, qBudgetRemaining, state } = params;
+    const {
+      selectedCode, selfConfidence, candidates,
+      extractedAttributes, rawTokens, qBudgetRemaining, state,
+    } = params;
 
     // Q-budget + candidate-count preconditions (cheap, no I/O).
     if (qBudgetRemaining <= 0) return null;
     if (candidates.length < 2) return null;
 
+    // C2 — uncertainty gate. Only engage when L4 itself signalled it was unsure.
+    // (C1 — non-null selectedCode — is guaranteed by the call site.)
+    const confScore = SELF_CONFIDENCE_SCORE[selfConfidence];
+    if (confScore >= siblingAskConfThreshold()) return null;
+
+    // The selected leaf's 6-digit subheading ("NNNN.NN") — the group it competes in.
+    const selectedSubheading = /^\d{4}\.\d{2}\.\d{2}$/.test(selectedCode)
+      ? selectedCode.slice(0, 7)
+      : (/^\d{4}\.\d{2}$/.test(selectedCode) ? selectedCode : null);
+    if (selectedSubheading === null) return null;
+
     // Pre-fetch the candidate TLA ONCE and reuse for BOTH the sibling diff and
-    // the QGS generator (the blueprint accepts this as a small indexed lookup).
+    // the QGS generator (a small indexed lookup; no double round trip).
     const codes = candidates.map((c) => c.code);
     const tlaByCode = await getTariffLineAttributesForCodes(codes);
 
-    // S1 — a real sibling group (≥2 codes + ≥1 differing field). computeSibling-
-    // Discriminators already omits all-identical groups, so any returned group
-    // qualifies.
+    // S1 — the SELECTED leaf must sit in a real sibling group. computeSibling-
+    // Discriminators omits all-identical groups, so any returned group qualifies;
+    // we additionally require the group to be the chosen leaf's own subheading.
     const siblingGroups = computeSiblingDiscriminators(candidates, tlaByCode);
-    if (siblingGroups.length === 0) return null;
+    const selectedGroup = siblingGroups.find((g) => g.subheading === selectedSubheading);
+    if (selectedGroup === undefined) return null;
 
     // S3 — let QGS decide if a usable info-gain question exists over the live set.
     // Pass the pre-fetched TLA via the deps seam (no second DB round trip for it).
@@ -342,16 +404,24 @@ async function checkSiblingAskTrigger(params: {
     });
     if (batch === null || batch.questions.length === 0) return null;
 
-    // S2 — the top-IG question's attribute must NOT be pinned by the query. If the
-    // user already specified it, asking adds nothing → defer to L4.
-    const primary = batch.questions[0]!;
-    if (isAttributePinnedByQuery(primary.discriminating_attribute, extractedAttributes, rawTokens)) {
+    // S3b — pick the batch question built on the SELECTED group's SPECIFIC
+    // discriminator. The group's `differing_fields` are DB-column names (e.g.
+    // `function_`); the question's `discriminating_attribute` is the PUBLIC key
+    // (e.g. `function`). Normalize the trailing underscore so they line up.
+    const groupAttrs = new Set(selectedGroup.differing_fields.map(toPublicAttribute));
+    const question = batch.questions.find((q) => groupAttrs.has(q.discriminating_attribute));
+    if (question === undefined) return null;
+
+    // S2 — that question's attribute must NOT be pinned by the query. If the user
+    // already specified it, asking adds nothing → finalize L4.
+    if (isAttributePinnedByQuery(question.discriminating_attribute, extractedAttributes, rawTokens)) {
       return null;
     }
 
-    // FIRE. Tag the question + surface the full batch. Mark trigger='sibling' on
-    // every batch question for downstream attribution (eval, wizard, trace).
-    const taggedQuestions: ClarifyingQuestion[] = batch.questions.map((q) => ({
+    // FIRE. Surface the chosen question FIRST (so single-question consumers ask the
+    // sibling discriminator) and tag every batch question trigger='sibling'.
+    const reordered = [question, ...batch.questions.filter((q) => q !== question)];
+    const taggedQuestions: ClarifyingQuestion[] = reordered.map((q) => ({
       ...q,
       trigger: 'sibling',
     }));
@@ -363,8 +433,10 @@ async function checkSiblingAskTrigger(params: {
 
     recordLayer(state, 'SIBLING-ASK', 'ask', {
       discriminating_attribute: taggedPrimary.discriminating_attribute,
+      self_confidence: selfConfidence,
+      selected_code: selectedCode,
+      subheading: selectedSubheading,
       questions: taggedQuestions.length,
-      sibling_groups: siblingGroups.length,
       total_ig: taggedBatch.total_ig_potential,
     });
 
@@ -375,10 +447,20 @@ async function checkSiblingAskTrigger(params: {
       diagnostics: buildDiagnostics(state),
     };
   } catch {
-    // The lever must NEVER throw — a DB/QGS/compute hiccup degrades gracefully to
-    // the L4 path (return null ⇒ orchestrator runs Select as normal).
+    // The lever must NEVER throw — a DB/QGS/compute hiccup degrades gracefully:
+    // return null ⇒ the orchestrator finalizes L4's classification unchanged.
     return null;
   }
+}
+
+/**
+ * Normalize a sibling-group differing-field name (DB-column space, where
+ * `function` carries a trailing underscore for Postgres reserved-word adjacency)
+ * to the PUBLIC `AttributeKey` used on a ClarifyingQuestion. Only `function_`
+ * differs; every other column name is identical to its public key.
+ */
+function toPublicAttribute(dbField: string): string {
+  return dbField === 'function_' ? 'function' : dbField;
 }
 
 /**
@@ -669,24 +751,6 @@ export async function classify(
     return finalize(BaselineEscalation.onZeroCandidates(state), state, captureTrace);
   }
 
-  // --- SIBLING-ASK elicitation lever (env-gated; default OFF) -------------
-  // Fires BETWEEN L3 and L4 when the surviving candidates are leaf-siblings that
-  // differ ONLY on an attribute the exporter never specified — ask one targeted
-  // question instead of letting L4 guess. With SIBLING_ASK_ENABLED unset (the
-  // default), checkSiblingAskTrigger returns null before doing ANY work, so the
-  // path below is byte-for-byte unchanged. A null return (gate off, no sibling
-  // group, attribute already pinned, or any internal error) ⇒ proceed to L4.
-  const siblingAsk = await checkSiblingAskTrigger({
-    candidates:          activeRulesOut.filtered_candidates,
-    extractedAttributes: activeTriageOut.extracted_attributes,
-    rawTokens:           normalized.raw_tokens,
-    qBudgetRemaining:    q_budget_remaining,
-    state,
-  });
-  if (siblingAsk !== null) {
-    return finalize(siblingAsk, state, captureTrace);
-  }
-
   /* ---- L4 — Select + L5 — Verify (with repair loop, Task 7) ----------- *
    * Attempt 0 = initial select+verify. On failure, up to 3 repair iterations
    * re-call select with verifier_failures + repair_iteration, then re-verify
@@ -710,6 +774,31 @@ export async function classify(
       raw_tokens: normalized.raw_tokens,
       head_nouns_for_fts: activeHeadNouns,
     };
+  }
+
+  /**
+   * Finalize a verifier-PASS Select as a CLASSIFY result — but FIRST run the
+   * POST-L4 SIBLING-ASK uncertainty gate (env-gated; default OFF). When the gate
+   * is off (or any condition fails / it errors) the L4 classification is returned
+   * UNCHANGED; when it fires, a SIBLING-ASK ClassifyResult is returned instead.
+   * Shared by the initial-pass and repair-loop pass exits so the gate hooks in
+   * exactly once per CLASSIFY outcome.
+   */
+  async function finalizeClassifyWithSiblingGate(passingSelectOut: SelectOutput): Promise<ClassifyResult> {
+    const code = passingSelectOut.selected_code;
+    if (code !== null) {
+      const siblingAsk = await maybeSiblingAskPostL4({
+        selectedCode:        code,
+        selfConfidence:      passingSelectOut.self_confidence,
+        candidates:          activeRulesOut.filtered_candidates,
+        extractedAttributes: activeTriageOut.extracted_attributes,
+        rawTokens:           normalized.raw_tokens,
+        qBudgetRemaining:    q_budget_remaining,
+        state,
+      });
+      if (siblingAsk !== null) return siblingAsk;
+    }
+    return selectToClassifyResult(passingSelectOut, state, { escalated_to_deep_think: false });
   }
 
   // --- Initial select (attempt 0, no repair metadata) --------------------
@@ -744,7 +833,7 @@ export async function classify(
   });
 
   if (currentVerifyOut.passed) {
-    return finalize(selectToClassifyResult(currentSelectOut, state, { escalated_to_deep_think: false }), state, captureTrace);
+    return finalize(await finalizeClassifyWithSiblingGate(currentSelectOut), state, captureTrace);
   }
 
   // --- Repair loop: up to 3 repair iterations (i = 0, 1, 2) -------------
@@ -788,7 +877,7 @@ export async function classify(
     });
 
     if (currentVerifyOut.passed) {
-      return finalize(selectToClassifyResult(currentSelectOut, state, { escalated_to_deep_think: false }), state, captureTrace);
+      return finalize(await finalizeClassifyWithSiblingGate(currentSelectOut), state, captureTrace);
     }
 
     lastFailures = currentVerifyOut.failed_rules;
