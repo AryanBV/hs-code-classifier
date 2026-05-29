@@ -138,6 +138,18 @@ function chainRow(code: string): ParentChainRow {
   };
 }
 
+/** Like chainRow but with an explicit description (residual-floor tests use the
+ *  description to decide whether a leaf is the standalone-"Other" residual). */
+function chainRowDesc(code: string, description: string): ParentChainRow {
+  return {
+    code,
+    description,
+    subheading: code.slice(0, 7),
+    heading:    code.slice(0, 4),
+    chapter:    code.slice(0, 2),
+  };
+}
+
 function baseInput(overrides: Partial<L2Input> = {}): L2Input {
   return {
     normalized_query:    'cotton t-shirt knitted ladies',
@@ -518,6 +530,287 @@ describe('retrieve() — direct_leaf_lookup shortcut', () => {
     // though the rerank POOL was widened well above it.
     expect(out.candidates.length).toBeLessThanOrEqual(_internal.L2_EMIT_CAP);
     expect(out.candidates.length).toBe(_internal.L2_EMIT_CAP);
+  });
+});
+
+/* ===========================================================================
+ * RESIDUAL-LEAF-FLOOR recall fix
+ *
+ * For each dominant surfaced subheading (the subheadings of the TOP-N reranked
+ * candidates), GUARANTEE its residual "Other" leaf is in the final candidate
+ * set so L4 can pick it (e.g. pharma 3004.90.99, supplement 2106.90.99).
+ * =========================================================================== */
+
+describe('retrieve() — residual-leaf-floor (cascade_full)', () => {
+  /**
+   * Build the cascade_full pharma scenario from the trace:
+   *   - candidate_chapters [30], cosine surfaces 3004.90 (multi-leaf) and some
+   *     specific leaves, but the residual 3004.90.99 ("Other: Other") is NOT in
+   *     the rerank output. The floor must force-include it.
+   */
+  function pharmaCascade(): void {
+    cosineChMock.mockResolvedValue([cosineRow('30', 0.9)]);
+    cosineHMock.mockResolvedValue([cosineRow('3004', 0.88)]);
+    cosineShMock.mockResolvedValue([cosineRow('3004.90', 0.82)]);
+    // 3004.90 is multi-leaf → NOT all-singleton → cascade_full.
+    childCountsMock.mockResolvedValue([
+      { subheading: '3004.90', child_count: 70 },
+    ] satisfies SubheadingChildCount[]);
+    cosineTlMock.mockResolvedValue([
+      cosineRow('3004.90.61', 0.80), // a specific NSAID leaf (not residual)
+    ]);
+    ftsTlMock.mockResolvedValue([ftsHit('3004.90.62', 0.5, 'Ibuprofen')]);
+    ftsExclMock.mockResolvedValue([]);
+    // Reranker orders the two specific leaves; residual .99 absent (the bug).
+    rerankMock.mockResolvedValue({
+      ranked: [
+        { id: '3004.90.61', relevance_score: 0.71 },
+        { id: '3004.90.62', relevance_score: 0.66 },
+      ],
+      latencyMs: 50,
+    });
+    // getTariffLinesForSubheadings is reused by the floor to fetch leaves of the
+    // dominant subheading 3004.90; return a representative slice incl. residual.
+    tlForShMock.mockImplementation((subheadings: string[]) => {
+      if (subheadings.includes('3004.90')) {
+        return Promise.resolve([
+          chainRowDesc('3004.90.61', 'Nonsteroidal antiinflammatory: Ibuprofen'),
+          chainRowDesc('3004.90.62', 'Nonsteroidal antiinflammatory: Diclofenac'),
+          chainRowDesc('3004.90.49', 'Anticancer drugs: Other'),
+          chainRowDesc('3004.90.99', 'Other: ---- Other'), // the residual
+        ]);
+      }
+      return Promise.resolve([]);
+    });
+  }
+
+  const pharmaInput = (): L2Input =>
+    baseInput({
+      normalized_query:   'metformin tablets',
+      raw_tokens:         ['metformin', 'tablets'],
+      candidate_chapters: ['30'],
+      head_nouns_for_fts: ['metformin'],
+    });
+
+  it('(a) force-includes the residual Other leaf of a multi-leaf surfaced subheading (3004.90.99)', async () => {
+    pharmaCascade();
+    const out = await retrieve(pharmaInput());
+
+    expect(out.retrieval_strategy).toBe('cascade_full');
+    const codes = out.candidates.map((c) => c.code);
+    // The residual leaf L4 reasons toward is now a candidate.
+    expect(codes).toContain('3004.90.99');
+    // Observability marker is populated with exactly the forced code.
+    expect(out.residual_floor_added).toContain('3004.90.99');
+    // The forced residual lands at the END (after the reranked candidates), so it
+    // does not displace a genuinely-reranked leaf.
+    expect(codes[codes.length - 1]).toBe('3004.90.99');
+  });
+
+  it('(a2) the forced residual carries its parent chain + a retrieval_scores entry', async () => {
+    pharmaCascade();
+    const out = await retrieve(pharmaInput());
+    const residual = out.candidates.find((c) => c.code === '3004.90.99');
+    expect(residual).toBeDefined();
+    expect(residual!.parent_chain.subheading).toBe('3004.90');
+    expect(residual!.parent_chain.chapter).toBe('30');
+    // rerank_score is null (it was force-included, not reranked).
+    expect(residual!.rerank_score).toBeNull();
+    expect(out.retrieval_scores['3004.90.99']).toBeDefined();
+  });
+
+  it('(b) emitted count stays within the bounded floor cap (<= L2_EMIT_CAP + MAX_RESIDUAL_FLOOR_ADDS)', async () => {
+    // Saturate the rerank with EMIT_CAP genuine leaves under TWO dominant
+    // subheadings, each missing its residual — the floor may add at most
+    // MAX_RESIDUAL_FLOOR_ADDS residuals beyond the cap.
+    cosineChMock.mockResolvedValue([cosineRow('30', 0.9)]);
+    cosineHMock.mockResolvedValue([cosineRow('3004', 0.88)]);
+    cosineShMock.mockResolvedValue([cosineRow('3004.90', 0.82), cosineRow('3004.50', 0.80)]);
+    childCountsMock.mockResolvedValue([
+      { subheading: '3004.90', child_count: 70 },
+      { subheading: '3004.50', child_count: 5 },
+    ] satisfies SubheadingChildCount[]);
+    const eightLeaves = [
+      '3004.90.61', '3004.90.62', '3004.90.63', '3004.90.64',
+      '3004.50.10', '3004.50.20', '3004.50.30', '3004.50.40',
+    ];
+    cosineTlMock.mockResolvedValue(eightLeaves.map((c) => cosineRow(c, 0.8)));
+    ftsTlMock.mockResolvedValue([]);
+    rerankMock.mockResolvedValue({
+      ranked: eightLeaves.map((id, i) => ({ id, relevance_score: 0.9 - i * 0.01 })),
+      latencyMs: 60,
+    });
+    tlForShMock.mockImplementation((subheadings: string[]) => {
+      const rows: ParentChainRow[] = [];
+      if (subheadings.includes('3004.90')) {
+        rows.push(chainRowDesc('3004.90.61', 'NSAID: Ibuprofen'));
+        rows.push(chainRowDesc('3004.90.99', 'Other: ---- Other'));
+      }
+      if (subheadings.includes('3004.50')) {
+        rows.push(chainRowDesc('3004.50.10', 'Vitamins A'));
+        rows.push(chainRowDesc('3004.50.90', 'Other'));
+      }
+      return Promise.resolve(rows);
+    });
+
+    const out = await retrieve(pharmaInput());
+    // BOTH dominant subheadings are missing their residual → floor adds exactly
+    // MAX_RESIDUAL_FLOOR_ADDS (2), appended after the EMIT_CAP (8) slice.
+    expect((out.residual_floor_added ?? []).length).toBe(_internal.MAX_RESIDUAL_FLOOR_ADDS);
+    expect(out.residual_floor_added).toEqual(
+      expect.arrayContaining(['3004.90.99', '3004.50.90']),
+    );
+    // HARD BOUND: emit stays within EMIT_CAP + MAX_RESIDUAL_FLOOR_ADDS.
+    expect(out.candidates.length).toBe(
+      _internal.L2_EMIT_CAP + _internal.MAX_RESIDUAL_FLOOR_ADDS,
+    );
+    expect(out.candidates.length).toBeLessThanOrEqual(
+      _internal.L2_EMIT_CAP + _internal.MAX_RESIDUAL_FLOOR_ADDS,
+    );
+    // No duplicate codes in the emitted set.
+    const codes = out.candidates.map((c) => c.code);
+    expect(new Set(codes).size).toBe(codes.length);
+  });
+
+  it('(c) never emits duplicate codes when the residual is also among the reranked leaves', async () => {
+    cosineChMock.mockResolvedValue([cosineRow('30', 0.9)]);
+    cosineHMock.mockResolvedValue([cosineRow('3004', 0.88)]);
+    cosineShMock.mockResolvedValue([cosineRow('3004.90', 0.82)]);
+    childCountsMock.mockResolvedValue([
+      { subheading: '3004.90', child_count: 70 },
+    ] satisfies SubheadingChildCount[]);
+    cosineTlMock.mockResolvedValue([cosineRow('3004.90.99', 0.80)]);
+    ftsTlMock.mockResolvedValue([]);
+    // Reranker ALREADY surfaces the residual .99 — floor must NOT duplicate it.
+    rerankMock.mockResolvedValue({
+      ranked: [{ id: '3004.90.99', relevance_score: 0.9 }],
+      latencyMs: 40,
+    });
+    tlForShMock.mockImplementation((subheadings: string[]) =>
+      subheadings.includes('3004.90')
+        ? Promise.resolve([chainRowDesc('3004.90.99', 'Other: ---- Other')])
+        : Promise.resolve([]),
+    );
+
+    const out = await retrieve(pharmaInput());
+    const codes = out.candidates.map((c) => c.code);
+    expect(codes.filter((c) => c === '3004.90.99')).toHaveLength(1);
+    // No-op marker: residual already present → nothing force-added.
+    expect(out.residual_floor_added ?? []).not.toContain('3004.90.99');
+  });
+
+  it('(d) no-op when the dominant subheading has NO standalone "other" leaf (avoids force-including a specific leaf e.g. "Squid")', async () => {
+    cosineChMock.mockResolvedValue([cosineRow('03', 0.9)]);
+    cosineHMock.mockResolvedValue([cosineRow('0307', 0.88)]);
+    cosineShMock.mockResolvedValue([cosineRow('0307.42', 0.82)]);
+    childCountsMock.mockResolvedValue([
+      { subheading: '0307.42', child_count: 2 },
+    ] satisfies SubheadingChildCount[]);
+    cosineTlMock.mockResolvedValue([cosineRow('0307.42.10', 0.80)]);
+    ftsTlMock.mockResolvedValue([]);
+    rerankMock.mockResolvedValue({
+      ranked: [{ id: '0307.42.10', relevance_score: 0.7 }],
+      latencyMs: 40,
+    });
+    // The "highest leaf" here is a SPECIFIC product ("Squid"), NOT a residual —
+    // there is no standalone-"other" leaf, so the floor must add nothing.
+    tlForShMock.mockImplementation((subheadings: string[]) =>
+      subheadings.includes('0307.42')
+        ? Promise.resolve([
+            chainRowDesc('0307.42.10', 'Cuttlefish'),
+            chainRowDesc('0307.42.20', 'Squid'),
+          ])
+        : Promise.resolve([]),
+    );
+
+    const out = await retrieve(
+      baseInput({
+        normalized_query:   'squid',
+        raw_tokens:         ['squid'],
+        candidate_chapters: ['03'],
+        head_nouns_for_fts: ['squid'],
+      }),
+    );
+    const codes = out.candidates.map((c) => c.code);
+    expect(codes).not.toContain('0307.42.20');
+    expect(out.residual_floor_added ?? []).toEqual([]);
+  });
+
+  it('(d2) no-op when the surfaced subheadings are all singletons (direct_leaf path handles its own widening)', async () => {
+    // Singleton subheading → no residual exists to add; floor stays silent.
+    cosineShMock.mockResolvedValue([cosineRow('6109.10', 0.86)]);
+    childCountsMock.mockResolvedValue([
+      { subheading: '6109.10', child_count: 1 },
+    ] satisfies SubheadingChildCount[]);
+    shForHeadingsMock.mockResolvedValue(['6109.10']);
+    tlForShMock.mockResolvedValue([chainRow('6109.10.00')]);
+    rerankMock.mockResolvedValue({
+      ranked: [{ id: '6109.10.00', relevance_score: 0.99 }],
+      latencyMs: 40,
+    });
+
+    const out = await retrieve(baseInput());
+    // direct_leaf_lookup branch; the residual floor adds nothing for singletons.
+    expect(out.residual_floor_added ?? []).toEqual([]);
+  });
+
+  it('(d3) does NOT force residuals for subheadings OUTSIDE the top-N reranked candidates (blast-radius limit)', async () => {
+    // THREE surfaced subheadings; only the TOP-2 reranked (3004.90, 3004.50) are
+    // eligible for the floor. 3004.10 ranks #3 (below RESIDUAL_FLOOR_TOP_SUBHEADINGS
+    // =2) and must NOT be queried for a residual nor get one.
+    cosineChMock.mockResolvedValue([cosineRow('30', 0.9)]);
+    cosineHMock.mockResolvedValue([cosineRow('3004', 0.88)]);
+    cosineShMock.mockResolvedValue([
+      cosineRow('3004.90', 0.82),
+      cosineRow('3004.50', 0.78),
+      cosineRow('3004.10', 0.55),
+    ]);
+    childCountsMock.mockResolvedValue([
+      { subheading: '3004.90', child_count: 70 },
+      { subheading: '3004.50', child_count: 5 },
+      { subheading: '3004.10', child_count: 4 },
+    ] satisfies SubheadingChildCount[]);
+    cosineTlMock.mockResolvedValue([
+      cosineRow('3004.90.61', 0.80),
+      cosineRow('3004.50.10', 0.70),
+      cosineRow('3004.10.10', 0.40),
+    ]);
+    ftsTlMock.mockResolvedValue([]);
+    rerankMock.mockResolvedValue({
+      ranked: [
+        { id: '3004.90.61', relevance_score: 0.92 },
+        { id: '3004.50.10', relevance_score: 0.80 },
+        { id: '3004.10.10', relevance_score: 0.10 }, // #3 → outside top-2 subheadings
+      ],
+      latencyMs: 50,
+    });
+    // Each subheading has a full sibling set incl. a standalone-"Other" residual.
+    tlForShMock.mockImplementation((subheadings: string[]) => {
+      const rows: ParentChainRow[] = [];
+      if (subheadings.includes('3004.90')) {
+        rows.push(chainRowDesc('3004.90.61', 'NSAID: Ibuprofen'));
+        rows.push(chainRowDesc('3004.90.99', 'Other: ---- Other'));
+      }
+      if (subheadings.includes('3004.50')) {
+        rows.push(chainRowDesc('3004.50.10', 'Vitamins A'));
+        rows.push(chainRowDesc('3004.50.90', 'Other'));
+      }
+      if (subheadings.includes('3004.10')) {
+        rows.push(chainRowDesc('3004.10.10', 'Penicillins'));
+        rows.push(chainRowDesc('3004.10.90', 'Other'));
+      }
+      return Promise.resolve(rows);
+    });
+
+    const out = await retrieve(pharmaInput());
+    // The TOP-2 dominant subheadings get their residuals (bounded by MAX adds=2).
+    expect(out.residual_floor_added ?? []).toContain('3004.90.99');
+    // The #3 subheading 3004.10 was NEVER queried for a residual (scoped to top-N).
+    const floorFetchCalls = tlForShMock.mock.calls.map((c) => c[0] as string[]);
+    const everQueried3004_10 = floorFetchCalls.some((arg) => arg.includes('3004.10'));
+    expect(everQueried3004_10).toBe(false);
+    // And no residual for 3004.10 leaked into the forced set.
+    expect(out.residual_floor_added ?? []).not.toContain('3004.10.90');
   });
 });
 

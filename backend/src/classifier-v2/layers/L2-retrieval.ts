@@ -107,6 +107,23 @@ const EXCL_FTS_LIMIT    = 30;
 const RERANK_TOP_N      = 15;   // was 5 — reranker returns more candidates
 const L2_EMIT_CAP       = 8;    // was 5 — emit up to 8 so rank #6–#8 reaches L3/L4
 
+// RESIDUAL-LEAF-FLOOR (2026-05-30, recall): for pharma/supplement queries the
+// trace showed L4 EXPLICITLY reasoning toward a subheading's residual "Other"
+// leaf (e.g. 3004.90.99, 2106.90.99) and then ABSTAINING because that leaf was
+// never a candidate (the rerank surfaced sibling .NN leaves but not the .99
+// catch-all). This deterministic floor GUARANTEES the residual leaf of the
+// DOMINANT surfaced subheading(s) is present so L4 can pick it.
+//
+// Bounding (gate-2 lesson — keep the final count near L2_EMIT_CAP=8):
+//   - Only the subheadings of the TOP-N reranked candidates are eligible
+//     (RESIDUAL_FLOOR_TOP_SUBHEADINGS), never every subheading in the DB.
+//   - At most MAX_RESIDUAL_FLOOR_ADDS residual leaves are force-included, and
+//     they are appended AFTER the L2_EMIT_CAP slice — so the emit is bounded by
+//     L2_EMIT_CAP + MAX_RESIDUAL_FLOOR_ADDS and the reranked top-8 are never
+//     displaced by a forced residual.
+const RESIDUAL_FLOOR_TOP_SUBHEADINGS = 2; // dominant subheadings eligible for a floor
+const MAX_RESIDUAL_FLOOR_ADDS        = 2; // hard cap on extra forced residual slots
+
 /* ---------------------------------------------------------------------------
  * Provider injection seam
  *
@@ -277,6 +294,43 @@ function parentChainFromRow(row: ParentChainRow): RetrievalCandidate['parent_cha
     subheading:  (row.subheading ?? null) as SubheadingCode | null,
     tariff_line: (row.code ?? null) as TariffLineCode | null,
   };
+}
+
+/**
+ * Match a STANDALONE "other" token in a tariff-line description.
+ *
+ * We deliberately require a word-boundary match (not a naive substring) so we
+ * do NOT treat "Anti-other..." style mid-word noise as a residual signal, and
+ * so the residual floor stays a no-op for subheadings whose highest leaf is a
+ * specific named product (e.g. 0307.42.20 "Squid", 0102.21.20 "Cows") rather
+ * than a catch-all "Other" line. Empirically (DB corpus, 2026-05-30) this gates
+ * out the ~10% of multi-leaf subheadings where the max code is NOT a residual.
+ */
+function descHasStandaloneOther(desc: string | null | undefined): boolean {
+  if (typeof desc !== 'string' || desc.length === 0) return false;
+  return /(^|[^a-z])other([^a-z]|$)/i.test(desc);
+}
+
+/**
+ * Pick the residual ("Other") leaf for a subheading from its tariff_line rows.
+ *
+ * Rule (deterministic; per spec "pick the residual by description Other or the
+ * highest leaf number"):
+ *   1. Consider only leaves whose description contains a standalone "other"
+ *      token (the catch-all residual marker).
+ *   2. Among those, pick the HIGHEST code (lexicographic max). Per DB corpus
+ *      this resolves to the canonical `.99` residual when present, else the
+ *      highest `.90`/`.NN` "Other" sub-line.
+ *   3. If NO leaf is a standalone-"other" residual, return null → the floor is a
+ *      no-op for this subheading (never force-includes a specific named leaf).
+ */
+function selectResidualLeaf(rows: ParentChainRow[]): ParentChainRow | null {
+  let best: ParentChainRow | null = null;
+  for (const r of rows) {
+    if (!descHasStandaloneOther(r.description)) continue;
+    if (best === null || r.code > best.code) best = r;
+  }
+  return best;
 }
 
 /* ---------------------------------------------------------------------------
@@ -550,20 +604,83 @@ export async function retrieve(input: L2Input): Promise<L2Output> {
     }
   }
 
+  /* ---------- Step 6.5: RESIDUAL-LEAF-FLOOR ---------------------------- */
+  // Guarantee the residual ("Other") leaf of the DOMINANT surfaced subheading(s)
+  // is in the emitted set, so L4 can pick a residual it explicitly reasons
+  // toward (e.g. pharma 3004.90.99) instead of abstaining because the leaf was
+  // never a candidate. Bounded: only the subheadings of the TOP-N reranked
+  // candidates are eligible, at most MAX_RESIDUAL_FLOOR_ADDS residuals are added,
+  // and they are appended AFTER the L2_EMIT_CAP slice (never displacing the
+  // reranked top-8). chainByCode/scoreMap are pre-seeded here for the forced
+  // codes so Step 7 emits them without a second lookup.
+  const chainByCode = new Map<string, ParentChainRow>();
+  const emitCodes: string[] = finalCodes.slice(0, L2_EMIT_CAP);
+  const residualFloorAdded: string[] = [];
+  {
+    // Dominant subheadings = the distinct subheadings of the top reranked
+    // candidates, in rank order. `code.slice(0,7)` is the "NNNN.NN" subheading
+    // (the DB-enforced format). Skip if there is nothing reranked.
+    const dominantSubheadings: string[] = [];
+    const seenSh = new Set<string>();
+    for (const code of finalCodes) {
+      const sh = code.slice(0, 7);
+      if (sh.length !== 7 || seenSh.has(sh)) continue;
+      seenSh.add(sh);
+      dominantSubheadings.push(sh);
+      if (dominantSubheadings.length >= RESIDUAL_FLOOR_TOP_SUBHEADINGS) break;
+    }
+
+    if (dominantSubheadings.length > 0) {
+      const tFloorStart = now();
+      const floorRows = await getTariffLinesForSubheadings(dominantSubheadings);
+      // Group fetched leaves by subheading so selectResidualLeaf sees the full
+      // sibling set (it needs ALL leaves to pick the standalone-"Other" line).
+      const rowsBySh = new Map<string, ParentChainRow[]>();
+      for (const r of floorRows) {
+        const list = rowsBySh.get(r.subheading);
+        if (list) list.push(r);
+        else rowsBySh.set(r.subheading, [r]);
+      }
+
+      const alreadyEmitted = new Set<string>(emitCodes);
+      for (const sh of dominantSubheadings) {
+        if (residualFloorAdded.length >= MAX_RESIDUAL_FLOOR_ADDS) break;
+        const rows = rowsBySh.get(sh);
+        if (!rows || rows.length < 2) continue;                  // singleton/empty → no residual
+        const residual = selectResidualLeaf(rows);
+        if (!residual) continue;                                  // no standalone-"Other" leaf → no-op
+        if (alreadyEmitted.has(residual.code)) continue;          // already a candidate → no dup
+        // Force-include: seed chain + score, append to the emit list.
+        chainByCode.set(residual.code, residual);
+        if (!scoreMap.has(residual.code)) {
+          scoreMap.set(residual.code, { cosine_score: 0, fts_rank: null, rerank_score: null });
+        }
+        emitCodes.push(residual.code);
+        alreadyEmitted.add(residual.code);
+        residualFloorAdded.push(residual.code);
+      }
+      trace.push({
+        step:      'residual_floor_added',
+        latencyMs: now() - tFloorStart,
+        count:     residualFloorAdded.length,
+      });
+    }
+  }
+
   /* ---------- Step 7: Build final RetrievalCandidate[] ----------------- */
   // Fetch parent chains for the FINAL codes (those we'll emit). For
   // direct-leaf this is the directLeafRows we already have; for cascade we
-  // may have a subset already fetched. Re-fetch only missing codes.
+  // may have a subset already fetched. Re-fetch only missing codes. Forced
+  // residuals (Step 6.5) already have their chains pre-seeded above.
   const tFinalChainStart = now();
-  const haveChainsFor = new Set<string>();
-  const chainByCode = new Map<string, ParentChainRow>();
+  const haveChainsFor = new Set<string>(chainByCode.keys());
   if (retrieval_strategy === 'direct_leaf_lookup') {
     for (const r of directLeafRows) {
       chainByCode.set(r.code, r);
       haveChainsFor.add(r.code);
     }
   }
-  const missingChainCodes = finalCodes.filter((c) => !haveChainsFor.has(c));
+  const missingChainCodes = emitCodes.filter((c) => !haveChainsFor.has(c));
   if (missingChainCodes.length > 0) {
     const rows = await getTariffLineParentChains(missingChainCodes);
     for (const r of rows) chainByCode.set(r.code, r);
@@ -571,11 +688,11 @@ export async function retrieve(input: L2Input): Promise<L2Output> {
   trace.push({
     step:      'final_parent_chain_lookup',
     latencyMs: now() - tFinalChainStart,
-    count:     finalCodes.length,
+    count:     emitCodes.length,
   });
 
   const candidates: RetrievalCandidate[] = [];
-  for (const code of finalCodes.slice(0, L2_EMIT_CAP)) {
+  for (const code of emitCodes) {
     const chain = chainByCode.get(code);
     const score = scoreMap.get(code);
     if (!chain) continue;                                        // DB lookup miss; skip
@@ -617,6 +734,11 @@ export async function retrieve(input: L2Input): Promise<L2Output> {
     ...(debugSurfacedSubheadings !== undefined
       ? { debug_surfaced_subheadings: debugSurfacedSubheadings }
       : {}),
+    // Observability: surface the residual leaves the floor force-included (only
+    // when non-empty; absent on a no-op).
+    ...(residualFloorAdded.length > 0
+      ? { residual_floor_added: residualFloorAdded as TariffLineCode[] }
+      : {}),
   };
 }
 
@@ -636,5 +758,9 @@ export const _internal = {
   EXCL_FTS_LIMIT,
   RERANK_TOP_N,
   L2_EMIT_CAP,
+  RESIDUAL_FLOOR_TOP_SUBHEADINGS,
+  MAX_RESIDUAL_FLOOR_ADDS,
   topNCosine,
+  selectResidualLeaf,
+  descHasStandaloneOther,
 };

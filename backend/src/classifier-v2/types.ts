@@ -231,6 +231,14 @@ export interface RetrievalOutput {
    * NEVER set in normal prod calls — field is absent from the object entirely.
    */
   debug_surfaced_subheadings?: string[];
+  /**
+   * RESIDUAL-LEAF-FLOOR (recall): the tariff-line codes force-included by the
+   * deterministic residual floor (the catch-all "Other" leaf of a dominant
+   * surfaced subheading that the rerank/cosine union missed). Populated whenever
+   * the floor adds at least one code, for observability/tracing; absent when the
+   * floor was a no-op. See L2-retrieval.ts `applyResidualFloor`.
+   */
+  residual_floor_added?: TariffLineCode[];
 }
 
 /* ============================================================================
