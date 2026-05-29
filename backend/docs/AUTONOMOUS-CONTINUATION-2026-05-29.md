@@ -6,9 +6,14 @@ ITC-HS v2 8-digit classifier. Branch `feat/phase-4-pipeline-build`. Backend root
 
 ### TL;DR — where we are
 - **HEAD = latest commit on the branch** (run `git --no-pager log --oneline -1`; do NOT trust a hardcoded hash — the tip moves with each commit).
-- **Honest baseline (clean gold, frozen routing-independent denom):** r12 = **68.0% OUTRIGHT** 8-digit. After **gold-freeze ROUND 4** (8 user-approved bucket-C corrections — 7/8 the brain already predicted) noise-free re-score = **70.1%**; full **r14** run confirmed **69.5%** (within the ±2–3pp LLM noise floor).
-- **GATE IN FLIGHT (workflow `wlu9kv9lz`):** r15 (MV-03 fix + bad-gold-R5 applied, all levers OFF) + r16 (calibrated-classify lever ON). **Numbers pending** — first action next session is to read those run results and run the three-sided gate.
+- **Baseline progression (clean gold, frozen routing-independent denom):** r12 68.0% → gold-R4 70.1% → r15 (MV-03 + bad-gold-R5) 74.3% → **r17 (L2 direct_leaf_lookup recall) 76.38% OUTRIGHT 8-digit (262/343), chapter 88.6%, heading 85.1%, routing 93.8%, confident-wrong ~20.9%** — **NEW BASELINE, IN the 75–80% target band.**
+- **L2-recall direct_leaf_lookup fix COMMITTED** (`d4cfb44`): widen rerank POOL to cosine∪FTS∪all-subheadings-of-surfaced-headings, emit still capped at `L2_EMIT_CAP`=8. Gate r17 vs r15: +2.04pp OUTRIGHT, gold-code rejects 15→7, confident-wrong flat, McNemar p=0.049 (13 improved / 4 regressed).
 - Suite = **385 cases** (post bad-gold R5: 22 query rewrites + drop DB030); scoring denom = **343** gold-code cases.
+- **REMAINING brain headroom:**
+  - **(a) CHAPTER/SUBHEADING RECALL** — ~7 not-surfaced gold-code rejects (TC203/TC208 pharma 3004.90 70-child residual, TC306 silk saree→6206 made-up garment, EC008 galvanized→7210 coated, DB053, DB200, TC012, TC210). The adjacent-excluded-family / triage-recall lever. **NEXT.**
+  - **(b) LEAF-PRECISION** (information-limited) — the wider pool added 3 true correct→wrong-leaf regressions (EC005/DB138/S5-AUTO-012) + TC210 (correct→reject). **DEFERRED to a fine-tuned reranker.** (See leaf-precision backlog below.)
+  - **(c) GOAL COMPONENTS not yet done:** TOP-3 surfacing + NEAR-ZERO confident-wrong (still ~21%) + calibrated ASK.
+- **Leaf-precision / fine-tuned-reranker BACKLOG:** EC005, DB138, S5-AUTO-012 (correct→wrong-leaf regressions from the wider pool) + TC210 (correct→reject). Signed-off in `compare.ts` as accepted regressions; revisit when the domain reranker lands.
 
 ### OVER-RESTRICTION ROOT CAUSE (the key reframe — via systematic-debugging)
 The r14 "**51 mis-routed valid products**" are **NOT** L4/L5 over-strictness. They decompose into 3 buckets:
@@ -29,6 +34,7 @@ The r14 "**51 mis-routed valid products**" are **NOT** L4/L5 over-strictness. Th
 | `881ef2e` | **MV-03 source_ref grammar fix** — taught L4 the locked `table:key=value` citation grammar; eliminates MV-03 false-reject → reclaims a repair round every classify |
 | `8a189ef` | **calibrated-classify lever** (env-gated OFF) — converts L1-ASK→CLASSIFY when retrieval concentrated; mirror of sibling-ASK; extracted `runSelectVerifyRepair`, main path byte-identical; **never emits REFUSE** |
 | `168ac64` | **gold-freeze Round 5** — 22 contentless-fragment query rewrites + drop DB030 (user-approved) |
+| `d4cfb44` | **L2 direct_leaf_lookup recall fix** — widen rerank POOL to cosine∪FTS∪all-subheadings-of-surfaced-headings; r17 = **76.38% OUTRIGHT** (NEW BASELINE), gold-code rejects 15→7, McNemar p=0.049 |
 
 ### ENV FLAGS & EVAL COMMANDS
 - `CALIBRATED_CLASSIFY_ENABLED` (default **off**), `CALIBRATED_CLASSIFY_MARGIN`=0.15, `CALIBRATED_CLASSIFY_STRONG_MARGIN`=0.30
@@ -42,7 +48,8 @@ The r14 "**51 mis-routed valid products**" are **NOT** L4/L5 over-strictness. Th
 | MV-03 grammar fix | **DONE** (committed) |
 | calibrated-classify | **BUILT + COMMITTED**, gating now (r16) |
 | bad-gold R5 | **APPLIED** (suite 385, denom 343) |
-| **L2-RECALL** | **DESIGNED, ready to build.** `direct_leaf_lookup` branch currently discards the FTS union → route it through the rerank block: **union(direct-leaves ∪ FTS ∪ all-subheadings-of-surfaced-headings) → rerank → cap `L2_EMIT_CAP`=8**. Plus `cascade_full` **dual-family retrieval** for coated/not-coated, raw/processed, fabric/made-up → recovers TC204/DB096/EC008/EC017/TC306/+~10. **Widen the RERANK POOL, not the L4 cap** (gate-2 lesson). See `GOLD-REMEDIATION` log + the design here. |
+| **L2-RECALL (direct_leaf_lookup)** | **DONE + COMMITTED (`d4cfb44`, r17 76.38%).** `direct_leaf_lookup` now unions cosine∪FTS∪all-subheadings-of-surfaced-headings through the rerank cascade, emit capped at `L2_EMIT_CAP`=8 (POOL widened, not L4 cap — gate-2 lesson upheld). |
+| **L2-RECALL (cascade_full dual-family)** | **DESIGNED, ready to build (NEXT).** `cascade_full` **dual-family retrieval** for coated/not-coated, raw/processed, fabric/made-up → recovers the ~7 not-surfaced rejects (TC306/EC008/TC203/TC208/DB053/DB200/TC012). The adjacent-excluded-family / triage-recall lever. |
 | sibling-ASK generalization | **DEFERRED** |
 
 ### END GOAL
