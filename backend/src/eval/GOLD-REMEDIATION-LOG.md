@@ -219,6 +219,29 @@ Heading 4010 splits conveyor belts (4010.11-19) from transmission belts (4010.31
 
 ---
 
+## Round 4 — bucket-C true-selection audit (2026-05-29, user-approved)
+
+Surfaced by the **bucket-C forensic**: of the 61 r12 wrong cases, 43 had the gold code present in L4's candidate set yet L4 mispicked ("true-selection"). Two **independent** blind law-first rater passes (4 agents each, different chunking) characterized those 43; inter-rater verdict agreement = 34/43 (79%). The **9 cases where BOTH passes independently agreed the gold was wrong AND agreed on the corrected code** were brought to the user. Each verifier saw only the query + gold code, never any model prediction. User approved on 2026-05-29.
+
+**8 applied** (2 are UPDATEs of prior-round overrides). Every new code was confirmed in `tariff_lines` (gold-consistency-audit exit 0, 0 hard inconsistencies).
+
+| caseId | query | old gold | new gold | basis |
+|---|---|---|---|---|
+| S5-AUTO-012 | coil spring suspension front for SUV | 8708.80.00 (r-prior) | 7320.20.00 | vehicle coil spring = helical spring; Sec XV Note 2(c) + Sec XVII Note 2(b) → "part of general use" Ch.73, NOT 8708. Supersedes prior 8708.80.00 |
+| EC034 | coffee concentrate cold brew liquid | 2101.12.00 (r-prior) | 2101.11.90 | concentrate of coffee = 2101.11 (.12 = preparations w/ added ingredients). Supersedes prior; now consistent with TC106 |
+| TC112 | cumin seeds whole jeera | 0909.31.21 | 0909.31.29 | "Of seed quality" = seed FOR SOWING; culinary cumin → residual .29 (GIR-6, unmarked-default) |
+| TC117 | saffron threads pure Kashmir | 0910.20.20 (stamen) | 0910.20.10 (stigma) | saffron "threads" = dried stigmas; stamen is the low-value male part (GIR-1) |
+| EC018 | viscose staple fiber rayon | 5504.10.11 | 5504.10.19 | .11 = special flame-retardant; no flag → residual .19 (unmarked-default) |
+| EC020 | leather vest motorcycle | 4203.10.10 | 4203.10.90 | .10 = "Jackets and jerseys"; a vest is neither → residual .90 *(confidence: low)* |
+| S5-SIMP-014 | cotton bed sheet queen size white | 6302.10.10 | 6302.31.00 | 6302.10 is KNITTED/crocheted bed linen; a bed sheet is woven → 6302.31 |
+| S5-SIMP-025 | split air conditioner 1.5 ton inverter | 8415.81.10 | 8415.10.10 | 8415.10 = window/wall/split-system; old .81.10 "two tons and above" contradicts 1.5-ton *(confidence: medium)* |
+
+**TC119 — EXCLUDED (process note).** Both rater passes reported its current gold as `0902.20.40` (waste) and suggested `0902.20.20` (bulk). But the **live** gold is already r8's `0902.20.90` (Other) — the agents reasoned off the JSON's stale pre-override `expectedCode` instead of the authoritative `GOLD_OVERRIDES` layer. Because the `.90`-vs-`.20` specificity question was never actually adjudicated, TC119 was withheld from this round (the orchestrator caught the stale-baseline contamination on review). It can be re-adjudicated `.90` (residual) vs `.20` (Green Tea in bulk, more specific per GIR-6) cleanly if warranted.
+
+**Lesson:** subagent gold audits must apply `GOLD_OVERRIDES` before reasoning; 1 of 9 candidates was contaminated by stale gold and would have laundered a no-op/wrong change into the key had it not been verified against the override-aware forensic golds.
+
+---
+
 ## Tooling repaired (Phase 1)
 
 The pre-existing `src/eval/gt-fix/` pipeline queried the dropped legacy `hs_codes`
