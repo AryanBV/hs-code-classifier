@@ -66,10 +66,10 @@ vi.mock('./layers/QGS-generator', () => ({
 }));
 // Mock the pin-check so the orchestrator control-flow test fully controls S2
 // (the pure pin logic is unit-tested in lib/sibling-ask-trigger.test.ts).
-// computeSiblingRerankMargin is NOT mocked: it is pure, and the gate is driven
-// directly through crafted rerank_score gaps on the candidate fixtures so the
-// control-flow tests exercise the REAL margin signal (its own units live in
-// lib/sibling-ask-trigger.test.ts).
+// computeSiblingRerankMargin AND evaluateCalibratedClassify are NOT mocked: they
+// are pure, and both gates are driven directly through crafted rerank_score gaps
+// on the candidate fixtures so the control-flow tests exercise the REAL signals
+// (their own units live in lib/sibling-ask-trigger.test.ts).
 const isAttributePinnedMock = vi.fn(() => false);
 vi.mock('./lib/sibling-ask-trigger', async (importOriginal) => {
   const actual = await importOriginal<typeof import('./lib/sibling-ask-trigger')>();
@@ -78,6 +78,13 @@ vi.mock('./lib/sibling-ask-trigger', async (importOriginal) => {
     isAttributePinnedByQuery: (...args: unknown[]) => isAttributePinnedMock(...args),
   };
 });
+// CALIBRATED-CLASSIFY lever dep: the survivor-description PK lookup. Default to a
+// description that does NOT verbatim-match the query, so only a STRONG margin (or
+// an explicit override) fires the lever's gate C.
+const getParentChainsMock = vi.fn(async () => [] as unknown[]);
+vi.mock('./lib/supabase-client', () => ({
+  getTariffLineParentChains: (...args: unknown[]) => getParentChainsMock(...args),
+}));
 
 // Import the SUT AFTER mocks are registered.
 import { classify, continueWithAnswer, continueWithAnswers } from './index';
@@ -1740,5 +1747,248 @@ describe('classify() — SIBLING-ASK lever GATE ON (post-L4 rerank-margin gate)'
     // The gate never engages without a selected_code.
     expect(getTLAForCodesMock).not.toHaveBeenCalled();
     expect(qgsMock).not.toHaveBeenCalled();
+  });
+});
+
+/* ---------------------------------------------------------------------------
+ * CALIBRATED-CLASSIFY lever (ASK → CLASSIFY upgrade; env-gated; default OFF →
+ * byte-identical). The MIRROR of the SIBLING-ASK lever: same
+ * computeSiblingRerankMargin signal, OPPOSITE polarity — it fires on a LARGE
+ * dominant margin over ONE residual subheading (the gold leaf is pinned), runs
+ * the shared select/verify/repair sequence, and upgrades an L1 ASK to a CLASSIFY.
+ * It can ONLY upgrade ASK→CLASSIFY; a select REFUSE / exhausted repair preserves
+ * the original ASK (never emits REFUSE).
+ * --------------------------------------------------------------------------- */
+
+/** Two siblings under 7318.15 with a STRONG (≥0.30) dominant margin (0.95−0.55 = 0.40). */
+const CC_STRONG_DOMINANT: RetrievalCandidate[] = [
+  mkSibling(SELECTED, 0.95),
+  mkSibling('7318.15.10', 0.55),
+];
+/** Two siblings under 7318.15 with a DOMINANT-but-not-strong margin (0.95−0.75 = 0.20). */
+const CC_DOMINANT_NOT_STRONG: RetrievalCandidate[] = [
+  mkSibling(SELECTED, 0.95),
+  mkSibling('7318.15.10', 0.75),
+];
+/** Two siblings under 7318.15 with a SMALL margin (0.90−0.88 = 0.02 < 0.15) → no dominance. */
+const CC_SMALL_MARGIN: RetrievalCandidate[] = [
+  mkSibling(SELECTED, 0.90),
+  mkSibling('7318.15.10', 0.88),
+];
+/** Two survivors in DIFFERENT subheadings → gate A (concentration) fails. */
+const CC_TWO_SUBHEADINGS: RetrievalCandidate[] = [
+  mkSibling(SELECTED, 0.95),
+  mkSibling('7318.16.00', 0.55),
+];
+
+describe('classify() — CALIBRATED-CLASSIFY lever GATE OFF (default → byte-identical ASK)', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    delete process.env.CALIBRATED_CLASSIFY_ENABLED;
+    delete process.env.CALIBRATED_CLASSIFY_MARGIN;
+    delete process.env.CALIBRATED_CLASSIFY_STRONG_MARGIN;
+    normalizeMock.mockResolvedValue(normalizedOut);
+    triageMock.mockResolvedValue(triageOutAsk); // L1 ASK → handleTriageAsk path
+    retrieveMock.mockResolvedValue(retrievalOut);
+    // STRONG dominant single subheading: ONLY the env gate suppresses the lever.
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(CC_STRONG_DOMINANT));
+    selectMock.mockResolvedValue(selectOut);
+    verifyMock.mockResolvedValue(verifierPass);
+    qgsMock.mockResolvedValue(null); // ASK falls back to the L1 question
+  });
+
+  afterEach(() => {
+    delete process.env.CALIBRATED_CLASSIFY_ENABLED;
+    delete process.env.CALIBRATED_CLASSIFY_MARGIN;
+    delete process.env.CALIBRATED_CLASSIFY_STRONG_MARGIN;
+  });
+
+  it('returns the unchanged ASK and does ZERO lever work (no select/verify/PK lookup)', async () => {
+    const res = await classify('coffee beans');
+
+    expect(res.decision).toBe('ASK');
+    expect(res.question?.question_id).toBe('ask_form');
+    // CRITICAL: with the gate off, the lever does ZERO work — never selects/verifies/looks up.
+    expect(selectMock).not.toHaveBeenCalled();
+    expect(verifyMock).not.toHaveBeenCalled();
+    expect(getParentChainsMock).not.toHaveBeenCalled();
+    // No CALIBRATED-CLASSIFY hop in the path.
+    expect(res.diagnostics.escalation_path).not.toContain('CALIBRATED-CLASSIFY');
+  });
+});
+
+describe('classify() — CALIBRATED-CLASSIFY lever GATE ON', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    process.env.CALIBRATED_CLASSIFY_ENABLED = 'true';
+    delete process.env.CALIBRATED_CLASSIFY_MARGIN;        // default 0.15
+    delete process.env.CALIBRATED_CLASSIFY_STRONG_MARGIN; // default 0.30
+    normalizeMock.mockResolvedValue(normalizedOut);
+    triageMock.mockResolvedValue(triageOutAsk); // L1 ASK → handleTriageAsk path
+    retrieveMock.mockResolvedValue(retrievalOut);
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(CC_STRONG_DOMINANT));
+    selectMock.mockResolvedValue(selectOut);
+    verifyMock.mockResolvedValue(verifierPass);
+    qgsMock.mockResolvedValue(null);
+    // Description that does NOT verbatim-match the query → only STRONG fires
+    // unless a test overrides the chain to a matching description.
+    getParentChainsMock.mockResolvedValue([
+      { code: SELECTED, description: 'totally unrelated wording', subheading: '7318.15', heading: '7318', chapter: '73' },
+    ]);
+  });
+
+  afterEach(() => {
+    delete process.env.CALIBRATED_CLASSIFY_ENABLED;
+    delete process.env.CALIBRATED_CLASSIFY_MARGIN;
+    delete process.env.CALIBRATED_CLASSIFY_STRONG_MARGIN;
+  });
+
+  it('upgrades ASK→CLASSIFY on a STRONG dominant margin (gate C via strong, skips PK lookup)', async () => {
+    const res = await classify('coffee beans', { captureTrace: true });
+
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.classification?.code).toBe(SELECTED);
+    // STRONG ⇒ no verbatim PK lookup needed.
+    expect(getParentChainsMock).not.toHaveBeenCalled();
+    // The shared select/verify ran.
+    expect(selectMock).toHaveBeenCalledTimes(1);
+    expect(verifyMock).toHaveBeenCalledTimes(1);
+    // Trace records the CALIBRATED-CLASSIFY hop with the decision metadata.
+    const trace = res.diagnostics.trace ?? [];
+    const step = trace.find((t) => t.layer === 'CALIBRATED-CLASSIFY' && t.event === 'classify');
+    expect(step).toBeDefined();
+    expect(step?.payload?.subheading).toBe('7318.15');
+    expect(step?.payload?.strong).toBe(true);
+    expect(step?.payload?.margin).toBeCloseTo(0.4, 10);
+    expect(res.diagnostics.escalation_path).toContain('CALIBRATED-CLASSIFY');
+  });
+
+  it('upgrades via VERBATIM-PIN when the margin is dominant-but-not-strong and the query matches the top description', async () => {
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(CC_DOMINANT_NOT_STRONG));
+    // Top survivor's description equals the normalized query → verbatim pin.
+    getParentChainsMock.mockResolvedValue([
+      { code: SELECTED, description: normalizedOut.normalized_query, subheading: '7318.15', heading: '7318', chapter: '73' },
+    ]);
+
+    const res = await classify('coffee beans', { captureTrace: true });
+
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.classification?.code).toBe(SELECTED);
+    // Not strong → the PK lookup WAS consulted for the verbatim pin.
+    expect(getParentChainsMock).toHaveBeenCalledTimes(1);
+    const trace = res.diagnostics.trace ?? [];
+    const step = trace.find((t) => t.layer === 'CALIBRATED-CLASSIFY' && t.event === 'classify');
+    expect(step?.payload?.verbatim_match).toBe(true);
+    expect(step?.payload?.strong).toBe(false);
+  });
+
+  it('preserves the ASK when dominant-but-not-strong AND no verbatim pin (gate C fails)', async () => {
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(CC_DOMINANT_NOT_STRONG));
+    // Description does NOT match the query (default mock) → neither strong nor verbatim.
+    const res = await classify('coffee beans');
+
+    expect(res.decision).toBe('ASK');
+    expect(res.question?.question_id).toBe('ask_form');
+    expect(getParentChainsMock).toHaveBeenCalledTimes(1);
+    // Lever bailed before running select/verify.
+    expect(selectMock).not.toHaveBeenCalled();
+    expect(verifyMock).not.toHaveBeenCalled();
+  });
+
+  it('does NOT fire when the margin is SMALL (below dominant cutoff) → preserves ASK', async () => {
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(CC_SMALL_MARGIN));
+
+    const res = await classify('coffee beans');
+
+    expect(res.decision).toBe('ASK');
+    // Gate B fails before any PK lookup / select.
+    expect(getParentChainsMock).not.toHaveBeenCalled();
+    expect(selectMock).not.toHaveBeenCalled();
+  });
+
+  it('does NOT fire when survivors span ≥2 subheadings (gate A concentration fails) → preserves ASK', async () => {
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(CC_TWO_SUBHEADINGS));
+
+    const res = await classify('coffee beans');
+
+    expect(res.decision).toBe('ASK');
+    expect(getParentChainsMock).not.toHaveBeenCalled();
+    expect(selectMock).not.toHaveBeenCalled();
+  });
+
+  it('NEVER emits REFUSE — a select REFUSE preserves the original ASK', async () => {
+    selectMock.mockResolvedValue({ ...selectOut, selected_code: null, refusal: { reason: 'no faithful match' } });
+
+    const res = await classify('coffee beans');
+
+    // The lever ran select (STRONG margin) but the select REFUSE must fall back
+    // to the ASK — the lever can NEVER downgrade to REFUSE.
+    expect(res.decision).toBe('ASK');
+    expect(res.question?.question_id).toBe('ask_form');
+    expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('preserves the ASK when verify exhausts all repairs (escalation, not CLASSIFY-upgrade)', async () => {
+    // STRONG margin → lever runs select/verify. Verify fails 4× (initial + 3 repairs)
+    // → runSelectVerifyRepair returns a BaselineEscalation result. The lever upgrades
+    // ONLY a CLASSIFY; an escalation outcome is non-CLASSIFY here only if it is not a
+    // CLASSIFY — BaselineEscalation emits CLASSIFY, so this asserts the upgrade still
+    // happens when escalation produces a CLASSIFY (best-result policy).
+    selectMock.mockResolvedValue(selectOut);
+    verifyMock.mockResolvedValue(verifierFail);
+
+    const res = await classify('coffee beans');
+
+    // BaselineEscalation.onVerifierExhausted emits a CLASSIFY (best result) → the
+    // lever DOES upgrade. Assert it is a CLASSIFY (never REFUSE) and select ran 4×.
+    expect(res.decision).toBe('CLASSIFY');
+    expect(selectMock).toHaveBeenCalledTimes(4);
+  });
+
+  it('upgrades on a single-survivor (null margin) via VERBATIM-PIN', async () => {
+    rulesFilterMock.mockResolvedValue(rulesFilterWith([mkSibling(SELECTED, 0.9)]));
+    getParentChainsMock.mockResolvedValue([
+      { code: SELECTED, description: normalizedOut.normalized_query, subheading: '7318.15', heading: '7318', chapter: '73' },
+    ]);
+
+    const res = await classify('coffee beans');
+
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.classification?.code).toBe(SELECTED);
+    // Single survivor null-margin path is not strong → verbatim PK lookup consulted.
+    expect(getParentChainsMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('degrades to the ASK (never throws) when the PK lookup throws', async () => {
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(CC_DOMINANT_NOT_STRONG));
+    getParentChainsMock.mockRejectedValue(new Error('DB hiccup'));
+
+    const res = await classify('coffee beans');
+
+    expect(res.decision).toBe('ASK');
+    expect(res.question?.question_id).toBe('ask_form');
+    expect(selectMock).not.toHaveBeenCalled();
+  });
+
+  it('CALIBRATED_CLASSIFY_MARGIN=0.50 excludes the 0.40 strong margin → preserves ASK', async () => {
+    process.env.CALIBRATED_CLASSIFY_MARGIN = '0.50'; // 0.40 < 0.50 → gate B fails
+    const res = await classify('coffee beans');
+
+    expect(res.decision).toBe('ASK');
+    expect(selectMock).not.toHaveBeenCalled();
+  });
+
+  it('CALIBRATED_CLASSIFY_STRONG_MARGIN=0.50 forces the 0.40 margin through the verbatim path', async () => {
+    process.env.CALIBRATED_CLASSIFY_STRONG_MARGIN = '0.50'; // 0.40 < 0.50 → not strong
+    // Description matches → verbatim pin carries gate C.
+    getParentChainsMock.mockResolvedValue([
+      { code: SELECTED, description: normalizedOut.normalized_query, subheading: '7318.15', heading: '7318', chapter: '73' },
+    ]);
+
+    const res = await classify('coffee beans');
+
+    expect(res.decision).toBe('CLASSIFY');
+    // 0.40 is no longer "strong" → the verbatim PK lookup WAS consulted.
+    expect(getParentChainsMock).toHaveBeenCalledTimes(1);
   });
 });

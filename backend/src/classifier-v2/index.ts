@@ -24,7 +24,12 @@ import {
 } from './layers/L4-select';
 import { verify } from './layers/L5-verifier';
 import { selectQGSBatch } from './layers/QGS-generator';
-import { isAttributePinnedByQuery, computeSiblingRerankMargin } from './lib/sibling-ask-trigger';
+import {
+  isAttributePinnedByQuery,
+  computeSiblingRerankMargin,
+  evaluateCalibratedClassify,
+} from './lib/sibling-ask-trigger';
+import { getTariffLineParentChains } from './lib/supabase-client';
 import { selectToClassifyResult, buildDiagnostics } from './select-to-result';
 import { BaselineEscalation, ESCALATION_REPAIR_PREFIX } from './escalation';
 import { MaxTokensError } from './lib/vertex-client';
@@ -218,6 +223,9 @@ async function handleTriageAsk(
   // Default reason: QGS ran and returned null (the common "no usable question"
   // outcome). Flipped to `qgs_error` only if the L2/L3/QGS path THROWS.
   let fallbackReason: QgsFallbackReason = 'qgs_null';
+  // CALIBRATED-CLASSIFY upgrade (env-gated; default OFF). Set inside the try once
+  // L2/L3 have run; an ASK→CLASSIFY upgrade short-circuits the ASK below.
+  let calibrated: ClassifyResult | null = null;
   try {
     const headNouns = t.extracted_attributes.head_nouns_for_fts;
     const retrievalOut = await retrieve({
@@ -252,6 +260,17 @@ async function handleTriageAsk(
     // A null return is the indistinguishable / no-candidate outcome (qgs_null,
     // already the default); only a THROW below is qgs_error.
     batch = await selectQGSBatch({ candidates: rulesOut.filtered_candidates });
+
+    // CALIBRATED-CLASSIFY: if L2/L3 already pinned the dominant leaf, upgrade the
+    // ASK to a CLASSIFY (env-gated; default OFF → zero work, byte-identical). The
+    // helper reuses the already-computed retrievalOut + rulesOut — no extra L2/L3.
+    calibrated = await maybeCalibratedClassifyFromAsk({
+      retrievalOut,
+      rulesOut,
+      normalized,
+      triageOut: t,
+      state,
+    });
   } catch {
     // A retrieval/rules/QGS hiccup must NEVER drop the ASK — fall back to the
     // L1 single question. (Genuine Vertex transport errors don't reach here —
@@ -260,6 +279,10 @@ async function handleTriageAsk(
     batch = null;
     fallbackReason = 'qgs_error';
   }
+
+  // An ASK→CLASSIFY upgrade short-circuits the ASK. (When the lever is off — the
+  // default — `calibrated` is always null and this is a no-op.)
+  if (calibrated !== null) return calibrated;
 
   return triageToAsk(t, state, batch, fallbackReason);
 }
@@ -459,6 +482,347 @@ async function maybeSiblingAskPostL4(params: {
  */
 function toPublicAttribute(dbField: string): string {
   return dbField === 'function_' ? 'function' : dbField;
+}
+
+/* ---------------------------------------------------------------------------
+ * Shared L4 (Select) + L5 (Verify) + repair-loop runner
+ *
+ * Extracted VERBATIM from the main classify() body so the SAME sequence drives
+ * BOTH the main CLASSIFY path AND the CALIBRATED-CLASSIFY lever (which converts
+ * an L1 ASK into a CLASSIFY by running this exact select/verify/repair loop on
+ * the already-retrieved candidate set). The main path's behavior is byte-for-byte
+ * identical to before extraction (proven by index.test.ts): every recordLayer
+ * event, llm_calls increment, REFUSE/escalation branch, and the post-L4 sibling
+ * gate are preserved in order.
+ *
+ * Returns a ClassifyResult that is NOT yet wrapped by finalize(captureTrace) — the
+ * trace-seam wrapping stays single-sourced at the call sites (so this helper has
+ * zero knowledge of captureTrace). `ctx.setStage` mutates the caller's
+ * `currentStage` so a Vertex transport error thrown from select() is still
+ * attributed to stage 'L4' by classify()'s outer catch.
+ * --------------------------------------------------------------------------- */
+
+interface SelectVerifyRepairContext {
+  state:             PipelineRunState;
+  activeRetrievalOut: { query_embedding: number[] };
+  activeRulesOut:    { filtered_candidates: RetrievalCandidate[]; matched_exclusions: L4Input['matched_exclusions'] };
+  activeTriageOut:   TriageOutput;
+  normalized:        NormalizedInput;
+  activeHeadNouns:   string[];
+  qBudgetRemaining:  number;
+  /** Mutates the caller's currentStage so the outer §7 catch attributes correctly. */
+  setStage:          (stage: PipelineSystemError['stage']) => void;
+}
+
+async function runSelectVerifyRepair(
+  baseL4Input: L4Input,
+  ctx: SelectVerifyRepairContext,
+): Promise<ClassifyResult> {
+  const { state, activeRetrievalOut, activeRulesOut, activeTriageOut, normalized, activeHeadNouns, qBudgetRemaining, setStage } = ctx;
+
+  /** Build the L5Input for the current select output. Reuse active L2 query vector. */
+  function buildL5Input(currentSelectOut: SelectOutput): L5Input {
+    const code = currentSelectOut.selected_code ?? '';
+    return {
+      select_output: currentSelectOut,
+      candidate_code: code,
+      candidate_chapter: chapterOf(code),
+      // Reuse L2's query vector — the single Cohere embed lives in L2 (avoids
+      // the redundant orchestrator re-embed that doubled cash-billed embed spend).
+      // After backtrack, this is the re-retrieve's vector (correct for re-triage scope).
+      query_embedding: activeRetrievalOut.query_embedding,
+      filtered_candidates: activeRulesOut.filtered_candidates,
+      matched_exclusions: activeRulesOut.matched_exclusions,
+      composite_flag: normalized.composite_flag,
+      raw_tokens: normalized.raw_tokens,
+      head_nouns_for_fts: activeHeadNouns,
+    };
+  }
+
+  /**
+   * Finalize a verifier-PASS Select as a CLASSIFY result — but FIRST run the
+   * POST-L4 SIBLING-ASK uncertainty gate (env-gated; default OFF). When the gate
+   * is off (or any condition fails / it errors) the L4 classification is returned
+   * UNCHANGED; when it fires, a SIBLING-ASK ClassifyResult is returned instead.
+   * Shared by the initial-pass and repair-loop pass exits so the gate hooks in
+   * exactly once per CLASSIFY outcome.
+   */
+  async function finalizeClassifyWithSiblingGate(passingSelectOut: SelectOutput): Promise<ClassifyResult> {
+    const code = passingSelectOut.selected_code;
+    if (code !== null) {
+      const siblingAsk = await maybeSiblingAskPostL4({
+        selectedCode:        code,
+        selfConfidence:      passingSelectOut.self_confidence,
+        candidates:          activeRulesOut.filtered_candidates,
+        extractedAttributes: activeTriageOut.extracted_attributes,
+        rawTokens:           normalized.raw_tokens,
+        qBudgetRemaining,
+        state,
+      });
+      if (siblingAsk !== null) return siblingAsk;
+    }
+    return selectToClassifyResult(passingSelectOut, state, { escalated_to_deep_think: false });
+  }
+
+  // --- Initial select (attempt 0, no repair metadata) --------------------
+  setStage('L4');
+  let currentSelectOut = await select(baseL4Input);
+  state.llm_calls = (state.llm_calls ?? 0) + 1;
+  recordLayer(state, 'L4', 'select', {
+    selected_code: currentSelectOut.selected_code,
+    self_confidence: currentSelectOut.self_confidence,
+  });
+
+  // Select REFUSE (null code) → ClassifyResult REFUSE (no verify — there is no
+  // code to check). A model decision, so system_error is not set.
+  if (currentSelectOut.selected_code === null) {
+    recordLayer(state, 'L4', 'refuse');
+    return selectToRefuse(currentSelectOut, state);
+  }
+
+  let currentVerifyOut = await verify(buildL5Input(currentSelectOut));
+  recordLayer(state, 'L5', 'verify', {
+    passed:       currentVerifyOut.passed,
+    failed_rules: currentVerifyOut.failed_rules.map((f) => f.rule_id),
+  });
+
+  if (currentVerifyOut.passed) {
+    return finalizeClassifyWithSiblingGate(currentSelectOut);
+  }
+
+  // --- Repair loop: up to 3 repair iterations (i = 0, 1, 2) -------------
+  let lastFailures: VerifierRuleFailure[] = currentVerifyOut.failed_rules;
+
+  for (let i = 0; i < 3; i++) {
+    // Push a trace event for this repair attempt (before re-selecting).
+    recordLayer(state, `${ESCALATION_REPAIR_PREFIX}${i}` as PipelineTraceEvent['layer'], 'repair', {
+      repair_iteration: i + 1,
+      failed_rules: lastFailures.length,
+    });
+
+    // Re-call select with repair feedback (this IS an LLM call).
+    const repairL4Input: L4Input = {
+      ...baseL4Input,
+      verifier_failures: lastFailures,
+      repair_iteration: i + 1,
+    };
+    setStage('L4');
+    currentSelectOut = await select(repairL4Input);
+    state.llm_calls = (state.llm_calls ?? 0) + 1;
+    recordLayer(state, 'L4', 'select', {
+      selected_code: currentSelectOut.selected_code,
+      self_confidence: currentSelectOut.self_confidence,
+      repair_iteration: i + 1,
+    });
+
+    // A repair select may itself refuse (null code). Close the Task-7 gap: REFUSE
+    // here rather than feed an empty code into chapterOf('')/verify.
+    if (currentSelectOut.selected_code === null) {
+      recordLayer(state, 'L4', 'refuse', { repair_iteration: i + 1 });
+      return selectToRefuse(currentSelectOut, state);
+    }
+
+    // Re-verify the repaired output (L5 is NOT an LLM call — no llm_calls increment).
+    currentVerifyOut = await verify(buildL5Input(currentSelectOut));
+    recordLayer(state, 'L5', 'verify', {
+      passed:           currentVerifyOut.passed,
+      failed_rules:     currentVerifyOut.failed_rules.map((f) => f.rule_id),
+      repair_iteration: i + 1,
+    });
+
+    if (currentVerifyOut.passed) {
+      return finalizeClassifyWithSiblingGate(currentSelectOut);
+    }
+
+    lastFailures = currentVerifyOut.failed_rules;
+  }
+
+  // All 3 repairs exhausted — hand off to escalation policy.
+  return BaselineEscalation.onVerifierExhausted(state, currentSelectOut, lastFailures);
+}
+
+/* ---------------------------------------------------------------------------
+ * CALIBRATED-CLASSIFY lever (ASK → CLASSIFY upgrade; env-gated; default OFF →
+ * byte-identical). The MIRROR of the POST-L4 SIBLING-ASK lever.
+ *
+ * When L1 Triage returns ASK, handleTriageAsk ALREADY runs L2 (retrieve) + L3
+ * (rulesFilter) + the QGS batch to build the candidate-aware question. This lever
+ * inspects THOSE already-computed survivors: when they concentrate into ONE
+ * residual subheading with a DOMINANT (large) rerank margin — the OPPOSITE
+ * polarity of sibling-ASK's small-margin confusable signal — the gold leaf is
+ * effectively pinned, so asking the user adds nothing. We instead run the EXACT
+ * select/verify/repair sequence on the in-scope candidates and, if it verifies,
+ * return a CLASSIFY. It can ONLY upgrade ASK→CLASSIFY: a select REFUSE or an
+ * exhausted repair loop returns null → the original ASK is preserved (this lever
+ * NEVER emits REFUSE).
+ *
+ * GATE: behind `CALIBRATED_CLASSIFY_ENABLED === 'true'`. Unset/anything else →
+ * returns null BEFORE any work, so handleTriageAsk is byte-for-byte identical to
+ * today. Opt-in for A/B measurement.
+ *
+ * Tunability (threshold sweeps without code changes):
+ *   - CALIBRATED_CLASSIFY_ENABLED        'true' → on; anything else → off (default).
+ *   - CALIBRATED_CLASSIFY_MARGIN         float, default 0.15 (gate B dominant cutoff).
+ *   - CALIBRATED_CLASSIFY_STRONG_MARGIN  float, default 0.30 (gate C STRONG cutoff;
+ *     at/above it the verbatim-pin DB fetch is skipped).
+ * --------------------------------------------------------------------------- */
+
+/** True only when the lever is explicitly enabled for this process. */
+function calibratedClassifyEnabled(): boolean {
+  return process.env.CALIBRATED_CLASSIFY_ENABLED === 'true';
+}
+
+/** Default gate-B dominant-margin cutoff. */
+const DEFAULT_CALIBRATED_CLASSIFY_MARGIN = 0.15;
+/** Default gate-C STRONG-margin cutoff (skip verbatim-pin DB fetch above it). */
+const DEFAULT_CALIBRATED_CLASSIFY_STRONG_MARGIN = 0.3;
+
+/** Read + parse the (sweepable) dominant-margin threshold; falls back to the default. */
+function calibratedClassifyMargin(): number {
+  const raw = process.env.CALIBRATED_CLASSIFY_MARGIN;
+  if (raw === undefined) return DEFAULT_CALIBRATED_CLASSIFY_MARGIN;
+  const parsed = Number.parseFloat(raw);
+  return Number.isFinite(parsed) ? parsed : DEFAULT_CALIBRATED_CLASSIFY_MARGIN;
+}
+
+/** Read + parse the (sweepable) STRONG-margin threshold; falls back to the default. */
+function calibratedClassifyStrongMargin(): number {
+  const raw = process.env.CALIBRATED_CLASSIFY_STRONG_MARGIN;
+  if (raw === undefined) return DEFAULT_CALIBRATED_CLASSIFY_STRONG_MARGIN;
+  const parsed = Number.parseFloat(raw);
+  return Number.isFinite(parsed) ? parsed : DEFAULT_CALIBRATED_CLASSIFY_STRONG_MARGIN;
+}
+
+/** Lowercase + trim, mirroring L0's normalization basis for substring/token comparison. */
+function ccNormalizeText(s: string): string {
+  return s.toLowerCase().trim();
+}
+
+/** Order-insensitive significant word-token set of a string (for Jaccard). */
+function ccTokenSet(s: string): Set<string> {
+  return new Set(
+    ccNormalizeText(s)
+      .split(/[^a-z0-9]+/)
+      .filter((t) => t.length > 0),
+  );
+}
+
+/**
+ * Gate-C VERBATIM half: does the normalized query (near-)pin the TOP survivor's
+ * description? True when the query is a substring of the description (or vice
+ * versa) OR their token sets have Jaccard ≥ 0.8. Pure + total.
+ */
+function ccVerbatimPin(normalizedQuery: string, description: string): boolean {
+  const q = ccNormalizeText(normalizedQuery);
+  const d = ccNormalizeText(description);
+  if (q.length === 0 || d.length === 0) return false;
+  if (d.includes(q) || q.includes(d)) return true;
+
+  const qs = ccTokenSet(q);
+  const ds = ccTokenSet(d);
+  if (qs.size === 0 || ds.size === 0) return false;
+  let inter = 0;
+  for (const t of qs) if (ds.has(t)) inter += 1;
+  const union = qs.size + ds.size - inter;
+  if (union === 0) return false;
+  return inter / union >= 0.8;
+}
+
+/**
+ * CALIBRATED-CLASSIFY orchestrator helper. Mirrors maybeSiblingAskPostL4's shape:
+ * env-gate FIRST (return null with ZERO work when off), never throws, returns null
+ * to fall through to the original ASK.
+ *
+ * Fire path (gate A ∧ B from the pure fn, AND gate C = STRONG or VERBATIM):
+ *   1. evaluateCalibratedClassify(rulesOut.filtered_candidates) — A (one subheading)
+ *      + B (dominant/single-survivor margin). Not firing → null.
+ *   2. Gate C — STRONG (margin ≥ strongMargin) short-circuits true. Else fetch the
+ *      survivor descriptions (ONE Postgres PK lookup, no LLM) and require the TOP
+ *      survivor's description to be (near-)pinned by the normalized query.
+ *   3. On C-pass, build an L4Input from the in-scope normalized/triage/rules state
+ *      and run the SHARED runSelectVerifyRepair. A CLASSIFY result is returned; a
+ *      REFUSE / escalation outcome is discarded → null (preserve the original ASK).
+ */
+async function maybeCalibratedClassifyFromAsk(params: {
+  retrievalOut: { query_embedding: number[] };
+  rulesOut:     { filtered_candidates: RetrievalCandidate[]; matched_exclusions: L4Input['matched_exclusions'] };
+  normalized:   NormalizedInput;
+  triageOut:    TriageOutput;
+  state:        PipelineRunState;
+}): Promise<ClassifyResult | null> {
+  // GATE — default OFF. Return BEFORE any DB/compute work so handleTriageAsk is
+  // byte-for-byte identical when the lever is unset.
+  if (!calibratedClassifyEnabled()) return null;
+
+  try {
+    const { retrievalOut, rulesOut, normalized, triageOut, state } = params;
+
+    const decision = evaluateCalibratedClassify(rulesOut.filtered_candidates, {
+      margin: calibratedClassifyMargin(),
+      strongMargin: calibratedClassifyStrongMargin(),
+    });
+    if (!decision.fire) return null;
+
+    // Gate C — STRONG (skip DB) OR VERBATIM-PIN (one PK lookup, no LLM).
+    let verbatimMatch = false;
+    if (!decision.strong) {
+      const survivorCodes = rulesOut.filtered_candidates.map((c) => c.code);
+      const chains = await getTariffLineParentChains(survivorCodes);
+      // The TOP survivor (dominant leaf) — fall back to the first survivor when
+      // the pure fn could not name a top code (single-survivor null-margin path).
+      const topCode = decision.topCode ?? survivorCodes[0] ?? null;
+      const topChain = topCode !== null ? chains.find((c) => c.code === topCode) : undefined;
+      if (topChain === undefined) return null; // no description to pin against → preserve ASK
+      verbatimMatch = ccVerbatimPin(normalized.normalized_query, topChain.description);
+      if (!verbatimMatch) return null; // neither strong nor verbatim → preserve ASK
+    }
+
+    // FIRE — run the EXACT select/verify/repair sequence on the in-scope set.
+    const headNouns = triageOut.extracted_attributes.head_nouns_for_fts;
+    const l4Input: L4Input = {
+      normalized_query: normalized.normalized_query,
+      raw_tokens: normalized.raw_tokens,
+      composite_flag: normalized.composite_flag,
+      extracted_attributes: triageOut.extracted_attributes,
+      candidate_chapters: triageOut.candidate_chapters,
+      filtered_candidates: rulesOut.filtered_candidates,
+      matched_exclusions: rulesOut.matched_exclusions,
+    };
+
+    recordLayer(state, 'CALIBRATED-CLASSIFY', 'classify', {
+      subheading: decision.subheading,
+      margin: decision.marginVal,
+      verbatim_match: verbatimMatch,
+      strong: decision.strong,
+    });
+
+    const result = await runSelectVerifyRepair(l4Input, {
+      state,
+      activeRetrievalOut: retrievalOut,
+      activeRulesOut: rulesOut,
+      activeTriageOut: triageOut,
+      normalized,
+      activeHeadNouns: headNouns,
+      qBudgetRemaining: state.q_budget_remaining,
+      // The lever's own catch swallows transport errors → preserve the ASK; the
+      // stage holder is a no-op here (handleTriageAsk has no §7 stage attribution).
+      setStage: () => {},
+    });
+
+    // ONLY an upgrade to CLASSIFY is allowed. A REFUSE / escalation-shaped result
+    // (or anything non-CLASSIFY) falls through to the original ASK — this lever
+    // NEVER emits REFUSE.
+    if (result.decision !== 'CLASSIFY') return null;
+
+    recordLayer(state, 'CALIBRATED-CLASSIFY', 'upgraded', {
+      subheading: decision.subheading,
+      selected_code: result.classification?.code ?? null,
+    });
+    return result;
+  } catch {
+    // Never throw — any DB/compute hiccup degrades gracefully to the original ASK.
+    return null;
+  }
 }
 
 /**
@@ -750,56 +1114,10 @@ export async function classify(
   }
 
   /* ---- L4 — Select + L5 — Verify (with repair loop, Task 7) ----------- *
-   * Attempt 0 = initial select+verify. On failure, up to 3 repair iterations
-   * re-call select with verifier_failures + repair_iteration, then re-verify
-   * the new output. First pass wins; after 3 failed repairs (4 total verify
-   * failures) hand off to BaselineEscalation.onVerifierExhausted.            */
-
-  /** Build the L5Input for the current select output. Reuse active L2 query vector. */
-  function buildL5Input(currentSelectOut: SelectOutput): L5Input {
-    const code = currentSelectOut.selected_code ?? '';
-    return {
-      select_output: currentSelectOut,
-      candidate_code: code,
-      candidate_chapter: chapterOf(code),
-      // Reuse L2's query vector — the single Cohere embed lives in L2 (avoids
-      // the redundant orchestrator re-embed that doubled cash-billed embed spend).
-      // After backtrack, this is the re-retrieve's vector (correct for re-triage scope).
-      query_embedding: activeRetrievalOut.query_embedding,
-      filtered_candidates: activeRulesOut.filtered_candidates,
-      matched_exclusions: activeRulesOut.matched_exclusions,
-      composite_flag: normalized.composite_flag,
-      raw_tokens: normalized.raw_tokens,
-      head_nouns_for_fts: activeHeadNouns,
-    };
-  }
-
-  /**
-   * Finalize a verifier-PASS Select as a CLASSIFY result — but FIRST run the
-   * POST-L4 SIBLING-ASK uncertainty gate (env-gated; default OFF). When the gate
-   * is off (or any condition fails / it errors) the L4 classification is returned
-   * UNCHANGED; when it fires, a SIBLING-ASK ClassifyResult is returned instead.
-   * Shared by the initial-pass and repair-loop pass exits so the gate hooks in
-   * exactly once per CLASSIFY outcome.
-   */
-  async function finalizeClassifyWithSiblingGate(passingSelectOut: SelectOutput): Promise<ClassifyResult> {
-    const code = passingSelectOut.selected_code;
-    if (code !== null) {
-      const siblingAsk = await maybeSiblingAskPostL4({
-        selectedCode:        code,
-        selfConfidence:      passingSelectOut.self_confidence,
-        candidates:          activeRulesOut.filtered_candidates,
-        extractedAttributes: activeTriageOut.extracted_attributes,
-        rawTokens:           normalized.raw_tokens,
-        qBudgetRemaining:    q_budget_remaining,
-        state,
-      });
-      if (siblingAsk !== null) return siblingAsk;
-    }
-    return selectToClassifyResult(passingSelectOut, state, { escalated_to_deep_think: false });
-  }
-
-  // --- Initial select (attempt 0, no repair metadata) --------------------
+   * Delegated to the shared runSelectVerifyRepair runner (also driven by the
+   * CALIBRATED-CLASSIFY lever) — behavior is byte-for-byte identical to the prior
+   * inline block (proven by index.test.ts). The §7 stage attribution is preserved
+   * via the setStage callback, which mutates this scope's `currentStage`.        */
   const baseL4Input: L4Input = {
     normalized_query: normalized.normalized_query,
     raw_tokens: normalized.raw_tokens,
@@ -809,80 +1127,17 @@ export async function classify(
     filtered_candidates: activeRulesOut.filtered_candidates,
     matched_exclusions: activeRulesOut.matched_exclusions,
   };
-  currentStage = 'L4';
-  let currentSelectOut = await select(baseL4Input);
-  state.llm_calls = (state.llm_calls ?? 0) + 1;
-  recordLayer(state, 'L4', 'select', {
-    selected_code: currentSelectOut.selected_code,
-    self_confidence: currentSelectOut.self_confidence,
+  const result = await runSelectVerifyRepair(baseL4Input, {
+    state,
+    activeRetrievalOut,
+    activeRulesOut,
+    activeTriageOut,
+    normalized,
+    activeHeadNouns,
+    qBudgetRemaining: q_budget_remaining,
+    setStage: (s) => { currentStage = s; },
   });
-
-  // Select REFUSE (null code) → ClassifyResult REFUSE (no verify — there is no
-  // code to check). A model decision, so system_error is not set.
-  if (currentSelectOut.selected_code === null) {
-    recordLayer(state, 'L4', 'refuse');
-    return finalize(selectToRefuse(currentSelectOut, state), state, captureTrace);
-  }
-
-  let currentVerifyOut = await verify(buildL5Input(currentSelectOut));
-  recordLayer(state, 'L5', 'verify', {
-    passed:       currentVerifyOut.passed,
-    failed_rules: currentVerifyOut.failed_rules.map((f) => f.rule_id),
-  });
-
-  if (currentVerifyOut.passed) {
-    return finalize(await finalizeClassifyWithSiblingGate(currentSelectOut), state, captureTrace);
-  }
-
-  // --- Repair loop: up to 3 repair iterations (i = 0, 1, 2) -------------
-  let lastFailures: VerifierRuleFailure[] = currentVerifyOut.failed_rules;
-
-  for (let i = 0; i < 3; i++) {
-    // Push a trace event for this repair attempt (before re-selecting).
-    recordLayer(state, `${ESCALATION_REPAIR_PREFIX}${i}` as PipelineTraceEvent['layer'], 'repair', {
-      repair_iteration: i + 1,
-      failed_rules: lastFailures.length,
-    });
-
-    // Re-call select with repair feedback (this IS an LLM call).
-    const repairL4Input: L4Input = {
-      ...baseL4Input,
-      verifier_failures: lastFailures,
-      repair_iteration: i + 1,
-    };
-    currentStage = 'L4';
-    currentSelectOut = await select(repairL4Input);
-    state.llm_calls = (state.llm_calls ?? 0) + 1;
-    recordLayer(state, 'L4', 'select', {
-      selected_code: currentSelectOut.selected_code,
-      self_confidence: currentSelectOut.self_confidence,
-      repair_iteration: i + 1,
-    });
-
-    // A repair select may itself refuse (null code). Close the Task-7 gap: REFUSE
-    // here rather than feed an empty code into chapterOf('')/verify.
-    if (currentSelectOut.selected_code === null) {
-      recordLayer(state, 'L4', 'refuse', { repair_iteration: i + 1 });
-      return finalize(selectToRefuse(currentSelectOut, state), state, captureTrace);
-    }
-
-    // Re-verify the repaired output (L5 is NOT an LLM call — no llm_calls increment).
-    currentVerifyOut = await verify(buildL5Input(currentSelectOut));
-    recordLayer(state, 'L5', 'verify', {
-      passed:           currentVerifyOut.passed,
-      failed_rules:     currentVerifyOut.failed_rules.map((f) => f.rule_id),
-      repair_iteration: i + 1,
-    });
-
-    if (currentVerifyOut.passed) {
-      return finalize(await finalizeClassifyWithSiblingGate(currentSelectOut), state, captureTrace);
-    }
-
-    lastFailures = currentVerifyOut.failed_rules;
-  }
-
-  // All 3 repairs exhausted — hand off to escalation policy.
-  return finalize(BaselineEscalation.onVerifierExhausted(state, currentSelectOut, lastFailures), state, captureTrace);
+  return finalize(result, state, captureTrace);
   } catch (err) {
     // §7 "Vertex 5xx persistent": surface a system-error to the user, NEVER a
     // fabricated classification. We narrow to GENUINE transport failures only

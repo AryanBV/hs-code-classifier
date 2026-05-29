@@ -5,7 +5,11 @@
  * Run: cd backend && npx vitest run src/classifier-v2/lib/sibling-ask-trigger.test.ts
  */
 import { describe, it, expect } from 'vitest';
-import { isAttributePinnedByQuery, computeSiblingRerankMargin } from './sibling-ask-trigger';
+import {
+  isAttributePinnedByQuery,
+  computeSiblingRerankMargin,
+  evaluateCalibratedClassify,
+} from './sibling-ask-trigger';
 import type { RetrievalCandidate, TriageExtractedAttributes } from '../types';
 
 /* ---------------------------------------------------------------------------
@@ -252,5 +256,153 @@ describe('computeSiblingRerankMargin', () => {
       margin: null,
       topCodes: null,
     });
+  });
+});
+
+/* ---------------------------------------------------------------------------
+ * evaluateCalibratedClassify — the MIRROR of the sibling-ASK lever.
+ *
+ * Fires (gate A ∧ gate B) when the L3 survivors concentrate into ONE subheading
+ * AND the top-2 rerank margin within it is dominant (≥ opts.margin). The OPPOSITE
+ * polarity of computeSiblingRerankMargin's small-margin ask signal.
+ * --------------------------------------------------------------------------- */
+
+const CC_OPTS = { margin: 0.15, strongMargin: 0.3 };
+
+describe('evaluateCalibratedClassify — gate A (concentration)', () => {
+  it('fires when 1 subheading + a dominant margin (≥0.15)', () => {
+    const candidates = [
+      mkRC('7318.15.00', 0.95),
+      mkRC('7318.15.10', 0.70),
+    ];
+    const d = evaluateCalibratedClassify(candidates, CC_OPTS);
+    expect(d.fire).toBe(true);
+    expect(d.subheading).toBe('7318.15');
+    expect(d.topCode).toBe('7318.15.00');
+    expect(d.marginVal).toBeCloseTo(0.25, 10);
+  });
+
+  it('does NOT fire when ≥2 distinct subheadings survive (concentration fails)', () => {
+    const candidates = [
+      mkRC('7318.15.00', 0.95),
+      mkRC('7318.16.00', 0.30), // different subheading
+    ];
+    const d = evaluateCalibratedClassify(candidates, CC_OPTS);
+    expect(d.fire).toBe(false);
+    expect(d.reason).toContain('concentration_fail');
+  });
+
+  it('uses parent_chain.subheading for concentration (not just code prefix)', () => {
+    // Both candidates carry the SAME explicit parent subheading even though their
+    // code prefixes differ — gate A must group by parent_chain.subheading first.
+    const candidates = [
+      mkRC('7318.15.00', 0.95, '7318.15'),
+      mkRC('7318.15.10', 0.70, '7318.15'),
+    ];
+    const d = evaluateCalibratedClassify(candidates, CC_OPTS);
+    expect(d.fire).toBe(true);
+    expect(d.subheading).toBe('7318.15');
+  });
+});
+
+describe('evaluateCalibratedClassify — gate B (dominant margin)', () => {
+  it('does NOT fire when the margin is below opts.margin (0.10 < 0.15)', () => {
+    const candidates = [
+      mkRC('7318.15.00', 0.90),
+      mkRC('7318.15.10', 0.80), // margin 0.10 < 0.15
+    ];
+    const d = evaluateCalibratedClassify(candidates, CC_OPTS);
+    expect(d.fire).toBe(false);
+    expect(d.reason).toContain('dominant_margin_fail');
+  });
+
+  it('fires at the inclusive threshold (margin === opts.margin, m >= margin)', () => {
+    // Use a tie to get an EXACT margin of 0 (no float error), then set the
+    // threshold to 0 so the boundary `m >= margin` is exercised cleanly inclusive.
+    const candidates = [
+      mkRC('7318.15.00', 0.80),
+      mkRC('7318.15.10', 0.80), // exact tie → margin 0
+    ];
+    const d = evaluateCalibratedClassify(candidates, { margin: 0, strongMargin: 0.3 });
+    expect(d.fire).toBe(true);
+    expect(d.marginVal).toBe(0);
+  });
+
+  it('flags strong=true when the margin ≥ opts.strongMargin (0.40 ≥ 0.30)', () => {
+    const candidates = [
+      mkRC('7318.15.00', 0.95),
+      mkRC('7318.15.10', 0.55), // margin 0.40 ≥ 0.30
+    ];
+    const d = evaluateCalibratedClassify(candidates, CC_OPTS);
+    expect(d.fire).toBe(true);
+    expect(d.strong).toBe(true);
+    expect(d.reason).toContain('strong_margin');
+  });
+
+  it('strong=false for a dominant-but-not-strong margin (0.15 ≤ m < 0.30)', () => {
+    const candidates = [
+      mkRC('7318.15.00', 0.95),
+      mkRC('7318.15.10', 0.75), // margin 0.20 — dominant, not strong
+    ];
+    const d = evaluateCalibratedClassify(candidates, CC_OPTS);
+    expect(d.fire).toBe(true);
+    expect(d.strong).toBe(false);
+    expect(d.reason).toContain('dominant_margin');
+  });
+});
+
+describe('evaluateCalibratedClassify — single-survivor null-margin path', () => {
+  it('fires trivially when exactly ONE candidate (null margin), strong=false', () => {
+    const candidates = [mkRC('7318.15.00', null)];
+    const d = evaluateCalibratedClassify(candidates, CC_OPTS);
+    expect(d.fire).toBe(true);
+    expect(d.subheading).toBe('7318.15');
+    expect(d.topCode).toBe('7318.15.00');
+    expect(d.marginVal).toBeNull();
+    // Not measurably dominant → must go through the orchestrator's verbatim half.
+    expect(d.strong).toBe(false);
+    expect(d.reason).toBe('single_survivor_null_margin');
+  });
+
+  it('fires for a single candidate even with a non-null rerank_score', () => {
+    const candidates = [mkRC('7318.15.00', 0.91)];
+    const d = evaluateCalibratedClassify(candidates, CC_OPTS);
+    // computeSiblingRerankMargin needs ≥2 siblings → null → single-survivor path.
+    expect(d.fire).toBe(true);
+    expect(d.marginVal).toBeNull();
+    expect(d.strong).toBe(false);
+  });
+
+  it('does NOT fire when the margin is null but >1 candidate (e.g. one rerank null)', () => {
+    // Two same-subheading candidates but only one carries a rerank_score → margin
+    // null AND length>1 → cannot assert dominance → no fire.
+    const candidates = [
+      mkRC('7318.15.00', 0.90),
+      mkRC('7318.15.10', null),
+    ];
+    const d = evaluateCalibratedClassify(candidates, CC_OPTS);
+    expect(d.fire).toBe(false);
+    expect(d.reason).toContain('null_margin_multi');
+  });
+});
+
+describe('evaluateCalibratedClassify — edge cases (never throws)', () => {
+  it('does NOT fire on an empty candidate list', () => {
+    expect(evaluateCalibratedClassify([], CC_OPTS).fire).toBe(false);
+  });
+
+  it('tolerates a non-array candidates input (defensive)', () => {
+    // @ts-expect-error — exercising the runtime guard.
+    expect(evaluateCalibratedClassify(null, CC_OPTS).fire).toBe(false);
+  });
+
+  it('does NOT fire when the only subheading is unresolvable', () => {
+    // A candidate with no parent subheading and a too-short code → '' bucket.
+    const broken: RetrievalCandidate = {
+      ...mkRC('7318.15.00', 0.9, null),
+      code: '73',
+    } as RetrievalCandidate;
+    const d = evaluateCalibratedClassify([broken], CC_OPTS);
+    expect(d.fire).toBe(false);
   });
 });

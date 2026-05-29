@@ -539,7 +539,7 @@ export type { Predicate, PredicateRef, PredicateEvalResult } from './db/predicat
 
 /** Trace event captured at each layer for audit + eval. */
 export interface PipelineTraceEvent {
-  layer:    'L0' | 'L1' | 'L2' | 'L3' | 'L4' | 'L5' | 'L6' | 'L7' | 'L8' | 'QGS' | 'SIBLING-ASK';
+  layer:    'L0' | 'L1' | 'L2' | 'L3' | 'L4' | 'L5' | 'L6' | 'L7' | 'L8' | 'QGS' | 'SIBLING-ASK' | 'CALIBRATED-CLASSIFY';
   /** Wall-clock ms from pipeline start to this event. */
   t_ms:     number;
   /** Stage label / sub-event id. */

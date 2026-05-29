@@ -167,3 +167,127 @@ export function computeSiblingRerankMargin(
     topCodes: [top1.code, top2.code],
   };
 }
+
+/* ---------------------------------------------------------------------------
+ * CALIBRATED-CLASSIFY decision — the MIRROR of the sibling-ASK lever.
+ *
+ * Sibling-ASK fires on a SMALL margin (genuinely confusable siblings → ask).
+ * CALIBRATED-CLASSIFY fires on the OPPOSITE polarity: a LARGE margin over a
+ * SINGLE residual subheading means L2/L3 already pinned the dominant leaf, so an
+ * L1 ASK can be safely UPGRADED to a CLASSIFY instead of asking. It can only ever
+ * turn an ASK into a CLASSIFY — never downgrade to REFUSE.
+ *
+ * This pure fn handles two of the three gates; gate C (verbatim-pin) requires a
+ * DB description fetch and is completed by the orchestrator.
+ *
+ *   - Gate A (CONCENTRATION): all surviving candidates share ONE subheading.
+ *   - Gate B (DOMINANT-MARGIN): the top-2 rerank margin within that subheading is
+ *     ≥ `opts.margin` (a clearly dominant leaf). A null margin (rerank_score null
+ *     on a direct_leaf_lookup / degrade) with exactly ONE candidate under the
+ *     subheading is treated as TRIVIALLY dominant (B passes).
+ *   - Gate C-half (STRONG): when the margin is ≥ `opts.strongMargin`, `strong` is
+ *     set so the orchestrator can skip the verbatim-pin DB fetch entirely.
+ *
+ * Reuses `computeSiblingRerankMargin` + the same subheading-derivation pattern as
+ * `subheadingOf` (parent_chain.subheading ?? code.slice(0,7)) — no duplication.
+ * --------------------------------------------------------------------------- */
+
+/** Result of the pure CALIBRATED-CLASSIFY gate evaluation. */
+export interface CalibratedClassifyDecision {
+  /** True iff gate A AND gate B hold (orchestrator then additionally requires C). */
+  fire:       boolean;
+  /** The single residual subheading when gate A holds; else null. */
+  subheading: string | null;
+  /** The dominant (top-rerank, or single-survivor) leaf code; else null. */
+  topCode:    string | null;
+  /** The top-2 rerank margin used for gate B; null on the single-survivor path. */
+  marginVal:  number | null;
+  /** True when the margin is ≥ strongMargin (gate-C STRONG half satisfied). */
+  strong:     boolean;
+  /** Human-readable cause for trace/debug (never load-bearing). */
+  reason:     string;
+}
+
+/**
+ * Derive a candidate's 6-digit subheading using the EXACT pattern shared by
+ * `computeSiblingRerankMargin` and L4-select's `subheadingOf`: prefer the parent
+ * chain's subheading, falling back to the code's "NNNN.NN" prefix when absent.
+ * Returns '' when neither is resolvable (pushed into a distinct bucket so an
+ * unresolvable candidate never silently joins a real group).
+ */
+function effectiveSubheading(c: RetrievalCandidate): string {
+  const sub = c.parent_chain.subheading ?? '';
+  if (sub.length > 0) return sub;
+  if (c.code.length >= 7) return c.code.slice(0, 7);
+  return '';
+}
+
+/**
+ * Pure CALIBRATED-CLASSIFY gate (A + B + the STRONG half of C). Total + side-
+ * effect free + never throws. See the section comment above for the gate model.
+ *
+ * @param candidates The L3 survivors (`rulesOut.filtered_candidates`).
+ * @param opts.margin       gate-B cutoff (dominant margin); orchestrator default 0.15.
+ * @param opts.strongMargin gate-C STRONG cutoff; orchestrator default 0.30.
+ */
+export function evaluateCalibratedClassify(
+  candidates: RetrievalCandidate[],
+  opts: { margin: number; strongMargin: number },
+): CalibratedClassifyDecision {
+  const noFire = (reason: string): CalibratedClassifyDecision => ({
+    fire: false, subheading: null, topCode: null, marginVal: null, strong: false, reason,
+  });
+
+  if (!Array.isArray(candidates) || candidates.length === 0) {
+    return noFire('no_candidates');
+  }
+
+  // Gate A — CONCENTRATION: exactly ONE distinct subheading across all survivors.
+  const subheadings = new Set<string>();
+  for (const c of candidates) subheadings.add(effectiveSubheading(c));
+  if (subheadings.size !== 1) {
+    return noFire(`concentration_fail:${subheadings.size}_subheadings`);
+  }
+  const theSubheading = [...subheadings][0]!;
+  if (theSubheading.length === 0) {
+    return noFire('concentration_fail:unresolvable_subheading');
+  }
+
+  // Gate B — DOMINANT-MARGIN. The rerank margin between the top-2 same-subheading
+  // siblings must be ≥ opts.margin. A null margin (single rerankable survivor, or
+  // rerank_score null on a direct_leaf_lookup) is trivially dominant iff exactly
+  // ONE candidate sits under the subheading.
+  const { margin, topCodes } = computeSiblingRerankMargin(candidates, theSubheading);
+
+  if (margin === null) {
+    if (candidates.length === 1) {
+      const only = candidates[0]!;
+      return {
+        fire: true,
+        subheading: theSubheading,
+        topCode: only.code,
+        marginVal: null,
+        // No measurable margin: the single survivor needs the verbatim-pin half of
+        // gate C (orchestrator), so it is NOT flagged strong here.
+        strong: false,
+        reason: 'single_survivor_null_margin',
+      };
+    }
+    return noFire('dominant_margin_fail:null_margin_multi');
+  }
+
+  if (margin < opts.margin) {
+    return noFire(`dominant_margin_fail:${margin}_below_${opts.margin}`);
+  }
+
+  const top1 = topCodes !== null ? topCodes[0] : null;
+  const strong = margin >= opts.strongMargin;
+  return {
+    fire: true,
+    subheading: theSubheading,
+    topCode: top1,
+    marginVal: margin,
+    strong,
+    reason: strong ? `strong_margin:${margin}` : `dominant_margin:${margin}`,
+  };
+}
