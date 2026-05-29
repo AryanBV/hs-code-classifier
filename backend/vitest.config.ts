@@ -9,6 +9,7 @@ export default defineConfig({
       'src/tests/**/*.test.ts',
       'src/classifier-v2/**/*.test.ts',
       'src/eval/**/*.test.ts',
+      'src/api/**/*.test.ts',
     ],
     exclude: [
       'node_modules',
