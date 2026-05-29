@@ -1,3 +1,5 @@
+> **STATUS: SUPERSEDED (2026-05-29 PM).** Cohere was DECOMMISSIONED at the M1 Vertex migration — the "TOP ACTION REQUIRED: upgrade the Cohere key" / HTTP-429 blocker described below NO LONGER APPLIES (resolved by removing Cohere). Current honest baseline = r12 8-digit OUTRIGHT 68.0% on clean gold. Canonical resume state = `backend/docs/AUTONOMOUS-CONTINUATION-2026-05-29.md`.
+
 # Phase 4.2a — Baseline, Failure Map & Roadmap to the Ultimate Classifier
 
 **Date:** 2026-05-28 · **Branch:** `feat/phase-4-pipeline-build`
