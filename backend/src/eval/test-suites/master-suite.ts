@@ -431,6 +431,59 @@ function applyGoldOverrides(cases: EvalTestCase[]): EvalTestCase[] {
 }
 
 // ---------------------------------------------------------------------------
+// Round 5 — bad-gold query rewrites + drop (2026-05-30, user-approved)
+// ---------------------------------------------------------------------------
+//
+// GOLD-REMEDIATION-LOG Round 5: 22 source cases whose queries were blind-verified
+// to be CONTENTLESS schedule fragments (legal cross-references / heading skeletons
+// with no real product signal). Each rewrite replaces the fragment with a realistic
+// product phrasing that preserves the SAME gold leaf — we do NOT touch the gold
+// code/chapter/heading here, only the `query` text. DB030 is DROPPED entirely: its
+// "query" was a contentless legal cross-reference with no classifiable product.
+//
+// Applied as the INNERMOST transform in the allCases pipeline so rewrites flow
+// through confidence overrides, gold overrides, and dedup. The out-of-boundary
+// comprehensive-test-set.json is left untouched (owned by a different agent).
+const QUERY_OVERRIDES: Record<string, string> = {
+  DB007: 'black tea in retail packets not exceeding 25 g',
+  DB025: 'Tobias acid (2-naphthylamine-1-sulphonic acid)',
+  DB028: 'sulphanilic acid (para-aminobenzene sulphonic acid)',
+  DB069: "women's knitted blouse of wool or fine animal hair",
+  DB093: 'silico-manganese alloy steel wire',
+  DB097: 'grain-oriented silicon electrical steel flat-rolled coil',
+  DB118: 'additive manufacturing 3D printer by plastics or rubber deposit',
+  DB191: 'endless rubber V-belt, rubber compound under 25% by weight',
+  DB002: 'raw unroasted Robusta parchment coffee, PB grade',
+  DB015: 'GI-recognised parboiled milled rice',
+  DB057: 'single combed cotton yarn, count finer than 80s (under 125 decitex)',
+  DB066: "women's knitted nightdress/lingerie of wool or fine animal hair",
+  DB091: 'zinc-coated (galvanized) iron/steel angles, shapes and sections',
+  DB092: 'stainless steel sheets and plates, thickness more than 4.75 mm',
+  DB095: 'hot-rolled alloy steel flat product under 600 mm wide, thickness below 3 mm',
+  DB107: 'seamless alloy steel tube/pipe up to 114.3 mm diameter',
+  DB108: 'clad-metal article of iron or steel (e.g. clad steel fitting)',
+  DB131: 'mechanically propelled parts of invalid carriages for disabled persons',
+  DB143: 'parts and accessories of compound optical microscopes',
+  DB144: 'parts and accessories of photographic laboratory apparatus',
+  DB151: 'frozen strawberries, not containing added sugar',
+  DB195: 'new pneumatic rubber tyres for construction, mining or industrial handling vehicles (OTR tyres)',
+};
+
+const DROPPED_CASE_IDS: ReadonlySet<string> = new Set<string>(['DB030']);
+
+// Drop contentless cases first, then rewrite contentless-fragment queries to a
+// realistic product phrasing (gold leaf preserved). See GOLD-REMEDIATION-LOG Round 5.
+function applyQueryRewritesAndDrops(cases: EvalTestCase[]): EvalTestCase[] {
+  return cases
+    .filter(tc => !DROPPED_CASE_IDS.has(tc.id))
+    .map(tc => {
+      const rewritten = QUERY_OVERRIDES[tc.id];
+      if (rewritten === undefined) return tc;
+      return { ...tc, query: rewritten };
+    });
+}
+
+// ---------------------------------------------------------------------------
 // Combine and deduplicate
 // ---------------------------------------------------------------------------
 
@@ -446,17 +499,22 @@ function deduplicateSuite(cases: EvalTestCase[]): EvalTestCase[] {
   return Array.from(seen.values());
 }
 
+// applyQueryRewritesAndDrops is the INNERMOST transform (GOLD-REMEDIATION-LOG
+// Round 5): query rewrites + DB030 drop flow through confidence + gold overrides
+// + dedup so every downstream stage sees the realistic phrasing.
 const allCases: EvalTestCase[] = applyGoldOverrides(
-  applyConfidenceOverrides([
-    ...comprehensiveCases,
-    ...ambiguousCases,
-    ...automotiveSupplemental.filter(c => isUnique(c.query)),
-    ...simpleSupplemental.filter(c => isUnique(c.query)),
-    ...askCases,
-    ...askCasesSingleWord,
-    ...askCasesMultiWord,
-    ...rejectCases,
-  ])
+  applyConfidenceOverrides(
+    applyQueryRewritesAndDrops([
+      ...comprehensiveCases,
+      ...ambiguousCases,
+      ...automotiveSupplemental.filter(c => isUnique(c.query)),
+      ...simpleSupplemental.filter(c => isUnique(c.query)),
+      ...askCases,
+      ...askCasesSingleWord,
+      ...askCasesMultiWord,
+      ...rejectCases,
+    ])
+  )
 );
 
 export const masterSuite: EvalTestCase[] = deduplicateSuite(allCases);

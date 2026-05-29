@@ -270,3 +270,47 @@ For every classify case with a code it checks: (a) code exists in `tariff_lines`
 (query/description salient-token overlap). Buckets each case OK /
 METADATA_INCONSISTENT / CODE_MISSING / SEMANTIC_SUSPECT, lists CLASSIFY_NO_CODE
 (chapter-only GT), and exits non-zero if any hard inconsistency remains.
+
+---
+
+## Round 5 — bad-gold query rewrites (2026-05-30, user-approved)
+
+22 `DB*` source cases were blind-verified to carry **contentless schedule fragments**
+as their "query" — legal cross-references / heading skeletons with no real product
+signal (so the classifier was being graded against unclassifiable text). The rewrites
+below replace each fragment with a **realistic product phrasing that preserves the SAME
+gold leaf** (the `expected_code`/`expected_chapter`/`expected_heading` are unchanged —
+only the `query` text is rewritten). One further case, **DB030, is DROPPED entirely**:
+its "query" was a contentless legal cross-reference with no classifiable product.
+
+**Mechanism:** additive, via a new `QUERY_OVERRIDES: Record<string,string>` map +
+`DROPPED_CASE_IDS` set + `applyQueryRewritesAndDrops()` in `master-suite.ts`, wired as
+the **innermost** transform of the `allCases` pipeline so the rewrites flow through the
+confidence overrides, gold overrides, and dedup. The out-of-boundary
+`comprehensive-test-set.json` is left untouched.
+
+| caseId | New query | Note |
+|---|---|---|
+| DB007 | black tea in retail packets not exceeding 25 g | rewrite |
+| DB025 | Tobias acid (2-naphthylamine-1-sulphonic acid) | rewrite |
+| DB028 | sulphanilic acid (para-aminobenzene sulphonic acid) | rewrite |
+| DB069 | women's knitted blouse of wool or fine animal hair | rewrite |
+| DB093 | silico-manganese alloy steel wire | rewrite |
+| DB097 | grain-oriented silicon electrical steel flat-rolled coil | rewrite |
+| DB118 | additive manufacturing 3D printer by plastics or rubber deposit | rewrite |
+| DB191 | endless rubber V-belt, rubber compound under 25% by weight | rewrite |
+| DB002 | raw unroasted Robusta parchment coffee, PB grade | rewrite |
+| DB015 | GI-recognised parboiled milled rice | rewrite |
+| DB057 | single combed cotton yarn, count finer than 80s (under 125 decitex) | rewrite |
+| DB066 | women's knitted nightdress/lingerie of wool or fine animal hair | rewrite |
+| DB091 | zinc-coated (galvanized) iron/steel angles, shapes and sections | rewrite |
+| DB092 | stainless steel sheets and plates, thickness more than 4.75 mm | rewrite |
+| DB095 | hot-rolled alloy steel flat product under 600 mm wide, thickness below 3 mm | rewrite |
+| DB107 | seamless alloy steel tube/pipe up to 114.3 mm diameter | rewrite |
+| DB108 | clad-metal article of iron or steel (e.g. clad steel fitting) | rewrite |
+| DB131 | mechanically propelled parts of invalid carriages for disabled persons | rewrite |
+| DB143 | parts and accessories of compound optical microscopes | rewrite |
+| DB144 | parts and accessories of photographic laboratory apparatus | rewrite |
+| DB151 | frozen strawberries, not containing added sugar | rewrite |
+| DB195 | new pneumatic rubber tyres for construction, mining or industrial handling vehicles (OTR tyres) | rewrite |
+| DB030 | — | **dropped** (contentless legal cross-reference) |
