@@ -160,7 +160,7 @@ function setHappySql(): void {
     { match: 'SELECT notes FROM sections',
       rows: [{ notes: [{ number: '1', text: 'Section XV base metals notes.' }] }] },
     // Rule 4 — cosine
-    { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.85 }] },
+    { match: '1 - (embedding_v2 <=> $1::vector)', rows: [{ cosine: 0.85 }] },
     // Rule 6 — india_specific
     { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
     // Rule 10 — policy
@@ -246,7 +246,7 @@ describe('L5 verifier — Rule 1 (code existence)', () => {
       { match: 'FROM tariff_lines WHERE code = $1 LIMIT 1', rows: [] },
       { match: 'SELECT notes FROM chapters', rows: [{ notes: [] }] },
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
-      { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.85 }] },
+      { match: '1 - (embedding_v2 <=> $1::vector)', rows: [{ cosine: 0.85 }] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
       { match: 'tl.export_policy', rows: [{ export_policy: 'Free', policy_condition: null, export_licensing_notes: [] }] },
     ]);
@@ -260,7 +260,7 @@ describe('L5 verifier — Rule 1 (code existence)', () => {
       { match: 'FROM subheadings WHERE subheading = $1 LIMIT 1', rows: [{ one: 1 }] },
       { match: 'SELECT notes FROM chapters', rows: [{ notes: [{ number: '1', text: 'Articles of iron or steel — screws bolts and similar fasteners.' }] }] },
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
-      { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.85 }] },
+      { match: '1 - (embedding_v2 <=> $1::vector)', rows: [{ cosine: 0.85 }] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
       { match: 'tl.export_policy', rows: [] },
     ]);
@@ -333,7 +333,7 @@ describe('L5 verifier — Rule 3 (verbatim citation fidelity / token-set contain
       { match: 'SELECT notes FROM chapters',
         rows: [{ notes: [{ number: '1', text: 'This Chapter covers articles of iron or steel such as screws, bolts, nuts, washers and similar threaded fasteners of base metal.' }] }] },
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
-      { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.85 }] },
+      { match: '1 - (embedding_v2 <=> $1::vector)', rows: [{ cosine: 0.85 }] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
       { match: 'tl.export_policy', rows: [{ export_policy: 'Free', policy_condition: null, export_licensing_notes: [] }] },
     ]);
@@ -361,7 +361,7 @@ describe('L5 verifier — Rule 3 (verbatim citation fidelity / token-set contain
       { match: 'SELECT notes FROM chapters',
         rows: [{ notes: [{ number: '1', text: 'Articles of iron or steel — screws bolts and similar fasteners.' }] }] },
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
-      { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.85 }] },
+      { match: '1 - (embedding_v2 <=> $1::vector)', rows: [{ cosine: 0.85 }] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
       { match: 'tl.export_policy', rows: [{ export_policy: 'Free', policy_condition: null, export_licensing_notes: [] }] },
     ]);
@@ -392,7 +392,7 @@ describe('L5 verifier — Rule 3 (verbatim citation fidelity / token-set contain
       { match: 'SELECT notes FROM chapters',
         rows: [{ notes: [{ number: '1', text: 'Articles of iron or steel such as screws, bolts and similar threaded fasteners.' }] }] },
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
-      { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.85 }] },
+      { match: '1 - (embedding_v2 <=> $1::vector)', rows: [{ cosine: 0.85 }] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
       { match: 'tl.export_policy', rows: [{ export_policy: 'Free', policy_condition: null, export_licensing_notes: [] }] },
     ]);
@@ -437,7 +437,7 @@ describe('L5 verifier — Rule 3 (verbatim citation fidelity / token-set contain
       { match: 'FROM tariff_lines WHERE code = $1 LIMIT 1', rows: [{ one: 1 }] },
       { match: 'SELECT notes FROM chapters', rows: [] }, // not found
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
-      { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.85 }] },
+      { match: '1 - (embedding_v2 <=> $1::vector)', rows: [{ cosine: 0.85 }] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
       { match: 'tl.export_policy', rows: [{ export_policy: 'Free', policy_condition: null, export_licensing_notes: [] }] },
     ]);
@@ -469,7 +469,7 @@ describe('L5 verifier — Rule 4 (embedding cosine floor)', () => {
       { match: 'SELECT notes FROM chapters',
         rows: [{ notes: [{ number: '1', text: 'Articles of iron or steel — screws bolts and similar fasteners.' }] }] },
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
-      { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: belowFloor }] },
+      { match: '1 - (embedding_v2 <=> $1::vector)', rows: [{ cosine: belowFloor }] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
       { match: 'tl.export_policy', rows: [{ export_policy: 'Free', policy_condition: null, export_licensing_notes: [] }] },
     ]);
@@ -484,7 +484,7 @@ describe('L5 verifier — Rule 4 (embedding cosine floor)', () => {
       { match: 'SELECT notes FROM chapters',
         rows: [{ notes: [{ number: '1', text: 'Articles of iron or steel — screws bolts and similar fasteners.' }] }] },
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
-      { match: '1 - (embedding <=> $1::vector)', rows: [] },
+      { match: '1 - (embedding_v2 <=> $1::vector)', rows: [] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
       { match: 'tl.export_policy', rows: [{ export_policy: 'Free', policy_condition: null, export_licensing_notes: [] }] },
     ]);
@@ -737,7 +737,7 @@ describe('L5 verifier — Rule 6 (india_specific consistency)', () => {
       { match: 'SELECT notes FROM chapters',
         rows: [{ notes: [{ number: '1', text: 'Articles of iron or steel — screws bolts and similar fasteners.' }] }] },
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
-      { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.85 }] },
+      { match: '1 - (embedding_v2 <=> $1::vector)', rows: [{ cosine: 0.85 }] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: true }] }, // DB true
       { match: 'tl.export_policy', rows: [{ export_policy: 'Free', policy_condition: null, export_licensing_notes: [] }] },
     ]);
@@ -1131,7 +1131,7 @@ describe('L5 verifier — Rule 10 (policy consistency)', () => {
       { match: 'SELECT notes FROM chapters',
         rows: [{ notes: [{ number: '1', text: 'Articles of iron or steel — screws bolts and similar fasteners.' }] }] },
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
-      { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.85 }] },
+      { match: '1 - (embedding_v2 <=> $1::vector)', rows: [{ cosine: 0.85 }] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
       { match: 'tl.export_policy', rows: [{
         export_policy: 'Prohibited',  // DB says prohibited
@@ -1150,7 +1150,7 @@ describe('L5 verifier — Rule 10 (policy consistency)', () => {
       { match: 'SELECT notes FROM chapters',
         rows: [{ notes: [{ number: '1', text: 'Articles of iron or steel — screws bolts and similar fasteners.' }] }] },
       { match: 'SELECT notes FROM sections', rows: [{ notes: [] }] },
-      { match: '1 - (embedding <=> $1::vector)', rows: [{ cosine: 0.85 }] },
+      { match: '1 - (embedding_v2 <=> $1::vector)', rows: [{ cosine: 0.85 }] },
       { match: 'COALESCE(india_specific, FALSE)', rows: [{ india_specific: false }] },
       { match: 'tl.export_policy', rows: [{
         export_policy: 'Free',

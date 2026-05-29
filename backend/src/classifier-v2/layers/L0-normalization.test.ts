@@ -29,6 +29,7 @@ import * as fs from 'fs';
 import {
   _clearAliasCacheForTesting,
   _getAliasMapPathForTesting,
+  _sanitizeNoiseForTesting,
   normalize,
 } from './L0-normalization';
 
@@ -234,6 +235,253 @@ describe('L0 normalize — alias substitution', () => {
     // 'dal' as a standalone token does not occur in the post-substitution text
     // (since 'channa dal' was consumed), so only one alias should be applied.
     expect(out.aliases_applied.map((a) => a.alias)).toEqual(['channa dal']);
+  });
+});
+
+describe('L0 normalize — noise sanitization (Round 1 routing calibration)', () => {
+  // --- Leading intent phrases ---------------------------------------------
+  const leadingIntentCases: Array<[string, string]> = [
+    ['I need to export ',        'I need to export stainless steel hex bolts'],
+    ['I want to export ',        'I want to export woven dress shirts'],
+    ['Looking to export ',       'Looking to export galvanized steel sheet coils'],
+    ['Please classify ',         'Please classify rubber oil seals for engines'],
+    ['What is the hs code for ', 'What is the hs code for muslin of carded yarn'],
+    ['What is the HS code for ', 'What is the HS code for furnishing fabrics'],
+    ['Can you classify ',        'Can you classify cotton knitted t-shirts'],
+  ];
+  for (const [phrase, query] of leadingIntentCases) {
+    it(`strips leading intent phrase "${phrase.trim()}"`, async () => {
+      mockAliasMap(null);
+      const out = await normalize(query);
+      // The intent verb should be gone; the product head-noun must survive.
+      expect(out.normalized_query.toLowerCase()).not.toContain('export');
+      expect(out.normalized_query.toLowerCase()).not.toContain('classify');
+      expect(out.normalized_query.toLowerCase()).not.toContain('hs code');
+    });
+  }
+
+  it('preserves the product description after stripping a leading intent phrase', async () => {
+    mockAliasMap(null);
+    const out = await normalize('I need to export stainless steel hex bolts');
+    expect(out.normalized_query).toBe('stainless steel hex bolts');
+    expect(out.raw_tokens).toEqual(['stainless', 'steel', 'hex', 'bolts']);
+  });
+
+  // --- Trailing provenance -------------------------------------------------
+  it('strips trailing "for export"', async () => {
+    mockAliasMap(null);
+    const out = await normalize('galvanized steel sheet coils for export');
+    expect(out.normalized_query).toBe('galvanized steel sheet coils');
+    expect(out.raw_tokens).not.toContain('export');
+  });
+
+  it('strips trailing "made in India"', async () => {
+    mockAliasMap(null);
+    const out = await normalize('woven dress shirt formal men made in India');
+    expect(out.normalized_query).toBe('woven dress shirt formal men');
+    expect(out.raw_tokens).not.toContain('india');
+    expect(out.raw_tokens).not.toContain('made');
+  });
+
+  it('strips trailing "made in <country>" for an arbitrary country', async () => {
+    mockAliasMap(null);
+    const out = await normalize('cotton bed sheets made in Bangladesh');
+    expect(out.normalized_query).toBe('cotton bed sheets');
+    expect(out.raw_tokens).not.toContain('bangladesh');
+  });
+
+  it('strips trailing "origin <country>" provenance', async () => {
+    mockAliasMap(null);
+    const out = await normalize('stainless steel fasteners origin India');
+    expect(out.normalized_query).toBe('stainless steel fasteners');
+    expect(out.raw_tokens).not.toContain('origin');
+    expect(out.raw_tokens).not.toContain('india');
+  });
+
+  it('strips trailing "country of origin: <country>" provenance', async () => {
+    mockAliasMap(null);
+    const out = await normalize('cotton bed sheets country of origin: Bangladesh');
+    expect(out.normalized_query).toBe('cotton bed sheets');
+    expect(out.raw_tokens).not.toContain('origin');
+    expect(out.raw_tokens).not.toContain('bangladesh');
+  });
+
+  it('does NOT strip "original" as if it were "origin" (word-boundary safety, FIX 2)', async () => {
+    mockAliasMap(null);
+    // 'original equipment manufacturer' must survive — 'origin' must only match
+    // as a whole word, never the prefix of 'original'.
+    const out = await normalize('rubber seals for original equipment manufacturer');
+    expect(out.normalized_query).toBe('rubber seals for original equipment manufacturer');
+    expect(out.raw_tokens).toContain('original');
+    expect(out.raw_tokens).toContain('equipment');
+    expect(out.raw_tokens).toContain('manufacturer');
+  });
+
+  it('does NOT strip a meaningful "for <use>" that is not provenance', async () => {
+    mockAliasMap(null);
+    // "for automobile engines" is intended-use, not provenance — must survive.
+    const out = await normalize('rubber oil seals for automobile engines');
+    expect(out.normalized_query).toBe('rubber oil seals for automobile engines');
+    expect(out.raw_tokens).toContain('automobile');
+    expect(out.raw_tokens).toContain('engines');
+  });
+
+  // --- Pasted-tariff structural markers ------------------------------------
+  it('strips a leading standalone dash bullet', async () => {
+    mockAliasMap(null);
+    const out = await normalize('- woven dress shirt formal men');
+    expect(out.normalized_query).toBe('woven dress shirt formal men');
+  });
+
+  it('strips a leading ":" bullet', async () => {
+    mockAliasMap(null);
+    const out = await normalize(': furnishing fabrics');
+    expect(out.normalized_query).toBe('furnishing fabrics');
+  });
+
+  it('strips a leading pasted-tariff "---" structural marker', async () => {
+    mockAliasMap(null);
+    const out = await normalize('--- muslin of carded yarn');
+    expect(out.normalized_query).toBe('muslin of carded yarn');
+  });
+
+  it('strips a leading ":--" pasted-tariff marker', async () => {
+    mockAliasMap(null);
+    const out = await normalize(':-- galvanized steel sheet coils');
+    expect(out.normalized_query).toBe('galvanized steel sheet coils');
+  });
+
+  it('collapses repeated dashes embedded in the query', async () => {
+    mockAliasMap(null);
+    const out = await normalize('woven dress shirt ---- formal men');
+    // Repeated structural dashes collapse; product words survive.
+    expect(out.normalized_query).not.toContain('----');
+    expect(out.raw_tokens).toEqual(['woven', 'dress', 'shirt', 'formal', 'men']);
+  });
+
+  it('does NOT strip a hyphen inside a compound product word', async () => {
+    mockAliasMap(null);
+    // 'leaf-spring' must NOT be broken or stripped by dash-collapse.
+    const out = await normalize('PU leaf-spring bushings');
+    expect(out.normalized_query).toContain('leaf-spring');
+  });
+
+  // --- Combined noise ------------------------------------------------------
+  it('strips leading intent AND trailing provenance together', async () => {
+    mockAliasMap(null);
+    const out = await normalize('I want to export galvanized steel sheet coils for export');
+    expect(out.normalized_query).toBe('galvanized steel sheet coils');
+  });
+
+  it('strips intent + bullet markers + provenance together, preserving product', async () => {
+    mockAliasMap(null);
+    const out = await normalize('Please classify - rubber oil seals for export, made in India');
+    expect(out.normalized_query.toLowerCase()).toContain('rubber oil seals');
+    expect(out.normalized_query.toLowerCase()).not.toContain('classify');
+    expect(out.normalized_query.toLowerCase()).not.toContain('made in india');
+  });
+
+  // --- Safety: do not over-strip ------------------------------------------
+  it('leaves a clean product query untouched', async () => {
+    mockAliasMap(null);
+    const out = await normalize('stainless steel hex bolt M10');
+    expect(out.normalized_query).toBe('stainless steel hex bolt M10');
+  });
+
+  it('does not strip "export" when it is part of the product itself', async () => {
+    mockAliasMap(null);
+    // 'export quality basmati rice' — 'export' here is an adjective, not a
+    // leading-intent verb or trailing-provenance phrase; product survives.
+    const out = await normalize('export quality basmati rice');
+    expect(out.raw_tokens).toContain('basmati');
+    expect(out.raw_tokens).toContain('rice');
+  });
+
+  it('returns empty when the query is ONLY noise markers', async () => {
+    mockAliasMap(null);
+    const out = await normalize('--- :-- ----');
+    expect(out.normalized_query).toBe('');
+    expect(out.raw_tokens).toEqual([]);
+  });
+
+  it('does not drop a product when intent phrase is the whole leading clause', async () => {
+    mockAliasMap(null);
+    const out = await normalize('looking to export furnishing fabrics');
+    expect(out.normalized_query).toBe('furnishing fabrics');
+  });
+
+  // --- Colon separators (pasted-tariff column residue, Round 2) ------------
+  // Dangling colons act as COLUMN SEPARATORS after provenance stripping and
+  // depress completeness scoring. Strip colons ADJACENT to whitespace (or a
+  // string edge); PRESERVE intra-token colons flanked by non-space on both
+  // sides ('ISO:3234', '1:2', '2:1 ratio', 'URL:http').
+  it('strips a colon separator with space on BOTH sides ("wheat : Seed")', async () => {
+    mockAliasMap(null);
+    const out = await normalize('Durum wheat : Seed');
+    expect(out.normalized_query).toBe('Durum wheat Seed');
+    expect(_sanitizeNoiseForTesting('Durum wheat : Seed')).toBe('Durum wheat Seed');
+  });
+
+  it('strips a colon separator with no space BEFORE but space after ("briefs: Of cotton")', async () => {
+    mockAliasMap(null);
+    const out = await normalize('Underpants and briefs: Of cotton');
+    expect(out.normalized_query).toBe('Underpants and briefs Of cotton');
+    expect(_sanitizeNoiseForTesting('Underpants and briefs: Of cotton')).toBe(
+      'Underpants and briefs Of cotton',
+    );
+  });
+
+  it('strips a colon separator with space on both sides ("Wafers : Communion")', async () => {
+    mockAliasMap(null);
+    const out = await normalize('Wafers : Communion');
+    expect(out.normalized_query).toBe('Wafers Communion');
+    expect(_sanitizeNoiseForTesting('Wafers : Communion')).toBe('Wafers Communion');
+  });
+
+  it('strips a trailing colon at end-of-string', async () => {
+    mockAliasMap(null);
+    expect(_sanitizeNoiseForTesting('furnishing fabrics :')).toBe('furnishing fabrics');
+    expect(_sanitizeNoiseForTesting('woven cotton shirts:')).toBe('woven cotton shirts');
+  });
+
+  it('PRESERVES intra-token colon "ISO:3234" (no surrounding whitespace)', async () => {
+    mockAliasMap(null);
+    expect(_sanitizeNoiseForTesting('steel bolts ISO:3234 grade')).toBe(
+      'steel bolts ISO:3234 grade',
+    );
+  });
+
+  it('PRESERVES ratio colon "1:2" (no surrounding whitespace)', async () => {
+    mockAliasMap(null);
+    expect(_sanitizeNoiseForTesting('cement sand mix 1:2 mortar')).toBe(
+      'cement sand mix 1:2 mortar',
+    );
+  });
+
+  it('PRESERVES "2:1 ratio" colon (non-space on both sides of the colon)', async () => {
+    mockAliasMap(null);
+    expect(_sanitizeNoiseForTesting('epoxy resin 2:1 ratio kit')).toBe(
+      'epoxy resin 2:1 ratio kit',
+    );
+  });
+
+  it('PRESERVES "URL:http" colon (no surrounding whitespace)', async () => {
+    mockAliasMap(null);
+    expect(_sanitizeNoiseForTesting('product page URL:http reference')).toBe(
+      'product page URL:http reference',
+    );
+  });
+});
+
+describe('L0 normalize — sanitization preserves alias substitution', () => {
+  it('applies aliases AFTER stripping leading intent', async () => {
+    mockAliasMap({ 'M.S.': 'mild steel' });
+    const out = await normalize('I need to export M.S. plate 5mm');
+    expect(out.normalized_query).toContain('mild steel');
+    expect(out.normalized_query.toLowerCase()).not.toContain('export');
+    expect(out.aliases_applied).toEqual([
+      { alias: 'M.S.', replaced_with: 'mild steel' },
+    ]);
   });
 });
 

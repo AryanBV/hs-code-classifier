@@ -90,7 +90,7 @@ export class VertexEmbeddingProvider implements EmbeddingProvider {
     }
 
     try {
-      const res = await embedVertex(text, taskType, {
+      const res = await embedVertex(text, taskType as EmbedTaskType, {
         outputDim: this.dim,
         ...(this.truncateChars !== undefined ? { truncateChars: this.truncateChars } : {}),
       });

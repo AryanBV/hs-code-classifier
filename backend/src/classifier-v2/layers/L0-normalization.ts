@@ -56,6 +56,141 @@ const COMPOSITE_RAW_SYMBOLS: readonly string[] = ['&', '+'];
 const COMPOSITE_RAW_PHRASES: readonly string[] = ['inclusive of', 'along with'];
 
 /* ---------------------------------------------------------------------------
+ * Noise sanitization (Round 1 routing calibration)
+ *
+ * Realistic exporter queries arrive wrapped in conversational intent
+ * ("I need to export ..."), trailing provenance ("... for export, made in
+ * India"), and pasted-tariff structural cruft (leading "---", ":--", bullet
+ * dashes). This noise mis-routes Triage to ASK/REFUSE even when a perfectly
+ * specific product is present. We strip it DETERMINISTICALLY before alias
+ * substitution + tokenization, while PRESERVING every meaningful product word
+ * (and intra-word hyphens like 'leaf-spring').
+ *
+ * Principles:
+ *   - General patterns only — no product strings, no per-case matching.
+ *   - Conservative: only strip phrases that are unambiguously intent/provenance
+ *     or structural markers. A bare "for <use>" (intended-use) is NEVER stripped
+ *     — only the closed-set provenance phrase "for export".
+ *   - Anchored: leading phrases anchor at start; trailing phrases anchor at end.
+ * --------------------------------------------------------------------------- */
+
+/**
+ * Leading conversational/intent phrases. Matched case-insensitively, anchored
+ * at the start of the (trimmed, marker-stripped) query, and only when followed
+ * by further product text. Each pattern ends with `\s+` so we never consume the
+ * product head-noun. Ordered longest/most-specific first.
+ */
+const LEADING_INTENT_PATTERNS: readonly RegExp[] = [
+  /^\s*what(?:'s| is| are)?\s+the\s+(?:itc[-\s]?hs|hs|hsn|tariff)\s+codes?\s+(?:for|of)\s+/i,
+  /^\s*what(?:'s| is| are)?\s+the\s+codes?\s+(?:for|of)\s+/i,
+  /^\s*(?:can|could)\s+you\s+(?:please\s+)?(?:classify|tell me the (?:hs )?code (?:for|of))\s+/i,
+  /^\s*(?:i\s+(?:need|want|would like|am looking|'m looking)|we\s+(?:need|want))\s+to\s+(?:export|classify|ship|sell)\s+/i,
+  /^\s*looking\s+to\s+(?:export|classify|ship|sell)\s+/i,
+  /^\s*(?:please\s+)?(?:classify|find (?:the )?(?:hs )?code (?:for|of)|identify (?:the )?(?:hs )?code (?:for|of))\s+/i,
+  /^\s*(?:hs|hsn|itc[-\s]?hs|tariff)\s+codes?\s+(?:for|of)\s+/i,
+];
+
+/**
+ * Trailing provenance phrases. Matched case-insensitively, anchored at the end.
+ * Closed set — only unambiguous provenance, never generic intended-use.
+ *   - "for export" (optionally preceded by a comma/dash)
+ *   - "made in <country>" / "manufactured in <country>" / "origin <country>"
+ * The `<country>` capture is a short run of capitalized/alpha words so we don't
+ * swallow real product words.
+ */
+const TRAILING_PROVENANCE_PATTERNS: readonly RegExp[] = [
+  /[\s,;-]+for\s+export\s*$/i,
+  /[\s,;-]+(?:made|manufactured|produced)\s+in\s+[A-Za-z][A-Za-z .'-]*$/i,
+  /[\s,;-]+(?:country\s+of\s+)?origin\s*:?\s+[A-Za-z][A-Za-z .'-]*$/i,
+];
+
+/**
+ * Strip pasted-tariff structural markers and bullet punctuation. Operates on the
+ * whole string (leading markers + repeated-dash runs), NOT on intra-word
+ * hyphens. We only treat a dash run as structural when it is bounded by
+ * whitespace or string edges — `leaf-spring` (letter-hyphen-letter) is untouched.
+ */
+function stripStructuralMarkers(s: string): string {
+  let out = s;
+  // Leading bullet/structural markers: runs of ':', '-', whitespace at the very
+  // start (e.g., '---', ':--', '- ', ': '). Repeated until none remain.
+  out = out.replace(/^[\s:–—-]+/u, '');
+  // Standalone dash/colon runs surrounded by whitespace (pasted-tariff column
+  // separators like ' ---- '). The lookarounds keep 'leaf-spring' intact.
+  out = out.replace(/(^|\s)[:–—-]{2,}(\s|$)/gu, '$1 $2');
+  // Pasted-tariff dangling colons act as COLUMN SEPARATORS after provenance
+  // stripping (e.g. 'Durum wheat : Seed', 'Underpants and briefs: Of cotton').
+  // A colon is a separator iff it is ADJACENT to whitespace (or a string edge)
+  // on at least one side: whitespace-then-colon (with optional trailing space),
+  // OR colon-then-whitespace (with optional leading space), OR a trailing colon
+  // at end-of-string. Replace each with a single space. The lookbehind/edge
+  // logic PRESERVES intra-token colons flanked by non-space on BOTH sides
+  // ('ISO:3234', '1:2', '2:1 ratio', 'URL:http').
+  out = out.replace(/\s+:\s*|:\s+|:\s*$/gu, ' ');
+  // Collapse any whitespace introduced above.
+  out = out.replace(/\s+/g, ' ').trim();
+  return out;
+}
+
+/**
+ * Remove leading intent phrases and trailing provenance phrases. Applied
+ * repeatedly for the leading set (a query may stack a marker + an intent
+ * phrase). Never strips down to empty when product text remains; if a pattern
+ * would consume the ENTIRE remaining string, it is skipped (defensive — a query
+ * that is ONLY an intent phrase has no product to preserve and legitimately
+ * reduces to '').
+ */
+function stripIntentAndProvenance(s: string): string {
+  let out = s;
+
+  // Leading intent — loop so 'please classify - <product>' (marker then intent,
+  // or stacked intents) fully resolves. Bounded iterations to avoid any chance
+  // of a pathological loop.
+  for (let i = 0; i < 4; i += 1) {
+    let matchedThisPass = false;
+    for (const re of LEADING_INTENT_PATTERNS) {
+      const m = re.exec(out);
+      if (m && m[0].length > 0 && m[0].length < out.length) {
+        out = out.slice(m[0].length);
+        out = stripStructuralMarkers(out);
+        matchedThisPass = true;
+        break;
+      }
+    }
+    if (!matchedThisPass) break;
+  }
+
+  // Trailing provenance — single pass per pattern (apply all, longest effect).
+  for (const re of TRAILING_PROVENANCE_PATTERNS) {
+    const m = re.exec(out);
+    if (m && m[0].length > 0 && m[0].length < out.length) {
+      out = out.slice(0, out.length - m[0].length).trim();
+    }
+  }
+
+  return out;
+}
+
+/**
+ * Full noise-sanitization pass over a raw query. Strips structural markers, then
+ * leading-intent + trailing-provenance, then re-strips markers exposed by the
+ * provenance removal. Returns a cleaned string with original casing preserved
+ * for the surviving product words.
+ */
+function sanitizeNoise(rawQuery: string): string {
+  let out = stripStructuralMarkers(rawQuery);
+  out = stripIntentAndProvenance(out);
+  // A trailing provenance strip can re-expose a dangling separator; clean again.
+  out = stripStructuralMarkers(out);
+  return out;
+}
+
+/** Test-only hook: expose noise sanitization directly. */
+export function _sanitizeNoiseForTesting(rawQuery: string): string {
+  return sanitizeNoise(rawQuery);
+}
+
+/* ---------------------------------------------------------------------------
  * Alias map loader (cached, one-time at module load)
  * --------------------------------------------------------------------------- */
 
@@ -308,8 +443,26 @@ export async function normalize(
     };
   }
 
+  // Strip conversational intent, trailing provenance, and pasted-tariff
+  // structural markers BEFORE alias substitution + tokenization. This keeps the
+  // product description intact for downstream Triage/retrieval while removing
+  // noise that mis-routes Triage to ASK/REFUSE.
+  const sanitized = sanitizeNoise(rawQuery);
+
+  // If sanitization reduced the query to empty (e.g., the input was ONLY noise
+  // markers / a bare intent phrase), there is no product to classify.
+  if (sanitized.trim().length === 0) {
+    return {
+      query: rawQuery,
+      normalized_query: '',
+      raw_tokens: [],
+      composite_flag: false,
+      aliases_applied: [],
+    };
+  }
+
   const aliases = loadAliasMap();
-  const { normalized, applied } = applyAliases(rawQuery, aliases);
+  const { normalized, applied } = applyAliases(sanitized, aliases);
   const tokens = tokenize(normalized);
   const composite = detectComposite(normalized, tokens);
 

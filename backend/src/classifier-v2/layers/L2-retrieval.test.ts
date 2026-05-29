@@ -1,14 +1,15 @@
 /**
  * Unit tests for Layer 2 Hybrid Retrieval.
  *
- * Framework: vitest. Mocks BOTH the Cohere client (`../lib/cohere-client`) and
- * the Supabase/pg wrapper (`../lib/supabase-client`) so no network or DB calls
- * happen. Validates:
- *   - Cohere embed/rerank call wiring
+ * Framework: vitest. Injects MOCK providers (EmbeddingProvider + Reranker) via
+ * the `_setProvidersForTesting` seam and mocks the Supabase/pg wrapper
+ * (`../lib/supabase-client`) so no network or DB calls happen. Validates:
+ *   - Vertex query-embed wiring (via injected EmbeddingProvider)
  *   - Multi-level cosine cascade ordering
  *   - direct_leaf_lookup shortcut detection
  *   - tsquery escaping for special characters
- *   - Cohere unavailable / 5xx fallback (cosine-only ordering)
+ *   - Provider unavailable / 5xx fallback (cosine-only ordering) — now triggered
+ *     by a RetrievalProviderError thrown from the injected reranker
  *   - Exclusion pre-filter population
  *   - Trace array completeness
  *
@@ -23,22 +24,40 @@ import type {
   ParentChainRow,
   SubheadingChildCount,
 } from '../lib/supabase-client';
+import type {
+  EmbeddingProvider,
+  EmbedProviderResult,
+  EmbeddingTaskType,
+} from '../lib/embedding-provider';
+import type {
+  Reranker,
+  RerankDocument,
+  RerankResult,
+  RerankOptions,
+} from '../lib/reranker';
+import { RetrievalProviderError } from '../lib/retrieval-errors';
 
 /* ---------------------------------------------------------------------------
- * Mocks (registered BEFORE importing the SUT)
+ * Provider mocks (injected via _setProvidersForTesting, NOT module mocks)
  * --------------------------------------------------------------------------- */
 
-const embedMock  = vi.fn();
-const rerankMock = vi.fn();
+const embedMock  = vi.fn<[string, { taskType: EmbeddingTaskType }], Promise<EmbedProviderResult>>();
+const rerankMock = vi.fn<[string, RerankDocument[], RerankOptions | undefined], Promise<RerankResult>>();
 
-vi.mock('../lib/cohere-client', async () => {
-  const actual = await vi.importActual<typeof import('../lib/cohere-client')>('../lib/cohere-client');
-  return {
-    ...actual,
-    embed:  (...args: unknown[]) => embedMock(...args),
-    rerank: (...args: unknown[]) => rerankMock(...args),
-  };
-});
+const mockEmbeddingProvider: EmbeddingProvider = {
+  name: 'mock/embedding',
+  dim:  1536,
+  embed: (text, opts) => embedMock(text, opts),
+};
+
+const mockReranker: Reranker = {
+  name:   'mock/reranker',
+  rerank: (query, documents, opts) => rerankMock(query, documents, opts),
+};
+
+/* ---------------------------------------------------------------------------
+ * Supabase mock (registered BEFORE importing the SUT)
+ * --------------------------------------------------------------------------- */
 
 const cosineChMock  = vi.fn();
 const cosineHMock   = vi.fn();
@@ -64,12 +83,12 @@ vi.mock('../lib/supabase-client', () => ({
 }));
 
 // Import SUT after mocks are in place.
-import { CohereError } from '../lib/cohere-client';
 import {
   retrieve,
   buildTsQuery,
   escapeTsQueryToken,
   _internal,
+  _setProvidersForTesting,
   type L2Input,
   type L2Output,
 } from './L2-retrieval';
@@ -133,6 +152,9 @@ function baseInput(overrides: Partial<L2Input> = {}): L2Input {
  * --------------------------------------------------------------------------- */
 
 beforeEach(() => {
+  // Inject the mock providers in place of the env factories.
+  _setProvidersForTesting({ embeddingProvider: mockEmbeddingProvider, reranker: mockReranker });
+
   // Default happy-path mock returns. Individual tests override as needed.
   embedMock.mockReset();
   rerankMock.mockReset();
@@ -146,7 +168,7 @@ beforeEach(() => {
   childCountsMock.mockReset();
   tlForShMock.mockReset();
 
-  embedMock.mockResolvedValue({ embedding: fixedEmbedding(), latencyMs: 10 });
+  embedMock.mockResolvedValue({ embedding: fixedEmbedding(), dim: 1536, latencyMs: 10 });
   cosineChMock.mockResolvedValue([cosineRow('61', 0.91)]);
   cosineHMock.mockResolvedValue([cosineRow('6109', 0.88), cosineRow('6110', 0.74)]);
   cosineShMock.mockResolvedValue([
@@ -178,6 +200,8 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.clearAllMocks();
+  // Restore the env factories so no injected mock leaks into other test files.
+  _setProvidersForTesting({ embeddingProvider: null, reranker: null });
 });
 
 /* ===========================================================================
@@ -272,6 +296,32 @@ describe('escapeTsQueryToken / buildTsQuery', () => {
     // "ladies" is no longer filler (conservative list) so it now survives.
     expect(buildTsQuery(['t-shirt', 'cotton'], ['cotton', 't-shirt', 'knitted', 'ladies']))
       .toBe('(t & shirt) | cotton | knitted | ladies');
+  });
+});
+
+/* ===========================================================================
+ * Provider wiring — embed task type + rerank inputs
+ * =========================================================================== */
+
+describe('retrieve() — provider wiring', () => {
+  it('embeds the query via the EmbeddingProvider with taskType RETRIEVAL_QUERY', async () => {
+    await retrieve(baseInput());
+    expect(embedMock).toHaveBeenCalledOnce();
+    const [text, opts] = embedMock.mock.calls[0];
+    expect(text).toBe('cotton t-shirt knitted ladies');
+    expect(opts).toEqual({ taskType: 'RETRIEVAL_QUERY' });
+  });
+
+  it('passes the normalized_query and {id,text} docs to the Reranker', async () => {
+    await retrieve(baseInput());
+    expect(rerankMock).toHaveBeenCalledOnce();
+    const [query, docs] = rerankMock.mock.calls[0];
+    expect(query).toBe('cotton t-shirt knitted ladies');
+    expect(Array.isArray(docs)).toBe(true);
+    for (const d of docs) {
+      expect(typeof d.id).toBe('string');
+      expect(typeof d.text).toBe('string');
+    }
   });
 });
 
@@ -380,14 +430,24 @@ describe('retrieve() — empty / degraded cases', () => {
   });
 });
 
-describe('retrieve() — Cohere failure paths', () => {
-  it('propagates CohereError from embed (retries already exhausted internally)', async () => {
-    embedMock.mockRejectedValue(new CohereError('500 Internal', 500, '...'));
-    await expect(retrieve(baseInput())).rejects.toBeInstanceOf(CohereError);
+describe('retrieve() — provider failure paths', () => {
+  it('propagates RetrievalProviderError from embed (retries already exhausted internally)', async () => {
+    embedMock.mockRejectedValue(
+      new RetrievalProviderError('Vertex embed failed: 500 Internal', {
+        provider: 'vertex',
+        retryable: true,
+      }),
+    );
+    await expect(retrieve(baseInput())).rejects.toBeInstanceOf(RetrievalProviderError);
   });
 
-  it('falls back to cosine-only ranking when rerank throws CohereError', async () => {
-    rerankMock.mockRejectedValue(new CohereError('503 Unavailable', 503, '...'));
+  it('falls back to cosine-only ranking when rerank throws RetrievalProviderError', async () => {
+    rerankMock.mockRejectedValue(
+      new RetrievalProviderError('Gemini-Flash rerank failed: 503 Unavailable', {
+        provider: 'vertex',
+        retryable: true,
+      }),
+    );
 
     const out = await retrieve(baseInput());
     expect(out.retrieval_strategy).toBe('cascade_full');
@@ -395,10 +455,15 @@ describe('retrieve() — Cohere failure paths', () => {
     expect(out.candidates[0].code).toBe('6109.10.00'); // cosine 0.85 > 0.72
     // rerank_score should be null since rerank failed.
     expect(out.candidates.every((c) => c.rerank_score === null)).toBe(true);
-    // Trace flag present.
+    // Trace flag present (degrade branch name preserved).
     expect(
       out.trace.some((t) => t.step === 'cohere_rerank_fallback_cosine'),
     ).toBe(true);
+  });
+
+  it('does NOT swallow a non-RetrievalProviderError thrown by rerank — it rethrows', async () => {
+    rerankMock.mockRejectedValue(new Error('unexpected non-provider error'));
+    await expect(retrieve(baseInput())).rejects.toThrow('unexpected non-provider error');
   });
 });
 
@@ -484,7 +549,7 @@ describe('retrieve() — caps and limits (FIX-A: widened funnel)', () => {
     expect(_internal.L2_EMIT_CAP).toBe(8);
   });
 
-  it('requests topN=RERANK_TOP_N (15) candidates from Cohere rerank', async () => {
+  it('requests topN=RERANK_TOP_N (15) candidates from the reranker', async () => {
     await retrieve(baseInput());
     expect(rerankMock).toHaveBeenCalledOnce();
     const [, , opts] = rerankMock.mock.calls[0];
@@ -546,7 +611,12 @@ describe('retrieve() — caps and limits (FIX-A: widened funnel)', () => {
       cosineRow('6109.90.60', 0.74),
     ]);
     ftsTlMock.mockResolvedValue([]);
-    rerankMock.mockRejectedValue(new CohereError('503 Unavailable', 503, '...'));
+    rerankMock.mockRejectedValue(
+      new RetrievalProviderError('Gemini-Flash rerank failed: 503 Unavailable', {
+        provider: 'vertex',
+        retryable: true,
+      }),
+    );
     const out = await retrieve(baseInput());
     expect(out.candidates.length).toBe(_internal.L2_EMIT_CAP);
     expect(out.candidates.every((c) => c.rerank_score === null)).toBe(true);

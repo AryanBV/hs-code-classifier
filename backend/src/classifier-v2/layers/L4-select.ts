@@ -48,6 +48,7 @@ import type {
   SelectOutput,
   SelectRefusal,
   SelfConfidence,
+  SiblingDiscriminatorGroup,
   VerifierRuleFailure,
 } from '../types';
 
@@ -155,6 +156,56 @@ function pretty(v: unknown): string {
   return JSON.stringify(v, null, 2);
 }
 
+/* ---------------------------------------------------------------------------
+ * Token discipline: LEAN per-candidate attribute projection
+ *
+ * `getTariffLineAttributesForCodes` now returns a WIDE record (7 core fields +
+ * up-to-11 metadata discriminator columns). The wide record feeds the sibling
+ * DIFF (compact — it surfaces only fields that DIFFER across a group). But the
+ * per-candidate `{tariff_line_attributes}` block is injected RAW for every
+ * candidate, so dumping ~18 fields × 5 candidates would bloat the prompt with
+ * mostly-irrelevant metadata. We therefore inject only the CORE fields per
+ * candidate; the metadata rides exclusively in the (already-minimal) sibling
+ * diff, exactly where it is decisional. This keeps the injected block at its
+ * pre-change size while making metadata-only sibling splits diffable.
+ * --------------------------------------------------------------------------- */
+
+/** The 7 core attribute keys surfaced per-candidate (lean prompt block). */
+const CORE_TLA_KEYS = [
+  'material',
+  'form',
+  'function',
+  'intended_use',
+  'processing_state',
+  'composition',
+  'composite_components',
+] as const;
+
+/**
+ * Project the wide TLA record down to ONLY the core keys, per code. Metadata
+ * discriminator columns (fabric_construction, chemical_class, carbon_pct, …) are
+ * dropped here — they are surfaced compactly via sibling_discriminators instead.
+ * Non-object / missing records pass through unchanged (graceful for O2 gaps).
+ */
+function projectCoreAttributes(
+  wide: Record<string, unknown>,
+): Record<string, unknown> {
+  const out: Record<string, unknown> = {};
+  for (const [code, rec] of Object.entries(wide)) {
+    if (rec === null || typeof rec !== 'object' || Array.isArray(rec)) {
+      out[code] = rec;
+      continue;
+    }
+    const r = rec as Record<string, unknown>;
+    const lean: Record<string, unknown> = {};
+    for (const k of CORE_TLA_KEYS) {
+      if (k in r) lean[k] = r[k];
+    }
+    out[code] = lean;
+  }
+  return out;
+}
+
 /** Distinct, deduplicated chapter set drawn from L3 filtered_candidates. */
 function chaptersFromCandidates(
   candidates: RetrievalCandidate[],
@@ -213,6 +264,122 @@ function hydrateCandidateRow(
     india_specific_note: dbRow.india_specific_note,
     retrieval_score:     candidate.rerank_score ?? candidate.cosine_score ?? null,
   };
+}
+
+/* ---------------------------------------------------------------------------
+ * Sibling-discrimination surface (deterministic, no LLM)
+ *
+ * When ≥2 candidates share a 6-digit subheading they are "siblings" — leaves
+ * that differ only on a narrow attribute (e.g. car-tyre 4011.10.10 vs truck-tyre
+ * 4011.20.10 differ ONLY on intended_use). The raw per-candidate tariff_line_attributes
+ * block gives L4 no explicit comparison surface, so it cannot see which field
+ * discriminates. computeSiblingDiscriminators groups candidates by subheading and,
+ * for each group of ≥2, surfaces ONLY the attribute fields whose VALUES DIFFER
+ * across the group, with each candidate's value for those fields. Identical fields
+ * are omitted (they do not discriminate). Fully general: works for any chapter.
+ * --------------------------------------------------------------------------- */
+
+/** The 6-digit subheading of a candidate ("NNNN.NN"), or null when unresolvable. */
+function subheadingOf(candidate: RetrievalCandidate): string | null {
+  const sub = candidate.parent_chain.subheading;
+  if (typeof sub === 'string' && /^\d{4}\.\d{2}$/.test(sub)) return sub;
+  // Derive from an 8-digit code "NNNN.NN.NN" → "NNNN.NN".
+  if (/^\d{4}\.\d{2}\.\d{2}$/.test(candidate.code)) return candidate.code.slice(0, 7);
+  if (/^\d{4}\.\d{2}$/.test(candidate.code)) return candidate.code;
+  return null;
+}
+
+/**
+ * Stable canonical representation of an attribute value for cross-sibling
+ * EQUALITY comparison. Arrays are order-insensitive (TLA arrays are unordered
+ * attribute sets); objects/scalars fall back to JSON. Used only to detect
+ * difference — the human-readable value surfaced to the prompt is the raw value.
+ */
+function canonicalizeAttrValue(v: unknown): string {
+  if (v === null || v === undefined) return 'null';
+  if (Array.isArray(v)) {
+    return JSON.stringify(
+      v.map((x) => (typeof x === 'string' ? x : JSON.stringify(x))).sort(),
+    );
+  }
+  if (typeof v === 'object') return JSON.stringify(v);
+  return JSON.stringify(v);
+}
+
+/**
+ * Compute the sibling-discrimination surface for a candidate set.
+ *
+ * Groups candidates by 6-digit subheading; for each group with ≥2 members,
+ * collects the union of attribute field names present across the group's TLA
+ * records and keeps only those whose canonicalized value DIFFERS across members.
+ * Field-agnostic: it diffs whatever fields are present on the TLA records (the
+ * 7 core arrays today, plus any metadata fields the fetcher later surfaces).
+ *
+ * A code absent from `tariffLineAttributes` contributes a missing value (`null`)
+ * for every field — so a present-vs-absent difference is itself surfaced.
+ *
+ * A group whose siblings are ALL-IDENTICAL (no differing field) is OMITTED: it
+ * carries no discriminator and would only pollute the prompt.
+ */
+export function computeSiblingDiscriminators(
+  candidates: RetrievalCandidate[],
+  tariffLineAttributes: Record<string, unknown>,
+): SiblingDiscriminatorGroup[] {
+  // 1) Group candidate codes by subheading, preserving candidate order.
+  const groups = new Map<string, string[]>();
+  for (const c of candidates) {
+    const sub = subheadingOf(c);
+    if (sub === null) continue;
+    const arr = groups.get(sub);
+    if (arr === undefined) groups.set(sub, [c.code]);
+    else arr.push(c.code);
+  }
+
+  const out: SiblingDiscriminatorGroup[] = [];
+
+  for (const [subheading, codes] of groups) {
+    if (codes.length < 2) continue; // not a sibling group
+
+    // Per-code attribute record (may be a non-object / missing → treated as {}).
+    const attrsByCode: Record<string, Record<string, unknown>> = {};
+    const fieldNames = new Set<string>();
+    for (const code of codes) {
+      const raw = tariffLineAttributes[code];
+      const rec: Record<string, unknown> =
+        raw !== null && typeof raw === 'object' && !Array.isArray(raw)
+          ? (raw as Record<string, unknown>)
+          : {};
+      attrsByCode[code] = rec;
+      for (const k of Object.keys(rec)) fieldNames.add(k);
+    }
+
+    // 2) For each field present anywhere in the group, keep it only if its
+    //    canonicalized value differs across at least two siblings.
+    const differing_fields: string[] = [];
+    const values_by_field: Record<string, Record<string, unknown>> = {};
+    for (const field of Array.from(fieldNames).sort()) {
+      const canon = new Set<string>();
+      const perCode: Record<string, unknown> = {};
+      for (const code of codes) {
+        const rec = attrsByCode[code] ?? {};
+        const val = field in rec ? rec[field] : null;
+        perCode[code] = val;
+        canon.add(canonicalizeAttrValue(val));
+      }
+      if (canon.size > 1) {
+        differing_fields.push(field);
+        values_by_field[field] = perCode;
+      }
+    }
+
+    // Omit groups with zero differing fields: all-identical siblings give the
+    // model no actionable discriminator and only pollute the prompt.
+    if (differing_fields.length < 1) continue;
+
+    out.push({ subheading, codes, differing_fields, values_by_field });
+  }
+
+  return out;
 }
 
 /**
@@ -285,9 +452,24 @@ export async function gatherSelectContext(input: L4Input): Promise<SelectContext
     .map((r) => `GIR ${r.number} — ${r.title}: ${r.application}`)
     .join('\n');
 
+  // Sibling-discrimination surface — derived deterministically from the
+  // WIDE attribute record (core + metadata discriminator columns), so a
+  // metadata-only split (fabric_construction, chemical_class, predominant_element,
+  // carbon_pct, …) surfaces in the compact diff. No extra DB round trip.
+  const sibling_discriminators = computeSiblingDiscriminators(
+    input.filtered_candidates,
+    tariffLineAttrs,
+  );
+
+  // Per-candidate injected block stays LEAN: only the 7 core fields. Metadata
+  // rides exclusively in sibling_discriminators (compact), never as a 18-field
+  // per-candidate dump (token discipline).
+  const lean_tariff_line_attributes = projectCoreAttributes(tariffLineAttrs);
+
   return {
     candidates,
-    tariff_line_attributes:  tariffLineAttrs,
+    tariff_line_attributes:  lean_tariff_line_attributes,
+    sibling_discriminators,
     notes_claims,
     chapter_notes_by_chapter,
     matched_exclusion_rules: input.matched_exclusions,
@@ -339,6 +521,7 @@ function renderSelectPrompt(
     .replace(/\{composite_product_flag\}/g, String(input.composite_flag))
     .replace(/\{candidates\}/g, pretty(context.candidates))
     .replace(/\{tariff_line_attributes\}/g, pretty(context.tariff_line_attributes))
+    .replace(/\{sibling_discriminators\}/g, pretty(context.sibling_discriminators))
     .replace(/\{notes_claims\}/g, pretty(context.notes_claims))
     .replace(/\{chapter_notes_by_chapter\}/g, pretty(context.chapter_notes_by_chapter))
     .replace(/\{matched_exclusion_rules\}/g, pretty(context.matched_exclusion_rules))
@@ -660,7 +843,13 @@ async function callSelect(
     responseSchema,
     responseMimeType: 'application/json',
     temperature:      0.0,
-    maxOutputTokens:  4096,
+    // gemini-3.5-flash at thinking_level='low' can spend ~3.5–4k tokens on
+    // thinking BEFORE generation; with the old 4096 budget that left too few
+    // tokens for the structured JSON response and tripped MAX_TOKENS. 8192
+    // (gemini-3.5-flash's max_output_tokens ceiling) reserves ample room for a
+    // full CLASSIFY response (reasoning_chain + verbatim citation + alternatives)
+    // even on a complex repair iteration, without uncapping cost.
+    maxOutputTokens:  8192,
   });
   return { parsed: tryParseSelectJSON(res.text), rawText: res.text };
 }
@@ -765,6 +954,10 @@ export const _internal = {
   chaptersFromCandidates,
   hydrateCandidateRow,
   syntheticRefuse,
+  computeSiblingDiscriminators,
+  subheadingOf,
+  canonicalizeAttrValue,
+  projectCoreAttributes,
 };
 
 /* ---------------------------------------------------------------------------

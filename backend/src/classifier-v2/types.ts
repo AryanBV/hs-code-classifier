@@ -385,12 +385,41 @@ export interface SelectNotesClaim {
   applies_to:   ChapterCode[];
 }
 
+/**
+ * One sibling group — a set of ≥2 candidate codes that share the same 6-digit
+ * subheading — together with the attribute fields whose VALUES DIFFER across the
+ * group and each sibling's value for those fields. Fields identical across all
+ * siblings are omitted (they do not discriminate). This is the compact
+ * comparison surface L4 consults to pick the correct leaf among siblings.
+ */
+export interface SiblingDiscriminatorGroup {
+  /** The shared 6-digit subheading (e.g. "4011.10"). */
+  subheading:        string;
+  /** Codes in this group, in candidate order. */
+  codes:             string[];
+  /** Names of the attribute fields that DIFFER across the group's siblings. */
+  differing_fields:  string[];
+  /**
+   * For each differing field, the per-code value. Shape:
+   *   { intended_use: { "4011.10.10": ["passenger-car"], "4011.20.10": ["truck"] } }
+   * Only differing fields appear here; identical fields are omitted.
+   */
+  values_by_field:   Record<string, Record<string, unknown>>;
+}
+
 /** Multi-signal context bundle assembled in parallel for L4. */
 export interface SelectContext {
   /** Candidate rows (fully hydrated from DB) — same ordering as filtered_candidates. */
   candidates:                  SelectCandidateRow[];
   /** Tariff-line attribute records, keyed by code. May be empty (O2 still extracting). */
   tariff_line_attributes:      Record<string, unknown>;
+  /**
+   * Sibling-discrimination surface — one entry per same-subheading group with
+   * ≥2 candidates, listing ONLY the attribute fields that differ across the
+   * group. Empty when no candidates share a subheading (no siblings). Lets L4
+   * see exactly which attribute distinguishes near-identical leaves.
+   */
+  sibling_discriminators:      SiblingDiscriminatorGroup[];
   /** Scoped notes_claims — only claims whose applies_to ∩ candidate_chapters ≠ ∅. */
   notes_claims:                SelectNotesClaim[];
   /** Per-chapter notes bundles, keyed by 2-digit chapter code. */
@@ -547,6 +576,33 @@ export interface ClarifyingQuestion {
   question_text:            string;
   discriminating_attribute: AttributeKey;
   options:                  TriageFallbackOption[];
+  /**
+   * Candidate-set information gain (bits) this question carries, per sub-spec 02
+   * §A. Present only when produced by the candidate-aware QGS; absent on the L1
+   * fallback question (which has no candidate set to score against).
+   */
+  info_gain_score?:         number;
+  /**
+   * True when this question was selected by the candidate-aware QGS over the live
+   * L3 candidate set; false/absent for the L1 single-question fallback. Lets the
+   * wizard + eval distinguish a real info-gain question from the heuristic fallback.
+   */
+  qgs_used?:                boolean;
+}
+
+/**
+ * A candidate-aware clarifying-question BATCH (QGS output). Surfaces 1..HARD_CAP
+ * greedily info-gain-ordered questions in a SINGLE ASK turn — the wizard collects
+ * all answers, then makes ONE `continueWithAnswer` call folding them into
+ * previousAnswers (one Q-budget slot consumed for the whole batch). Backward
+ * compatible: `ClassifyResult.question` always mirrors `questions.questions[0]`
+ * so single-question consumers keep working unchanged.
+ */
+export interface ClarifyingQuestionBatch {
+  /** ≥1 (FLOOR), ≤ hard cap (default 3) questions, in descending info-gain order. */
+  questions:          ClarifyingQuestion[];
+  /** Sum of per-question info_gain_score (bits) — total discriminative potential. */
+  total_ig_potential?: number;
 }
 
 export interface ClassifyResult {
@@ -567,8 +623,19 @@ export interface ClassifyResult {
     escalated_to_deep_think:    boolean;
   };
 
-  /** Populated when decision === 'ASK'. */
+  /**
+   * Populated when decision === 'ASK'. ALWAYS the first (highest info-gain)
+   * question — mirrors `questions.questions[0]` when a QGS batch is present, so
+   * single-question consumers (legacy adapter, wizard v1) keep working unchanged.
+   */
   question?: ClarifyingQuestion;
+
+  /**
+   * Populated when decision === 'ASK' AND the candidate-aware QGS produced ≥1
+   * question. The full batch (1..hard-cap) surfaced together in one turn. Absent
+   * when the L1 single-question fallback fired (no candidate set to score).
+   */
+  questions?: ClarifyingQuestionBatch;
 
   /** Populated when decision === 'REFUSE'. */
   refusal?: {

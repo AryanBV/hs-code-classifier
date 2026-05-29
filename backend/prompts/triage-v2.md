@@ -49,7 +49,9 @@ The 7 out-of-scope classes (with anti-examples):
 | `contraband` | Prohibited under Indian or international law (narcotics, endangered wildlife products under CITES Appendix I, etc.) | "tiger bone powder", "raw ivory", "ozone-depleting CFC-12 refrigerant for export" |
 | `weapons_restricted_class` | Specific arms/munitions whose export is prohibited or governed by separate licensing regime outside ITC-HS classifier scope | "anti-personnel landmines", "fissile uranium-235" — Ch.93 small arms ARE classifiable, do NOT refuse those |
 | `function_only_no_substance` | Described purely by function with no material/form/composition signal — even after clarifying rounds | "a thing for cooking", "device that helps" (only REFUSE this class after Q-budget is exhausted) |
-| `incoherent_query` | Query is gibberish, empty, or self-contradictory | "asdf", "metal that is also plastic", single character |
+| `incoherent_query` | Query is gibberish, empty, self-contradictory, or contains no product at all (pure greeting / chatter / pricing-or-contact request / emoji-only) | "asdfghjkl", "metal that is also plastic", single character, "hello how are you", "best price please contact", an emoji-only message |
+
+**Note on `incoherent_query`:** REFUSE input that names NO product — greetings ("hello how are you"), pure pricing/contact solicitations ("best price please contact"), random keystrokes ("asdfghjkl"), or emoji-only messages. Do NOT try to ASK these into scope; there is no product to clarify. This is distinct from a *terse but real* product (which should CLASSIFY) and from a *vague-but-real* product like "metal part" (which should ASK).
 
 **Note on `function_only_no_substance`:** if Q-budget is still available (see Rule 2), prefer ASK over REFUSE on first encounter.
 
@@ -58,6 +60,8 @@ The 7 out-of-scope classes (with anti-examples):
 Output `decision: "ASK"` when EITHER condition (A) or (B) holds AND `previousAnswers` contains fewer than 3 entries (**Q-budget is at most 3 per session** — increased from v1's 2).
 
 (A) **Insufficient detail:** `completeness_signal < 0.6` — the attributes you could extract do not narrow the query to a single defensible chapter family. Typical missing axes: material, form, processing_state, intended_use.
+
+> **Calibration — terse is NOT the same as vague (do NOT over-ask).** A short query can still be fully sufficient. **If the query has a clear product head-noun PLUS at least ONE discriminator (material OR form OR intended_use), and the product plausibly sits in a single chapter family, CLASSIFY — do not ASK.** A clarifying question is only warranted when a *genuine* discriminator is missing AND the answer would change the chapter/code. Asking for detail the exporter has already effectively given (or that would not move the code) is a needless ask and is penalized. Examples that are SUFFICIENT → **CLASSIFY** (do NOT ASK): "rubber oil seals for automobile engines" (head-noun=seal + material=rubber + use=engine), "woven dress shirt formal men" (head-noun=shirt + form=woven), "furnishing fabrics" (head-noun=fabric + use=furnishing), "muslin of carded yarn" (head-noun=muslin/fabric + form=woven cotton fabric), "galvanized steel sheet coils" (head-noun=coil/sheet + material=galvanized steel + form=sheet). Reserve ASK for queries where the substance/identity itself is unknown ("metal part", "plastic thing", "white powder food grade") — i.e. only a generic placeholder noun and no specific discriminator.
 
 (B) **Competing-chapter-interpretation detected:** the extracted attributes match TWO OR MORE distinct chapter families strongly, and no attribute disambiguates between them. The classifier cannot proceed without knowing which chapter the user intends. Examples:
 
@@ -101,6 +105,8 @@ In v2, the user-facing clarifying question text is **NOT free-form**. When `deci
 ### Rule 3 — CLASSIFY
 
 Output `decision: "CLASSIFY"` when `completeness_signal >= 0.6` AND `1 <= candidate_chapters.length <= 3` AND no competing-interpretation flag fired AND no out-of-scope class matched.
+
+A query with a clear product head-noun + ≥1 discriminator (material/form/intended_use) that routes to a single plausible chapter family meets this bar even when phrased tersely (see the calibration note under Rule 2(A)). Prefer CLASSIFY over ASK whenever a clarifying answer would not change the chapter/code.
 
 ---
 

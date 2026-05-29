@@ -216,7 +216,7 @@ function embeddingToPgVector(embedding: number[]): string {
 /**
  * Search `chapters.embedding` for the top-K closest chapters in `candidateChapters`.
  *
- * Returns rows with `cosine_score = 1 - (embedding <=> :q)`.
+ * Returns rows with `cosine_score = 1 - (embedding_v2 <=> :q)`.
  */
 export async function cosineSearchChapters(
   embedding:         number[],
@@ -229,11 +229,11 @@ export async function cosineSearchChapters(
   const sql = `
     SELECT
       chapter AS code,
-      1 - (embedding <=> $1::vector) AS cosine_score
+      1 - (embedding_v2 <=> $1::vector) AS cosine_score
     FROM chapters
     WHERE chapter = ANY($2)
-      AND embedding IS NOT NULL
-    ORDER BY embedding <=> $1::vector
+      AND embedding_v2 IS NOT NULL
+    ORDER BY embedding_v2 <=> $1::vector
     LIMIT $3
   `;
   const res = await runner.query<{ code: string; cosine_score: number }>(sql, [
@@ -261,11 +261,11 @@ export async function cosineSearchHeadings(
   const sql = `
     SELECT
       heading AS code,
-      1 - (embedding <=> $1::vector) AS cosine_score
+      1 - (embedding_v2 <=> $1::vector) AS cosine_score
     FROM headings
     WHERE chapter = ANY($2)
-      AND embedding IS NOT NULL
-    ORDER BY embedding <=> $1::vector
+      AND embedding_v2 IS NOT NULL
+    ORDER BY embedding_v2 <=> $1::vector
     LIMIT $3
   `;
   const res = await runner.query<{ code: string; cosine_score: number }>(sql, [
@@ -293,11 +293,11 @@ export async function cosineSearchSubheadings(
   const sql = `
     SELECT
       subheading AS code,
-      1 - (embedding <=> $1::vector) AS cosine_score
+      1 - (embedding_v2 <=> $1::vector) AS cosine_score
     FROM subheadings
     WHERE heading = ANY($2)
-      AND embedding IS NOT NULL
-    ORDER BY embedding <=> $1::vector
+      AND embedding_v2 IS NOT NULL
+    ORDER BY embedding_v2 <=> $1::vector
     LIMIT $3
   `;
   const res = await runner.query<{ code: string; cosine_score: number }>(sql, [
@@ -325,11 +325,11 @@ export async function cosineSearchTariffLines(
   const sql = `
     SELECT
       code,
-      1 - (embedding <=> $1::vector) AS cosine_score
+      1 - (embedding_v2 <=> $1::vector) AS cosine_score
     FROM tariff_lines
     WHERE subheading = ANY($2)
-      AND embedding IS NOT NULL
-    ORDER BY embedding <=> $1::vector
+      AND embedding_v2 IS NOT NULL
+    ORDER BY embedding_v2 <=> $1::vector
     LIMIT $3
   `;
   const res = await runner.query<{ code: string; cosine_score: number }>(sql, [
@@ -712,18 +712,155 @@ export async function getNotesClaimsForChapters(
 }
 
 /**
+ * Metadata discriminator columns fetched IN ADDITION to the 7 core fields.
+ *
+ * Why these and not all ~41 columns: sibling groups whose ONLY discriminator is
+ * a metadata column (e.g. Ch.61 knitted-vs-woven `fabric_construction`, Ch.27/29
+ * organic-vs-isomer `chemical_class`, Ch.71-83 `predominant_element` / metal %s)
+ * were previously invisible to L4's sibling-diff — the diff saw identical core
+ * fields and surfaced no discriminator, so L4 had to guess or over-defer to the
+ * 6-digit/general leaf. Fetching these lets `computeSiblingDiscriminators` surface
+ * the real splitter. The list is the HIGH/MEDIUM/LOWER tier from the over-defer
+ * investigation; metadata-only / SKIP-prone columns (`solution_purpose`,
+ * `electrically_*`, `wearable`, the remaining trace-metal %s, sieve %s) are
+ * deliberately omitted to keep the row — and the diff input — lean.
+ *
+ * Keyed by their DB column names so the L5 predicate evaluator (`resolveVar`)
+ * can resolve `fabric_construction`, `chemical_class`, `carbon_pct`, etc.
+ * directly — these previously SKIPped for lack of the key (no behavior loss, a
+ * net gain). `function_` keeps both the legacy `function` key (consumed by the
+ * L4 prompt block) AND `function_` is unaffected (core block unchanged).
+ */
+const TLA_METADATA_COLUMNS = [
+  // HIGH-tier discriminators
+  'fabric_construction',
+  'chemical_class',
+  'predominant_element',
+  'in_solution',
+  // MEDIUM-tier (metal composition %s)
+  'carbon_pct',
+  'chromium_pct',
+  'nickel_pct',
+  'iron_pct',
+  'aluminum_pct',
+  // LOWER-tier
+  'made_up',
+  'intended_role',
+] as const;
+
+type TlaMetadataColumn = (typeof TLA_METADATA_COLUMNS)[number];
+
+/** Raw row shape returned by the widened SELECT. */
+interface TariffLineAttributesRowRaw {
+  code: string;
+  material: string[] | null;
+  form: string[] | null;
+  function_: string[] | null;
+  intended_use: string[] | null;
+  processing_state: string[] | null;
+  composition: string[] | null;
+  composite_components: unknown[] | null;
+  fabric_construction: string | null;
+  chemical_class: string | null;
+  predominant_element: string | null;
+  in_solution: boolean | null;
+  carbon_pct: number | string | null;
+  chromium_pct: number | string | null;
+  nickel_pct: number | string | null;
+  iron_pct: number | string | null;
+  aluminum_pct: number | string | null;
+  made_up: boolean | null;
+  intended_role: string | null;
+}
+
+/** Numeric metadata columns arrive from pg as `string` (NUMERIC) — coerce. */
+const TLA_NUMERIC_COLUMNS: ReadonlySet<TlaMetadataColumn> = new Set<TlaMetadataColumn>([
+  'carbon_pct',
+  'chromium_pct',
+  'nickel_pct',
+  'iron_pct',
+  'aluminum_pct',
+]);
+
+/**
  * Fetch tariff_line_attributes rows for a set of candidate codes. May return
  * empty when O2 extraction is still running — L4 gracefully renders an empty
  * TLA block in that case (Verifier Rule 7/8/9 SKIP semantics absorb the gap).
  *
- * Returns one row per code; codes without an attributes row are silently
- * dropped from the result.
+ * Returns one record per code; codes without an attributes row are silently
+ * dropped. Each record carries the 7 CORE fields (always present, defaulted to
+ * `[]`/`null`) plus any of the `TLA_METADATA_COLUMNS` whose value is NON-NULL.
+ * Null metadata columns are OMITTED so the record stays compact: a code with no
+ * metadata looks exactly like the old 7-field shape, and the sibling-diff treats
+ * an omitted field as "absent" (consistent with the present-vs-absent rule).
+ *
+ * Consumers:
+ *   - L4 `computeSiblingDiscriminators` diffs the FULL record (core + metadata),
+ *     so a metadata-only split (e.g. `fabric_construction`) now surfaces.
+ *   - L4 injects only the LEAN core subset per-candidate into the prompt
+ *     (see `projectCoreAttributes` in L4-select.ts) — metadata rides only in the
+ *     compact sibling-diff, never as a per-candidate dump.
+ *   - L5 predicate evaluator resolves metadata vars (`carbon_pct`, etc.) directly.
  */
+/* ---------------------------------------------------------------------------
+ * QGS — question_templates lookup
+ * --------------------------------------------------------------------------- */
+
+/** A curated question_templates row consumed by the QGS generator. */
+export interface QuestionTemplateRow {
+  id:                       number;
+  discriminating_attribute: string;
+  /** Chapters this template is scoped to; null = general (any chapter). */
+  chapter_scope:            string[] | null;
+  question_text:            string;
+  /** Map of option-value → human label (e.g. { "leather": "Leather only — ..." }). */
+  value_labels:             Record<string, string>;
+}
+
+/**
+ * Fetch curated question_templates rows for one discriminating attribute.
+ *
+ * The `discriminating_attribute` column stores DB-column keys (`function_`, not
+ * `function`), matching the QGS DB-key space. Returns all matching rows; the QGS
+ * generator picks the most chapter-relevant one via `pickTemplate`. Empty array
+ * when no template exists for the attribute (QGS then synthesizes a generic
+ * question_text + value-derived labels).
+ */
+export async function getQuestionTemplatesForAttribute(
+  attribute: string,
+): Promise<QuestionTemplateRow[]> {
+  if (attribute.length === 0) return [];
+  const runner = getRunner();
+  const sql = `
+    SELECT id, discriminating_attribute, chapter_scope, question_text, value_labels
+    FROM question_templates
+    WHERE discriminating_attribute = $1
+    ORDER BY id
+  `;
+  const res = await runner.query<{
+    id: number;
+    discriminating_attribute: string;
+    chapter_scope: string[] | null;
+    question_text: string;
+    value_labels: Record<string, string> | null;
+  }>(sql, [attribute]);
+  return res.rows.map((r) => ({
+    id:                       Number(r.id),
+    discriminating_attribute: r.discriminating_attribute,
+    chapter_scope:            Array.isArray(r.chapter_scope) ? r.chapter_scope : null,
+    question_text:            r.question_text,
+    value_labels:             r.value_labels !== null && typeof r.value_labels === 'object'
+      ? r.value_labels
+      : {},
+  }));
+}
+
 export async function getTariffLineAttributesForCodes(
   codes: string[],
 ): Promise<Record<string, unknown>> {
   if (codes.length === 0) return {};
   const runner = getRunner();
+  const metadataSelect = TLA_METADATA_COLUMNS.join(',\n      ');
   const sql = `
     SELECT
       code,
@@ -733,31 +870,35 @@ export async function getTariffLineAttributesForCodes(
       intended_use,
       processing_state,
       composition,
-      composite_components
+      composite_components,
+      ${metadataSelect}
     FROM tariff_line_attributes
     WHERE code = ANY($1)
   `;
-  const res = await runner.query<{
-    code: string;
-    material: string[] | null;
-    form: string[] | null;
-    function_: string[] | null;
-    intended_use: string[] | null;
-    processing_state: string[] | null;
-    composition: string[] | null;
-    composite_components: unknown[] | null;
-  }>(sql, [codes]);
+  const res = await runner.query<TariffLineAttributesRowRaw>(sql, [codes]);
   const out: Record<string, unknown> = {};
   for (const r of res.rows) {
-    out[r.code] = {
-      material:         r.material         ?? [],
-      form:             r.form             ?? [],
-      function:         r.function_        ?? [],
-      intended_use:     r.intended_use     ?? [],
-      processing_state: r.processing_state ?? [],
-      composition:      r.composition      ?? [],
+    const rec: Record<string, unknown> = {
+      material:             r.material         ?? [],
+      form:                 r.form             ?? [],
+      function:             r.function_        ?? [],
+      intended_use:         r.intended_use     ?? [],
+      processing_state:     r.processing_state ?? [],
+      composition:          r.composition      ?? [],
       composite_components: r.composite_components ?? null,
     };
+    // Attach ONLY non-null metadata columns (keeps the record + diff input lean).
+    for (const col of TLA_METADATA_COLUMNS) {
+      const raw = (r as unknown as Record<string, unknown>)[col];
+      if (raw === null || raw === undefined) continue;
+      if (TLA_NUMERIC_COLUMNS.has(col)) {
+        const n = typeof raw === 'string' ? Number(raw) : raw;
+        if (typeof n === 'number' && Number.isFinite(n)) rec[col] = n;
+      } else {
+        rec[col] = raw;
+      }
+    }
+    out[r.code] = rec;
   }
   return out;
 }

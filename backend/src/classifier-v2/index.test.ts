@@ -34,6 +34,7 @@ const retrieveMock   = vi.fn();
 const rulesFilterMock = vi.fn();
 const selectMock     = vi.fn();
 const verifyMock     = vi.fn();
+const qgsMock        = vi.fn();
 
 vi.mock('./layers/L0-normalization', () => ({
   normalize: (...args: unknown[]) => normalizeMock(...args),
@@ -53,9 +54,12 @@ vi.mock('./layers/L4-select', () => ({
 vi.mock('./layers/L5-verifier', () => ({
   verify: (...args: unknown[]) => verifyMock(...args),
 }));
+vi.mock('./layers/QGS-generator', () => ({
+  selectQGSBatch: (...args: unknown[]) => qgsMock(...args),
+}));
 
 // Import the SUT AFTER mocks are registered.
-import { classify, continueWithAnswer } from './index';
+import { classify, continueWithAnswer, continueWithAnswers } from './index';
 
 /* ---------------------------------------------------------------------------
  * Fixtures
@@ -642,26 +646,26 @@ const triageOutAsk: TriageOutput = {
   out_of_scope_class: null,
 };
 
-describe('classify() — ASK path (Task 9)', () => {
+describe('classify() — ASK path (QGS candidate-aware seam)', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     normalizeMock.mockResolvedValue(normalizedOut);
-    // retrieve/rulesFilter/select/verify should never be called on ASK
+    // On ASK the orchestrator now runs L2→L3→QGS to obtain the candidate set.
     retrieveMock.mockResolvedValue(retrievalOut);
     rulesFilterMock.mockResolvedValue(rulesFilterOut);
     selectMock.mockResolvedValue(selectOut);
     verifyMock.mockResolvedValue(verifierPass);
+    // Default: QGS yields nothing → orchestrator falls back to the L1 question.
+    qgsMock.mockResolvedValue(null);
   });
 
-  it('returns decision:ASK with correctly mapped question on first-pass triage ASK', async () => {
+  it('falls back to the L1 single question when QGS yields nothing', async () => {
     triageMock.mockResolvedValue(triageOutAsk);
 
     const res = await classify('cotton fabric');
 
-    // Top-level decision
     expect(res.decision).toBe('ASK');
-
-    // question must be present and fully mapped
+    // Fallback (candidate-unaware) question, fully mapped.
     expect(res.question).toBeDefined();
     expect(res.question?.question_text).toBe('Knitted or woven?');
     expect(res.question?.discriminating_attribute).toBe('form');
@@ -669,54 +673,135 @@ describe('classify() — ASK path (Task 9)', () => {
       { id: 'knit', label: 'Knitted' },
       { id: 'woven', label: 'Woven' },
     ]);
-    // question_id is the stable synthesized id
     expect(res.question?.question_id).toBe('ask_form');
+    expect(res.question?.qgs_used).toBe(false);
+    // No batch when falling back.
+    expect(res.questions).toBeUndefined();
 
-    // classification must not be set
     expect(res.classification).toBeUndefined();
-
-    // diagnostics always present
-    expect(res.diagnostics).toBeDefined();
     expect(res.diagnostics.escalation_path).toContain('L0');
     expect(res.diagnostics.escalation_path).toContain('L1');
 
-    // Pipeline stopped at L1 — layers after triage must not have been called
-    expect(retrieveMock).not.toHaveBeenCalled();
-    expect(rulesFilterMock).not.toHaveBeenCalled();
+    // The candidate-aware seam DID run L2→L3→QGS (but not L4/L5).
+    expect(retrieveMock).toHaveBeenCalledTimes(1);
+    expect(rulesFilterMock).toHaveBeenCalledTimes(1);
+    expect(qgsMock).toHaveBeenCalledTimes(1);
     expect(selectMock).not.toHaveBeenCalled();
     expect(verifyMock).not.toHaveBeenCalled();
   });
 
-  it('returns decision:ASK on backtrack re-triage ASK (same triageToAsk mapping)', async () => {
-    // First triage → CLASSIFY (triggers backtrack path)
-    // Second triage (backtrack re-entry) → ASK
+  // FIX B: a QGS null return records fallback reason qgs_null on the L1 ask trace.
+  it('records qgs_fallback_reason=qgs_null on the L1 ask trace when QGS returns null', async () => {
+    triageMock.mockResolvedValue(triageOutAsk);
+    qgsMock.mockResolvedValue(null); // genuinely indistinguishable / no candidates
+
+    const res = await classify('cotton fabric', { captureTrace: true });
+
+    expect(res.decision).toBe('ASK');
+    const trace = res.diagnostics.trace ?? [];
+    const l1Ask = trace.find((t) => t.layer === 'L1' && t.event === 'ask');
+    expect(l1Ask).toBeDefined();
+    expect(l1Ask?.payload?.qgs_fallback_reason).toBe('qgs_null');
+  });
+
+  // FIX B: a QGS throw records fallback reason qgs_error — behavior identical
+  // (still falls back to the L1 single question), but the cause is observable.
+  it('records qgs_fallback_reason=qgs_error on the L1 ask trace when QGS throws', async () => {
+    triageMock.mockResolvedValue(triageOutAsk);
+    qgsMock.mockRejectedValue(new Error('L2 embedding error (e.g. retrieval/embed failure)'));
+
+    const res = await classify('cotton fabric', { captureTrace: true });
+
+    // Behavior unchanged: still an ASK with the L1 fallback question.
+    expect(res.decision).toBe('ASK');
+    expect(res.question?.question_id).toBe('ask_form');
+    expect(res.question?.qgs_used).toBe(false);
+
+    const trace = res.diagnostics.trace ?? [];
+    const l1Ask = trace.find((t) => t.layer === 'L1' && t.event === 'ask');
+    expect(l1Ask).toBeDefined();
+    expect(l1Ask?.payload?.qgs_fallback_reason).toBe('qgs_error');
+  });
+
+  it('surfaces the QGS batch (question + questions) when QGS produces one', async () => {
+    triageMock.mockResolvedValue(triageOutAsk);
+    const batch = {
+      questions: [
+        {
+          question_id: 'ask_processing_state',
+          question_text: 'Is the coffee roasted or not roasted?',
+          discriminating_attribute: 'processing_state' as const,
+          options: [
+            { id: 'roasted', label: 'Roasted' },
+            { id: 'green', label: 'Not roasted (green)' },
+            { id: 'other', label: 'Other' },
+            { id: 'none', label: 'None' },
+          ],
+          info_gain_score: 1.0,
+          qgs_used: true,
+        },
+        {
+          question_id: 'ask_material',
+          question_text: 'Which species?',
+          discriminating_attribute: 'material' as const,
+          options: [
+            { id: 'arabica', label: 'Arabica' },
+            { id: 'robusta', label: 'Robusta' },
+            { id: 'other', label: 'Other' },
+            { id: 'none', label: 'None' },
+          ],
+          info_gain_score: 0.8,
+          qgs_used: true,
+        },
+      ],
+      total_ig_potential: 1.8,
+    };
+    qgsMock.mockResolvedValue(batch);
+
+    const res = await classify('coffee');
+
+    expect(res.decision).toBe('ASK');
+    // Primary question mirrors questions[0].
+    expect(res.question?.question_id).toBe('ask_processing_state');
+    expect(res.question?.qgs_used).toBe(true);
+    // Full batch surfaced.
+    expect(res.questions).toBeDefined();
+    expect(res.questions?.questions).toHaveLength(2);
+    expect(res.questions?.total_ig_potential).toBeCloseTo(1.8, 6);
+    // QGS got the L3 filtered candidates.
+    expect(qgsMock).toHaveBeenCalledTimes(1);
+    const qgsArg = qgsMock.mock.calls[0][0] as { candidates: unknown[] };
+    expect(qgsArg.candidates).toEqual(rulesFilterOut.filtered_candidates);
+    // Diagnostics record the QGS hop.
+    expect(res.diagnostics.escalation_path).toContain('QGS');
+  });
+
+  it('returns decision:ASK on backtrack re-triage ASK (shared QGS seam)', async () => {
+    // First triage → CLASSIFY (triggers backtrack path); second → ASK.
     triageMock
       .mockResolvedValueOnce(triageOut)        // first pass → CLASSIFY
       .mockResolvedValueOnce(triageOutAsk);     // backtrack re-entry → ASK
 
-    // First rulesFilter fires backtrack_signal; second never called
+    // First rulesFilter fires backtrack_signal.
     rulesFilterMock
       .mockResolvedValueOnce(rulesFilterBacktrack)
-      .mockResolvedValue(rulesFilterOut);       // fallback (should not be reached)
+      .mockResolvedValue(rulesFilterOut);
 
     retrieveMock
-      .mockResolvedValueOnce(retrievalOut)      // first retrieve
-      .mockResolvedValue(retrievalOutBacktrack); // backtrack retrieve (called)
+      .mockResolvedValueOnce(retrievalOut)
+      .mockResolvedValue(retrievalOutBacktrack);
 
     const res = await classify('cotton fabric');
 
     expect(res.decision).toBe('ASK');
+    // QGS returns null (default) → fallback L1 question.
     expect(res.question?.question_text).toBe('Knitted or woven?');
     expect(res.question?.discriminating_attribute).toBe('form');
     expect(res.question?.question_id).toBe('ask_form');
-    expect(res.question?.options).toEqual([
-      { id: 'knit', label: 'Knitted' },
-      { id: 'woven', label: 'Woven' },
-    ]);
 
-    // triage called twice (first pass + backtrack)
     expect(triageMock).toHaveBeenCalledTimes(2);
-    // select/verify must not have been called
+    // QGS attempted for the ASK.
+    expect(qgsMock).toHaveBeenCalled();
     expect(selectMock).not.toHaveBeenCalled();
     expect(verifyMock).not.toHaveBeenCalled();
   });
@@ -928,11 +1013,13 @@ describe('continueWithAnswer() — multi-turn (Task 11)', () => {
     expect(triageCallInput.q_budget_remaining).toBe(2);
   });
 
-  // Test 2: 3-round cap — if previousAnswers already has 3 entries, adding a 4th
-  // must short-circuit BEFORE any triage/LLM call and return REFUSE function_only_no_substance.
-  it('3-round cap: refuses with function_only_no_substance when previousAnswers already has 3 entries — NO triage call', async () => {
+  // Test 2: round cap — when 3 clarifying rounds are already complete, a 4th
+  // re-entry must short-circuit BEFORE any triage/LLM call and return REFUSE
+  // function_only_no_substance. The cap counts ROUNDS (re-entries), not answer keys.
+  it('round cap: refuses with function_only_no_substance on the 4th round — NO triage call', async () => {
     const res = await continueWithAnswer('stainless bolts', 'q_fourth', 'x', {
       previousAnswers: { a: '1', b: '2', c: '3' },
+      rounds: 3, // 3 rounds already completed → this would be the 4th
     });
 
     // Must REFUSE — Q-budget exhausted
@@ -973,6 +1060,7 @@ describe('continueWithAnswer() — multi-turn (Task 11)', () => {
 
     const res = await continueWithAnswer('cotton fabric', 'q_form', 'woven', {
       previousAnswers: { q_knit: 'no' },
+      rounds: 1, // one clarifying round already completed → this is round 2
     });
 
     // Returns ASK — multi-turn continues
@@ -981,7 +1069,7 @@ describe('continueWithAnswer() — multi-turn (Task 11)', () => {
     expect(res.question?.question_id).toBe('ask_material');
 
     // Triage was called with the accumulated previousAnswers (both q_knit + q_form)
-    // and q_budget_remaining = 3 - 2 = 1
+    // and q_budget_remaining = 3 (budget) - 2 (this round) = 1
     expect(triageMock).toHaveBeenCalledTimes(1);
     const triageCallInput = triageMock.mock.calls[0][0];
     expect(triageCallInput.previousAnswers).toEqual({ q_knit: 'no', q_form: 'woven' });
@@ -1000,6 +1088,77 @@ describe('continueWithAnswer() — multi-turn (Task 11)', () => {
     const triageCallInput = triageMock.mock.calls[0][0];
     expect(triageCallInput.previousAnswers).toEqual({ q_form: 'hex' });
     expect(triageCallInput.q_budget_remaining).toBe(2);
+  });
+
+  // Test 5 (FIX A): a QGS BATCH of 3 answers folded in ONE continueWithAnswers call
+  // counts as exactly ONE round — the Q-budget is NOT exhausted, and triage runs
+  // with q_budget_remaining = 3 - 1 = 2. (Under the old key-counting cap this batch
+  // would have exhausted the budget in one turn and short-circuited to REFUSE.)
+  it('round cap: a batch of 3 answers in ONE call is ONE round (budget NOT exhausted)', async () => {
+    const res = await continueWithAnswers(
+      'coffee',
+      { ask_processing_state: 'roasted', ask_material: 'arabica', ask_form: 'ground' },
+      { previousAnswers: {}, rounds: 0 },
+    );
+
+    // Pipeline ran — NOT short-circuited to REFUSE.
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.system_error).toBeUndefined();
+
+    // Triage WAS called (proves no short-circuit) with all 3 folded answers and
+    // q_budget_remaining = 2 (one round consumed, two remain).
+    expect(triageMock).toHaveBeenCalledTimes(1);
+    const triageCallInput = triageMock.mock.calls[0][0];
+    expect(triageCallInput.previousAnswers).toEqual({
+      ask_processing_state: 'roasted',
+      ask_material: 'arabica',
+      ask_form: 'ground',
+    });
+    expect(triageCallInput.q_budget_remaining).toBe(2);
+  });
+
+  // Test 6 (FIX A): three successive rounds (rounds 1,2,3) all run; the 4th
+  // re-entry (rounds=3 already complete) short-circuits to REFUSE — the cap is on
+  // ROUNDS. Each round here carries a 3-answer batch, proving key-count is irrelevant.
+  it('round cap: 3 successive rounds run, the 4th hits the cap (rounds, not keys)', async () => {
+    const batch = (n: number): Record<string, string> => ({
+      [`q_${n}_a`]: 'x',
+      [`q_${n}_b`]: 'y',
+      [`q_${n}_c`]: 'z',
+    });
+    const merged: Record<string, string> = {};
+
+    // Rounds 1..3 each run the pipeline (triage IS called).
+    for (let round = 0; round < 3; round++) {
+      vi.clearAllMocks();
+      triageMock.mockResolvedValue(triageOut);
+      retrieveMock.mockResolvedValue(retrievalOut);
+      rulesFilterMock.mockResolvedValue(rulesFilterOut);
+      selectMock.mockResolvedValue(selectOut);
+      verifyMock.mockResolvedValue(verifierPass);
+
+      Object.assign(merged, batch(round + 1));
+      const res = await continueWithAnswers('multi', batch(round + 1), {
+        previousAnswers: { ...merged },
+        rounds: round,
+      });
+
+      // Each of the first 3 rounds runs the pipeline (no premature cap).
+      expect(res.decision).toBe('CLASSIFY');
+      expect(triageMock).toHaveBeenCalledTimes(1);
+      expect(triageMock.mock.calls[0][0].q_budget_remaining).toBe(3 - (round + 1));
+    }
+
+    // 4th round (3 already complete) → cap hit, REFUSE, NO triage call.
+    vi.clearAllMocks();
+    triageMock.mockResolvedValue(triageOut);
+    const capped = await continueWithAnswers('multi', batch(4), {
+      previousAnswers: { ...merged },
+      rounds: 3,
+    });
+    expect(capped.decision).toBe('REFUSE');
+    expect(capped.refusal?.out_of_scope_class).toBe('function_only_no_substance');
+    expect(triageMock).not.toHaveBeenCalled();
   });
 });
 

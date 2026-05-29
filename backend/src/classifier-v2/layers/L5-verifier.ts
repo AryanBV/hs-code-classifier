@@ -292,10 +292,10 @@ async function ruleEmbeddingCosineFloor(input: L5Input): Promise<RuleResult> {
   const runner = getRunner();
   const vec = `[${input.query_embedding.join(',')}]`;
   const sql = `
-    SELECT 1 - (embedding <=> $1::vector) AS cosine
+    SELECT 1 - (embedding_v2 <=> $1::vector) AS cosine
     FROM tariff_lines
     WHERE code = $2
-      AND embedding IS NOT NULL
+      AND embedding_v2 IS NOT NULL
     LIMIT 1
   `;
   const res = await runner.query<{ cosine: number | null }>(sql, [vec, code]);
@@ -304,7 +304,7 @@ async function ruleEmbeddingCosineFloor(input: L5Input): Promise<RuleResult> {
       rule_id:        'MV-04',
       rule_name:      RULE_META['MV-04'] as string,
       failure_code:   'EMBEDDING_MISSING',
-      failure_detail: `tariff_lines.embedding is NULL for selected_code '${code}'.`,
+      failure_detail: `tariff_lines.embedding_v2 is NULL for selected_code '${code}'.`,
       field_path:     'selected_code',
       suggested_fix:  'Embedding column is missing for this code — pick a code with embeddings (verifier diagnostic).',
     });

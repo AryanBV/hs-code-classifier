@@ -77,8 +77,8 @@ API client: `frontend/src/lib/api-client.ts` — Axios client pointing to `NEXT_
 **Legacy `hs_codes` table dropped.** Backup at `backend/backups/legacy-tables-2026-05-22T20-01-56.json` (156 MB, gitignored).
 
 ### External APIs
-- **Vertex AI (Gemini)** — Phase 4 v2 runtime LLM stack. Auth via service-account JSON at `backend/.gcp/vertex-sa.json` (`GOOGLE_APPLICATION_CREDENTIALS`). Models: `gemini-3.5-flash` (Triage+Select) and `gemini-3.1-pro-preview` (Tiebreak+Deep-Think). GDP Premium GenAI Credit-covered through 2027-05-08.
-- **Cohere** — embeddings (embed-v4) + rerank (Rerank 4 Pro). Via own `COHERE_API_KEY` env var on Cohere's billing (NOT through Vertex; NOT credit-covered; ~$300/mo cash at 100K queries). ⚠️ **The current key is a TRIAL key (1,000 calls/month) and was EXHAUSTED on 2026-05-28** — every v2 classification embeds via Cohere (L2), so all evals/traces/`smoke:pipeline` return HTTP 429 until the key is upgraded to a Production key. Conserve Cohere calls; FTS is pure Postgres (no Cohere). See `backend/docs/PHASE-4.2a-BASELINE.md`.
+- **Vertex AI (Gemini)** — Phase 4 v2 runtime LLM + embedding stack. Auth via service-account JSON at `backend/.gcp/vertex-sa.json` (`GOOGLE_APPLICATION_CREDENTIALS`). Models: `gemini-3.5-flash` (Triage+Select) and `gemini-3.1-pro-preview` (Tiebreak+Deep-Think). **Embeddings = `gemini-embedding-001` @1536-dim** (M1 migration 2026-05-29, replacing Cohere). Reranking = Gemini-Flash. GDP Premium GenAI Credit-covered through 2027-05-08 — runtime Gemini/embeddings are credit-covered, do NOT conserve.
+- **Cohere** — ⚠️ **DECOMMISSIONED from the v2 runtime/eval path as of M1 (2026-05-29).** Retrieval migrated OFF Cohere onto Vertex `gemini-embedding-001` + Gemini-Flash rerank; the Trial-key 429 blocker is RESOLVED by removal. Do NOT re-introduce a Cohere-key dependency. (`backend/src/classifier-v2/lib/cohere-client.ts` may still exist but is off the path.)
 - **OpenAI** — `OPENAI_API_KEY` available in env. Used by LEGACY classifier (GPT-4o-mini + text-embedding-3-small). For v2 runtime use: ASK USER FIRST before invoking — default v2 plan does NOT use OpenAI at runtime.
 - **Anthropic (Claude)** — via user's Claude Max subscription, NOT via API key (no Anthropic API key in env). Build-time only (offline data engineering jobs O1-O5 using Opus 4.7). Not deployable as a runtime service.
 - **Supabase** — PostgreSQL database + pgvector for semantic search.
@@ -162,9 +162,11 @@ Test case format:
 { query: 'ceramic brake pads for heavy trucks', expectedChapter: '87', expectedHeading: '8708', category: 'Vehicle Parts' }
 ```
 
-## Current Status (2026-05-27)
+## Current Status (2026-05-29)
 
-**Branch:** `feat/phase-4-pipeline-build` — significant untracked work, no commits made yet.
+**Branch:** `feat/phase-4-pipeline-build` — significant work in the WORKING TREE, **UNCOMMITTED by design** (last commit `1593359`; ~9 measured rounds of M1+M2 changes + new QGS/answer-sim files are unstaged — user commits on return; do NOT push/commit unattended).
+
+**Authoritative resume brief:** `backend/docs/AUTONOMOUS-CONTINUATION-2026-05-29.md` (per-round narrative, gates, ultimate bars, commands). Pair with memory note `project_vertex_m0_migration`. Eval reports: `backend/eval-results/vertex-m0-*.json` (highest round = latest).
 
 ### Phase 4.0 build-time data (DB-backed unless noted)
 - Done O1 Notes Claims: 253 rows in `notes_claims` table (50 marked `validated=true`)
@@ -189,31 +191,34 @@ Test case format:
 - Done L5 Mechanical Verifier (`layers/L5-verifier.ts`) — all 10 rules + predicate DSL evaluator (three-valued PASS/FAIL/SKIP) + source-ref resolver + ts_rank_cd TF-IDF citation check
 - Shared libs: `lib/vertex-client.ts` (raw HTTPS + retry + MaxTokensError), `lib/cohere-client.ts`, `lib/supabase-client.ts` (with withRetry wrapper), `lib/thinking-config.ts` (model-conditional helper for 2.5-pro vs 3.x)
 
-### Phase 4.2 — IN PROGRESS
-- QGS wiring (info-gain computation + template lookup) — needed for Layer 1 ASK path
+### M1 — Vertex embedding migration — DONE & verified (2026-05-29)
+- Corpus 100% re-embedded into `embedding_v2` (`gemini-embedding-001` @1536-dim, all 4 hierarchy levels + HNSW index); `supabase-client` + L5 MV-04 query `embedding_v2`; **Cohere off the runtime/eval path** (Trial-key 429 blocker resolved by removal). Re-embed script: `backend/scripts/reembed-corpus-vertex.ts`.
+- **Clean Cohere-free baseline** (`eval-results/vertex-m0-baseline.json`, master suite n=386): routing **78.8%**; on n≈271 completed-classify cases → chapter **93.7%** / heading **90.0%** / 8-digit **72.7%** / weighted **86.3%**. No regression vs Cohere era.
 
-### Phase 4.3 — PENDING
-- L6 Tiebreak (gemini-3.1-pro-preview, thinking_level=high)
-- L7 Deep-Think (gemini-3.1-pro-preview with extended thinking)
-- L8 Active Learning (case_law write-back; table not yet created)
-- Rewire `backend/src/api/classify.ts` from legacy classifier to classifier-v2 (AFTER eval gate passes)
-- Wire v2 into canonical `backend/src/eval/runner.ts` via new `src/eval/v2-adapter.ts` (`mapV2ToLegacy`); ~386-case master suite. (`backend/eval/` 168-case stub is DEPRECATED — see `backend/eval/DEPRECATED.md`.)
+### M2 — routing + leaf precision rounds (r1–r6, all measured & KEPT; eval-gated, uncommitted)
+- **Routing recovery (r1–r4):** L0 noise/colon sanitization + L1 ASK→CLASSIFY recalibration + L4 REFUSE recalibration + GIR-2(a)/Section-XVII parts-of-vehicle fix + retrieval host-candidate injection (parts → host chapter). Routing **78.8 → 86.5%**; over-ASK 51→28 and over-REJECT 29→15 (both below baseline). Recovering ~37 borderline cases **diluted** classify accuracy (8-digit 72.7→~68%, weighted 86.3→~84%) — confirmed DILUTION not regression (on 266 shared cases 8-digit HELD 72.2%).
+- **Leaf precision (r5–r6):** sibling-comparison-view (diff discriminating `tariff_line_attributes` across same-subheading siblings → surface to L4) + widened metadata-discriminator fetcher (+11 cols: fabric_construction, chemical_class, predominant_element, metal %s, made_up, intended_role…). Per-case wins verified (e.g. TC013 truck-tyre → 4011.20.10). **r6** (`vertex-m0-r6.json`): chapter 92.4 / heading 88.4 / 8-digit **68.0** / weighted 83.9, routing 86.5. **8-digit PLATEAUED ~68% across r4–r6 (noise band) — leaf thread at DATA CEILING** (remaining gap = 19 data-gap leaf cases + dilution; 0 retrieval misses).
 
-### Phase 4.4 — PENDING
-- Eval gate on canonical `backend/src/eval/` ~386-case master suite (>=85% chapter / >=75% heading / >=70% code targets)
-- Prompt iteration on weak chapters
-- Calibration of CITATION_TFIDF_THRESHOLD (0.6) and EMBEDDING_COSINE_FLOOR (0.55) against empirical distribution
+### M2 — QGS + answer-simulation eval — BUILT, currently MEASURING (r7-sim, in flight)
+- **Answer-simulation eval** (`backend/src/eval/answer-simulator.ts`, `gold-attributes-lookup.ts`, `runner.ts --simulate-answers`, default-off): for ASK outputs, derives the answer from the GOLD code's true attribute value → `continueWithAnswer` (≤Q-budget) → scores end-to-end. Honest (no gold-code leakage). **r6-sim baseline** (`vertex-m0-r6-sim.json`): ASK recoverability **41.4%** (12/29), end-to-end chapter 89.2 / heading 85.5 / 8-digit 67.3 (n=324).
+- **QGS multi-question** (`backend/src/classifier-v2/layers/QGS-generator.ts`): info-gain greedy, cap-3/floor-1, candidate-aware after L3 (+ L1 fallback); batched `continueWithAnswers` (1 batch = 1 round); answer-sim batch-aware. 702 v2/eval tests passing, tsc clean.
+- **⏳ IN FLIGHT:** `vertex-m0-r7-sim` — QGS gate: recoverability must rise >41.4%, end-to-end 8-digit >66.7%, AND flag-off-equivalent routing/classify no regression vs r6 (86.5/68.0). (No `vertex-m0-r7-sim.json` on disk yet — run not landed.)
 
-**Operative resume brief:** `C:\Users\ASUS\.claude\plans\ultrathink-i-m-resuming-the-zesty-candle.md` (v1->v2 transition rationale)
-**Phase 4.2-4.4 design spec:** `backend/docs/PHASE-4.2-4.4-BUILD-DESIGN.md`
-**Phase 4.2a implementation plan:** `backend/docs/plans/2026-05-28-phase-4.2a-spine-baseline.md`
-**Continuation prompt for fresh session (Phase 4.2a build — spine+instrument+baseline):** `backend/docs/PHASE-4.2-CONTINUATION-PROMPT.md`
+### Levers left toward "ultimate" (eval-gated, priority order)
+- **Data enrichment** for the 19 heading-right/leaf-wrong cases needing NEW attributes (garment sizing, vehicle specs, surface treatment, fur species) — offline O2-style round; only path past the ~68% 8-digit ceiling besides QGS.
+- **Ground-truth cleanup** of suspected eval-GT errors (see PARKED list in the continuation brief, e.g. TC009 fuel-pump).
+- **L6 Tiebreak / L7 Deep-Think / L8 Active-Learning** — build ONLY if baseline proves need (verifier_rejected_but_correct rate, etc.).
+- **Verifier recalibration for Vertex space** (MV-04 cosine floor 0.22 is Cohere-era; MV-03 citation threshold), **latency/perf** (~20–44s/case vs p95≤8s; intermittent MaxTokensError on composite cases), then **ship (M4/M5):** API rewire legacy→v2 (`backend/src/api/classify.ts`), trade intelligence, PDF reports, CI.
+
+**Authoritative resume brief:** `backend/docs/AUTONOMOUS-CONTINUATION-2026-05-29.md` (per-round narrative, gates, ultimate bars, commands).
+**Ultimate bars:** chapter ≥92–95%, heading ≥82–88%, 8-digit ≥75–82%, weighted ≥87%, routing ≥90%, p95 ≤8s, verifier over-rejection ≤8%.
+**Prior design specs (historical):** `backend/docs/PHASE-4.2-4.4-BUILD-DESIGN.md`, `backend/docs/PHASE-4.2a-BASELINE.md`. Eval canonical = `backend/src/eval/` ~386-case master suite (`backend/eval/` 168-stub DEPRECATED).
 
 ## Roadmap
 - DONE Phase 1: Eval harness (168 cases, on `feat/phase-1-eval-harness`)
 - DONE Phase 2: Data foundation (normalized schema + canonical data + 7-audit verified)
 - DONE Phase 3: Architecture spike — 30 paper-traces, 29/30 CORRECT, verdict PROCEED_TO_PHASE_4
 - DONE Phase 3.5 (May 2026): Data completion + architecture lock-in — chapter_exclusions +352 rules, fts_search_text + text[] + sections.notes, A9 empirical proof 10/10 CORRECT, D1 model stack LOCKED. 8 carryforwards in ARCHITECTURE.md §12.
-- IN PROGRESS Phase 4: Brain rebuild — v2 (8-layer). Phase 4.0 DONE (O1-O5; O2 12,406 ingested). **Phase 4.2a DONE (2026-05-28):** orchestrator wired (L0-L5 + repair loop + backtrack + ASK/REFUSE + §7 errors + continueWithAnswer), eval wired to v2, trace CLI + smoke. Many root-cause fixes (L3 over-exclusion, MV-03/04/07 + sentinel verifier bugs, L2 recall funnel/FTS/typo, timeout). Brain strong: on completed classify cases **chapter/heading 93.5%, 8-digit 58.1%**. Security review CLEAN + code review done. **BLOCKER: clean full baseline pending Cohere Trial-key upgrade (1000/mo quota exhausted → 269/386 cases 429'd).** Full state + prioritized roadmap to "ultimate": `backend/docs/PHASE-4.2a-BASELINE.md`. Next: L6/L7/L8 + QGS + L2 synonym layer + leaf precision + API rewire — measurement-gated. Eval canonical = `backend/src/eval/` ~386-case master suite (168-stub DEPRECATED).
+- IN PROGRESS Phase 4: Brain rebuild — v2 (8-layer). Phase 4.0 DONE (O1-O5; O2 12,406 ingested). Phase 4.2a DONE (orchestrator L0-L5 + repair/backtrack + ASK/REFUSE + continueWithAnswer; eval wired to v2). **M1 Vertex embedding migration DONE & verified (2026-05-29):** Cohere off the runtime/eval path (Trial-key 429 blocker resolved by removal), corpus on `gemini-embedding-001`@1536; clean baseline routing 78.8 / chapter 93.7 / heading 90.0 / 8-digit 72.7 / weighted 86.3. **M2 routing+precision rounds r1–r6 (all eval-gated & KEPT, uncommitted):** routing 78.8→86.5%; 8-digit plateaued ~68% (DILUTION from recovering borderline cases + a data ceiling — 0 retrieval misses, 19 cases need new attribute data). **Now:** answer-sim eval + QGS multi-question BUILT (702 tests pass); r6-sim end-to-end baseline (ASK recoverability 41.4%) recorded; `vertex-m0-r7-sim` IN FLIGHT to gate QGS. Levers left: data enrichment (19 gap cases) + GT cleanup + L6/L7 + verifier recalibration + API rewire — all measurement-gated. Authoritative brief: `backend/docs/AUTONOMOUS-CONTINUATION-2026-05-29.md`. Eval canonical = `backend/src/eval/` ~386-case master suite (168-stub DEPRECATED).
 - M4: Trade intelligence — duty rates, export policy on every result
 - M5: Ship — PDF reports, CI, feedback, investor demo

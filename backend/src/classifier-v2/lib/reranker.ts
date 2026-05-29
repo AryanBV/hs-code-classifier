@@ -310,6 +310,25 @@ export class GeminiFlashReranker implements Reranker {
  * CohereReranker — thin wrapper (A/B + fallback; NOT default)
  * --------------------------------------------------------------------------- */
 
+/**
+ * Classify a Cohere failure as transient (retryable) vs hard.
+ *
+ * cohere-client surfaces:
+ *   - HTTP errors as `CohereError` with a numeric `status` (429/5xx transient);
+ *   - TRANSPORT errors (DNS/socket/abort) as `CohereError` with `status === null`
+ *     and a "Cohere network error:" message — those ARE transient (M6).
+ * Falls back to the generic `isTransientError` (status / code / retry-prefix) for
+ * any non-CohereError throw, so a raw network Error is still classified.
+ */
+function isCohereRetryable(e: unknown): boolean {
+  if (e instanceof CohereError) {
+    if (typeof e.status === 'number') return isTransientError({ status: e.status });
+    // status === null → transport/network failure → transient.
+    return true;
+  }
+  return isTransientError(e);
+}
+
 export class CohereReranker implements Reranker {
   public readonly name = 'cohere/rerank-v4.0-pro';
 

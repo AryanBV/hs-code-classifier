@@ -333,6 +333,78 @@ describe('L4 select — prompt parsing', () => {
 });
 
 /* ---------------------------------------------------------------------------
+ * Prompt content — GIR 2(a) parts rule + Note-2 bounding + Ch.95 Note 1(c)
+ *
+ * The parts-classification logic lives in the select-v2.md system prompt (L4 is
+ * prompt-driven; no TS branch decides chapter). These assertions guard that the
+ * HS-grounded reasoning rules and their legal bounds remain present, so a future
+ * prompt edit cannot silently delete them. See backend/prompts/select-v2.md
+ * Step 2a (parts rule) and Step 2b (heading-scope / Ch.95 Note 1(c)).
+ * --------------------------------------------------------------------------- */
+
+describe('L4 select — prompt encodes the GIR 2(a) parts rule (HS-grounded, bounded)', () => {
+  const fs = require('fs') as typeof import('fs');
+  const sys = (): string =>
+    _internal.parsePrompt(fs.readFileSync(_getPromptPathForTesting(), 'utf8'))
+      .systemInstruction;
+
+  it('states the parts principle: solely/principally-for-host classifies with the host, not by material', () => {
+    const s = sys();
+    expect(s).toMatch(/solely or principally/i);
+    // The principle must explicitly reject material-based routing for parts.
+    expect(s).toMatch(/NOT by (?:the )?(?:its )?(?:constituent )?material/i);
+    // Anchored to the controlling section notes for machine/vehicle parts.
+    expect(s).toContain('Section XVI Note 2');
+    expect(s).toContain('Section XVII Note 3');
+    // The canonical vehicle-parts heading.
+    expect(s).toContain('8708');
+  });
+
+  it('BOUNDS the parts rule with the Section XVI/XVII Note-2 exclusions (no over-routing)', () => {
+    const s = sys();
+    // Pumps / machines of 8401-8479 stay in Chapter 84 (the fuel-injection-pump guard).
+    expect(s).toContain('8401');
+    expect(s).toContain('8479');
+    expect(s).toMatch(/Note 2\(e\)/);
+    expect(s).toMatch(/8413/); // fuel-injection pump heading
+    // Electrical machinery -> Ch.85.
+    expect(s).toMatch(/Chapter 85|Ch\.85/);
+    // Parts of general use (base-metal bolts/springs) -> own headings (Section XV Note 2).
+    expect(s).toMatch(/parts of general use/i);
+    expect(s).toContain('Section XV Note 2');
+    // Generic rubber 4016 / plastics Ch.39 may stay material-chapter when not solely a part.
+    expect(s).toContain('4016');
+    // Explicit anti-over-correction guard.
+    expect(s).toMatch(/do NOT force-route|not force-route|Over-routing/i);
+  });
+
+  it('keeps genuinely dual-use parts as best-fit + MEDIUM confidence (not a forced rule)', () => {
+    const s = sys();
+    expect(s).toMatch(/ambiguous/i);
+    expect(s).toMatch(/MEDIUM/);
+  });
+
+  it('encodes Chapter 95 Note 1(c): fishing monofilament not made up -> Section XI (5404), not Ch.95', () => {
+    const s = sys();
+    expect(s).toMatch(/Chapter 95 Note 1\(c\)|Ch\.95 Note 1\(c\)|95 Note 1\(c\)/);
+    expect(s).toContain('5404');
+    expect(s).toMatch(/made[- ]up/i);
+    expect(s).toMatch(/Section XI/);
+  });
+
+  it('the closing user-template reminders restate the parts rule and its bound', () => {
+    const tmpl = _internal.parsePrompt(
+      fs.readFileSync(_getPromptPathForTesting(), 'utf8'),
+    ).userTemplate;
+    expect(tmpl).toMatch(/PARTS RULE/);
+    expect(tmpl).toContain('8708');
+    expect(tmpl).toContain('Ch.84');
+    expect(tmpl).toMatch(/HEADING-SCOPE/);
+    expect(tmpl).toContain('5404');
+  });
+});
+
+/* ---------------------------------------------------------------------------
  * Multi-signal context gathering
  * --------------------------------------------------------------------------- */
 
@@ -479,7 +551,9 @@ describe('L4 select — vertex call configuration', () => {
     expect(call.thinkingLevel).toBe('low');
     expect(call.responseMimeType).toBe('application/json');
     expect(call.temperature).toBe(0.0);
-    expect(call.maxOutputTokens).toBe(4096);
+    // 8192 (was 4096): the model max_output_tokens ceiling — reserves ample room
+    // for a full CLASSIFY response beyond the low-thinking budget (no MAX_TOKENS).
+    expect(call.maxOutputTokens).toBe(8192);
   });
 });
 
@@ -978,5 +1052,467 @@ describe('L4 select — internal helpers', () => {
     expect(_internal.renderRepairBlock(null)).toBe('');
     expect(_internal.renderRepairBlock(undefined)).toBe('');
     expect(_internal.renderRepairBlock([])).toBe('');
+  });
+});
+
+/* ---------------------------------------------------------------------------
+ * Sibling-discrimination surface — computeSiblingDiscriminators
+ *
+ * The highest-leverage leaf-precision fix: when ≥2 candidates share a 6-digit
+ * subheading, surface ONLY the attribute fields that DIFFER between them so L4
+ * has an explicit comparison surface. General (any chapter), no per-case logic.
+ * --------------------------------------------------------------------------- */
+
+describe('L4 select — computeSiblingDiscriminators (differing-attribute diff)', () => {
+  const compute = _internal.computeSiblingDiscriminators;
+
+  it('surfaces ONLY the field that differs between two siblings (tyre car vs truck pattern)', () => {
+    // Two 8-digit leaves under the SAME subheading 4011.10 differing only on intended_use.
+    const cands: RetrievalCandidate[] = [
+      candidate('4011.10.10', '40'),
+      candidate('4011.10.90', '40'),
+    ];
+    const tla: Record<string, unknown> = {
+      '4011.10.10': {
+        material: ['rubber'], form: ['new-pneumatic'], function: ['tyre'],
+        intended_use: ['passenger-motor-car'], processing_state: ['finished'],
+        composition: [], composite_components: null,
+      },
+      '4011.10.90': {
+        material: ['rubber'], form: ['new-pneumatic'], function: ['tyre'],
+        intended_use: ['other'], processing_state: ['finished'],
+        composition: [], composite_components: null,
+      },
+    };
+    const groups = compute(cands, tla);
+    expect(groups.length).toBe(1);
+    const g = groups[0];
+    expect(g.subheading).toBe('4011.10');
+    expect(g.codes).toEqual(['4011.10.10', '4011.10.90']);
+    // Only intended_use differs; identical fields (material/form/function/...) omitted.
+    expect(g.differing_fields).toEqual(['intended_use']);
+    expect(g.values_by_field.intended_use['4011.10.10']).toEqual(['passenger-motor-car']);
+    expect(g.values_by_field.intended_use['4011.10.90']).toEqual(['other']);
+    // Identical fields must NOT appear in the diff surface.
+    expect(g.differing_fields).not.toContain('material');
+    expect(g.values_by_field.material).toBeUndefined();
+  });
+
+  it('omits a sibling group entirely when ALL fields are identical (no discriminator)', () => {
+    const cands: RetrievalCandidate[] = [
+      candidate('5208.11.10', '52'),
+      candidate('5208.11.20', '52'),
+    ];
+    const identical = {
+      material: ['cotton'], form: ['woven'], function: [], intended_use: [],
+      processing_state: ['unbleached'], composition: [], composite_components: null,
+    };
+    const groups = compute(cands, { '5208.11.10': identical, '5208.11.20': identical });
+    // All-identical siblings have no discriminator → the group is OMITTED entirely
+    // (an empty-diff group is not actionable and only pollutes the prompt).
+    expect(groups).toEqual([]);
+  });
+
+  it('produces NO group when candidates do not share a subheading (non-siblings)', () => {
+    const cands: RetrievalCandidate[] = [
+      candidate('4011.10.10', '40'),
+      candidate('4011.20.10', '40'), // different subheading 4011.20
+      candidate('7318.15.00', '73'), // different chapter entirely
+    ];
+    const tla: Record<string, unknown> = {
+      '4011.10.10': { intended_use: ['car'] },
+      '4011.20.10': { intended_use: ['truck'] },
+      '7318.15.00': { intended_use: ['industrial'] },
+    };
+    const groups = compute(cands, tla);
+    expect(groups).toEqual([]);
+  });
+
+  it('forms multiple independent groups and diffs each by its own subheading', () => {
+    const cands: RetrievalCandidate[] = [
+      candidate('4011.10.10', '40'),
+      candidate('4011.10.90', '40'),
+      candidate('4011.20.10', '40'),
+      candidate('4011.20.90', '40'),
+    ];
+    const tla: Record<string, unknown> = {
+      '4011.10.10': { intended_use: ['car'], form: ['radial'] },
+      '4011.10.90': { intended_use: ['other'], form: ['radial'] },
+      '4011.20.10': { intended_use: ['bus'], form: ['radial'] },
+      '4011.20.90': { intended_use: ['other'], form: ['radial'] },
+    };
+    const groups = compute(cands, tla);
+    expect(groups.length).toBe(2);
+    const bySub = Object.fromEntries(groups.map((g) => [g.subheading, g]));
+    expect(bySub['4011.10'].differing_fields).toEqual(['intended_use']);
+    expect(bySub['4011.20'].differing_fields).toEqual(['intended_use']);
+    // form is identical within each group → omitted.
+    expect(bySub['4011.10'].differing_fields).not.toContain('form');
+  });
+
+  it('treats a present-vs-absent attribute record as a difference (missing TLA → null)', () => {
+    const cands: RetrievalCandidate[] = [
+      candidate('4011.10.10', '40'),
+      candidate('4011.10.90', '40'),
+    ];
+    // Only the first code has a TLA record; the second is missing entirely.
+    const tla: Record<string, unknown> = {
+      '4011.10.10': { intended_use: ['car'] },
+    };
+    const groups = compute(cands, tla);
+    expect(groups.length).toBe(1);
+    expect(groups[0].differing_fields).toEqual(['intended_use']);
+    expect(groups[0].values_by_field.intended_use['4011.10.10']).toEqual(['car']);
+    expect(groups[0].values_by_field.intended_use['4011.10.90']).toBeNull();
+  });
+
+  it('array comparison is order-insensitive (same set in different order ⇒ NOT differing)', () => {
+    const cands: RetrievalCandidate[] = [
+      candidate('7208.10.10', '72'),
+      candidate('7208.10.20', '72'),
+    ];
+    const tla: Record<string, unknown> = {
+      '7208.10.10': { material: ['iron', 'steel'], form: ['coil'] },
+      '7208.10.20': { material: ['steel', 'iron'], form: ['sheet'] },
+    };
+    const groups = compute(cands, tla);
+    expect(groups.length).toBe(1);
+    // material is the same SET (order-insensitive) → not differing; only form differs.
+    expect(groups[0].differing_fields).toEqual(['form']);
+  });
+
+  it('derives the subheading from an 8-digit code when parent_chain.subheading is null', () => {
+    const c1 = candidate('4011.10.10', '40');
+    const c2 = candidate('4011.10.90', '40');
+    c1.parent_chain.subheading = null;
+    c2.parent_chain.subheading = null;
+    const groups = compute([c1, c2], {
+      '4011.10.10': { intended_use: ['car'] },
+      '4011.10.90': { intended_use: ['other'] },
+    });
+    expect(groups.length).toBe(1);
+    expect(groups[0].subheading).toBe('4011.10');
+  });
+
+  it('subheadingOf resolves NNNN.NN from parent_chain, 8-digit code, or 6-digit code', () => {
+    expect(_internal.subheadingOf(candidate('4011.10.10', '40'))).toBe('4011.10');
+    const sixDigit: RetrievalCandidate = {
+      code: '3301.22', level: 'subheading', cosine_score: 0.9, fts_rank: null,
+      rerank_score: 0.9,
+      parent_chain: { chapter: '33', heading: '3301', subheading: '3301.22', tariff_line: null },
+    };
+    expect(_internal.subheadingOf(sixDigit)).toBe('3301.22');
+  });
+
+  it('returns [] for an empty candidate set', () => {
+    expect(compute([], {})).toEqual([]);
+  });
+
+  /* -- METADATA-only sibling splits (the over-defer fix) -------------------- */
+
+  it('surfaces a METADATA-only discriminator (fabric_construction: knitted vs woven, Ch.61/62)', () => {
+    // Two leaves under the SAME subheading whose CORE fields are identical and
+    // differ ONLY on the metadata column fabric_construction. Pre-fix these
+    // looked identical (core-only diff) → no discriminator → over-defer.
+    const cands: RetrievalCandidate[] = [
+      candidate('6109.10.10', '61'),
+      candidate('6109.10.20', '61'),
+    ];
+    const tla: Record<string, unknown> = {
+      '6109.10.10': {
+        material: ['cotton'], form: ['shirt'], function: [], intended_use: [],
+        processing_state: ['finished'], composition: [], composite_components: null,
+        fabric_construction: 'knitted',
+      },
+      '6109.10.20': {
+        material: ['cotton'], form: ['shirt'], function: [], intended_use: [],
+        processing_state: ['finished'], composition: [], composite_components: null,
+        fabric_construction: 'woven',
+      },
+    };
+    const groups = compute(cands, tla);
+    expect(groups.length).toBe(1);
+    expect(groups[0].differing_fields).toEqual(['fabric_construction']);
+    expect(groups[0].values_by_field.fabric_construction['6109.10.10']).toBe('knitted');
+    expect(groups[0].values_by_field.fabric_construction['6109.10.20']).toBe('woven');
+    // core fields are identical → must NOT appear in the diff
+    expect(groups[0].differing_fields).not.toContain('material');
+  });
+
+  it('surfaces a NUMERIC metadata discriminator (carbon_pct, Ch.72 steel grade)', () => {
+    const cands: RetrievalCandidate[] = [
+      candidate('7213.91.10', '72'),
+      candidate('7213.91.20', '72'),
+    ];
+    const tla: Record<string, unknown> = {
+      '7213.91.10': { material: ['steel'], form: ['bar'], carbon_pct: 0.1 },
+      '7213.91.20': { material: ['steel'], form: ['bar'], carbon_pct: 0.8 },
+    };
+    const groups = compute(cands, tla);
+    expect(groups.length).toBe(1);
+    expect(groups[0].differing_fields).toEqual(['carbon_pct']);
+    expect(groups[0].values_by_field.carbon_pct['7213.91.10']).toBe(0.1);
+    expect(groups[0].values_by_field.carbon_pct['7213.91.20']).toBe(0.8);
+  });
+
+  it('surfaces a chemical_class metadata discriminator (Ch.27/29 compound vs isomer mix)', () => {
+    // Same subheading 2902.20 → genuine siblings differing only on chemical_class.
+    const cands: RetrievalCandidate[] = [
+      candidate('2902.20.10', '29'),
+      candidate('2902.20.20', '29'),
+    ];
+    const tla: Record<string, unknown> = {
+      '2902.20.10': { material: ['benzene'], chemical_class: 'separate_organic_compound' },
+      '2902.20.20': { material: ['benzene'], chemical_class: 'isomer_mixture' },
+    };
+    const groups = compute(cands, tla);
+    expect(groups.length).toBe(1);
+    expect(groups[0].differing_fields).toEqual(['chemical_class']);
+  });
+});
+
+/* ---------------------------------------------------------------------------
+ * projectCoreAttributes — token discipline: per-candidate block stays lean
+ * --------------------------------------------------------------------------- */
+
+describe('L4 select — projectCoreAttributes (lean per-candidate block)', () => {
+  const project = _internal.projectCoreAttributes;
+
+  it('keeps ONLY the 7 core keys, dropping every metadata column', () => {
+    const wide: Record<string, unknown> = {
+      '6109.10.10': {
+        material: ['cotton'], form: ['shirt'], function: [], intended_use: [],
+        processing_state: ['finished'], composition: [], composite_components: null,
+        // metadata that MUST be stripped from the per-candidate injected block
+        fabric_construction: 'knitted', chemical_class: 'other', predominant_element: 'iron',
+        carbon_pct: 0.25, iron_pct: 98.5, made_up: true, intended_role: 'support',
+        in_solution: false,
+      },
+    };
+    const lean = project(wide)['6109.10.10'] as Record<string, unknown>;
+    expect(Object.keys(lean).sort()).toEqual([
+      'composite_components', 'composition', 'form', 'function',
+      'intended_use', 'material', 'processing_state',
+    ]);
+    expect('fabric_construction' in lean).toBe(false);
+    expect('carbon_pct' in lean).toBe(false);
+    expect('predominant_element' in lean).toBe(false);
+    expect('made_up' in lean).toBe(false);
+    // core values preserved verbatim
+    expect(lean.material).toEqual(['cotton']);
+  });
+
+  it('passes through non-object / missing records unchanged (O2 gap tolerance)', () => {
+    const wide: Record<string, unknown> = {
+      'A': null,
+      'B': 'unexpected-scalar',
+      'C': [1, 2, 3],
+    };
+    expect(project(wide)).toEqual({ A: null, B: 'unexpected-scalar', C: [1, 2, 3] });
+  });
+
+  it('only copies core keys that are actually present (no fabricated keys)', () => {
+    const wide: Record<string, unknown> = {
+      'X': { material: ['steel'], carbon_pct: 0.5 }, // partial record
+    };
+    const lean = project(wide)['X'] as Record<string, unknown>;
+    expect(lean).toEqual({ material: ['steel'] });
+  });
+});
+
+/* ---------------------------------------------------------------------------
+ * gatherSelectContext — wide diff vs lean injected block
+ * --------------------------------------------------------------------------- */
+
+describe('L4 select — wide sibling-diff but lean per-candidate injection', () => {
+  it('diffs on a metadata column yet injects ONLY core fields per candidate', async () => {
+    getSelectCandidateRowsMock.mockResolvedValue([
+      dbRow('6109.10.10', '61'),
+      dbRow('6109.10.20', '61'),
+    ]);
+    getChapterNotesBundlesMock.mockResolvedValue([]);
+    getNotesClaimsForChaptersMock.mockResolvedValue([]);
+    // Wide record: identical core, differ only on fabric_construction (metadata).
+    getTariffLineAttributesForCodesMock.mockResolvedValue({
+      '6109.10.10': {
+        material: ['cotton'], form: ['shirt'], function: [], intended_use: [],
+        processing_state: ['finished'], composition: [], composite_components: null,
+        fabric_construction: 'knitted',
+      },
+      '6109.10.20': {
+        material: ['cotton'], form: ['shirt'], function: [], intended_use: [],
+        processing_state: ['finished'], composition: [], composite_components: null,
+        fabric_construction: 'woven',
+      },
+    });
+
+    const ctx = await gatherSelectContext(input({
+      candidate_chapters:  ['61'],
+      filtered_candidates: [candidate('6109.10.10', '61'), candidate('6109.10.20', '61')],
+    }));
+
+    // (1) Sibling diff DID surface the metadata-only discriminator.
+    expect(ctx.sibling_discriminators.length).toBe(1);
+    expect(ctx.sibling_discriminators[0].differing_fields).toEqual(['fabric_construction']);
+
+    // (2) The per-candidate injected block is LEAN — metadata stripped.
+    const inj = ctx.tariff_line_attributes['6109.10.10'] as Record<string, unknown>;
+    expect('fabric_construction' in inj).toBe(false);
+    expect(inj.material).toEqual(['cotton']);
+  });
+
+  it('renders the metadata discriminator into SIBLING_DISCRIMINATORS but NOT into the per-candidate block', async () => {
+    getSelectCandidateRowsMock.mockResolvedValue([
+      dbRow('6109.10.10', '61'),
+      dbRow('6109.10.20', '61'),
+    ]);
+    getChapterNotesBundlesMock.mockResolvedValue([]);
+    getNotesClaimsForChaptersMock.mockResolvedValue([]);
+    getTariffLineAttributesForCodesMock.mockResolvedValue({
+      '6109.10.10': { material: ['cotton'], form: ['shirt'], fabric_construction: 'knitted' },
+      '6109.10.20': { material: ['cotton'], form: ['shirt'], fabric_construction: 'woven' },
+    });
+    queueModelResponses(JSON.stringify(validClassifyOutput({
+      selected_code: '6109.10.10',
+      alternatives_considered: ['6109.10.20'],
+    })));
+
+    await select(input({
+      candidate_chapters:  ['61'],
+      filtered_candidates: [candidate('6109.10.10', '61'), candidate('6109.10.20', '61')],
+    }));
+    const call = generateContentMock.mock.calls[0][0];
+    const prompt = call.prompt as string;
+
+    // The discriminator name appears in the prompt (via the sibling-diff block).
+    expect(prompt).toContain('fabric_construction');
+
+    // Token discipline: it must NOT leak into the TARIFF_LINE_ATTRIBUTES block.
+    // Isolate that block and assert fabric_construction is absent from it.
+    const tlaStart = prompt.indexOf('TARIFF_LINE_ATTRIBUTES');
+    const sibStart = prompt.indexOf('SIBLING_DISCRIMINATORS');
+    expect(tlaStart).toBeGreaterThanOrEqual(0);
+    expect(sibStart).toBeGreaterThan(tlaStart);
+    const tlaBlock = prompt.slice(tlaStart, sibStart);
+    expect(tlaBlock).not.toContain('fabric_construction');
+  });
+});
+
+/* ---------------------------------------------------------------------------
+ * Sibling-discrimination — wiring into gatherSelectContext + prompt directive
+ * --------------------------------------------------------------------------- */
+
+describe('L4 select — sibling_discriminators wired into context + prompt', () => {
+  it('gatherSelectContext computes sibling_discriminators from candidates + TLA', async () => {
+    getSelectCandidateRowsMock.mockResolvedValue([
+      dbRow('4011.10.10', '40'),
+      dbRow('4011.10.90', '40'),
+    ]);
+    getChapterNotesBundlesMock.mockResolvedValue([]);
+    getNotesClaimsForChaptersMock.mockResolvedValue([]);
+    getTariffLineAttributesForCodesMock.mockResolvedValue({
+      '4011.10.10': { intended_use: ['passenger-motor-car'], material: ['rubber'] },
+      '4011.10.90': { intended_use: ['other'],               material: ['rubber'] },
+    });
+
+    const ctx = await gatherSelectContext(input({
+      candidate_chapters:  ['40'],
+      filtered_candidates: [candidate('4011.10.10', '40'), candidate('4011.10.90', '40')],
+    }));
+    expect(ctx.sibling_discriminators.length).toBe(1);
+    expect(ctx.sibling_discriminators[0].subheading).toBe('4011.10');
+    expect(ctx.sibling_discriminators[0].differing_fields).toEqual(['intended_use']);
+  });
+
+  it('renders SIBLING_DISCRIMINATORS block into the user prompt with the differing field', async () => {
+    getSelectCandidateRowsMock.mockResolvedValue([
+      dbRow('4011.10.10', '40'),
+      dbRow('4011.10.90', '40'),
+    ]);
+    getChapterNotesBundlesMock.mockResolvedValue([]);
+    getNotesClaimsForChaptersMock.mockResolvedValue([]);
+    getTariffLineAttributesForCodesMock.mockResolvedValue({
+      '4011.10.10': { intended_use: ['passenger-motor-car'] },
+      '4011.10.90': { intended_use: ['other'] },
+    });
+    queueModelResponses(JSON.stringify(validClassifyOutput({
+      selected_code: '4011.10.10',
+      alternatives_considered: ['4011.10.90'],
+    })));
+
+    await select(input({
+      candidate_chapters:  ['40'],
+      filtered_candidates: [candidate('4011.10.10', '40'), candidate('4011.10.90', '40')],
+    }));
+    const call = generateContentMock.mock.calls[0][0];
+    expect(call.prompt).toContain('SIBLING_DISCRIMINATORS');
+    expect(call.prompt).toContain('4011.10');
+    expect(call.prompt).toContain('differing_fields');
+    expect(call.prompt).toContain('intended_use');
+  });
+
+  it('renders an empty SIBLING_DISCRIMINATORS array when no candidates are siblings', async () => {
+    setSupabaseHappyPath();
+    queueModelResponses(JSON.stringify(validClassifyOutput()));
+
+    // Default input has 7318.15.00 + 7318.16.00 — different subheadings (7318.15 vs 7318.16).
+    await select(input());
+    const call = generateContentMock.mock.calls[0][0];
+    expect(call.prompt).toContain('SIBLING_DISCRIMINATORS');
+    // The substituted value is an empty JSON array.
+    expect(call.prompt).toMatch(/SIBLING_DISCRIMINATORS[^\n]*\n\[\]/);
+  });
+});
+
+/* ---------------------------------------------------------------------------
+ * Prompt content — SIBLING DISCRIMINATION directive must be present
+ * --------------------------------------------------------------------------- */
+
+describe('L4 select — prompt encodes the SIBLING DISCRIMINATION directive', () => {
+  const fs = require('fs') as typeof import('fs');
+  const parsed = () =>
+    _internal.parsePrompt(fs.readFileSync(_getPromptPathForTesting(), 'utf8'));
+
+  it('system prompt documents the {sibling_discriminators} input + Step 3a directive', () => {
+    const s = parsed().systemInstruction;
+    expect(s).toContain('{sibling_discriminators}');
+    expect(s).toMatch(/SIBLING DISCRIMINATION/);
+    // Directive must instruct selecting the leaf whose differing-field values match the query.
+    expect(s).toContain('differing_fields');
+    // And the safety rule: silent-on-discriminator ⇒ prefer general/residual, do not guess.
+    expect(s).toMatch(/silent/i);
+    expect(s).toMatch(/general|residual|Other/);
+    expect(s).toMatch(/do NOT guess|not guess/i);
+    // General across chapters, not a per-case hack.
+    expect(s).toMatch(/any.*chapter|GENERAL/i);
+  });
+
+  it('user template includes the SIBLING_DISCRIMINATORS block + closing reminder', () => {
+    const tmpl = parsed().userTemplate;
+    expect(tmpl).toContain('SIBLING_DISCRIMINATORS');
+    expect(tmpl).toContain('{sibling_discriminators}');
+    expect(tmpl).toMatch(/SIBLING DISCRIMINATION/);
+  });
+
+  it('Step 3a names METADATA discriminators with equal weight to core ones', () => {
+    const s = parsed().systemInstruction;
+    // The diff can split on a metadata column — these must be named so the model
+    // treats them as decisive, not ignorable.
+    expect(s).toContain('fabric_construction');
+    expect(s).toContain('chemical_class');
+    expect(s).toContain('predominant_element');
+    expect(s).toMatch(/carbon_pct/);
+    // Equal-weight instruction (metadata is just as legally decisive at the leaf).
+    expect(s).toMatch(/same weight|equal weight|just as legally decisive/i);
+  });
+
+  it('Step 3a TIGHTENS the defer rule: resolve from query text, defer ONLY when genuinely silent', () => {
+    const s = parsed().systemInstruction;
+    // Must resolve from the query text, not only the named extracted_attributes keys.
+    expect(s).toMatch(/\{query\} text|query text/i);
+    // The over-defer guard: if the query resolves the splitter, pick that leaf.
+    expect(s).toMatch(/do NOT defer .* when the evidence is present|MUST pick that specific leaf/i);
+    // Defer ONLY when genuinely silent (not merely because the splitter is metadata).
+    expect(s).toMatch(/genuinely SILENT|genuinely silent/i);
   });
 });

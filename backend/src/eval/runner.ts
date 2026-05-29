@@ -20,6 +20,7 @@ import {
   buildConfusionMatrix,
 } from './scorer';
 import { mapWithConcurrency } from './concurrency';
+import { runAnswerSimulation } from './answer-simulator';
 import { masterSuite, validateSuite } from './test-suites/master-suite';
 import { quickSuite } from './test-suites/quick-suite';
 import * as fs from 'fs';
@@ -62,6 +63,14 @@ interface RunConfig {
   suite: 'master' | 'quick';
   category?: string;
   runId: string;
+  /**
+   * OPT-IN. When true, an ASK on a case carrying a gold code triggers the
+   * gold-answer simulation (answer-simulator.ts): derive the user's answer from
+   * the gold tariff_line_attributes value and score the final code end-to-end.
+   * Default false — when off, routing/classification metrics + report are
+   * byte-for-byte unchanged (purely additive).
+   */
+  simulateAnswers: boolean;
 }
 
 function parseArgs(): RunConfig {
@@ -69,6 +78,7 @@ function parseArgs(): RunConfig {
   let suite: 'master' | 'quick' = 'master';
   let category: string | undefined;
   let runId = `eval-${new Date().toISOString().slice(0, 10)}`;
+  let simulateAnswers = false;
 
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
@@ -76,9 +86,10 @@ function parseArgs(): RunConfig {
     if (arg === '--suite' && next) { suite = next as 'master' | 'quick'; i++; }
     else if (arg === '--category' && next) { category = next; i++; }
     else if (arg === '--run-id' && next) { runId = next; i++; }
+    else if (arg === '--simulate-answers') { simulateAnswers = true; }
   }
 
-  return { suite, category, runId };
+  return { suite, category, runId, simulateAnswers };
 }
 
 // ---------------------------------------------------------------------------
@@ -147,7 +158,10 @@ function buildErrorDetail(
 // Run a single test case
 // ---------------------------------------------------------------------------
 
-export async function runTestCase(tc: EvalTestCase): Promise<EvalDetail> {
+export async function runTestCase(
+  tc: EvalTestCase,
+  simulateAnswers = false,
+): Promise<EvalDetail> {
   const startTime = Date.now();
 
   // Per-case timeout. The timer handle is captured so it can be cleared once the
@@ -225,7 +239,7 @@ export async function runTestCase(tc: EvalTestCase): Promise<EvalDetail> {
         result.options?.map(o => ({ label: o.label })),
       );
 
-      return {
+      const askDetail: EvalDetail = {
         test_case_id: tc.id,
         query: tc.query,
         expected_routing: tc.expected_routing,
@@ -237,6 +251,32 @@ export async function runTestCase(tc: EvalTestCase): Promise<EvalDetail> {
         score: routingCorrect ? (qScore / 2) * 100 : 0,
         ...extractDiagnostics(raw, false),
       };
+
+      // OPT-IN answer simulation (purely ADDITIVE): when on AND this case carries
+      // a gold code, derive the user's answer from the gold tariff_line_attributes
+      // value and score the final code end-to-end. The base detail above (routing,
+      // score, question_score, diagnostics) is left EXACTLY as the baseline so a
+      // flag-off run is byte-for-byte unchanged.
+      if (simulateAnswers && tc.expected_code) {
+        const recovery = await runAnswerSimulation(tc.query, raw, tc.expected_code);
+        const finalCode = recovery.final_code_if_classify;
+        const goldNorm = normalizeHSCode(tc.expected_code);
+        const finalNorm = finalCode ? normalizeHSCode(finalCode) : '';
+        askDetail.ask_recovery_attempt = {
+          initial_question_id: recovery.initial_question_id,
+          rounds_attempted: recovery.rounds_attempted,
+          final_decision: recovery.final_decision,
+          ...(finalCode ? { final_code_if_classify: finalCode } : {}),
+          code_correct_after_recovery: recovery.code_correct_after_recovery,
+          chapter_correct_after_recovery:
+            finalNorm.length >= 2 && finalNorm.substring(0, 2) === goldNorm.substring(0, 2),
+          heading_correct_after_recovery:
+            finalNorm.length >= 4 && finalNorm.substring(0, 4) === goldNorm.substring(0, 4),
+          answer_matches: recovery.answer_matches,
+        };
+      }
+
+      return askDetail;
     }
 
     // Unexpected routing (incl. genuine model REFUSE → routing 'reject')
@@ -320,6 +360,11 @@ function buildReport(
   const targeted = askDetails.filter(d => (d.question_score ?? 0) >= 1).length;
   const relevant = askDetails.filter(d => (d.question_score ?? 0) >= 2).length;
 
+  // End-to-end metrics (ONLY present when --simulate-answers ran: detected by the
+  // presence of at least one ask_recovery_attempt). Purely additive — when absent
+  // the report is byte-for-byte identical to the baseline.
+  const endToEnd = buildEndToEndMetrics(scored);
+
   return {
     metadata: {
       timestamp: startTime.toISOString(),
@@ -348,8 +393,77 @@ function buildReport(
       relevant_pct: (relevant / askN) * 100,
       average_score: askDetails.reduce((sum, d) => sum + (d.question_score ?? 0), 0) / askN,
     },
+    // Spread so the key is ABSENT (not `undefined`) on a baseline run — keeps the
+    // serialized report byte-for-byte identical when --simulate-answers is off.
+    ...(endToEnd ? { end_to_end_metrics: endToEnd } : {}),
     details,
   };
+}
+
+/**
+ * Compute end-to-end metrics across scored (non-error) details. Returns
+ * `undefined` when NO detail carries an `ask_recovery_attempt` (i.e. the eval ran
+ * without --simulate-answers) so the report stays byte-for-byte unchanged.
+ *
+ * Denominator (`scored_with_gold`): every scored case that carries a gold code —
+ * direct classify cases AND cases the system ASKed (which gold-classify cases
+ * triggered the simulation on). A correct end-to-end outcome is either a direct
+ * classify with the right code OR an ASK recovered to the right code after the
+ * gold answer. This is the honest "if the user answers, do we reach the code?"
+ * accuracy that the baseline routing/classification metrics cannot see.
+ */
+function buildEndToEndMetrics(
+  scored: EvalDetail[],
+): NonNullable<EvalReport['end_to_end_metrics']> | undefined {
+  const recovered = scored.filter(d => d.ask_recovery_attempt !== undefined);
+  if (recovered.length === 0) return undefined;
+
+  // Direct classify cases (system actually classified) carrying a gold code.
+  const directClassify = scored.filter(
+    d => d.actual_routing === 'classify' && d.expected_code !== undefined,
+  );
+  const classifyDirectCorrect = directClassify.filter(d => d.code_correct).length;
+  const classifyDirectChapter = directClassify.filter(d => d.chapter_correct).length;
+  const classifyDirectHeading = directClassify.filter(d => d.heading_correct).length;
+
+  // ASK-recovery cases (always carry a gold code — the runner only simulates then).
+  const askCaseCount = recovered.length;
+  const askRecoveredCorrect = recovered.filter(
+    d => d.ask_recovery_attempt!.code_correct_after_recovery,
+  ).length;
+  const askRecoveredChapter = recovered.filter(
+    d => d.ask_recovery_attempt!.chapter_correct_after_recovery,
+  ).length;
+  const askRecoveredHeading = recovered.filter(
+    d => d.ask_recovery_attempt!.heading_correct_after_recovery,
+  ).length;
+  const askUnanswerable = recovered.filter(
+    d => d.ask_recovery_attempt!.final_decision === 'UNANSWERABLE',
+  ).length;
+  const askRoundsTotal = recovered.reduce(
+    (sum, d) => sum + d.ask_recovery_attempt!.rounds_attempted, 0,
+  );
+
+  const scoredWithGold = directClassify.length + askCaseCount;
+  const denom = scoredWithGold || 1;
+
+  return {
+    ask_case_count: askCaseCount,
+    ask_recovered_correct: askRecoveredCorrect,
+    ask_recoverability_rate: askCaseCount > 0 ? (askRecoveredCorrect / askCaseCount) * 100 : 0,
+    ask_recovery_avg_rounds: askCaseCount > 0 ? askRoundsTotal / askCaseCount : 0,
+    ask_unanswerable: askUnanswerable,
+    classify_direct_correct: classifyDirectCorrect,
+    scored_with_gold: scoredWithGold,
+    end_to_end_chapter_accuracy: ((classifyDirectChapter + askRecoveredChapter) / denom) * 100,
+    end_to_end_heading_accuracy: ((classifyDirectHeading + askRecoveredHeading) / denom) * 100,
+    end_to_end_code_accuracy: ((classifyDirectCorrect + askRecoveredCorrect) / denom) * 100,
+  };
+}
+
+/** Test-only re-export: build a report from synthetic details (skips metadata). */
+export function buildReportForTest(details: EvalDetail[]): EvalReport {
+  return buildReport(details, 'test', 'quick', new Date());
 }
 
 // ---------------------------------------------------------------------------
@@ -403,6 +517,18 @@ function printSummary(report: EvalReport): void {
   console.log(`  Targeted: ${question_quality.targeted_pct.toFixed(1)}%`);
   console.log(`  Relevant: ${question_quality.relevant_pct.toFixed(1)}%`);
 
+  // End-to-end (only when --simulate-answers ran — otherwise omitted entirely)
+  const e2e = report.end_to_end_metrics;
+  if (e2e) {
+    console.log(`\nEND-TO-END (--simulate-answers: gold answer fed back on ASK)`);
+    console.log(`  ASK recoverability: ${e2e.ask_recoverability_rate.toFixed(1)}% (${e2e.ask_recovered_correct}/${e2e.ask_case_count} ASK cases reached the correct code)`);
+    console.log(`  ASK avg rounds: ${e2e.ask_recovery_avg_rounds.toFixed(2)} | unanswerable: ${e2e.ask_unanswerable}`);
+    console.log(`  End-to-end accuracy (direct classify + recovered ASK, n=${e2e.scored_with_gold}):`);
+    console.log(`    Chapter:  ${e2e.end_to_end_chapter_accuracy.toFixed(1)}%`);
+    console.log(`    Heading:  ${e2e.end_to_end_heading_accuracy.toFixed(1)}%`);
+    console.log(`    8-digit:  ${e2e.end_to_end_code_accuracy.toFixed(1)}%`);
+  }
+
   // Top failures (model failures only — infra errors listed separately below)
   const failures = scored
     .filter(d => !d.routing_correct || (d.expected_routing === 'classify' && !d.chapter_correct))
@@ -453,7 +579,7 @@ async function main(): Promise<void> {
 
   console.log(`Starting eval run: ${config.runId}`);
   console.log(`Suite: ${config.suite}${config.category ? ` (category: ${config.category})` : ''}`);
-  console.log(`Cases: ${testCases.length} | Concurrency: ${CONCURRENCY}`);
+  console.log(`Cases: ${testCases.length} | Concurrency: ${CONCURRENCY}${config.simulateAnswers ? ' | answer-simulation: ON' : ''}`);
   console.log('');
 
   const startTime = new Date();
@@ -467,7 +593,7 @@ async function main(): Promise<void> {
     testCases,
     CONCURRENCY,
     async (tc) => {
-      const detail = await runTestCase(tc);
+      const detail = await runTestCase(tc, config.simulateAnswers);
 
       // Progress logging — order reflects COMPLETION, not input index (expected
       // under concurrency); the saved report.details remains input-ordered.

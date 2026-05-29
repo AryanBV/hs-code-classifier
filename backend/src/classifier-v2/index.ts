@@ -19,6 +19,7 @@ import { retrieve } from './layers/L2-retrieval';
 import { rulesFilter } from './layers/L3-rules-filter';
 import { select } from './layers/L4-select';
 import { verify } from './layers/L5-verifier';
+import { selectQGSBatch } from './layers/QGS-generator';
 import { selectToClassifyResult, buildDiagnostics } from './select-to-result';
 import { BaselineEscalation, ESCALATION_REPAIR_PREFIX } from './escalation';
 import { MaxTokensError } from './lib/vertex-client';
@@ -26,9 +27,11 @@ import { LlmOutputValidationError } from './schemas';
 import type {
   ChapterCode,
   ClarifyingQuestion,
+  ClarifyingQuestionBatch,
   ClassifyResult,
   L4Input,
   L5Input,
+  NormalizedInput,
   PipelineRunState,
   PipelineSystemError,
   PipelineTraceEvent,
@@ -108,18 +111,18 @@ function chapterOf(code: string): ChapterCode {
 }
 
 /**
- * Map a TriageOutput with decision:'ASK' to a ClassifyResult with decision:'ASK'.
+ * Build the L1 FALLBACK single-question from a triage ASK output.
  *
  * Synthesizes a stable `question_id` from the discriminating_attribute so the
- * API surface is consistent across calls. QGS (Task QGS wiring) will later
- * replace the *selection* of the question — this seam remains unchanged.
+ * API surface is consistent across calls. This is the candidate-UNAWARE fallback
+ * used when the candidate-aware QGS yields nothing (genuinely indistinguishable
+ * set, no usable TLA rows, etc.).
  *
- * Defensive guard: if the triage output somehow arrives here with a null
- * clarifying_question despite decision==='ASK' (incoherent triage — the L1
- * isTriageOutput guard should prevent this), we throw a clear error rather than
- * emitting an ASK with an empty question.
+ * @throws if the triage output arrives with a null clarifying_question despite
+ *   decision==='ASK' (incoherent triage — the L1 cross-field guard should
+ *   prevent this) rather than emitting an ASK with an empty question.
  */
-function triageToAsk(t: TriageOutput, state: PipelineRunState): ClassifyResult {
+function buildFallbackQuestion(t: TriageOutput): ClarifyingQuestion {
   const cq = t.clarifying_question;
   if (cq === null) {
     // Should be unreachable: L1 cross-field guard enforces ASK ⇒ non-null.
@@ -127,21 +130,131 @@ function triageToAsk(t: TriageOutput, state: PipelineRunState): ClassifyResult {
       'classifier-v2: Triage returned ASK with null clarifying_question (incoherent triage output).',
     );
   }
-
-  const question: ClarifyingQuestion = {
+  return {
     question_id: `ask_${cq.discriminating_attribute}`,
     question_text: cq.fallback_question_text,
     discriminating_attribute: cq.discriminating_attribute,
     options: cq.fallback_options,
+    qgs_used: false,
   };
+}
 
-  recordLayer(state, 'L1', 'ask', { discriminating_attribute: cq.discriminating_attribute });
+/**
+ * Why the candidate-aware QGS did not produce a batch, so the L1-fallback trace
+ * can distinguish the cause (observability only — behavior is identical):
+ *   - `qgs_error` — `selectQGSBatch` (or L2/L3 before it) THREW (e.g. retrieval /
+ *     embedding error). The ASK is preserved via the L1 fallback regardless.
+ *   - `qgs_null`  — QGS returned `null` (genuinely indistinguishable set, no usable
+ *     TLA rows, or <2 survivors). A normal "no question" outcome, not an error.
+ */
+type QgsFallbackReason = 'qgs_error' | 'qgs_null';
 
+/**
+ * Map a TriageOutput with decision:'ASK' to a ClassifyResult with decision:'ASK'.
+ *
+ * When a candidate-aware QGS `batch` is supplied, the result surfaces BOTH the
+ * full `questions` batch AND `question` = `batch.questions[0]` (the highest
+ * info-gain question) for single-question consumers. With no batch, it falls
+ * back to the L1 single fallback question and records `fallbackReason` on the
+ * trace so the QGS miss-cause is observable (`qgs_error` vs `qgs_null`).
+ */
+function triageToAsk(
+  t: TriageOutput,
+  state: PipelineRunState,
+  batch: ClarifyingQuestionBatch | null,
+  fallbackReason: QgsFallbackReason,
+): ClassifyResult {
+  if (batch !== null && batch.questions.length > 0) {
+    const primary = batch.questions[0]!;
+    recordLayer(state, 'QGS', 'ask', {
+      questions: batch.questions.length,
+      attributes: batch.questions.map((q) => q.discriminating_attribute),
+      total_ig: batch.total_ig_potential,
+    });
+    return {
+      decision: 'ASK',
+      question: primary,
+      questions: batch,
+      diagnostics: buildDiagnostics(state),
+    };
+  }
+
+  const question = buildFallbackQuestion(t);
+  recordLayer(state, 'L1', 'ask', {
+    discriminating_attribute: question.discriminating_attribute,
+    qgs_fallback_reason: fallbackReason,
+  });
   return {
     decision: 'ASK',
     question,
     diagnostics: buildDiagnostics(state),
   };
+}
+
+/**
+ * Candidate-aware ASK: run L2 → L3 against the triage ASK's candidate chapters
+ * to obtain the LIVE candidate set, then ask the QGS to generate an info-gain
+ * question BATCH over it. Falls back CLEANLY to the L1 single question when the
+ * candidate set is genuinely indistinguishable / unavailable / empty (the QGS
+ * returns null) or when retrieval/rules fail (we never block an ASK on a
+ * retrieval hiccup — the fallback question is always available).
+ *
+ * Used at BOTH ASK sites (first-pass + backtrack re-entry) via a shared path.
+ */
+async function handleTriageAsk(
+  t: TriageOutput,
+  normalized: NormalizedInput,
+  state: PipelineRunState,
+  opts: { backtrack: boolean },
+): Promise<ClassifyResult> {
+  let batch: ClarifyingQuestionBatch | null = null;
+  // Default reason: QGS ran and returned null (the common "no usable question"
+  // outcome). Flipped to `qgs_error` only if the L2/L3/QGS path THROWS.
+  let fallbackReason: QgsFallbackReason = 'qgs_null';
+  try {
+    const headNouns = t.extracted_attributes.head_nouns_for_fts;
+    const retrievalOut = await retrieve({
+      normalized_query: normalized.normalized_query,
+      raw_tokens: normalized.raw_tokens,
+      composite_flag: normalized.composite_flag,
+      candidate_chapters: t.candidate_chapters,
+      head_nouns_for_fts: headNouns,
+    });
+    recordLayer(state, 'L2', 'retrieve', {
+      strategy: retrievalOut.retrieval_strategy,
+      candidates: retrievalOut.candidates.length,
+      for_ask: true,
+      ...(opts.backtrack ? { backtrack: true } : {}),
+    });
+
+    const rulesOut = await rulesFilter({
+      l2_output: retrievalOut,
+      normalized_query: normalized.normalized_query,
+      raw_tokens: normalized.raw_tokens,
+      head_nouns_for_fts: headNouns,
+      candidate_chapters: t.candidate_chapters,
+      // For an ASK we are not driving the backtrack gate; suppress re-signal.
+      backtrack_attempted: true,
+    });
+    recordLayer(state, 'L3', 'rules_filter', {
+      survivors: rulesOut.filtered_candidates.length,
+      for_ask: true,
+      ...(opts.backtrack ? { backtrack: true } : {}),
+    });
+
+    // A null return is the indistinguishable / no-candidate outcome (qgs_null,
+    // already the default); only a THROW below is qgs_error.
+    batch = await selectQGSBatch({ candidates: rulesOut.filtered_candidates });
+  } catch {
+    // A retrieval/rules/QGS hiccup must NEVER drop the ASK — fall back to the
+    // L1 single question. (Genuine Vertex transport errors don't reach here —
+    // L2/L3/QGS are deterministic DB/compute, not Vertex LLM calls.) Record the
+    // distinct cause for observability — behavior is identical to the null path.
+    batch = null;
+    fallbackReason = 'qgs_error';
+  }
+
+  return triageToAsk(t, state, batch, fallbackReason);
 }
 
 /**
@@ -304,10 +417,11 @@ export async function classify(
   state.llm_calls = (state.llm_calls ?? 0) + 1;
   recordLayer(state, 'L1', 'triage', { decision: triageOut.decision });
 
-  // ASK → Task 9. REFUSE → Task 10 (maps every model refusal, incl. the L1
-  // invalid-JSON synthetic incoherent_query refuse and Q-budget exhaustion).
+  // ASK → candidate-aware QGS (L2→L3→QGS) with clean fallback to the L1 single
+  // question. REFUSE → maps every model refusal (incl. the L1 invalid-JSON
+  // synthetic incoherent_query refuse and Q-budget exhaustion).
   if (triageOut.decision === 'ASK') {
-    return finalize(triageToAsk(triageOut, state), state, captureTrace);
+    return finalize(await handleTriageAsk(triageOut, normalized, state, { backtrack: false }), state, captureTrace);
   }
   if (triageOut.decision === 'REFUSE') {
     recordLayer(state, 'L1', 'refuse', { out_of_scope_class: triageOut.out_of_scope_class });
@@ -375,10 +489,11 @@ export async function classify(
     state.llm_calls = (state.llm_calls ?? 0) + 1;
     recordLayer(state, 'L1', 'triage', { decision: backtrackTriageOut.decision, backtrack: true });
 
-    // ASK → Task 9. REFUSE → Task 10 (same canonical mapping; naturally covers
-    // the L3 backtrack_no_fit REFUSE L1 emits when the constraint can't be met).
+    // ASK → candidate-aware QGS (same shared path). REFUSE → canonical mapping
+    // (naturally covers the L3 backtrack_no_fit REFUSE L1 emits when the
+    // constraint can't be met).
     if (backtrackTriageOut.decision === 'ASK') {
-      return finalize(triageToAsk(backtrackTriageOut, state), state, captureTrace);
+      return finalize(await handleTriageAsk(backtrackTriageOut, normalized, state, { backtrack: true }), state, captureTrace);
     }
     if (backtrackTriageOut.decision === 'REFUSE') {
       recordLayer(state, 'L1', 'refuse', {
@@ -563,39 +678,86 @@ export async function classify(
  * Folds the user's answer to a clarifying question back into `previousAnswers`
  * and re-enters `classify` from L1 (triage replays all prior answers as binding
  * facts and does NOT re-ask). The 3-round Q-budget cap (ARCHITECTURE §8, §7) is
- * enforced here as a short-circuit BEFORE any LLM call — if adding this answer
- * would produce a 4th distinct answer (`newPreviousAnswers.length > 3`), we
- * immediately REFUSE with `function_only_no_substance` rather than waste an L1
- * call that triage would also refuse.
+ * enforced by {@link continueWithAnswers} on the number of clarifying ROUNDS
+ * (distinct re-entries), NOT the number of answer keys — a single QGS batch of
+ * several answers is ONE round (see {@link continueWithAnswers} for the rationale).
  *
  * Signature mirrors the legacy API route body `{ originalQuery, answerId,
  * answerLabel }` but drops `answerLabel` (not needed for previousAnswers keying;
  * QGS guarantees both ids match `^[a-z][a-z0-9_]*$`). The wizard carries the
- * full `previousAnswers` map from round to round, so it passes it in via `opts`.
+ * full `previousAnswers` map (and the `rounds` counter) from round to round, so
+ * it passes them in via `opts`. Delegating a 1-entry map = exactly ONE round, so
+ * this function's behavior is unchanged by the rounds-based cap.
  *
  * @param originalQuery  The original user query (unchanged across all rounds).
  * @param questionId     The id of the question being answered (e.g. `'ask_form'`).
  * @param answerId       The id of the selected option (e.g. `'hex'`).
  * @param opts.previousAnswers  Answers accumulated from earlier rounds (default: {}).
+ * @param opts.rounds    Clarifying rounds already completed BEFORE this call
+ *                       (default 0). Threaded forward by callers across turns.
  */
 export async function continueWithAnswer(
   originalQuery: string,
   questionId: string,
   answerId: string,
-  opts?: { previousAnswers?: Record<string, string> },
+  opts?: { previousAnswers?: Record<string, string>; rounds?: number },
+): Promise<ClassifyResult> {
+  return continueWithAnswers(
+    originalQuery,
+    { [questionId]: answerId },
+    { previousAnswers: opts?.previousAnswers, rounds: opts?.rounds },
+  );
+}
+
+/**
+ * Multi-turn continuation accepting a BATCH of answers in ONE round (QGS batch).
+ *
+ * The candidate-aware QGS may surface several questions in a single ASK turn;
+ * the wizard collects all of them and folds them back together. This entry point
+ * folds the whole `batchAnswers` map into `previousAnswers` and re-enters
+ * `classify` ONCE — so a QGS batch consumes a SINGLE conceptual clarifying round,
+ * not one per question. `continueWithAnswer` (singular) delegates here with a
+ * 1-entry map, so its behavior is byte-for-byte unchanged.
+ *
+ * The Q-budget cap (ARCHITECTURE §8) counts clarifying ROUNDS — distinct
+ * `continueWithAnswers` re-entries — NOT the number of answered questionIds. A
+ * QGS batch of up to {@link QGS_HARD_CAP} answers folded in ONE call is exactly
+ * ONE round, so it consumes exactly ONE budget slot. Counting answer KEYS would
+ * let a single 3-question batch exhaust the whole budget in one turn and break
+ * any legitimate follow-up round. The caller threads `opts.rounds` (rounds
+ * already completed) from turn to turn; this call is round `opts.rounds + 1`, and
+ * we short-circuit to REFUSE (before any LLM call) once that exceeds `q_budget`.
+ *
+ * @param originalQuery  The original user query (unchanged across all rounds).
+ * @param batchAnswers   Map of questionId → answerId answered THIS round (≥1).
+ * @param opts.previousAnswers  Answers accumulated from earlier rounds (default {}).
+ * @param opts.rounds    Clarifying rounds already completed BEFORE this call
+ *                       (default 0). This call is round `rounds + 1`.
+ * @param opts.q_budget  Round budget (default {@link DEFAULT_Q_BUDGET} = 3).
+ */
+export async function continueWithAnswers(
+  originalQuery: string,
+  batchAnswers: Record<string, string>,
+  opts?: { previousAnswers?: Record<string, string>; rounds?: number; q_budget?: number },
 ): Promise<ClassifyResult> {
   const prior = opts?.previousAnswers ?? {};
+  const priorRounds = opts?.rounds ?? 0;
+  const roundBudget = opts?.q_budget ?? DEFAULT_Q_BUDGET;
 
-  // Build the merged answers map (adds this round's answer to prior rounds).
+  // Build the merged answers map (adds THIS round's batch to prior rounds).
   // Answers are keyed by questionId: re-answering the same question OVERWRITES
-  // the prior answer and does NOT consume a new Q-budget slot (the 3-round cap
-  // counts distinct questionIds in Object.keys(newPreviousAnswers), not calls).
-  const newPreviousAnswers: Record<string, string> = { ...prior, [questionId]: answerId };
+  // the prior answer. Key COUNT is irrelevant to the budget — the cap is on
+  // rounds (re-entries), not on how many questions a batch carried.
+  const newPreviousAnswers: Record<string, string> = { ...prior, ...batchAnswers };
 
-  // 3-round cap: if we now have more than 3 distinct answers, the Q-budget is
+  // This invocation is the next clarifying ROUND. A QGS batch (≥1 answers folded
+  // in one call) counts as exactly ONE round.
+  const thisRound = priorRounds + 1;
+
+  // Round cap: once this would be the (roundBudget+1)th round, the Q-budget is
   // exhausted. Short-circuit here so zero LLM calls are made for this hopeless
-  // 4th round — triage also enforces this, but defense-in-depth is cheap here.
-  if (Object.keys(newPreviousAnswers).length > 3) {
+  // round — triage also enforces this, but defense-in-depth is cheap here.
+  if (thisRound > roundBudget) {
     const capState: PipelineRunState = {
       query: originalQuery,
       normalized_query: '',
@@ -610,7 +772,7 @@ export async function continueWithAnswer(
     return {
       decision: 'REFUSE',
       refusal: {
-        reason: 'Q-budget exhausted after 3 clarifying rounds',
+        reason: `Q-budget exhausted after ${roundBudget} clarifying rounds`,
         out_of_scope_class: 'function_only_no_substance',
         verifier_failures: [],
       },
@@ -618,9 +780,8 @@ export async function continueWithAnswer(
     };
   }
 
-  // Compute the remaining Q-budget AFTER consuming this answer (each answer uses
-  // one slot; budget starts at DEFAULT_Q_BUDGET = 3).
-  const q_budget = DEFAULT_Q_BUDGET - Object.keys(newPreviousAnswers).length;
+  // Remaining Q-budget AFTER consuming THIS round (rounds, not answer keys).
+  const q_budget = roundBudget - thisRound;
 
   // Delegate entirely to classify — no pipeline logic lives here.
   return classify(originalQuery, { previousAnswers: newPreviousAnswers, q_budget });

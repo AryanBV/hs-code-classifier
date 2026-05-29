@@ -58,6 +58,41 @@ export interface EvalReport {
     relevant_pct: number;
     average_score: number;
   };
+
+  /**
+   * End-to-end multi-turn ASK-recovery metrics. Present ONLY when the eval ran
+   * with `--simulate-answers` (additive — omitted entirely otherwise, so a
+   * baseline run's report is byte-for-byte unchanged). See answer-simulator.ts.
+   *
+   * `ask_recoverability_rate`: of cases the SYSTEM routed to ASK that carry a
+   *   gold code, the fraction that reach the correct 8-digit code after the gold
+   *   answer is fed back (multi-turn).
+   * `end_to_end_*_accuracy`: chapter/heading/8-digit accuracy counting BOTH
+   *   classify-direct-correct cases AND ask-then-correctly-answered cases over
+   *   the same denominator (all scored cases that carry a gold code).
+   */
+  end_to_end_metrics?: {
+    /** Cases the system ASKed that carry a gold code (the recovery denominator). */
+    ask_case_count: number;
+    /** Of those, how many reached the correct 8-digit code after the gold answer. */
+    ask_recovered_correct: number;
+    /** ask_recovered_correct / ask_case_count × 100 (0 when no ask cases). */
+    ask_recoverability_rate: number;
+    /** Average rounds attempted across the ASK-recovery cases. */
+    ask_recovery_avg_rounds: number;
+    /** ASK cases where no offered option matched the gold value (unanswerable). */
+    ask_unanswerable: number;
+    /** Direct classify cases (system CLASSIFY) with a correct 8-digit code. */
+    classify_direct_correct: number;
+    /** Total scored cases carrying a gold code (the end-to-end denominator). */
+    scored_with_gold: number;
+    /** Combined chapter accuracy: (direct-chapter-correct + ask-recovered-chapter-correct) / scored_with_gold × 100. */
+    end_to_end_chapter_accuracy: number;
+    end_to_end_heading_accuracy: number;
+    /** Combined 8-digit accuracy — the headline end-to-end number. */
+    end_to_end_code_accuracy: number;
+  };
+
   details: EvalDetail[];
 }
 
@@ -120,4 +155,36 @@ export interface EvalDetail {
    * almost killed" — a calibration signal for verifier strictness.
    */
   verifier_rejected_but_correct?: boolean;
+
+  /**
+   * Multi-turn ASK-recovery trace. Populated ONLY when the eval ran with
+   * `--simulate-answers` AND this case's system decision was ASK AND the case
+   * carries a gold code. Additive: absent entirely in a baseline run, so an
+   * existing detail object is byte-for-byte unchanged when the flag is off.
+   *
+   * The simulated answer is always the gold-true `tariff_line_attributes` value
+   * for the asked discriminating attribute — an HONEST measure of "if the user
+   * answers correctly, do we reach the right code?", not gaming.
+   */
+  ask_recovery_attempt?: {
+    initial_question_id: string;
+    rounds_attempted: number;
+    final_decision: 'CLASSIFY' | 'ASK' | 'REFUSE' | 'UNANSWERABLE';
+    final_code_if_classify?: string;
+    /** Final code matched the gold 8-digit code after multi-turn recovery. */
+    code_correct_after_recovery: boolean;
+    /** True iff the recovered chapter (first 2 digits) matched gold. */
+    chapter_correct_after_recovery: boolean;
+    /** True iff the recovered heading (first 4 digits) matched gold. */
+    heading_correct_after_recovery: boolean;
+    answer_matches: {
+      round: number;
+      question_id: string;
+      discriminating_attribute: string;
+      gold_attribute_value: string | null;
+      derived_answer_id: string | null;
+      answer_found: boolean;
+      system_decision_after: 'CLASSIFY' | 'ASK' | 'REFUSE' | 'UNANSWERABLE';
+    }[];
+  };
 }

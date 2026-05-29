@@ -23,6 +23,7 @@ import { generateContent } from '../lib/vertex-client';
 import { LlmOutputValidationError, TriageOutputZ, parseOrThrow } from '../schemas';
 import type {
   AttributeKey,
+  ChapterCode,
   ConstraintHint,
   OutOfScopeClass,
   TriageClarifyingQuestion,
@@ -434,6 +435,363 @@ function syntheticRefuse(
 }
 
 /* ---------------------------------------------------------------------------
+ * Completeness recalibration — terse-but-specific should CLASSIFY (Round 1)
+ *
+ * The 2026-05-29 baseline showed Triage OVER-ASKING on terse but unambiguous
+ * queries (e.g., "rubber oil seals for automobile engines", "galvanized steel
+ * sheet coils"). A query with a clear product head-noun PLUS ≥1 discriminator
+ * (material / form / intended_use) that the model itself routes to a SINGLE
+ * candidate chapter is sufficient to CLASSIFY — the ASK adds no information and
+ * cannot change the code.
+ *
+ * This guard is PRINCIPLED + GENERAL: it inspects the structured attribute
+ * bundle, never the query string, and never per-case strings. It is deliberately
+ * conservative — it upgrades ASK→CLASSIFY ONLY when there is no genuine
+ * chapter-level ambiguity (exactly one candidate chapter). A genuine
+ * competing-interpretation ASK (≥2 candidate chapters, e.g. rubber bushing
+ * Ch.40 vs Ch.87) is preserved. Junk/vague queries are preserved because they
+ * lack a real head-noun and/or a real discriminator.
+ * --------------------------------------------------------------------------- */
+
+/**
+ * Generic placeholder nouns that carry no classification signal on their own.
+ * A head-noun list consisting ONLY of these does not constitute a "real"
+ * product head-noun. Closed, product-agnostic set — not per-case strings.
+ */
+const GENERIC_PLACEHOLDER_NOUNS: ReadonlySet<string> = new Set<string>([
+  'unknown',
+  'part',
+  'parts',
+  'thing',
+  'things',
+  'item',
+  'items',
+  'product',
+  'products',
+  'good',
+  'goods',
+  'article',
+  'articles',
+  'material',
+  'materials',
+  'stuff',
+  'component',
+  'components',
+  'equipment',
+  'device',
+  'devices',
+  'object',
+  'unit',
+  'piece',
+]);
+
+/**
+ * Bare GENERIC material words. A material attribute (or head-noun) that is ONLY
+ * one of these carries no chapter-discriminating signal on its own: "metal part",
+ * "plastic component" can land in dozens of chapters. These must NOT by themselves
+ * enable the ASK→CLASSIFY upgrade.
+ *
+ * This is deliberately restricted to GENERIC material classes. SPECIFIC materials
+ * — 'stainless steel', 'aluminium', 'polyester', 'silicone', and even bare 'steel'
+ * — ARE discriminating and are intentionally absent so they continue to count as
+ * specific. Multi-word values (e.g. 'galvanized steel') are never matched here
+ * because the check is applied per single-word value only.
+ */
+const GENERIC_BARE_MATERIALS: ReadonlySet<string> = new Set<string>([
+  'metal',
+  'metallic',
+  'plastic',
+  'rubber',
+  'wood',
+  'glass',
+  'ceramic',
+  'fabric',
+  'paper',
+  'textile',
+  'synthetic',
+  'liquid',
+  'solid',
+  'powder',
+]);
+
+/**
+ * True when a single-word value is a bare generic placeholder noun OR a bare
+ * generic material. Either way it is NOT a specific discriminator / real
+ * head-noun on its own.
+ */
+function isBareNonSpecificWord(word: string): boolean {
+  return GENERIC_PLACEHOLDER_NOUNS.has(word) || GENERIC_BARE_MATERIALS.has(word);
+}
+
+/** True when `v` is a non-empty string that is not a bare generic placeholder. */
+function isSpecificValue(v: string | null): boolean {
+  if (v === null) return false;
+  const trimmed = v.trim().toLowerCase();
+  if (trimmed.length === 0) return false;
+  // A single-word value that is itself a generic placeholder OR a bare generic
+  // material is not specific ("metal", "plastic", "rubber" ALONE are weak; but
+  // multi-word values like "stainless steel" / "galvanized steel" — and specific
+  // single-word materials like "steel", "aluminium", "polyester" — ARE specific).
+  const words = trimmed.split(/\s+/);
+  if (words.length === 1 && words[0] !== undefined && isBareNonSpecificWord(words[0])) {
+    return false;
+  }
+  return true;
+}
+
+/** True when at least one head-noun is a real (non-placeholder) product noun. */
+function hasRealHeadNoun(headNouns: string[]): boolean {
+  return headNouns.some((n) => {
+    const t = n.trim().toLowerCase();
+    // A multi-word head-noun ("oil seals") is always real; a single-word
+    // head-noun must be neither a generic placeholder nor a bare generic
+    // material ("metal" / "plastic" alone is not a real product head-noun).
+    if (t.length === 0) return false;
+    if (/\s/.test(t)) return true;
+    return !isBareNonSpecificWord(t);
+  });
+}
+
+/**
+ * Decide whether a model-emitted ASK is over-cautious and should be upgraded to
+ * CLASSIFY. Returns true ONLY when:
+ *   - decision === 'ASK',
+ *   - exactly ONE candidate chapter (no genuine competing interpretation),
+ *   - the head-noun list contains a real product noun, AND
+ *   - at least one discriminator among {material, form, intended_use} is present
+ *     and specific (not a bare generic placeholder).
+ *
+ * Note: a bare generic material such as "metal" / "plastic" / "rubber" does NOT
+ * count as a discriminator on its own (those drive genuine ASKs like "metal
+ * part"), nor as a real head-noun on its own. See GENERIC_BARE_MATERIALS.
+ */
+function shouldUpgradeAskToClassify(output: TriageOutput): boolean {
+  if (output.decision !== 'ASK') return false;
+  if (output.candidate_chapters.length !== 1) return false;
+
+  const a = output.extracted_attributes;
+  if (!hasRealHeadNoun(a.head_nouns_for_fts)) return false;
+
+  const hasDiscriminator =
+    isSpecificValue(a.material) ||
+    isSpecificValue(a.form) ||
+    isSpecificValue(a.intended_use);
+
+  return hasDiscriminator;
+}
+
+/**
+ * Apply the terse-specific recalibration in place: when {@link shouldUpgradeAskToClassify}
+ * holds, return a CLASSIFY-shaped clone (clearing the ASK-only fields so the
+ * cross-field CLASSIFY invariants in isTriageOutput hold). Otherwise return the
+ * output unchanged.
+ */
+function recalibrateDecision(output: TriageOutput): TriageOutput {
+  if (!shouldUpgradeAskToClassify(output)) return output;
+  return {
+    ...output,
+    decision:            'CLASSIFY',
+    clarifying_question: null,
+    refusal_reason:      null,
+    out_of_scope_class:  null,
+    // Bump the completeness signal to satisfy the CLASSIFY ≥0.6 contract; the
+    // structural sufficiency check above is the real gate.
+    completeness_signal: Math.max(output.completeness_signal, 0.6),
+  };
+}
+
+/* ---------------------------------------------------------------------------
+ * Host-chapter surfacing for parts-of-vehicle / parts-of-machine queries
+ *
+ * GIR-2(a) + Section XVII / XVI Notes: a part that is solely or principally for
+ * a vehicle / aircraft / vessel / railway / machine is classified in the HOST
+ * chapter (e.g. "brake pads for trucks" → Ch.87, not the ceramic Ch.69), bounded
+ * by the Section's part-exclusion notes (which L3/L4 enforce per-leaf).
+ *
+ * The model frequently routes such queries to the MATERIAL chapter only (Ch.40
+ * rubber, Ch.68/69 ceramic, …). When the host chapter is absent from
+ * candidate_chapters, L2 hard-filters it out (cosine + FTS are scoped to
+ * candidate_chapters) so L4 never even sees the host-chapter leaves and cannot
+ * apply GIR-2(a). This pass restores the host chapter as a CANDIDATE — it does
+ * not decide classification; it only ensures L4 gets the choice. L3 exclusions +
+ * L4's Note-2 reasoning still decide whether the host chapter actually wins.
+ *
+ * Boundedness (no per-case / no flooding):
+ *   - Fires ONLY when BOTH a generic PART head-noun AND a HOST signal are
+ *     detected from the structured attribute bundle + normalized query.
+ *   - Material-only queries (no host token) are untouched.
+ *   - The host chapter is injected only if not already present, and the total is
+ *     capped at the schema max (3): if full, the lowest-priority existing
+ *     candidate is dropped to make room for the discriminating host chapter.
+ *   - Never injects a chapter in constraint_hint.exclude_chapters (respects the
+ *     single-shot backtrack contract).
+ * --------------------------------------------------------------------------- */
+
+/** Schema cap on candidate_chapters (triage-v2.md RESPONSE JSON SCHEMA maxItems). */
+const MAX_CANDIDATE_CHAPTERS = 3;
+
+/**
+ * Generic part / accessory nouns that, on their own, classify by their HOST
+ * (GIR-2(a)) rather than their material. Closed, product-agnostic set — these
+ * are the part-type words, NOT the host words. Specific articles with their own
+ * heading (e.g. "tyre", "battery", "filter", "pump") are intentionally absent —
+ * those are decided by L4 against their dedicated headings, and the function-over
+ * -material rules in chapter-rules.ts already carve them out at the legacy layer.
+ */
+const PART_HEAD_NOUNS: ReadonlySet<string> = new Set<string>([
+  'seal',
+  'gasket',
+  'bushing',
+  'bush',
+  'bearing',
+  'pad',
+  'lining',
+  'liner',
+  'gear',
+  'sprocket',
+  'hose',
+  'clip',
+  'clamp',
+  'bracket',
+  'mount',
+  'mounting',
+  'shield',
+  'cover',
+  'casing',
+  'housing',
+  'bumper',
+  'fender',
+  'mudguard',
+  'panel',
+  'muffler',
+  'silencer',
+  'manifold',
+  'piston',
+  'ring',
+  'rod',
+  'shaft',
+  'axle',
+  'pin',
+  'spring',
+  'damper',
+  'shock',
+  'absorber',
+  'coupling',
+  'joint',
+  'bellow',
+  'diaphragm',
+  'grommet',
+]);
+
+/**
+ * Host-keyword → host-chapter map. A host keyword in the normalized query or
+ * intended_use upgrades the part to its host chapter (Section XVII / XVI hosts):
+ *   - 87 motor vehicles (cars, trucks, buses, motorcycles, tractors)
+ *   - 86 railway / tramway rolling stock
+ *   - 88 aircraft / spacecraft
+ *   - 89 ships / boats / vessels
+ *   - 84 machinery (engines, pumps, compressors, machines) — Section XVI
+ * Listed longest-first so multi-word hosts ("motor vehicle") match before bare
+ * tokens. Each entry is a word-boundary regex source fragment.
+ */
+const HOST_KEYWORD_TO_CHAPTER: ReadonlyArray<readonly [RegExp, ChapterCode]> = [
+  // Railway / tramway → 86
+  [/\b(railway|railroad|tramway|locomotive|train|wagon)s?\b/, '86'],
+  // Aircraft / spacecraft → 88
+  [/\b(aircraft|airplane|aeroplane|helicopter|drone|spacecraft|aviation)s?\b/, '88'],
+  // Ships / vessels → 89
+  [/\b(ship|boat|vessel|yacht|tanker|barge)s?\b/, '89'],
+  // Motor vehicles → 87
+  [/\b(motor[\s-]?vehicle|automobile|automotive|car|cars|truck|lorry|lorries|bus|buses|van|motorcycle|motorbike|scooter|tractor|trailer)s?\b/, '87'],
+  // General machinery (Section XVI) → 84. "engine" lives here: an engine is a
+  // Ch.84 machine and its parts go to 84 unless a vehicle host also appears
+  // (the vehicle regex above is checked first and wins via first-match).
+  [/\b(machine|machinery|engine|motor|pump|compressor|turbine|generator|gearbox)s?\b/, '84'],
+];
+
+/**
+ * Detect the host chapter for a parts-of-X query, or null when no host signal.
+ * Scans intended_use first (most explicit), then the normalized query. Returns
+ * the FIRST matching host chapter (priority order in HOST_KEYWORD_TO_CHAPTER:
+ * specific transport hosts before general machinery).
+ */
+function detectHostChapter(
+  normalizedQuery: string,
+  intendedUse: string | null,
+): ChapterCode | null {
+  const haystack = `${intendedUse ?? ''} ${normalizedQuery}`.toLowerCase();
+  for (const [re, chapter] of HOST_KEYWORD_TO_CHAPTER) {
+    if (re.test(haystack)) return chapter;
+  }
+  return null;
+}
+
+/**
+ * True when a single word is a generic PART noun, matching simple plurals too
+ * ("seals" → "seal", "bushes"/"boxes" → strip "es", "lorries" → "lorry").
+ * Part nouns are stored singular; head-nouns arrive in either number.
+ */
+function isPartWord(word: string): boolean {
+  if (PART_HEAD_NOUNS.has(word)) return true;
+  // -ies → -y (unlikely for parts but cheap + safe)
+  if (word.endsWith('ies') && PART_HEAD_NOUNS.has(`${word.slice(0, -3)}y`)) return true;
+  // -es → strip ("boxes"→"box", "bushes"→"bush")
+  if (word.endsWith('es') && PART_HEAD_NOUNS.has(word.slice(0, -2))) return true;
+  // -s → strip ("seals"→"seal", "pads"→"pad")
+  if (word.endsWith('s') && PART_HEAD_NOUNS.has(word.slice(0, -1))) return true;
+  return false;
+}
+
+/** True when at least one head-noun is a generic PART head-noun. */
+function hasPartHeadNoun(headNouns: string[]): boolean {
+  return headNouns.some((n) => {
+    const t = n.trim().toLowerCase();
+    if (t.length === 0) return false;
+    // Match any whitespace-separated word against the part-noun set so a
+    // multi-word head-noun like "oil seal" or "brake pads" still triggers.
+    return t.split(/\s+/).some((w) => isPartWord(w));
+  });
+}
+
+/**
+ * When a CLASSIFY output describes a part of a host (PART head-noun + HOST
+ * signal) whose host chapter is not yet a candidate, inject the host chapter so
+ * L2 surfaces its leaves and L4 can weigh GIR-2(a). Bounded + cap-respecting;
+ * see the section header. No-op for any non-CLASSIFY decision, any query with no
+ * part-noun, and any query with no host signal.
+ */
+function surfaceHostChapter(
+  output: TriageOutput,
+  normalizedQuery: string,
+  hint: ConstraintHint | null,
+): TriageOutput {
+  if (output.decision !== 'CLASSIFY') return output;
+
+  const attrs = output.extracted_attributes;
+  if (!hasPartHeadNoun(attrs.head_nouns_for_fts)) return output;
+
+  const host = detectHostChapter(normalizedQuery, attrs.intended_use);
+  if (host === null) return output;
+
+  // Already present → nothing to do.
+  if (output.candidate_chapters.includes(host)) return output;
+
+  // Never re-introduce a backtrack-excluded chapter (single-shot contract).
+  if (hint !== null && hint.exclude_chapters.includes(host)) return output;
+
+  // Inject the host chapter, capped at the schema max. When the list is already
+  // full, drop the LAST (lowest-priority) existing candidate to make room — the
+  // host chapter is the discriminating signal L4 needs, and L1 emits
+  // candidate_chapters most-likely-first.
+  const next =
+    output.candidate_chapters.length < MAX_CANDIDATE_CHAPTERS
+      ? [...output.candidate_chapters, host]
+      : [...output.candidate_chapters.slice(0, MAX_CANDIDATE_CHAPTERS - 1), host];
+
+  return { ...output, candidate_chapters: next };
+}
+
+/* ---------------------------------------------------------------------------
  * Constraint-hint violation check
  * --------------------------------------------------------------------------- */
 
@@ -567,6 +925,33 @@ export async function triage(input: TriageInput): Promise<TriageOutput> {
     }
   }
 
+  // ----- Terse-specific recalibration (Round 1) -----
+  // Upgrade an over-cautious ASK → CLASSIFY when the query is terse but
+  // unambiguous (real head-noun + ≥1 discriminator, single candidate chapter).
+  // Runs AFTER the Q-budget override (so a q_budget=0 ASK stays REFUSE) and
+  // AFTER constraint-hint enforcement (so backtrack constraints are honored).
+  const recalibrated = recalibrateDecision(parsed);
+  if (recalibrated.decision !== parsed.decision) {
+    // eslint-disable-next-line no-console
+    console.log('[L1] Terse-specific recalibration: ASK → CLASSIFY.');
+  }
+  parsed = recalibrated;
+
+  // ----- Host-chapter surfacing (parts-of-vehicle / parts-of-machine) -----
+  // Runs LAST so it sees the final CLASSIFY candidate set (post Q-budget,
+  // constraint-hint, and recalibration). Injects the GIR-2(a) host chapter
+  // (87/86/88/89/84) when a part head-noun + host signal co-occur, so L2 can
+  // surface host-chapter leaves and L4 can weigh GIR-2(a). Respects the
+  // candidate cap and never re-introduces a backtrack-excluded chapter.
+  const beforeHost: TriageOutput = parsed;
+  const withHost = surfaceHostChapter(beforeHost, input.normalized_query, input.constraint_hint);
+  if (withHost !== beforeHost) {
+    // surfaceHostChapter only returns a NEW object when it injected a host chapter.
+    // eslint-disable-next-line no-console
+    console.log(`[L1] Host-chapter surfacing: candidate_chapters → ${JSON.stringify(withHost.candidate_chapters)}`);
+  }
+  parsed = withHost;
+
   // eslint-disable-next-line no-console
   console.log(`[L1] Triage decision=${parsed.decision} attempts=${attempts}`);
   return parsed;
@@ -581,4 +966,9 @@ export const _internal = {
   renderTemplate,
   tryParseTriageJSON,
   isTriageOutput,
+  shouldUpgradeAskToClassify,
+  recalibrateDecision,
+  detectHostChapter,
+  hasPartHeadNoun,
+  surfaceHostChapter,
 };

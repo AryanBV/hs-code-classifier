@@ -425,3 +425,505 @@ describe('L1 triage — constraint_hint enforcement', () => {
     expect(generateContentMock).toHaveBeenCalledTimes(1);
   });
 });
+
+/* ---------------------------------------------------------------------------
+ * Completeness recalibration — terse-but-specific should CLASSIFY (Round 1)
+ * --------------------------------------------------------------------------- */
+
+/**
+ * Build an ASK output whose attributes carry a clear head-noun + the named
+ * discriminators, routed to a SINGLE candidate chapter (no genuine competition).
+ * This is the over-ask shape the recalibration must upgrade to CLASSIFY.
+ */
+function terseSpecificAsk(opts: {
+  head_nouns: string[];
+  material?: string | null;
+  form?: string | null;
+  intended_use?: string | null;
+  candidate_chapters?: string[];
+  completeness?: number;
+}): TriageOutput {
+  const attrs: TriageExtractedAttributes = {
+    ...emptyAttrs(),
+    material:             opts.material ?? null,
+    material_confidence:  opts.material != null ? 0.9 : null,
+    form:                 opts.form ?? null,
+    form_confidence:      opts.form != null ? 0.9 : null,
+    intended_use:         opts.intended_use ?? null,
+    intended_use_confidence: opts.intended_use != null ? 0.9 : null,
+    head_nouns_for_fts:   opts.head_nouns,
+    raw_tokens:           [],
+  };
+  return {
+    decision:             'ASK',
+    extracted_attributes: attrs,
+    candidate_chapters:   opts.candidate_chapters ?? ['40'],
+    completeness_signal:  opts.completeness ?? 0.55,
+    clarifying_question:  {
+      discriminating_attribute: 'composition',
+      fallback_question_text:   'Any further detail on the construction?',
+      fallback_options: [
+        { id: 'opt_a',  label: 'Option A' },
+        { id: 'opt_b',  label: 'Option B' },
+        { id: 'unsure', label: "I'm not sure" },
+      ],
+    },
+    refusal_reason:       null,
+    out_of_scope_class:   null,
+  };
+}
+
+describe('L1 triage — terse-specific completeness recalibration (ASK→CLASSIFY)', () => {
+  it('upgrades ASK→CLASSIFY for "rubber oil seals for automobile engines" (head-noun + material + use, single chapter)', async () => {
+    queueResponses(JSON.stringify(terseSpecificAsk({
+      head_nouns:   ['seal', 'rubber', 'oil'],
+      material:     'rubber',
+      intended_use: 'automobile engines',
+      candidate_chapters: ['40'],
+    })));
+    const result = await triage(input({ normalized_query: 'rubber oil seals for automobile engines' }));
+    expect(result.decision).toBe('CLASSIFY');
+    expect(result.clarifying_question).toBeNull();
+    // Recalibration keeps the material chapter (40); host-chapter surfacing then
+    // adds the GIR-2(a) vehicle host (87) because this is a part-of-vehicle query
+    // ("oil seals" + "automobile engines"). Both must reach L2 so L4 can choose.
+    expect(result.candidate_chapters).toContain('40');
+    expect(result.candidate_chapters).toContain('87');
+  });
+
+  it('STILL upgrades "rubber oil seals" with a multi-word head-noun + bare material + use (positive guard for FIX 1)', async () => {
+    // Adversarial-review FIX 1 positive guard: even though material='rubber' is
+    // now a bare generic material, a real product FORM/head-noun ("oil seals")
+    // plus a specific intended_use must STILL upgrade. The bare material being
+    // demoted must NOT break legitimately-specific terse queries.
+    queueResponses(JSON.stringify(terseSpecificAsk({
+      head_nouns:   ['oil seals', 'seals'],
+      material:     'rubber',
+      intended_use: 'automobile engines',
+      candidate_chapters: ['40'],
+    })));
+    const result = await triage(input({ normalized_query: 'rubber oil seals for automobile engines' }));
+    expect(result.decision).toBe('CLASSIFY');
+    expect(result.clarifying_question).toBeNull();
+    // As above: recalibration upgrades to CLASSIFY, then host surfacing adds 87.
+    expect(result.candidate_chapters).toContain('40');
+    expect(result.candidate_chapters).toContain('87');
+  });
+
+  it('upgrades ASK→CLASSIFY for "woven dress shirt formal men" (head-noun + form, single chapter)', async () => {
+    queueResponses(JSON.stringify(terseSpecificAsk({
+      head_nouns: ['shirt', 'dress'],
+      form:       'woven shirt',
+      candidate_chapters: ['62'],
+    })));
+    const result = await triage(input({ normalized_query: 'woven dress shirt formal men' }));
+    expect(result.decision).toBe('CLASSIFY');
+    expect(result.candidate_chapters).toEqual(['62']);
+  });
+
+  it('upgrades ASK→CLASSIFY for "galvanized steel sheet coils" (head-noun + material + form)', async () => {
+    queueResponses(JSON.stringify(terseSpecificAsk({
+      head_nouns: ['coil', 'sheet', 'steel'],
+      material:   'galvanized steel',
+      form:       'sheet coil',
+      candidate_chapters: ['72'],
+    })));
+    const result = await triage(input({ normalized_query: 'galvanized steel sheet coils' }));
+    expect(result.decision).toBe('CLASSIFY');
+  });
+
+  it('upgrades ASK→CLASSIFY for "muslin of carded yarn" (head-noun + processing-state form discriminator)', async () => {
+    const out = terseSpecificAsk({
+      head_nouns: ['muslin', 'fabric'],
+      form:       'woven fabric',
+      candidate_chapters: ['52'],
+    });
+    queueResponses(JSON.stringify(out));
+    const result = await triage(input({ normalized_query: 'muslin of carded yarn' }));
+    expect(result.decision).toBe('CLASSIFY');
+  });
+
+  it('does NOT upgrade when the ASK names ≥2 competing candidate chapters (genuine ambiguity)', async () => {
+    // rubber bushing 40 vs 87 — head-noun + material present, but TWO chapter
+    // families compete and composition is the missing discriminator. Keep ASK.
+    queueResponses(JSON.stringify(terseSpecificAsk({
+      head_nouns: ['bushing', 'rubber'],
+      material:   'rubber',
+      candidate_chapters: ['40', '87'],
+    })));
+    const result = await triage(input({ normalized_query: 'rubber suspension bushings for trucks' }));
+    expect(result.decision).toBe('ASK');
+  });
+
+  it('does NOT upgrade a genuinely-vague query ("metal part" — head-noun but no discriminator)', async () => {
+    queueResponses(JSON.stringify(terseSpecificAsk({
+      head_nouns: ['part'],
+      material:   'metal',          // material is generic; treated as discriminator-absent below
+      candidate_chapters: ['73'],
+      completeness: 0.3,
+    })));
+    // For "metal part"/"plastic thing" the model is expected to keep ASK; our
+    // guard must not force these through. We assert ASK is preserved when the
+    // ONLY signal is a generic material with no form/use and a generic head-noun.
+    const result = await triage(input({ normalized_query: 'metal part' }));
+    expect(result.decision).toBe('ASK');
+  });
+
+  it('does NOT upgrade "metal part" even when the bare material appears in head_nouns', async () => {
+    // Adversarial-review FIX 1: the model emits head_nouns=['metal','part'] and
+    // material='metal' with a single candidate chapter. Neither the bare-material
+    // head-noun nor the bare-material attribute may enable the upgrade — wrong-code
+    // risk on a genuinely vague input.
+    queueResponses(JSON.stringify(terseSpecificAsk({
+      head_nouns: ['metal', 'part'],
+      material:   'metal',
+      candidate_chapters: ['73'],
+      completeness: 0.3,
+    })));
+    const result = await triage(input({ normalized_query: 'metal part' }));
+    expect(result.decision).toBe('ASK');
+  });
+
+  it('does NOT upgrade "plastic component" (bare material head-noun + bare material attribute, single chapter)', async () => {
+    queueResponses(JSON.stringify(terseSpecificAsk({
+      head_nouns: ['plastic', 'component'],
+      material:   'plastic',
+      candidate_chapters: ['39'],
+      completeness: 0.3,
+    })));
+    const result = await triage(input({ normalized_query: 'plastic component' }));
+    expect(result.decision).toBe('ASK');
+  });
+
+  it('does NOT upgrade when head_nouns is the synthetic ["unknown"] placeholder', async () => {
+    queueResponses(JSON.stringify(terseSpecificAsk({
+      head_nouns: ['unknown'],
+      material:   'steel',
+      candidate_chapters: ['73'],
+    })));
+    const result = await triage(input({ normalized_query: 'thing' }));
+    expect(result.decision).toBe('ASK');
+  });
+
+  it('does NOT upgrade when the ASK has zero candidate chapters', async () => {
+    queueResponses(JSON.stringify(terseSpecificAsk({
+      head_nouns: ['widget'],
+      form:       'gadget',
+      candidate_chapters: [],
+    })));
+    const result = await triage(input({ normalized_query: 'a widget gadget' }));
+    expect(result.decision).toBe('ASK');
+  });
+
+  it('leaves a genuine REFUSE (junk) untouched', async () => {
+    queueResponses(JSON.stringify(refuseOutput('incoherent_query')));
+    const result = await triage(input({ normalized_query: 'asdfghjkl' }));
+    expect(result.decision).toBe('REFUSE');
+    expect(result.out_of_scope_class).toBe('incoherent_query');
+  });
+
+  it('leaves a clean CLASSIFY untouched (no spurious mutation)', async () => {
+    const out = classifyOutput();
+    queueResponses(JSON.stringify(out));
+    const result = await triage(input());
+    expect(result.decision).toBe('CLASSIFY');
+    expect(result).toEqual(out);
+  });
+
+  it('does not fire the ASK→CLASSIFY upgrade when q_budget_remaining=0 (already overridden to REFUSE)', async () => {
+    // q_budget=0 with ASK becomes REFUSE BEFORE any upgrade — guard must not
+    // resurrect it into a CLASSIFY.
+    queueResponses(JSON.stringify(terseSpecificAsk({
+      head_nouns: ['seal', 'rubber'],
+      material:   'rubber',
+      candidate_chapters: ['40'],
+    })));
+    const result = await triage(input({ q_budget_remaining: 0 }));
+    expect(result.decision).toBe('REFUSE');
+  });
+});
+
+/* ---------------------------------------------------------------------------
+ * Host-chapter surfacing — parts-of-vehicle / parts-of-machine (GIR-2(a))
+ * --------------------------------------------------------------------------- */
+
+/**
+ * Build a CLASSIFY output with the given part head-nouns / intended_use /
+ * candidate chapters — the shape the host-surfacing pass operates on.
+ */
+function partClassify(opts: {
+  head_nouns: string[];
+  material?: string | null;
+  intended_use?: string | null;
+  candidate_chapters: string[];
+}): TriageOutput {
+  return {
+    decision:             'CLASSIFY',
+    extracted_attributes: {
+      ...emptyAttrs(),
+      material:                 opts.material ?? null,
+      material_confidence:      opts.material != null ? 0.9 : null,
+      intended_use:             opts.intended_use ?? null,
+      intended_use_confidence:  opts.intended_use != null ? 0.9 : null,
+      head_nouns_for_fts:       opts.head_nouns,
+      raw_tokens:               [],
+    },
+    candidate_chapters:   opts.candidate_chapters,
+    completeness_signal:  0.8,
+    clarifying_question:  null,
+    refusal_reason:       null,
+    out_of_scope_class:   null,
+  };
+}
+
+describe('L1 triage — host-chapter surfacing (parts-of-vehicle / machine)', () => {
+  it('injects Ch.87 for "ceramic brake pads for heavy trucks" (part + vehicle host)', async () => {
+    queueResponses(JSON.stringify(partClassify({
+      head_nouns:         ['brake pad', 'pad'],
+      material:           'ceramic',
+      intended_use:       'heavy trucks',
+      candidate_chapters: ['69'],
+    })));
+    const result = await triage(input({ normalized_query: 'ceramic brake pads for heavy trucks' }));
+    expect(result.decision).toBe('CLASSIFY');
+    expect(result.candidate_chapters).toContain('69');
+    expect(result.candidate_chapters).toContain('87');
+  });
+
+  it('injects Ch.87 for "rubber oil seals for automobile engines" (part + vehicle host; engine alone would be 84 but automobile wins)', async () => {
+    queueResponses(JSON.stringify(partClassify({
+      head_nouns:         ['oil seal', 'seal'],
+      material:           'rubber',
+      intended_use:       'automobile engines',
+      candidate_chapters: ['40'],
+    })));
+    const result = await triage(input({ normalized_query: 'rubber oil seals for automobile engines' }));
+    expect(result.candidate_chapters).toContain('40');
+    expect(result.candidate_chapters).toContain('87');
+  });
+
+  it('injects Ch.84 for "rubber oil seals for engines" (part + machinery host only)', async () => {
+    queueResponses(JSON.stringify(partClassify({
+      head_nouns:         ['oil seal', 'seal'],
+      material:           'rubber',
+      intended_use:       'engines',
+      candidate_chapters: ['40'],
+    })));
+    const result = await triage(input({ normalized_query: 'rubber oil seals for engines' }));
+    expect(result.candidate_chapters).toContain('40');
+    expect(result.candidate_chapters).toContain('84');
+    expect(result.candidate_chapters).not.toContain('87');
+  });
+
+  it('injects Ch.86 for railway parts and Ch.88 for aircraft parts', async () => {
+    queueResponses(JSON.stringify(partClassify({
+      head_nouns:         ['bearing'],
+      candidate_chapters: ['84'],
+      intended_use:       'locomotive',
+    })));
+    const railway = await triage(input({ normalized_query: 'bearing for locomotive' }));
+    expect(railway.candidate_chapters).toContain('86');
+
+    queueResponses(JSON.stringify(partClassify({
+      head_nouns:         ['bracket'],
+      candidate_chapters: ['76'],
+      intended_use:       'aircraft fuselage',
+    })));
+    const aircraft = await triage(input({ normalized_query: 'aluminium bracket for aircraft' }));
+    expect(aircraft.candidate_chapters).toContain('88');
+  });
+
+  it('does NOT inject when there is no host signal ("ceramic brake pads")', async () => {
+    queueResponses(JSON.stringify(partClassify({
+      head_nouns:         ['brake pad', 'pad'],
+      material:           'ceramic',
+      candidate_chapters: ['69'],
+    })));
+    const result = await triage(input({ normalized_query: 'ceramic brake pads' }));
+    expect(result.candidate_chapters).toEqual(['69']);
+  });
+
+  it('does NOT inject for a non-part material query that names a host ("ceramic tiles for cars")', async () => {
+    // "tile" is not a PART head-noun; the host token must not flood ceramic
+    // tiles into Ch.87.
+    queueResponses(JSON.stringify(partClassify({
+      head_nouns:         ['tile'],
+      material:           'ceramic',
+      intended_use:       'cars',
+      candidate_chapters: ['69'],
+    })));
+    const result = await triage(input({ normalized_query: 'ceramic tiles for cars' }));
+    expect(result.candidate_chapters).toEqual(['69']);
+  });
+
+  it('does NOT duplicate when the host chapter is already a candidate', async () => {
+    queueResponses(JSON.stringify(partClassify({
+      head_nouns:         ['brake pad'],
+      intended_use:       'trucks',
+      candidate_chapters: ['68', '87'],
+    })));
+    const result = await triage(input({ normalized_query: 'brake pads for trucks' }));
+    expect(result.candidate_chapters).toEqual(['68', '87']);
+  });
+
+  it('caps at 3 by dropping the lowest-priority candidate to make room for the host', async () => {
+    queueResponses(JSON.stringify(partClassify({
+      head_nouns:         ['gasket'],
+      intended_use:       'trucks',
+      candidate_chapters: ['40', '68', '84'],
+    })));
+    const result = await triage(input({ normalized_query: 'gasket for trucks' }));
+    expect(result.candidate_chapters).toHaveLength(3);
+    expect(result.candidate_chapters).toContain('87');
+    // Last (lowest-priority) original chapter dropped; first two kept.
+    expect(result.candidate_chapters).toEqual(['40', '68', '87']);
+  });
+
+  it('does NOT re-introduce a backtrack-excluded host chapter', async () => {
+    const hint: ConstraintHint = {
+      exclude_chapters:    ['87'],
+      prefer_chapters:     ['40'],
+      reason:              'Ch.87 excluded by backtrack',
+      source_exclusion_id: 99,
+    };
+    queueResponses(JSON.stringify(partClassify({
+      head_nouns:         ['seal'],
+      intended_use:       'trucks',
+      candidate_chapters: ['40'],
+    })));
+    const result = await triage(input({
+      normalized_query: 'seal for trucks',
+      constraint_hint:  hint,
+    }));
+    expect(result.candidate_chapters).toEqual(['40']);
+    expect(result.candidate_chapters).not.toContain('87');
+  });
+
+  it('does NOT touch an ASK or REFUSE decision', async () => {
+    queueResponses(JSON.stringify(askOutput(['40', '87'])));
+    const ask = await triage(input({ normalized_query: 'rubber bushing for trucks' }));
+    expect(ask.decision).toBe('ASK');
+    expect(ask.candidate_chapters).toEqual(['40', '87']);
+
+    queueResponses(JSON.stringify(refuseOutput('incoherent_query')));
+    const refuse = await triage(input({ normalized_query: 'asdf for trucks' }));
+    expect(refuse.decision).toBe('REFUSE');
+    expect(refuse.candidate_chapters).toEqual([]);
+  });
+
+  it('surfaces the host chapter even for a recalibrated ASK→CLASSIFY (part + host, single chapter)', async () => {
+    // terseSpecificAsk → ASK upgraded to CLASSIFY by recalibration, THEN host
+    // surfacing must still run on the resulting CLASSIFY.
+    queueResponses(JSON.stringify(terseSpecificAsk({
+      head_nouns:   ['gasket'],
+      material:     'graphite',
+      intended_use: 'trucks',
+      candidate_chapters: ['68'],
+    })));
+    const result = await triage(input({ normalized_query: 'graphite gasket for trucks' }));
+    expect(result.decision).toBe('CLASSIFY');
+    expect(result.candidate_chapters).toContain('68');
+    expect(result.candidate_chapters).toContain('87');
+  });
+});
+
+describe('L1 triage — host-chapter detection (unit)', () => {
+  it('detectHostChapter maps vehicle / railway / aircraft / vessel / machinery tokens', () => {
+    expect(_internal.detectHostChapter('brake pads for trucks', null)).toBe('87');
+    expect(_internal.detectHostChapter('parts', 'motor vehicle')).toBe('87');
+    expect(_internal.detectHostChapter('coupling for locomotive', null)).toBe('86');
+    expect(_internal.detectHostChapter('bracket for aircraft', null)).toBe('88');
+    expect(_internal.detectHostChapter('seal for ship', null)).toBe('89');
+    expect(_internal.detectHostChapter('seal for pump', null)).toBe('84');
+    expect(_internal.detectHostChapter('engine seal', null)).toBe('84');
+  });
+
+  it('detectHostChapter prefers a vehicle host over a bare machinery host', () => {
+    // "automobile engines": both 'automobile' (87) and 'engine' (84) appear;
+    // the vehicle host is checked first and wins.
+    expect(_internal.detectHostChapter('seals for automobile engines', null)).toBe('87');
+  });
+
+  it('detectHostChapter returns null when no host token present', () => {
+    expect(_internal.detectHostChapter('ceramic tiles', null)).toBeNull();
+    expect(_internal.detectHostChapter('cotton t-shirt', 'retail')).toBeNull();
+  });
+
+  it('hasPartHeadNoun matches single- and multi-word part nouns + plurals, rejects non-parts', () => {
+    expect(_internal.hasPartHeadNoun(['seal'])).toBe(true);
+    expect(_internal.hasPartHeadNoun(['oil seal'])).toBe(true);
+    expect(_internal.hasPartHeadNoun(['brake pad', 'pad'])).toBe(true);
+    // Plurals must match (head-nouns arrive in either number).
+    expect(_internal.hasPartHeadNoun(['seals'])).toBe(true);
+    expect(_internal.hasPartHeadNoun(['oil seals'])).toBe(true);
+    expect(_internal.hasPartHeadNoun(['gaskets'])).toBe(true);
+    expect(_internal.hasPartHeadNoun(['bushes'])).toBe(true);
+    expect(_internal.hasPartHeadNoun(['tile'])).toBe(false);
+    expect(_internal.hasPartHeadNoun(['tiles'])).toBe(false);
+    expect(_internal.hasPartHeadNoun(['t-shirt'])).toBe(false);
+    expect(_internal.hasPartHeadNoun(['unknown'])).toBe(false);
+  });
+
+  it('surfaceHostChapter is a no-op on a clean non-part CLASSIFY', () => {
+    const out = classifyOutput();
+    expect(_internal.surfaceHostChapter(out, 'cotton t-shirt', null)).toEqual(out);
+  });
+});
+
+describe('L1 triage — completenessSufficient guard (unit)', () => {
+  it('returns true for head-noun + specific material', () => {
+    // FIX 1: a bare generic material ('rubber') no longer counts as a
+    // discriminator on its own; a SPECIFIC material ('steel') still does.
+    const out = terseSpecificAsk({ head_nouns: ['seal'], material: 'steel', candidate_chapters: ['73'] });
+    expect(_internal.shouldUpgradeAskToClassify(out)).toBe(true);
+  });
+  it('returns true for head-noun + form', () => {
+    const out = terseSpecificAsk({ head_nouns: ['shirt'], form: 'woven shirt', candidate_chapters: ['62'] });
+    expect(_internal.shouldUpgradeAskToClassify(out)).toBe(true);
+  });
+  it('returns true for head-noun + intended_use', () => {
+    const out = terseSpecificAsk({ head_nouns: ['filter'], intended_use: 'for trucks', candidate_chapters: ['84'] });
+    expect(_internal.shouldUpgradeAskToClassify(out)).toBe(true);
+  });
+  it('returns false when ≥2 candidate chapters compete', () => {
+    const out = terseSpecificAsk({ head_nouns: ['bushing'], material: 'rubber', candidate_chapters: ['40', '87'] });
+    expect(_internal.shouldUpgradeAskToClassify(out)).toBe(false);
+  });
+  it('returns false when no discriminator present', () => {
+    const out = terseSpecificAsk({ head_nouns: ['part'], candidate_chapters: ['73'] });
+    expect(_internal.shouldUpgradeAskToClassify(out)).toBe(false);
+  });
+  it('returns false for head_nouns ["metal","part"] + material "metal" + single chapter (FIX 1)', () => {
+    const out = terseSpecificAsk({ head_nouns: ['metal', 'part'], material: 'metal', candidate_chapters: ['73'] });
+    expect(_internal.shouldUpgradeAskToClassify(out)).toBe(false);
+  });
+  it('returns false for head_nouns ["plastic","component"] + material "plastic" + single chapter (FIX 1)', () => {
+    const out = terseSpecificAsk({ head_nouns: ['plastic', 'component'], material: 'plastic', candidate_chapters: ['39'] });
+    expect(_internal.shouldUpgradeAskToClassify(out)).toBe(false);
+  });
+  it('returns true for a multi-word head-noun + bare material + intended_use (FIX 1 positive guard)', () => {
+    const out = terseSpecificAsk({
+      head_nouns:   ['oil seals', 'seals'],
+      material:     'rubber',
+      intended_use: 'automobile engines',
+      candidate_chapters: ['40'],
+    });
+    expect(_internal.shouldUpgradeAskToClassify(out)).toBe(true);
+  });
+  it('returns false when material is a bare generic material ("rubber") and head-noun is bare too', () => {
+    const out = terseSpecificAsk({ head_nouns: ['rubber'], material: 'rubber', candidate_chapters: ['40'] });
+    expect(_internal.shouldUpgradeAskToClassify(out)).toBe(false);
+  });
+  it('returns true for a specific single-word material ("steel") with a real head-noun', () => {
+    // 'steel' is SPECIFIC (not in GENERIC_BARE_MATERIALS), so it still discriminates.
+    const out = terseSpecificAsk({ head_nouns: ['bolt'], material: 'steel', candidate_chapters: ['73'] });
+    expect(_internal.shouldUpgradeAskToClassify(out)).toBe(true);
+  });
+  it('returns false for the synthetic ["unknown"] head-noun', () => {
+    const out = terseSpecificAsk({ head_nouns: ['unknown'], material: 'steel', candidate_chapters: ['73'] });
+    expect(_internal.shouldUpgradeAskToClassify(out)).toBe(false);
+  });
+  it('returns false for a CLASSIFY input (only applies to ASK)', () => {
+    expect(_internal.shouldUpgradeAskToClassify(classifyOutput())).toBe(false);
+  });
+});

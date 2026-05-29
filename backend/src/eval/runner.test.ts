@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type { ClassifyResult } from '../classifier-v2/types';
 import type { EvalClassifyResult } from './v2-adapter';
 import type { EvalTestCase } from './types';
+import type { AnswerRecoveryResult } from './answer-simulator';
 
 // Mock the adapter so runTestCase exercises our diagnostics/error policy in
 // isolation, with NO live classifier call. isSystemError is re-implemented
@@ -12,9 +13,17 @@ vi.mock('./v2-adapter', () => ({
   isSystemError: (r: ClassifyResult) => r.system_error !== undefined,
 }));
 
+// Mock the answer-simulator so the runner's --simulate-answers branch is tested
+// in isolation, with NO live DB / continueWithAnswer call.
+const runAnswerSimulation = vi.fn<[string, ClassifyResult, string], Promise<AnswerRecoveryResult>>();
+vi.mock('./answer-simulator', () => ({
+  runAnswerSimulation: (q: string, ask: ClassifyResult, code: string) =>
+    runAnswerSimulation(q, ask, code),
+}));
+
 // Imported AFTER vi.mock so the mock is wired. require.main !== module under
 // vitest, so importing runner does NOT kick off a live eval.
-import { runTestCase, extractDiagnostics } from './runner';
+import { runTestCase, extractDiagnostics, buildReportForTest } from './runner';
 
 const diag = (over: Partial<ClassifyResult['diagnostics']> = {}): ClassifyResult['diagnostics'] => ({
   escalation_path: ['L0', 'L1', 'L2', 'L3', 'L4', 'L5'],
@@ -41,6 +50,7 @@ const tc = (over: Partial<EvalTestCase> = {}): EvalTestCase => ({
 
 beforeEach(() => {
   classifyForEval.mockReset();
+  runAnswerSimulation.mockReset();
 });
 
 describe('extractDiagnostics (pure)', () => {
@@ -147,5 +157,152 @@ describe('runTestCase — genuine model REFUSE is a scored reject (not an error)
     expect(d.is_error).toBeUndefined();      // scored, NOT an error
     expect(d.actual_routing).toBe('reject');
     expect(d.routing_correct).toBe(true);    // gold expected reject → correct
+  });
+});
+
+// ---------------------------------------------------------------------------
+// --simulate-answers: OFF = byte-for-byte unchanged; ON = ASK recovery attached
+// ---------------------------------------------------------------------------
+
+const askRaw = (): ClassifyResult =>
+  classifyResult({
+    decision: 'ASK',
+    question: {
+      question_id: 'ask_form',
+      question_text: 'What form is the steel in?',
+      discriminating_attribute: 'form',
+      options: [{ id: 'bolt', label: 'Bolt' }, { id: 'sheet', label: 'Sheet' }],
+    },
+  });
+
+describe('runTestCase — simulateAnswers OFF (default): existing behavior preserved', () => {
+  it('an ASK on a gold-classify case stays a routing miss with NO recovery field', async () => {
+    classifyForEval.mockResolvedValue({
+      legacy: { responseType: 'question', question: 'What form is the steel in?', options: [{ id: 'bolt', label: 'Bolt' }, { id: 'sheet', label: 'Sheet' }] } as any,
+      raw: askRaw(),
+    });
+
+    const d = await runTestCase(tc()); // expected_routing 'classify'
+    expect(d.actual_routing).toBe('ask');
+    expect(d.routing_correct).toBe(false);    // GT classify, system asked → miss
+    expect(d.score).toBe(0);                   // wrong routing → 0
+    expect(d.ask_recovery_attempt).toBeUndefined();
+    expect(runAnswerSimulation).not.toHaveBeenCalled();
+  });
+});
+
+describe('runTestCase — simulateAnswers ON: gold-answer recovery on ASK', () => {
+  it('attaches ask_recovery_attempt and recovers to the correct code', async () => {
+    const raw = askRaw();
+    classifyForEval.mockResolvedValue({
+      legacy: { responseType: 'question', question: 'q', options: [{ id: 'bolt', label: 'Bolt' }] } as any,
+      raw,
+    });
+    runAnswerSimulation.mockResolvedValue({
+      initial_question_id: 'ask_form',
+      rounds_attempted: 1,
+      final_decision: 'CLASSIFY',
+      final_code_if_classify: '7318.15.00',
+      code_correct_after_recovery: true,
+      answer_matches: [{
+        round: 1, question_id: 'ask_form', discriminating_attribute: 'form',
+        gold_attribute_value: 'bolt', derived_answer_id: 'bolt', answer_found: true,
+        system_decision_after: 'CLASSIFY',
+      }],
+    });
+
+    const d = await runTestCase(tc(), true);
+    // Routing/score base metrics are UNCHANGED — the ASK is still a routing miss.
+    expect(d.actual_routing).toBe('ask');
+    expect(d.routing_correct).toBe(false);
+    expect(d.score).toBe(0);
+    // …but the recovery attempt is now recorded for end-to-end measurement.
+    expect(runAnswerSimulation).toHaveBeenCalledWith('stainless steel hex bolts M10', raw, '7318.15.00');
+    expect(d.ask_recovery_attempt).toBeDefined();
+    expect(d.ask_recovery_attempt!.code_correct_after_recovery).toBe(true);
+    expect(d.ask_recovery_attempt!.chapter_correct_after_recovery).toBe(true);
+    expect(d.ask_recovery_attempt!.heading_correct_after_recovery).toBe(true);
+  });
+
+  it('does NOT run recovery when the case has no gold code', async () => {
+    classifyForEval.mockResolvedValue({
+      legacy: { responseType: 'question', question: 'q', options: [] } as any,
+      raw: askRaw(),
+    });
+    const d = await runTestCase(tc({ expected_code: undefined, expected_routing: 'ask' }), true);
+    expect(runAnswerSimulation).not.toHaveBeenCalled();
+    expect(d.ask_recovery_attempt).toBeUndefined();
+  });
+
+  it('records a wrong-code recovery (chapter/heading derived from final code)', async () => {
+    classifyForEval.mockResolvedValue({
+      legacy: { responseType: 'question', question: 'q', options: [] } as any,
+      raw: askRaw(),
+    });
+    runAnswerSimulation.mockResolvedValue({
+      initial_question_id: 'ask_form',
+      rounds_attempted: 1,
+      final_decision: 'CLASSIFY',
+      final_code_if_classify: '7326.90.99', // ch 73 ok, heading 7326 wrong, code wrong
+      code_correct_after_recovery: false,
+      answer_matches: [],
+    });
+    const d = await runTestCase(tc(), true); // gold 7318.15.00
+    expect(d.ask_recovery_attempt!.code_correct_after_recovery).toBe(false);
+    expect(d.ask_recovery_attempt!.chapter_correct_after_recovery).toBe(true);  // 73 == 73
+    expect(d.ask_recovery_attempt!.heading_correct_after_recovery).toBe(false); // 7326 != 7318
+  });
+});
+
+describe('buildReportForTest — end_to_end_metrics', () => {
+  const detail = (over: Partial<import('./types').EvalDetail>): import('./types').EvalDetail => ({
+    test_case_id: 'x', query: 'q', expected_routing: 'classify', actual_routing: 'classify',
+    routing_correct: true, response_time_ms: 1, score: 100, ...over,
+  });
+
+  it('is OMITTED entirely when no detail carries a recovery attempt (baseline unchanged)', () => {
+    const r = buildReportForTest([
+      detail({ expected_code: '7318.15.00', actual_code: '7318.15.00', chapter_correct: true, heading_correct: true, code_correct: true }),
+    ]);
+    expect(r.end_to_end_metrics).toBeUndefined();
+  });
+
+  it('combines classify-direct-correct + ask-recovered-correct over gold cases', () => {
+    const details: import('./types').EvalDetail[] = [
+      // direct classify, fully correct
+      detail({ test_case_id: 'C1', expected_code: '7318.15.00', expected_chapter: '73', expected_heading: '7318', actual_code: '7318.15.00', chapter_correct: true, heading_correct: true, code_correct: true }),
+      // ASK on a gold case, recovered correct
+      detail({
+        test_case_id: 'A1', actual_routing: 'ask', routing_correct: false, score: 0,
+        expected_code: '0901.21.00', expected_chapter: '09', expected_heading: '0901',
+        ask_recovery_attempt: {
+          initial_question_id: 'ask_processing_state', rounds_attempted: 1, final_decision: 'CLASSIFY',
+          final_code_if_classify: '0901.21.00', code_correct_after_recovery: true,
+          chapter_correct_after_recovery: true, heading_correct_after_recovery: true, answer_matches: [],
+        },
+      }),
+      // ASK on a gold case, unanswerable (not recovered)
+      detail({
+        test_case_id: 'A2', actual_routing: 'ask', routing_correct: false, score: 0,
+        expected_code: '7318.16.00', expected_chapter: '73', expected_heading: '7318',
+        ask_recovery_attempt: {
+          initial_question_id: 'ask_form', rounds_attempted: 0, final_decision: 'UNANSWERABLE',
+          code_correct_after_recovery: false, chapter_correct_after_recovery: false,
+          heading_correct_after_recovery: false, answer_matches: [],
+        },
+      }),
+    ];
+    const r = buildReportForTest(details);
+    const e = r.end_to_end_metrics!;
+    expect(e.ask_case_count).toBe(2);
+    expect(e.ask_recovered_correct).toBe(1);
+    expect(e.ask_recoverability_rate).toBeCloseTo(50, 5);
+    expect(e.ask_unanswerable).toBe(1);
+    expect(e.classify_direct_correct).toBe(1);
+    expect(e.scored_with_gold).toBe(3); // C1 + A1 + A2 all carry a gold code
+    // 8-digit: direct C1 + recovered A1 = 2 of 3
+    expect(e.end_to_end_code_accuracy).toBeCloseTo((2 / 3) * 100, 5);
+    // chapter: C1 + A1 = 2 of 3 (A2 chapter not recovered)
+    expect(e.end_to_end_chapter_accuracy).toBeCloseTo((2 / 3) * 100, 5);
   });
 });

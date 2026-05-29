@@ -13,18 +13,28 @@
  * one tariff_line child, skip the rerank and emit direct-leaf codes — flag the
  * strategy as `direct_leaf_lookup`.
  *
+ * Provider abstraction (M2): the query embedding comes from the pluggable
+ * `EmbeddingProvider` (default Vertex `gemini-embedding-001`, 1536-dim) and the
+ * rerank from the pluggable `Reranker` (default Gemini-Flash). L2 no longer
+ * imports the Cohere client directly; the degrade-path catches the neutral
+ * `RetrievalProviderError` instead of `CohereError`.
+ *
  * Spec references:
  *   - backend/docs/ARCHITECTURE.md §2 (Layer 2 box) + §3 (I/O row)
  *   - backend/docs/ARCHITECTURE.md §4.5 (Multi-signal synthesis)
  *   - backend/docs/ARCHITECTURE.md §4.7 (head_nouns | raw_tokens tsquery)
- *   - backend/docs/ARCHITECTURE.md §7 (Cohere unavailable fallback)
+ *   - backend/docs/ARCHITECTURE.md §7 (provider unavailable → cosine-only fallback)
  */
 import {
-  embed,
-  rerank,
-  CohereError,
+  getEmbeddingProvider,
+  type EmbeddingProvider,
+} from '../lib/embedding-provider';
+import {
+  getReranker,
+  type Reranker,
   type RerankDocument,
-} from '../lib/cohere-client';
+} from '../lib/reranker';
+import { RetrievalProviderError } from '../lib/retrieval-errors';
 import {
   cosineSearchChapters,
   cosineSearchHeadings,
@@ -93,8 +103,41 @@ const TOP_K_TARIFF      = 10;
 // survives to L4 (whose prompt handles a few more candidates fine).
 const FTS_LIMIT         = 40;   // was 20 — fetch deeper so #20–#40 reach the union
 const EXCL_FTS_LIMIT    = 30;
-const RERANK_TOP_N      = 15;   // was 5 — Cohere rerank returns more candidates
+const RERANK_TOP_N      = 15;   // was 5 — reranker returns more candidates
 const L2_EMIT_CAP       = 8;    // was 5 — emit up to 8 so rank #6–#8 reaches L3/L4
+
+/* ---------------------------------------------------------------------------
+ * Provider injection seam
+ *
+ * Mirrors `supabase-client._setQueryRunnerForTesting` / `L5-verifier`'s
+ * runner-injection convention: a module-level slot defaulting to `null`, a lazy
+ * getter that falls back to the env factory, and a test-only setter. Tests
+ * inject mock providers instead of mocking the underlying clients.
+ * --------------------------------------------------------------------------- */
+
+let _embeddingProvider: EmbeddingProvider | null = null;
+let _reranker:          Reranker | null = null;
+
+function getActiveEmbeddingProvider(): EmbeddingProvider {
+  return _embeddingProvider ?? getEmbeddingProvider();
+}
+
+function getActiveReranker(): Reranker {
+  return _reranker ?? getReranker();
+}
+
+/**
+ * Test-only hook: inject mock providers. Pass `null` for either field (or omit
+ * it) to leave that slot at its current value; pass `null` explicitly to restore
+ * the env factory for that provider.
+ */
+export function _setProvidersForTesting(overrides: {
+  embeddingProvider?: EmbeddingProvider | null;
+  reranker?:          Reranker | null;
+}): void {
+  if ('embeddingProvider' in overrides) _embeddingProvider = overrides.embeddingProvider ?? null;
+  if ('reranker' in overrides)          _reranker          = overrides.reranker ?? null;
+}
 
 /* ---------------------------------------------------------------------------
  * tsquery escaping
@@ -242,17 +285,22 @@ function parentChainFromRow(row: ParentChainRow): RetrievalCandidate['parent_cha
 /**
  * Run Layer 2 hybrid retrieval.
  *
- * @throws CohereError if embed fails after all retries (no embedding ⇒ no
- *   cosine search ⇒ no retrieval; we surface the failure rather than silently
- *   degrade further than the rerank-skip fallback).
+ * @throws RetrievalProviderError if the query embed fails after all retries (no
+ *   embedding ⇒ no cosine search ⇒ no retrieval; we surface the failure rather
+ *   than silently degrade further than the rerank-skip fallback).
  */
 export async function retrieve(input: L2Input): Promise<L2Output> {
   const trace: L2TraceEntry[] = [];
   const t0 = now();
 
-  /* ---------- Step 1: Cohere query embed -------------------------------- */
+  /* ---------- Step 1: provider query embed ----------------------------- */
+  // Sourced from the pluggable EmbeddingProvider (default Vertex
+  // gemini-embedding-001). taskType RETRIEVAL_QUERY (vs RETRIEVAL_DOCUMENT for
+  // the corpus). The resulting vector is L2-normalized and reused by L5.
   const tEmbedStart = now();
-  const embedRes = await embed(input.normalized_query, { inputType: 'search_query' });
+  const embedRes = await getActiveEmbeddingProvider().embed(input.normalized_query, {
+    taskType: 'RETRIEVAL_QUERY',
+  });
   trace.push({
     step:      'cohere_embed',
     latencyMs: now() - tEmbedStart,
@@ -406,13 +454,13 @@ export async function retrieve(input: L2Input): Promise<L2Output> {
     }
   }
 
-  /* ---------- Step 6: Cohere Rerank (cascade_full only) ----------------- */
+  /* ---------- Step 6: Rerank (cascade_full only) ----------------------- */
   let finalCodes: string[];
   if (retrieval_strategy === 'direct_leaf_lookup') {
     finalCodes = directLeafRows.map((r) => r.code);
   } else {
-    // Union of cosine + FTS, dedup. Rerank if any candidates exist AND Cohere
-    // key is present; otherwise fall back to cosine-only ordering.
+    // Union of cosine + FTS, dedup. Rerank if any candidates exist; on a
+    // provider failure we fall back to cosine-only ordering.
     const unionCodes = Array.from(scoreMap.keys());
 
     if (unionCodes.length === 0) {
@@ -450,7 +498,7 @@ export async function retrieve(input: L2Input): Promise<L2Output> {
       } else {
         try {
           const tRrStart = now();
-          const rerankRes = await rerank(input.normalized_query, rerankDocs, {
+          const rerankRes = await getActiveReranker().rerank(input.normalized_query, rerankDocs, {
             topN: RERANK_TOP_N,
           });
           trace.push({
@@ -464,9 +512,10 @@ export async function retrieve(input: L2Input): Promise<L2Output> {
           }
           finalCodes = rerankRes.ranked.map((r) => r.id);
         } catch (err: unknown) {
-          // Cohere unavailable → fallback to cosine-only ranking per
-          // ARCHITECTURE.md §7.
-          if (err instanceof CohereError) {
+          // Rerank provider unavailable → fallback to cosine-only ranking per
+          // ARCHITECTURE.md §7. Catches the neutral provider error so L2 stays
+          // vendor-agnostic.
+          if (err instanceof RetrievalProviderError) {
             trace.push({
               step:      'cohere_rerank_fallback_cosine',
               latencyMs: 0,
