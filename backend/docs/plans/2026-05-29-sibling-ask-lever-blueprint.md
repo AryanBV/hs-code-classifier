@@ -1,3 +1,5 @@
+> **STATUS: SUPERSEDED** — the PRE-L4 trigger described here over-fired (33% ask-rate, -18.8pp OUTRIGHT). Replaced by a POST-L4 uncertainty-gated trigger (commit e340990). See AUTONOMOUS-CONTINUATION sections 2.13/6.1.
+
 # Sibling-ASK Elicitation Lever — Build Blueprint (2026-05-29)
 
 **Why:** ~50% of leaf-sibling selection errors are genuine query-underspecification — the deciding attribute exists in `tariff_line_attributes` but NOT in the exporter's query, so neither a stronger model (Pro tied with Flash) nor more candidates can guess it. The right behavior: ask ONE targeted question (options from the candidate siblings' TLA values), the exporter answers, resolve to the right leaf. Reuses QGS + computeSiblingDiscriminators. Runtime = Vertex (NO Cohere — ignore any Cohere references).

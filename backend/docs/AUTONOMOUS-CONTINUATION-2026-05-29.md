@@ -1,159 +1,100 @@
-## Autonomous Continuation Brief — HS Code Classifier (2026-05-29, CORRECTED)
+# Autonomous Continuation Brief — HS Code Classifier (2026-05-29 PM, REWRITTEN)
 
-ITC-HS v2 classifier. Branch: `feat/phase-4-pipeline-build`. Backend root: `backend/`.
-
----
-
-### Post-compaction recovery protocol (do this FIRST)
-
-1. Read this ENTIRE brief + `MEMORY.md` (keys: `project_vertex_m0_migration`, `feedback_calibrated_routing_not_restriction`, `feedback_root_cause_fix_not_patch`, `feedback_quality_first_best_in_class`).
-2. `git log --oneline -3` — confirm HEAD is `059cf76` (checkpoint commit). `git status` — confirm clean working tree.
-3. List `backend/eval-results/vertex-m0-*.json` — highest round is `vertex-m0-r7-sim`. Read its summary metrics (already reproduced below).
-4. Reconcile: latest measured numbers + next gated action (per Priority Order). Only once you can state both with certainty, proceed.
+ITC-HS v2 8-digit classifier for Indian SME exporters. Branch `feat/phase-4-pipeline-build`. Backend root `backend/`.
+**This doc is the lossless resume point. It supersedes all earlier state in this file.** Read it + `MEMORY.md` keys (`project_ultimate_brain_program_v2`, `feedback_root_cause_fix_not_patch`, `feedback_calibrated_routing_not_restriction`, `feedback_quality_first_best_in_class`) before acting.
 
 ---
 
-### Committed state (HEAD 059cf76, 2026-05-29)
+## 0. TL;DR — where we are RIGHT NOW
 
-- **Branch:** `feat/phase-4-pipeline-build`
-- **Working tree:** CLEAN (no uncommitted changes)
-- **tsc:** clean (`npx tsc --noEmit` from `backend/` — zero errors)
-- **Tests:** 702 tests pass (`npx vitest run src/classifier-v2 src/eval`)
-- **eval-results/ directory:** gitignored per policy; JSON files present locally
-
----
-
-### Architecture — v2 layers (all committed)
-
-`backend/src/classifier-v2/`
-
-- **L0** `layers/L0-normalization.ts` — alias map + composite flag
-- **L1** `layers/L1-triage.ts` — Gemini 3.5 Flash, thinking_level=low
-- **L2** `layers/L2-retrieval.ts` — **Vertex gemini-embedding-001 (1536-dim, HNSW cosine) + Gemini-Flash reranker + Postgres GIN-FTS dual**. Cohere is OFF the v2 runtime path (RERANKER env defaults to `gemini-flash`; EMBEDDING_PROVIDER defaults to `vertex`). `lib/embedding-provider.ts` and `lib/reranker.ts` are the factory sources of truth.
-- **L3** `layers/L3-rules-filter.ts` — exclusions, multi-dest collapse, single-shot backtrack gate
-- **L4** `layers/L4-select.ts` — Gemini 3.5 Flash with sibling-comparison-view (widened to 18 metadata discriminator cols), multi-signal context
-- **L5** `layers/L5-verifier.ts` — 10 rules + predicate DSL + TF-IDF citation
-- **QGS** `layers/QGS-generator.ts` — candidate-aware info-gain question generation (greedy, cap-3, floor-1, 6 core axes)
-- **Orchestrator** `index.ts` — L0→L5 + repair loop + backtrack + ASK/QGS/REFUSE + continueWithAnswer/continueWithAnswers (Q-budget round-based cap)
-- **Eval harness** `src/eval/runner.ts` (--simulate-answers opt-in), `src/eval/answer-simulator.ts`, `src/eval/gold-attributes-lookup.ts`
-
-Key prompts: `backend/prompts/triage-v2.md`, `backend/prompts/select-v2.md`
+- **HEAD = `e340990`** on `feat/phase-4-pipeline-build`. **Working tree CLEAN.** `tsc` clean; **796 v2/eval tests pass**.
+- **Honest brain accuracy (r12, clean gold, ASK off): 8-digit OUTRIGHT = 68.0%** / chapter 81.1% / heading 78.2% (frozen routing-independent denominator, n=344 gold-code cases) / confident-wrong = 69 / EFFECTIVE 8-digit 71.5%. This is the TRUE number (see §3).
+- **IN FLIGHT (Vertex eval, may be done by next session):** two calibration runs of the new uncertainty-gated sibling-ASK lever — `vertex-m0-r13-ask045-sim` (τ=0.45) and `vertex-m0-r13-ask065-sim` (τ=0.65). **First action next session = read those + decide (see §6.1).**
+- Runtime = **Vertex** (gemini-embedding-001@1536 + Gemini-Flash rerank + Gemini-Flash L1/L4). **Cohere is OFF and decommissioned — ignore any doc that says a run "needs Cohere" or is "429-blocked"; that is stale.**
 
 ---
 
-### Eval round history (all on 386-case master suite, n_classify varies)
+## 1. END GOAL (the finish line)
 
-| Run | Routing | Chapter | Heading | 8-digit | Weighted | Notes |
-|---|---|---|---|---|---|---|
-| vertex-m0-baseline | 78.8% | 93.7% | 90.0% | 72.7% | 86.3% | Pre-R1; n=271 classify |
-| vertex-m0-r1 | ~79% | — | — | — | 85.0% | Routing calibration; regression exposed |
-| vertex-m0-r2 | 87.8% | — | — | 68.5% | 83.1% | +9pp routing; dilution introduces ~23 harder cases |
-| vertex-m0-r3 | 84.9% | 93.5% | 89.5% | 69.4% | 85.1% | GIR-2(a) parts fix |
-| vertex-m0-r4 | 86.2% | — | — | 68.7% | 83.5% | Host-candidate retrieval fix |
-| vertex-m0-r5 | 87.0% | — | — | 67.0% | — | Sibling-view (7-core-field only; noisy) |
-| **vertex-m0-r6** | **86.5%** | **92.4%** | **88.4%** | **68.0%** | **83.9%** | Widened sibling-view (+11 metadata cols); data ceiling confirmed |
-| vertex-m0-r6-sim | 86.5% | 92.1%* | 87.5%* | 67.3%* | — | answer-sim ON (pre-QGS baseline); ask_recoverability 41.4% (12/29); *end-to-end metrics: ch 89.2/hd 85.5/8d 66.7 |
-| **vertex-m0-r7-sim** | **86.4%** | **92.3%** | **88.0%** | **68.6%** | **83.9%** | QGS implemented; NO classify regression vs r6; ask_recoverability 25% (7/28) — MEASUREMENT GAP |
-
-r7-sim end-to-end metrics (--simulate-answers): ask_cases=28, recovered=7, recoverability=25.0%, unanswerable=16, end-to-end 8d=66.5%. **Root cause of recoverability drop = HARNESS GAP** (gold-attributes-lookup.ts has no stored attribute matching 16/28 QGS-generated candidate-aware questions). QGS itself has 0 classify regression → KEEP QGS, fix harness first.
-
-r6-sim classify-only metrics (separate from end-to-end): chapter 92.1, heading 87.5, 8-digit 67.3 (same pool, slightly different routing noise vs r6).
-
-**Dilution note (established at r2-r6):** on the 266 shared-classify subset, 8-digit HELD 72.2% vs baseline 72.7% — headline drop is dilution (harder cases recovered into classify), NOT regression.
+**Build the best ITC-HS classifier brain, then API-rewire it, then rebuild the frontend, then publish.** "Best brain" = realistic, not hypothetical:
+- 8-digit OUTRIGHT ~75–80% (on ANSWERED cases) + **calibrated ASK** that converts genuinely-underspecified queries into the right code via one question + **top-3 alternatives** + **near-zero confident-wrong** + legally-defensible (GIR + notes + citation) answers.
+- Honest ceiling: published non-fine-tuned frontier+RAG systems top out ~64–75% top-1 / ~78–91% top-3 at 8-digit. Our 68% is squarely in-band. **80% outright without fine-tuning is the optimistic edge** — the realistic "ultimate" is ~75-80% outright + ASK/top-3 for the irreducibly-ambiguous, with a fine-tuned domain reranker as the later true ceiling-raiser.
+- Then: API rewire legacy→v2 (`backend/src/api/classify.ts`) → frontend rebuild → publish.
 
 ---
 
-### Strategic orientation (locked after r4)
+## 2. WHAT WE DID THIS SESSION (chronological, with commits)
 
-Routing recovery (R1-R4) hit diminishing returns. 8-digit has plateaued at ~68% across r4-r6 (noise band). Root cause breakdown of 56 heading-right/leaf-wrong cases:
-- 37 (66%) have discriminating attr in tariff_line_attributes but L4 couldn't leverage them → FIXED by sibling-comparison-view (r5-r6); per-case wins verified (TC013 truck tyre now correct)
-- 19 (34%) need NEW offline data (garment sizing, vehicle specs, surface treatment, fur species) → DATA ENRICHMENT required (O2-style batch)
-- 0 retrieval misses
-
-**~68% = DATA CEILING for current attributes.** Next lever = QGS (move borderline cases to ASK-then-correct) + data enrichment (19 gap cases, ~+5-6pp headroom).
-
----
-
-### Priority order (next session)
-
-1. **Fix answer-sim harness coverage** → run r8-sim → real QGS measurement gate. `gold-attributes-lookup.ts` covers only 6 discriminating-attribute columns; QGS now generates candidate-aware questions (may ask metadata cols like `fabric_construction`, `chemical_class`, etc.). Fix: widen the gold lookup to cover the QGS attribute set; also add fallback matching (option-label substring) when exact attribute value is absent. Confirm r8-sim shows ask_recoverability improvement vs r6-sim 41.4% baseline.
-
-2. **DATA ENRICHMENT** (19 gap cases) — highest single lever for 8-digit headroom (~+5-6pp on shared-266 subset). Offline O2-style attribute batch for garment sizing attributes, vehicle weight/load specs, surface treatment codes, fur species fields. Measure on targeted per-case set, not just whole-suite delta.
-
-3. **GT cleanup** — TC009 "fuel injection pump for car": Section XVII Note 2(e) excludes pumps → Ch.84 is legally correct; our output is right, GT is likely wrong. Audit and correct after user review. Log all suspected GT errors; never silently rewrite to inflate eval.
-
-4. **Textile cluster** Ch.61/62/63 — silk saree→62 not 50, woven vs knitted discrimination.
-
-5. **L6 Tiebreak / L7 Deep-Think** — build ONLY if verifier_rejected_but_correct rate proves need on the master suite.
-
-6. **API rewire** legacy→v2 (`backend/src/api/classify.ts`) + frontend wizard + ship.
+1. **Adversarial re-audit** of the inherited plan (4 diverse-lens agents) → 13 critical + 19 major flaws → rebuilt the plan (`docs/plans/2026-05-29-ultimate-brain-program-v2.md`).
+2. **Phase-0 Trust-Spine** (`899c999`): made the eval ruler honest — frozen routing-independent denominator (killed the dilution trap), EFFECTIVE scorer + population-closure assertion, confident-wrong rate, calibration (Brier + equal-mass ECE + bootstrap CI), Wilson CIs, McNemar, automated regression-guard (`compare.ts`), **oracle decontamination** (frozen gold-attributes snapshot so ASK-recovery can't self-grade off enrichment), and a `deriveAnswerId` fabrication fix. Contract: `docs/EVAL_DESIGN.md`.
+3. **P1 corpus discriminator-gap analysis** (`eb981da`): across 2,241 multi-leaf subheadings — residual-"Other" = 74.7% (a REASONING pattern, not a data gap); genuine data-separable axes each only 1–3%.
+4. **r8-sim honest baseline:** OUTRIGHT 8-digit 59.9% (vs the inflated routing-conditional "68%"); confident-wrong 32.6%; ASK-recovery 40.7% (r7's "25%" was the harness artifact, now fixed).
+5. **Gold-freeze Round 1** (`082d918`): 11 user-approved, blind-law-verified GT corrections → r9 baseline OUTRIGHT 62.2%.
+6. **Gate-1 (L4 "Other-by-elimination" prompt):** NEUTRAL (8-digit +0.3pp, McNemar p=1.0) → **REVERTED**. Diagnosis: reasoning-gated; the elimination prompt mis-reasoned (eliminated the correct sibling). `docs/plans/2026-05-29-gate1-other-elimination-blueprint.md` (REVERTED — kept for the isOtherLeaf logic).
+7. **Strategic re-plan** (`docs/plans/2026-05-29-roadmap-to-80.md`): error decomposition (SELECTION 75% / RETRIEVAL 25% / rerank-drop 0%) + SOTA research + codebase leverage map.
+8. **Gate-2 (sibling expansion + rerank-attributes + cap 8→12):** REGRESSED −2pp → **REVERTED** (wider candidate set confused Flash more).
+9. **Pro-vs-Flash experiment (DECISIVE):** Gemini-Pro fixed only ~6% of Flash's sibling errors; in 42/51 cases Pro chose the SAME wrong sibling. → **The selection bottleneck is INFORMATION, not the model and not complexity.** Both ruled out empirically.
+10. **GT audit + blind verification:** ~50% of the "selection errors" are GT-errors (the brain was already right, gold was wrong); ~50% are genuine query-underspecification (the deciding fact is absent from the query → the ASK lever's job).
+11. **Gold-freeze Round 3** (`e48fdb7`): 21 user-approved, blind-law-verified GT corrections → **r12 baseline OUTRIGHT 68.0%** (+5.8pp vs r9, McNemar p=0.0008 — the real win). Log: `src/eval/GOLD-REMEDIATION-LOG.md`.
+12. **Sibling-ASK lever v1** (`a8b3630`, env-gated off) + eval tooling (`--ids` filter, `SELECT_MODEL_OVERRIDE`, `CASE_TIMEOUT_MS`). v1 (PRE-L4 trigger) over-fired (33% ask-rate, −18.8pp) → FAILED.
+13. **Sibling-ASK redesign** (`e340990`, env-gated off): POST-L4 **uncertainty-gated** trigger — asks only when L4 returns CLASSIFY with `self_confidence` below `SIBLING_ASK_CONF_THRESHOLD`, the leaf is in a same-subheading sibling group, the discriminator is unpinned by the query, and a QGS question on that exact discriminator is buildable. **Calibration in flight (r13).**
 
 ---
 
-### Operating rules (user-set, must follow)
-
-1. Quality-first, never reduce it. "Right thing at the right time." Best-in-class over hand-rolled.
-2. Root-cause fixes, not patches. No eval-overfitting — changes must be general/principled. A green eval via hacks = false pass.
-3. Measured gates, one change at a time. Apply ONE principled change → full master eval → compare → keep ONLY if the two-sided gate holds: target metric up AND wrong-code rate flat/down. Never stack unmeasured changes.
-4. Orchestrate with dynamic workflows + as many agents as needed. After a delegated audit claims completeness, VERIFY yourself (grep) — agents miss sites.
-5. Calibrated routing (not restriction). Classify when confident; ASK a relevant number of valid questions with real options; abstain only for genuine junk. Minimize wrong-codes AND needless asks/refuses together.
-6. Runtime = Vertex (credit-covered) — never reintroduce a Cohere dependency. Cohere is OFF the v2 path entirely.
-7. Unattended limits: no git commit/push, no deploy, no external data send.
-8. Lean orchestrator — delegate bulk reading/analysis to agents; read only structured returns.
-9. No questions until user returns; no time pressure. Quality must INCREASE at every step.
+## 3. WHY 68% IS THE TRUE NUMBER (don't be confused by the history)
+- Session start showed a flattering "**68%**" — inflated by a routing-conditional denominator (dilution).
+- Phase-0 exposed the honest floor at **59.9%** (frozen denominator, but on *wrong* gold).
+- 32 gold corrections (Rounds 1+3, all blind-law-verified + user-approved) fixed a systematically-buggy answer key. On *correct* gold the honest number is **68.0%** — i.e. the brain was always ~68% and we were under-crediting it. The brain is strong and in the SOTA band; the remaining gap is the underspecified-query problem (→ ASK) + the retrieval-25% bucket.
 
 ---
 
-### Process lessons (from r1-r7)
-
-- **Fast eval subset (~60 cases, ~5 min)** for iteration; full 386-case eval (~27 min) only at milestones.
-- **Per-case attribution**: name the specific case IDs a fix targets AND cases at risk before trusting whole-suite deltas — noise band is ±1-2pp.
-- **Run flag-off + flag-on evals in PARALLEL** to halve wall-clock measurement time.
-- **Commit at every kept gate** — don't let N rounds of uncommitted changes accumulate.
-- **Dilution-vs-regression**: always compare on the shared-classify subset, not raw headline (denominator drifts when routing changes).
-
----
-
-### Parked for user review (do NOT auto-fix)
-
-- **TC009 "fuel injection pump for car"**: GT expects Ch.87; Section XVII Note 2(e) legally excludes pumps → Ch.84 correct. Our output is right. Recommend GT correction after user review.
-- **3 reranker regressions**: DB058/077/192 — adjacent-chapter false positives from sibling-view. Logged for later; no runtime fix yet.
-- **Ambiguous cases** (silicone radiator hose, some rubber seals): defensible either way; candidates for confusing-pairs / ASK path.
+## 4. KEY LEARNINGS (the session's intellectual capital — do not relearn the hard way)
+1. **Measure honestly first.** Self-grading loops (routing-conditional denominator; oracle reading the same table enrichment rewrites) silently mislead. Trust-spine before optimization.
+2. **The eval gold had systematic errors.** When two independent strong models confidently agree on a non-gold code, the gold is wrong ~half the time. Blind-law-verify (given only query+gold) + user-approve before changing gold; never launder toward the model.
+3. **8-digit gap = SELECTION 75% / RETRIEVAL 25% / rerank-drop 0%.**
+4. **The selection bottleneck is INFORMATION, not model/complexity.** PROVEN: gate-1 (more prompt) neutral; gate-2 (more candidates/attrs) negative; Pro=Flash. **Do NOT try to fix sibling selection by adding context, candidates, or a bigger model — it does not help and often hurts.**
+5. **Half the selection errors need ASK** (the deciding fact isn't in the query; the exporter knows it). The other half were gold errors.
+6. **ASK must be uncertainty-gated** (ask only when L4 is genuinely stuck), never pre-emptive (over-fires catastrophically).
+7. **Unmarked-default-wins principle:** when a query doesn't flag the *special* variant (flavoured / filled / handloom / hand-crocheted / ballistic / seed-quality), the correct code is the *common/residual* leaf, not the special one. (Now in the select-v2 prompt as the india-specific opt-in rule + applied in gold corrections.)
+8. **Non-fine-tuned ceiling ~64-75% top-1.** Report top-1 AND top-3; lean on calibrated ASK for the irreducible remainder.
 
 ---
 
-### Commands
-
-```
-# Full master eval (~27 min, concurrency 8):
-cd backend && npx tsx --require dotenv/config src/eval/runner.ts --suite master --run-id <id>
-
-# With answer simulation:
-cd backend && npx tsx --require dotenv/config src/eval/runner.ts --suite master --run-id <id> --simulate-answers
-
-# Quick suite (~5 min):
-cd backend && npx tsx --require dotenv/config src/eval/runner.ts --suite quick --run-id <id>
-
-# Tests:
-cd backend && npx vitest run src/classifier-v2 src/eval
-
-# Typecheck:
-cd backend && npx tsc --noEmit
-
-# DB read-only probes (Supabase MCP preferred; these also work):
-cd backend && npx tsx --require dotenv/config scripts/_check_progress.ts
-```
+## 5. METRICS, FILES, COMMANDS
+- **Eval runner:** `cd backend && npx tsx --require dotenv/config src/eval/runner.ts --suite master --run-id <id> --simulate-answers` (~30 min, Vertex). Add `--ids <c1,c2,...>` for a targeted subset (~minutes). Quick suite: `--suite quick`.
+- **ASK lever envs:** `SIBLING_ASK_ENABLED=true` to turn it on; `SIBLING_ASK_CONF_THRESHOLD=<float>` (default 0.65; 0.45=ask on LOW-only, 0.65=ask on LOW+MEDIUM).
+- **Compare two runs:** `npx tsx src/eval/compare.ts <before.json> <after.json>` → metric diffs + McNemar + improved/regressed caseIds + three-sided gate verdict.
+- **Tests:** `npx vitest run src/classifier-v2 src/eval`. **Typecheck:** `npx tsc --noEmit`.
+- Eval results: `backend/eval-results/vertex-m0-*.json` (gitignored; key ones: `r9-sim`, `r12-sim` (=68% baseline, ASK off), `r13-ask045-sim`/`r13-ask065-sim` (calibration), `pro-select-probe.json`).
+- Plans: `docs/plans/2026-05-29-{ultimate-brain-program-v2, roadmap-to-80, gate1-other-elimination-blueprint, sibling-ask-lever-blueprint}.md`. Metric contract: `docs/EVAL_DESIGN.md`. Gold log: `src/eval/GOLD-REMEDIATION-LOG.md`.
 
 ---
 
-### Ultimate bars
+## 6. HOW TO PROCEED (priority order)
 
-chapter ≥95% / heading ≥88% / **8-digit ≥75-82%** / routing ≥90% / weighted ≥87% / mean cost ≤$0.012/query / p95 latency ≤8s / verifier over-rejection ≤8% / ASK quality ≥95% targeted + ≥98% relevant / calibrated confidence / customs-officer-acceptable citations.
+### 6.1 IMMEDIATE — finish the ASK-lever calibration (resume here)
+Read `eval-results/vertex-m0-r13-ask045-sim.json` and `vertex-m0-r13-ask065-sim.json` (if missing, re-run them — §5 commands with the two thresholds). For each, `compare.ts` vs `vertex-m0-r12-sim.json` and check the three-sided gate: **OUTRIGHT preserved (not tanked) AND classify_as_ask ≤ ~15% AND sibling_ask_recoverability_rate ≥ 75% AND EFFECTIVE 8-digit up.** Pick the threshold that clears it. If one clears → flip the default to enabled (set the env or change the default) + commit ("keep gate"). If neither clears → the uncertainty signal (3-level enum) is too coarse; options to try: (a) ask only on LOW (τ=0.45) + improve question option-coverage for recoverability, (b) require a margin signal not just confidence, (c) accept ASK as a smaller win and move to 6.2. Do NOT force it.
+
+### 6.2 Retrieval-25% bucket
+Triage chapter-mis-routing (TC009 fuel-injection-pump→Ch.84 [GT-suspect: Sec XVII Note 2(e) — may already be handled], TC306 silk saree→62 not 50) + genuine L2 leaf-recall gaps. Levers (from `roadmap-to-80.md` Tier-2): per-subheading leaf floor, RRF fusion (dense+FTS), a chapter-recall safety net / loosened backtrack. One change per three-sided gate, iterate on `--ids` subset.
+
+### 6.3 Calibration of confidence
+ECE ~18% (poorly calibrated). For trustworthy confidence + a sharper ASK gate, calibrate L4 self_confidence (or derive a margin signal). Enables the "never confidently wrong" bar.
+
+### 6.4 Ship arc (after the brain is maxed)
+API rewire legacy→v2 (`src/api/classify.ts`) — freeze the external DTO, thin HTTP smoke first → frontend rebuild → publish + trade-intelligence (duty rates).
+
+### 6.5 Deferred / ceiling-raisers (need infra/data)
+Fine-tuned domain reranker with hard-negative mining (siblings = hard negatives); corpus re-embed with discriminating attributes; RAG over Indian ITC-HS advance rulings. Start mining sibling hard-negatives now (free; the code trie defines them).
 
 ---
 
-### Honest constraints
-
-- 5-hour rolling usage limit shared across orchestrator + all subagents; resets 5hr from first prompt. This brief = lossless resume after reset.
-- "Ultimate" is multi-session. Target strong MEASURED progress per gate, not completion-in-5h.
-- Cohere Trial key is exhausted (1000/mo, exhausted 2026-05-28). Cohere is OFF the v2 path — this is a non-issue.
+## 7. OPERATING RULES (user-set)
+1. Quality-first and INCREASING; never reduce it. Right thing at the right time; not rushed. Best-in-class over hand-rolled.
+2. Root-cause fixes, not patches; no eval-overfit. A green eval via hacks = false pass.
+3. **One principled change per measured THREE-SIDED gate** (target metric up via McNemar AND confident-wrong flat/down + regression-guard AND latency/cost in budget). Iterate on the `--ids` fast subset; full-386 only at milestones. **Do NOT get stuck in an eval loop** — eval at the right time, focus on making the classifier better.
+4. **Gold changes are USER-GATED** — blind-law-verify (only query+gold) + present for approval; never launder toward the model.
+5. Orchestrate with dynamic workflows + many parallel agents (ultracode). Pure orchestrator: delegate bulk reading/analysis/implementation; read only structured returns; verify delegated work yourself (re-run tsc/tests, spot-check, independent review).
+6. Commit at every kept gate (authorized standing policy this run). Runtime stays Vertex; never reintroduce Cohere.
+7. Diverse-lens adversarial review before locking a plan; verify state before lock.
+8. Ask the user only for genuine forks (esp. gold changes, scope/strategy at milestones); otherwise proceed on your best recommendation.

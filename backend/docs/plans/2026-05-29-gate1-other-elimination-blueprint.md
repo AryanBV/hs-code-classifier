@@ -1,3 +1,5 @@
+> **STATUS: REVERTED** — gate-1 was neutral (p=1.0); the elimination prompt backfired (eliminated the correct sibling). Kept for the isOtherLeaf logic + the learning that prompt-only sibling fixes are fragile.
+
 # P2 Gate #1 — L4 "Other-by-Elimination" Reasoning Mode (resolved blueprint)
 
 **Status:** Ready to implement (after GT-freeze + clean r9 baseline). Confirmed #1 lever: 50% of leaf errors (30 cases), 60.6% of confident-wrong are leaf-sibling.

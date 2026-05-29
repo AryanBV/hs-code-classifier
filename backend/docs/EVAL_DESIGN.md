@@ -5,6 +5,11 @@ downstream gate depends on these numbers being computed exactly as written. A
 metric change requires: (1) update this doc, (2) update the metric unit test, (3)
 note the change in the commit. Implemented under TDD in `src/eval/`.
 
+**Gold version:** the eval gold is now **Round-3** (32 user-approved, blind-law-verified
+GT corrections over Rounds 1+3; r12 baseline OUTRIGHT 8-digit = 68.0%). See
+`src/eval/GOLD-REMEDIATION-LOG.md`. Metric *definitions* below are unaffected by gold
+changes — only the population's correctness labels are.
+
 **Implementing files**
 - `src/eval/metrics.ts` — pure statistical primitives (Wilson CI, McNemar, Brier, ECE, bootstrap, percentile). Unit tests: `metrics.test.ts`.
 - `src/eval/runner.ts` `buildReport` — folds per-case `EvalDetail[]` into the report. Unit tests: `runner.test.ts`.
