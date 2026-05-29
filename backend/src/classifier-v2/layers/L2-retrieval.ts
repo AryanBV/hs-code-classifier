@@ -583,6 +583,12 @@ export async function retrieve(input: L2Input): Promise<L2Output> {
 
   trace.push({ step: 'l2_total', latencyMs: now() - t0, count: candidates.length });
 
+  // ENV-GATED debug field: only populated when RECALL_FORENSIC_DEBUG=1.
+  // Exposes the set of cosine-cascade subheadings surfaced before rerank, so the
+  // recall-forensic script can partition loss (bucket A = not-surfaced vs B/C).
+  const debugSurfacedSubheadings: string[] | undefined =
+    process.env.RECALL_FORENSIC_DEBUG === '1' ? [...topSubheadingCodes] : undefined;
+
   return {
     candidates,
     retrieval_scores,
@@ -594,6 +600,9 @@ export async function retrieve(input: L2Input): Promise<L2Output> {
     // L5 Rule-4 cosine floor reuses this vector instead of re-embedding.
     query_embedding: embedRes.embedding,
     trace,
+    ...(debugSurfacedSubheadings !== undefined
+      ? { debug_surfaced_subheadings: debugSurfacedSubheadings }
+      : {}),
   };
 }
 

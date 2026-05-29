@@ -223,6 +223,14 @@ export interface RetrievalOutput {
    */
   query_embedding:        number[];
   trace:                  L2TraceEntry[];
+  /**
+   * DEBUG ONLY — populated when env RECALL_FORENSIC_DEBUG=1.
+   * The set of 6-digit subheading codes surfaced by the cosine cascade at Step 2
+   * (topSubheadingCodes, before rerank or direct-leaf lookup). Used by the
+   * recall-forensic script to partition retrieval-loss (bucket A vs B/C).
+   * NEVER set in normal prod calls — field is absent from the object entirely.
+   */
+  debug_surfaced_subheadings?: string[];
 }
 
 /* ============================================================================
