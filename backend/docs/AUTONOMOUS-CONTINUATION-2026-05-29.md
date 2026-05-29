@@ -1,3 +1,64 @@
+## 2026-05-30 AUTONOMOUS SESSION — CURRENT STATE (supersedes everything below)
+
+ITC-HS v2 8-digit classifier. Branch `feat/phase-4-pipeline-build`. Backend root `backend/`. Runtime = **Vertex** (gemini-embedding-001@1536 + Gemini-Flash rerank + Gemini-Flash L1/L4). **NO Cohere** — ignore any "429-blocked / needs Cohere" text below; it is stale.
+
+> On context compaction: RE-BRAINSTORM before acting — re-read this section + `MEMORY.md` + `git log` + the TaskList. Then continue.
+
+### TL;DR — where we are
+- **HEAD = latest commit on the branch** (run `git --no-pager log --oneline -1`; do NOT trust a hardcoded hash — the tip moves with each commit).
+- **Honest baseline (clean gold, frozen routing-independent denom):** r12 = **68.0% OUTRIGHT** 8-digit. After **gold-freeze ROUND 4** (8 user-approved bucket-C corrections — 7/8 the brain already predicted) noise-free re-score = **70.1%**; full **r14** run confirmed **69.5%** (within the ±2–3pp LLM noise floor).
+- **GATE IN FLIGHT (workflow `wlu9kv9lz`):** r15 (MV-03 fix + bad-gold-R5 applied, all levers OFF) + r16 (calibrated-classify lever ON). **Numbers pending** — first action next session is to read those run results and run the three-sided gate.
+- Suite = **385 cases** (post bad-gold R5: 22 query rewrites + drop DB030); scoring denom = **343** gold-code cases.
+
+### OVER-RESTRICTION ROOT CAUSE (the key reframe — via systematic-debugging)
+The r14 "**51 mis-routed valid products**" are **NOT** L4/L5 over-strictness. They decompose into 3 buckets:
+
+| Bucket | ~Count | What it actually is | Correct fix | Do NOT |
+|---|---|---|---|---|
+| 1. BAD EVAL GOLD | ~16 | Contentless ITC-HS schedule fragments (no product noun) where REFUSE/ASK is the *correct* behavior | bad-gold **Round 5** (22 rewrites + drop DB030, USER-APPROVED, APPLIED) | — |
+| 2. L2 RETRIEVAL RECALL | ~16 | L1 routes the right chapter, L4/L5 reason correctly, but L2 never surfaces the gold leaf → L4 faithfully abstains. Causes: `direct_leaf_lookup` collapse + `cascade_full` adjacent-excluded-family | **L2 ONLY** (see L2-recall lever) | relax L4/L5 (→ confident WRONG codes) |
+| 3. ASK/CLASSIFY CALIBRATION | ~20 | Gold IS retrieved but L1 over-asks | calibrated-classify lever | weaken MV-07/MV-08 (L4/L5 verified CORRECT here) |
+
+### COMMITS TODAY
+| Hash | What |
+|---|---|
+| `f13a446` | forensic recall diagnostic + env-gated surfaced-subheadings debug |
+| `7112767` | sibling-ASK uncertainty gate → rerank-margin signal (env-gated OFF) |
+| `6d9afd9` | gold-freeze Round 4 (8 user-approved bucket-C corrections) |
+| `82dd3d4` | ASK-generalization plan doc |
+| `881ef2e` | **MV-03 source_ref grammar fix** — taught L4 the locked `table:key=value` citation grammar; eliminates MV-03 false-reject → reclaims a repair round every classify |
+| `8a189ef` | **calibrated-classify lever** (env-gated OFF) — converts L1-ASK→CLASSIFY when retrieval concentrated; mirror of sibling-ASK; extracted `runSelectVerifyRepair`, main path byte-identical; **never emits REFUSE** |
+| `168ac64` | **gold-freeze Round 5** — 22 contentless-fragment query rewrites + drop DB030 (user-approved) |
+
+### ENV FLAGS & EVAL COMMANDS
+- `CALIBRATED_CLASSIFY_ENABLED` (default **off**), `CALIBRATED_CLASSIFY_MARGIN`=0.15, `CALIBRATED_CLASSIFY_STRONG_MARGIN`=0.30
+- `SIBLING_ASK_ENABLED` (**off** — r13 calibration failed; needs a usable uncertainty signal)
+- Run eval: `npx tsx --require dotenv/config src/eval/runner.ts --suite master --simulate-answers --run-id <id>` (add `--ids <a,b,c>` for subsets)
+- Paired three-sided gate: `npx tsx src/eval/compare.ts <before> <after>`
+
+### LEVER STATE / NEXT
+| Lever | State |
+|---|---|
+| MV-03 grammar fix | **DONE** (committed) |
+| calibrated-classify | **BUILT + COMMITTED**, gating now (r16) |
+| bad-gold R5 | **APPLIED** (suite 385, denom 343) |
+| **L2-RECALL** | **DESIGNED, ready to build.** `direct_leaf_lookup` branch currently discards the FTS union → route it through the rerank block: **union(direct-leaves ∪ FTS ∪ all-subheadings-of-surfaced-headings) → rerank → cap `L2_EMIT_CAP`=8**. Plus `cascade_full` **dual-family retrieval** for coated/not-coated, raw/processed, fabric/made-up → recovers TC204/DB096/EC008/EC017/TC306/+~10. **Widen the RERANK POOL, not the L4 cap** (gate-2 lesson). See `GOLD-REMEDIATION` log + the design here. |
+| sibling-ASK generalization | **DEFERRED** |
+
+### END GOAL
+Best brain (~75–80% OUTRIGHT + calibrated ASK + top-3 + near-zero confident-wrong + GIR/notes/citation) → **API rewire** (`backend/src/api/classify.ts` legacy→v2) → **frontend rebuild** → **publish** + trade-intelligence. **MCP = use MCP tools to build, NOT a standalone MCP-server deliverable** (user-confirmed).
+
+### OPERATING RULES (autonomous session, user away ~hours)
+- **Pure orchestrator** — delegate everything to subagents, consume structured returns, keep context lean.
+- **Maximal parallel workflows**, no agent-count limit.
+- **Root-cause, not patches.**
+- **ONE change per measured THREE-SIDED gate:** target metric ↑ (McNemar) **AND** confident-wrong flat/down **AND** latency/cost ok.
+- Iterate on `--ids` subsets; full-386 only at milestones.
+- **GOLD/EVAL-DATA changes are USER-GATED** → while user away, **LOG** newly-found gold issues for approval; do **NOT** apply.
+- **Commit at every kept gate.** Vertex runtime always (never Cohere).
+
+---
+
 # Autonomous Continuation Brief — HS Code Classifier (2026-05-29 PM, REWRITTEN)
 
 ITC-HS v2 8-digit classifier for Indian SME exporters. Branch `feat/phase-4-pipeline-build`. Backend root `backend/`.
