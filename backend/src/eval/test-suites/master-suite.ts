@@ -358,12 +358,24 @@ const GOLD_OVERRIDES: Record<string, GoldOverride> = {
 
   // ── Session5 simple (inline) ──
   'S5-SIMP-009': { code: '0306.17.90', reason: 'Frozen shrimps/prawns, species unspecified -> 0306.17.90 "Other". Old 0306.17.50 = "Flower shrimp" (arbitrary species); expected_heading 0304 also wrong.' },
-  'S5-SIMP-021': { code: '8528.72.19', reason: 'Finished LED/smart television -> 8528.72.19 (TV reception apparatus, Other). Old 8524.92.90 = bare flat-panel display module.' },
+  'S5-SIMP-021': { code: '8528.72.17', reason: 'r8(2026-05-29): 55" approx 140cm > 105cm -> size-band leaf 8528.72.17 is more specific than residual .19 per GIR-6. (Prior remediation had set .19 Other; old 8524.92.90 = bare display module.)' },
   'S5-SIMP-022': { code: '8418.10.90', reason: 'Double-door (combined) household refrigerator -> 8418.10.90. Old 8418.30.90 = chest-type freezer.' },
   'S5-SIMP-032': { code: '3924.90.90', reason: 'Plastic bucket 20L household -> 3924.90.90 (household articles of plastic, Other). Old 3925.10.00 = tanks/reservoirs >300L.' },
   'S5-SIMP-037': { code: '9608.10.19', reason: 'Ordinary blue-ink plastic ballpoint -> 9608.10.19 "Other". Old 9608.10.11 = high-value pens (US$100+).' },
   'S5-SIMP-039': { code: '9102.11.00', reason: 'Quartz steel wristwatch -> 9102.11.00 (electrically operated, base-metal case). Old 9101.21.00 = precious-metal case + automatic winding.' },
   'S5-SIMP-040': { code: '9202.90.00', reason: 'Acoustic guitar (plucked) -> 9202.90.00 "Other". Old 9202.10.00 = "Played with a bow".' },
+
+  // ── r8 forensics corrections (2026-05-29, user-approved; each independently legally verified, law-first) ──
+  'S5-SIMP-024': { code: '8516.50.00', reason: 'r8: microwave oven -> 8516.50.00 (eo nomine "Microwave ovens"). Old 8514.11.00 = industrial hot isostatic presses (GIR-1).' },
+  'S5-SIMP-029': { code: '7113.19.11', reason: 'r8: 22k gold necklace = article of jewellery -> 7113.19.11 (of gold, unstudded). Old 7108.12.10 = unwrought gold bullion (Ch.71 Note 9).' },
+  TC101: { code: '0901.11.11', reason: 'r8: query states grade A -> 0901.11.11 (Arabica plantation A Grade). Old 0901.11.12 = B Grade (GIR-6).' },
+  TC003: { code: '4016.93.30', reason: 'r8: rubber oil seals -> 4016.93.30 (Rubber seals/oil seals). Old 8708.99.00 wrong: Section XVII Note 2(a) excludes vulcanised-rubber articles from Ch.87 parts.' },
+  TC119: { code: '0902.20.90', reason: 'r8: loose green tea leaves (not waste) -> 0902.20.90 Other. Old 0902.20.40 = Green Tea WASTE.' },
+  TC304: { code: '6203.42.90', reason: 'r8: denim jeans = cotton trousers -> 6203.42.90. Old 6203.19.10 = Suits of other textile materials (Ch.62 Note 3; jeans are trousers, not suits).' },
+  EC037: { code: '8413.81.90', reason: 'r8: generic industrial hydraulic pump -> 8413.81.90 Other. Old 8413.81.30 = pumps designed primarily for handling water (GIR-6).' },
+  DB016: { code: '1008.29.50', reason: 'r8: bare species name (no sowing-seed signal) = trade grain -> 1008.29.50. Old 1008.21.50 = Millet SEED for sowing.' },
+  'S5-AUTO-024': { code: '8512.40.00', reason: 'r8: windscreen wiper blade -> 8512.40.00 (eo nomine wipers). Old chapter-only Ch.87 wrong: 8708.22 = windscreen GLASS; Section XVII Note 2(f) excludes Ch.85 electrical equipment.' },
+  'S5-AMB-012': { code: '8523.51.00', reason: 'r8: USB flash drive = solid-state non-volatile storage -> 8523.51.00 (Ch.85 Note 6(a)). Old chapter-only Ch.84 wrong (it is Ch.85).' },
 };
 
 function deriveChapter(code: string): string {

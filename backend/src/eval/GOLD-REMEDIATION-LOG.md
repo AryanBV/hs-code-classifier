@@ -162,6 +162,28 @@ headings and were left at the suite's original code: TC009 fuel-injection pump �
 
 ---
 
+## Round 2 — r8 forensics corrections (2026-05-29, user-approved)
+
+Surfaced by the r8 honest-baseline error-attribution forensic; each independently re-adjudicated LAW-FIRST (the verifier saw only query+gold, NOT the model's pick) before approval. Applied via `GOLD_OVERRIDES` (chapter/heading auto-derived). User approved all 9 GOLD-WRONG + the 2 AMBIGUOUS (recommended calls) on 2026-05-29.
+
+| case | query | old gold | new gold | basis |
+|---|---|---|---|---|
+| S5-SIMP-024 | microwave oven convection 25L | 8514.11.00 | 8516.50.00 | eo nomine "Microwave ovens"; old = industrial hot isostatic presses (GIR-1) |
+| S5-SIMP-029 | gold necklace 22k | 7108.12.10 | 7113.19.11 | Ch.71 Note 9 (jewellery); old = unwrought bullion |
+| TC101 | arabica coffee grade A | 0901.11.12 | 0901.11.11 | query says A grade; old = B grade (GIR-6) |
+| TC003 | rubber oil seals for engines | 8708.99.00 | 4016.93.30 | Section XVII Note 2(a) excludes rubber articles from Ch.87 |
+| TC119 | green tea loose leaves | 0902.20.40 | 0902.20.90 | loose leaves != waste |
+| TC304 | denim jeans cotton woven | 6203.19.10 | 6203.42.90 | jeans = trousers not suits (Ch.62 Note 3) |
+| EC037 | hydraulic pump industrial | 8413.81.30 | 8413.81.90 | old = water-specific pumps; generic -> .90 Other |
+| DB016 | proso millet | 1008.21.50 | 1008.29.50 | old = seed for sowing; trade grain -> .29 (AMBIGUOUS, user-approved) |
+| S5-AUTO-024 | wiper blade | (Ch.87 only) | 8512.40.00 | eo nomine wipers; 8708.22 = windscreen glass; Sec XVII Note 2(f) |
+| S5-AMB-012 | USB flash drive | (Ch.84 only) | 8523.51.00 | Ch.85 Note 6(a) solid-state storage (it is Ch.85) |
+| S5-SIMP-021 | LED TV 55 inch | 8528.72.19 | 8528.72.17 | 55in~140cm > 105cm -> size-band leaf more specific (GIR-6); supersedes Round-1 .19 |
+
+Note: TC119 and EC037 are cases where BOTH the prior gold AND the model's r8 pick were wrong — the corrected code is the independently-derived legally-correct residual, NOT the model's pick. Error-removal, not laundering.
+
+---
+
 ## Tooling repaired (Phase 1)
 
 The pre-existing `src/eval/gt-fix/` pipeline queried the dropped legacy `hs_codes`
