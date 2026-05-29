@@ -371,7 +371,7 @@ function buildReport(
       run_id: runId,
       total_cases: details.length,
       duration_seconds: durationSeconds,
-      model: 'classifier-v2 (Gemini 3.5 Flash + Cohere)',
+      model: 'classifier-v2 (Vertex gemini-embedding-001 + Gemini-Flash reranker)',
       notes: suiteName === 'master' ? 'Full eval suite (tier 1+2 + session5 + ask)' : `Suite: ${suiteName}`,
       errors,
       suite: suiteName,

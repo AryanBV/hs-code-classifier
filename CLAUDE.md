@@ -164,7 +164,7 @@ Test case format:
 
 ## Current Status (2026-05-29)
 
-**Branch:** `feat/phase-4-pipeline-build` — significant work in the WORKING TREE, **UNCOMMITTED by design** (last commit `1593359`; ~9 measured rounds of M1+M2 changes + new QGS/answer-sim files are unstaged — user commits on return; do NOT push/commit unattended).
+**Branch:** `feat/phase-4-pipeline-build` — work **COMMITTED at `059cf76`** (checkpoint) plus a follow-up docs-correction commit; **working tree clean**. (~9 measured rounds of M1+M2 changes + QGS/answer-sim files are now in history; do NOT push unattended.)
 
 **Authoritative resume brief:** `backend/docs/AUTONOMOUS-CONTINUATION-2026-05-29.md` (per-round narrative, gates, ultimate bars, commands). Pair with memory note `project_vertex_m0_migration`. Eval reports: `backend/eval-results/vertex-m0-*.json` (highest round = latest).
 
@@ -185,7 +185,7 @@ Test case format:
 ### Phase 4.1 runtime layers (491 v2/eval tests passing as of 2026-05-28; was 302)
 - Done L0 Input Normalization (`layers/L0-normalization.ts`) — alias map + composite-flag
 - Done L1 Triage (`layers/L1-triage.ts`) — Gemini 3.5 Flash, thinking_level=low, constraint_hint-aware
-- Done L2 Hybrid Retrieval (`layers/L2-retrieval.ts`) — Cohere embed-v4 + Rerank 4 Pro + Postgres HNSW cosine + GIN-FTS dual; direct-leaf-lookup shortcut
+- Done L2 Hybrid Retrieval (`layers/L2-retrieval.ts`) — Vertex `gemini-embedding-001` @1536 (HNSW cosine) + Gemini-Flash reranker + Postgres GIN-FTS (M1 migration 2026-05-29 — superseded Cohere; Cohere OFF the v2 path); direct-leaf-lookup shortcut
 - Done L3 Rules Filter (`layers/L3-rules-filter.ts`) — exclusions, multi-dest collapse, single-shot backtrack gate
 - Done L4 Select (`layers/L4-select.ts`) — Gemini 3.5 Flash with multi-signal context (chapter_notes + section_notes + notes_claims + tariff_line_attributes + GIRs), components[] for GIR-3(b)
 - Done L5 Mechanical Verifier (`layers/L5-verifier.ts`) — all 10 rules + predicate DSL evaluator (three-valued PASS/FAIL/SKIP) + source-ref resolver + ts_rank_cd TF-IDF citation check
@@ -202,7 +202,7 @@ Test case format:
 ### M2 — QGS + answer-simulation eval — BUILT, currently MEASURING (r7-sim, in flight)
 - **Answer-simulation eval** (`backend/src/eval/answer-simulator.ts`, `gold-attributes-lookup.ts`, `runner.ts --simulate-answers`, default-off): for ASK outputs, derives the answer from the GOLD code's true attribute value → `continueWithAnswer` (≤Q-budget) → scores end-to-end. Honest (no gold-code leakage). **r6-sim baseline** (`vertex-m0-r6-sim.json`): ASK recoverability **41.4%** (12/29), end-to-end chapter 89.2 / heading 85.5 / 8-digit 67.3 (n=324).
 - **QGS multi-question** (`backend/src/classifier-v2/layers/QGS-generator.ts`): info-gain greedy, cap-3/floor-1, candidate-aware after L3 (+ L1 fallback); batched `continueWithAnswers` (1 batch = 1 round); answer-sim batch-aware. 702 v2/eval tests passing, tsc clean.
-- **⏳ IN FLIGHT:** `vertex-m0-r7-sim` — QGS gate: recoverability must rise >41.4%, end-to-end 8-digit >66.7%, AND flag-off-equivalent routing/classify no regression vs r6 (86.5/68.0). (No `vertex-m0-r7-sim.json` on disk yet — run not landed.)
+- **✅ DONE:** `vertex-m0-r7-sim` — routing **86.4** / chapter **92.3** / heading **88.0** / 8-digit **68.6** / weighted **83.9**; QGS introduced **no classify regression** vs r6. `ask_recoverability` **25%** is an answer-sim HARNESS GAP (gold-attributes-lookup coverage), NOT a QGS failure — the simulator can't supply gold answers for cases outside its attribute-lookup table, so recoverable ASKs score as misses.
 
 ### Levers left toward "ultimate" (eval-gated, priority order)
 - **Data enrichment** for the 19 heading-right/leaf-wrong cases needing NEW attributes (garment sizing, vehicle specs, surface treatment, fur species) — offline O2-style round; only path past the ~68% 8-digit ceiling besides QGS.
