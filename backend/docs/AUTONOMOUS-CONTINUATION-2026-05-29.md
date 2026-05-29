@@ -6,14 +6,16 @@ ITC-HS v2 8-digit classifier. Branch `feat/phase-4-pipeline-build`. Backend root
 
 ### TL;DR — where we are
 - **HEAD = latest commit on the branch** (run `git --no-pager log --oneline -1`; do NOT trust a hardcoded hash — the tip moves with each commit).
-- **Baseline progression (clean gold, frozen routing-independent denom):** r12 68.0% → gold-R4 70.1% → r15 (MV-03 + bad-gold-R5) 74.3% → **r17 (L2 direct_leaf_lookup recall) 76.38% OUTRIGHT 8-digit (262/343), chapter 88.6%, heading 85.1%, routing 93.8%, confident-wrong ~20.9%** — **NEW BASELINE, IN the 75–80% target band.**
-- **L2-recall direct_leaf_lookup fix COMMITTED** (`d4cfb44`): widen rerank POOL to cosine∪FTS∪all-subheadings-of-surfaced-headings, emit still capped at `L2_EMIT_CAP`=8. Gate r17 vs r15: +2.04pp OUTRIGHT, gold-code rejects 15→7, confident-wrong flat, McNemar p=0.049 (13 improved / 4 regressed).
+- **Baseline progression (clean gold, frozen routing-independent denom):** r12 68.0% → gold-R4 70.1% → r15 (MV-03 + bad-gold-R5) 74.3% → r17 (L2 direct_leaf_lookup recall) 76.4% → **r18 (residual-leaf-floor) 77.3% OUTRIGHT 8-digit (265/343), chapter 89.2%, heading 85.4%, confident-wrong 63 (down from 69)** — **CURRENT BASELINE, at the top of the realistic non-fine-tuned band.**
+- **SHIP ARC STARTED (`cd7a5a3`):** `backend/src/api/v2-api-adapter.ts` (`mapV2Result`: CLASSIFY/ASK/REFUSE → flat DTO, confidence 0–100, leaf-desc + top-3 alternatives hydration, system_error/80s-timeout → 503) + `USE_V2_CLASSIFIER` feature flag in `src/api/classify.ts`, **DEFAULT OFF** (legacy byte-identical, instant rollback). Cutover (flag ON) + frontend rebuild = **DEFERRED to user review** (outward-facing change).
 - Suite = **385 cases** (post bad-gold R5: 22 query rewrites + drop DB030); scoring denom = **343** gold-code cases.
-- **REMAINING brain headroom:**
-  - **(a) CHAPTER/SUBHEADING RECALL** — ~7 not-surfaced gold-code rejects (TC203/TC208 pharma 3004.90 70-child residual, TC306 silk saree→6206 made-up garment, EC008 galvanized→7210 coated, DB053, DB200, TC012, TC210). The adjacent-excluded-family / triage-recall lever. **NEXT.**
-  - **(b) LEAF-PRECISION** (information-limited) — the wider pool added 3 true correct→wrong-leaf regressions (EC005/DB138/S5-AUTO-012) + TC210 (correct→reject). **DEFERRED to a fine-tuned reranker.** (See leaf-precision backlog below.)
-  - **(c) GOAL COMPONENTS not yet done:** TOP-3 surfacing + NEAR-ZERO confident-wrong (still ~21%) + calibrated ASK.
-- **Leaf-precision / fine-tuned-reranker BACKLOG:** EC005, DB138, S5-AUTO-012 (correct→wrong-leaf regressions from the wider pool) + TC210 (correct→reject). Signed-off in `compare.ts` as accepted regressions; revisit when the domain reranker lands.
+- **REMAINING BRAIN HEADROOM** (all harder / diminishing, measurement-gated):
+  - **(1) WRONG-HEADING SYNONYM-RECALL** — TC012 silicone hose (Ch.40 vs 8708, function-over-material), EC008 galvanized (7210 coated vs 7208/9) → L2 recall/synonym + sibling-diversity.
+  - **(2) LEAF-PRECISION** (information-limited) — the wider pools added a few correct→wrong-leaf flips (e.g. DB108 wrong-residual, EC005/DB138/S5-AUTO-012) → needs a **FINE-TUNED RERANKER** (the real ceiling-raiser).
+  - **(3) CONFIDENCE-CALIBRATION** — confident-wrong is ~72% HIGH-confidence overconfidence (ECE ~0.10) → a discrete-confidence sub-0.9 abstain gives ~+4pt safety but near-zero needs a **NEW signal** (rerank-margin / entropy) = research lever.
+  - **(4) TOP-3 is UNMEASURABLE** until the eval persists candidate lists (small instrumentation needed).
+  - **(5) DB053 notes_claims definition-note fix** (id 20/21 EXISTS-on-definition → SKIP; broad textile blast radius, gate carefully).
+- **GOLD-REVIEW QUEUE (user-gated, NOT applied — user away):** DB061 (Ensembles unwinnable), S5-AMB-005 (car seat cover sofa-vs-other), DB200 (malformed query + L0 truncation). See TaskList #13.
 
 ### OVER-RESTRICTION ROOT CAUSE (the key reframe — via systematic-debugging)
 The r14 "**51 mis-routed valid products**" are **NOT** L4/L5 over-strictness. They decompose into 3 buckets:
@@ -34,7 +36,9 @@ The r14 "**51 mis-routed valid products**" are **NOT** L4/L5 over-strictness. Th
 | `881ef2e` | **MV-03 source_ref grammar fix** — taught L4 the locked `table:key=value` citation grammar; eliminates MV-03 false-reject → reclaims a repair round every classify |
 | `8a189ef` | **calibrated-classify lever** (env-gated OFF) — converts L1-ASK→CLASSIFY when retrieval concentrated; mirror of sibling-ASK; extracted `runSelectVerifyRepair`, main path byte-identical; **never emits REFUSE** |
 | `168ac64` | **gold-freeze Round 5** — 22 contentless-fragment query rewrites + drop DB030 (user-approved) |
-| `d4cfb44` | **L2 direct_leaf_lookup recall fix** — widen rerank POOL to cosine∪FTS∪all-subheadings-of-surfaced-headings; r17 = **76.38% OUTRIGHT** (NEW BASELINE), gold-code rejects 15→7, McNemar p=0.049 |
+| `d4cfb44` | **L2 direct_leaf_lookup recall fix** — widen rerank POOL to cosine∪FTS∪all-subheadings-of-surfaced-headings; r17 = **76.4% OUTRIGHT**, gold-code rejects 15→7, McNemar p=0.049 |
+| `cd7a5a3` | **v2 API-rewire adapter** — `src/api/v2-api-adapter.ts` (`mapV2Result`: CLASSIFY/ASK/REFUSE → flat DTO, confidence 0–100, leaf-desc + top-3 hydration, system_error/timeout → 503) + `USE_V2_CLASSIFIER` flag in `classify.ts`, **DEFAULT OFF** (legacy byte-identical, instant rollback) |
+| `7629a2b` | **residual-leaf-floor** — force-include surfaced-subheading residual "Other" leaf (recovers pharma/supplement residual rejects); r18 = **77.3% OUTRIGHT** (CURRENT BASELINE, 265/343), confident-wrong 69→63 |
 
 ### ENV FLAGS & EVAL COMMANDS
 - `CALIBRATED_CLASSIFY_ENABLED` (default **off**), `CALIBRATED_CLASSIFY_MARGIN`=0.15, `CALIBRATED_CLASSIFY_STRONG_MARGIN`=0.30
@@ -48,21 +52,26 @@ The r14 "**51 mis-routed valid products**" are **NOT** L4/L5 over-strictness. Th
 | MV-03 grammar fix | **DONE** (committed) |
 | calibrated-classify | **BUILT + COMMITTED**, gating now (r16) |
 | bad-gold R5 | **APPLIED** (suite 385, denom 343) |
-| **L2-RECALL (direct_leaf_lookup)** | **DONE + COMMITTED (`d4cfb44`, r17 76.38%).** `direct_leaf_lookup` now unions cosine∪FTS∪all-subheadings-of-surfaced-headings through the rerank cascade, emit capped at `L2_EMIT_CAP`=8 (POOL widened, not L4 cap — gate-2 lesson upheld). |
-| **L2-RECALL (cascade_full dual-family)** | **DESIGNED, ready to build (NEXT).** `cascade_full` **dual-family retrieval** for coated/not-coated, raw/processed, fabric/made-up → recovers the ~7 not-surfaced rejects (TC306/EC008/TC203/TC208/DB053/DB200/TC012). The adjacent-excluded-family / triage-recall lever. |
+| **L2-RECALL (direct_leaf_lookup)** | **DONE + COMMITTED (`d4cfb44`, r17 76.4%).** `direct_leaf_lookup` now unions cosine∪FTS∪all-subheadings-of-surfaced-headings through the rerank cascade, emit capped at `L2_EMIT_CAP`=8 (POOL widened, not L4 cap — gate-2 lesson upheld). |
+| **residual-leaf-floor** | **DONE + COMMITTED (`7629a2b`, r18 77.3% — CURRENT BASELINE).** Force-include the surfaced-subheading residual "Other" leaf so pharma/supplement residual rejects are recoverable; confident-wrong 69→63. |
+| **v2 API-rewire adapter** | **DONE + COMMITTED (`cd7a5a3`), flag DEFAULT OFF.** `mapV2Result` adapter + `USE_V2_CLASSIFIER`. Cutover (flag ON) + frontend rebuild **DEFERRED to user review.** |
+| wrong-heading synonym-recall | **NEXT (brain headroom 1)** — TC012 silicone hose, EC008 galvanized → L2 recall/synonym + sibling-diversity. |
+| leaf-precision (fine-tuned reranker) | **DEFERRED** — DB108/EC005/DB138/S5-AUTO-012; the real ceiling-raiser. |
+| confidence-calibration | **RESEARCH** — needs a new signal (rerank-margin/entropy); ~+4pt safety from a sub-0.9 abstain. |
 | sibling-ASK generalization | **DEFERRED** |
 
-### END GOAL
-Best brain (~75–80% OUTRIGHT + calibrated ASK + top-3 + near-zero confident-wrong + GIR/notes/citation) → **API rewire** (`backend/src/api/classify.ts` legacy→v2) → **frontend rebuild** → **publish** + trade-intelligence. **MCP = use MCP tools to build, NOT a standalone MCP-server deliverable** (user-confirmed).
+### END GOAL (unchanged)
+Best brain (~75–80% OUTRIGHT + calibrated ASK + top-3 + near-zero confident-wrong + GIR/notes/citation) → **API rewire** (`backend/src/api/classify.ts` legacy→v2 — **foundation DONE**, `cd7a5a3`, flag default OFF; cutover deferred to user review) → **frontend rebuild** → **publish** + trade-intelligence. **MCP = use MCP tools to build, NOT a standalone MCP-server deliverable** (user-confirmed).
 
-### OPERATING RULES (autonomous session, user away ~hours)
+### OPERATING RULES (autonomous session, user away ~hours) — unchanged
 - **Pure orchestrator** — delegate everything to subagents, consume structured returns, keep context lean.
 - **Maximal parallel workflows**, no agent-count limit.
-- **Root-cause, not patches.**
+- **Root-cause, not patches.** Never weaken L4/L5 (→ confident WRONG codes).
 - **ONE change per measured THREE-SIDED gate:** target metric ↑ (McNemar) **AND** confident-wrong flat/down **AND** latency/cost ok.
 - Iterate on `--ids` subsets; full-386 only at milestones.
-- **GOLD/EVAL-DATA changes are USER-GATED** → while user away, **LOG** newly-found gold issues for approval; do **NOT** apply.
+- **GOLD/EVAL-DATA changes are USER-GATED** → while user away, **LOG** newly-found gold issues for approval; do **NOT** apply (no unilateral gold changes).
 - **Commit at every kept gate.** Vertex runtime always (never Cohere).
+- **EVAL-ORCHESTRATION FAILURE MODE (recurring — heed):** when a ~30-min eval is delegated to a SUBAGENT, the subagent BACKGROUNDS it and returns prematurely — its child process dies with it, so the run never completes. **The ORCHESTRATOR must run long evals as its OWN background Bash** (it gets re-invoked on completion); only delegate the no-eval compare+commit step to a subagent.
 
 ---
 
