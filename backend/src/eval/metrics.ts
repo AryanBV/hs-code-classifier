@@ -279,3 +279,53 @@ export function mean(values: number[]): number {
   if (values.length === 0) return 0;
   return values.reduce((s, x) => s + x, 0) / values.length;
 }
+
+/**
+ * One gold case's top-k input: the gold 8-digit code and the ranked list of
+ * candidate codes the classifier considered (selected first). Both sides are
+ * passed in their RAW dotted form; this scorer normalizes internally so callers
+ * need not pre-strip dots.
+ */
+export interface TopKCase {
+  /** Gold 8-digit code (dotted, e.g. "8708.30.00"). */
+  goldCode: string;
+  /**
+   * Ranked candidate codes the classifier surfaced (selected first, then
+   * alternatives in the model's ranking order). Empty when the system did not
+   * deliver a classification (ASK/REFUSE/error) — that case is a top-k miss.
+   */
+  candidateCodes: string[];
+}
+
+/** Strip dots/whitespace so "8708.30.00" and "87083000" compare equal. */
+function stripCode(code: string): string {
+  return code.replace(/\./g, '').replace(/\s/g, '');
+}
+
+/**
+ * top-k code accuracy over a frozen population: the fraction of cases whose gold
+ * code appears among the FIRST `k` candidate codes (selected + alternatives).
+ *
+ * The denominator is `cases.length` (the caller passes the FROZEN gold-code
+ * population — every non-error gold case, including ASK/REFUSE cases which carry
+ * an empty `candidateCodes` and so are misses). Returns a {@link RateCI} so the
+ * report carries a Wilson 95% CI exactly like the other accuracy numbers.
+ *
+ * Pure + deterministic: comparison is dot-insensitive (normalized internally),
+ * the first `k` candidates only are inspected, and `k<=0` yields 0 hits.
+ */
+export function topKCodeAccuracy(cases: TopKCase[], k: number): RateCI {
+  const n = cases.length;
+  if (n === 0) return wilsonInterval(0, 0);
+  let hits = 0;
+  if (k > 0) {
+    for (const c of cases) {
+      const goldNorm = stripCode(c.goldCode);
+      const found = c.candidateCodes
+        .slice(0, k)
+        .some((code) => stripCode(code) === goldNorm);
+      if (found) hits++;
+    }
+  }
+  return wilsonInterval(hits, n);
+}

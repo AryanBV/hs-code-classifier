@@ -27,7 +27,9 @@ import {
   eceEqualMass,
   bootstrapECE,
   percentile,
+  topKCodeAccuracy,
   type CalibrationSample,
+  type TopKCase,
 } from './metrics';
 import { masterSuite, validateSuite } from './test-suites/master-suite';
 import { quickSuite } from './test-suites/quick-suite';
@@ -182,6 +184,40 @@ export function extractDiagnostics(
 }
 
 /**
+ * EVAL-ONLY (additive, behavior-neutral): the ranked candidate CODES the
+ * classifier considered for a delivered classification — SELECTED CODE FIRST,
+ * then the model's `alternatives_considered` (in the model's own ranking order).
+ *
+ * SOURCE + FIDELITY: this is the `selected_code + alternatives_considered` PROXY,
+ * NOT the full L3 reranked candidate set. We deliberately do NOT enable
+ * `captureTrace` to read L3's `filtered_candidates`: that set mixes 6-digit
+ * subheadings with 8-digit leaves (not directly top-k-comparable to an 8-digit
+ * gold code) and would require a classify()-side change to surface, whereas
+ * `classification.alternatives_considered` is ALREADY on the result, is code-only
+ * (select-v2.md schema pattern `^\d{4}\.\d{2}(\.\d{2})?$`, maxItems 4), and needs
+ * no behavior change. Limitation: it is a LOWER bound on true retrieval top-k —
+ * a gold code retrieved into L4's set but neither selected nor listed by the
+ * model will not appear here. De-duplicated (selected code is dropped from the
+ * tail if the model also echoed it) while preserving rank order. Returns
+ * `undefined` when the result is not a delivered classification (ASK/REFUSE).
+ */
+export function buildCandidateCodes(raw: ClassifyResult): string[] | undefined {
+  if (raw.decision !== 'CLASSIFY' || !raw.classification) return undefined;
+  const c = raw.classification;
+  const ranked = [c.code, ...c.alternatives_considered];
+  // Stable de-dup preserving first occurrence (keeps the selected code in slot 0).
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const code of ranked) {
+    if (!code) continue;
+    if (seen.has(code)) continue;
+    seen.add(code);
+    out.push(code);
+  }
+  return out;
+}
+
+/**
  * Build a per-case ERROR EvalDetail. Used for BOTH thrown exceptions (I1:
  * timeout / persistent Cohere/Supabase L2/L3 transport failure) and v2
  * `system_error` results (C1: persistent Vertex transport failure). An error is
@@ -286,6 +322,12 @@ export async function runTestCase(
         confidence: result.confidence,
         response_time_ms: elapsed,
         score: routingCorrect ? scoring.score : 0,
+        // EVAL-ONLY (additive): ranked candidate codes (selected first) for top-k.
+        // Spread so the key is ABSENT (not undefined) when not a classification.
+        ...(() => {
+          const cc = buildCandidateCodes(raw);
+          return cc ? { candidate_codes: cc } : {};
+        })(),
         ...extractDiagnostics(raw, scoring.codeCorrect),
       };
     }
@@ -450,6 +492,19 @@ function buildReport(
   const primaryHeadingK = goldCases.filter(d => d.heading_correct === true).length;
   const primaryCodeK = goldCases.filter(d => d.code_correct === true).length;
 
+  // -------------------------------------------------------------------------
+  // EVAL-ONLY top-k code accuracy (additive; NOT a gate). Over the SAME frozen
+  // gold-code population: is the gold code among the first k candidate codes
+  // (selected first + alternatives_considered)? A gold case that ASKed/REFUSEd
+  // carries no candidate_codes → empty list → a top-k miss kept in the denom.
+  // Omitted entirely when there are no gold cases (goldN === 0) so an all-ASK /
+  // all-error run's report stays byte-for-byte unchanged.
+  // -------------------------------------------------------------------------
+  const topKCases: TopKCase[] = goldCases.map(d => ({
+    goldCode: d.expected_code as string,
+    candidateCodes: d.candidate_codes ?? [],
+  }));
+
   // Conditional precision (the OLD numbers) — kept ONLY as a labeled diagnostic.
   const conditionalN = classifyDetails.length;
 
@@ -546,6 +601,17 @@ function buildReport(
       heading: wilsonInterval(primaryHeadingK, goldN),
       code: wilsonInterval(primaryCodeK, goldN),
     },
+    // EVAL-ONLY top-k (additive). Spread so the key is ABSENT (not undefined) on a
+    // run with no gold cases — keeps the serialized report shape unchanged there.
+    ...(goldN > 0
+      ? {
+          top_k_code_accuracy: {
+            gold_code_cases: goldN,
+            top_1: topKCodeAccuracy(topKCases, 1),
+            top_3: topKCodeAccuracy(topKCases, 3),
+          },
+        }
+      : {}),
     precision_when_classifying: {
       n: conditionalN,
       chapter: wilsonInterval(chapterCorrect, conditionalN),
@@ -764,6 +830,14 @@ function printSummary(report: EvalReport): void {
   console.log(`  Chapter:  ${fmtCI(pa.chapter)}`);
   console.log(`  Heading:  ${fmtCI(pa.heading)}`);
   console.log(`  8-digit:  ${fmtCI(pa.code)}`);
+
+  // EVAL-ONLY top-k (additive; NOT a gate) — selected + alternatives_considered PROXY.
+  const tk = report.top_k_code_accuracy;
+  if (tk) {
+    console.log(`\nTOP-K 8-DIGIT (EVAL-ONLY, frozen denom = ${tk.gold_code_cases}; selected+alternatives PROXY — NOT a gate)`);
+    console.log(`  top-1:  ${fmtCI(tk.top_1)}`);
+    console.log(`  top-3:  ${fmtCI(tk.top_3)}`);
+  }
 
   // Secondary diagnostic — the OLD routing-conditional precision (dilutable).
   const pwc = report.precision_when_classifying;

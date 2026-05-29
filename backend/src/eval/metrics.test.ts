@@ -6,7 +6,9 @@ import {
   eceEqualMass,
   percentile,
   mean,
+  topKCodeAccuracy,
   type CalibrationSample,
+  type TopKCase,
 } from './metrics';
 
 // ---------------------------------------------------------------------------
@@ -206,5 +208,75 @@ describe('mean', () => {
   });
   it('empty → 0', () => {
     expect(mean([])).toBe(0);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// topKCodeAccuracy — synthetic cases (EVAL-ONLY top-k instrumentation)
+// ---------------------------------------------------------------------------
+
+describe('topKCodeAccuracy', () => {
+  it('empty population → 0/0 with the full [0,1] interval', () => {
+    const ci = topKCodeAccuracy([], 3);
+    expect(ci.k).toBe(0);
+    expect(ci.n).toBe(0);
+    expect(ci.rate).toBe(0);
+  });
+
+  it('top-1 counts only gold-as-selected (first candidate)', () => {
+    const cases: TopKCase[] = [
+      { goldCode: '7318.15.00', candidateCodes: ['7318.15.00', '7318.16.00'] }, // selected = gold ✓
+      { goldCode: '0901.21.00', candidateCodes: ['0901.22.00', '0901.21.00'] }, // gold is alt #1, NOT selected ✗ at k=1
+    ];
+    const ci = topKCodeAccuracy(cases, 1);
+    expect(ci.k).toBe(1);
+    expect(ci.n).toBe(2);
+    expect(ci.rate).toBeCloseTo(0.5, 10);
+  });
+
+  it('top-3 finds the gold code among the first 3 candidates', () => {
+    const cases: TopKCase[] = [
+      // gold is the 3rd candidate → hit at k=3 (miss at k=1).
+      { goldCode: '7318.15.00', candidateCodes: ['7326.90.99', '7318.16.00', '7318.15.00', '7318.19.00'] },
+      // gold beyond position 3 → miss even at k=3.
+      { goldCode: '0901.21.00', candidateCodes: ['0902.10.00', '0902.20.00', '0902.30.00', '0901.21.00'] },
+    ];
+    expect(topKCodeAccuracy(cases, 1).rate).toBeCloseTo(0, 10);
+    expect(topKCodeAccuracy(cases, 3).rate).toBeCloseTo(0.5, 10); // first case only
+  });
+
+  it('a gold case with NO candidates (ASK/REFUSE) is a miss but stays in the denominator', () => {
+    const cases: TopKCase[] = [
+      { goldCode: '7318.15.00', candidateCodes: ['7318.15.00'] }, // hit
+      { goldCode: '0901.21.00', candidateCodes: [] },             // ASK/REFUSE → miss, denom kept
+    ];
+    const ci = topKCodeAccuracy(cases, 3);
+    expect(ci.k).toBe(1);
+    expect(ci.n).toBe(2); // denominator NOT shrunk by the empty case
+    expect(ci.rate).toBeCloseTo(0.5, 10);
+  });
+
+  it('comparison is dot-insensitive (normalizes both sides)', () => {
+    const cases: TopKCase[] = [
+      { goldCode: '7318.15.00', candidateCodes: ['73181500'] }, // dotted gold vs un-dotted candidate
+    ];
+    expect(topKCodeAccuracy(cases, 1).rate).toBe(1);
+  });
+
+  it('top-k is monotone non-decreasing in k (top-1 ≤ top-3)', () => {
+    const cases: TopKCase[] = [
+      { goldCode: '7318.15.00', candidateCodes: ['7318.16.00', '7318.15.00'] }, // gold at pos 2
+      { goldCode: '0901.21.00', candidateCodes: ['0901.21.00'] },               // gold at pos 1
+    ];
+    const t1 = topKCodeAccuracy(cases, 1).rate; // 1/2 (second case only)
+    const t3 = topKCodeAccuracy(cases, 3).rate; // 2/2 (both)
+    expect(t1).toBeCloseTo(0.5, 10);
+    expect(t3).toBeCloseTo(1, 10);
+    expect(t3).toBeGreaterThanOrEqual(t1);
+  });
+
+  it('k<=0 yields 0 hits (defensive)', () => {
+    const cases: TopKCase[] = [{ goldCode: '7318.15.00', candidateCodes: ['7318.15.00'] }];
+    expect(topKCodeAccuracy(cases, 0).k).toBe(0);
   });
 });

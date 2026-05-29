@@ -23,7 +23,7 @@ vi.mock('./answer-simulator', () => ({
 
 // Imported AFTER vi.mock so the mock is wired. require.main !== module under
 // vitest, so importing runner does NOT kick off a live eval.
-import { runTestCase, extractDiagnostics, buildReportForTest, filterByIds } from './runner';
+import { runTestCase, extractDiagnostics, buildReportForTest, filterByIds, buildCandidateCodes } from './runner';
 
 const diag = (over: Partial<ClassifyResult['diagnostics']> = {}): ClassifyResult['diagnostics'] => ({
   escalation_path: ['L0', 'L1', 'L2', 'L3', 'L4', 'L5'],
@@ -111,6 +111,41 @@ describe('extractDiagnostics (pure)', () => {
   });
 });
 
+describe('buildCandidateCodes (pure, EVAL-ONLY proxy)', () => {
+  const classifying = (over: Partial<NonNullable<ClassifyResult['classification']>>): ClassifyResult =>
+    classifyResult({
+      decision: 'CLASSIFY',
+      classification: {
+        code: '7318.15.00', is_six_digit: false, export_policy: null, policy_condition: null,
+        india_specific: false,
+        citation: { primary: { type: 'leaf_description', source_ref: 'x', verbatim_text: 't', note_or_exclusion_id: null }, gir_applied: 'GIR-1' },
+        reasoning_chain: ['r'], self_confidence: 'HIGH', alternatives_considered: [],
+        components: null, escalated_to_deep_think: false,
+        ...over,
+      },
+    });
+
+  it('puts the selected code FIRST, then alternatives in model order', () => {
+    const raw = classifying({ code: '7318.15.00', alternatives_considered: ['7318.16.00', '7318.19.00'] });
+    expect(buildCandidateCodes(raw)).toEqual(['7318.15.00', '7318.16.00', '7318.19.00']);
+  });
+
+  it('de-dups the selected code if the model also echoed it in alternatives (rank preserved)', () => {
+    const raw = classifying({ code: '7318.15.00', alternatives_considered: ['7318.15.00', '7318.16.00'] });
+    expect(buildCandidateCodes(raw)).toEqual(['7318.15.00', '7318.16.00']);
+  });
+
+  it('returns just the selected code when there are no alternatives', () => {
+    const raw = classifying({ code: '2709.00.10', alternatives_considered: [] });
+    expect(buildCandidateCodes(raw)).toEqual(['2709.00.10']);
+  });
+
+  it('returns undefined for a non-classification (ASK / REFUSE) result', () => {
+    expect(buildCandidateCodes(classifyResult({ decision: 'ASK', classification: undefined }))).toBeUndefined();
+    expect(buildCandidateCodes(classifyResult({ decision: 'REFUSE', classification: undefined }))).toBeUndefined();
+  });
+});
+
 describe('runTestCase — happy path captures diagnostics', () => {
   it('scores a correct classification and attaches diagnostics', async () => {
     const raw = classifyResult({
@@ -119,7 +154,7 @@ describe('runTestCase — happy path captures diagnostics', () => {
         code: '7318.15.00', is_six_digit: false, export_policy: 'Free', policy_condition: null,
         india_specific: false,
         citation: { primary: { type: 'leaf_description', source_ref: 'x', verbatim_text: 'bolts', note_or_exclusion_id: null }, gir_applied: 'GIR-1' },
-        reasoning_chain: ['r'], self_confidence: 'HIGH', alternatives_considered: [],
+        reasoning_chain: ['r'], self_confidence: 'HIGH', alternatives_considered: ['7318.16.00'],
         components: null, escalated_to_deep_think: false,
       },
       diagnostics: diag({ llm_calls: 2 }),
@@ -134,6 +169,8 @@ describe('runTestCase — happy path captures diagnostics', () => {
     expect(d.escalation_path).toEqual(raw.diagnostics.escalation_path);
     expect(d.llm_calls).toBe(2);
     expect(d.est_cost_usd).toBeGreaterThan(0);
+    // EVAL-ONLY: candidate_codes = selected first, then alternatives_considered.
+    expect(d.candidate_codes).toEqual(['7318.15.00', '7318.16.00']);
   });
 });
 
@@ -218,6 +255,7 @@ describe('runTestCase — simulateAnswers OFF (default): existing behavior prese
     expect(d.expected_code).toBe('7318.15.00');
     expect(d.expected_chapter).toBe('73');
     expect(d.code_correct).toBeUndefined(); // no code delivered → frozen-denom miss
+    expect(d.candidate_codes).toBeUndefined(); // EVAL-ONLY: no classification → no candidates
   });
 });
 
@@ -341,6 +379,57 @@ describe('buildReportForTest — frozen scoring population (primary_accuracy)', 
     ];
     const r = buildReportForTest(details);
     expect(r.primary_accuracy.gold_code_cases).toBe(1); // E1 excluded
+  });
+});
+
+describe('buildReportForTest — top_k_code_accuracy (EVAL-ONLY, frozen denom)', () => {
+  const detail = (over: Partial<import('./types').EvalDetail>): import('./types').EvalDetail => ({
+    test_case_id: 'x', query: 'q', expected_routing: 'classify', actual_routing: 'classify',
+    routing_correct: true, response_time_ms: 1, score: 100, ...over,
+  });
+
+  it('top-1 equals primary code accuracy; top-3 catches a gold ranked #2', () => {
+    const details: import('./types').EvalDetail[] = [
+      // selected = gold → top-1 hit.
+      detail({ test_case_id: 'C1', expected_code: '7318.15.00', actual_code: '7318.15.00',
+        chapter_correct: true, heading_correct: true, code_correct: true,
+        candidate_codes: ['7318.15.00', '7318.16.00'] }),
+      // selected WRONG but gold is candidate #2 → top-1 miss, top-3 hit.
+      detail({ test_case_id: 'C2', expected_code: '0901.21.00', actual_code: '0901.22.00',
+        chapter_correct: true, heading_correct: true, code_correct: false,
+        candidate_codes: ['0901.22.00', '0901.21.00'] }),
+    ];
+    const r = buildReportForTest(details);
+    expect(r.top_k_code_accuracy).toBeDefined();
+    expect(r.top_k_code_accuracy!.gold_code_cases).toBe(2);
+    // top-1 mirrors primary_accuracy.code (1/2).
+    expect(r.top_k_code_accuracy!.top_1.k).toBe(1);
+    expect(r.top_k_code_accuracy!.top_1.rate).toBeCloseTo(r.primary_accuracy.code.rate, 10);
+    // top-3 recovers C2 → 2/2.
+    expect(r.top_k_code_accuracy!.top_3.k).toBe(2);
+    expect(r.top_k_code_accuracy!.top_3.n).toBe(2);
+    expect(r.top_k_code_accuracy!.top_3.rate).toBeCloseTo(1, 10);
+  });
+
+  it('a gold case routed to ASK (no candidate_codes) stays a top-k miss in the denom', () => {
+    const details: import('./types').EvalDetail[] = [
+      detail({ test_case_id: 'C1', expected_code: '7318.15.00', actual_code: '7318.15.00',
+        code_correct: true, candidate_codes: ['7318.15.00'] }),
+      detail({ test_case_id: 'A1', actual_routing: 'ask', routing_correct: false,
+        expected_code: '0901.21.00' }), // no candidate_codes → miss
+    ];
+    const r = buildReportForTest(details);
+    expect(r.top_k_code_accuracy!.top_3.k).toBe(1);
+    expect(r.top_k_code_accuracy!.top_3.n).toBe(2); // denominator kept
+  });
+
+  it('is OMITTED when there are no gold-code cases (report shape unchanged)', () => {
+    const details: import('./types').EvalDetail[] = [
+      detail({ test_case_id: 'NG', expected_routing: 'ask', actual_routing: 'ask', routing_correct: true,
+        question_asked: 'q', question_score: 2 }), // no expected_code
+    ];
+    const r = buildReportForTest(details);
+    expect(r.top_k_code_accuracy).toBeUndefined();
   });
 });
 

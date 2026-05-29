@@ -73,6 +73,28 @@ export interface EvalReport {
   };
 
   /**
+   * EVAL-ONLY top-k instrumentation (additive; NOT a gate). Over the SAME frozen
+   * gold-code denominator as `primary_accuracy` (every non-error case carrying a
+   * gold code), the fraction where the gold 8-digit code appears among the first
+   * `k` `candidate_codes` (selected first + the model's `alternatives_considered`).
+   * top-1 by construction equals `primary_accuracy.code` on delivered
+   * classifications. A gold case that ASKed/REFUSEd/errored carries no
+   * candidate_codes → it is a top-k MISS but stays in the denominator.
+   *
+   * FIDELITY: this measures the `selected + alternatives_considered` PROXY, a
+   * LOWER bound on true retrieval top-k (see `EvalDetail.candidate_codes`). Absent
+   * entirely when no scored case carries a gold code (denominator 0).
+   */
+  top_k_code_accuracy?: {
+    /** Frozen denominator = all non-error gold-code cases (same as primary_accuracy). */
+    gold_code_cases: number;
+    /** Gold code is the FIRST candidate (selected). k=1, with Wilson 95% CI. */
+    top_1: RateCI;
+    /** Gold code is within the first 3 candidates. k=3, with Wilson 95% CI. */
+    top_3: RateCI;
+  };
+
+  /**
    * SECONDARY DIAGNOSTIC — the OLD routing-conditional numbers (correct over
    * correctly-routed classify cases only). Relabeled to make explicit it is a
    * conditional precision, NOT the headline accuracy. Mirrors `classification.*`
@@ -283,6 +305,27 @@ export interface EvalDetail {
   code_correct?: boolean;
   alternative_chapters?: string[];
   alternative_match?: boolean;
+
+  /**
+   * EVAL-ONLY instrumentation (additive, behavior-neutral). The ranked list of
+   * 8-/6-digit candidate CODES the classifier considered for this case, SELECTED
+   * CODE FIRST, followed by the model's `alternatives_considered` (in the model's
+   * own ranking order). Populated ONLY on a delivered classification (decision
+   * CLASSIFY); absent on ASK/REFUSE/error. Lets a re-run compute top-k accuracy
+   * (is the gold code among the first k considered) WITHOUT re-running the model.
+   *
+   * SOURCE + FIDELITY: this is the `selected_code + classification.alternatives_
+   * considered` PROXY, not the full L3 reranked candidate set. `alternatives_
+   * considered` is a code-only array (select-v2.md schema: pattern
+   * `^\d{4}\.\d{2}(\.\d{2})?$`, maxItems 4), so the proxy carries at most 5 codes
+   * and reflects what the MODEL chose to surface as runners-up — NOT every code
+   * L4 saw. A gold code that was retrieved into L4's candidate set but which the
+   * model neither selected nor listed will NOT appear here (top-k is a LOWER
+   * bound on true retrieval recall). Codes are stored verbatim (dotted form); the
+   * scorer normalizes before comparison.
+   */
+  candidate_codes?: string[];
+
   question_asked?: string;
   question_score?: number;
   confidence?: number;
