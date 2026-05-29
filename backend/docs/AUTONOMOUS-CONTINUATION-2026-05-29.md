@@ -7,7 +7,7 @@ ITC-HS v2 8-digit classifier for Indian SME exporters. Branch `feat/phase-4-pipe
 
 ## 0. TL;DR — where we are RIGHT NOW
 
-- **HEAD = `e340990`** on `feat/phase-4-pipeline-build`. **Working tree CLEAN.** `tsc` clean; **796 v2/eval tests pass**.
+- **HEAD = latest commit on `feat/phase-4-pipeline-build`** (run `git log --oneline -1`; was `2933796` at wrap-up — don't trust a hardcoded hash, the tip moves with each doc commit). **Working tree CLEAN.** `tsc` clean; **796 v2/eval tests pass**.
 - **Honest brain accuracy (r12, clean gold, ASK off): 8-digit OUTRIGHT = 68.0%** / chapter 81.1% / heading 78.2% (frozen routing-independent denominator, n=344 gold-code cases) / confident-wrong = 69 / EFFECTIVE 8-digit 71.5%. This is the TRUE number (see §3).
 - **ASK-lever calibration DONE (2026-05-29 PM):** the post-L4 uncertainty-gated sibling-ASK lever fired **~0×** (0 at τ=0.45, 1 at τ=0.65) → gate NOT cleared. Root cause: **L4's `self_confidence` is a coarse 3-level enum AND overconfident/uncalibrated** (ECE ~18%), so it doesn't flag the genuinely-uncertain sibling picks → the uncertainty-gate under-fires. (v1 pre-L4 trigger had the opposite failure — over-fired at 33%.) **You cannot gate ASK on L4 self_confidence.** The lever code is sound + committed (env-gated OFF, no harm); it is BLOCKED on the SIGNAL. The r13 OUTRIGHT (66%) vs r12 (68%) is ~run-to-run LLM noise (the lever fired ~0× → r13 ≈ a r12 re-run). **First action next session = §6.1 (unblock the ASK signal) and/or §6.2 (retrieval, independent).**
 - Runtime = **Vertex** (gemini-embedding-001@1536 + Gemini-Flash rerank + Gemini-Flash L1/L4). **Cohere is OFF and decommissioned — ignore any doc that says a run "needs Cohere" or is "429-blocked"; that is stale.**
