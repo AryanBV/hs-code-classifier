@@ -42,8 +42,20 @@ import * as path from 'path';
 const CONCURRENCY = 8;
 
 /** Per-case wall-clock timeout (ms). A genuine 4x-Select repair/escalation case
- * runs ~60-75s (each L4 Select ~13-20s); 90s gives headroom without masking hangs. */
-const CASE_TIMEOUT_MS = 90000;
+ * runs ~60-75s (each L4 Select ~13-20s); 90s gives headroom without masking hangs.
+ *
+ * Override via `CASE_TIMEOUT_MS` env var (ms) for slow-model probes — e.g. the
+ * pro-select-probe routes L4 through gemini-3.1-pro-preview at thinking_level=high,
+ * where a single Select call alone can run ~40-50s and a repair iteration pushes a
+ * case past the default 90s. Unset → default 90s (committed behavior unchanged). */
+const CASE_TIMEOUT_MS = (() => {
+  const raw = process.env.CASE_TIMEOUT_MS?.trim();
+  if (raw) {
+    const n = Number(raw);
+    if (Number.isFinite(n) && n > 0) return n;
+  }
+  return 90000;
+})();
 
 /** Confidence threshold for the GRADED confident-wrong variant (computed, NOT a gate). */
 const CONFIDENT_WRONG_TAU = 0.7;
@@ -88,6 +100,12 @@ interface RunConfig {
    * byte-for-byte unchanged (purely additive).
    */
   simulateAnswers: boolean;
+  /**
+   * OPT-IN targeted subset. When set, only the listed test-case ids run (after
+   * suite + category selection). Lets a measurement iteration replay just the
+   * wrong/regression-guard cases fast. Empty/undefined → run the full selection.
+   */
+  ids?: string[];
 }
 
 function parseArgs(): RunConfig {
@@ -96,6 +114,7 @@ function parseArgs(): RunConfig {
   let category: string | undefined;
   let runId = `eval-${new Date().toISOString().slice(0, 10)}`;
   let simulateAnswers = false;
+  let ids: string[] | undefined;
 
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
@@ -104,9 +123,32 @@ function parseArgs(): RunConfig {
     else if (arg === '--category' && next) { category = next; i++; }
     else if (arg === '--run-id' && next) { runId = next; i++; }
     else if (arg === '--simulate-answers') { simulateAnswers = true; }
+    else if (arg === '--ids' && next) {
+      // Comma-separated case ids → targeted subset (trimmed, empties dropped).
+      ids = next.split(',').map((s) => s.trim()).filter((s) => s.length > 0);
+      i++;
+    }
   }
 
-  return { suite, category, runId, simulateAnswers };
+  return { suite, category, runId, simulateAnswers, ...(ids ? { ids } : {}) };
+}
+
+/**
+ * Filter a test-case list down to an explicit set of ids (the `--ids` targeted
+ * subset). Order follows the SUITE order, not the requested-id order, so the
+ * report stays deterministic. `unknownIds` surfaces requested ids absent from the
+ * (already suite/category-filtered) input so the caller can warn. Pure + additive
+ * — extracted from `main` so it's unit-testable without invoking a live run.
+ */
+export function filterByIds(
+  cases: EvalTestCase[],
+  ids: string[],
+): { filtered: EvalTestCase[]; unknownIds: string[] } {
+  const wanted = new Set(ids);
+  const filtered = cases.filter((tc) => wanted.has(tc.id));
+  const found = new Set(filtered.map((tc) => tc.id));
+  const unknownIds = ids.filter((id) => !found.has(id));
+  return { filtered, unknownIds };
 }
 
 // ---------------------------------------------------------------------------
@@ -291,6 +333,10 @@ export async function runTestCase(
         const finalNorm = finalCode ? normalizeHSCode(finalCode) : '';
         askDetail.ask_recovery_attempt = {
           initial_question_id: recovery.initial_question_id,
+          // Which lever raised the question — surfaced from the v2 ClassifyResult.
+          // Sibling-ASK tags `question.trigger='sibling'`; a triage ASK leaves it
+          // absent. Populated only when present so triage cases stay byte-identical.
+          ...(raw.question?.trigger ? { ask_trigger: raw.question.trigger } : {}),
           rounds_attempted: recovery.rounds_attempted,
           final_decision: recovery.final_decision,
           ...(finalCode ? { final_code_if_classify: finalCode } : {}),
@@ -616,6 +662,17 @@ function buildEndToEndMetrics(
     (sum, d) => sum + d.ask_recovery_attempt!.rounds_attempted, 0,
   );
 
+  // SIBLING-ASK lever sub-metrics — the subset of recovery cases whose initial
+  // question was raised by the sibling lever (ask_trigger==='sibling'). With the
+  // lever OFF (default), NO case carries that trigger → count 0, rate 0.
+  const siblingAskCases = recovered.filter(
+    d => d.ask_recovery_attempt!.ask_trigger === 'sibling',
+  );
+  const siblingAskCount = siblingAskCases.length;
+  const siblingAskRecoveredCorrect = siblingAskCases.filter(
+    d => d.ask_recovery_attempt!.code_correct_after_recovery,
+  ).length;
+
   // LEGACY (recovered-only) denominator — kept for backward compatibility.
   const scoredWithGold = directClassify.length + askCaseCount;
   const denom = scoredWithGold || 1;
@@ -646,6 +703,10 @@ function buildEndToEndMetrics(
     effective_code: wilsonInterval(effCodeK, effectiveDenom),
     ask_recovery_ci: wilsonInterval(askRecoveredCorrect, askCaseCount),
     refused_after_ask: refusedAfterAsk,
+    sibling_ask_count: siblingAskCount,
+    sibling_ask_recovered_correct: siblingAskRecoveredCorrect,
+    sibling_ask_recoverability_rate:
+      siblingAskCount > 0 ? (siblingAskRecoveredCorrect / siblingAskCount) * 100 : 0,
   };
 }
 
@@ -760,6 +821,9 @@ function printSummary(report: EvalReport): void {
     console.log(`    Heading:  ${fmtCI(e2e.effective_heading)}`);
     console.log(`    8-digit:  ${fmtCI(e2e.effective_code)}`);
     console.log(`  [legacy recovered-only-denom n=${e2e.scored_with_gold}: chapter ${e2e.end_to_end_chapter_accuracy.toFixed(1)}% / heading ${e2e.end_to_end_heading_accuracy.toFixed(1)}% / 8-digit ${e2e.end_to_end_code_accuracy.toFixed(1)}%]`);
+    if (e2e.sibling_ask_count > 0) {
+      console.log(`  SIBLING-ASK lever: ${e2e.sibling_ask_recoverability_rate.toFixed(1)}% recoverable (${e2e.sibling_ask_recovered_correct}/${e2e.sibling_ask_count} sibling-ASK cases reached the correct code)`);
+    }
   }
 
   // Top failures (model failures only — infra errors listed separately below)
@@ -810,8 +874,21 @@ async function main(): Promise<void> {
     }
   }
 
+  // Filter by explicit case ids (targeted subset for fast measurement iterations).
+  if (config.ids) {
+    const { filtered, unknownIds } = filterByIds(testCases, config.ids);
+    if (unknownIds.length > 0) {
+      console.warn(`Warning: --ids requested ${unknownIds.length} unknown case id(s): ${unknownIds.join(', ')}`);
+    }
+    if (filtered.length === 0) {
+      console.error(`No test cases matched --ids: ${config.ids.join(', ')}`);
+      process.exit(1);
+    }
+    testCases = filtered;
+  }
+
   console.log(`Starting eval run: ${config.runId}`);
-  console.log(`Suite: ${config.suite}${config.category ? ` (category: ${config.category})` : ''}`);
+  console.log(`Suite: ${config.suite}${config.category ? ` (category: ${config.category})` : ''}${config.ids ? ` (ids: ${testCases.length}/${config.ids.length} matched)` : ''}`);
   console.log(`Cases: ${testCases.length} | Concurrency: ${CONCURRENCY}${config.simulateAnswers ? ' | answer-simulation: ON' : ''}`);
   console.log('');
 

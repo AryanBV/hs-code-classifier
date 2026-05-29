@@ -23,7 +23,7 @@ vi.mock('./answer-simulator', () => ({
 
 // Imported AFTER vi.mock so the mock is wired. require.main !== module under
 // vitest, so importing runner does NOT kick off a live eval.
-import { runTestCase, extractDiagnostics, buildReportForTest } from './runner';
+import { runTestCase, extractDiagnostics, buildReportForTest, filterByIds } from './runner';
 
 const diag = (over: Partial<ClassifyResult['diagnostics']> = {}): ClassifyResult['diagnostics'] => ({
   escalation_path: ['L0', 'L1', 'L2', 'L3', 'L4', 'L5'],
@@ -51,6 +51,31 @@ const tc = (over: Partial<EvalTestCase> = {}): EvalTestCase => ({
 beforeEach(() => {
   classifyForEval.mockReset();
   runAnswerSimulation.mockReset();
+});
+
+describe('filterByIds (--ids targeted subset)', () => {
+  const cases: EvalTestCase[] = [
+    tc({ id: 'TC001' }),
+    tc({ id: 'TC009' }),
+    tc({ id: 'TC306' }),
+  ];
+
+  it('keeps only the requested ids, in SUITE order (not requested order)', () => {
+    const { filtered } = filterByIds(cases, ['TC306', 'TC001']);
+    expect(filtered.map((c) => c.id)).toEqual(['TC001', 'TC306']); // suite order
+  });
+
+  it('reports requested ids that are absent from the input as unknownIds', () => {
+    const { filtered, unknownIds } = filterByIds(cases, ['TC009', 'NOPE']);
+    expect(filtered.map((c) => c.id)).toEqual(['TC009']);
+    expect(unknownIds).toEqual(['NOPE']);
+  });
+
+  it('returns an empty filtered set + all ids unknown when none match', () => {
+    const { filtered, unknownIds } = filterByIds(cases, ['X', 'Y']);
+    expect(filtered).toEqual([]);
+    expect(unknownIds).toEqual(['X', 'Y']);
+  });
 });
 
 describe('extractDiagnostics (pure)', () => {
@@ -527,5 +552,53 @@ describe('buildReportForTest — end_to_end_metrics', () => {
     expect(e.end_to_end_code_accuracy).toBeCloseTo((2 / 3) * 100, 5);
     // chapter: C1 + A1 = 2 of 3 (A2 chapter not recovered)
     expect(e.end_to_end_chapter_accuracy).toBeCloseTo((2 / 3) * 100, 5);
+    // No case carries ask_trigger='sibling' → sibling sub-metrics inert (0).
+    expect(e.sibling_ask_count).toBe(0);
+    expect(e.sibling_ask_recovered_correct).toBe(0);
+    expect(e.sibling_ask_recoverability_rate).toBe(0);
+  });
+
+  it('splits sibling-ASK sub-metrics from triage-ASK by ask_trigger', () => {
+    const details: import('./types').EvalDetail[] = [
+      // triage-ASK, recovered correct — must NOT count toward sibling metrics.
+      detail({
+        test_case_id: 'T1', actual_routing: 'ask', routing_correct: false, score: 0,
+        expected_code: '0901.21.00', expected_chapter: '09', expected_heading: '0901',
+        ask_recovery_attempt: {
+          initial_question_id: 'ask_processing_state', ask_trigger: 'triage',
+          rounds_attempted: 1, final_decision: 'CLASSIFY',
+          final_code_if_classify: '0901.21.00', code_correct_after_recovery: true,
+          chapter_correct_after_recovery: true, heading_correct_after_recovery: true, answer_matches: [],
+        },
+      }),
+      // sibling-ASK, recovered correct.
+      detail({
+        test_case_id: 'S1', actual_routing: 'ask', routing_correct: false, score: 0,
+        expected_code: '4011.10.10', expected_chapter: '40', expected_heading: '4011',
+        ask_recovery_attempt: {
+          initial_question_id: 'ask_intended_use', ask_trigger: 'sibling',
+          rounds_attempted: 1, final_decision: 'CLASSIFY',
+          final_code_if_classify: '4011.10.10', code_correct_after_recovery: true,
+          chapter_correct_after_recovery: true, heading_correct_after_recovery: true, answer_matches: [],
+        },
+      }),
+      // sibling-ASK, NOT recovered (wrong code after answer).
+      detail({
+        test_case_id: 'S2', actual_routing: 'ask', routing_correct: false, score: 0,
+        expected_code: '4011.20.10', expected_chapter: '40', expected_heading: '4011',
+        ask_recovery_attempt: {
+          initial_question_id: 'ask_intended_use', ask_trigger: 'sibling',
+          rounds_attempted: 1, final_decision: 'CLASSIFY',
+          final_code_if_classify: '4011.10.10', code_correct_after_recovery: false,
+          chapter_correct_after_recovery: true, heading_correct_after_recovery: true, answer_matches: [],
+        },
+      }),
+    ];
+    const r = buildReportForTest(details);
+    const e = r.end_to_end_metrics!;
+    expect(e.ask_case_count).toBe(3);            // all three are recovery cases
+    expect(e.sibling_ask_count).toBe(2);          // S1 + S2 only
+    expect(e.sibling_ask_recovered_correct).toBe(1); // S1
+    expect(e.sibling_ask_recoverability_rate).toBeCloseTo(50, 5); // 1/2
   });
 });

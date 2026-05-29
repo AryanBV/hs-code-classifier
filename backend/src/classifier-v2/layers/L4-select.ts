@@ -22,7 +22,8 @@
  */
 import * as fs from 'fs';
 import * as path from 'path';
-import { generateContent } from '../lib/vertex-client';
+import { generateContent, type GeminiModel } from '../lib/vertex-client';
+import type { ThinkingLevel } from '../lib/thinking-config';
 import {
   getSelectCandidateRows,
   getChapterNotesBundles,
@@ -830,16 +831,56 @@ interface CallResult {
   rawText: string;
 }
 
+/* ---------------------------------------------------------------------------
+ * EXPERIMENTAL model override (env-gated; default = flash, unchanged)
+ *
+ * Set `SELECT_MODEL_OVERRIDE=gemini-3.1-pro-preview` to route the L4 Select call
+ * through the Pro model (with thinking_level=high) instead of the default
+ * gemini-3.5-flash (thinking_level=low). Used by the "pro-select-probe" to test
+ * whether the leaf-sibling selection bottleneck is MODEL CAPABILITY vs
+ * INFORMATION. ONLY the model + thinking-level change — everything else (prompt,
+ * context, schema, retries, hard-constraint checks) is identical. With the env var
+ * unset, behavior is byte-for-byte the committed default. NOT wired into the
+ * orchestrator's escalation logic — this is a measurement lever only.
+ * --------------------------------------------------------------------------- */
+
+const DEFAULT_SELECT_MODEL: GeminiModel = 'gemini-3.5-flash';
+const DEFAULT_SELECT_THINKING: ThinkingLevel = 'low';
+const SUPPORTED_OVERRIDE_MODELS: ReadonlySet<GeminiModel> = new Set<GeminiModel>([
+  'gemini-3.5-flash',
+  'gemini-3.1-pro-preview',
+  'gemini-2.5-pro',
+]);
+
+/**
+ * Resolve the L4 Select model + thinking level. Reads SELECT_MODEL_OVERRIDE at
+ * call time (so a test/probe can set it before invoking). Unrecognized values
+ * fall back to the flash default rather than throwing — a typo'd env var must not
+ * brick the pipeline. Pro/2.5-pro tiers run at thinking_level=high (a stronger
+ * model is only worth its cost with deeper reasoning); flash stays low.
+ */
+function resolveSelectModel(): { model: GeminiModel; thinkingLevel: ThinkingLevel } {
+  const override = process.env.SELECT_MODEL_OVERRIDE?.trim();
+  if (override && SUPPORTED_OVERRIDE_MODELS.has(override as GeminiModel)) {
+    const model = override as GeminiModel;
+    if (model !== DEFAULT_SELECT_MODEL) {
+      return { model, thinkingLevel: 'high' };
+    }
+  }
+  return { model: DEFAULT_SELECT_MODEL, thinkingLevel: DEFAULT_SELECT_THINKING };
+}
+
 async function callSelect(
   systemInstruction: string,
   userPrompt:        string,
   responseSchema:    Record<string, unknown>,
 ): Promise<CallResult> {
+  const { model, thinkingLevel } = resolveSelectModel();
   const res = await generateContent({
-    model:            'gemini-3.5-flash',
+    model,
     prompt:           userPrompt,
     systemInstruction,
-    thinkingLevel:    'low',
+    thinkingLevel,
     responseSchema,
     responseMimeType: 'application/json',
     temperature:      0.0,
@@ -958,6 +999,7 @@ export const _internal = {
   subheadingOf,
   canonicalizeAttrValue,
   projectCoreAttributes,
+  resolveSelectModel,
 };
 
 /* ---------------------------------------------------------------------------
@@ -965,3 +1007,13 @@ export const _internal = {
  * --------------------------------------------------------------------------- */
 
 export type { ExclusionMatch };
+
+/**
+ * Public TLA-fetch accessor. Re-exported so the SIBLING-ASK orchestrator path
+ * (index.ts) can pre-fetch the candidate tariff_line_attributes ONCE and pass
+ * them both to `computeSiblingDiscriminators` (this module) and to
+ * `selectQGSBatch` (via its `deps.fetchTLA`), without importing the lower-level
+ * supabase-client directly. (The blueprint accepts a duplicate fetch vs L4's own
+ * gather as a small indexed lookup.)
+ */
+export { getTariffLineAttributesForCodes };

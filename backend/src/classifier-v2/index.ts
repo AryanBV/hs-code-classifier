@@ -17,9 +17,14 @@ import { normalize } from './layers/L0-normalization';
 import { triage } from './layers/L1-triage';
 import { retrieve } from './layers/L2-retrieval';
 import { rulesFilter } from './layers/L3-rules-filter';
-import { select } from './layers/L4-select';
+import {
+  select,
+  computeSiblingDiscriminators,
+  getTariffLineAttributesForCodes,
+} from './layers/L4-select';
 import { verify } from './layers/L5-verifier';
 import { selectQGSBatch } from './layers/QGS-generator';
+import { isAttributePinnedByQuery } from './lib/sibling-ask-trigger';
 import { selectToClassifyResult, buildDiagnostics } from './select-to-result';
 import { BaselineEscalation, ESCALATION_REPAIR_PREFIX } from './escalation';
 import { MaxTokensError } from './lib/vertex-client';
@@ -35,8 +40,10 @@ import type {
   PipelineRunState,
   PipelineSystemError,
   PipelineTraceEvent,
+  RetrievalCandidate,
   RulesFilterInput,
   SelectOutput,
+  TriageExtractedAttributes,
   TriageInput,
   TriageOutput,
   VerifierRuleFailure,
@@ -255,6 +262,123 @@ async function handleTriageAsk(
   }
 
   return triageToAsk(t, state, batch, fallbackReason);
+}
+
+/* ---------------------------------------------------------------------------
+ * SIBLING-ASK elicitation lever (env-gated; default OFF → byte-identical)
+ *
+ * ~50% of leaf-sibling selection errors are genuine query UNDER-SPECIFICATION:
+ * the deciding attribute exists in tariff_line_attributes but NOT in the
+ * exporter's query, so L4 (even a stronger model) can only GUESS it. The fix is
+ * to ask ONE targeted question whose options come from the candidate siblings'
+ * actual TLA values, then resolve to the right leaf on the answer.
+ *
+ * GATE: the entire lever is behind `SIBLING_ASK_ENABLED === 'true'`. When that
+ * env var is unset/anything else, `checkSiblingAskTrigger` returns null BEFORE
+ * doing any DB/QGS/compute work — so the committed default pipeline is
+ * byte-for-byte unchanged. This is opt-in for A/B measurement; it is flipped on
+ * only after the milestone gate passes.
+ * --------------------------------------------------------------------------- */
+
+/** True only when the lever is explicitly enabled for this process. */
+function siblingAskEnabled(): boolean {
+  return process.env.SIBLING_ASK_ENABLED === 'true';
+}
+
+/**
+ * Decide whether to fire a SIBLING-ASK between L3 and L4. Returns a `ClassifyResult`
+ * (decision:'ASK', `question.trigger='sibling'`) when ALL trigger conditions hold,
+ * else `null` (⇒ the orchestrator proceeds to L4 unchanged). NEVER throws — any
+ * internal error is swallowed and yields null (graceful degrade to L4).
+ *
+ * Trigger (fire iff ALL hold), per the blueprint:
+ *   - GATE  env `SIBLING_ASK_ENABLED === 'true'` (else null, no work).
+ *   - skip  `q_budget_remaining === 0` (shared Q-budget) OR `candidates < 2`.
+ *   - S1    a sibling group exists: `computeSiblingDiscriminators` yields ≥1 group
+ *           with ≥2 codes AND ≥1 differing field (over the pre-fetched TLA).
+ *   - S3    L4 not already decisive: `selectQGSBatch` returns a non-null batch
+ *           (its built-in SILENT-DISCRIMINATOR guard returns null on
+ *           indistinguishable / <2-option sets — the over-ask guard).
+ *   - S2    the top-IG discriminating attribute is NOT pinned by the query
+ *           (`isAttributePinnedByQuery` is false) — i.e. the user did not say it.
+ *
+ * On a fire, records a `SIBLING-ASK` trace step and surfaces BOTH the full batch
+ * (`questions`) and the primary question (`question`, with `trigger='sibling'`).
+ */
+async function checkSiblingAskTrigger(params: {
+  candidates:           RetrievalCandidate[];
+  extractedAttributes:  TriageExtractedAttributes;
+  rawTokens:            string[];
+  qBudgetRemaining:     number;
+  state:                PipelineRunState;
+}): Promise<ClassifyResult | null> {
+  // GATE — default OFF. Return BEFORE any DB/QGS/compute work so the committed
+  // default pipeline is byte-for-byte identical.
+  if (!siblingAskEnabled()) return null;
+
+  try {
+    const { candidates, extractedAttributes, rawTokens, qBudgetRemaining, state } = params;
+
+    // Q-budget + candidate-count preconditions (cheap, no I/O).
+    if (qBudgetRemaining <= 0) return null;
+    if (candidates.length < 2) return null;
+
+    // Pre-fetch the candidate TLA ONCE and reuse for BOTH the sibling diff and
+    // the QGS generator (the blueprint accepts this as a small indexed lookup).
+    const codes = candidates.map((c) => c.code);
+    const tlaByCode = await getTariffLineAttributesForCodes(codes);
+
+    // S1 — a real sibling group (≥2 codes + ≥1 differing field). computeSibling-
+    // Discriminators already omits all-identical groups, so any returned group
+    // qualifies.
+    const siblingGroups = computeSiblingDiscriminators(candidates, tlaByCode);
+    if (siblingGroups.length === 0) return null;
+
+    // S3 — let QGS decide if a usable info-gain question exists over the live set.
+    // Pass the pre-fetched TLA via the deps seam (no second DB round trip for it).
+    const batch = await selectQGSBatch({
+      candidates,
+      deps: { fetchTLA: async () => tlaByCode },
+    });
+    if (batch === null || batch.questions.length === 0) return null;
+
+    // S2 — the top-IG question's attribute must NOT be pinned by the query. If the
+    // user already specified it, asking adds nothing → defer to L4.
+    const primary = batch.questions[0]!;
+    if (isAttributePinnedByQuery(primary.discriminating_attribute, extractedAttributes, rawTokens)) {
+      return null;
+    }
+
+    // FIRE. Tag the question + surface the full batch. Mark trigger='sibling' on
+    // every batch question for downstream attribution (eval, wizard, trace).
+    const taggedQuestions: ClarifyingQuestion[] = batch.questions.map((q) => ({
+      ...q,
+      trigger: 'sibling',
+    }));
+    const taggedBatch: ClarifyingQuestionBatch = {
+      ...batch,
+      questions: taggedQuestions,
+    };
+    const taggedPrimary = taggedQuestions[0]!;
+
+    recordLayer(state, 'SIBLING-ASK', 'ask', {
+      discriminating_attribute: taggedPrimary.discriminating_attribute,
+      questions: taggedQuestions.length,
+      sibling_groups: siblingGroups.length,
+      total_ig: taggedBatch.total_ig_potential,
+    });
+
+    return {
+      decision: 'ASK',
+      question: taggedPrimary,
+      questions: taggedBatch,
+      diagnostics: buildDiagnostics(state),
+    };
+  } catch {
+    // The lever must NEVER throw — a DB/QGS/compute hiccup degrades gracefully to
+    // the L4 path (return null ⇒ orchestrator runs Select as normal).
+    return null;
+  }
 }
 
 /**
@@ -543,6 +667,24 @@ export async function classify(
   // --- Zero-candidate escalation (after gate, before L4) ------------------
   if (activeRulesOut.filtered_candidates.length === 0) {
     return finalize(BaselineEscalation.onZeroCandidates(state), state, captureTrace);
+  }
+
+  // --- SIBLING-ASK elicitation lever (env-gated; default OFF) -------------
+  // Fires BETWEEN L3 and L4 when the surviving candidates are leaf-siblings that
+  // differ ONLY on an attribute the exporter never specified — ask one targeted
+  // question instead of letting L4 guess. With SIBLING_ASK_ENABLED unset (the
+  // default), checkSiblingAskTrigger returns null before doing ANY work, so the
+  // path below is byte-for-byte unchanged. A null return (gate off, no sibling
+  // group, attribute already pinned, or any internal error) ⇒ proceed to L4.
+  const siblingAsk = await checkSiblingAskTrigger({
+    candidates:          activeRulesOut.filtered_candidates,
+    extractedAttributes: activeTriageOut.extracted_attributes,
+    rawTokens:           normalized.raw_tokens,
+    qBudgetRemaining:    q_budget_remaining,
+    state,
+  });
+  if (siblingAsk !== null) {
+    return finalize(siblingAsk, state, captureTrace);
   }
 
   /* ---- L4 — Select + L5 — Verify (with repair loop, Task 7) ----------- *

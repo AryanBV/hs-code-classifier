@@ -244,6 +244,23 @@ export interface EvalReport {
     ask_recovery_ci: RateCI;
     /** Gold cases that REFUSEd after the ASK simulation (counted as misses). */
     refused_after_ask: number;
+
+    /**
+     * SIBLING-ASK lever sub-metrics (additive). Of the simulated ASK-recovery
+     * cases, the subset whose initial question was raised by the SIBLING-ASK lever
+     * (`ask_recovery_attempt.ask_trigger === 'sibling'`). When the lever is OFF
+     * (default) NO case carries that trigger, so `sibling_ask_count` is 0 and the
+     * rate is 0 — the report shape is unchanged but the values are inert.
+     *
+     * `sibling_ask_recoverability_rate`: of the sibling-ASK cases, the fraction
+     * that reached the correct 8-digit code after the gold answer was fed back —
+     * the milestone-gate signal ("the questions we ask must be answerable").
+     */
+    sibling_ask_count: number;
+    /** sibling-ASK cases that recovered the correct 8-digit code. */
+    sibling_ask_recovered_correct: number;
+    /** sibling_ask_recovered_correct / sibling_ask_count × 100 (0 when none). */
+    sibling_ask_recoverability_rate: number;
   };
 
   details: EvalDetail[];
@@ -321,6 +338,14 @@ export interface EvalDetail {
    */
   ask_recovery_attempt?: {
     initial_question_id: string;
+    /**
+     * Which lever raised the initial clarifying question this recovery attempt
+     * answered: `'triage'` (L1 chapter-level ASK) or `'sibling'` (the SIBLING-ASK
+     * leaf-disambiguation lever, fired between L3 and L4). Mirrors
+     * `ClarifyingQuestion.trigger`. Absent when the trigger is unknown (treated as
+     * triage). Lets the report split recoverability by lever (sibling_ask_*).
+     */
+    ask_trigger?: 'triage' | 'sibling';
     rounds_attempted: number;
     final_decision: 'CLASSIFY' | 'ASK' | 'REFUSE' | 'UNANSWERABLE';
     final_code_if_classify?: string;

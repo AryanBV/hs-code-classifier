@@ -10,7 +10,7 @@
  * Run:
  *   cd backend && npx vitest run src/classifier-v2/index.test.ts
  */
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type {
   NormalizedInput,
   TriageOutput,
@@ -35,6 +35,11 @@ const rulesFilterMock = vi.fn();
 const selectMock     = vi.fn();
 const verifyMock     = vi.fn();
 const qgsMock        = vi.fn();
+// SIBLING-ASK lever deps (re-exported from L4-select). Default to no sibling
+// group + empty TLA so the lever is inert even when the env gate is ON unless a
+// test deliberately arranges a group. These are NEVER called with the gate off.
+const computeSiblingDiscriminatorsMock = vi.fn(() => [] as unknown[]);
+const getTLAForCodesMock = vi.fn(async () => ({} as Record<string, unknown>));
 
 vi.mock('./layers/L0-normalization', () => ({
   normalize: (...args: unknown[]) => normalizeMock(...args),
@@ -50,12 +55,20 @@ vi.mock('./layers/L3-rules-filter', () => ({
 }));
 vi.mock('./layers/L4-select', () => ({
   select: (...args: unknown[]) => selectMock(...args),
+  computeSiblingDiscriminators: (...args: unknown[]) => computeSiblingDiscriminatorsMock(...args),
+  getTariffLineAttributesForCodes: (...args: unknown[]) => getTLAForCodesMock(...args),
 }));
 vi.mock('./layers/L5-verifier', () => ({
   verify: (...args: unknown[]) => verifyMock(...args),
 }));
 vi.mock('./layers/QGS-generator', () => ({
   selectQGSBatch: (...args: unknown[]) => qgsMock(...args),
+}));
+// Mock the pin-check so the orchestrator control-flow test fully controls S2
+// (the pure pin logic is unit-tested in lib/sibling-ask-trigger.test.ts).
+const isAttributePinnedMock = vi.fn(() => false);
+vi.mock('./lib/sibling-ask-trigger', () => ({
+  isAttributePinnedByQuery: (...args: unknown[]) => isAttributePinnedMock(...args),
 }));
 
 // Import the SUT AFTER mocks are registered.
@@ -1352,5 +1365,185 @@ describe('classify() — post-backtrack L5 uses 2nd retrieve embedding (not 1st)
     expect(l5Input.query_embedding).toEqual([0.55, 0.66, 0.77, 0.88]);
     // Negative assertion: must NOT be the original embedding.
     expect(l5Input.query_embedding).not.toEqual(L2_QUERY_EMBEDDING);
+  });
+});
+
+/* ---------------------------------------------------------------------------
+ * SIBLING-ASK lever (env-gated; default OFF → byte-identical)
+ * --------------------------------------------------------------------------- */
+
+/** A QGS-style sibling batch whose top question discriminates on processing_state. */
+const siblingBatch = {
+  questions: [
+    {
+      question_id: 'ask_processing_state',
+      question_text: 'Is the product roasted or not roasted?',
+      discriminating_attribute: 'processing_state' as const,
+      options: [
+        { id: 'roasted', label: 'Roasted' },
+        { id: 'green', label: 'Not roasted (green)' },
+        { id: 'other', label: 'Other' },
+        { id: 'none', label: 'None' },
+      ],
+      info_gain_score: 1.0,
+      qgs_used: true,
+    },
+  ],
+  total_ig_potential: 1.0,
+};
+
+describe('classify() — SIBLING-ASK lever GATE OFF (default → byte-identical)', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    delete process.env.SIBLING_ASK_ENABLED; // explicit: gate OFF
+    normalizeMock.mockResolvedValue(normalizedOut);
+    triageMock.mockResolvedValue(triageOut);          // CLASSIFY
+    retrieveMock.mockResolvedValue(retrievalOut);
+    rulesFilterMock.mockResolvedValue(rulesFilterOut); // 2 sibling candidates
+    selectMock.mockResolvedValue(selectOut);
+    verifyMock.mockResolvedValue(verifierPass);
+    // Arrange a would-be sibling group + usable batch + unpinned attr so that ONLY
+    // the gate suppresses the lever (proves the gate, not the trigger conditions).
+    computeSiblingDiscriminatorsMock.mockReturnValue([
+      { subheading: '7318.15', codes: [SELECTED, '7318.16.00'], differing_fields: ['form'], values_by_field: {} },
+    ] as unknown[]);
+    getTLAForCodesMock.mockResolvedValue({ [SELECTED]: {}, '7318.16.00': {} });
+    qgsMock.mockResolvedValue(siblingBatch);
+    isAttributePinnedMock.mockReturnValue(false);
+  });
+
+  afterEach(() => {
+    delete process.env.SIBLING_ASK_ENABLED;
+  });
+
+  it('returns the unchanged CLASSIFY result and never touches the lever deps', async () => {
+    const res = await classify('stainless steel hex bolts M10');
+
+    // Byte-identical CLASSIFY outcome (same as the happy-path suite).
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.classification?.code).toBe(SELECTED);
+    // Pipeline proceeds straight to L4/L5 — no SIBLING-ASK hop.
+    expect(res.diagnostics.escalation_path).toEqual(['L0', 'L1', 'L2', 'L3', 'L4', 'L5']);
+
+    // CRITICAL: with the gate off, the lever does ZERO work — no DB/QGS/pin calls.
+    expect(getTLAForCodesMock).not.toHaveBeenCalled();
+    expect(computeSiblingDiscriminatorsMock).not.toHaveBeenCalled();
+    expect(qgsMock).not.toHaveBeenCalled();
+    expect(isAttributePinnedMock).not.toHaveBeenCalled();
+    // L4 + L5 ran exactly once (normal path).
+    expect(selectMock).toHaveBeenCalledTimes(1);
+    expect(verifyMock).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('classify() — SIBLING-ASK lever GATE ON', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    process.env.SIBLING_ASK_ENABLED = 'true';
+    normalizeMock.mockResolvedValue(normalizedOut);
+    triageMock.mockResolvedValue(triageOut);          // CLASSIFY → reaches L3/L4 seam
+    retrieveMock.mockResolvedValue(retrievalOut);
+    rulesFilterMock.mockResolvedValue(rulesFilterOut); // 2 sibling candidates
+    selectMock.mockResolvedValue(selectOut);
+    verifyMock.mockResolvedValue(verifierPass);
+    computeSiblingDiscriminatorsMock.mockReturnValue([
+      { subheading: '7318.15', codes: [SELECTED, '7318.16.00'], differing_fields: ['form'], values_by_field: {} },
+    ] as unknown[]);
+    getTLAForCodesMock.mockResolvedValue({ [SELECTED]: {}, '7318.16.00': {} });
+    qgsMock.mockResolvedValue(siblingBatch);
+    isAttributePinnedMock.mockReturnValue(false); // attribute NOT pinned → ASK
+  });
+
+  afterEach(() => {
+    delete process.env.SIBLING_ASK_ENABLED;
+  });
+
+  it('fires an ASK (trigger=sibling) when a sibling group has an UNPINNED attribute', async () => {
+    const res = await classify('coffee beans', { captureTrace: true });
+
+    expect(res.decision).toBe('ASK');
+    expect(res.question?.discriminating_attribute).toBe('processing_state');
+    expect(res.question?.trigger).toBe('sibling');
+    // Full batch surfaced + every question tagged.
+    expect(res.questions?.questions).toHaveLength(1);
+    expect(res.questions?.questions[0]?.trigger).toBe('sibling');
+
+    // It fired BEFORE L4/L5 — Select/Verify never ran.
+    expect(selectMock).not.toHaveBeenCalled();
+    expect(verifyMock).not.toHaveBeenCalled();
+
+    // SIBLING-ASK trace step recorded.
+    const trace = res.diagnostics.trace ?? [];
+    const step = trace.find((t) => t.layer === 'SIBLING-ASK' && t.event === 'ask');
+    expect(step).toBeDefined();
+    expect(step?.payload?.discriminating_attribute).toBe('processing_state');
+
+    // Reused the pre-fetched TLA: getTLAForCodes called exactly once (no duplicate
+    // fetch inside QGS — it received the deps.fetchTLA seam).
+    expect(getTLAForCodesMock).toHaveBeenCalledTimes(1);
+    expect(qgsMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('does NOT fire (→ proceeds to L4) when the top attribute is PINNED', async () => {
+    isAttributePinnedMock.mockReturnValue(true); // user already specified it
+
+    const res = await classify('coffee beans');
+
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.classification?.code).toBe(SELECTED);
+    // The lever evaluated S1/S3 (DB + QGS ran) but S2 suppressed the ASK.
+    expect(getTLAForCodesMock).toHaveBeenCalledTimes(1);
+    expect(qgsMock).toHaveBeenCalledTimes(1);
+    expect(isAttributePinnedMock).toHaveBeenCalledTimes(1);
+    // Fell through to L4 + L5.
+    expect(selectMock).toHaveBeenCalledTimes(1);
+    expect(verifyMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('does NOT fire when there is no sibling group (S1 fails) → proceeds to L4', async () => {
+    computeSiblingDiscriminatorsMock.mockReturnValue([] as unknown[]);
+
+    const res = await classify('coffee beans');
+
+    expect(res.decision).toBe('CLASSIFY');
+    // S1 short-circuits before QGS / pin-check.
+    expect(getTLAForCodesMock).toHaveBeenCalledTimes(1);
+    expect(qgsMock).not.toHaveBeenCalled();
+    expect(isAttributePinnedMock).not.toHaveBeenCalled();
+    expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('does NOT fire when QGS returns null (S3 fails / over-ask guard) → proceeds to L4', async () => {
+    qgsMock.mockResolvedValue(null);
+
+    const res = await classify('coffee beans');
+
+    expect(res.decision).toBe('CLASSIFY');
+    expect(qgsMock).toHaveBeenCalledTimes(1);
+    expect(isAttributePinnedMock).not.toHaveBeenCalled();
+    expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('degrades to L4 (never throws) when the lever internals throw', async () => {
+    getTLAForCodesMock.mockRejectedValue(new Error('DB hiccup'));
+
+    const res = await classify('coffee beans');
+
+    // Graceful degrade: a thrown error inside the lever yields null → L4 runs.
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.classification?.code).toBe(SELECTED);
+    expect(selectMock).toHaveBeenCalledTimes(1);
+    expect(verifyMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('does NOT fire when the Q-budget is exhausted (q_budget=0)', async () => {
+    const res = await classify('coffee beans', { q_budget: 0 });
+
+    // Note: triage is mocked to CLASSIFY, so q_budget=0 does not force a triage
+    // REFUSE here; it must suppress the sibling lever directly (qBudget<=0 guard).
+    expect(res.decision).toBe('CLASSIFY');
+    expect(getTLAForCodesMock).not.toHaveBeenCalled();
+    expect(qgsMock).not.toHaveBeenCalled();
+    expect(selectMock).toHaveBeenCalledTimes(1);
   });
 });

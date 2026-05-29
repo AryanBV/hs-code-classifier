@@ -518,13 +518,23 @@ const GENERIC_BARE_MATERIALS: ReadonlySet<string> = new Set<string>([
  * True when a single-word value is a bare generic placeholder noun OR a bare
  * generic material. Either way it is NOT a specific discriminator / real
  * head-noun on its own.
+ *
+ * Exported (additive) for reuse by the SIBLING-ASK pin-check
+ * (`lib/sibling-ask-trigger.ts`), which needs the same notion of a bare generic
+ * word to decide whether a query token genuinely pins an attribute.
  */
-function isBareNonSpecificWord(word: string): boolean {
+export function isBareNonSpecificWord(word: string): boolean {
   return GENERIC_PLACEHOLDER_NOUNS.has(word) || GENERIC_BARE_MATERIALS.has(word);
 }
 
-/** True when `v` is a non-empty string that is not a bare generic placeholder. */
-function isSpecificValue(v: string | null): boolean {
+/**
+ * True when `v` is a non-empty string that is not a bare generic placeholder.
+ *
+ * Exported (additive) for reuse by the SIBLING-ASK pin-check
+ * (`lib/sibling-ask-trigger.ts`): a bare generic value ("metal", "plastic") does
+ * not pin an attribute well enough to suppress an ASK.
+ */
+export function isSpecificValue(v: string | null): boolean {
   if (v === null) return false;
   const trimmed = v.trim().toLowerCase();
   if (trimmed.length === 0) return false;

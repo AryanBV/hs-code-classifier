@@ -531,7 +531,7 @@ export type { Predicate, PredicateRef, PredicateEvalResult } from './db/predicat
 
 /** Trace event captured at each layer for audit + eval. */
 export interface PipelineTraceEvent {
-  layer:    'L0' | 'L1' | 'L2' | 'L3' | 'L4' | 'L5' | 'L6' | 'L7' | 'L8' | 'QGS';
+  layer:    'L0' | 'L1' | 'L2' | 'L3' | 'L4' | 'L5' | 'L6' | 'L7' | 'L8' | 'QGS' | 'SIBLING-ASK';
   /** Wall-clock ms from pipeline start to this event. */
   t_ms:     number;
   /** Stage label / sub-event id. */
@@ -588,6 +588,16 @@ export interface ClarifyingQuestion {
    * wizard + eval distinguish a real info-gain question from the heuristic fallback.
    */
   qgs_used?:                boolean;
+  /**
+   * Which lever raised this clarifying question:
+   *   - `'triage'` — the Triage stage (L1) decided to ASK (chapter-level
+   *     ambiguity / under-specified product). The historical default.
+   *   - `'sibling'` — the SIBLING-ASK lever fired AFTER L3 (between candidates):
+   *     L4 would have to guess a leaf-level discriminating attribute the user
+   *     never specified, so we ask one targeted question instead.
+   * Absent on questions produced before this field existed (treated as triage).
+   */
+  trigger?:                 'triage' | 'sibling';
 }
 
 /**
