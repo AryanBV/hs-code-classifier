@@ -492,6 +492,27 @@ export async function getSubheadingChildCounts(
 }
 
 /**
+ * For a list of headings, return ALL subheading codes under them. Used by L2's
+ * direct_leaf_lookup branch to widen the rerank pool from the cosine top-5
+ * subheadings to every subheading of the SURFACED headings, so missing sibling
+ * subheadings (and their residual `.90/.99/Other` leaf) enter the rerank pool.
+ */
+export async function getSubheadingsForHeadings(
+  headings: string[],
+): Promise<string[]> {
+  if (headings.length === 0) return [];
+  const runner = getRunner();
+  const sql = `
+    SELECT subheading
+    FROM subheadings
+    WHERE heading = ANY($1)
+    ORDER BY subheading
+  `;
+  const res = await runner.query<{ subheading: string }>(sql, [headings]);
+  return res.rows.map((r) => r.subheading);
+}
+
+/**
  * Fetch all tariff_line children for a list of subheadings — used by the
  * direct-leaf-lookup shortcut to emit candidates without going through rerank.
  */

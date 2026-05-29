@@ -67,6 +67,7 @@ const ftsTlMock     = vi.fn();
 const ftsExclMock   = vi.fn();
 const parentChainMock = vi.fn();
 const childCountsMock = vi.fn();
+const shForHeadingsMock = vi.fn();
 const tlForShMock   = vi.fn();
 
 vi.mock('../lib/supabase-client', () => ({
@@ -78,6 +79,7 @@ vi.mock('../lib/supabase-client', () => ({
   ftsSearchExclusions:         (...args: unknown[]) => ftsExclMock(...args),
   getTariffLineParentChains:   (...args: unknown[]) => parentChainMock(...args),
   getSubheadingChildCounts:    (...args: unknown[]) => childCountsMock(...args),
+  getSubheadingsForHeadings:   (...args: unknown[]) => shForHeadingsMock(...args),
   getTariffLinesForSubheadings: (...args: unknown[]) => tlForShMock(...args),
   _setQueryRunnerForTesting:   () => undefined,
 }));
@@ -166,6 +168,7 @@ beforeEach(() => {
   ftsExclMock.mockReset();
   parentChainMock.mockReset();
   childCountsMock.mockReset();
+  shForHeadingsMock.mockReset();
   tlForShMock.mockReset();
 
   embedMock.mockResolvedValue({ embedding: fixedEmbedding(), dim: 1536, latencyMs: 10 });
@@ -188,6 +191,11 @@ beforeEach(() => {
     { subheading: '6109.10', child_count: 1 },
     { subheading: '6109.90', child_count: 2 },
   ] satisfies SubheadingChildCount[]);
+  // Default: heading-expansion returns the surfaced headings' subheadings. The
+  // happy-path baseInput surfaces headings 6109/6110 (cosineHMock); default to
+  // the two cosine-surfaced subheadings so expansion is a no-op unless a test
+  // overrides it to add sibling subheadings.
+  shForHeadingsMock.mockResolvedValue(['6109.10', '6109.90']);
   tlForShMock.mockResolvedValue([]);
   rerankMock.mockResolvedValue({
     ranked: [
@@ -330,8 +338,8 @@ describe('retrieve() — provider wiring', () => {
  * =========================================================================== */
 
 describe('retrieve() — direct_leaf_lookup shortcut', () => {
-  it('skips rerank when ALL top subheadings have exactly 1 child', async () => {
-    // Override: every subheading is a singleton.
+  it('detects direct_leaf_lookup when ALL top subheadings have exactly 1 child', async () => {
+    // Override: every surfaced subheading is a singleton.
     cosineShMock.mockResolvedValue([
       cosineRow('6109.10', 0.86),
       cosineRow('6109.90', 0.71),
@@ -340,22 +348,176 @@ describe('retrieve() — direct_leaf_lookup shortcut', () => {
       { subheading: '6109.10', child_count: 1 },
       { subheading: '6109.90', child_count: 1 },
     ]);
+    shForHeadingsMock.mockResolvedValue(['6109.10', '6109.90']);
     tlForShMock.mockResolvedValue([
       chainRow('6109.10.00'),
       chainRow('6109.90.00'),
     ]);
+    rerankMock.mockResolvedValue({
+      ranked: [
+        { id: '6109.10.00', relevance_score: 0.99 },
+        { id: '6109.90.00', relevance_score: 0.62 },
+      ],
+      latencyMs: 50,
+    });
 
     const out: L2Output = await retrieve(baseInput());
 
     expect(out.retrieval_strategy).toBe('direct_leaf_lookup');
-    expect(rerankMock).not.toHaveBeenCalled();
-    expect(out.candidates.map((c) => c.code)).toEqual(['6109.10.00', '6109.90.00']);
-    expect(out.candidates.every((c) => c.rerank_score === null)).toBe(true);
     expect(out.trace.some((t) => t.step === 'direct_leaf_fetch')).toBe(true);
     // The query embedding MUST be surfaced even on the direct-leaf path so L5
     // Rule-4 cosine floor never silently SKIPs (it embeds once, at Step 1).
     expect(out.query_embedding).toEqual(fixedEmbedding());
     expect(out.query_embedding.length).toBeGreaterThan(0);
+  });
+
+  /* ----- RECALL fix part 1: direct branch reranks the FTS union ----- */
+
+  it('reranks the union (does NOT skip rerank) on the direct-leaf path', async () => {
+    cosineShMock.mockResolvedValue([
+      cosineRow('6109.10', 0.86),
+      cosineRow('6109.90', 0.71),
+    ]);
+    childCountsMock.mockResolvedValue([
+      { subheading: '6109.10', child_count: 1 },
+      { subheading: '6109.90', child_count: 1 },
+    ]);
+    shForHeadingsMock.mockResolvedValue(['6109.10', '6109.90']);
+    tlForShMock.mockResolvedValue([
+      chainRow('6109.10.00'),
+      chainRow('6109.90.00'),
+    ]);
+    rerankMock.mockResolvedValue({
+      ranked: [
+        { id: '6109.10.00', relevance_score: 0.99 },
+        { id: '6109.90.00', relevance_score: 0.62 },
+      ],
+      latencyMs: 50,
+    });
+
+    const out = await retrieve(baseInput());
+
+    expect(out.retrieval_strategy).toBe('direct_leaf_lookup');
+    // Rerank IS now invoked on the direct branch (was previously skipped).
+    expect(rerankMock).toHaveBeenCalledOnce();
+    expect(out.trace.some((t) => t.step === 'cohere_rerank')).toBe(true);
+    // The reranked candidate carries a non-null rerank_score.
+    const top = out.candidates.find((c) => c.code === '6109.10.00');
+    expect(top).toBeDefined();
+    expect(top!.rerank_score).toBe(0.99);
+  });
+
+  it('INCLUDES an FTS-surfaced gold leaf that is NOT among the direct-leaf rows (e.g. ferro-tungsten 7202.80)', async () => {
+    // Cosine cascade surfaces only 6109.* singletons → direct_leaf_lookup.
+    cosineShMock.mockResolvedValue([
+      cosineRow('6109.10', 0.86),
+      cosineRow('6109.90', 0.71),
+    ]);
+    childCountsMock.mockResolvedValue([
+      { subheading: '6109.10', child_count: 1 },
+      { subheading: '6109.90', child_count: 1 },
+    ]);
+    shForHeadingsMock.mockResolvedValue(['6109.10', '6109.90']);
+    tlForShMock.mockResolvedValue([
+      chainRow('6109.10.00'),
+      chainRow('6109.90.00'),
+    ]);
+    // FTS surfaces the gold leaf the cosine cascade missed entirely.
+    cosineTlMock.mockResolvedValue([]);
+    ftsTlMock.mockResolvedValue([ftsHit('7202.80.00', 0.6)]);
+    rerankMock.mockResolvedValue({
+      ranked: [
+        // Reranker puts the FTS-surfaced gold on top.
+        { id: '7202.80.00', relevance_score: 0.97 },
+        { id: '6109.10.00', relevance_score: 0.40 },
+        { id: '6109.90.00', relevance_score: 0.30 },
+      ],
+      latencyMs: 60,
+    });
+
+    const out = await retrieve(baseInput());
+
+    expect(out.retrieval_strategy).toBe('direct_leaf_lookup');
+    const codes = out.candidates.map((c) => c.code);
+    // The FTS-surfaced gold leaf survives to the emitted candidate set — the old
+    // direct branch discarded the FTS union and would have dropped it.
+    expect(codes).toContain('7202.80.00');
+    // FTS doc was passed to the reranker (union, not direct-only).
+    const [, docs] = rerankMock.mock.calls[0];
+    expect(docs.map((d) => d.id)).toContain('7202.80.00');
+  });
+
+  /* ----- RECALL fix part 2: expand leaf set to ALL subheadings of headings ----- */
+
+  it('INCLUDES sibling/residual subheading leaves from the surfaced HEADINGS, not just the cosine top-5 subheadings (e.g. plastic chair 9401.80)', async () => {
+    // Cosine surfaces only 9401.30 (singleton) → direct_leaf_lookup, but the
+    // gold leaf lives under sibling subheading 9401.80 which cosine never ranked.
+    cosineHMock.mockResolvedValue([cosineRow('9401', 0.9)]);
+    cosineShMock.mockResolvedValue([cosineRow('9401.30', 0.8)]);
+    childCountsMock.mockResolvedValue([
+      { subheading: '9401.30', child_count: 1 },
+    ]);
+    // Heading-expansion returns ALL subheadings of heading 9401 — including the
+    // sibling 9401.80 the cosine cascade did not surface.
+    shForHeadingsMock.mockResolvedValue(['9401.30', '9401.80']);
+    tlForShMock.mockResolvedValue([
+      chainRow('9401.30.00'),
+      chainRow('9401.80.00'), // the residual/sibling gold leaf
+    ]);
+    cosineTlMock.mockResolvedValue([cosineRow('9401.30.00', 0.78)]);
+    ftsTlMock.mockResolvedValue([]);
+    rerankMock.mockResolvedValue({
+      ranked: [
+        { id: '9401.80.00', relevance_score: 0.96 },
+        { id: '9401.30.00', relevance_score: 0.50 },
+      ],
+      latencyMs: 55,
+    });
+
+    const out = await retrieve(
+      baseInput({ candidate_chapters: ['94'], head_nouns_for_fts: ['chair'], raw_tokens: ['plastic', 'chair'] }),
+    );
+
+    expect(out.retrieval_strategy).toBe('direct_leaf_lookup');
+    // Heading-expansion was queried with the surfaced heading.
+    expect(shForHeadingsMock).toHaveBeenCalledWith(['9401']);
+    // The leaf-fetch used the EXPANDED subheading set (includes sibling 9401.80).
+    expect(tlForShMock).toHaveBeenCalledWith(['9401.30', '9401.80']);
+    const codes = out.candidates.map((c) => c.code);
+    expect(codes).toContain('9401.80.00');
+  });
+
+  it('keeps the final emitted count <= L2_EMIT_CAP on the direct-leaf union path', async () => {
+    cosineShMock.mockResolvedValue([cosineRow('6109.10', 0.86)]);
+    childCountsMock.mockResolvedValue([
+      { subheading: '6109.10', child_count: 1 },
+    ]);
+    // Heading-expansion + leaf-fetch yield MANY leaves (well above the cap).
+    shForHeadingsMock.mockResolvedValue([
+      '6109.10', '6109.90', '6110.10', '6110.20', '6110.30',
+    ]);
+    const manyLeaves = [
+      '6109.10.00', '6109.90.00', '6110.10.00', '6110.20.00',
+      '6110.30.00', '6110.30.10', '6110.30.20', '6110.30.30',
+      '6110.30.40', '6110.30.50', '6110.30.60', '6110.30.70',
+    ];
+    tlForShMock.mockResolvedValue(manyLeaves.map(chainRow));
+    cosineTlMock.mockResolvedValue([]);
+    ftsTlMock.mockResolvedValue([]);
+    rerankMock.mockResolvedValue({
+      ranked: manyLeaves
+        .slice(0, _internal.RERANK_TOP_N)
+        .map((id, i) => ({ id, relevance_score: 0.9 - i * 0.01 })),
+      latencyMs: 70,
+    });
+
+    const out = await retrieve(baseInput());
+
+    expect(out.retrieval_strategy).toBe('direct_leaf_lookup');
+    // HARD CONSTRAINT: emitted candidate count stays at L2_EMIT_CAP (8), even
+    // though the rerank POOL was widened well above it.
+    expect(out.candidates.length).toBeLessThanOrEqual(_internal.L2_EMIT_CAP);
+    expect(out.candidates.length).toBe(_internal.L2_EMIT_CAP);
   });
 });
 

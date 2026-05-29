@@ -44,6 +44,7 @@ import {
   ftsSearchExclusions,
   getTariffLineParentChains,
   getSubheadingChildCounts,
+  getSubheadingsForHeadings,
   getTariffLinesForSubheadings,
   type FtsHit,
   type ExclusionFtsHit,
@@ -412,7 +413,16 @@ export async function retrieve(input: L2Input): Promise<L2Output> {
     if (allSingleton) {
       retrieval_strategy = 'direct_leaf_lookup';
       const tDlStart = now();
-      directLeafRows = await getTariffLinesForSubheadings(topSubheadingCodes);
+      // RECALL fix (part 2): expand the leaf set to ALL subheadings of the
+      // SURFACED HEADINGS (topHeadingCodes) — not just the cosine top-5
+      // subheadings — so missing sibling subheadings AND the residual
+      // `.90/.99/Other` leaf of each candidate subheading enter the rerank pool
+      // (e.g. plastic chair 9401.80). Fall back to the cosine top-5 subheadings
+      // if the heading expansion returns nothing (defensive; keeps prior behavior).
+      const expandedSubheadings = await getSubheadingsForHeadings(topHeadingCodes);
+      const leafSubheadings =
+        expandedSubheadings.length > 0 ? expandedSubheadings : topSubheadingCodes;
+      directLeafRows = await getTariffLinesForSubheadings(leafSubheadings);
       trace.push({
         step:      'direct_leaf_fetch',
         latencyMs: now() - tDlStart,
@@ -443,9 +453,12 @@ export async function retrieve(input: L2Input): Promise<L2Output> {
     }
   }
 
-  // For direct-leaf strategy, override with direct rows (each cosine=highest
-  // possible match available; if missing, default to 0.5 — placeholder until
-  // we re-score against the cosine table). We DON'T rerank in this branch.
+  // RECALL fix (part 1): for the direct-leaf strategy, UNION the direct-leaf
+  // codes into scoreMap WITHOUT discarding the FTS/cosine union already seeded
+  // above. Previously this branch emitted ONLY the direct-leaf rows and skipped
+  // rerank, dropping FTS-surfaced golds (e.g. ferro-tungsten 7202.80). Now the
+  // union (cosine ∪ FTS ∪ expanded-direct-leaf) flows through the SAME rerank
+  // cascade as cascade_full, then is sliced to L2_EMIT_CAP.
   if (retrieval_strategy === 'direct_leaf_lookup') {
     for (const r of directLeafRows) {
       if (!scoreMap.has(r.code)) {
@@ -454,13 +467,14 @@ export async function retrieve(input: L2Input): Promise<L2Output> {
     }
   }
 
-  /* ---------- Step 6: Rerank (cascade_full only) ----------------------- */
+  /* ---------- Step 6: Rerank the candidate union ----------------------- */
+  // Both strategies (cascade_full AND direct_leaf_lookup) now rerank the union
+  // of cosine + FTS (+ expanded direct-leaf) candidates. The retrieval_strategy
+  // label is preserved for tracing; only the candidate sourcing differs.
   let finalCodes: string[];
-  if (retrieval_strategy === 'direct_leaf_lookup') {
-    finalCodes = directLeafRows.map((r) => r.code);
-  } else {
-    // Union of cosine + FTS, dedup. Rerank if any candidates exist; on a
-    // provider failure we fall back to cosine-only ordering.
+  {
+    // Union of cosine + FTS (+ direct-leaf), dedup. Rerank if any candidates
+    // exist; on a provider failure we fall back to cosine-only ordering.
     const unionCodes = Array.from(scoreMap.keys());
 
     if (unionCodes.length === 0) {
