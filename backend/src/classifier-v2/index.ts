@@ -24,7 +24,7 @@ import {
 } from './layers/L4-select';
 import { verify } from './layers/L5-verifier';
 import { selectQGSBatch } from './layers/QGS-generator';
-import { isAttributePinnedByQuery } from './lib/sibling-ask-trigger';
+import { isAttributePinnedByQuery, computeSiblingRerankMargin } from './lib/sibling-ask-trigger';
 import { selectToClassifyResult, buildDiagnostics } from './select-to-result';
 import { BaselineEscalation, ESCALATION_REPAIR_PREFIX } from './escalation';
 import { MaxTokensError } from './lib/vertex-client';
@@ -288,11 +288,13 @@ async function handleTriageAsk(
  * passes.
  *
  * Tunability (for threshold sweeps without code changes):
- *   - SIBLING_ASK_ENABLED          'true' → on; anything else → off (default).
- *   - SIBLING_ASK_CONF_THRESHOLD   float, default 0.65. L4's self_confidence
- *     (HIGH/MEDIUM/LOW) is mapped to a numeric score (see SELF_CONFIDENCE_SCORE)
- *     and the lever is eligible only when score < threshold. Sweep 0.55/0.65/0.75
- *     to find the ask-rate ≤15% / recoverability ≥75% operating point.
+ *   - SIBLING_ASK_ENABLED            'true' → on; anything else → off (default).
+ *   - SIBLING_ASK_MARGIN_THRESHOLD   float, default 0.05. The lever is eligible
+ *     only when the rerank-score margin between the top-2 same-subheading
+ *     siblings of the selected leaf is BELOW this threshold (small margin = the
+ *     reranker could not separate them = genuinely confusable). Replaces the
+ *     uncalibrated self_confidence enum (ECE ~18%). Sweep to find the
+ *     ask-rate ≤15% / recoverability ≥75% operating point.
  * --------------------------------------------------------------------------- */
 
 /** True only when the lever is explicitly enabled for this process. */
@@ -300,28 +302,15 @@ function siblingAskEnabled(): boolean {
   return process.env.SIBLING_ASK_ENABLED === 'true';
 }
 
-/** Default confidence cutoff: L4 below this is "uncertain enough to ask". */
-const DEFAULT_SIBLING_ASK_CONF_THRESHOLD = 0.65;
+/** Default rerank-margin cutoff: siblings closer than this are "too confusable to guess". */
+const DEFAULT_SIBLING_ASK_MARGIN_THRESHOLD = 0.05;
 
-/**
- * Map L4's `self_confidence` ENUM (the only confidence signal SelectOutput
- * carries) to a numeric score so it can be compared against the float
- * `SIBLING_ASK_CONF_THRESHOLD`. With the default 0.65: LOW(0.30) and MEDIUM(0.60)
- * are below (eligible), HIGH(0.90) is above (not eligible). A 0.55 threshold
- * excludes MEDIUM; a 0.75 threshold keeps both LOW and MEDIUM eligible.
- */
-const SELF_CONFIDENCE_SCORE: Record<SelectOutput['self_confidence'], number> = {
-  HIGH:   0.9,
-  MEDIUM: 0.6,
-  LOW:    0.3,
-};
-
-/** Read + parse the (sweepable) confidence threshold; falls back to the default. */
-function siblingAskConfThreshold(): number {
-  const raw = process.env.SIBLING_ASK_CONF_THRESHOLD;
-  if (raw === undefined) return DEFAULT_SIBLING_ASK_CONF_THRESHOLD;
+/** Read + parse the (sweepable) rerank-margin threshold; falls back to the default. */
+function siblingAskMarginThreshold(): number {
+  const raw = process.env.SIBLING_ASK_MARGIN_THRESHOLD;
+  if (raw === undefined) return DEFAULT_SIBLING_ASK_MARGIN_THRESHOLD;
   const parsed = Number.parseFloat(raw);
-  return Number.isFinite(parsed) ? parsed : DEFAULT_SIBLING_ASK_CONF_THRESHOLD;
+  return Number.isFinite(parsed) ? parsed : DEFAULT_SIBLING_ASK_MARGIN_THRESHOLD;
 }
 
 /**
@@ -335,8 +324,11 @@ function siblingAskConfThreshold(): number {
  *   - GATE  env `SIBLING_ASK_ENABLED === 'true'` (else null, ZERO work).
  *   - skip  `qBudgetRemaining <= 0` (shared Q-budget) OR `candidates < 2`.
  *   - C1    L4 returned a CLASSIFY with a non-null `selectedCode`.
- *   - C2    L4's `self_confidence` score < `SIBLING_ASK_CONF_THRESHOLD` (default
- *           0.65) — i.e. L4 is genuinely unsure (the over-fire fix vs PRE-L4).
+ *   - C2    the rerank-margin between the top-2 same-subheading siblings of the
+ *           selected leaf is < `SIBLING_ASK_MARGIN_THRESHOLD` (default 0.05) —
+ *           i.e. the reranker could not separate the siblings (genuinely
+ *           confusable). A null margin (<2 rerankable siblings) is treated
+ *           conservatively as "cannot assess → no fire".
  *   - S1    the SELECTED leaf is in a same-subheading sibling group:
  *           `computeSiblingDiscriminators` yields a group whose 6-digit subheading
  *           equals the selected code's subheading (≥2 codes, ≥1 differing field).
@@ -373,16 +365,20 @@ async function maybeSiblingAskPostL4(params: {
     if (qBudgetRemaining <= 0) return null;
     if (candidates.length < 2) return null;
 
-    // C2 — uncertainty gate. Only engage when L4 itself signalled it was unsure.
-    // (C1 — non-null selectedCode — is guaranteed by the call site.)
-    const confScore = SELF_CONFIDENCE_SCORE[selfConfidence];
-    if (confScore >= siblingAskConfThreshold()) return null;
-
-    // The selected leaf's 6-digit subheading ("NNNN.NN") — the group it competes in.
+    // The selected leaf's 6-digit subheading ("NNNN.NN") — the group it competes
+    // in. Derived BEFORE the uncertainty gate so the margin can be scoped to it.
     const selectedSubheading = /^\d{4}\.\d{2}\.\d{2}$/.test(selectedCode)
       ? selectedCode.slice(0, 7)
       : (/^\d{4}\.\d{2}$/.test(selectedCode) ? selectedCode : null);
     if (selectedSubheading === null) return null;
+
+    // C2 — uncertainty gate (rerank-margin). Engage only when the reranker could
+    // NOT separate the top-2 same-subheading siblings (small margin = genuinely
+    // confusable). Replaces the uncalibrated self_confidence enum (ECE ~18%).
+    // (C1 — non-null selectedCode — is guaranteed by the call site.)
+    const { margin, topCodes } = computeSiblingRerankMargin(candidates, selectedSubheading);
+    if (margin === null) return null;                         // can't assess uncertainty → conservative no-fire
+    if (margin >= siblingAskMarginThreshold()) return null;   // siblings well-separated → confident, don't ask
 
     // Pre-fetch the candidate TLA ONCE and reuse for BOTH the sibling diff and
     // the QGS generator (a small indexed lookup; no double round trip).
@@ -433,7 +429,9 @@ async function maybeSiblingAskPostL4(params: {
 
     recordLayer(state, 'SIBLING-ASK', 'ask', {
       discriminating_attribute: taggedPrimary.discriminating_attribute,
-      self_confidence: selfConfidence,
+      margin,
+      top_codes: topCodes,
+      self_confidence: selfConfidence, // logged only — no longer gates
       selected_code: selectedCode,
       subheading: selectedSubheading,
       questions: taggedQuestions.length,

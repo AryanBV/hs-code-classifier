@@ -66,10 +66,18 @@ vi.mock('./layers/QGS-generator', () => ({
 }));
 // Mock the pin-check so the orchestrator control-flow test fully controls S2
 // (the pure pin logic is unit-tested in lib/sibling-ask-trigger.test.ts).
+// computeSiblingRerankMargin is NOT mocked: it is pure, and the gate is driven
+// directly through crafted rerank_score gaps on the candidate fixtures so the
+// control-flow tests exercise the REAL margin signal (its own units live in
+// lib/sibling-ask-trigger.test.ts).
 const isAttributePinnedMock = vi.fn(() => false);
-vi.mock('./lib/sibling-ask-trigger', () => ({
-  isAttributePinnedByQuery: (...args: unknown[]) => isAttributePinnedMock(...args),
-}));
+vi.mock('./lib/sibling-ask-trigger', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('./lib/sibling-ask-trigger')>();
+  return {
+    ...actual,
+    isAttributePinnedByQuery: (...args: unknown[]) => isAttributePinnedMock(...args),
+  };
+});
 
 // Import the SUT AFTER mocks are registered.
 import { classify, continueWithAnswer, continueWithAnswers } from './index';
@@ -1371,11 +1379,44 @@ describe('classify() — post-backtrack L5 uses 2nd retrieve embedding (not 1st)
 /* ---------------------------------------------------------------------------
  * SIBLING-ASK lever (POST-L4 uncertainty gate; env-gated; default OFF →
  * byte-identical). The lever now runs AFTER L4 (Select) + its L5/repair loop:
- * it asks ONE targeted question ONLY when L4 itself signalled it was uncertain
- * (self_confidence below SIBLING_ASK_CONF_THRESHOLD) AND the winning leaf sits
- * in a same-subheading sibling group whose discriminating attribute the user
- * never pinned. Everything else finalizes L4's classification unchanged.
+ * it asks ONE targeted question ONLY when the rerank-score margin between the
+ * top-2 same-subheading siblings of the selected leaf is below
+ * SIBLING_ASK_MARGIN_THRESHOLD (the reranker could not separate them) AND the
+ * winning leaf sits in a same-subheading sibling group whose discriminating
+ * attribute the user never pinned. Everything else finalizes L4 unchanged.
  * --------------------------------------------------------------------------- */
+
+/**
+ * Build a same-subheading sibling `RetrievalCandidate` with a CRAFTED
+ * rerank_score so the post-L4 margin gate can be driven directly. Both the
+ * selected leaf and its competitor live under subheading `7318.15`, so
+ * `computeSiblingRerankMargin` sees a real ≥2-sibling group and the margin is
+ * controlled purely by the rerank gap between the two.
+ */
+function mkSibling(code: string, rerank: number): RetrievalCandidate {
+  return { ...mkCandidate(code), rerank_score: rerank };
+}
+
+/** Two siblings under 7318.15 with a LARGE rerank margin (0.95−0.55 = 0.40 ≫ 0.05). */
+const SIBLINGS_WIDE_MARGIN: RetrievalCandidate[] = [
+  mkSibling(SELECTED, 0.95),
+  mkSibling('7318.15.10', 0.55),
+];
+/** Two siblings under 7318.15 with a SMALL rerank margin (0.90−0.88 = 0.02 < 0.05). */
+const SIBLINGS_SMALL_MARGIN: RetrievalCandidate[] = [
+  mkSibling(SELECTED, 0.90),
+  mkSibling('7318.15.10', 0.88),
+];
+/** Only ONE rerankable sibling under 7318.15 → margin null (the other is a different subheading). */
+const SIBLINGS_SINGLETON: RetrievalCandidate[] = [
+  mkSibling(SELECTED, 0.90),
+  mkSibling('7318.16.00', 0.50),
+];
+
+/** A rules-filter output carrying a given sibling candidate set. */
+function rulesFilterWith(candidates: RetrievalCandidate[]): RulesFilterOutput {
+  return { ...rulesFilterOut, filtered_candidates: candidates };
+}
 
 /**
  * A QGS-style sibling batch whose top question discriminates on `form` — the
@@ -1401,41 +1442,45 @@ const siblingBatch = {
   total_ig_potential: 1.0,
 };
 
-/** A LOW-confidence L4 output (below the default 0.65 threshold → eligible). */
+/**
+ * L4 outputs whose self_confidence varies. self_confidence NO LONGER gates the
+ * lever (it is logged only); these exist to prove the gate is INDEPENDENT of it
+ * — a confident-LOW or confident-HIGH L4 both ASK iff the rerank margin is small.
+ */
 const selectOutLowConf: SelectOutput = { ...selectOut, self_confidence: 'LOW' };
-/** A MEDIUM-confidence L4 output (below 0.65 → eligible; above 0.55). */
 const selectOutMedConf: SelectOutput = { ...selectOut, self_confidence: 'MEDIUM' };
 
 describe('classify() — SIBLING-ASK lever GATE OFF (default → byte-identical)', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     delete process.env.SIBLING_ASK_ENABLED; // explicit: gate OFF
-    delete process.env.SIBLING_ASK_CONF_THRESHOLD;
+    delete process.env.SIBLING_ASK_MARGIN_THRESHOLD;
     normalizeMock.mockResolvedValue(normalizedOut);
     triageMock.mockResolvedValue(triageOut);          // CLASSIFY
     retrieveMock.mockResolvedValue(retrievalOut);
-    rulesFilterMock.mockResolvedValue(rulesFilterOut); // 2 sibling candidates
-    // LOW confidence + a would-be sibling group + usable batch + unpinned attr so
-    // that ONLY the gate suppresses the lever (proves the gate, not conditions).
+    // SMALL-margin siblings + a would-be sibling group + usable batch + unpinned
+    // attr so that ONLY the env gate suppresses the lever (proves the gate, not
+    // the margin/conditions).
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(SIBLINGS_SMALL_MARGIN));
     selectMock.mockResolvedValue(selectOutLowConf);
     verifyMock.mockResolvedValue(verifierPass);
     computeSiblingDiscriminatorsMock.mockReturnValue([
-      { subheading: '7318.15', codes: [SELECTED, '7318.16.00'], differing_fields: ['form'], values_by_field: {} },
+      { subheading: '7318.15', codes: [SELECTED, '7318.15.10'], differing_fields: ['form'], values_by_field: {} },
     ] as unknown[]);
-    getTLAForCodesMock.mockResolvedValue({ [SELECTED]: {}, '7318.16.00': {} });
+    getTLAForCodesMock.mockResolvedValue({ [SELECTED]: {}, '7318.15.10': {} });
     qgsMock.mockResolvedValue(siblingBatch);
     isAttributePinnedMock.mockReturnValue(false);
   });
 
   afterEach(() => {
     delete process.env.SIBLING_ASK_ENABLED;
-    delete process.env.SIBLING_ASK_CONF_THRESHOLD;
+    delete process.env.SIBLING_ASK_MARGIN_THRESHOLD;
   });
 
   it('returns the unchanged CLASSIFY result and never touches the lever deps', async () => {
     const res = await classify('stainless steel hex bolts M10');
 
-    // Byte-identical CLASSIFY outcome (same as the happy-path suite): L4's LOW-conf
+    // Byte-identical CLASSIFY outcome (same as the happy-path suite): L4's
     // classification is finalized verbatim — the post-L4 gate never engaged.
     expect(res.decision).toBe('CLASSIFY');
     expect(res.classification?.code).toBe(SELECTED);
@@ -1454,31 +1499,34 @@ describe('classify() — SIBLING-ASK lever GATE OFF (default → byte-identical)
   });
 });
 
-describe('classify() — SIBLING-ASK lever GATE ON (post-L4 uncertainty gate)', () => {
+describe('classify() — SIBLING-ASK lever GATE ON (post-L4 rerank-margin gate)', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     process.env.SIBLING_ASK_ENABLED = 'true';
-    delete process.env.SIBLING_ASK_CONF_THRESHOLD; // default 0.65
+    delete process.env.SIBLING_ASK_MARGIN_THRESHOLD; // default 0.05
     normalizeMock.mockResolvedValue(normalizedOut);
     triageMock.mockResolvedValue(triageOut);          // CLASSIFY → reaches L4
     retrieveMock.mockResolvedValue(retrievalOut);
-    rulesFilterMock.mockResolvedValue(rulesFilterOut); // 2 sibling candidates
-    selectMock.mockResolvedValue(selectOutLowConf);    // LOW → below threshold
+    // SMALL-margin siblings (0.90−0.88 = 0.02 < 0.05) → reranker cannot separate
+    // them → ask-eligible. self_confidence no longer gates (LOW here just proves
+    // the gate is independent of it).
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(SIBLINGS_SMALL_MARGIN));
+    selectMock.mockResolvedValue(selectOutLowConf);
     verifyMock.mockResolvedValue(verifierPass);
     computeSiblingDiscriminatorsMock.mockReturnValue([
-      { subheading: '7318.15', codes: [SELECTED, '7318.16.00'], differing_fields: ['form'], values_by_field: {} },
+      { subheading: '7318.15', codes: [SELECTED, '7318.15.10'], differing_fields: ['form'], values_by_field: {} },
     ] as unknown[]);
-    getTLAForCodesMock.mockResolvedValue({ [SELECTED]: {}, '7318.16.00': {} });
+    getTLAForCodesMock.mockResolvedValue({ [SELECTED]: {}, '7318.15.10': {} });
     qgsMock.mockResolvedValue(siblingBatch);
     isAttributePinnedMock.mockReturnValue(false); // attribute NOT pinned → ASK
   });
 
   afterEach(() => {
     delete process.env.SIBLING_ASK_ENABLED;
-    delete process.env.SIBLING_ASK_CONF_THRESHOLD;
+    delete process.env.SIBLING_ASK_MARGIN_THRESHOLD;
   });
 
-  it('fires an ASK (trigger=sibling) when L4 is LOW-conf on an UNPINNED sibling group', async () => {
+  it('fires an ASK (trigger=sibling) when the sibling rerank margin is SMALL on an UNPINNED group', async () => {
     const res = await classify('coffee beans', { captureTrace: true });
 
     expect(res.decision).toBe('ASK');
@@ -1492,12 +1540,15 @@ describe('classify() — SIBLING-ASK lever GATE ON (post-L4 uncertainty gate)', 
     expect(selectMock).toHaveBeenCalledTimes(1);
     expect(verifyMock).toHaveBeenCalledTimes(1);
 
-    // SIBLING-ASK trace step recorded AFTER L4/L5.
+    // SIBLING-ASK trace step recorded AFTER L4/L5 — logs the margin, the top-2
+    // codes, AND the (non-gating) self_confidence.
     const trace = res.diagnostics.trace ?? [];
     const step = trace.find((t) => t.layer === 'SIBLING-ASK' && t.event === 'ask');
     expect(step).toBeDefined();
     expect(step?.payload?.discriminating_attribute).toBe('form');
     expect(step?.payload?.self_confidence).toBe('LOW');
+    expect(step?.payload?.margin).toBeCloseTo(0.02, 10);
+    expect(step?.payload?.top_codes).toEqual([SELECTED, '7318.15.10']);
     // The gate ran after L5 in the escalation path.
     const path = res.diagnostics.escalation_path;
     expect(path[path.length - 1]).toBe('SIBLING-ASK');
@@ -1508,8 +1559,8 @@ describe('classify() — SIBLING-ASK lever GATE ON (post-L4 uncertainty gate)', 
     expect(qgsMock).toHaveBeenCalledTimes(1);
   });
 
-  it('also fires for MEDIUM confidence (below the default 0.65 threshold)', async () => {
-    selectMock.mockResolvedValue(selectOutMedConf);
+  it('fires regardless of self_confidence (HIGH-conf L4 still ASKs on a small margin)', async () => {
+    selectMock.mockResolvedValue(selectOut); // HIGH — no longer gates
 
     const res = await classify('coffee beans');
 
@@ -1517,15 +1568,15 @@ describe('classify() — SIBLING-ASK lever GATE ON (post-L4 uncertainty gate)', 
     expect(res.question?.trigger).toBe('sibling');
   });
 
-  it('does NOT fire when L4 is HIGH-conf (≥ threshold) → finalizes L4 classification', async () => {
-    selectMock.mockResolvedValue(selectOut); // HIGH (0.9) ≥ 0.65
+  it('does NOT fire when the sibling rerank margin is LARGE (≥ threshold) → finalizes L4 classification', async () => {
+    // Wide margin (0.95−0.55 = 0.40 ≥ 0.05): the reranker clearly preferred the
+    // winner → confident → don't ask. The gate short-circuits BEFORE any DB/QGS/pin work.
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(SIBLINGS_WIDE_MARGIN));
 
     const res = await classify('coffee beans');
 
     expect(res.decision).toBe('CLASSIFY');
     expect(res.classification?.code).toBe(SELECTED);
-    expect(res.classification?.self_confidence).toBe('HIGH');
-    // The confidence gate short-circuits BEFORE any DB/QGS/pin work.
     expect(getTLAForCodesMock).not.toHaveBeenCalled();
     expect(computeSiblingDiscriminatorsMock).not.toHaveBeenCalled();
     expect(qgsMock).not.toHaveBeenCalled();
@@ -1534,21 +1585,35 @@ describe('classify() — SIBLING-ASK lever GATE ON (post-L4 uncertainty gate)', 
     expect(verifyMock).toHaveBeenCalledTimes(1);
   });
 
-  it('SIBLING_ASK_CONF_THRESHOLD=0.55 excludes MEDIUM (0.6) → finalizes classification', async () => {
-    process.env.SIBLING_ASK_CONF_THRESHOLD = '0.55';
-    selectMock.mockResolvedValue(selectOutMedConf); // MEDIUM (0.6) ≥ 0.55 → no ask
+  it('does NOT fire when the margin is UNKNOWABLE (<2 rerankable siblings → null) → finalize', async () => {
+    // Only one candidate sits under the selected subheading → margin null →
+    // conservative no-fire (cannot assess uncertainty). Short-circuits before DB/QGS.
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(SIBLINGS_SINGLETON));
 
     const res = await classify('coffee beans');
 
     expect(res.decision).toBe('CLASSIFY');
-    expect(res.classification?.self_confidence).toBe('MEDIUM');
+    expect(res.classification?.code).toBe(SELECTED);
+    expect(getTLAForCodesMock).not.toHaveBeenCalled();
+    expect(computeSiblingDiscriminatorsMock).not.toHaveBeenCalled();
+    expect(qgsMock).not.toHaveBeenCalled();
+    expect(isAttributePinnedMock).not.toHaveBeenCalled();
+    expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('SIBLING_ASK_MARGIN_THRESHOLD=0.01 excludes the 0.02 margin → finalizes classification', async () => {
+    process.env.SIBLING_ASK_MARGIN_THRESHOLD = '0.01'; // 0.02 ≥ 0.01 → no ask
+
+    const res = await classify('coffee beans');
+
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.classification?.code).toBe(SELECTED);
     expect(getTLAForCodesMock).not.toHaveBeenCalled();
     expect(qgsMock).not.toHaveBeenCalled();
   });
 
-  it('SIBLING_ASK_CONF_THRESHOLD=0.55 still fires for LOW (0.3 < 0.55)', async () => {
-    process.env.SIBLING_ASK_CONF_THRESHOLD = '0.55';
-    selectMock.mockResolvedValue(selectOutLowConf);
+  it('SIBLING_ASK_MARGIN_THRESHOLD=0.50 still fires for the 0.02 margin (0.02 < 0.50)', async () => {
+    process.env.SIBLING_ASK_MARGIN_THRESHOLD = '0.50';
 
     const res = await classify('coffee beans');
 

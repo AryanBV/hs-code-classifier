@@ -20,7 +20,7 @@
  * (Phase A — pure fn + first-match-wins rule list).
  */
 import { isSpecificValue, isBareNonSpecificWord } from '../layers/L1-triage';
-import type { AttributeKey, TriageExtractedAttributes } from '../types';
+import type { AttributeKey, RetrievalCandidate, TriageExtractedAttributes } from '../types';
 
 /**
  * Map an `AttributeKey` to the `extracted_attributes` value field. `function`
@@ -118,4 +118,52 @@ export function isAttributePinnedByQuery(
 
   // (4) Specific value the user actually said → pinned (do not ask).
   return true;
+}
+
+/**
+ * Reranker-margin uncertainty signal for the SIBLING-ASK lever.
+ *
+ * Looks at the SELECTED leaf's same-subheading siblings (the codes that compete
+ * directly under the chosen 6-digit subheading) and measures how far the
+ * reranker separated the top two. A SMALL margin means the reranker could not
+ * tell the siblings apart ⇒ genuinely confusable ⇒ ask-eligible; a LARGE margin
+ * means the winner is clearly preferred ⇒ confident ⇒ don't ask.
+ *
+ * Only candidates that (a) belong to `selectedSubheading` — via
+ * `parent_chain.subheading`, falling back to `code.slice(0,7)` when that is
+ * empty — and (b) carry a non-null `rerank_score` participate. With fewer than
+ * two such siblings the margin is unknowable ⇒ `{ margin: null, topCodes: null }`
+ * (the caller treats null conservatively as "cannot assess → do not ask").
+ *
+ * Pure + side-effect free + total (never throws).
+ *
+ * @returns `margin` = top1.rerank_score − top2.rerank_score (≥0; 0 on an exact
+ *          tie) and `topCodes` = [top1.code, top2.code]; both null when <2
+ *          rerankable same-subheading siblings exist.
+ */
+export function computeSiblingRerankMargin(
+  candidates: RetrievalCandidate[],
+  selectedSubheading: string,
+): { margin: number | null; topCodes: [string, string] | null } {
+  // Keep only same-subheading siblings that carry a rerank score, capturing the
+  // (now non-null) score alongside the code so the sort/return are strongly typed.
+  const siblings: Array<{ code: string; score: number }> = [];
+  for (const c of candidates) {
+    if (c.rerank_score === null) continue;
+    const sub = c.parent_chain.subheading ?? '';
+    const effective = sub.length > 0 ? sub : c.code.slice(0, 7);
+    if (effective === selectedSubheading) {
+      siblings.push({ code: c.code, score: c.rerank_score });
+    }
+  }
+
+  siblings.sort((a, b) => b.score - a.score);
+  const [top1, top2] = siblings;
+  if (top1 === undefined || top2 === undefined) {
+    return { margin: null, topCodes: null }; // <2 rerankable same-subheading siblings
+  }
+  return {
+    margin: top1.score - top2.score,
+    topCodes: [top1.code, top2.code],
+  };
 }

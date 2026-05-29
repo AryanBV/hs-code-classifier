@@ -5,8 +5,8 @@
  * Run: cd backend && npx vitest run src/classifier-v2/lib/sibling-ask-trigger.test.ts
  */
 import { describe, it, expect } from 'vitest';
-import { isAttributePinnedByQuery } from './sibling-ask-trigger';
-import type { TriageExtractedAttributes } from '../types';
+import { isAttributePinnedByQuery, computeSiblingRerankMargin } from './sibling-ask-trigger';
+import type { RetrievalCandidate, TriageExtractedAttributes } from '../types';
 
 /* ---------------------------------------------------------------------------
  * Fixture builder — a fully-null attribute bundle with overrides.
@@ -131,5 +131,126 @@ describe('isAttributePinnedByQuery — edge / escape cases (never throws)', () =
   it('a pinned material does not bleed into an unset (null) attribute', () => {
     const attrs = mkAttrs({ material: 'steel' });
     expect(isAttributePinnedByQuery('form', attrs, ['steel', 'bolt'])).toBe(false);
+  });
+});
+
+/* ---------------------------------------------------------------------------
+ * computeSiblingRerankMargin — the reranker-margin uncertainty signal.
+ *
+ * A small top-2 margin between SAME-SUBHEADING siblings of the selected leaf
+ * means the reranker could not separate them ⇒ genuinely confusable ⇒
+ * ask-eligible. Only siblings whose 6-digit subheading equals the selected
+ * subheading AND that carry a non-null rerank_score participate.
+ * --------------------------------------------------------------------------- */
+
+/**
+ * Build a `RetrievalCandidate`. `subheading` is overridable so a candidate can
+ * be placed in (or out of) the selected sibling group independently of its code
+ * prefix; when omitted it falls back to `code.slice(0,7)` (the real parent
+ * chain). `rerank` may be null to model a candidate that was never reranked.
+ */
+function mkRC(
+  code: string,
+  rerank: number | null,
+  subheading: string | null = code.slice(0, 7),
+): RetrievalCandidate {
+  return {
+    code,
+    level: 'tariff_line',
+    cosine_score: 0.8,
+    fts_rank: 0.5,
+    rerank_score: rerank,
+    parent_chain: {
+      chapter: code.slice(0, 2),
+      heading: code.slice(0, 4),
+      subheading,
+      tariff_line: code,
+    },
+  } as RetrievalCandidate;
+}
+
+describe('computeSiblingRerankMargin', () => {
+  it('returns the top-2 margin and codes for ≥2 same-subheading siblings', () => {
+    const candidates = [
+      mkRC('7318.15.00', 0.90),
+      mkRC('7318.15.10', 0.62),
+    ];
+    const { margin, topCodes } = computeSiblingRerankMargin(candidates, '7318.15');
+    expect(margin).toBeCloseTo(0.28, 10);
+    expect(topCodes).toEqual(['7318.15.00', '7318.15.10']);
+  });
+
+  it('orders by rerank_score DESC regardless of input order', () => {
+    const candidates = [
+      mkRC('7318.15.10', 0.40),
+      mkRC('7318.15.00', 0.95),
+      mkRC('7318.15.90', 0.80),
+    ];
+    const { margin, topCodes } = computeSiblingRerankMargin(candidates, '7318.15');
+    // top1=0.95 (…00), top2=0.80 (…90); margin = 0.15.
+    expect(margin).toBeCloseTo(0.15, 10);
+    expect(topCodes).toEqual(['7318.15.00', '7318.15.90']);
+  });
+
+  it('returns margin 0 for an exact tie (the most confusable case)', () => {
+    const candidates = [
+      mkRC('7318.15.00', 0.77),
+      mkRC('7318.15.10', 0.77),
+    ];
+    const { margin, topCodes } = computeSiblingRerankMargin(candidates, '7318.15');
+    expect(margin).toBe(0);
+    expect(topCodes).toEqual(['7318.15.00', '7318.15.10']);
+  });
+
+  it('returns {null,null} when only ONE sibling remains in the group', () => {
+    const candidates = [
+      mkRC('7318.15.00', 0.90),
+      mkRC('7318.16.00', 0.62), // different subheading → filtered out
+    ];
+    expect(computeSiblingRerankMargin(candidates, '7318.15')).toEqual({
+      margin: null,
+      topCodes: null,
+    });
+  });
+
+  it('excludes candidates whose rerank_score is null (FTS-only hits)', () => {
+    const candidates = [
+      mkRC('7318.15.00', 0.90),
+      mkRC('7318.15.10', null), // never reranked → excluded → <2 remain
+    ];
+    expect(computeSiblingRerankMargin(candidates, '7318.15')).toEqual({
+      margin: null,
+      topCodes: null,
+    });
+  });
+
+  it('counts only same-subheading siblings; off-subheading candidates do not contribute', () => {
+    const candidates = [
+      mkRC('7318.15.00', 0.90),
+      mkRC('7318.15.10', 0.85),
+      mkRC('7318.16.00', 0.10), // different subheading: must NOT become top2
+      mkRC('7320.10.00', 0.05),
+    ];
+    const { margin, topCodes } = computeSiblingRerankMargin(candidates, '7318.15');
+    // Only the two 7318.15.* survive → margin 0.05 between them.
+    expect(margin).toBeCloseTo(0.05, 10);
+    expect(topCodes).toEqual(['7318.15.00', '7318.15.10']);
+  });
+
+  it('falls back to code.slice(0,7) when parent_chain.subheading is empty', () => {
+    const candidates = [
+      mkRC('7318.15.00', 0.90, null), // no parent subheading → derive from code
+      mkRC('7318.15.10', 0.70, ''),   // empty string → derive from code
+    ];
+    const { margin, topCodes } = computeSiblingRerankMargin(candidates, '7318.15');
+    expect(margin).toBeCloseTo(0.20, 10);
+    expect(topCodes).toEqual(['7318.15.00', '7318.15.10']);
+  });
+
+  it('returns {null,null} for an empty candidate list', () => {
+    expect(computeSiblingRerankMargin([], '7318.15')).toEqual({
+      margin: null,
+      topCodes: null,
+    });
   });
 });
