@@ -184,6 +184,41 @@ Note: TC119 and EC037 are cases where BOTH the prior gold AND the model's r8 pic
 
 ---
 
+## Round 3 — sibling-audit corrections (2026-05-29, user-approved)
+
+Surfaced by the r8/r9 sibling-audit (gold codes that pointed at the wrong sibling leaf or wrong subheading within an otherwise-correct heading). Each correction was independently re-adjudicated LAW-FIRST — the verifier saw only the query + the gold code, NOT any model prediction. User approved all 21 on 2026-05-29. Applied via `GOLD_OVERRIDES` (chapter/heading auto-derived). Every new code was confirmed to exist in `tariff_lines` before writing.
+
+| caseId | query | old gold | new gold | basis |
+|---|---|---|---|---|
+| TC013 | truck tyre | 4011.10.* (motor-car) | 4011.20.10 | lorry/bus tyre -> 4011.20; .10 Radials (GIR-6) |
+| TC106 | coffee concentrate | (prior gold) | 2101.11.90 | extracts/essences/concentrates of coffee, Other |
+| TC015 | safety/protective headgear | (prior gold) | 6506.10.90 | safety headgear; .90 Other |
+| EC001 | fur garment | (prior gold) | 4303.10.90 | articles of apparel of furskin, Other (GIR-1) |
+| EC003 | farmed rabbit fur jacket | 4303.90.90 (r1) | 4303.10.90 | corrects r1: jacket = apparel (4303.10) not residual "other articles" (4303.90) |
+| EC014 | synthetic monofilament | (prior gold) | 5404.19.90 | monofilament >=67 dtex, Other; .90 Other |
+| EC022 | women's man-made-fibre overcoat/raincoat | (prior gold) | 6202.20.10 | of man-made fibres; .10 overcoats/raincoats/capes |
+| EC025 | men's knitted cotton shirt | (prior gold) | 6105.10.90 | men's knitted cotton shirts; .90 Other (not handloom) |
+| EC029 | men's woven cotton trousers | (prior gold) | 6203.42.90 | of cotton; .90 Other (GIR-1) |
+| EC030 | women's woven skirt, other textile | (prior gold) | 6204.59.99 | skirts of other textile materials; .99 Other:Other |
+| S5-SIMP-004 | refined white cane sugar | 1701.91.00 | 1701.99.90 | .91 = "added flavouring/colouring"; plain refined -> .99; .90 Other |
+| S5-SIMP-017 | polyester curtains | 6303.99.10 | 6303.92.00 | curtains of synthetic fibres (GIR-1) |
+| S5-SIMP-038 | folding/automatic umbrella | 6601.10.00 | 6601.91.00 | umbrella having a telescopic shaft (GIR-6) |
+| S5-AMB-004 | motorcycle helmet | 6506.10.20 | 6506.10.90 | safety headgear; .90 Other (corrects sibling .20) |
+| S5-AMB-006 | H4 halogen vehicle headlight bulb | 8539.21.10 | 8539.21.20 | tungsten halogen lamps; .20 Other for automobiles (eo nomine) |
+| S5-AMB-008 | memory-foam PU mattress | 9404.29.90 (r1) | 9404.21.90 | corrects r1: mattress of cellular plastics -> 9404.21 (eo nomine), not 9404.29 (other) |
+| EC040 | liquid-dielectric power transformer | (prior gold) | 8504.22.00 | 650-10000 kVA power band (GIR-6) |
+| TC104 | instant coffee | (prior gold) | 2101.11.20 | instant coffee, not flavoured |
+| S5-SIMP-010 | milk chocolate bar with almonds | 1806.31.00 | 1806.32.00 | added nuts != "filled"; bars not filled -> .32 (corrects r1 kept-as-is) |
+| S5-AMB-007 | silicone sealant for construction | 3214.90.10 | 3214.10.00 | mastic/caulking compound -> 3214.10 eo nomine (resolves Ch.32 vs 39) |
+| S5-AUTO-025 | Honda engine timing belt | 4010.11.10 (conveyor) | 4010.35.90 | endless SYNCHRONOUS transmission belt 60-150cm; .90 residual (low-confidence on band) |
+
+All 21 were blind-law-verified (the verifier saw only the query + gold code, never any model prediction) and user-approved on 2026-05-29. Two are UPDATEs of prior-round overrides that were themselves wrong (EC003: r1 4303.90.90 -> r3 4303.10.90; S5-AMB-008: r1 9404.29.90 -> r3 9404.21.90). S5-SIMP-010 supersedes a Round-1 "kept-as-is" call (1806.31.00 "filled" -> 1806.32.00 "not filled").
+
+### S5-AUTO-025 leaf-choice note
+Heading 4010 splits conveyor belts (4010.11-19) from transmission belts (4010.31-39). A passenger-car engine timing belt is an endless **synchronous** (toothed) belt. WCO splits synchronous belts by outside circumference: **4010.35 = 60-150 cm**, 4010.36 = 150-198 cm. A typical car timing belt falls in the 60-150 cm band, so 4010.35. Within 4010.35, `.10` is "rubber compound content < 25% by weight" and `.90` is "Other"; with no signal that the belt is low-rubber-content, the residual `.90` is the defensible leaf. Final: **4010.35.90**, flagged `confidence: 'low'` because exact circumference is not in the query (the band could theoretically be 4010.36 for an unusually large belt).
+
+---
+
 ## Tooling repaired (Phase 1)
 
 The pre-existing `src/eval/gt-fix/` pipeline queried the dropped legacy `hs_codes`

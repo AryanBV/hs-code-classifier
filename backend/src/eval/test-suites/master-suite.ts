@@ -331,7 +331,7 @@ const GOLD_OVERRIDES: Record<string, GoldOverride> = {
   EC032: { code: '0901.22.90', reason: 'Roasted + decaffeinated coffee -> 0901.22.90. Old 0901.11.44 = not roasted/not decaf.' },
   EC034: { code: '2101.12.00', reason: 'Coffee concentrate/extract -> 2101.12.00 (preparations w/ basis of coffee extracts). Old 2101.20.20 = tea.' },
   EC035: { code: '0901.21.90', reason: 'Espresso capsules (ground roasted coffee) -> 0901.21.90. Old 0901.90.10 = coffee husks/skins.' },
-  EC003: { code: '4303.90.90', reason: 'Farmed rabbit fur jacket -> 4303.90.90 "Other". Old 4303.90.10 = wild animals (Wildlife Protection Act).' },
+  EC003: { code: '4303.10.90', reason: 'r3(2026-05-29): farmed rabbit fur JACKET = article of apparel -> 4303.10.90 (apparel/accessories, Other). Corrects prior-round 4303.90.90 which is the residual "Other articles" line, not apparel; 4303.10 is eo nomine for apparel of furskin (GIR-1). blind-law-verified.' },
   EC010: { code: '8007.00.90', reason: 'Tin foil wrapping -> 8007.00.90 "Other" (article of tin). Old 8007.00.10 = "Blanks".' },
   EC041: { code: '3917.23.10', reason: 'Rigid PVC water-supply pipe -> 3917.23.10 (rigid, of vinyl chloride polymers, seamless). Old 3917.31.00 = flexible.' },
   EC042: { code: '3923.30.90', reason: 'Food-grade HDPE container -> 3923.30.90 "Other". Old 3923.30.10 = "Insulated ware".' },
@@ -351,7 +351,7 @@ const GOLD_OVERRIDES: Record<string, GoldOverride> = {
   // ── Session5 ambiguous (inline) ──
   'S5-AMB-003': { code: '4016.91.00', reason: 'Rubber car floor mat -> 4016.91.00 (floor coverings/mats of rubber). Old 4013.10.10 = inner tubes.' },
   'S5-AMB-005': { code: '4205.00.90', reason: 'Leather car seat cover -> 4205.00.90 (other articles of leather). Old 4201.00.00 = animal saddlery/harness.' },
-  'S5-AMB-008': { code: '9404.29.90', reason: 'Polyurethane memory-foam mattress -> 9404.29.90 "Other". Old 9404.29.20 = rubberized coir.' },
+  'S5-AMB-008': { code: '9404.21.90', reason: 'r3(2026-05-29): memory-foam PU mattress = mattress of CELLULAR plastics -> 9404.21.90 (Mattresses: of cellular rubber or plastics, Of Plastic). Corrects prior-round 9404.29.90 (other mattresses); WCO 9404.21 is the eo nomine cellular-plastics mattress subheading (GIR-1/GIR-6). blind-law-verified.' },
   'S5-AMB-010': { code: '6212.10.00', reason: 'Sports bra (brassiere) -> 6212.10.00 (heading 6212 covers brassieres knitted or not). Old 6104.43.00 = dresses. alternative_chapters already lists 62.' },
   'S5-AMB-013': { code: '8507.60.00', reason: 'Lithium power bank -> 8507.60.00 (lithium-ion accumulator). Old 8513.10.90 = portable electric lamps.' },
   'S5-AMB-014': { code: '9506.99.90', reason: 'PVC yoga/exercise mat -> 9506.99.90 "Other" (general exercise equipment). Old 9506.99.20 = cricket leg pads/bats.' },
@@ -376,6 +376,27 @@ const GOLD_OVERRIDES: Record<string, GoldOverride> = {
   DB016: { code: '1008.29.50', reason: 'r8: bare species name (no sowing-seed signal) = trade grain -> 1008.29.50. Old 1008.21.50 = Millet SEED for sowing.' },
   'S5-AUTO-024': { code: '8512.40.00', reason: 'r8: windscreen wiper blade -> 8512.40.00 (eo nomine wipers). Old chapter-only Ch.87 wrong: 8708.22 = windscreen GLASS; Section XVII Note 2(f) excludes Ch.85 electrical equipment.' },
   'S5-AMB-012': { code: '8523.51.00', reason: 'r8: USB flash drive = solid-state non-volatile storage -> 8523.51.00 (Ch.85 Note 6(a)). Old chapter-only Ch.84 wrong (it is Ch.85).' },
+
+  // ── Round 3: r8/r9 sibling-audit corrections (2026-05-29, user-approved, blind-law-verified) ──
+  TC013: { code: '4011.20.10', reason: 'r3(2026-05-29): truck tyre = lorry/bus tyre -> 4011.20 (used on buses or lorries) not 4011.10 (motor cars); .10 Radials per GIR-6. blind-law-verified.' },
+  TC106: { code: '2101.11.90', reason: 'r3(2026-05-29): coffee extract/essence (concentrate) -> 2101.11 (extracts, essences and concentrates of coffee); .90 Other. blind-law-verified.' },
+  TC015: { code: '6506.10.90', reason: 'r3(2026-05-29): safety/protective headgear -> 6506.10 (safety headgear); .90 Other (not .20 helmets-of-specific-type). blind-law-verified.' },
+  EC001: { code: '4303.10.90', reason: 'r3(2026-05-29): fur garment = article of apparel of furskin -> 4303.10 (articles of apparel and clothing accessories); .90 Other (GIR-1). blind-law-verified.' },
+  EC014: { code: '5404.19.90', reason: 'r3(2026-05-29): synthetic monofilament >=67 dtex, cross-section <=1mm -> 5404.19 (monofilament, Other); .90 Other. blind-law-verified.' },
+  EC022: { code: '6202.20.10', reason: "r3(2026-05-29): women's overcoat/raincoat of man-made fibres (woven) -> 6202.20 (of man-made fibres); .10 overcoats, raincoats, car-coats, capes, cloaks and similar articles. blind-law-verified." },
+  EC025: { code: '6105.10.90', reason: "r3(2026-05-29): men's knitted cotton shirt -> 6105.10 (men's/boys' shirts, knitted, of cotton); .90 Other (not handloom). blind-law-verified." },
+  EC029: { code: '6203.42.90', reason: "r3(2026-05-29): men's woven cotton trousers -> 6203.42 (of cotton); .90 Other (GIR-1). blind-law-verified." },
+  EC030: { code: '6204.59.99', reason: "r3(2026-05-29): women's woven skirt of other textile materials -> 6204.59 (skirts, of other textile materials); .99 Other: Other. blind-law-verified." },
+  'S5-SIMP-004': { code: '1701.99.90', reason: 'r3(2026-05-29): refined white cane sugar (no added flavour/colour) -> 1701.99 (other cane/beet sugar, refined); .90 Other. Old 1701.91.00 = "containing added flavouring or colouring". blind-law-verified.' },
+  'S5-SIMP-017': { code: '6303.92.00', reason: 'r3(2026-05-29): polyester (synthetic) curtains -> 6303.92.00 (curtains/interior blinds, of synthetic fibres) per GIR-1. blind-law-verified.' },
+  'S5-SIMP-038': { code: '6601.91.00', reason: 'r3(2026-05-29): folding/automatic umbrella -> 6601.91.00 (umbrellas, having a telescopic shaft) per GIR-1/GIR-6. blind-law-verified.' },
+  'S5-AMB-004': { code: '6506.10.90', reason: 'r3(2026-05-29): motorcycle (protective) helmet -> 6506.10 (safety headgear); .90 Other. Section XVII excludes headgear from Ch.87. blind-law-verified.' },
+  'S5-AMB-006': { code: '8539.21.20', reason: 'r3(2026-05-29): halogen H4 vehicle headlight bulb -> 8539.21 (tungsten halogen filament lamps); .20 Other for automobiles (eo nomine, GIR-1). blind-law-verified.' },
+  EC040: { code: '8504.22.00', reason: 'r3(2026-05-29): liquid-dielectric power transformer 650-10000 kVA -> 8504.22.00 per GIR-1/GIR-6 (power band). blind-law-verified.' },
+  TC104: { code: '2101.11.20', reason: 'r3(2026-05-29): instant (soluble) coffee, not flavoured -> 2101.11.20 (extracts/essences/concentrates of coffee: instant coffee, not flavoured). blind-law-verified.' },
+  'S5-SIMP-010': { code: '1806.32.00', reason: 'r3(2026-05-29): milk chocolate bar WITH almonds = chocolate in bars/slabs, not filled (added nuts != "filled" per HS) -> 1806.32.00 (Other, in blocks/slabs/bars: not filled). Old 1806.31.00 = "filled". blind-law-verified.' },
+  'S5-AMB-007': { code: '3214.10.00', reason: 'r3(2026-05-29): silicone sealant for construction = mastic/caulking compound -> 3214.10.00 (glaziers putty, caulking compounds and other mastics). Resolves Ch.32 vs Ch.39 in favour of eo nomine mastics line (GIR-1). blind-law-verified.' },
+  'S5-AUTO-025': { code: '4010.35.90', reason: 'r3(2026-05-29): Honda car engine timing belt = endless SYNCHRONOUS transmission belt, ~60-150cm circumference -> 4010.35 (endless synchronous belts, 60-150cm); .90 Other (residual rubber-content leaf; .10 is for rubber compound <25% by weight, no such signal). Transmission belt 4010.3x, NOT conveyor 4010.11. blind-law-verified; circumference assumed (low-confidence on band, but .35 is the standard car-timing-belt band).', confidence: 'low' },
 };
 
 function deriveChapter(code: string): string {
