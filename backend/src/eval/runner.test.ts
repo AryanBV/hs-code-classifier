@@ -188,6 +188,11 @@ describe('runTestCase — simulateAnswers OFF (default): existing behavior prese
     expect(d.score).toBe(0);                   // wrong routing → 0
     expect(d.ask_recovery_attempt).toBeUndefined();
     expect(runAnswerSimulation).not.toHaveBeenCalled();
+    // The ASK detail now carries the gold labels (frozen-population requirement)
+    // so a gold case the system ASKed becomes a miss in primary_accuracy.
+    expect(d.expected_code).toBe('7318.15.00');
+    expect(d.expected_chapter).toBe('73');
+    expect(d.code_correct).toBeUndefined(); // no code delivered → frozen-denom miss
   });
 });
 
@@ -251,6 +256,224 @@ describe('runTestCase — simulateAnswers ON: gold-answer recovery on ASK', () =
     expect(d.ask_recovery_attempt!.code_correct_after_recovery).toBe(false);
     expect(d.ask_recovery_attempt!.chapter_correct_after_recovery).toBe(true);  // 73 == 73
     expect(d.ask_recovery_attempt!.heading_correct_after_recovery).toBe(false); // 7326 != 7318
+  });
+});
+
+// ---------------------------------------------------------------------------
+// P0-A frozen metric contract: primary (frozen-denom) accuracy, precision_when_
+// classifying, confident-wrong, calibration, latency, cost, population closure.
+// ---------------------------------------------------------------------------
+
+describe('buildReportForTest — frozen scoring population (primary_accuracy)', () => {
+  const detail = (over: Partial<import('./types').EvalDetail>): import('./types').EvalDetail => ({
+    test_case_id: 'x', query: 'q', expected_routing: 'classify', actual_routing: 'classify',
+    routing_correct: true, response_time_ms: 1, score: 100, ...over,
+  });
+
+  it('counts a gold case routed to ASK as a MISS (frozen denominator, not dropped)', () => {
+    const details: import('./types').EvalDetail[] = [
+      // direct classify, code correct
+      detail({ test_case_id: 'C1', expected_code: '7318.15.00', expected_chapter: '73', expected_heading: '7318',
+        actual_code: '7318.15.00', chapter_correct: true, heading_correct: true, code_correct: true }),
+      // gold case the system ASKed — NOT correctly routed; primary counts it a miss.
+      detail({ test_case_id: 'A1', actual_routing: 'ask', routing_correct: false, score: 0,
+        expected_code: '0901.21.00', expected_chapter: '09', expected_heading: '0901' }),
+    ];
+    const r = buildReportForTest(details);
+    // Frozen denom = 2 gold cases. Only C1 correct → 1/2.
+    expect(r.primary_accuracy.gold_code_cases).toBe(2);
+    expect(r.primary_accuracy.code.k).toBe(1);
+    expect(r.primary_accuracy.code.n).toBe(2);
+    expect(r.primary_accuracy.code.rate).toBeCloseTo(0.5, 10);
+    expect(r.primary_accuracy.chapter.k).toBe(1);
+    expect(r.primary_accuracy.chapter.n).toBe(2);
+    // CI present and bounded.
+    expect(r.primary_accuracy.code.lower).toBeGreaterThanOrEqual(0);
+    expect(r.primary_accuracy.code.upper).toBeLessThanOrEqual(1);
+  });
+
+  it('precision_when_classifying uses the SHRINKING conditional denominator', () => {
+    const details: import('./types').EvalDetail[] = [
+      detail({ test_case_id: 'C1', expected_code: '7318.15.00', expected_chapter: '73', expected_heading: '7318',
+        actual_code: '7318.15.00', chapter_correct: true, heading_correct: true, code_correct: true }),
+      detail({ test_case_id: 'A1', actual_routing: 'ask', routing_correct: false, score: 0,
+        expected_code: '0901.21.00', expected_chapter: '09', expected_heading: '0901' }),
+    ];
+    const r = buildReportForTest(details);
+    // Conditional denom = only correctly-routed classify cases = 1 (C1).
+    expect(r.precision_when_classifying.n).toBe(1);
+    expect(r.precision_when_classifying.code.rate).toBeCloseTo(1, 10);
+    // …and it differs from the (lower) frozen primary number — the dilution gap.
+    expect(r.primary_accuracy.code.rate).toBeLessThan(r.precision_when_classifying.code.rate);
+  });
+
+  it('excludes error cases from the frozen population', () => {
+    const details: import('./types').EvalDetail[] = [
+      detail({ test_case_id: 'C1', expected_code: '7318.15.00', expected_chapter: '73', expected_heading: '7318',
+        actual_code: '7318.15.00', chapter_correct: true, heading_correct: true, code_correct: true }),
+      detail({ test_case_id: 'E1', is_error: true, actual_routing: 'error', routing_correct: false, score: 0,
+        expected_code: '8501.10.00', error: 'timeout' }),
+    ];
+    const r = buildReportForTest(details);
+    expect(r.primary_accuracy.gold_code_cases).toBe(1); // E1 excluded
+  });
+});
+
+describe('buildReportForTest — confident-wrong', () => {
+  const detail = (over: Partial<import('./types').EvalDetail>): import('./types').EvalDetail => ({
+    test_case_id: 'x', query: 'q', expected_routing: 'classify', actual_routing: 'classify',
+    routing_correct: true, response_time_ms: 1, score: 100, ...over,
+  });
+
+  it('counts a delivered-classification-with-wrong-code and lists the caseId', () => {
+    const details: import('./types').EvalDetail[] = [
+      // classified, correct → not confident-wrong
+      detail({ test_case_id: 'OK1', expected_code: '7318.15.00', actual_code: '7318.15.00', code_correct: true, confidence: 0.9 }),
+      // classified, WRONG → confident-wrong
+      detail({ test_case_id: 'CW1', expected_code: '0901.21.00', actual_code: '7326.90.99', code_correct: false, confidence: 0.9 }),
+      // ASKed (not a classification delivery) → NOT in answered set
+      detail({ test_case_id: 'A1', actual_routing: 'ask', routing_correct: false, expected_code: '5208.11.00' }),
+    ];
+    const r = buildReportForTest(details);
+    expect(r.confident_wrong.answered_count).toBe(2); // OK1 + CW1 (delivered classifications)
+    expect(r.confident_wrong.count).toBe(1);
+    expect(r.confident_wrong.case_ids).toEqual(['CW1']);
+    expect(r.confident_wrong.rate.rate).toBeCloseTo(0.5, 10);
+  });
+
+  it('graded τ=0.7 variant filters by confidence ≥ 0.7', () => {
+    const details: import('./types').EvalDetail[] = [
+      detail({ test_case_id: 'CW_hi', actual_code: '7326.90.99', expected_code: '0901.21.00', code_correct: false, confidence: 0.9 }),
+      detail({ test_case_id: 'CW_lo', actual_code: '7326.90.99', expected_code: '0901.21.00', code_correct: false, confidence: 0.3 }),
+    ];
+    const r = buildReportForTest(details);
+    expect(r.confident_wrong.count).toBe(2); // both are confident-wrong (ungraded)
+    expect(r.confident_wrong.graded_tau_0_7).toBeDefined();
+    expect(r.confident_wrong.graded_tau_0_7!.threshold).toBe(0.7);
+    expect(r.confident_wrong.graded_tau_0_7!.count).toBe(1); // only the conf=0.9 one
+    expect(r.confident_wrong.graded_tau_0_7!.case_ids).toEqual(['CW_hi']);
+  });
+});
+
+describe('buildReportForTest — calibration, latency, cost', () => {
+  const detail = (over: Partial<import('./types').EvalDetail>): import('./types').EvalDetail => ({
+    test_case_id: 'x', query: 'q', expected_routing: 'classify', actual_routing: 'classify',
+    routing_correct: true, response_time_ms: 1, score: 100, ...over,
+  });
+
+  it('computes Brier + ECE over classify cases carrying a confidence', () => {
+    const details: import('./types').EvalDetail[] = [
+      detail({ test_case_id: 'A', actual_code: '7318.15.00', code_correct: true, confidence: 1 }),
+      detail({ test_case_id: 'B', actual_code: '7318.15.00', code_correct: true, confidence: 1 }),
+    ];
+    const r = buildReportForTest(details);
+    expect(r.calibration).toBeDefined();
+    expect(r.calibration!.sample_count).toBe(2);
+    expect(r.calibration!.brier_score).toBe(0); // perfect confident-correct
+  });
+
+  it('omits calibration when no classify case carries a confidence', () => {
+    const details: import('./types').EvalDetail[] = [
+      detail({ test_case_id: 'A', actual_code: '7318.15.00', code_correct: true }), // no confidence
+    ];
+    const r = buildReportForTest(details);
+    expect(r.calibration).toBeUndefined();
+  });
+
+  it('computes p95/median latency and an order-of-magnitude cost roll-up', () => {
+    const details: import('./types').EvalDetail[] = [
+      detail({ test_case_id: 'A', response_time_ms: 100, est_cost_usd: 0.001 }),
+      detail({ test_case_id: 'B', response_time_ms: 200, est_cost_usd: 0.002 }),
+      detail({ test_case_id: 'C', response_time_ms: 300, est_cost_usd: 0.003 }),
+    ];
+    const r = buildReportForTest(details);
+    expect(r.latency.sample_count).toBe(3);
+    expect(r.latency.p95_ms).toBe(300); // nearest-rank p95 over [100,200,300]
+    expect(r.latency.median_ms).toBe(200);
+    expect(r.cost.est_total_usd).toBeCloseTo(0.006, 10);
+    expect(r.cost.is_order_of_magnitude).toBe(true);
+  });
+});
+
+describe('buildReportForTest — population closure assertion', () => {
+  const detail = (over: Partial<import('./types').EvalDetail>): import('./types').EvalDetail => ({
+    test_case_id: 'x', query: 'q', expected_routing: 'classify', actual_routing: 'classify',
+    routing_correct: true, response_time_ms: 1, score: 100, ...over,
+  });
+
+  it('partitions gold cases by routing and reports closed=true', () => {
+    const details: import('./types').EvalDetail[] = [
+      detail({ test_case_id: 'C1', expected_code: '7318.15.00', actual_code: '7318.15.00', code_correct: true }),
+      detail({ test_case_id: 'A1', actual_routing: 'ask', routing_correct: false, expected_code: '0901.21.00',
+        ask_recovery_attempt: { initial_question_id: 'q', rounds_attempted: 1, final_decision: 'CLASSIFY',
+          final_code_if_classify: '0901.21.00', code_correct_after_recovery: true,
+          chapter_correct_after_recovery: true, heading_correct_after_recovery: true, answer_matches: [] } }),
+      detail({ test_case_id: 'R1', actual_routing: 'reject', routing_correct: false, expected_code: '5208.11.00' }),
+    ];
+    const r = buildReportForTest(details);
+    expect(r.population_closure.scored_with_gold).toBe(3);
+    expect(r.population_closure.direct_classify).toBe(1);
+    expect(r.population_closure.ask_cases).toBe(1);
+    expect(r.population_closure.refused_with_gold).toBe(1);
+    expect(r.population_closure.asked_not_simulated).toBe(0);
+    expect(r.population_closure.closed).toBe(true);
+  });
+
+  it('counts a gold ASK case with NO simulation attempt as asked_not_simulated (still closed)', () => {
+    const details: import('./types').EvalDetail[] = [
+      detail({ test_case_id: 'A1', actual_routing: 'ask', routing_correct: false, expected_code: '0901.21.00' }),
+    ];
+    const r = buildReportForTest(details);
+    expect(r.population_closure.scored_with_gold).toBe(1);
+    expect(r.population_closure.asked_not_simulated).toBe(1);
+    expect(r.population_closure.closed).toBe(true);
+  });
+
+  it('FIX-2: a gold case matching NONE of the four positive predicates → closure THROWS', () => {
+    // A non-error gold case with an actual_routing value outside {classify, ask,
+    // reject}. With the OLD complement-remainder it would be silently absorbed
+    // into asked_not_simulated; with the positive-predicate counts it matches no
+    // bucket → sum < goldN → the closure assertion must fire.
+    const details: import('./types').EvalDetail[] = [
+      detail({
+        test_case_id: 'BAD',
+        actual_routing: 'somethingelse', // not classify/ask/reject; is_error stays false
+        routing_correct: false,
+        expected_code: '7318.15.00',
+      }),
+    ];
+    expect(() => buildReportForTest(details)).toThrow(/population closure FAILED/);
+  });
+});
+
+describe('buildReportForTest — effective accuracy (constant denominator, REFUSE leak closed)', () => {
+  const detail = (over: Partial<import('./types').EvalDetail>): import('./types').EvalDetail => ({
+    test_case_id: 'x', query: 'q', expected_routing: 'classify', actual_routing: 'classify',
+    routing_correct: true, response_time_ms: 1, score: 100, ...over,
+  });
+
+  it('effective denominator = ALL gold cases (a REFUSE gold case stays a miss)', () => {
+    const details: import('./types').EvalDetail[] = [
+      // direct classify correct
+      detail({ test_case_id: 'C1', expected_code: '7318.15.00', expected_chapter: '73', expected_heading: '7318',
+        actual_code: '7318.15.00', chapter_correct: true, heading_correct: true, code_correct: true }),
+      // ASK recovered correct
+      detail({ test_case_id: 'A1', actual_routing: 'ask', routing_correct: false, expected_code: '0901.21.00',
+        expected_chapter: '09', expected_heading: '0901',
+        ask_recovery_attempt: { initial_question_id: 'q', rounds_attempted: 1, final_decision: 'CLASSIFY',
+          final_code_if_classify: '0901.21.00', code_correct_after_recovery: true,
+          chapter_correct_after_recovery: true, heading_correct_after_recovery: true, answer_matches: [] } }),
+      // REFUSE gold case — must remain in the EFFECTIVE denominator as a miss.
+      detail({ test_case_id: 'R1', actual_routing: 'reject', routing_correct: false, expected_code: '5208.11.00',
+        expected_chapter: '52', expected_heading: '5208' }),
+    ];
+    const r = buildReportForTest(details);
+    const e = r.end_to_end_metrics!;
+    // EFFECTIVE 8-digit: (C1 + A1) correct over ALL 3 gold cases = 2/3.
+    expect(e.effective_code.n).toBe(3);
+    expect(e.effective_code.k).toBe(2);
+    expect(e.effective_code.rate).toBeCloseTo(2 / 3, 10);
+    expect(e.refused_after_ask).toBe(0); // R1 was a direct REFUSE, not post-ASK
   });
 });
 

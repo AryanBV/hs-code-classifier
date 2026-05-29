@@ -1,5 +1,7 @@
 // backend/src/eval/types.ts
 
+import type { RateCI, ReliabilityBin } from './metrics';
+
 export interface EvalTestCase {
   id: string;                    // e.g., "TC001", "S5-AUTO-003", "INT-001"
   query: string;
@@ -53,6 +55,131 @@ export interface EvalReport {
     code_accuracy: number;
     per_chapter_breakdown: Record<string, { correct: number; total: number; accuracy: number }>;
   };
+
+  /**
+   * FROZEN SCORING POPULATION (EVAL_DESIGN.md §1). PRIMARY accuracy: denominator =
+   * every non-error case carrying a gold code, INDEPENDENT of routing. A gold case
+   * the system routed to ASK/REFUSE/(any non-classify) counts as a MISS — it is
+   * NOT dropped. This kills the dilution trap where rerouting hard cases to ASK
+   * shrinks n and inflates the conditional number. Each rate carries a Wilson 95%
+   * CI. THIS is the number to gate on, never `precision_when_classifying`.
+   */
+  primary_accuracy: {
+    /** |gold-code cases| (non-error) — the constant frozen denominator. */
+    gold_code_cases: number;
+    chapter: RateCI;
+    heading: RateCI;
+    code: RateCI;
+  };
+
+  /**
+   * SECONDARY DIAGNOSTIC — the OLD routing-conditional numbers (correct over
+   * correctly-routed classify cases only). Relabeled to make explicit it is a
+   * conditional precision, NOT the headline accuracy. Mirrors `classification.*`
+   * but with CIs and an explicit (shrinking) denominator. NEVER gate on this.
+   */
+  precision_when_classifying: {
+    /** correctly-routed classify cases (the conditional, dilutable denominator). */
+    n: number;
+    chapter: RateCI;
+    heading: RateCI;
+    code: RateCI;
+  };
+
+  /**
+   * confident-wrong (EVAL_DESIGN.md §3): the system CLASSIFIED (responseType
+   * 'classification') AND the 8-digit code was wrong — a confidently delivered
+   * wrong answer. The headline harm metric (gated on absolute count + manual
+   * review, not a threshold). Rate is over the ANSWERED set (cases the system
+   * classified). The caseId list is for mandatory manual review.
+   */
+  confident_wrong: {
+    /** Cases the system delivered as a classification (the answered set). */
+    answered_count: number;
+    /** Of those, how many had a wrong 8-digit code. */
+    count: number;
+    /** count / answered_count, with Wilson 95% CI. */
+    rate: RateCI;
+    /** Every confident-wrong test_case_id — for manual "is it indefensible?" review. */
+    case_ids: string[];
+    /**
+     * OPTIONAL graded variant at τ=0.7: confident-wrong restricted to cases whose
+     * `confidence` ≥ 0.7. Computed for visibility only — NOT a gate. Undefined when
+     * no answered case carries a confidence.
+     */
+    graded_tau_0_7?: {
+      threshold: number;
+      /** Answered cases with confidence ≥ τ. */
+      answered_count: number;
+      count: number;
+      rate: RateCI;
+      case_ids: string[];
+    };
+  };
+
+  /**
+   * Calibration (EVAL_DESIGN.md §4) over classify cases carrying a confidence AND
+   * a binary correctness. `brier_score` is the headline scalar; ECE uses
+   * EQUAL-MASS bins (≤5) with a deterministic bootstrap CI. The reliability bins
+   * are a directional diagnostic only. NEVER emit a "within 5%" claim — the CI is
+   * the honest statement. Undefined when no classify case carries a confidence.
+   */
+  calibration?: {
+    /** Classify cases with a confidence used for calibration. */
+    sample_count: number;
+    /** Mean squared error of the confidence forecasts (lower better). */
+    brier_score: number;
+    /** Expected Calibration Error (equal-mass bins). */
+    ece: number;
+    /** Deterministic bootstrap CI for ECE (1000 resamples, seeded). */
+    ece_ci: { lower: number; upper: number; resamples: number };
+    /** Number of equal-mass bins used (≤5). */
+    bins_requested: number;
+    /** Reliability bins (diagnostic). */
+    reliability_bins: ReliabilityBin[];
+  };
+
+  /**
+   * Latency over scored (non-error) cases, from per-case `response_time_ms`.
+   * Order-of-magnitude wall-clock under the eval's concurrency, NOT a production
+   * SLA measurement, but the p95/median shape is the budget signal.
+   */
+  latency: {
+    median_ms: number;
+    p95_ms: number;
+    /** Cases contributing a response_time_ms. */
+    sample_count: number;
+  };
+
+  /**
+   * Cost roll-up. `est_total_usd` = Σ per-case `est_cost_usd` (each itself an
+   * APPROX `llm_calls × representative-per-call`). Clearly ORDER-OF-MAGNITUDE —
+   * real per-token instrumentation is deferred (no runtime change here).
+   */
+  cost: {
+    /** APPROX total USD across scored cases (order-of-magnitude only). */
+    est_total_usd: number;
+    /** True — flags that this is NOT a real per-token billing figure. */
+    is_order_of_magnitude: true;
+  };
+
+  /**
+   * POPULATION CLOSURE assertion (EVAL_DESIGN.md §2). Partitions the frozen
+   * gold-code population by how the system routed each case so the EFFECTIVE
+   * denominator can never silently leak a REFUSE/missing case. `closed` is true
+   * iff `direct_classify + ask_cases + refused_with_gold + asked_not_simulated
+   * === scored_with_gold`. buildReport THROWS when it is false.
+   */
+  population_closure: {
+    scored_with_gold: number;
+    direct_classify: number;
+    ask_cases: number;
+    refused_with_gold: number;
+    /** ASK/other gold cases NOT carrying a simulation attempt (e.g. flag-off). */
+    asked_not_simulated: number;
+    closed: boolean;
+  };
+
   question_quality: {
     targeted_pct: number;
     relevant_pct: number;
@@ -84,13 +211,39 @@ export interface EvalReport {
     ask_unanswerable: number;
     /** Direct classify cases (system CLASSIFY) with a correct 8-digit code. */
     classify_direct_correct: number;
-    /** Total scored cases carrying a gold code (the end-to-end denominator). */
+    /**
+     * LEGACY denominator (FIX-3): direct-classify cases + simulated-ASK cases
+     * ONLY. It EXCLUDES gold cases the system REFUSEd (and any asked-not-simulated
+     * gold case), so it is NOT the constant frozen denominator and can shrink as
+     * cases reroute. Retained for backward comparison with old reports. The
+     * spec-correct constant denominator is `goldCases.length` (the frozen
+     * population), used by the `effective_*` metrics below.
+     */
     scored_with_gold: number;
-    /** Combined chapter accuracy: (direct-chapter-correct + ask-recovered-chapter-correct) / scored_with_gold × 100. */
+    /** LEGACY combined chapter accuracy over `scored_with_gold` (recovered-only denom — prefer `effective_chapter`). */
     end_to_end_chapter_accuracy: number;
+    /** LEGACY combined heading accuracy over `scored_with_gold` (prefer `effective_heading`). */
     end_to_end_heading_accuracy: number;
-    /** Combined 8-digit accuracy — the headline end-to-end number. */
+    /** LEGACY combined 8-digit accuracy over `scored_with_gold` (prefer `effective_code`). */
     end_to_end_code_accuracy: number;
+
+    /**
+     * EFFECTIVE accuracy (EVAL_DESIGN.md §2) with a CONSTANT denominator = ALL
+     * non-error gold-code cases (the same frozen population as primary_accuracy),
+     * NOT just direct-classify + simulated-ask. = (outright-correct +
+     * ASK-recovered-correct ≤2 rounds) / |gold-classify cases|. Wrong-after-ASK =
+     * miss. This closes the REFUSE leak: a gold case that REFUSEd or was never
+     * simulated stays in the denominator as a miss. Each carries a Wilson 95% CI.
+     * The `end_to_end_*` fields above keep the legacy (recovered-only) denominator
+     * for backward compatibility; `effective_*` is the spec-correct number.
+     */
+    effective_chapter: RateCI;
+    effective_heading: RateCI;
+    effective_code: RateCI;
+    /** ASK-recovery as k/n with a Wilson 95% CI (never gate at n<30). */
+    ask_recovery_ci: RateCI;
+    /** Gold cases that REFUSEd after the ASK simulation (counted as misses). */
+    refused_after_ask: number;
   };
 
   details: EvalDetail[];

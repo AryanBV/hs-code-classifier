@@ -139,6 +139,150 @@ describe('deriveAnswerId (pure gold→option mapping)', () => {
     expect(d.answer_found).toBe(false);
     expect(d.derived_answer_id).toBeNull();
   });
+
+  // -------------------------------------------------------------------------
+  // Canonical-normalization fix (P0-A item 8): hyphen/space/underscore/case skew
+  // between raw gold DB strings and title-cased option labels caused FALSE
+  // NEGATIVES. Normalize BOTH sides (lowercase, collapse [-_\s]+ → single space,
+  // trim) before exact comparison; also match slugified-gold to option.id.
+  // -------------------------------------------------------------------------
+
+  it('matches hyphenated gold to title-cased space label: alloy-steel ↔ Alloy Steel', () => {
+    const q = askQuestion({
+      options: [
+        { id: 'alloy_steel', label: 'Alloy Steel' },
+        { id: 'carbon_steel', label: 'Carbon Steel' },
+      ],
+    });
+    const d = deriveAnswerId(q, ['alloy-steel']);
+    expect(d.answer_found).toBe(true);
+    expect(d.derived_answer_id).toBe('alloy_steel');
+  });
+
+  it('matches hyphenated gold to title-cased space label: passenger-car ↔ Passenger Car', () => {
+    const q = askQuestion({
+      options: [
+        { id: 'passenger_car', label: 'Passenger Car' },
+        { id: 'commercial', label: 'Commercial Vehicle' },
+      ],
+    });
+    const d = deriveAnswerId(q, ['passenger-car']);
+    expect(d.answer_found).toBe(true);
+    expect(d.derived_answer_id).toBe('passenger_car');
+  });
+
+  it('matches underscored gold to title-cased space label: barnyard_millet ↔ Barnyard Millet', () => {
+    const q = askQuestion({
+      options: [
+        { id: 'barnyard_millet', label: 'Barnyard Millet' },
+        { id: 'finger_millet', label: 'Finger Millet' },
+      ],
+    });
+    const d = deriveAnswerId(q, ['barnyard_millet']);
+    expect(d.answer_found).toBe(true);
+    expect(d.derived_answer_id).toBe('barnyard_millet');
+  });
+
+  it('matches slugified gold against option.id when labels do not align', () => {
+    // Label is a human phrase but the id is the slug; canonical-slug equality
+    // on the id still resolves the answer.
+    const q = askQuestion({
+      options: [
+        { id: 'alloy-steel', label: 'Steel containing alloying elements' },
+        { id: 'carbon-steel', label: 'Plain carbon steel' },
+      ],
+    });
+    const d = deriveAnswerId(q, ['alloy_steel']);
+    expect(d.answer_found).toBe(true);
+    expect(d.derived_answer_id).toBe('alloy-steel');
+  });
+
+  it('escape options (other / none) NEVER match a real gold value, even after normalization', () => {
+    const q = askQuestion({
+      options: [
+        { id: 'other', label: 'Other' },
+        { id: 'none', label: 'None of the above' },
+      ],
+    });
+    // Gold value 'other' would EXACT-match the 'Other' option after normalization,
+    // but escape options must never count — this prevents fabricated recoveries.
+    expect(deriveAnswerId(q, ['other']).answer_found).toBe(false);
+    expect(deriveAnswerId(q, ['none']).answer_found).toBe(false);
+    expect(deriveAnswerId(q, ['alloy-steel']).answer_found).toBe(false);
+  });
+
+  it('normalization does not manufacture a match the exact rule would not produce', () => {
+    // 'frozen' canonical-normalizes to 'frozen'; no option canonical-equals it,
+    // and the (kept, label≥2) substring rule must not bridge unrelated tokens.
+    const q = askQuestion({
+      options: [
+        { id: 'roasted', label: 'Roasted' },
+        { id: 'green', label: 'Green' },
+      ],
+    });
+    expect(deriveAnswerId(q, ['frozen']).answer_found).toBe(false);
+  });
+
+  // -------------------------------------------------------------------------
+  // FIX-1: the substring rule must NOT fabricate a recovery by matching a short
+  // option label that is a MINOR TOKEN of a longer multi-word gold value, nor a
+  // polarity inversion. Root-cause guard = length-ratio floor (0.6) + negation
+  // polarity check (a whole-word check does NOT fix this — "steel" IS a whole
+  // word in "alloy steel").
+  // -------------------------------------------------------------------------
+
+  it('does NOT match a short label that is a minor token of a longer gold: alloy-steel ⊅ Steel', () => {
+    const q = askQuestion({
+      options: [
+        { id: 'steel', label: 'Steel' },
+        { id: 'aluminium', label: 'Aluminium' },
+      ],
+    });
+    // gold "alloy steel" (11) ⊃ "steel" (5) → ratio 0.45 < 0.6 → fabrication blocked.
+    const d = deriveAnswerId(q, ['alloy-steel']);
+    expect(d.answer_found).toBe(false);
+    expect(d.derived_answer_id).toBeNull();
+  });
+
+  it('does NOT match across a negation polarity boundary: non-alloy-steel ⊅ Alloy Steel', () => {
+    const q = askQuestion({
+      options: [
+        { id: 'alloy_steel', label: 'Alloy Steel' },
+        { id: 'carbon_steel', label: 'Carbon Steel' },
+      ],
+    });
+    // gold "non alloy steel" (15) ⊃ "alloy steel" (11) → ratio 0.73 ≥ 0.6 BUT the
+    // gold carries a leading negation the option lacks → opposite meaning → blocked.
+    const d = deriveAnswerId(q, ['non-alloy-steel']);
+    expect(d.answer_found).toBe(false);
+    expect(d.derived_answer_id).toBeNull();
+  });
+
+  it('STILL matches a genuine morphological variant: roasted ↔ Roast (ratio 5/7 ≥ 0.6)', () => {
+    const q = askQuestion({
+      options: [
+        { id: 'roast', label: 'Roast' },
+        { id: 'green', label: 'Green' },
+      ],
+    });
+    const d = deriveAnswerId(q, ['roasted']);
+    expect(d.answer_found).toBe(true);
+    expect(d.derived_answer_id).toBe('roast');
+  });
+
+  it('regression: the r7 DB098 case (non-alloy-steel gold) is no longer mis-derived to alloy_steel', () => {
+    const q = askQuestion({
+      question_id: 'ask_material',
+      discriminating_attribute: 'material',
+      options: [
+        { id: 'alloy_steel', label: 'Alloy Steel' },
+        { id: 'stainless_steel', label: 'Stainless Steel' },
+        { id: 'other', label: 'Other' },
+      ],
+    });
+    const d = deriveAnswerId(q, ['non-alloy-steel']);
+    expect(d.answer_found).toBe(false); // was incorrectly 'alloy_steel' before FIX-1
+  });
 });
 
 // ---------------------------------------------------------------------------

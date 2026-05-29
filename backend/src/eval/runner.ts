@@ -21,6 +21,14 @@ import {
 } from './scorer';
 import { mapWithConcurrency } from './concurrency';
 import { runAnswerSimulation } from './answer-simulator';
+import {
+  wilsonInterval,
+  brierScore,
+  eceEqualMass,
+  bootstrapECE,
+  percentile,
+  type CalibrationSample,
+} from './metrics';
 import { masterSuite, validateSuite } from './test-suites/master-suite';
 import { quickSuite } from './test-suites/quick-suite';
 import * as fs from 'fs';
@@ -36,6 +44,15 @@ const CONCURRENCY = 8;
 /** Per-case wall-clock timeout (ms). A genuine 4x-Select repair/escalation case
  * runs ~60-75s (each L4 Select ~13-20s); 90s gives headroom without masking hangs. */
 const CASE_TIMEOUT_MS = 90000;
+
+/** Confidence threshold for the GRADED confident-wrong variant (computed, NOT a gate). */
+const CONFIDENT_WRONG_TAU = 0.7;
+
+/** Equal-mass bins for ECE (spec §2.4: ≤5). */
+const ECE_BINS = 5;
+
+/** Bootstrap resamples for the ECE CI (spec §2.4: 1000, seeded deterministically). */
+const ECE_BOOTSTRAP_RESAMPLES = 1000;
 
 /**
  * APPROXIMATE flat USD cost per LLM call, used for `est_cost_usd`.
@@ -245,6 +262,14 @@ export async function runTestCase(
         expected_routing: tc.expected_routing,
         actual_routing: actualRouting,
         routing_correct: routingCorrect,
+        // Carry the gold labels even on an ASK so a gold case the system ASKed
+        // ENTERS the frozen scoring population as a miss (EVAL_DESIGN.md §1) —
+        // it must NOT vanish from the denominator. chapter/heading/code_correct
+        // stay UNDEFINED (the system did not deliver a code), which buildReport
+        // treats as not-correct → a frozen-denominator miss.
+        ...(tc.expected_chapter !== undefined ? { expected_chapter: tc.expected_chapter } : {}),
+        ...(tc.expected_heading !== undefined ? { expected_heading: tc.expected_heading } : {}),
+        ...(tc.expected_code !== undefined ? { expected_code: tc.expected_code } : {}),
         question_asked: result.question,
         question_score: qScore,
         response_time_ms: elapsed,
@@ -252,11 +277,13 @@ export async function runTestCase(
         ...extractDiagnostics(raw, false),
       };
 
-      // OPT-IN answer simulation (purely ADDITIVE): when on AND this case carries
-      // a gold code, derive the user's answer from the gold tariff_line_attributes
-      // value and score the final code end-to-end. The base detail above (routing,
-      // score, question_score, diagnostics) is left EXACTLY as the baseline so a
-      // flag-off run is byte-for-byte unchanged.
+      // OPT-IN answer simulation: when on AND this case carries a gold code,
+      // derive the user's answer from the gold tariff_line_attributes value and
+      // score the final code end-to-end. The routing/score/question_score base is
+      // unchanged by the flag; `ask_recovery_attempt` is attached ONLY when the
+      // flag is on. (Note: the ASK detail now also carries expected_* gold labels
+      // regardless of the flag — required so a gold case the system ASKed enters
+      // the frozen scoring population as a miss; see EVAL_DESIGN.md §1.)
       if (simulateAnswers && tc.expected_code) {
         const recovery = await runAnswerSimulation(tc.query, raw, tc.expected_code);
         const finalCode = recovery.final_code_if_classify;
@@ -279,13 +306,19 @@ export async function runTestCase(
       return askDetail;
     }
 
-    // Unexpected routing (incl. genuine model REFUSE → routing 'reject')
+    // Unexpected routing (incl. genuine model REFUSE → routing 'reject'). Carry
+    // the gold labels so a gold case the system REFUSEd enters the frozen scoring
+    // population as a miss (EVAL_DESIGN.md §1 — closes the REFUSE leak), and the
+    // population-closure partition can see it under refused_with_gold.
     return {
       test_case_id: tc.id,
       query: tc.query,
       expected_routing: tc.expected_routing,
       actual_routing: actualRouting,
       routing_correct: routingCorrect,
+      ...(tc.expected_chapter !== undefined ? { expected_chapter: tc.expected_chapter } : {}),
+      ...(tc.expected_heading !== undefined ? { expected_heading: tc.expected_heading } : {}),
+      ...(tc.expected_code !== undefined ? { expected_code: tc.expected_code } : {}),
       response_time_ms: elapsed,
       score: 0,
       ...extractDiagnostics(raw, false),
@@ -360,10 +393,83 @@ function buildReport(
   const targeted = askDetails.filter(d => (d.question_score ?? 0) >= 1).length;
   const relevant = askDetails.filter(d => (d.question_score ?? 0) >= 2).length;
 
+  // -------------------------------------------------------------------------
+  // FROZEN scoring population (EVAL_DESIGN.md §1): every non-error case carrying
+  // a gold code, INDEPENDENT of routing. A gold case routed to ASK/REFUSE counts
+  // as a miss — it is NOT dropped. THIS is the primary, gateable accuracy.
+  // -------------------------------------------------------------------------
+  const goldCases = scored.filter(d => d.expected_code !== undefined);
+  const goldN = goldCases.length;
+  const primaryChapterK = goldCases.filter(d => d.chapter_correct === true).length;
+  const primaryHeadingK = goldCases.filter(d => d.heading_correct === true).length;
+  const primaryCodeK = goldCases.filter(d => d.code_correct === true).length;
+
+  // Conditional precision (the OLD numbers) — kept ONLY as a labeled diagnostic.
+  const conditionalN = classifyDetails.length;
+
+  // -------------------------------------------------------------------------
+  // confident-wrong (§3): system delivered a CLASSIFICATION and the code was
+  // wrong. Answered set = cases the system classified (actual_routing classify).
+  // -------------------------------------------------------------------------
+  const answered = scored.filter(d => d.actual_routing === 'classify');
+  const confidentWrongDetails = answered.filter(d => d.code_correct === false);
+  const confidentWrongIds = confidentWrongDetails.map(d => d.test_case_id);
+
+  // Graded τ=0.7 variant (computed only). Restrict to answered cases carrying a
+  // confidence; undefined when none do.
+  const answeredWithConf = answered.filter(d => typeof d.confidence === 'number');
+  const gradedAnswered = answeredWithConf.filter(d => (d.confidence ?? 0) >= CONFIDENT_WRONG_TAU);
+  const gradedWrong = gradedAnswered.filter(d => d.code_correct === false);
+
+  // -------------------------------------------------------------------------
+  // Calibration (§4): over classify cases carrying a confidence + binary correct.
+  // -------------------------------------------------------------------------
+  const calibrationSamples: CalibrationSample[] = answered
+    .filter(d => typeof d.confidence === 'number' && typeof d.code_correct === 'boolean')
+    .map(d => ({ confidence: d.confidence as number, correct: d.code_correct as boolean }));
+
+  // -------------------------------------------------------------------------
+  // Latency (§7) + cost roll-up. response_time_ms is on every scored case.
+  // -------------------------------------------------------------------------
+  const latencies = scored.map(d => d.response_time_ms);
+  const estTotalUsd = scored.reduce((s, d) => s + (d.est_cost_usd ?? 0), 0);
+
+  // -------------------------------------------------------------------------
+  // POPULATION CLOSURE (§2): partition the frozen gold population by routing so
+  // the EFFECTIVE denominator can never silently leak a REFUSE/missing case.
+  // -------------------------------------------------------------------------
+  // Each partition counted by a POSITIVE membership predicate (FIX-2) — NOT as a
+  // complement/remainder. This makes the sum-check a genuine validation: a gold
+  // case whose routing matches NONE of the four predicates is silently
+  // mis-bucketed, the sum is < goldN, and the assertion FIRES (instead of a
+  // catch-all remainder absorbing it and masking the leak).
+  const directClassifyN = goldCases.filter(d => d.actual_routing === 'classify').length;
+  const askCasesN = goldCases.filter(
+    d => d.actual_routing === 'ask' && d.ask_recovery_attempt !== undefined,
+  ).length;
+  const refusedWithGoldN = goldCases.filter(d => d.actual_routing === 'reject').length;
+  // POSITIVE predicate: ASK without a simulation attempt (e.g. flag-off). A miss
+  // kept in the denominator — NOT a catch-all for arbitrary routings.
+  const askedNotSimulatedN = goldCases.filter(
+    d => d.actual_routing === 'ask' && d.ask_recovery_attempt === undefined,
+  ).length;
+  const closed =
+    directClassifyN + askCasesN + refusedWithGoldN + askedNotSimulatedN === goldN;
+
+  if (!closed) {
+    throw new Error(
+      `buildReport: population closure FAILED — gold-code cases must partition exactly. ` +
+        `direct_classify(${directClassifyN}) + ask_cases(${askCasesN}) + ` +
+        `refused_with_gold(${refusedWithGoldN}) + asked_not_simulated(${askedNotSimulatedN}) ` +
+        `!== scored_with_gold(${goldN}). The EFFECTIVE denominator is untrustworthy; aborting.`,
+    );
+  }
+
   // End-to-end metrics (ONLY present when --simulate-answers ran: detected by the
   // presence of at least one ask_recovery_attempt). Purely additive — when absent
-  // the report is byte-for-byte identical to the baseline.
-  const endToEnd = buildEndToEndMetrics(scored);
+  // the report is byte-for-byte identical to the baseline. The EFFECTIVE accuracy
+  // uses the frozen goldN denominator (passed in) so the REFUSE leak is closed.
+  const endToEnd = buildEndToEndMetrics(scored, goldCases);
 
   return {
     metadata: {
@@ -387,6 +493,68 @@ function buildReport(
       heading_accuracy: headingAcc,
       code_accuracy: codeAcc,
       per_chapter_breakdown: perChapter,
+    },
+    primary_accuracy: {
+      gold_code_cases: goldN,
+      chapter: wilsonInterval(primaryChapterK, goldN),
+      heading: wilsonInterval(primaryHeadingK, goldN),
+      code: wilsonInterval(primaryCodeK, goldN),
+    },
+    precision_when_classifying: {
+      n: conditionalN,
+      chapter: wilsonInterval(chapterCorrect, conditionalN),
+      heading: wilsonInterval(headingCorrect, conditionalN),
+      code: wilsonInterval(codeCorrect, conditionalN),
+    },
+    confident_wrong: {
+      answered_count: answered.length,
+      count: confidentWrongDetails.length,
+      rate: wilsonInterval(confidentWrongDetails.length, answered.length),
+      case_ids: confidentWrongIds,
+      ...(answeredWithConf.length > 0
+        ? {
+            graded_tau_0_7: {
+              threshold: CONFIDENT_WRONG_TAU,
+              answered_count: gradedAnswered.length,
+              count: gradedWrong.length,
+              rate: wilsonInterval(gradedWrong.length, gradedAnswered.length),
+              case_ids: gradedWrong.map(d => d.test_case_id),
+            },
+          }
+        : {}),
+    },
+    ...(calibrationSamples.length > 0
+      ? {
+          calibration: (() => {
+            const ece = eceEqualMass(calibrationSamples, ECE_BINS);
+            const ci = bootstrapECE(calibrationSamples, ECE_BINS, ECE_BOOTSTRAP_RESAMPLES);
+            return {
+              sample_count: calibrationSamples.length,
+              brier_score: brierScore(calibrationSamples),
+              ece: ece.ece,
+              ece_ci: { lower: ci.lower, upper: ci.upper, resamples: ci.resamples },
+              bins_requested: ECE_BINS,
+              reliability_bins: ece.bins,
+            };
+          })(),
+        }
+      : {}),
+    latency: {
+      median_ms: percentile(latencies, 50),
+      p95_ms: percentile(latencies, 95),
+      sample_count: latencies.length,
+    },
+    cost: {
+      est_total_usd: estTotalUsd,
+      is_order_of_magnitude: true,
+    },
+    population_closure: {
+      scored_with_gold: goldN,
+      direct_classify: directClassifyN,
+      ask_cases: askCasesN,
+      refused_with_gold: refusedWithGoldN,
+      asked_not_simulated: askedNotSimulatedN,
+      closed,
     },
     question_quality: {
       targeted_pct: (targeted / askN) * 100,
@@ -414,6 +582,7 @@ function buildReport(
  */
 function buildEndToEndMetrics(
   scored: EvalDetail[],
+  goldCases: EvalDetail[],
 ): NonNullable<EvalReport['end_to_end_metrics']> | undefined {
   const recovered = scored.filter(d => d.ask_recovery_attempt !== undefined);
   if (recovered.length === 0) return undefined;
@@ -440,12 +609,26 @@ function buildEndToEndMetrics(
   const askUnanswerable = recovered.filter(
     d => d.ask_recovery_attempt!.final_decision === 'UNANSWERABLE',
   ).length;
+  const refusedAfterAsk = recovered.filter(
+    d => d.ask_recovery_attempt!.final_decision === 'REFUSE',
+  ).length;
   const askRoundsTotal = recovered.reduce(
     (sum, d) => sum + d.ask_recovery_attempt!.rounds_attempted, 0,
   );
 
+  // LEGACY (recovered-only) denominator — kept for backward compatibility.
   const scoredWithGold = directClassify.length + askCaseCount;
   const denom = scoredWithGold || 1;
+
+  // EFFECTIVE accuracy (§2): CONSTANT denominator = ALL non-error gold cases (the
+  // same frozen population as primary_accuracy). outright-correct (a direct
+  // classify whose code matched) + ASK-recovered-correct, over goldN. Anything
+  // else — REFUSE, asked-not-simulated, ASK-unrecovered, classify-wrong — stays a
+  // miss in the denominator (this is what closes the REFUSE leak).
+  const effectiveDenom = goldCases.length;
+  const effChapterK = classifyDirectChapter + askRecoveredChapter;
+  const effHeadingK = classifyDirectHeading + askRecoveredHeading;
+  const effCodeK = classifyDirectCorrect + askRecoveredCorrect;
 
   return {
     ask_case_count: askCaseCount,
@@ -458,6 +641,11 @@ function buildEndToEndMetrics(
     end_to_end_chapter_accuracy: ((classifyDirectChapter + askRecoveredChapter) / denom) * 100,
     end_to_end_heading_accuracy: ((classifyDirectHeading + askRecoveredHeading) / denom) * 100,
     end_to_end_code_accuracy: ((classifyDirectCorrect + askRecoveredCorrect) / denom) * 100,
+    effective_chapter: wilsonInterval(effChapterK, effectiveDenom),
+    effective_heading: wilsonInterval(effHeadingK, effectiveDenom),
+    effective_code: wilsonInterval(effCodeK, effectiveDenom),
+    ask_recovery_ci: wilsonInterval(askRecoveredCorrect, askCaseCount),
+    refused_after_ask: refusedAfterAsk,
   };
 }
 
@@ -478,6 +666,12 @@ function formatDuration(seconds: number): string {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
   return m > 0 ? `${m}m ${s}s` : `${s}s`;
+}
+
+/** Format a RateCI as "62.3% [57.7,66.9] (k/n)". */
+function fmtCI(ci: { rate: number; lower: number; upper: number; k: number; n: number }): string {
+  const pct = (x: number): string => (x * 100).toFixed(1);
+  return `${pct(ci.rate)}% [${pct(ci.lower)},${pct(ci.upper)}] (${ci.k}/${ci.n})`;
 }
 
 function printSummary(report: EvalReport): void {
@@ -503,9 +697,46 @@ function printSummary(report: EvalReport): void {
   console.log(`  Ask         ${pad(cm.ask_as_classify)}   ${pad(cm.ask_as_ask)}   ${pad(cm.ask_as_reject)}`);
   console.log(`  Reject      ${pad(cm.reject_as_classify)}   ${pad(cm.reject_as_ask)}   ${pad(cm.reject_as_reject)}`);
 
-  // Classification
+  // PRIMARY accuracy (FROZEN denominator — the number we gate on).
+  const pa = report.primary_accuracy;
+  console.log(`\nPRIMARY ACCURACY (FROZEN denom = all ${pa.gold_code_cases} gold-code cases, routing-independent — GATE ON THIS)`);
+  console.log(`  Chapter:  ${fmtCI(pa.chapter)}`);
+  console.log(`  Heading:  ${fmtCI(pa.heading)}`);
+  console.log(`  8-digit:  ${fmtCI(pa.code)}`);
+
+  // Secondary diagnostic — the OLD routing-conditional precision (dilutable).
+  const pwc = report.precision_when_classifying;
+  console.log(`\nprecision_when_classifying (SECONDARY DIAGNOSTIC, conditional n=${pwc.n} — do NOT gate)`);
+  console.log(`  Chapter:  ${fmtCI(pwc.chapter)}  Heading: ${fmtCI(pwc.heading)}  8-digit: ${fmtCI(pwc.code)}`);
+
+  // confident-wrong (headline harm metric).
+  const cw = report.confident_wrong;
+  console.log(`\nCONFIDENT-WRONG (delivered classification + wrong code; answered set n=${cw.answered_count})`);
+  console.log(`  Count: ${cw.count}  Rate: ${fmtCI(cw.rate)}`);
+  if (cw.case_ids.length > 0) console.log(`  Case IDs (MANUAL REVIEW each): ${cw.case_ids.join(', ')}`);
+  if (cw.graded_tau_0_7) {
+    console.log(`  Graded τ=0.7 (computed, not a gate): ${cw.graded_tau_0_7.count}/${cw.graded_tau_0_7.answered_count}`);
+  }
+
+  // Calibration.
+  const cal = report.calibration;
+  if (cal) {
+    console.log(`\nCALIBRATION (n=${cal.sample_count})`);
+    console.log(`  Brier: ${cal.brier_score.toFixed(4)}  ECE: ${cal.ece.toFixed(4)} [${cal.ece_ci.lower.toFixed(4)},${cal.ece_ci.upper.toFixed(4)}] (${cal.ece_ci.resamples} boot)`);
+  }
+
+  // Latency + cost.
+  console.log(`\nLATENCY / COST (n=${report.latency.sample_count})`);
+  console.log(`  Median: ${report.latency.median_ms}ms  p95: ${report.latency.p95_ms}ms`);
+  console.log(`  Est total cost: $${report.cost.est_total_usd.toFixed(4)} (ORDER-OF-MAGNITUDE — not real per-token billing)`);
+
+  // Population closure (trust-spine invariant).
+  const pc = report.population_closure;
+  console.log(`\nPOPULATION CLOSURE: ${pc.closed ? 'OK' : 'FAILED'} — ${pc.direct_classify} classify + ${pc.ask_cases} ask + ${pc.refused_with_gold} refuse + ${pc.asked_not_simulated} not-simulated = ${pc.scored_with_gold} gold cases`);
+
+  // Classification (legacy view — kept for backward comparison).
   const classifyN = scored.filter(d => d.routing_correct && d.expected_routing === 'classify').length;
-  console.log(`\nCLASSIFICATION (correctly-routed classify cases only, n=${classifyN})`);
+  console.log(`\nCLASSIFICATION (LEGACY view — correctly-routed classify cases only, n=${classifyN})`);
   console.log(`  Chapter:  ${classification.chapter_accuracy.toFixed(1)}%`);
   console.log(`  Heading:  ${classification.heading_accuracy.toFixed(1)}%`);
   console.log(`  8-digit:  ${classification.code_accuracy.toFixed(1)}%`);
@@ -523,10 +754,12 @@ function printSummary(report: EvalReport): void {
     console.log(`\nEND-TO-END (--simulate-answers: gold answer fed back on ASK)`);
     console.log(`  ASK recoverability: ${e2e.ask_recoverability_rate.toFixed(1)}% (${e2e.ask_recovered_correct}/${e2e.ask_case_count} ASK cases reached the correct code)`);
     console.log(`  ASK avg rounds: ${e2e.ask_recovery_avg_rounds.toFixed(2)} | unanswerable: ${e2e.ask_unanswerable}`);
-    console.log(`  End-to-end accuracy (direct classify + recovered ASK, n=${e2e.scored_with_gold}):`);
-    console.log(`    Chapter:  ${e2e.end_to_end_chapter_accuracy.toFixed(1)}%`);
-    console.log(`    Heading:  ${e2e.end_to_end_heading_accuracy.toFixed(1)}%`);
-    console.log(`    8-digit:  ${e2e.end_to_end_code_accuracy.toFixed(1)}%`);
+    console.log(`  ASK-recovery (k/n, Wilson CI): ${fmtCI(e2e.ask_recovery_ci)}${e2e.ask_recovery_ci.n < 30 ? '  [n<30 — do NOT gate]' : ''}`);
+    console.log(`  EFFECTIVE accuracy (outright + recovered, CONSTANT denom = all gold cases — SECONDARY/UX bar):`);
+    console.log(`    Chapter:  ${fmtCI(e2e.effective_chapter)}`);
+    console.log(`    Heading:  ${fmtCI(e2e.effective_heading)}`);
+    console.log(`    8-digit:  ${fmtCI(e2e.effective_code)}`);
+    console.log(`  [legacy recovered-only-denom n=${e2e.scored_with_gold}: chapter ${e2e.end_to_end_chapter_accuracy.toFixed(1)}% / heading ${e2e.end_to_end_heading_accuracy.toFixed(1)}% / 8-digit ${e2e.end_to_end_code_accuracy.toFixed(1)}%]`);
   }
 
   // Top failures (model failures only — infra errors listed separately below)

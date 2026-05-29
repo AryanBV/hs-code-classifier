@@ -37,6 +37,96 @@ export const DEFAULT_MAX_ROUNDS = 3;
 const MIN_SUBSTRING_LABEL_LEN = 2;
 
 /**
+ * Length-ratio floor for the substring rule (FIX-1): the shorter canonical string
+ * must cover ≥ this fraction of the longer for a substring containment to count.
+ *
+ * This is the ROOT-CAUSE guard against fabricated recoveries where a short option
+ * label is merely a minor TOKEN of a longer multi-word gold value:
+ *   gold "alloy steel" (11) ⊃ option "steel" (5) → ratio 5/11 ≈ 0.45 → REJECTED.
+ * It still bridges genuine morphological variants:
+ *   gold "roasted" (7) ⊃ option "roast" (5) → ratio 5/7 ≈ 0.71 → ACCEPTED.
+ *
+ * Chosen at 0.6: strictly between the must-reject 0.4545 (steel⊂alloy-steel) and
+ * the must-pass 0.714 (roast⊂roasted). A whole-word-boundary check would NOT fix
+ * the steel case ("steel" is a whole word in "alloy steel"); only a coverage
+ * ratio distinguishes "minor token" from "morphological variant".
+ */
+const SUBSTRING_LENGTH_RATIO_FLOOR = 0.6;
+
+/**
+ * Negation tokens whose presence/absence flips meaning. A substring containment
+ * across a polarity boundary is NEVER a real match (FIX-1):
+ *   gold "non alloy steel" ⊃ option "alloy steel" → polarity inversion → REJECTED,
+ * even though the length ratio (11/15 ≈ 0.73) clears the floor. We reject when one
+ * side carries a leading negation token the other lacks.
+ */
+const NEGATION_TOKENS = new Set(['non', 'not', 'un', 'no', 'without', 'free']);
+
+/** True when `value` (canonical, space-separated) begins with a negation token. */
+function hasLeadingNegation(value: string): boolean {
+  const first = value.split(' ', 1)[0] ?? '';
+  return NEGATION_TOKENS.has(first);
+}
+
+/**
+ * Substring-containment match between two CANONICAL strings, guarded against
+ * fabrication. Returns true only when one contains the other AND the shorter
+ * covers ≥ {@link SUBSTRING_LENGTH_RATIO_FLOOR} of the longer AND the two agree on
+ * leading-negation polarity. Both must be ≥ {@link MIN_SUBSTRING_LABEL_LEN}.
+ */
+function substringMatch(a: string, b: string): boolean {
+  if (a.length < MIN_SUBSTRING_LABEL_LEN || b.length < MIN_SUBSTRING_LABEL_LEN) return false;
+  const contains = a.includes(b) || b.includes(a);
+  if (!contains) return false;
+  // Polarity guard: a negation on exactly one side means opposite meaning.
+  if (hasLeadingNegation(a) !== hasLeadingNegation(b)) return false;
+  // Coverage guard: the shorter must be a large fraction of the longer.
+  const shorter = Math.min(a.length, b.length);
+  const longer = Math.max(a.length, b.length);
+  return shorter / longer >= SUBSTRING_LENGTH_RATIO_FLOOR;
+}
+
+/**
+ * Escape / non-substantive option ids+labels that must NEVER count as a gold
+ * answer. A gold value can sometimes be the literal token "other" (when the
+ * underlying corpus stored an "Other"-by-elimination leaf), which would
+ * EXACT-match an "Other" option after normalization and fabricate a recovery.
+ * The simulator's honesty invariant: a recovery exists only when a gold value
+ * maps to a REAL discriminating option.
+ */
+const ESCAPE_OPTION_TOKENS = new Set([
+  'other',
+  'none',
+  'none of the above',
+  'not sure',
+  'unknown',
+  'not applicable',
+  'na',
+]);
+
+/**
+ * Canonical comparison form: lowercase, collapse every run of hyphen/underscore/
+ * whitespace to a single space, trim. Bridges the raw gold DB strings
+ * ("alloy-steel", "passenger-car", "barnyard_millet") and the title-cased option
+ * labels ("Alloy Steel", "Passenger Car", "Barnyard Millet") so casing/separator
+ * skew no longer produces a FALSE NEGATIVE. This is the LEGIT P0-A item-8 fix —
+ * it tightens matching to true equivalence, it does NOT loosen it.
+ */
+export function canonicalize(value: string): string {
+  return value.toLowerCase().replace(/[-_\s]+/g, ' ').trim();
+}
+
+/** Slug form (canonical with spaces → single hyphen) for option.id comparison. */
+function slugify(value: string): string {
+  return canonicalize(value).replace(/ /g, '-');
+}
+
+/** True when an option is a non-substantive escape choice (must never count). */
+function isEscapeOption(opt: { id: string; label: string }): boolean {
+  return ESCAPE_OPTION_TOKENS.has(canonicalize(opt.id)) || ESCAPE_OPTION_TOKENS.has(canonicalize(opt.label));
+}
+
+/**
  * Fetch the gold-true attribute values (array) for a tariff-line code + attribute.
  * Returns null when the attribute is unset/empty for that code. Injected so the
  * loop is testable without a live DB.
@@ -96,15 +186,26 @@ export interface DerivedAnswer {
 /**
  * Map gold-true attribute values onto a clarifying question's options.
  *
- * A gold value array (e.g. `['roasted','ground']`) matches an option when the
- * option's label and a gold value are equal, or one contains the other
- * (case-insensitive). Substring matches require the label to be ≥2 chars to
- * avoid 1-char options spuriously matching arbitrary gold values. Options are
- * scanned in order; the FIRST matching option wins (deterministic).
+ * Matching is done on a CANONICAL form ({@link canonicalize}: lowercase, collapse
+ * `[-_\s]+` to one space, trim) so the raw gold DB strings ("alloy-steel",
+ * "barnyard_millet") align with title-cased option labels ("Alloy Steel",
+ * "Barnyard Millet") — the P0-A item-8 fix for the dominant value-mismatch false
+ * negative. A gold value matches an option when, in canonical form, it (1) equals
+ * the option's label, OR equals its slugified/canonical id; OR (2) passes the
+ * GUARDED substring test ({@link substringMatch}: length-ratio floor + negation
+ * polarity), which bridges only morphological variants — never minor token
+ * overlap. Options are scanned in order; the FIRST matching option wins.
+ *
+ * HONESTY INVARIANTS (must not regress):
+ *  - Escape/non-substantive options ("other", "none", …) NEVER count, even on a
+ *    canonical-exact match — that would fabricate a recovery.
+ *  - The substring rule will NOT bridge a short option label that is a minor token
+ *    of a longer multi-word gold (e.g. "steel" ⊄match "alloy steel"), nor a
+ *    polarity inversion ("alloy steel" ⊄match "non alloy steel"). See FIX-1.
  *
  * Returns `{ answer_found: false, derived_answer_id: null }` when the gold value
- * is null/empty OR no option matches — the caller treats that as "unanswerable"
- * and stops (does NOT fabricate an answer).
+ * is null/empty OR no real option matches — the caller treats that as
+ * "unanswerable" and stops (does NOT fabricate an answer).
  */
 export function deriveAnswerId(
   question: { options: { id: string; label: string }[] },
@@ -113,18 +214,27 @@ export function deriveAnswerId(
   if (goldValues === null || goldValues.length === 0) {
     return { derived_answer_id: null, answer_found: false };
   }
-  const golds = goldValues.map((g) => g.toLowerCase().trim()).filter((g) => g.length > 0);
+  const golds = goldValues
+    .map((g) => ({ canon: canonicalize(g), slug: slugify(g) }))
+    .filter((g) => g.canon.length > 0);
   if (golds.length === 0) return { derived_answer_id: null, answer_found: false };
 
   for (const opt of question.options) {
-    const label = opt.label.toLowerCase().trim();
-    if (label.length === 0) continue;
+    // Escape options can never count — guards against fabricated recoveries.
+    if (isEscapeOption(opt)) continue;
+    const labelCanon = canonicalize(opt.label);
+    const idCanon = canonicalize(opt.id);
+    if (labelCanon.length === 0 && idCanon.length === 0) continue;
+
     for (const g of golds) {
-      if (label === g) return { derived_answer_id: opt.id, answer_found: true };
-      if (label.length >= MIN_SUBSTRING_LABEL_LEN) {
-        if ((g.length >= MIN_SUBSTRING_LABEL_LEN && label.includes(g)) || g.includes(label)) {
-          return { derived_answer_id: opt.id, answer_found: true };
-        }
+      // 1) canonical-exact on label OR slugified-id (the legit fix).
+      if (g.canon === labelCanon || g.slug === idCanon || g.canon === idCanon) {
+        return { derived_answer_id: opt.id, answer_found: true };
+      }
+      // 2) GUARDED substring on the label (length-ratio + negation polarity) — the
+      //    FIX-1 root-cause guard against minor-token fabrication.
+      if (substringMatch(labelCanon, g.canon)) {
+        return { derived_answer_id: opt.id, answer_found: true };
       }
     }
   }
