@@ -1,3 +1,39 @@
+## ▶ START HERE — NEXT SESSION (2026-05-30)
+
+**This block is the definitive, self-contained entry point. Read it top-to-bottom, then proceed. Everything below it is supporting detail.**
+
+**ONE-LINE STATE:** v2 brain ~77% OUTRIGHT 8-digit / ~86% top-3 / chapter ~89% / heading ~86% / confident-wrong ~64; runtime Vertex-only; branch `feat/phase-4-pipeline-build`; tree clean; 855 tests pass.
+
+**CHOSEN PATH (user-confirmed 2026-05-30): SHIP, LATENCY-FIRST.** IMMEDIATE FIRST ACTION next session:
+1. **Re-run the latency profiler (read-only).** Parse `eval-results/vertex-m0-r19-top3-sim.json` `response_time_ms` vs repair-count + trace a few cases for per-layer latency. Prime suspect = the **L5 repair loop** (each repair ≈ a 15s L4 call → p95 ~62s + occasional 90s timeouts).
+2. **Build the latency fix GATED** — latency must drop WITHOUT accuracy / confident-wrong regression. Candidate fixes: condition/cap the repair loop; trim the L4 prompt / thinking budget; and STREAM the HTTP response for perceived UX.
+3. **Cutover** — turn `USE_V2_CLASSIFIER` on, staged.
+4. **Frontend rebuild** — `frontend/src/lib/hooks/use-wizard.ts`: read `alternatives`/top-3; handle `responseType:refused`; multi-turn `/answer` with `{questionId, answerId}`; address the ~39-62s latency UX.
+5. **Publish + trade-intelligence.**
+
+**TASK ROADMAP** (the in-session TaskList does NOT carry to a fresh session — captured here):
+- **DONE:** gold-R4 · MV-03 · bad-gold-R5 · calibrated-classify (off) · L2 `direct_leaf` recall · residual-leaf-floor · v2 API adapter + flag · top-3 instrumentation.
+- **ACTIVE:** ship arc (latency-first).
+- **DEFERRED brain (real-usage-driven):**
+  - synonym / heading recall — TC012 hose → 8708 vs 4009; EC008 galvanized → 7210 vs 7208/9.
+  - DB053 notes_claims definition-note fix — id 20/21 EXISTS-on-definition → SKIP; BROAD textile blast radius, gate carefully.
+  - confidence calibration — needs a new signal (rerank-margin / entropy).
+  - fine-tuned domain reranker — the real ceiling-raiser.
+- **USER-GATED gold-review queue (NOT applied):** DB061 (Ensembles unwinnable) · S5-AMB-005 (car-seat-cover .20 vs .90) · DB200 (malformed query + L0 truncation).
+
+**KEY COMMANDS:**
+- eval = `npx tsx --require dotenv/config src/eval/runner.ts --suite master --simulate-answers --run-id X` (subset: add `--ids c1,c2`)
+- compare = `npx tsx src/eval/compare.ts before.json after.json`
+- tests = `npx vitest run src/classifier-v2 src/eval`
+- tsc = `npx tsc --noEmit`
+- New eval metric: `top_k_code_accuracy`; per-case `candidate_codes` field.
+
+**KEY COMMITS (`feat/phase-4-pipeline-build`):** gold-R4 `6d9afd9` · MV-03 `881ef2e` · bad-gold-R5 `168ac64` · calibrated-classify `8a189ef` · L2 recall `d4cfb44` · API adapter+flag `cd7a5a3` · residual-leaf-floor `7629a2b` · top-3 instrumentation `ec34ee6`. Read `CLAUDE.md` (Current Status) + `git log` for full detail.
+
+**OPERATING RULES (unchanged):** pure orchestrator; the ORCHESTRATOR runs long evals (subagents background-and-die); one change per **three-sided gate** (target↑ McNemar AND confident-wrong flat/down AND latency/cost ok); never weaken L4/L5; gold/eval changes are USER-GATED; commit at kept gates; Vertex-only.
+
+---
+
 ## 2026-05-30 AUTONOMOUS SESSION — CURRENT STATE (supersedes everything below)
 
 ITC-HS v2 8-digit classifier. Branch `feat/phase-4-pipeline-build`. Backend root `backend/`. Runtime = **Vertex** (gemini-embedding-001@1536 + Gemini-Flash rerank + Gemini-Flash L1/L4). **NO Cohere** — ignore any "429-blocked / needs Cohere" text below; it is stale.
