@@ -162,35 +162,45 @@ Test case format:
 { query: 'ceramic brake pads for heavy trucks', expectedChapter: '87', expectedHeading: '8708', category: 'Vehicle Parts' }
 ```
 
-## Current Status (2026-05-29)
+## Current Status (2026-05-30)
 
-**Branch:** `feat/phase-4-pipeline-build`. **HEAD = `e340990`**, working tree clean; `tsc` clean; ~796 v2/eval tests pass. Do NOT push unattended.
+**Branch:** `feat/phase-4-pipeline-build`. Phase 4 v2 8-layer classifier is BUILT and is the **active brain (eval-wired)**. `tsc` clean; **855 tests pass**. Do NOT push unattended.
 
-**Authoritative resume brief:** `backend/docs/AUTONOMOUS-CONTINUATION-2026-05-29.md` — READ FIRST. Single lossless resume point; supersedes the per-round history below. Eval reports: `backend/eval-results/vertex-m0-*.json` (gitignored; `r12-sim` = current 68% baseline with ASK off).
+**Authoritative resume brief:** `backend/docs/AUTONOMOUS-CONTINUATION-2026-05-29.md` — READ FIRST.
 
-### Brain accuracy — honest numbers (r12, clean gold, ASK off)
-- **8-digit OUTRIGHT = 68.0%** / chapter 81.1% / heading 78.2% — on a **frozen routing-independent denominator** (n=344 gold-code cases). EFFECTIVE 8-digit 71.5%; confident-wrong = 69. This is the TRUE number — earlier flattering "68%" was routing-conditional (dilution), the honest floor on *wrong* gold was 59.9%, and 32 blind-law-verified gold corrections (2 freeze rounds, McNemar p=0.0008) revealed the brain was always ~68%.
-- **Realistic ceiling ~75–80% OUTRIGHT** (non-fine-tuned frontier+RAG tops out ~64–75% top-1 / ~78–91% top-3 at 8-digit; we're in-band). The "ultimate" target is ~75–80% outright + **calibrated ASK** + **top-3 alternatives** + near-zero confident-wrong + legally-defensible (GIR + notes + citation) answers.
+### Brain accuracy — honest numbers (frozen denom, Vertex runtime, levers OFF)
+- **~77% OUTRIGHT 8-digit** (r18 77.3% / r19 76.5%, within ±2-3pp LLM noise) — **TOP-3 ~86%** (lower bound), chapter ~89%, heading ~86%, confident-wrong ~64 (down).
+- In the realistic non-fine-tuned ceiling band. Eval suite = `backend/src/eval` master suite, **385 cases, 343 gold-code frozen denominator** (DB030 dropped Round 5).
+- New metric: `top_k_code_accuracy` + per-case `candidate_codes`.
 
-### Key findings (do not relearn the hard way)
-- **8-digit gap decomposition: SELECTION 75% / RETRIEVAL 25% / rerank-drop 0%.**
-- **The selection bottleneck is INFORMATION, not model and not complexity.** PROVEN: gate-1 (richer "Other-by-elimination" prompt) NEUTRAL→reverted; gate-2 (more candidates/attrs, cap 8→12) REGRESSED −2pp→reverted; Pro=Flash (Gemini-Pro fixed only ~6% of Flash's sibling errors, chose the SAME wrong sibling in 42/51). Do NOT try to fix sibling selection with more context/candidates/bigger model.
-- **~half the selection errors need ASK** (deciding fact absent from the query); the other half were GT-errors.
-- **Unmarked-default-wins:** when a query doesn't flag the special variant (flavoured/filled/handloom/ballistic/seed-quality), the correct leaf is the common/residual one, not the special one (now in the select-v2 prompt + applied in gold corrections).
-- ASK must be **uncertainty-gated** (ask only when L4 is genuinely stuck); pre-emptive ASK over-fires catastrophically.
+### Runtime = Vertex ONLY (Cohere fully decommissioned)
+- `gemini-embedding-001`@1536 embeddings + Gemini-Flash rerank + Gemini-Flash L1 triage / L4 select. **No Cohere key needed** — any Cohere-429-blocker note in older docs is OBSOLETE.
 
-### Sibling-ASK lever — env-gated OFF, calibrating (r13 in flight)
-- Redesigned to **POST-L4 uncertainty-gated** (`e340990`): fires only when L4 returns CLASSIFY with `self_confidence` below `SIBLING_ASK_CONF_THRESHOLD`, the leaf is in a same-subheading sibling group, the discriminator is unpinned by the query, and a QGS question on that exact discriminator is buildable. (v1 PRE-L4 trigger over-fired at 33% ask-rate, −18.8pp → discarded.)
-- Envs: `SIBLING_ASK_ENABLED=true` to enable; `SIBLING_ASK_CONF_THRESHOLD=<float>` (default 0.65; 0.45 = ask on LOW-only, 0.65 = ask on LOW+MEDIUM). Two calibration runs in flight: `vertex-m0-r13-ask045-sim`, `vertex-m0-r13-ask065-sim`.
-- Three-sided gate to keep it: OUTRIGHT preserved AND classify_as_ask ≤ ~15% AND sibling_ask_recoverability ≥ 75% AND EFFECTIVE 8-digit up.
+### Ship arc — STARTED (decision: SHIP, latency-first)
+- `backend/src/api/v2-api-adapter.ts` — `mapV2Result`: flat DTO, confidence 0-100, leaf-description + top-3 alternatives hydration, REFUSE→`responseType:refused`, system_error/80s-timeout→503.
+- `USE_V2_CLASSIFIER` feature flag in `backend/src/api/classify.ts` — **DEFAULT OFF = legacy byte-identical; instant rollback.** Committed `cd7a5a3` + LIVE HTTP-smoke validated.
+- **BLOCKER before cutover: latency.** classify p95 ~62s + occasional 90s timeouts. Prime suspect = **L5 repair loop** (each repair = another ~15s L4 call). Fix latency → cutover (flag ON) → frontend rebuild → publish.
+- **Frontend rebuild (`frontend/src/lib/hooks/use-wizard.ts`):** read `alternatives`, handle `responseType:refused`, multi-turn `/answer` with `{questionId, answerId}`.
 
-### Trust-spine (the honest eval ruler — Phase-0)
-- Frozen routing-independent denominator (kills dilution), EFFECTIVE scorer + population-closure assertion, confident-wrong rate, calibration (Brier + equal-mass ECE + bootstrap CI), Wilson CIs, McNemar, automated regression-guard (`src/eval/compare.ts`), oracle decontamination (frozen gold-attributes snapshot so ASK-recovery can't self-grade off enrichment). Contract: `backend/docs/EVAL_DESIGN.md`. Gold log: `backend/src/eval/GOLD-REMEDIATION-LOG.md`.
+### Key commits this session (`feat/phase-4-pipeline-build`)
+- gold-freeze R4 `6d9afd9`; MV-03 source_ref grammar `881ef2e`; bad-gold R5 `168ac64`; calibrated-classify lever (env-off) `8a189ef`; L2 `direct_leaf_lookup` recall `d4cfb44`; v2 API adapter + flag `cd7a5a3`; residual-leaf-floor `7629a2b`; top-3 instrumentation `ec34ee6`.
+
+### Env flags (all OFF by default)
+- `USE_V2_CLASSIFIER` (off — legacy path), `CALIBRATED_CLASSIFY_ENABLED` (off), `SIBLING_ASK_ENABLED` (off).
 
 ### Eval commands
-- Full run: `cd backend && npx tsx --require dotenv/config src/eval/runner.ts --suite master --run-id <id> --simulate-answers` (~30 min, Vertex). Targeted subset: add `--ids <c1,c2,...>` (minutes).
-- Compare: `npx tsx src/eval/compare.ts <before.json> <after.json>` → metric diffs + McNemar + improved/regressed caseIds + three-sided gate verdict.
+- Full run: `cd backend && npx tsx --require dotenv/config src/eval/runner.ts --suite master --simulate-answers --run-id <id>` (~30 min, Vertex). Targeted subset: add `--ids <c1,c2,...>`.
+- Compare: `npx tsx src/eval/compare.ts <before.json> <after.json>` → metric diffs + McNemar + three-sided gate verdict.
 - Tests: `npx vitest run src/classifier-v2 src/eval`. Typecheck: `npx tsc --noEmit`.
+
+### Key findings (do not relearn the hard way)
+- **The selection bottleneck is INFORMATION, not model and not complexity.** PROVEN: richer prompt NEUTRAL→reverted; more candidates/attrs (cap 8→12) REGRESSED→reverted; Pro≈Flash (Gemini-Pro chose the SAME wrong sibling in 42/51). Do NOT try to fix sibling selection with more context/candidates/bigger model.
+- **Unmarked-default-wins:** when a query doesn't flag the special variant (flavoured/filled/handloom/ballistic/seed-quality), the correct leaf is the common/residual one.
+- ASK must be **uncertainty-gated**; pre-emptive ASK over-fires catastrophically.
+- MV-04 cosine floor + MV-03 citation threshold were Cohere-era — recalibrate for Vertex space if the verifier over/under-fires.
+
+### Trust-spine (the honest eval ruler)
+- Frozen routing-independent denominator (kills dilution), EFFECTIVE scorer + population-closure assertion, confident-wrong rate, calibration (Brier + ECE + bootstrap CI), Wilson CIs, McNemar, automated regression-guard (`src/eval/compare.ts`), oracle decontamination. Contract: `backend/docs/EVAL_DESIGN.md`. Gold log: `backend/src/eval/GOLD-REMEDIATION-LOG.md`.
 
 ### Phase 4.0 build-time data (DB-backed unless noted)
 - Done O1 Notes Claims: 253 rows in `notes_claims` table (50 marked `validated=true`)
@@ -213,28 +223,27 @@ Test case format:
 - Done L3 Rules Filter (`layers/L3-rules-filter.ts`) — exclusions, multi-dest collapse, single-shot backtrack gate
 - Done L4 Select (`layers/L4-select.ts`) — Gemini 3.5 Flash with multi-signal context (chapter_notes + section_notes + notes_claims + tariff_line_attributes + GIRs), components[] for GIR-3(b)
 - Done L5 Mechanical Verifier (`layers/L5-verifier.ts`) — all 10 rules + predicate DSL evaluator (three-valued PASS/FAIL/SKIP) + source-ref resolver + ts_rank_cd TF-IDF citation check
-- Shared libs: `lib/vertex-client.ts` (raw HTTPS + retry + MaxTokensError), `lib/cohere-client.ts`, `lib/supabase-client.ts` (with withRetry wrapper), `lib/thinking-config.ts` (model-conditional helper for 2.5-pro vs 3.x)
+- Shared libs: `lib/vertex-client.ts` (raw HTTPS + retry + MaxTokensError), `lib/embedding-provider.ts` + `lib/reranker.ts` (Vertex `gemini-embedding-001` embed + Gemini-Flash rerank), `lib/supabase-client.ts` (with withRetry wrapper), `lib/thinking-config.ts` (model-conditional helper for 2.5-pro vs 3.x). (`lib/cohere-client.ts` may still exist but is OFF the runtime/eval path — Cohere decommissioned.)
 
 ### M1 — Vertex embedding migration — DONE & verified (2026-05-29)
 - Corpus 100% re-embedded into `embedding_v2` (`gemini-embedding-001` @1536-dim, all 4 hierarchy levels + HNSW index); `supabase-client` + L5 MV-04 query `embedding_v2`; **Cohere decommissioned off the runtime/eval path** (Trial-key 429 blocker resolved by removal). Re-embed script: `backend/scripts/reembed-corpus-vertex.ts`. Runtime is now 100% Vertex (embed + rerank + L1/L4). Note: MV-04 cosine floor (0.22) and MV-03 citation threshold are Cohere-era values — recalibrate for Vertex space if the verifier over/under-fires.
 
-### NEXT STEPS (priority order — full detail in the continuation brief §6)
-1. **Finish ASK-lever calibration (resume here):** read `vertex-m0-r13-ask045-sim` / `r13-ask065-sim`, `compare.ts` each vs `r12-sim`, pick the threshold that clears the three-sided gate; flip default on + commit if it clears, else don't force it.
-2. **Retrieval-25% bucket:** chapter-mis-routing triage (TC009, TC306) + L2 leaf-recall gaps. Levers: per-subheading leaf floor, RRF fusion (dense+FTS), chapter-recall safety net / loosened backtrack. One change per three-sided gate on an `--ids` subset.
-3. **Confidence calibration:** ECE ~18% (poorly calibrated) — calibrate L4 `self_confidence` / derive a margin signal → trustworthy confidence + sharper ASK gate + "never confidently wrong" bar.
-4. **Ship arc (after the brain is maxed):** API rewire legacy→v2 (`backend/src/api/classify.ts`, freeze the external DTO) → frontend rebuild → publish + trade intelligence (duty rates, PDF reports, CI).
-5. **Deferred ceiling-raisers (need infra/data):** fine-tuned domain reranker with sibling hard-negative mining (free to start — the code trie defines the negatives); corpus re-embed with discriminating attributes; RAG over Indian ITC-HS advance rulings.
+### NEXT STEPS (priority order — full detail in the continuation brief)
+1. **Latency fix (ship blocker — resume here):** classify p95 ~62s + 90s timeouts. Prime suspect = L5 repair loop (each repair = ~15s L4 call). Profile + cap/parallelize → bring p95 into budget.
+2. **Cutover:** flip `USE_V2_CLASSIFIER` ON once latency is fixed; v2 becomes the live API.
+3. **Frontend rebuild (`frontend/src/lib/hooks/use-wizard.ts`):** read `alternatives`, handle `responseType:refused`, multi-turn `/answer` with `{questionId, answerId}` → publish.
+4. **Brain ceiling-raisers (measurement-gated):** retrieval bucket (per-subheading leaf floor, RRF fusion, chapter-recall safety net); confidence calibration (ECE) → sharper ASK gate; deferred: fine-tuned domain reranker w/ sibling hard-negative mining, corpus re-embed with discriminating attributes, RAG over Indian ITC-HS advance rulings.
 
-**Operating rules (user-set, this run):** quality-first and INCREASING; root-cause not patch (a green eval via hacks = false pass); **one principled change per measured THREE-SIDED gate** (target metric up via McNemar AND confident-wrong flat/down + regression-guard AND latency/cost in budget); **gold changes are USER-GATED** (blind-law-verify on query+gold, then approve — never launder toward the model); don't get stuck in an eval loop; commit at every kept gate; runtime stays Vertex (never reintroduce Cohere).
+**Operating rules (user-set):** quality-first and INCREASING; root-cause not patch (a green eval via hacks = false pass); **one principled change per measured THREE-SIDED gate** (target metric up via McNemar AND confident-wrong flat/down + regression-guard AND latency/cost in budget); **gold changes are USER-GATED** (blind-law-verify on query+gold, then approve); don't get stuck in an eval loop; commit at every kept gate; **runtime stays Vertex (never reintroduce Cohere).**
 
-**Ultimate bars:** 8-digit OUTRIGHT ~75–80% + calibrated ASK + top-3 + near-zero confident-wrong; chapter ≥92–95%, heading ≥82–88%, routing ≥90%, p95 ≤8s, verifier over-rejection ≤8%.
-**Prior design specs (historical):** `backend/docs/PHASE-4.2-4.4-BUILD-DESIGN.md`, `backend/docs/PHASE-4.2a-BASELINE.md`. Plans: `backend/docs/plans/2026-05-29-{ultimate-brain-program-v2, roadmap-to-80, sibling-ask-lever-blueprint}.md`. Eval canonical = `backend/src/eval/` ~386-case master suite (`backend/eval/` 168-stub DEPRECATED).
+**Ultimate bars:** 8-digit OUTRIGHT ~77%+ (in-band) + calibrated ASK + top-3 ~86% + near-zero confident-wrong; chapter ≥92–95%, heading ≥82–88%, routing ≥90%, p95 ≤8s, verifier over-rejection ≤8%.
+**Prior design specs (historical):** `backend/docs/PHASE-4.2-4.4-BUILD-DESIGN.md`, `backend/docs/PHASE-4.2a-BASELINE.md`. Eval canonical = `backend/src/eval/` master suite, 385 cases / 343 gold-code frozen denom (`backend/eval/` 168-stub DEPRECATED).
 
 ## Roadmap
 - DONE Phase 1: Eval harness (168 cases, on `feat/phase-1-eval-harness`)
 - DONE Phase 2: Data foundation (normalized schema + canonical data + 7-audit verified)
 - DONE Phase 3: Architecture spike — 30 paper-traces, 29/30 CORRECT, verdict PROCEED_TO_PHASE_4
 - DONE Phase 3.5 (May 2026): Data completion + architecture lock-in — chapter_exclusions +352 rules, fts_search_text + text[] + sections.notes, A9 empirical proof 10/10 CORRECT, D1 model stack LOCKED. 8 carryforwards in ARCHITECTURE.md §12.
-- IN PROGRESS Phase 4: Brain rebuild — v2 (8-layer), active and orchestrated (legacy classifier still wired in the API — rewire pending). Phase 4.0 DONE (O1-O5; O2 12,406 ingested). Phase 4.2a DONE (orchestrator L0-L5 + repair/backtrack + ASK/REFUSE + continueWithAnswer; eval wired to v2). **M1 DONE (2026-05-29):** Vertex embedding migration — Cohere DECOMMISSIONED, corpus on `gemini-embedding-001`@1536; runtime 100% Vertex. **Trust-spine + 2 gold-freeze rounds DONE:** honest eval ruler (frozen routing-independent denominator, EFFECTIVE scorer, confident-wrong rate, calibration, regression-guard, oracle decontamination) + 32 blind-law-verified gold corrections (McNemar p=0.0008). **Honest 8-digit OUTRIGHT = 68.0%** (r12, clean gold, ASK off); gap decomposes SELECTION 75% / RETRIEVAL 25% / rerank-drop 0%; the selection bottleneck is **INFORMATION, not model/complexity** (gate-1 neutral, gate-2 regressed, Pro=Flash — all reverted). **Now:** env-gated post-L4 uncertainty-gated sibling-ASK lever calibrating (r13 in flight). Realistic ~75–80% outright ceiling. Next: finish ASK calibration → retrieval-25% bucket → confidence calibration → API rewire → frontend → publish. Authoritative brief: `backend/docs/AUTONOMOUS-CONTINUATION-2026-05-29.md`. Eval canonical = `backend/src/eval/` ~386-case master suite (168-stub DEPRECATED).
+- IN PROGRESS Phase 4: Brain rebuild — v2 (8-layer) BUILT and the **active brain (eval-wired)**. Phase 4.0 DONE (O1-O5; O2 12,406 ingested). Phase 4.2a DONE (orchestrator L0-L5 + repair/backtrack + ASK/REFUSE + continueWithAnswer; eval wired to v2). **Runtime is Vertex-ONLY** (`gemini-embedding-001`@1536 embed + Gemini-Flash rerank + Gemini-Flash L1/L4; Cohere fully decommissioned). Trust-spine + gold-freeze rounds DONE (honest eval ruler: frozen routing-independent denom, EFFECTIVE scorer, confident-wrong, calibration, regression-guard, oracle decontamination). **Brain ~77% OUTRIGHT 8-digit / TOP-3 ~86% / chapter ~89% / heading ~86%** (frozen denom, levers off) — in the realistic non-fine-tuned ceiling band. **Ship arc STARTED:** v2 API adapter (`backend/src/api/v2-api-adapter.ts`) + `USE_V2_CLASSIFIER` flag (default OFF = legacy byte-identical) committed `cd7a5a3` + LIVE HTTP-smoke validated; decision = SHIP, latency-first. **Next: fix classify latency (p95 ~62s, suspect L5 repair loop) → cutover (flag ON) → frontend rebuild → publish.** Authoritative brief: `backend/docs/AUTONOMOUS-CONTINUATION-2026-05-29.md`. Eval canonical = `backend/src/eval/` master suite, 385 cases (168-stub DEPRECATED).
 - M4: Trade intelligence — duty rates, export policy on every result
 - M5: Ship — API rewire (legacy→v2) → frontend rebuild → publish; PDF reports, CI, feedback, investor demo
