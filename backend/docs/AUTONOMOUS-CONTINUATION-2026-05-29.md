@@ -2,26 +2,27 @@
 
 **This block is the definitive, self-contained entry point. Read it top-to-bottom, then proceed. Everything below it is supporting detail.**
 
-**ONE-LINE STATE:** v2 brain ~77% OUTRIGHT 8-digit / ~86% top-3 / chapter ~89% / heading ~86% / confident-wrong ~64; runtime Vertex-only; branch `feat/phase-4-pipeline-build`; tree clean; 855 tests pass.
+**ONE-LINE STATE:** v2 brain ~77% OUTRIGHT 8-digit / ~86% top-3 / chapter ~89% / heading ~86% / confident-wrong ~64; runtime Vertex-only; branch `feat/phase-4-pipeline-build`; tree clean; 879 tests pass.
 
-**CHOSEN PATH (user-confirmed 2026-05-30): SHIP, LATENCY-FIRST.** IMMEDIATE FIRST ACTION next session:
+**CHOSEN PATH (user-confirmed 2026-05-30): SHIP, LATENCY-FIRST.**
 
-#### LATENCY PROFILE — DONE (2026-05-30) — do NOT re-profile; act on it
-- **DOMINANT cost = the L4 Select REPAIR LOOP.** 0-repair cases median **19.9s** vs 3-repair median **49.3s**; each repair = another ~13–18s L4 call (full prompt re-sent + a growing `VERIFIER_FAILURES` block). Fixed ~**12s L2 tax on EVERY request** (Vertex embed + Gemini-Flash rerank). L1 triage ~2–4s; L5 verify cheap (1–5s).
-- **WASTE: 43% of classify cases (141/326) exhaust all 3 repairs, and 140/141 STILL fail the verifier** (escalation_path ends `L6:would_escalate` → they classify the best Select anyway). So repairs **#2 and #3 add the largest latency (+15–18s each) for ZERO recovery.** The 3 r19 "timeout errors" (S5-AUTO-011/016/021) are repair-loop cases exceeding the 90s eval cap.
+#### LATENCY FIX — DONE + COMMITTED (`0ae224a`, 2026-05-30) — do NOT redo
+- **Adaptive repair loop SHIPPED:** cap repairs at **2** + **code-only no-progress bail** (bail the moment a repair re-selects the same failing `selected_code` as the prior iteration). Repair-loop control lives in `backend/src/classifier-v2/index.ts`. Env knobs: `REPAIR_MAX_ITERATIONS` (default 2), `REPAIR_NOPROGRESS_BAIL` (default on), `REPAIR_BAIL_ON_SIGNATURE` (default OFF/opt-in), `REPAIR_BAIL_MIN_ITERATION` (default 0).
+- **r19→r21 three-sided gate (master suite, 343 gold denom, `--simulate-answers`):** p95 latency **62.5s → 38.8s (-38%)**, median 30.4s → 26.8s; OUTRIGHT 8-digit 76.5% → 76.4% (**McNemar p=1.0000, statistically identical**); confident-wrong 65 → 71 (+6, within run-to-run noise, **user-accepted**); repair distribution ≥2 repairs **161→6**, bailed **0→164**.
+- **Rejected alternatives (learnings):** r20 (cap=2 + **signature+code** bail) cut off still-converging repairs and broke DB064/070/080 → the signature clause is too aggressive (kept OFF/opt-in). r22 (cap=3 + code-only bail) over-repairs (McNemar p=0.049 vs r21). **Kept config = cap=2 + code-only bail.**
 
-**REVISED FIRST ACTION (ship latency-first):**
-1. **BUILD an ADAPTIVE repair loop.** Default-cap repairs at **1**, AND short-circuit/bail to escalation the moment a repair makes **no progress** (same failing `selected_code` OR same failed-rule signature as the prior iteration). First **confirm the recovery distribution** from `eval-results/vertex-m0-r19-top3-sim.json` `details[].escalation_path` (count cases whose final verifier-PASS occurred at repair0 vs repair1 vs repair2/3) to choose **cap=1 vs 2**. Repair-loop control lives in `backend/src/classifier-v2/index.ts` (the `for i<3` loop ~`index.ts:840` + `onVerifierExhausted`). **THREE-SIDED GATE:** p95 latency DOWN **AND** OUTRIGHT 8-digit + confident-wrong NOT regressed (run **r20 vs r19/r18**; the ORCHESTRATOR runs the eval itself).
-2. **STREAM the HTTP response** (perceived-UX, zero accuracy risk) in `backend/src/api/classify.ts` + frontend.
+**FIRST ACTION (ship — latency done, resume at streaming):**
+1. **DONE — adaptive repair-loop latency fix (`0ae224a`).** See block above.
+2. **STREAM the HTTP response** (perceived-UX, zero accuracy risk) in `backend/src/api/classify.ts` + frontend. ← **resume here**
 3. **Cutover** — turn `USE_V2_CLASSIFIER` on, staged.
-4. **Frontend rebuild** — `frontend/src/lib/hooks/use-wizard.ts`: read `alternatives`/top-3; handle `responseType:refused`; multi-turn `/answer` with `{questionId, answerId}`; address the ~39-62s latency UX.
-5. **Publish + trade-intelligence.**
+4. **Frontend rebuild — MUST be planned with the user first** — `frontend/src/lib/hooks/use-wizard.ts`: read `alternatives`/top-3; handle `responseType:refused`; multi-turn `/answer` with `{questionId, answerId}`; address the ~27-39s latency UX.
+5. **Publish + trade-intelligence.** Deferred quality lever: calibrated escalation to route low-confidence best-effort emits to ASK (would recover the confident-wrong delta).
 
 **Secondary latency lever (medium risk, A/B only):** trim the ~17K-token `select-v2.md` base prompt / lower `maxOutputTokens` (`L4-select.ts:847-893`, `thinking_level=low`) — risks hurting hard sibling cases; do **NOT** do blindly.
 
 **TASK ROADMAP** (the in-session TaskList does NOT carry to a fresh session — captured here):
-- **DONE:** gold-R4 · MV-03 · bad-gold-R5 · calibrated-classify (off) · L2 `direct_leaf` recall · residual-leaf-floor · v2 API adapter + flag · top-3 instrumentation.
-- **ACTIVE:** ship arc (latency-first).
+- **DONE:** gold-R4 · MV-03 · bad-gold-R5 · calibrated-classify (off) · L2 `direct_leaf` recall · residual-leaf-floor · v2 API adapter + flag · top-3 instrumentation · **adaptive repair-loop latency fix `0ae224a` (cap=2 + code-only bail, p95 62.5→38.8s)**.
+- **ACTIVE:** ship arc — resume at **streaming** (latency DONE).
 - **DEFERRED brain (real-usage-driven):**
   - synonym / heading recall — TC012 hose → 8708 vs 4009; EC008 galvanized → 7210 vs 7208/9.
   - DB053 notes_claims definition-note fix — id 20/21 EXISTS-on-definition → SKIP; BROAD textile blast radius, gate carefully.
@@ -36,7 +37,7 @@
 - tsc = `npx tsc --noEmit`
 - New eval metric: `top_k_code_accuracy`; per-case `candidate_codes` field.
 
-**KEY COMMITS (`feat/phase-4-pipeline-build`):** gold-R4 `6d9afd9` · MV-03 `881ef2e` · bad-gold-R5 `168ac64` · calibrated-classify `8a189ef` · L2 recall `d4cfb44` · API adapter+flag `cd7a5a3` · residual-leaf-floor `7629a2b` · top-3 instrumentation `ec34ee6`. Read `CLAUDE.md` (Current Status) + `git log` for full detail.
+**KEY COMMITS (`feat/phase-4-pipeline-build`):** gold-R4 `6d9afd9` · MV-03 `881ef2e` · bad-gold-R5 `168ac64` · calibrated-classify `8a189ef` · L2 recall `d4cfb44` · API adapter+flag `cd7a5a3` · residual-leaf-floor `7629a2b` · top-3 instrumentation `ec34ee6` · adaptive repair-loop latency fix `0ae224a`. Read `CLAUDE.md` (Current Status) + `git log` for full detail.
 
 **OPERATING RULES (unchanged):** pure orchestrator; the ORCHESTRATOR runs long evals (subagents background-and-die); one change per **three-sided gate** (target↑ McNemar AND confident-wrong flat/down AND latency/cost ok); never weaken L4/L5; gold/eval changes are USER-GATED; commit at kept gates; Vertex-only.
 
@@ -55,7 +56,7 @@ ITC-HS v2 8-digit classifier. Branch `feat/phase-4-pipeline-build`. Backend root
 - **TOP-3 NOW MEASURED (new metric, commit `ec34ee6`):** r19 (vertex-m0-r19-top3-sim) **top_3_code_accuracy = 85.9% (293/341)**, top_1 = 76.5% (261/341). NOTE this top-3 is a **LOWER BOUND** — the proxy counts only the product's *displayed* candidates (selected + model `alternatives_considered`, ≤5), not the full L4 candidate set; true top-3 retrieval recall is **≥86%**. Product story: top-1 ~77%, top-3 ~86%+.
 - **SHIP ARC STARTED (`cd7a5a3`):** `backend/src/api/v2-api-adapter.ts` (`mapV2Result`: CLASSIFY/ASK/REFUSE → flat DTO, confidence 0–100, leaf-desc + top-3 alternatives hydration, system_error/80s-timeout → 503) + `USE_V2_CLASSIFIER` feature flag in `src/api/classify.ts`, **DEFAULT OFF** (legacy byte-identical, instant rollback). Cutover (flag ON) + frontend rebuild = **DEFERRED to user review** (outward-facing change).
 - **SHIP FOUNDATION LIVE-VALIDATED (HTTP smoke, flag `USE_V2_CLASSIFIER=true`, port 3007):** "stainless steel hex bolts M10" → **7318.15.00 correct**, DB-hydrated description, confidence 90, 3 alternatives, GIR citation, exportPolicy Free (39s); "steel" → **ASK with 6 options** (23s). DTO flat + correct. Server killed clean.
-- **SHIP-CUTOVER BLOCKER (address before flipping the flag): LATENCY** — classify p95 ~62s, occasional 90s Vertex timeouts; sync HTTP UX risk. Mitigations: the committed **80s server-side timeout→503**; for cutover consider streaming/async or tightening the repair loop. Plus a **cosmetic em-dash mojibake** in one ASK option label (question-template source string).
+- **SHIP-CUTOVER — LATENCY now FIXED (`0ae224a`):** adaptive repair loop (cap=2 + code-only bail) brought classify **p95 62.5s → 38.8s (-38%)** with OUTRIGHT 8-digit statistically identical (McNemar p=1.0000). Remaining cutover prep: stream the sync HTTP response for perceived UX; the committed **80s server-side timeout→503** stays as a backstop. Plus a **cosmetic em-dash mojibake** in one ASK option label (question-template source string).
 - Suite = **385 cases** (post bad-gold R5: 22 query rewrites + drop DB030); scoring denom = **343** gold-code cases (341 in r19 after 3 infra-timeout exclusions).
 - **REMAINING BRAIN HEADROOM** (all harder / research-grade, measurement-gated):
   - **(1) WRONG-HEADING SYNONYM-RECALL** — TC012 silicone hose (Ch.40 vs 8708, function-over-material), EC008 galvanized (7210 coated vs 7208/9) → L2 recall/synonym + sibling-diversity.
