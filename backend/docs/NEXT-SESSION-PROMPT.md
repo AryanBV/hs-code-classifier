@@ -30,13 +30,11 @@ Then, **before your first action, state out loud**: the current numbers (OUTRIGH
 
 ## C. CHOSEN PATH — SHIP, LATENCY-FIRST
 
-1. **Profile + fix classify latency.** Latency profile is **DONE** (do not re-profile): dominant cost = the **L4 Select repair loop**; **43% of classify cases exhaust all 3 repairs and 140/141 still fail the verifier** (zero recovery for the extra +15–18s each). Fixed ~12s L2 tax per request; p95 ~62s.
-   - **Fix:** build an **adaptive repair loop** — default-cap repairs at 1, short-circuit/bail to escalation the moment a repair makes no progress (same failing `selected_code` OR same failed-rule signature as the prior iteration). First confirm the recovery distribution from `eval-results/vertex-m0-r19-top3-sim.json` `details[].escalation_path` (count final verifier-PASS at repair0 vs repair1 vs repair2/3) to choose cap=1 vs 2. Loop lives in `backend/src/classifier-v2/index.ts` (~`index.ts:840`, the `for i<3` loop + `onVerifierExhausted`).
-   - Also consider **repair-loop conditioning** and **response streaming** (perceived-UX, zero accuracy risk) in `backend/src/api/classify.ts` + frontend.
-   - **GATE (three-sided):** p95 latency DOWN **AND** OUTRIGHT 8-digit + confident-wrong NOT regressed (run r20 vs r19/r18) **AND** cost ok.
-2. **Cutover** — turn `USE_V2_CLASSIFIER` on, **staged** (user go/no-go required — outward-facing change).
-3. **Frontend rebuild** — `frontend/src/lib/hooks/use-wizard.ts`: read `alternatives` / top-3; handle `responseType: refused`; multi-turn `/answer` with `{ questionId, answerId }`; address the ~39–62s latency UX.
-4. **Publish + trade-intelligence** (duty rates, export policy on every result; PDF reports).
+1. **BUILD the adaptive repair-loop latency fix** — profile is **DONE** (do NOT re-profile; see resume doc 'LATENCY PROFILE — DONE'). Evidence: 43% of cases exhaust all 3 repairs and 140/141 still fail the verifier (wasted ~30-48s); 0-repair 19.9s vs 3-repair 49.3s; each repair ~13-18s L4 call. FIX: default-cap repairs at 1 + bail to escalation on no-progress (same failing code / same failed-rule signature); confirm repair0-vs-later recovery split from r19 escalation_path to pick cap=1 vs 2; loop control at backend/src/classifier-v2/index.ts (the for i<3 loop + onVerifierExhausted); THREE-SIDED GATE: p95 latency DOWN AND OUTRIGHT 8-digit + confident-wrong NOT regressed (orchestrator runs the eval).
+2. **Stream the HTTP response** (perceived-UX, zero accuracy risk).
+3. **Cutover** `USE_V2` on staged.
+4. **Frontend rebuild.**
+5. **Publish.**
 
 **DEFERRED (real-usage-driven, do NOT pre-optimize):**
 - synonym / heading recall (TC012 silicone hose → 8708 vs 4009; EC008 galvanized → 7210 vs 7208/9).
