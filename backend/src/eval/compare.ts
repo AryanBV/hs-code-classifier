@@ -113,6 +113,26 @@ function printDiff(label: string, before: number, after: number): void {
   console.log(`  ${icon} ${label.padEnd(20)}: ${before.toFixed(1)}% -> ${after.toFixed(1)}% (${sign}${diff.toFixed(1)}%)`);
 }
 
+function printLatency(label: string, before: number, after: number): void {
+  const diff = after - before;
+  const sign = diff > 0 ? '+' : '';
+  const icon = diff < 0 ? 'DOWN' : diff > 0 ? 'UP' : '==';
+  console.log(`  ${icon} ${label.padEnd(8)}: ${before.toFixed(0)}ms -> ${after.toFixed(0)}ms (${sign}${diff.toFixed(0)}ms)`);
+}
+
+function repairStats(report: EvalReport): { any: number; deep: number; bailed: number; escalated: number } {
+  let any = 0, deep = 0, bailed = 0, escalated = 0;
+  for (const d of report.details) {
+    const path = d.escalation_path ?? [];
+    const repairs = path.filter((p) => /^L5:repair\d+$/.test(p)).length;
+    if (repairs >= 1) any++;
+    if (repairs >= 2) deep++;
+    if (path.includes('L5:no_progress_bail')) bailed++;
+    if (path.includes('L6:would_escalate')) escalated++;
+  }
+  return { any, deep, bailed, escalated };
+}
+
 function main(): void {
   const args = process.argv.slice(2).filter(a => a !== '--');
   // Optional: --signoff id1,id2 marks regressions as reviewed/accepted.
@@ -171,6 +191,19 @@ function main(): void {
   printDiff('Legacy chapter', before.classification.chapter_accuracy, after.classification.chapter_accuracy);
   printDiff('Legacy heading', before.classification.heading_accuracy, after.classification.heading_accuracy);
   printDiff('Legacy 8-digit', before.classification.code_accuracy, after.classification.code_accuracy);
+
+  // LATENCY + repair-distribution view (the adaptive-repair-loop A/B signal).
+  console.log(`\nLATENCY COMPARISON`);
+  printLatency('p95', before.latency.p95_ms, after.latency.p95_ms);
+  printLatency('median', before.latency.median_ms, after.latency.median_ms);
+
+  const rsB = repairStats(before);
+  const rsA = repairStats(after);
+  console.log(`\nREPAIR DISTRIBUTION (before -> after)`);
+  console.log(`  >=1 repair : ${rsB.any} -> ${rsA.any}`);
+  console.log(`  >=2 repairs: ${rsB.deep} -> ${rsA.deep}`);
+  console.log(`  bailed     : ${rsB.bailed} -> ${rsA.bailed}`);
+  console.log(`  escalated  : ${rsB.escalated} -> ${rsA.escalated}`);
 
   // AUTOMATED regression-guard.
   const cmp = compareRuns(before, after, { signedOffRegressions });

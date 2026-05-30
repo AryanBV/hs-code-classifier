@@ -1,6 +1,15 @@
 import { describe, it, expect } from 'vitest';
-import { BaselineEscalation } from './escalation';
-import type { PipelineRunState, SelectOutput } from './types';
+import { BaselineEscalation, sortedRuleSignature, noProgress } from './escalation';
+import type { PipelineRunState, SelectOutput, VerifierRuleFailure } from './types';
+
+/** Build a minimal VerifierRuleFailure carrying only the fields the helpers read. */
+function mkFailure(rule_id: string): VerifierRuleFailure {
+  return {
+    rule_id,
+    rule_name: rule_id,
+    failure_detail: `${rule_id} failed`,
+  };
+}
 
 function mkState(): PipelineRunState {
   return {
@@ -158,5 +167,93 @@ describe('BaselineEscalation', () => {
       expect(out.classification).toBeUndefined();
       expect(out.question).toBeUndefined();
     });
+  });
+});
+
+describe('sortedRuleSignature', () => {
+  it('is order-independent (["A","B"] === ["B","A"])', () => {
+    expect(sortedRuleSignature([mkFailure('A'), mkFailure('B')])).toBe(
+      sortedRuleSignature([mkFailure('B'), mkFailure('A')]),
+    );
+  });
+
+  it('de-duplicates repeated rule_ids (["A","A"] === ["A"])', () => {
+    expect(sortedRuleSignature([mkFailure('A'), mkFailure('A')])).toBe(
+      sortedRuleSignature([mkFailure('A')]),
+    );
+  });
+
+  it('distinguishes different rule sets', () => {
+    expect(sortedRuleSignature([mkFailure('A')])).not.toBe(
+      sortedRuleSignature([mkFailure('B')]),
+    );
+  });
+
+  it('is the empty string for no failures', () => {
+    expect(sortedRuleSignature([])).toBe('');
+  });
+});
+
+describe('noProgress', () => {
+  it('returns true when the code is unchanged (same non-null code)', () => {
+    expect(
+      noProgress('7318.15.00', '7318.15.00', [mkFailure('MV-01')], [mkFailure('MV-02')]),
+    ).toBe(true);
+  });
+
+  it('returns true when the signature is unchanged regardless of code', () => {
+    expect(
+      noProgress('7318.15.00', '7318.16.00', [mkFailure('MV-01')], [mkFailure('MV-01')]),
+    ).toBe(true);
+  });
+
+  it('returns false when BOTH the code and the signature differ', () => {
+    expect(
+      noProgress('7318.15.00', '7318.16.00', [mkFailure('MV-01')], [mkFailure('MV-02')]),
+    ).toBe(false);
+  });
+
+  it('treats signature equality order-independently', () => {
+    expect(
+      noProgress(
+        '7318.15.00',
+        '7318.16.00',
+        [mkFailure('MV-01'), mkFailure('MV-02')],
+        [mkFailure('MV-02'), mkFailure('MV-01')],
+      ),
+    ).toBe(true);
+  });
+
+  it('treats signature equality de-duplicated', () => {
+    expect(
+      noProgress(
+        '7318.15.00',
+        '7318.16.00',
+        [mkFailure('MV-01')],
+        [mkFailure('MV-01'), mkFailure('MV-01')],
+      ),
+    ).toBe(true);
+  });
+
+  it('never matches the code clause when prevCode is null (only signature)', () => {
+    // prevCode null, differing signatures → no progress is false.
+    expect(
+      noProgress(null, '7318.15.00', [mkFailure('MV-01')], [mkFailure('MV-02')]),
+    ).toBe(false);
+    // prevCode null, matching signature → bails on the signature clause only.
+    expect(
+      noProgress(null, '7318.15.00', [mkFailure('MV-01')], [mkFailure('MV-01')]),
+    ).toBe(true);
+  });
+
+  it('ignores the signature clause when useSignature is false', () => {
+    // Same signature but different code, useSignature=false → no bail (code-only).
+    expect(
+      noProgress('7318.15.00', '7318.16.00', [mkFailure('MV-01')], [mkFailure('MV-01')], false),
+    ).toBe(false);
+    // Same code still bails even with useSignature=false.
+    expect(
+      noProgress('7318.15.00', '7318.15.00', [mkFailure('MV-01')], [mkFailure('MV-02')], false),
+    ).toBe(true);
   });
 });

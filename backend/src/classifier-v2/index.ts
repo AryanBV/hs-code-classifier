@@ -31,7 +31,12 @@ import {
 } from './lib/sibling-ask-trigger';
 import { getTariffLineParentChains } from './lib/supabase-client';
 import { selectToClassifyResult, buildDiagnostics } from './select-to-result';
-import { BaselineEscalation, ESCALATION_REPAIR_PREFIX } from './escalation';
+import {
+  BaselineEscalation,
+  ESCALATION_REPAIR_PREFIX,
+  ESCALATION_NOPROGRESS_BAIL_MARKER,
+  noProgress,
+} from './escalation';
 import { MaxTokensError } from './lib/vertex-client';
 import { LlmOutputValidationError } from './schemas';
 import type {
@@ -336,6 +341,50 @@ function siblingAskMarginThreshold(): number {
   return Number.isFinite(parsed) ? parsed : DEFAULT_SIBLING_ASK_MARGIN_THRESHOLD;
 }
 
+/* ---------------------------------------------------------------------------
+ * ADAPTIVE REPAIR LOOP latency controls (env-gated for A/B without rebuilds).
+ *
+ * Cuts classify p95 by (1) capping repair iterations at 2 (was a hardcoded 3) and
+ * (2) bailing early when a repair makes NO PROGRESS (same code OR same failed-rule
+ * signature as the prior attempt) — another ~15s L4 repair would not help. r19
+ * data: cap=2 sacrifices ≤1 verify-pass-correct case (DB070) vs 15 for cap=1; the
+ * exhausted bucket (median ~49s) is the p95 driver. Both default-on but reversible.
+ * --------------------------------------------------------------------------- */
+
+/** Default repair-iteration cap. r19 data: cap=2 loses ≤1 verify-pass-correct (DB070). */
+const DEFAULT_REPAIR_MAX_ITERATIONS = 2;
+
+/** Repair cap (env-overridable). parseInt + >=1 guard; malformed/<1 -> default. */
+function repairMaxIterations(): number {
+  const raw = process.env.REPAIR_MAX_ITERATIONS;
+  if (raw === undefined) return DEFAULT_REPAIR_MAX_ITERATIONS;
+  const parsed = Number.parseInt(raw, 10);
+  return Number.isInteger(parsed) && parsed >= 1 ? parsed : DEFAULT_REPAIR_MAX_ITERATIONS;
+}
+
+/** No-progress bail defaults ON (set REPAIR_NOPROGRESS_BAIL=false to A/B it off). */
+function repairNoProgressBailEnabled(): boolean {
+  return process.env.REPAIR_NOPROGRESS_BAIL !== 'false';
+}
+
+/**
+ * The signature clause of the no-progress bail is OPT-IN (default code-only bail;
+ * set REPAIR_BAIL_ON_SIGNATURE=true to also bail on identical failed-rule signature).
+ * Data (r20 forensics) showed the signature clause cut off still-converging repairs —
+ * code-only is the safe default.
+ */
+function repairBailOnSignature(): boolean {
+  return process.env.REPAIR_BAIL_ON_SIGNATURE === 'true';
+}
+
+/** Minimum iteration index at which the bail may fire (default 0 = even the first repair). */
+function repairBailMinIteration(): number {
+  const raw = process.env.REPAIR_BAIL_MIN_ITERATION;
+  if (raw === undefined) return 0;
+  const parsed = Number.parseInt(raw, 10);
+  return Number.isInteger(parsed) && parsed >= 0 ? parsed : 0;
+}
+
 /**
  * POST-L4 SIBLING-ASK uncertainty gate. Called AFTER L4 (Select) + its L5/repair
  * loop produced a CLASSIFY-bound `SelectOutput`. Returns a `ClassifyResult`
@@ -590,10 +639,25 @@ async function runSelectVerifyRepair(
     return finalizeClassifyWithSiblingGate(currentSelectOut);
   }
 
-  // --- Repair loop: up to 3 repair iterations (i = 0, 1, 2) -------------
+  // --- Adaptive repair loop (latency fix) -------------------------------
+  // Cap repairs at `maxRepairs` (default 2, env-overridable) AND bail early when a
+  // repair makes NO PROGRESS vs the prior attempt (same code OR same failed-rule
+  // signature) — another ~15s L4 call would not help. Both controls are env-gated
+  // (default-on) so the eval gate can A/B without a rebuild.
   let lastFailures: VerifierRuleFailure[] = currentVerifyOut.failed_rules;
+  // Seeded with the INITIAL select's code (guaranteed non-null: an initial null code
+  // already returned via selectToRefuse before this loop). Lets the bail fire on repair 0.
+  let previousSelectedCode: string | null = currentSelectOut.selected_code;
+  const maxRepairs = repairMaxIterations();
+  const bailEnabled = repairNoProgressBailEnabled();
+  const bailOnSignature = repairBailOnSignature();
+  const bailMinIteration = repairBailMinIteration();
 
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < maxRepairs; i++) {
+    // Snapshot pre-repair state for the post-verify no-progress comparison.
+    const prevFailures = lastFailures;
+    const prevCode = previousSelectedCode;
+
     // Push a trace event for this repair attempt (before re-selecting).
     recordLayer(state, `${ESCALATION_REPAIR_PREFIX}${i}` as PipelineTraceEvent['layer'], 'repair', {
       repair_iteration: i + 1,
@@ -616,11 +680,15 @@ async function runSelectVerifyRepair(
     });
 
     // A repair select may itself refuse (null code). Close the Task-7 gap: REFUSE
-    // here rather than feed an empty code into chapterOf('')/verify.
+    // here rather than feed an empty code into chapterOf('')/verify. This MUST stay
+    // before the no-progress bail so a null repair always REFUSEs (never CLASSIFY-bails).
     if (currentSelectOut.selected_code === null) {
       recordLayer(state, 'L4', 'refuse', { repair_iteration: i + 1 });
       return selectToRefuse(currentSelectOut, state);
     }
+
+    // Non-null code captured for the no-progress comparison (narrowed to string here).
+    const curCode: string = currentSelectOut.selected_code;
 
     // Re-verify the repaired output (L5 is NOT an LLM call — no llm_calls increment).
     currentVerifyOut = await verify(buildL5Input(currentSelectOut));
@@ -634,10 +702,29 @@ async function runSelectVerifyRepair(
       return finalizeClassifyWithSiblingGate(currentSelectOut);
     }
 
+    // Adaptive no-progress bail: same code OR same failed-rule signature as the prior
+    // attempt => another ~15s repair is wasted spend. Hand off to escalation NOW. Routed
+    // through onVerifierExhausted so a bailed case lands in the SAME eval bucket
+    // (best-effort CLASSIFY + 'L6:would_escalate') as a cap-exhausted case. The ONLY new
+    // escalation_path entry is the single ESCALATION_NOPROGRESS_BAIL_MARKER (NOT a repairN).
+    if (
+      bailEnabled &&
+      i >= bailMinIteration &&
+      noProgress(prevCode, curCode, prevFailures, currentVerifyOut.failed_rules, bailOnSignature)
+    ) {
+      recordLayer(state, ESCALATION_NOPROGRESS_BAIL_MARKER as PipelineTraceEvent['layer'], 'repair', {
+        repair_iteration: i + 1,
+        failed_rules: currentVerifyOut.failed_rules.length,
+        no_progress_bail: true,
+      });
+      return BaselineEscalation.onVerifierExhausted(state, currentSelectOut, currentVerifyOut.failed_rules);
+    }
+
     lastFailures = currentVerifyOut.failed_rules;
+    previousSelectedCode = curCode;
   }
 
-  // All 3 repairs exhausted — hand off to escalation policy.
+  // Repair cap exhausted — hand off to escalation policy.
   return BaselineEscalation.onVerifierExhausted(state, currentSelectOut, lastFailures);
 }
 

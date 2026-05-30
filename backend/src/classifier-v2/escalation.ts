@@ -20,6 +20,33 @@ import { selectToClassifyResult, buildDiagnostics } from './select-to-result';
 export const ESCALATION_REPAIR_PREFIX = 'L5:repair';
 export const ESCALATION_WOULD_ESCALATE_MARKER = 'L6:would_escalate';
 
+/** escalation_path marker for a repair that bailed early due to no progress. Distinct
+ *  from the per-iteration `L5:repairN` markers so repair-count metrics are not inflated. */
+export const ESCALATION_NOPROGRESS_BAIL_MARKER = 'L5:no_progress_bail';
+
+/** Order-independent, de-duplicated signature of a verifier failure set (sorted rule_ids). */
+export function sortedRuleSignature(failures: VerifierRuleFailure[]): string {
+  return [...new Set(failures.map((f) => f.rule_id))].sort().join('|');
+}
+
+/**
+ * A repair made NO PROGRESS vs the prior attempt iff it produced the same (non-null) code,
+ * OR — when `useSignature` is true — the same sorted failed-rule signature. `prevCode` is the
+ * previously-emitted selected_code (seeded with the INITIAL select's code so the bail can fire
+ * on the first repair). `curCode` is non-null (the null-refuse path returns before this is called).
+ */
+export function noProgress(
+  prevCode: string | null,
+  curCode: string,
+  prevFailures: VerifierRuleFailure[],
+  curFailures: VerifierRuleFailure[],
+  useSignature = true,
+): boolean {
+  if (prevCode !== null && curCode === prevCode) return true;
+  if (useSignature && sortedRuleSignature(curFailures) === sortedRuleSignature(prevFailures)) return true;
+  return false;
+}
+
 /**
  * EscalationPolicy — permanent seam for escalation handlers.
  *

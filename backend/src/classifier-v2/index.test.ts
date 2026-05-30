@@ -325,6 +325,58 @@ const selectOutRepair2: SelectOutput = {
   self_confidence: 'HIGH',
 };
 
+/**
+ * Repair SelectOutput that re-emits the SAME code as the initial `selectOut`
+ * (7318.15.00). Drives the no-progress bail's code-equality clause.
+ */
+const selectOutRepairSameCode: SelectOutput = {
+  ...selectOut,
+  selected_code: SELECTED, // identical to the initial select → no progress on code
+  self_confidence: 'MEDIUM',
+};
+
+/** A second distinct verifier failure (different rule_id) to steer signature (in)equality. */
+const VERIFIER_FAILURE_2: VerifierRuleFailure = {
+  rule_id: 'MV-99',
+  rule_name: 'OTHER_RULE',
+  failure_code: 'OTHER_FAILURE',
+  failure_detail: 'A different failed rule to change the signature',
+  field_path: 'selected_code',
+  suggested_fix: 'Try a different code',
+};
+
+/** Verifier fail carrying the DIFFERENT rule_id (MV-99) — a distinct signature from verifierFail. */
+const verifierFail2: VerifierOutput = {
+  passed: false,
+  failed_rules: [VERIFIER_FAILURE_2],
+  skipped_predicates: [],
+  repair_feedback: 'A different rule failed.',
+  trace: [],
+};
+
+/** Verifier fail carrying yet a third distinct signature (MV-01 + MV-99 together). */
+const verifierFail3: VerifierOutput = {
+  passed: false,
+  failed_rules: [VERIFIER_FAILURE, VERIFIER_FAILURE_2],
+  skipped_predicates: [],
+  repair_feedback: 'Two rules failed.',
+  trace: [],
+};
+
+/** Third distinct code for the "both change" path (chapter 73 to keep verify chapter consistent). */
+const selectOutRepairCodeC: SelectOutput = {
+  ...selectOut,
+  selected_code: '7318.19.00',
+  self_confidence: 'MEDIUM',
+};
+
+/** A repair-select REFUSE (null code) used to prove refuse-before-bail in the loop. */
+const selectOutRepairRefuse: SelectOutput = {
+  ...selectOut,
+  selected_code: null,
+  refusal: { reason: 'No faithful classification' },
+};
+
 describe('classify() — verifier repair loop (Task 7)', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -334,7 +386,19 @@ describe('classify() — verifier repair loop (Task 7)', () => {
     rulesFilterMock.mockResolvedValue(rulesFilterOut);
   });
 
-  it('retries select up to 3× on verifier fail, stops at first pass (fail, fail, pass)', async () => {
+  afterEach(() => {
+    delete process.env.REPAIR_MAX_ITERATIONS;
+    delete process.env.REPAIR_NOPROGRESS_BAIL;
+    delete process.env.REPAIR_BAIL_ON_SIGNATURE;
+    delete process.env.REPAIR_BAIL_MIN_ITERATION;
+  });
+
+  it('retries select up to the cap on verifier fail, stops at first pass (fail, fail, pass)', async () => {
+    // Isolate the cap path: these fixtures share a failed-rule signature (MV-01),
+    // so the no-progress bail would otherwise fire on repair 0. Turn it off to
+    // assert the pure cap behavior (pass on the 2nd repair = i=1, within cap=2).
+    process.env.REPAIR_NOPROGRESS_BAIL = 'false';
+
     // select: initial → repair1 → repair2
     selectMock
       .mockResolvedValueOnce(selectOut)       // attempt 0 (initial)
@@ -382,6 +446,12 @@ describe('classify() — verifier repair loop (Task 7)', () => {
   });
 
   it('FIX 3: L5 verify trace events surface failed_rules ids (not just passed)', async () => {
+    // Defensive isolation: this test relies on the verify-PASS short-circuit on
+    // repair0 to reach a 2nd L5 event, and selectOutRepair2 happens to re-emit the
+    // initial code. Disable the no-progress bail so a future fixture edit swapping
+    // verifierPass→verifierFail can't silently bail before the 2nd verify records.
+    process.env.REPAIR_NOPROGRESS_BAIL = 'false';
+
     selectMock
       .mockResolvedValueOnce(selectOut)
       .mockResolvedValueOnce(selectOutRepair2);
@@ -405,45 +475,410 @@ describe('classify() — verifier repair loop (Task 7)', () => {
     expect(lastPass?.payload?.failed_rules).toEqual([]);
   });
 
-  it('invokes BaselineEscalation.onVerifierExhausted after 3 repair failures (4 total verify failures)', async () => {
-    // select: initial + 3 repairs (4 total)
-    selectMock
-      .mockResolvedValueOnce(selectOut)        // attempt 0
-      .mockResolvedValueOnce(selectOutRepair1) // repair 1
-      .mockResolvedValueOnce(selectOutRepair2) // repair 2
-      .mockResolvedValueOnce(selectOut);       // repair 3
+  it('invokes BaselineEscalation.onVerifierExhausted after exhausting the cap (cap=2 → 3 total verify failures)', async () => {
+    // Isolate the cap path: bail OFF so the cap (default 2) is the only stopper.
+    // Use DISTINCT signatures per attempt (so even the code clause cannot trigger
+    // the bail were it on) — exhaustion must come purely from the iteration cap.
+    process.env.REPAIR_NOPROGRESS_BAIL = 'false';
 
-    // verify: fail all 4 times
+    // select: initial + 2 repairs (3 total under cap=2)
+    selectMock
+      .mockResolvedValueOnce(selectOut)            // attempt 0 (code A)
+      .mockResolvedValueOnce(selectOutRepair1)     // repair 1 (code B)
+      .mockResolvedValueOnce(selectOutRepairCodeC); // repair 2 (code C)
+
+    // verify: fail all 3 times, each with a different failed-rule signature
     verifyMock
-      .mockResolvedValueOnce(verifierFail) // attempt 0
-      .mockResolvedValueOnce(verifierFail) // repair 1
-      .mockResolvedValueOnce(verifierFail) // repair 2
-      .mockResolvedValueOnce(verifierFail); // repair 3
+      .mockResolvedValueOnce(verifierFail)  // attempt 0 ([MV-01])
+      .mockResolvedValueOnce(verifierFail2) // repair 1 ([MV-99])
+      .mockResolvedValueOnce(verifierFail3); // repair 2 ([MV-01, MV-99])
 
     const res = await classify('stainless steel hex bolts M10');
 
     // 1. Still returns CLASSIFY (BaselineEscalation emits best result, not REFUSE)
     expect(res.decision).toBe('CLASSIFY');
 
-    // 2. select called 4 times total (initial + 3 repairs)
-    expect(selectMock).toHaveBeenCalledTimes(4);
+    // 2. select called 3 times total (initial + 2 repairs under cap=2)
+    expect(selectMock).toHaveBeenCalledTimes(3);
 
-    // 3. verify called 4 times
-    expect(verifyMock).toHaveBeenCalledTimes(4);
+    // 3. verify called 3 times
+    expect(verifyMock).toHaveBeenCalledTimes(3);
 
-    // 4. escalation_path has the would_escalate marker from BaselineEscalation
+    // 4. escalation_path has both repair markers + the would_escalate marker, and
+    //    NOT a 3rd repair (cap=2). No no-progress bail (it is disabled here).
+    expect(res.diagnostics.escalation_path).toContain('L5:repair0');
+    expect(res.diagnostics.escalation_path).toContain('L5:repair1');
+    expect(res.diagnostics.escalation_path).not.toContain('L5:repair2');
     expect(res.diagnostics.escalation_path).toContain('L6:would_escalate');
+    expect(res.diagnostics.escalation_path).not.toContain('L5:no_progress_bail');
 
-    // 5. repair_iteration on each repair call
+    // 5. repair_iteration on each repair call (max = 2 under cap=2)
     const l4Call1 = selectMock.mock.calls[1][0];
     expect(l4Call1.repair_iteration).toBe(1);
     const l4Call2 = selectMock.mock.calls[2][0];
     expect(l4Call2.repair_iteration).toBe(2);
+
+    // 6. LLM calls = 1 (triage) + 3 (select×3) = 4
+    expect(res.diagnostics.llm_calls).toBe(4);
+  });
+
+  it('REPAIR_MAX_ITERATIONS=3 restores the old 3-deep exhaustion (4 total verify failures)', async () => {
+    // Explicit override preserving the original 3-repair coverage. Bail OFF +
+    // distinct signatures so only the (raised) cap stops the loop.
+    process.env.REPAIR_MAX_ITERATIONS = '3';
+    process.env.REPAIR_NOPROGRESS_BAIL = 'false';
+
+    // select: initial + 3 repairs (4 total)
+    selectMock
+      .mockResolvedValueOnce(selectOut)            // attempt 0 (code A)
+      .mockResolvedValueOnce(selectOutRepair1)     // repair 1 (code B)
+      .mockResolvedValueOnce(selectOutRepairCodeC) // repair 2 (code C)
+      .mockResolvedValueOnce(selectOutRepair2);    // repair 3 (code A again, but bail off)
+
+    // verify: fail all 4 times with distinct signatures so the cap is the stopper
+    verifyMock
+      .mockResolvedValueOnce(verifierFail)  // attempt 0 ([MV-01])
+      .mockResolvedValueOnce(verifierFail2) // repair 1 ([MV-99])
+      .mockResolvedValueOnce(verifierFail3) // repair 2 ([MV-01, MV-99])
+      .mockResolvedValueOnce(verifierFail); // repair 3 ([MV-01])
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    expect(res.decision).toBe('CLASSIFY');
+    expect(selectMock).toHaveBeenCalledTimes(4);
+    expect(verifyMock).toHaveBeenCalledTimes(4);
+    expect(res.diagnostics.escalation_path).toContain('L5:repair0');
+    expect(res.diagnostics.escalation_path).toContain('L5:repair1');
+    expect(res.diagnostics.escalation_path).toContain('L5:repair2');
+    expect(res.diagnostics.escalation_path).toContain('L6:would_escalate');
+
     const l4Call3 = selectMock.mock.calls[3][0];
     expect(l4Call3.repair_iteration).toBe(3);
 
-    // 6. LLM calls = 1 (triage) + 4 (select×4) = 5
+    // LLM calls = 1 (triage) + 4 (select×4) = 5
     expect(res.diagnostics.llm_calls).toBe(5);
+  });
+});
+
+/* ---------------------------------------------------------------------------
+ * Adaptive repair loop — no-progress bail + cap controls (latency fix)
+ * --------------------------------------------------------------------------- */
+
+describe('classify() — adaptive repair loop (no-progress bail + cap)', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    normalizeMock.mockResolvedValue(normalizedOut);
+    triageMock.mockResolvedValue(triageOut);
+    retrieveMock.mockResolvedValue(retrievalOut);
+    rulesFilterMock.mockResolvedValue(rulesFilterOut);
+  });
+
+  afterEach(() => {
+    delete process.env.REPAIR_MAX_ITERATIONS;
+    delete process.env.REPAIR_NOPROGRESS_BAIL;
+    delete process.env.REPAIR_BAIL_ON_SIGNATURE;
+    delete process.env.REPAIR_BAIL_MIN_ITERATION;
+  });
+
+  it('1. bails on SAME CODE after repair0 (no further repair)', async () => {
+    // initial(A, fail) → repair0(A again, fail) ⇒ no progress on code ⇒ bail.
+    // Only the consumed Once-values are queued (the bail stops before repair1), so
+    // no unconsumed mock leaks into the next test (clearAllMocks keeps queued Once).
+    selectMock
+      .mockResolvedValueOnce(selectOut)                // initial: code A
+      .mockResolvedValueOnce(selectOutRepairSameCode); // repair0: code A again → bail
+    verifyMock
+      .mockResolvedValueOnce(verifierFail)   // initial fails
+      .mockResolvedValueOnce(verifierFail2); // repair0 fails (different sig — isolate code clause)
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    // select called only twice (initial + repair0); the bail stops repair1.
+    expect(selectMock).toHaveBeenCalledTimes(2);
+    expect(verifyMock).toHaveBeenCalledTimes(2);
+
+    const path = res.diagnostics.escalation_path ?? [];
+    expect(path).toContain('L5:repair0');
+    expect(path).toContain('L5:no_progress_bail');
+    expect(path).toContain('L6:would_escalate');
+    expect(path).not.toContain('L5:repair1');
+
+    // Best-effort CLASSIFY with code A (the bailed select).
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.classification?.code).toBe(SELECTED);
+  });
+
+  it('2. bails on SAME SIGNATURE with a DIFFERENT code after repair0', async () => {
+    // The signature clause is now OPT-IN (default is code-only). Enable it explicitly
+    // to exercise the same-signature bail. initial(A,[MV-01]) → repair0(B,[MV-01]) ⇒
+    // same signature ⇒ bail. (afterEach deletes REPAIR_BAIL_ON_SIGNATURE.)
+    process.env.REPAIR_BAIL_ON_SIGNATURE = 'true';
+
+    selectMock
+      .mockResolvedValueOnce(selectOut)        // initial: code A, MV-01
+      .mockResolvedValueOnce(selectOutRepair1); // repair0: code B → bail (same sig)
+    verifyMock
+      .mockResolvedValueOnce(verifierFail)  // initial: [MV-01]
+      .mockResolvedValueOnce(verifierFail); // repair0: [MV-01] again → same signature
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    expect(selectMock).toHaveBeenCalledTimes(2);
+    expect(verifyMock).toHaveBeenCalledTimes(2);
+
+    const path = res.diagnostics.escalation_path ?? [];
+    expect(path).toContain('L5:repair0');
+    expect(path).toContain('L5:no_progress_bail');
+    expect(path).not.toContain('L5:repair1');
+  });
+
+  it('3. does NOT bail when BOTH code and signature change (runs the full cap=2)', async () => {
+    // initial(A,[MV-01]) → repair0(B,[MV-99]) → repair1(C,[MV-01,MV-99]).
+    selectMock
+      .mockResolvedValueOnce(selectOut)            // initial: A, [MV-01]
+      .mockResolvedValueOnce(selectOutRepair1)     // repair0: B, [MV-99]
+      .mockResolvedValueOnce(selectOutRepairCodeC); // repair1: C, [MV-01, MV-99]
+    verifyMock
+      .mockResolvedValueOnce(verifierFail)  // [MV-01]
+      .mockResolvedValueOnce(verifierFail2) // [MV-99]
+      .mockResolvedValueOnce(verifierFail3); // [MV-01, MV-99]
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    // No bail → full cap=2 exhaustion (initial + 2 repairs).
+    expect(selectMock).toHaveBeenCalledTimes(3);
+    expect(verifyMock).toHaveBeenCalledTimes(3);
+
+    const path = res.diagnostics.escalation_path ?? [];
+    expect(path).toContain('L5:repair0');
+    expect(path).toContain('L5:repair1');
+    expect(path).toContain('L6:would_escalate');
+    expect(path).not.toContain('L5:no_progress_bail');
+  });
+
+  it('4a. REPAIR_MAX_ITERATIONS=3 runs four distinct selects then escalates', async () => {
+    process.env.REPAIR_MAX_ITERATIONS = '3';
+    selectMock
+      .mockResolvedValueOnce(selectOut)             // A, [MV-01]
+      .mockResolvedValueOnce(selectOutRepair1)      // B, [MV-99]
+      .mockResolvedValueOnce(selectOutRepairCodeC)  // C, [MV-01, MV-99]
+      .mockResolvedValueOnce(selectOutRepair2);     // A (distinct from C), [MV-99]
+    verifyMock
+      .mockResolvedValueOnce(verifierFail)   // [MV-01]
+      .mockResolvedValueOnce(verifierFail2)  // [MV-99]
+      .mockResolvedValueOnce(verifierFail3)  // [MV-01, MV-99]
+      .mockResolvedValueOnce(verifierFail2); // [MV-99]
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    expect(selectMock).toHaveBeenCalledTimes(4);
+    const path = res.diagnostics.escalation_path ?? [];
+    expect(path).toContain('L5:repair0');
+    expect(path).toContain('L5:repair1');
+    expect(path).toContain('L5:repair2');
+    expect(path).toContain('L6:would_escalate');
+    expect(path).not.toContain('L5:no_progress_bail');
+  });
+
+  it('4b. REPAIR_MAX_ITERATIONS=1 runs initial + one repair then escalates', async () => {
+    process.env.REPAIR_MAX_ITERATIONS = '1';
+    selectMock
+      .mockResolvedValueOnce(selectOut)         // A, [MV-01]
+      .mockResolvedValueOnce(selectOutRepair1); // B, [MV-99] → cap=1 exhausted
+    verifyMock
+      .mockResolvedValueOnce(verifierFail)   // [MV-01]
+      .mockResolvedValueOnce(verifierFail2); // [MV-99]
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    // initial + exactly one repair (cap=1) → escalate.
+    expect(selectMock).toHaveBeenCalledTimes(2);
+    const path = res.diagnostics.escalation_path ?? [];
+    expect(path).toContain('L5:repair0');
+    expect(path).not.toContain('L5:repair1');
+    expect(path).toContain('L6:would_escalate');
+    expect(path).not.toContain('L5:no_progress_bail');
+  });
+
+  it('5. REPAIR_NOPROGRESS_BAIL=false disables the bail (same-code fixtures run full cap)', async () => {
+    process.env.REPAIR_NOPROGRESS_BAIL = 'false';
+    // Same code on repair0 (would bail if enabled), but a distinct repair1 queued.
+    selectMock
+      .mockResolvedValueOnce(selectOut)               // A
+      .mockResolvedValueOnce(selectOutRepairSameCode) // A again (would bail if on)
+      .mockResolvedValueOnce(selectOutRepairCodeC);   // C
+    verifyMock
+      .mockResolvedValueOnce(verifierFail)  // [MV-01]
+      .mockResolvedValueOnce(verifierFail2) // [MV-99]
+      .mockResolvedValueOnce(verifierFail3); // [MV-01, MV-99]
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    // Bail off → full cap=2 (initial + 2 repairs), no bail marker.
+    expect(selectMock).toHaveBeenCalledTimes(3);
+    const path = res.diagnostics.escalation_path ?? [];
+    expect(path).toContain('L5:repair0');
+    expect(path).toContain('L5:repair1');
+    expect(path).not.toContain('L5:no_progress_bail');
+    expect(path).toContain('L6:would_escalate');
+  });
+
+  it('6. a bail emits CLASSIFY (best-effort), never REFUSE', async () => {
+    // Same-code bail (test 1 shape) — assert decision is CLASSIFY, no refusal.
+    selectMock
+      .mockResolvedValueOnce(selectOut)
+      .mockResolvedValueOnce(selectOutRepairSameCode);
+    verifyMock
+      .mockResolvedValueOnce(verifierFail)
+      .mockResolvedValueOnce(verifierFail2);
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.refusal).toBeUndefined();
+    expect(res.diagnostics.escalation_path).toContain('L5:no_progress_bail');
+  });
+
+  it('7. a null repair select still REFUSEs (refuse BEFORE bail; verify not called)', async () => {
+    selectMock
+      .mockResolvedValueOnce(selectOut)              // initial: code A, fails
+      .mockResolvedValueOnce(selectOutRepairRefuse); // repair0: null code → REFUSE
+    verifyMock
+      .mockResolvedValueOnce(verifierFail); // only the initial verify runs
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    // The repair select refused → REFUSE, no bail marker, and verify is NOT
+    // called for the repair iteration (only the initial verify ran).
+    expect(res.decision).toBe('REFUSE');
+    expect(verifyMock).toHaveBeenCalledTimes(1);
+    const path = res.diagnostics.escalation_path ?? [];
+    expect(path).not.toContain('L5:no_progress_bail');
+    expect(path).not.toContain('L6:would_escalate');
+  });
+
+  it('8. malformed/<1 REPAIR_MAX_ITERATIONS falls back to the default cap of 2', async () => {
+    for (const bad of ['abc', '0', '-1']) {
+      vi.clearAllMocks();
+      normalizeMock.mockResolvedValue(normalizedOut);
+      triageMock.mockResolvedValue(triageOut);
+      retrieveMock.mockResolvedValue(retrievalOut);
+      rulesFilterMock.mockResolvedValue(rulesFilterOut);
+      process.env.REPAIR_MAX_ITERATIONS = bad;
+      process.env.REPAIR_NOPROGRESS_BAIL = 'false'; // isolate the cap from the bail
+
+      // Queue EXACTLY the 3 selects/verifies the default cap=2 consumes (initial +
+      // 2 repairs) — no unconsumed Once-value leaks into the next loop iteration.
+      selectMock
+        .mockResolvedValueOnce(selectOut)
+        .mockResolvedValueOnce(selectOutRepair1)
+        .mockResolvedValueOnce(selectOutRepairCodeC);
+      verifyMock
+        .mockResolvedValueOnce(verifierFail)
+        .mockResolvedValueOnce(verifierFail2)
+        .mockResolvedValueOnce(verifierFail3);
+
+      const res = await classify('stainless steel hex bolts M10');
+
+      // Default cap=2 → initial + 2 repairs = 3 selects (a 4th would only run at cap≥3).
+      expect(selectMock, `bad value ${bad}`).toHaveBeenCalledTimes(3);
+      expect(res.diagnostics.escalation_path).not.toContain('L5:repair2');
+    }
+  });
+
+  it('9. REPAIR_BAIL_ON_SIGNATURE=false → same-signature-different-code does NOT bail', async () => {
+    // Explicit 'false' (still valid). Under the new default this is also the
+    // env-UNSET behavior — see test 11 which pins the default code-only bail.
+    process.env.REPAIR_BAIL_ON_SIGNATURE = 'false';
+    // initial(A,[MV-01]) → repair0(B,[MV-01]) — same signature, different code.
+    // With the signature clause off and the code changing, no bail at repair0.
+    selectMock
+      .mockResolvedValueOnce(selectOut)            // A, [MV-01]
+      .mockResolvedValueOnce(selectOutRepair1)     // B, [MV-01] (different code)
+      .mockResolvedValueOnce(selectOutRepairCodeC); // C, [MV-01, MV-99]
+    verifyMock
+      .mockResolvedValueOnce(verifierFail)  // [MV-01]
+      .mockResolvedValueOnce(verifierFail)  // [MV-01] again (same sig, but clause off)
+      .mockResolvedValueOnce(verifierFail3); // [MV-01, MV-99]
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    // Continues past repair0 → full cap=2 (3 selects), no bail.
+    expect(selectMock).toHaveBeenCalledTimes(3);
+    const path = res.diagnostics.escalation_path ?? [];
+    expect(path).toContain('L5:repair0');
+    expect(path).toContain('L5:repair1');
+    expect(path).not.toContain('L5:no_progress_bail');
+    expect(path).toContain('L6:would_escalate');
+  });
+
+  it('10. REPAIR_BAIL_MIN_ITERATION=1 delays the bail by one iteration', async () => {
+    // Bail ON (default), cap=2 (REPAIR_MAX_ITERATIONS unset). The min-iteration
+    // guard suppresses the bail at i=0 (0 >= 1 is false) even though this is a
+    // genuine no-progress case (same code A AND same [MV-01] signature throughout).
+    // The bail then fires at i=1 (1 >= 1). Exercises the `i >= bailMinIteration`
+    // guard at the bail site (otherwise zero coverage).
+    process.env.REPAIR_BAIL_MIN_ITERATION = '1';
+
+    selectMock
+      .mockResolvedValueOnce(selectOut)               // initial: code A
+      .mockResolvedValueOnce(selectOutRepairSameCode) // repair0: code A (no bail at i=0)
+      .mockResolvedValueOnce(selectOutRepairSameCode); // repair1: code A → bail at i=1
+    verifyMock
+      .mockResolvedValueOnce(verifierFail)  // initial: [MV-01]
+      .mockResolvedValueOnce(verifierFail)  // repair0: [MV-01] (would bail if not gated)
+      .mockResolvedValueOnce(verifierFail); // repair1: [MV-01] → bail fires here
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    // initial + repair0 + repair1 = 3 selects (the bail at i=1 stops further work).
+    expect(selectMock).toHaveBeenCalledTimes(3);
+    expect(verifyMock).toHaveBeenCalledTimes(3);
+
+    const path = res.diagnostics.escalation_path ?? [];
+    // Marker order at the bail iteration (i=1): the top-of-loop repair1 record is
+    // pushed BEFORE the bail marker. So both repair markers precede the single bail.
+    expect(path).toContain('L5:repair0');
+    expect(path).toContain('L5:repair1');
+    expect(path).toContain('L5:no_progress_bail');
+    expect(path).toContain('L6:would_escalate');
+    // Exactly one bail marker (the gate did not also fire at i=0).
+    expect(path.filter((p) => p === 'L5:no_progress_bail')).toHaveLength(1);
+    // Ordering: repair0 → repair1 → bail.
+    const iRepair0 = path.indexOf('L5:repair0');
+    const iRepair1 = path.indexOf('L5:repair1');
+    const iBail = path.indexOf('L5:no_progress_bail');
+    expect(iRepair0).toBeLessThan(iRepair1);
+    expect(iRepair1).toBeLessThan(iBail);
+
+    // Best-effort CLASSIFY (escalation policy), never REFUSE.
+    expect(res.decision).toBe('CLASSIFY');
+  });
+
+  it('11. default (env unset) does NOT bail on signature alone (code-only is the default)', async () => {
+    // r20 default flip: the signature clause is OPT-IN. With NO env override, a
+    // same-signature/different-code repair must NOT bail — only an unchanged code
+    // bails by default. This pins the code-only default so it can't silently regress.
+    // (No REPAIR_BAIL_ON_SIGNATURE set; bail ON by default; cap=2.)
+    selectMock
+      .mockResolvedValueOnce(selectOut)            // initial: A, [MV-01]
+      .mockResolvedValueOnce(selectOutRepair1)     // repair0: B, [MV-01] (different code)
+      .mockResolvedValueOnce(selectOutRepairCodeC); // repair1: C, [MV-01, MV-99]
+    verifyMock
+      .mockResolvedValueOnce(verifierFail)  // [MV-01]
+      .mockResolvedValueOnce(verifierFail)  // [MV-01] again — same sig, but clause is OPT-IN
+      .mockResolvedValueOnce(verifierFail3); // [MV-01, MV-99]
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    // Continues past repair0 (no signature bail) → full cap=2 (3 selects), no bail.
+    expect(selectMock).toHaveBeenCalledTimes(3);
+    expect(verifyMock).toHaveBeenCalledTimes(3);
+    const path = res.diagnostics.escalation_path ?? [];
+    expect(path).toContain('L5:repair0');
+    expect(path).toContain('L5:repair1');
+    expect(path).not.toContain('L5:no_progress_bail');
+    expect(path).toContain('L6:would_escalate');
   });
 });
 
@@ -1929,20 +2364,20 @@ describe('classify() — CALIBRATED-CLASSIFY lever GATE ON', () => {
   });
 
   it('preserves the ASK when verify exhausts all repairs (escalation, not CLASSIFY-upgrade)', async () => {
-    // STRONG margin → lever runs select/verify. Verify fails 4× (initial + 3 repairs)
-    // → runSelectVerifyRepair returns a BaselineEscalation result. The lever upgrades
-    // ONLY a CLASSIFY; an escalation outcome is non-CLASSIFY here only if it is not a
-    // CLASSIFY — BaselineEscalation emits CLASSIFY, so this asserts the upgrade still
-    // happens when escalation produces a CLASSIFY (best-result policy).
+    // STRONG margin → lever runs select/verify. The constant select(code A)+verify
+    // (same [MV-01] signature) makes repair0 a NO-PROGRESS attempt, so the adaptive
+    // bail hands off to BaselineEscalation after the initial + ONE repair (2 selects).
+    // BaselineEscalation emits a CLASSIFY (best-result policy), so the lever still
+    // upgrades to CLASSIFY — the intent (escalation→CLASSIFY, never REFUSE) holds.
     selectMock.mockResolvedValue(selectOut);
     verifyMock.mockResolvedValue(verifierFail);
 
     const res = await classify('coffee beans');
 
     // BaselineEscalation.onVerifierExhausted emits a CLASSIFY (best result) → the
-    // lever DOES upgrade. Assert it is a CLASSIFY (never REFUSE) and select ran 4×.
+    // lever DOES upgrade. select ran 2× (initial + 1 repair before the no-progress bail).
     expect(res.decision).toBe('CLASSIFY');
-    expect(selectMock).toHaveBeenCalledTimes(4);
+    expect(selectMock).toHaveBeenCalledTimes(2);
   });
 
   it('upgrades on a single-survivor (null margin) via VERBATIM-PIN', async () => {
