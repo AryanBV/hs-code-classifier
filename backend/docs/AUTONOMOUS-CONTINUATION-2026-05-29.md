@@ -5,11 +5,19 @@
 **ONE-LINE STATE:** v2 brain ~77% OUTRIGHT 8-digit / ~86% top-3 / chapter ~89% / heading ~86% / confident-wrong ~64; runtime Vertex-only; branch `feat/phase-4-pipeline-build`; tree clean; 855 tests pass.
 
 **CHOSEN PATH (user-confirmed 2026-05-30): SHIP, LATENCY-FIRST.** IMMEDIATE FIRST ACTION next session:
-1. **Re-run the latency profiler (read-only).** Parse `eval-results/vertex-m0-r19-top3-sim.json` `response_time_ms` vs repair-count + trace a few cases for per-layer latency. Prime suspect = the **L5 repair loop** (each repair ≈ a 15s L4 call → p95 ~62s + occasional 90s timeouts).
-2. **Build the latency fix GATED** — latency must drop WITHOUT accuracy / confident-wrong regression. Candidate fixes: condition/cap the repair loop; trim the L4 prompt / thinking budget; and STREAM the HTTP response for perceived UX.
+
+#### LATENCY PROFILE — DONE (2026-05-30) — do NOT re-profile; act on it
+- **DOMINANT cost = the L4 Select REPAIR LOOP.** 0-repair cases median **19.9s** vs 3-repair median **49.3s**; each repair = another ~13–18s L4 call (full prompt re-sent + a growing `VERIFIER_FAILURES` block). Fixed ~**12s L2 tax on EVERY request** (Vertex embed + Gemini-Flash rerank). L1 triage ~2–4s; L5 verify cheap (1–5s).
+- **WASTE: 43% of classify cases (141/326) exhaust all 3 repairs, and 140/141 STILL fail the verifier** (escalation_path ends `L6:would_escalate` → they classify the best Select anyway). So repairs **#2 and #3 add the largest latency (+15–18s each) for ZERO recovery.** The 3 r19 "timeout errors" (S5-AUTO-011/016/021) are repair-loop cases exceeding the 90s eval cap.
+
+**REVISED FIRST ACTION (ship latency-first):**
+1. **BUILD an ADAPTIVE repair loop.** Default-cap repairs at **1**, AND short-circuit/bail to escalation the moment a repair makes **no progress** (same failing `selected_code` OR same failed-rule signature as the prior iteration). First **confirm the recovery distribution** from `eval-results/vertex-m0-r19-top3-sim.json` `details[].escalation_path` (count cases whose final verifier-PASS occurred at repair0 vs repair1 vs repair2/3) to choose **cap=1 vs 2**. Repair-loop control lives in `backend/src/classifier-v2/index.ts` (the `for i<3` loop ~`index.ts:840` + `onVerifierExhausted`). **THREE-SIDED GATE:** p95 latency DOWN **AND** OUTRIGHT 8-digit + confident-wrong NOT regressed (run **r20 vs r19/r18**; the ORCHESTRATOR runs the eval itself).
+2. **STREAM the HTTP response** (perceived-UX, zero accuracy risk) in `backend/src/api/classify.ts` + frontend.
 3. **Cutover** — turn `USE_V2_CLASSIFIER` on, staged.
 4. **Frontend rebuild** — `frontend/src/lib/hooks/use-wizard.ts`: read `alternatives`/top-3; handle `responseType:refused`; multi-turn `/answer` with `{questionId, answerId}`; address the ~39-62s latency UX.
 5. **Publish + trade-intelligence.**
+
+**Secondary latency lever (medium risk, A/B only):** trim the ~17K-token `select-v2.md` base prompt / lower `maxOutputTokens` (`L4-select.ts:847-893`, `thinking_level=low`) — risks hurting hard sibling cases; do **NOT** do blindly.
 
 **TASK ROADMAP** (the in-session TaskList does NOT carry to a fresh session — captured here):
 - **DONE:** gold-R4 · MV-03 · bad-gold-R5 · calibrated-classify (off) · L2 `direct_leaf` recall · residual-leaf-floor · v2 API adapter + flag · top-3 instrumentation.
