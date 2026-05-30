@@ -1,3 +1,5 @@
+> SUPERSEDED 2026-05-30 — earlier-phase document, kept for history. CURRENT STATE: see backend/docs/AUTONOMOUS-CONTINUATION-2026-05-29.md (START HERE block) and CLAUDE.md Current Status. v2 brain ~77% OUTRIGHT / ~86% top-3, Vertex-only (Cohere decommissioned), ship arc started (latency-first).
+
 # ARCHITECTURE.md — Phase 4 Pipeline Spec (LOCKED v2)
 
 **Status:** LOCKED v2 2026-05-26 (supersedes v1 2026-05-25 lock).

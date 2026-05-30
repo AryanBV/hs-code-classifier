@@ -1,3 +1,5 @@
+> SUPERSEDED 2026-05-30 — earlier-phase document, kept for history. CURRENT STATE: see backend/docs/AUTONOMOUS-CONTINUATION-2026-05-29.md (START HERE block) and CLAUDE.md Current Status. v2 brain ~77% OUTRIGHT / ~86% top-3, Vertex-only (Cohere decommissioned), ship arc started (latency-first).
+
 # Phase 4 — Next-Session Resume Prompt (v2)
 
 > **⚠️ Updated 2026-05-26:** This is the v2 resume prompt. v1 (locked 2026-05-25) is superseded by v2 architecture (locked 2026-05-26). Key change: all-Gemini cross-MODEL diversity (3.5 Flash + 3.1 Pro) replaces v1's same-family verify cascade; 8-layer pipeline with Mechanical Verifier + Active Learning + QGS replaces v1's 6-stage cascade. Build-time Opus 4.7 jobs precede runtime. See `backend/docs/ARCHITECTURE.md` for the canonical spec.

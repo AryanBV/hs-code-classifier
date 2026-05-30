@@ -5,10 +5,14 @@ downstream gate depends on these numbers being computed exactly as written. A
 metric change requires: (1) update this doc, (2) update the metric unit test, (3)
 note the change in the commit. Implemented under TDD in `src/eval/`.
 
-**Gold version:** the eval gold is now **Round-3** (32 user-approved, blind-law-verified
-GT corrections over Rounds 1+3; r12 baseline OUTRIGHT 8-digit = 68.0%). See
-`src/eval/GOLD-REMEDIATION-LOG.md`. Metric *definitions* below are unaffected by gold
-changes — only the population's correctness labels are.
+**Gold version:** the eval gold is now **Round-5** (user-approved, blind-law-verified GT
+corrections through R5: Round-4 bucket-C fixes + Round-5 22 contentless-fragment query
+rewrites + drop DB030). Baseline progression on the frozen routing-independent denom:
+r12 68.0% → gold-R4 70.1% → r15 74.3% → r17 76.4% → r18 **77.3% OUTRIGHT 8-digit**
+(r19 76.5% within LLM-noise floor); **top-3 ~86% (top_3_code_accuracy = 85.9% @ r19)**;
+chapter ~89%, heading ~86%, confident-wrong ~64. Runtime is **Vertex-only** (Cohere
+decommissioned). See `src/eval/GOLD-REMEDIATION-LOG.md`. Metric *definitions* below are
+unaffected by gold changes — only the population's correctness labels are.
 
 **Implementing files**
 - `src/eval/metrics.ts` — pure statistical primitives (Wilson CI, McNemar, Brier, ECE, bootstrap, percentile). Unit tests: `metrics.test.ts`.
