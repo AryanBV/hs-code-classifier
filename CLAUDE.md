@@ -164,6 +164,8 @@ Test case format:
 
 ## Current Status (2026-05-30)
 
+> **2026-05-30 re-audit → REVISED DIRECTION (authoritative):** product is FREE (Prevyl bundle later); value = TOP-3 + cited rationale record (not single-code); confidence = calibrated bands; latency UX = sync staged-progress; arch = SSE + Supabase classification_jobs + /job/:id. **Build BACKEND-FIRST: v2 cutover → latency (p95 ≤8-10s) → streaming/job backend → calibration → freeze DTO, THEN the frontend.** Full plan: C:\Users\ASUS\.claude\plans\FRONTEND-PLAN.md (RE-AUDIT REVISIONS section). Continuation: C:\Users\ASUS\.claude\plans\NEXT-SESSION-CONTINUATION.md.
+
 **Branch:** `feat/phase-4-pipeline-build`. Phase 4 v2 8-layer classifier is BUILT and is the **active brain (eval-wired)**. `tsc` clean; **879 tests pass**. Do NOT push unattended.
 
 **Authoritative resume brief:** `backend/docs/AUTONOMOUS-CONTINUATION-2026-05-29.md` — READ FIRST.

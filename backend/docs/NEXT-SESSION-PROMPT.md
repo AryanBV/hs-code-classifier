@@ -1,3 +1,5 @@
+> ⛔ SUPERSEDED (2026-05-30) — DO NOT USE. This file says "855 tests / build the latency fix", but the latency fix is DONE (commit 0ae224a; 879 tests) and the product direction was re-audited. Authoritative handoff: C:\Users\ASUS\.claude\plans\NEXT-SESSION-CONTINUATION.md + FRONTEND-PLAN.md ("RE-AUDIT REVISIONS").
+
 # NEXT-SESSION-PROMPT — ITC-HS v2 Classifier (copy-paste into a fresh session)
 
 Paste everything below into a new Claude Code session at `C:\Export Business\hs-code-classifier`.

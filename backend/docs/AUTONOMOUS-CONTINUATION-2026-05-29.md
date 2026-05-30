@@ -1,3 +1,5 @@
+> ⚠️ 2026-05-30 — the brain/latency state in this doc is accurate, but the PRODUCT direction + build sequence were RE-AUDITED after it was written. Authoritative now: FRONTEND-PLAN.md "RE-AUDIT REVISIONS" + C:\Users\ASUS\.claude\plans\NEXT-SESSION-CONTINUATION.md. This doc predates the FREE / backend-first / top-3 reframe — use it only for brain/backend facts.
+
 ## ▶ START HERE — NEXT SESSION (2026-05-30)
 
 **This block is the definitive, self-contained entry point. Read it top-to-bottom, then proceed. Everything below it is supporting detail.**
