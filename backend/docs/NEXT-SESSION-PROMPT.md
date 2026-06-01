@@ -1,4 +1,4 @@
-> ⛔ SUPERSEDED (2026-05-30) — DO NOT USE. This file says "855 tests / build the latency fix", but the latency fix is DONE (commit 0ae224a; 879 tests) and the product direction was re-audited. Authoritative handoff: C:\Users\ASUS\.claude\plans\NEXT-SESSION-CONTINUATION.md + FRONTEND-PLAN.md ("RE-AUDIT REVISIONS").
+> ⛔ SUPERSEDED (2026-06-01) — DO NOT USE; describes PRE-Phase-B state. Current continuation prompt: `C:\Users\ASUS\.claude\plans\CONTINUATION-PROMPT-2026-06-01.md` (authoritative roadmap `ROADMAP-2026-06-01.md`). Now: Phase A DONE + Phase B Steps 0-2 committed (HEAD `d373e6b`, 1045 tests) + 12 frontend decisions LOCKED; next = START THE FRONTEND BUILD. Vertex DISABLED; runtime = free-tier Gemini Developer API; correctness > speed.
 
 # NEXT-SESSION-PROMPT — ITC-HS v2 Classifier (copy-paste into a fresh session)
 
@@ -23,7 +23,7 @@ Then, **before your first action, state out loud**: the current numbers (OUTRIGH
 ## B. STATE (as of 2026-05-30)
 
 - **v2 brain:** ~77% OUTRIGHT 8-digit (r18 77.3% / 265/343; r19 76.5% within LLM-noise floor) · **top-3 ~86%** (top_3_code_accuracy = 85.9% @ r19) · **confident-wrong ~64** · **chapter ~89%** · **heading ~86%**.
-- **Runtime = Vertex-only** (gemini-embedding-001@1536 + Gemini-Flash rerank + Gemini-Flash L1/L4). **Cohere is decommissioned — never reintroduce it.**
+- **Runtime = free-tier Gemini Developer API** (Vertex disabled 2026-06-01; same models — gemini-embedding-001@1536 + Gemini-Flash rerank + Gemini-Flash L1/L4). **Cohere decommissioned — never reintroduce it.**
 - **Branch:** `feat/phase-4-pipeline-build`. **855 tests pass**, `tsc --noEmit` clean, git tree clean.
 - **Ship foundation committed + live-validated:** `backend/src/api/v2-api-adapter.ts` (`mapV2Result`: CLASSIFY/ASK/REFUSE → flat DTO, confidence 0–100, leaf-desc + top-3 alternatives hydration, system_error/timeout → 503) and the `USE_V2_CLASSIFIER` feature flag in `src/api/classify.ts` — **DEFAULT OFF** (legacy byte-identical, instant rollback). HTTP smoke passed (hex bolts → 7318.15.00 correct; "steel" → ASK with 6 options).
 - Suite = **385 cases**; scoring denom = **343** gold-code cases (341 in r19 after 3 infra-timeout exclusions).
@@ -31,6 +31,8 @@ Then, **before your first action, state out loud**: the current numbers (OUTRIGH
 ---
 
 ## C. CHOSEN PATH — SHIP, LATENCY-FIRST
+
+> SUPERSEDED — cost-efficiency (Phase A) first; correctness > speed; see ROADMAP-2026-06-01.md.
 
 1. **BUILD the adaptive repair-loop latency fix** — profile is **DONE** (do NOT re-profile; see resume doc 'LATENCY PROFILE — DONE'). Evidence: 43% of cases exhaust all 3 repairs and 140/141 still fail the verifier (wasted ~30-48s); 0-repair 19.9s vs 3-repair 49.3s; each repair ~13-18s L4 call. FIX: default-cap repairs at 1 + bail to escalation on no-progress (same failing code / same failed-rule signature); confirm repair0-vs-later recovery split from r19 escalation_path to pick cap=1 vs 2; loop control at backend/src/classifier-v2/index.ts (the for i<3 loop + onVerifierExhausted); THREE-SIDED GATE: p95 latency DOWN AND OUTRIGHT 8-digit + confident-wrong NOT regressed (orchestrator runs the eval).
 2. **Stream the HTTP response** (perceived-UX, zero accuracy risk).
@@ -58,7 +60,7 @@ Then, **before your first action, state out loud**: the current numbers (OUTRIGH
 - **GOLD / EVAL changes are USER-GATED** (blind-law-verify + explicit approval). Never launder gold toward the model.
 - **Never weaken the L4/L5 verifier rules.**
 - **Commit at every kept gate.**
-- **Runtime stays Vertex** — never reintroduce Cohere.
+- **Runtime = free-tier Gemini Developer API** (Vertex disabled); never reintroduce Cohere; NO paid calls without explicit cost-aware user OK.
 - **Use the full power of Claude Code + Opus 4.8** (1M context, parallel workflows, background tasks, MCPs) = ultracode. **Ultrathink before locking decisions.**
 - **Ask the user only for genuine forks** (gold changes, ship cutover go/no-go, scope/strategy at milestones). Otherwise proceed on your best recommendation.
 

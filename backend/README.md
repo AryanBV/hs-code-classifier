@@ -1,4 +1,4 @@
-> SUPERSEDED 2026-05-30 — earlier-phase document, kept for history. CURRENT STATE: see backend/docs/AUTONOMOUS-CONTINUATION-2026-05-29.md (START HERE block) and CLAUDE.md Current Status. v2 brain ~77% OUTRIGHT / ~86% top-3, Vertex-only (Cohere decommissioned), ship arc started (latency-first).
+> SUPERSEDED 2026-06-01 — earlier-phase document, kept for history. CURRENT STATE: see plans/ROADMAP-2026-06-01.md (authoritative) plus CLAUDE.md Current Status. v2 brain ~77% OUTRIGHT / ~86% top-3. Runtime = Gemini Developer API free tier (free-tier GEMINI_API_KEY; same gemini-3.5-flash / gemini-3.1-pro-preview / gemini-embedding-001 models, for free); **Vertex AI is DISABLED** (billing resolved) and Cohere stays decommissioned. Sequencing = Phase A cost-efficiency FIRST, THEN Phase B ship (cutover→latency→streaming/jobs→calibration→DTO freeze), THEN Phase C frontend. CORRECTNESS > SPEED — latency is secondary, never trade accuracy for speed; no paid API calls without explicit cost-aware user OK. The older "Vertex-only / ship-arc latency-first" framing below is SUPERSEDED.
 
 # HS Code Classifier - Backend API
 

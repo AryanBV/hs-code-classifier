@@ -1,4 +1,4 @@
-> SUPERSEDED 2026-05-30 — earlier-phase document, kept for history. CURRENT STATE: see backend/docs/AUTONOMOUS-CONTINUATION-2026-05-29.md (START HERE block) and CLAUDE.md Current Status. v2 brain ~77% OUTRIGHT / ~86% top-3, Vertex-only (Cohere decommissioned), ship arc started (latency-first).
+> SUPERSEDED 2026-06-01 — earlier-phase document, kept for history. CURRENT STATE: see plans/ROADMAP-2026-06-01.md (authoritative), backend/docs/AUTONOMOUS-CONTINUATION-2026-05-29.md (START HERE block), and CLAUDE.md Current Status. v2 brain ~77% OUTRIGHT / ~86% top-3. Runtime is now the **Gemini Developer API free tier** (Vertex AI DISABLED after the billing crisis was resolved; Cohere still decommissioned). Sequencing = Phase A cost-efficiency FIRST → Phase B ship (cutover → latency → streaming/jobs → calibration → DTO freeze) → Phase C frontend. CORRECTNESS > SPEED (latency is secondary; never trade accuracy for it). Older "Vertex-only / ship-arc latency-first" framing is SUPERSEDED.
 
 # HS Code Classifier - AI-Powered Export Documentation Assistant
 

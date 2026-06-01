@@ -1,4 +1,4 @@
-> SUPERSEDED 2026-05-30 — earlier-phase document, kept for history. CURRENT STATE: see backend/docs/AUTONOMOUS-CONTINUATION-2026-05-29.md (START HERE block) and CLAUDE.md Current Status. v2 brain ~77% OUTRIGHT / ~86% top-3, Vertex-only (Cohere decommissioned), ship arc started (latency-first).
+> SUPERSEDED 2026-06-01 — earlier-phase document, kept for history. CURRENT STATE: see plans/ROADMAP-2026-06-01.md (authoritative), backend/docs/AUTONOMOUS-CONTINUATION-2026-05-29.md (START HERE block), and CLAUDE.md Current Status. v2 brain ~77% OUTRIGHT / ~86% top-3, Cohere decommissioned. NOTE: Vertex AI is now DISABLED (billing); runtime moved to the **Gemini Developer API free tier** (same gemini-3.5-flash / gemini-3.1-pro-preview / gemini-embedding-001 models, free). Sequencing is **Phase A cost-efficiency FIRST, then Phase B ship, then Phase C frontend** — and **correctness > speed** (latency is secondary; never trade accuracy for speed). The earlier "Vertex-only / ship arc latency-first" framing is SUPERSEDED.
 
 # classifier-v2
 

@@ -10,8 +10,9 @@ corrections through R5: Round-4 bucket-C fixes + Round-5 22 contentless-fragment
 rewrites + drop DB030). Baseline progression on the frozen routing-independent denom:
 r12 68.0% → gold-R4 70.1% → r15 74.3% → r17 76.4% → r18 **77.3% OUTRIGHT 8-digit**
 (r19 76.5% within LLM-noise floor); **top-3 ~86% (top_3_code_accuracy = 85.9% @ r19)**;
-chapter ~89%, heading ~86%, confident-wrong ~64. Runtime is **Vertex-only** (Cohere
-decommissioned). See `src/eval/GOLD-REMEDIATION-LOG.md`. Metric *definitions* below are
+chapter ~89%, heading ~86%, confident-wrong ~64. Runtime = free-tier Gemini Developer
+API (Vertex disabled 2026-06-01; same models; Cohere decommissioned). See
+`src/eval/GOLD-REMEDIATION-LOG.md`. Metric *definitions* below are
 unaffected by gold changes — only the population's correctness labels are.
 
 **Implementing files**

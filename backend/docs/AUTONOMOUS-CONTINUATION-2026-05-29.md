@@ -1,21 +1,23 @@
+> ⛔ SUPERSEDED (2026-06-01) — describes PRE-Phase-B state. Current continuation prompt: `C:\Users\ASUS\.claude\plans\CONTINUATION-PROMPT-2026-06-01.md` (authoritative roadmap `ROADMAP-2026-06-01.md`). Phase A is DONE + Phase B Steps 0-2 committed (HEAD `d373e6b`) + 12 frontend decisions LOCKED; next = START THE FRONTEND BUILD. Use THIS doc only for brain/eval facts.
+> ⛔ SUPERSEDED for next-steps + runtime (2026-06-01): Vertex is DISABLED; runtime moved to the free-tier Gemini Developer API; cost-efficiency (Phase A) comes before ship; correctness > speed. Authoritative: C:\Users\ASUS\.claude\plans\ROADMAP-2026-06-01.md. Use THIS doc only for brain/eval facts.
 > ⚠️ 2026-05-30 — the brain/latency state in this doc is accurate, but the PRODUCT direction + build sequence were RE-AUDITED after it was written. Authoritative now: FRONTEND-PLAN.md "RE-AUDIT REVISIONS" + C:\Users\ASUS\.claude\plans\NEXT-SESSION-CONTINUATION.md. This doc predates the FREE / backend-first / top-3 reframe — use it only for brain/backend facts.
 
 ## ▶ START HERE — NEXT SESSION (2026-05-30)
 
 **This block is the definitive, self-contained entry point. Read it top-to-bottom, then proceed. Everything below it is supporting detail.**
 
-**ONE-LINE STATE:** v2 brain ~77% OUTRIGHT 8-digit / ~86% top-3 / chapter ~89% / heading ~86% / confident-wrong ~64; runtime Vertex-only; branch `feat/phase-4-pipeline-build`; tree clean; 879 tests pass.
+**ONE-LINE STATE:** v2 brain ~77% OUTRIGHT 8-digit / ~86% top-3 / chapter ~89% / heading ~86% / confident-wrong ~64; runtime = free-tier Gemini Developer API (Vertex disabled 2026-06-01); branch `feat/phase-4-pipeline-build`; tree clean; 879 tests pass.
 
-**CHOSEN PATH (user-confirmed 2026-05-30): SHIP, LATENCY-FIRST.**
+**CHOSEN PATH (user-confirmed 2026-05-30): SHIP, LATENCY-FIRST.** _(SUPERSEDED 2026-06-01 — cost-efficiency (Phase A) first, then ship; correctness > speed (latency secondary). See ROADMAP-2026-06-01.md.)_
 
 #### LATENCY FIX — DONE + COMMITTED (`0ae224a`, 2026-05-30) — do NOT redo
 - **Adaptive repair loop SHIPPED:** cap repairs at **2** + **code-only no-progress bail** (bail the moment a repair re-selects the same failing `selected_code` as the prior iteration). Repair-loop control lives in `backend/src/classifier-v2/index.ts`. Env knobs: `REPAIR_MAX_ITERATIONS` (default 2), `REPAIR_NOPROGRESS_BAIL` (default on), `REPAIR_BAIL_ON_SIGNATURE` (default OFF/opt-in), `REPAIR_BAIL_MIN_ITERATION` (default 0).
 - **r19→r21 three-sided gate (master suite, 343 gold denom, `--simulate-answers`):** p95 latency **62.5s → 38.8s (-38%)**, median 30.4s → 26.8s; OUTRIGHT 8-digit 76.5% → 76.4% (**McNemar p=1.0000, statistically identical**); confident-wrong 65 → 71 (+6, within run-to-run noise, **user-accepted**); repair distribution ≥2 repairs **161→6**, bailed **0→164**.
 - **Rejected alternatives (learnings):** r20 (cap=2 + **signature+code** bail) cut off still-converging repairs and broke DB064/070/080 → the signature clause is too aggressive (kept OFF/opt-in). r22 (cap=3 + code-only bail) over-repairs (McNemar p=0.049 vs r21). **Kept config = cap=2 + code-only bail.**
 
-**FIRST ACTION (ship — latency done, resume at streaming):**
+**FIRST ACTION (ship — latency done, resume at streaming):** _(SUPERSEDED 2026-06-01 — resume point is now Phase A cost-efficiency, NOT streaming. See ROADMAP-2026-06-01.md.)_
 1. **DONE — adaptive repair-loop latency fix (`0ae224a`).** See block above.
-2. **STREAM the HTTP response** (perceived-UX, zero accuracy risk) in `backend/src/api/classify.ts` + frontend. ← **resume here**
+2. **STREAM the HTTP response** (perceived-UX, zero accuracy risk) in `backend/src/api/classify.ts` + frontend. _(SUPERSEDED 2026-06-01 — the resume point is now Phase A (cost-efficiency: Gemini Developer API client → reconnect token meter → caching) per ROADMAP-2026-06-01.md; streaming is a Phase B item (B2/B3), not the immediate next step.)_
 3. **Cutover** — turn `USE_V2_CLASSIFIER` on, staged.
 4. **Frontend rebuild — MUST be planned with the user first** — `frontend/src/lib/hooks/use-wizard.ts`: read `alternatives`/top-3; handle `responseType:refused`; multi-turn `/answer` with `{questionId, answerId}`; address the ~27-39s latency UX.
 5. **Publish + trade-intelligence.** Deferred quality lever: calibrated escalation to route low-confidence best-effort emits to ASK (would recover the confident-wrong delta).
@@ -24,7 +26,7 @@
 
 **TASK ROADMAP** (the in-session TaskList does NOT carry to a fresh session — captured here):
 - **DONE:** gold-R4 · MV-03 · bad-gold-R5 · calibrated-classify (off) · L2 `direct_leaf` recall · residual-leaf-floor · v2 API adapter + flag · top-3 instrumentation · **adaptive repair-loop latency fix `0ae224a` (cap=2 + code-only bail, p95 62.5→38.8s)**.
-- **ACTIVE:** ship arc — resume at **streaming** (latency DONE).
+- **ACTIVE:** ship arc — resume at **streaming** (latency DONE). _(SUPERSEDED 2026-06-01 — resume point is now Phase A cost-efficiency, NOT streaming. See ROADMAP-2026-06-01.md.)_
 - **DEFERRED brain (real-usage-driven):**
   - synonym / heading recall — TC012 hose → 8708 vs 4009; EC008 galvanized → 7210 vs 7208/9.
   - DB053 notes_claims definition-note fix — id 20/21 EXISTS-on-definition → SKIP; BROAD textile blast radius, gate carefully.
@@ -41,13 +43,13 @@
 
 **KEY COMMITS (`feat/phase-4-pipeline-build`):** gold-R4 `6d9afd9` · MV-03 `881ef2e` · bad-gold-R5 `168ac64` · calibrated-classify `8a189ef` · L2 recall `d4cfb44` · API adapter+flag `cd7a5a3` · residual-leaf-floor `7629a2b` · top-3 instrumentation `ec34ee6` · adaptive repair-loop latency fix `0ae224a`. Read `CLAUDE.md` (Current Status) + `git log` for full detail.
 
-**OPERATING RULES (unchanged):** pure orchestrator; the ORCHESTRATOR runs long evals (subagents background-and-die); one change per **three-sided gate** (target↑ McNemar AND confident-wrong flat/down AND latency/cost ok); never weaken L4/L5; gold/eval changes are USER-GATED; commit at kept gates; Vertex-only.
+**OPERATING RULES (unchanged):** pure orchestrator; the ORCHESTRATOR runs long evals (subagents background-and-die); one change per **three-sided gate** (target↑ McNemar AND confident-wrong flat/down AND latency/cost ok); never weaken L4/L5; gold/eval changes are USER-GATED; commit at kept gates; runtime = free-tier Gemini Developer API (Vertex disabled; Cohere decommissioned); NO paid calls without explicit cost-aware OK.
 
 ---
 
 ## 2026-05-30 AUTONOMOUS SESSION — CURRENT STATE (supersedes everything below)
 
-ITC-HS v2 8-digit classifier. Branch `feat/phase-4-pipeline-build`. Backend root `backend/`. Runtime = **Vertex** (gemini-embedding-001@1536 + Gemini-Flash rerank + Gemini-Flash L1/L4). **NO Cohere** — ignore any "429-blocked / needs Cohere" text below; it is stale.
+ITC-HS v2 8-digit classifier. Branch `feat/phase-4-pipeline-build`. Backend root `backend/`. Runtime = **Vertex** (gemini-embedding-001@1536 + Gemini-Flash rerank + Gemini-Flash L1/L4). _(Vertex disabled 2026-06-01 → same models now via the free-tier Gemini Developer API key.)_ **NO Cohere** — ignore any "429-blocked / needs Cohere" text below; it is stale.
 
 > On context compaction: RE-BRAINSTORM before acting — re-read this section + `MEMORY.md` + `git log` + the TaskList. Then continue.
 
@@ -125,7 +127,7 @@ Best brain (~75–80% OUTRIGHT + calibrated ASK + top-3 + near-zero confident-wr
 - **ONE change per measured THREE-SIDED gate:** target metric ↑ (McNemar) **AND** confident-wrong flat/down **AND** latency/cost ok.
 - Iterate on `--ids` subsets; full-386 only at milestones.
 - **GOLD/EVAL-DATA changes are USER-GATED** → while user away, **LOG** newly-found gold issues for approval; do **NOT** apply (no unilateral gold changes).
-- **Commit at every kept gate.** Vertex runtime always (never Cohere).
+- **Commit at every kept gate.** Vertex runtime always (never Cohere). _(SUPERSEDED 2026-06-01 — Vertex disabled; runtime = free-tier Gemini Developer API key (same models); Cohere still decommissioned.)_
 - **EVAL-ORCHESTRATION FAILURE MODE (recurring — heed):** when a ~30-min eval is delegated to a SUBAGENT, the subagent BACKGROUNDS it and returns prematurely — its child process dies with it, so the run never completes. **The ORCHESTRATOR must run long evals as its OWN background Bash** (it gets re-invoked on completion); only delegate the no-eval compare+commit step to a subagent.
 
 ---
@@ -142,7 +144,7 @@ ITC-HS v2 8-digit classifier for Indian SME exporters. Branch `feat/phase-4-pipe
 - **HEAD = latest commit on `feat/phase-4-pipeline-build`** (run `git log --oneline -1`; was `2933796` at wrap-up — don't trust a hardcoded hash, the tip moves with each doc commit). **Working tree CLEAN.** `tsc` clean; **796 v2/eval tests pass**.
 - **Honest brain accuracy (r12, clean gold, ASK off): 8-digit OUTRIGHT = 68.0%** / chapter 81.1% / heading 78.2% (frozen routing-independent denominator, n=344 gold-code cases) / confident-wrong = 69 / EFFECTIVE 8-digit 71.5%. This is the TRUE number (see §3).
 - **ASK-lever calibration DONE (2026-05-29 PM):** the post-L4 uncertainty-gated sibling-ASK lever fired **~0×** (0 at τ=0.45, 1 at τ=0.65) → gate NOT cleared. Root cause: **L4's `self_confidence` is a coarse 3-level enum AND overconfident/uncalibrated** (ECE ~18%), so it doesn't flag the genuinely-uncertain sibling picks → the uncertainty-gate under-fires. (v1 pre-L4 trigger had the opposite failure — over-fired at 33%.) **You cannot gate ASK on L4 self_confidence.** The lever code is sound + committed (env-gated OFF, no harm); it is BLOCKED on the SIGNAL. The r13 OUTRIGHT (66%) vs r12 (68%) is ~run-to-run LLM noise (the lever fired ~0× → r13 ≈ a r12 re-run). **First action next session = §6.1 (unblock the ASK signal) and/or §6.2 (retrieval, independent).**
-- Runtime = **Vertex** (gemini-embedding-001@1536 + Gemini-Flash rerank + Gemini-Flash L1/L4). **Cohere is OFF and decommissioned — ignore any doc that says a run "needs Cohere" or is "429-blocked"; that is stale.**
+- Runtime = **Vertex** (gemini-embedding-001@1536 + Gemini-Flash rerank + Gemini-Flash L1/L4). _(Vertex disabled 2026-06-01 → same models now via the free-tier Gemini Developer API key.)_ **Cohere is OFF and decommissioned — ignore any doc that says a run "needs Cohere" or is "429-blocked"; that is stale.**
 
 ---
 
@@ -230,6 +232,6 @@ Fine-tuned domain reranker with hard-negative mining (siblings = hard negatives)
 3. **One principled change per measured THREE-SIDED gate** (target metric up via McNemar AND confident-wrong flat/down + regression-guard AND latency/cost in budget). Iterate on the `--ids` fast subset; full-386 only at milestones. **Do NOT get stuck in an eval loop** — eval at the right time, focus on making the classifier better.
 4. **Gold changes are USER-GATED** — blind-law-verify (only query+gold) + present for approval; never launder toward the model.
 5. Orchestrate with dynamic workflows + many parallel agents (ultracode). Pure orchestrator: delegate bulk reading/analysis/implementation; read only structured returns; verify delegated work yourself (re-run tsc/tests, spot-check, independent review).
-6. Commit at every kept gate (authorized standing policy this run). Runtime stays Vertex; never reintroduce Cohere.
+6. Commit at every kept gate (authorized standing policy this run). Runtime stays Vertex; never reintroduce Cohere. _(SUPERSEDED 2026-06-01 — Vertex disabled; runtime = free-tier Gemini Developer API key (same models); Cohere still decommissioned; NO paid calls without explicit cost-aware OK.)_
 7. Diverse-lens adversarial review before locking a plan; verify state before lock.
 8. Ask the user only for genuine forks (esp. gold changes, scope/strategy at milestones); otherwise proceed on your best recommendation.

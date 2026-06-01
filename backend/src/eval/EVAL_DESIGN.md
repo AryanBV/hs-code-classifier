@@ -1,4 +1,4 @@
-> SUPERSEDED 2026-05-30 — earlier-phase document, kept for history. CURRENT STATE: see backend/docs/AUTONOMOUS-CONTINUATION-2026-05-29.md (START HERE block) and CLAUDE.md Current Status. v2 brain ~77% OUTRIGHT / ~86% top-3, Vertex-only (Cohere decommissioned), ship arc started (latency-first). The ACTIVE canonical frozen-metric contract is backend/docs/EVAL_DESIGN.md (v2-wired); this legacy doc describes the deprecated classify() harness.
+> SUPERSEDED 2026-06-01 — earlier-phase document, kept for history. CURRENT STATE: see plans/ROADMAP-2026-06-01.md (authoritative) and CLAUDE.md Current Status. v2 brain ~77% OUTRIGHT / ~86% top-3. Runtime = Gemini Developer API free tier (Vertex AI DISABLED post billing crisis; Cohere still decommissioned). Sequencing = Phase A cost-efficiency FIRST, then Phase B ship, then Phase C frontend; CORRECTNESS > SPEED (latency is secondary, never trade accuracy for speed). The earlier "Vertex-only / ship-arc latency-first" framing is SUPERSEDED. The ACTIVE canonical frozen-metric contract is backend/docs/EVAL_DESIGN.md (v2-wired); this legacy doc describes the deprecated classify() harness.
 
 # Eval Harness Design
 

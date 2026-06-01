@@ -1,3 +1,5 @@
+> ⛔ SUPERSEDED (2026-06-01): Vertex AI billing is DISABLED on this project after a real billing crisis (the GenAI App Builder credit is SKU-scoped and did NOT cover Gemini generateContent/embeddings). Runtime moved to the free-tier Gemini Developer API key (GEMINI_API_KEY in backend/.env). This SA walkthrough is retained for history only — do NOT re-enable Vertex billing without explicit cost-aware user go-ahead. See `plans/ROADMAP-2026-06-01.md`.
+
 # Vertex AI Service-Account Setup (Gemini 3.x)
 
 Walkthrough to provision a GCP service-account JSON key so we can call Gemini 3.x via Vertex AI Platform API. Replaces the API-key path (which only reaches Gemini 2.5).
@@ -6,7 +8,7 @@ Walkthrough to provision a GCP service-account JSON key so we can call Gemini 3.
 - **Region**: `global` (Gemini 3.x endpoint availability)
 - **Target models (v2 architecture)**: `gemini-3.5-flash` AND `gemini-3.1-pro-preview`
 - **Time**: ~10 minutes
-- **Cost**: smoke test ≈ $0.0001, billed against existing credits (Free Trial $326 / GenAI App Builder $1,130)
+- **Cost**: smoke test ≈ $0.0001 ~~billed against existing credits (Free Trial $326 / GenAI App Builder $1,130)~~ — WRONG: the GenAI App Builder credit was SKU-scoped and did NOT cover Gemini generateContent/embeddings; real charges accrued (₹86,970, ~75% later waived). Vertex billing is now DISABLED.
 
 ---
 
@@ -220,6 +222,8 @@ Full response:
 ---
 
 ## 8. Verify billing routes to credits (not card)
+
+> ⛔ OBSOLETE (2026-06-01): This whole section's premise was WRONG. Vertex Gemini calls did NOT route to the GenAI App Builder credit (it is SKU-scoped) — they hit real money (₹86,970, ~75% later waived). The project is now billing-DISABLED. Do NOT follow these steps; see the top banner.
 
 1. Open: https://console.cloud.google.com/billing/01735A-7C1CE5-E75B14/credits?project=gen-lang-client-0962892937
 2. Note current credit balance.

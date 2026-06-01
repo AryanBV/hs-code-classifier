@@ -1,7 +1,7 @@
 # Ultimate Brain Program — v2 (post-adversarial-audit, 2026-05-29)
 
 **Status:** ACTIVE plan-of-record (design philosophy + phased program). Supersedes the priority order in `AUTONOMOUS-CONTINUATION-2026-05-29.md` where they disagree (this is more correct after audit). **For the live capability-climb state + "next" ordering, the canonical source is `AUTONOMOUS-CONTINUATION-2026-05-29.md` §0/§6 — this doc is the strategy/contract; it must not contradict that brief.**
-**Branch:** `feat/phase-4-pipeline-build`. **Runtime:** Vertex only (Cohere DECOMMISSIONED — do not reintroduce; any "needs Cohere"/"429-blocked" line anywhere is STALE).
+**Branch:** `feat/phase-4-pipeline-build`. **Runtime:** free-tier Gemini Developer API (Vertex DISABLED 2026-06-01 after the billing crisis; same gemini models; Cohere DECOMMISSIONED — do not reintroduce; any "needs Cohere"/"429-blocked" line anywhere is STALE). For live next-steps + runtime, canonical = C:\Users\ASUS\.claude\plans\ROADMAP-2026-06-01.md.
 **Authority:** Adversarial re-audit (4 diverse lenses) ran 2026-05-29; 13 critical + 19 major flaws. This doc folds in every critical + major fix. Raw findings: workflow `wf_17e58c7b-5ef`.
 
 ---
@@ -172,7 +172,7 @@ The answer-simulator must answer from **what the exporter knows at P0**, not fro
 ## 6. Operating discipline
 - One principled change per **three-sided** measured gate; McNemar + per-case attribution (name target + at-risk caseIds) before trusting any delta; automated regression-guard blocks silent swaps.
 - 60-case subset = **smoke/triage ONLY, never a gate**; full 386 (DEV) for any kept gate; confident-wrong + calibration on HELD-OUT only.
-- Commit at every kept gate. Runtime stays Vertex. Build-time (Opus) $ is uncapped but the **5-hour bucket is the real constraint** — reserve headroom for gates.
+- Commit at every kept gate. Runtime = free-tier Gemini Developer API (Vertex disabled); never reintroduce Cohere; NO paid API calls without explicit cost-aware user go-ahead. Build-time (Opus) $ is uncapped but the **5-hour bucket is the real constraint** — reserve headroom for gates.
 
 ## 7. Open items surfaced to user (proceeding on recommendation; flag if you disagree)
 1. **Metric philosophy change**: OUTRIGHT-on-answered is now PRIMARY; "EFFECTIVE incl. ASK" demoted to a secondary UX metric + ask-rate cap ≤15-20%. (Customs files one code.)

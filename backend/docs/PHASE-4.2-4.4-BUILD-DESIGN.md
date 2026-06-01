@@ -1,4 +1,5 @@
-> SUPERSEDED 2026-05-30 — earlier-phase document, kept for history. CURRENT STATE: see backend/docs/AUTONOMOUS-CONTINUATION-2026-05-29.md (START HERE block) and CLAUDE.md Current Status. v2 brain ~77% OUTRIGHT / ~86% top-3, Vertex-only (Cohere decommissioned), ship arc started (latency-first).
+> ⛔ SUPERSEDED (2026-06-01) — describes PRE-Phase-B state. Current continuation prompt: `C:\Users\ASUS\.claude\plans\CONTINUATION-PROMPT-2026-06-01.md`. Phase A DONE + Phase B Steps 0-2 committed (HEAD `d373e6b`) + 12 frontend decisions LOCKED; next = START THE FRONTEND BUILD.
+> SUPERSEDED 2026-06-01 — earlier-phase document, kept for history. CURRENT STATE: see plans/ROADMAP-2026-06-01.md (authoritative). NOTE: the "Vertex-only / ship-arc latency-first / credit-covered" framing below is STALE. Vertex AI is now DISABLED (billing crisis resolved, ~75% waived, ₹17,742.63 remaining, case #71826606); runtime is the **Gemini Developer API free tier** (free-tier `GEMINI_API_KEY` in `backend/.env`, key-tested VALID 2026-06-01 — SAME models gemini-3.5-flash / gemini-3.1-pro-preview / gemini-embedding-001, for free; Cohere still decommissioned). Sequencing is now Phase A cost-efficiency FIRST → Phase B ship → Phase C frontend, and CORRECTNESS > SPEED (latency is SECONDARY — never trade accuracy for speed; repair loop + L5 verifier stay; NO paid API calls without explicit cost-aware user OK). v2 brain ~77% OUTRIGHT / ~86% top-3.
 
 # Phase 4.2–4.4 Build Design — v2 Classifier Completion
 
@@ -146,7 +147,7 @@ To get the best out of Opus 4.7 + the tooling (and keep quality high):
 - **Orchestrator-as-coordinator:** I stay lean; bulk implementation goes to Opus subagents (the proven O2 pattern). Per-agent **git worktrees** so independent layers (L6, L7, QGS are independent once the seams exist in step 1) are built **in parallel** without collision, then integrated.
 - **Adversarial review before locking** each layer/prompt (dispatch a devil's-advocate Opus reviewer — caught real defects in O2 and Phase 3.5).
 - **implementer → spec-reviewer → quality-reviewer** cycle on each layer/prompt change.
-- **Opus 4.7 for the hard reasoning** — QGS info-gain design, verifier edge cases, prompt iteration, failure root-causing — where deep reasoning pays off. Runtime stays all-Gemini (cost).
+- **Opus 4.7 for the hard reasoning** — QGS info-gain design, verifier edge cases, prompt iteration, failure root-causing — where deep reasoning pays off. Runtime stays all-Gemini (cost). [SUPERSEDED 2026-06-01: runtime is now the Gemini Developer API **free tier**, not Vertex; same Gemini models, billed-Vertex DISABLED — see top banner / ROADMAP-2026-06-01.md.]
 - **systematic-debugging** skill on every non-obvious failure before proposing a fix.
 
 ## 9. Targets / exit criteria (ARCHITECTURE §14.4)
