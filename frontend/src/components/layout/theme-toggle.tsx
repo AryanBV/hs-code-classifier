@@ -1,39 +1,48 @@
-'use client'
+"use client";
 
-import * as React from 'react'
-import { Moon, Sun } from 'lucide-react'
-import { useTheme } from 'next-themes'
-import { Button } from '@/components/ui/button'
+import * as React from "react";
+import { useTheme } from "next-themes";
+import { Moon, Sun } from "lucide-react";
 
-export function ThemeToggle() {
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = React.useState(false)
+import { Button } from "@/components/ui/button";
+
+/**
+ * ThemeToggle — flips between the light (aged paper) and warm-dark (lamplit
+ * ledger) themes. Guards against hydration mismatch with a mounted check, since
+ * the resolved theme is only known on the client.
+ */
+function ThemeToggle({ className }: { className?: string }) {
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
-  if (!mounted) {
-    return (
-      <Button variant="ghost" size="icon" className="h-9 w-9">
-        <span className="sr-only">Toggle theme</span>
-      </Button>
-    )
-  }
+  const isDark = resolvedTheme === "dark";
 
   return (
     <Button
       variant="ghost"
       size="icon"
-      className="h-9 w-9"
-      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      className={className}
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      aria-label={
+        mounted
+          ? isDark
+            ? "Switch to light theme"
+            : "Switch to dark theme"
+          : "Toggle theme"
+      }
     >
-      {theme === 'dark' ? (
-        <Sun className="h-4 w-4 transition-transform duration-200" />
+      {/* Render a stable icon until mounted to avoid a hydration mismatch. */}
+      {mounted && isDark ? (
+        <Sun aria-hidden="true" />
       ) : (
-        <Moon className="h-4 w-4 transition-transform duration-200" />
+        <Moon aria-hidden="true" />
       )}
-      <span className="sr-only">Toggle theme</span>
     </Button>
-  )
+  );
 }
+
+export { ThemeToggle };

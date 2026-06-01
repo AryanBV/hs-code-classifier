@@ -1,15 +1,22 @@
-import { cn } from "@/lib/cn"
+import * as React from "react";
 
-function Skeleton({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
+import { cn } from "@/lib/utils";
+
+export type SkeletonProps = React.HTMLAttributes<HTMLDivElement>;
+
+/**
+ * Skeleton — a calm placeholder block. A gentle opacity pulse on surface-sunk
+ * (no moving shimmer sweep). The global reduced-motion guard stops the pulse
+ * for users who prefer reduced motion.
+ */
+function Skeleton({ className, ...props }: SkeletonProps) {
   return (
     <div
-      className={cn("animate-pulse rounded-md bg-muted", className)}
+      aria-hidden="true"
+      className={cn("animate-pulse rounded-md bg-surface-sunk", className)}
       {...props}
     />
-  )
+  );
 }
 
-export { Skeleton }
+export { Skeleton };

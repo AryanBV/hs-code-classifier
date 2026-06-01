@@ -1,40 +1,41 @@
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "@/lib/cn"
+import * as React from "react";
 
-const badgeVariants = cva(
-  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
-  {
-    variants: {
-      variant: {
-        default:
-          "border-transparent bg-primary text-primary-foreground",
-        secondary:
-          "border-transparent bg-secondary text-secondary-foreground",
-        destructive:
-          "border-transparent bg-destructive text-destructive-foreground",
-        success:
-          "border-transparent bg-success text-success-foreground",
-        warning:
-          "border-transparent bg-warning text-warning-foreground",
-        outline: 
-          "text-foreground",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
-)
+import { cn } from "@/lib/utils";
 
-export interface BadgeProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {}
+type BadgeVariant = "neutral" | "accent" | "high" | "medium" | "low";
 
-function Badge({ className, variant, ...props }: BadgeProps) {
-  return (
-    <div className={cn(badgeVariants({ variant }), className)} {...props} />
-  )
+export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
+  variant?: BadgeVariant;
 }
 
-export { Badge, badgeVariants }
+const variantClasses: Record<BadgeVariant, string> = {
+  neutral: "border-rule bg-surface-sunk text-ink-muted",
+  accent:
+    "border-[color-mix(in_srgb,var(--accent)_30%,var(--rule))] bg-[color-mix(in_srgb,var(--accent)_9%,var(--surface))] text-accent-ink",
+  high: "border-[color-mix(in_srgb,var(--band-high)_34%,var(--rule))] bg-[color-mix(in_srgb,var(--band-high)_10%,var(--surface))] text-band-high",
+  medium:
+    "border-[color-mix(in_srgb,var(--band-medium)_34%,var(--rule))] bg-[color-mix(in_srgb,var(--band-medium)_10%,var(--surface))] text-band-medium",
+  low: "border-[color-mix(in_srgb,var(--band-low)_34%,var(--rule))] bg-[color-mix(in_srgb,var(--band-low)_10%,var(--surface))] text-band-low",
+};
+
+/**
+ * Badge — a small status marker, sibling of Chip but tuned for statuses
+ * (record state, policy status, band echoes). Hairline border, ledger feel.
+ */
+const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
+  ({ className, variant = "neutral", ...props }, ref) => (
+    <span
+      ref={ref}
+      className={cn(
+        "inline-flex items-center gap-1 rounded-sm border px-2 py-0.5",
+        "font-sans text-[0.7rem] font-semibold uppercase tracking-[0.06em]",
+        variantClasses[variant],
+        className,
+      )}
+      {...props}
+    />
+  ),
+);
+Badge.displayName = "Badge";
+
+export { Badge };
