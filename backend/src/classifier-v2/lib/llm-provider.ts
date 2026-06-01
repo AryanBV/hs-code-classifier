@@ -31,6 +31,7 @@ import {
 } from './vertex-client';
 import { GeminiDeveloperLlmProvider } from './gemini-developer-client';
 import { recordUsage } from './token-meter';
+import { getRateLimiter } from './rate-limiter';
 
 /* Re-export the shared contract so call sites have a single import surface. */
 export type {
@@ -119,10 +120,18 @@ export function getLlmProvider(): LlmProvider {
  * carried usage here in the catch and rethrow so the error still propagates
  * unchanged. Success and throw are mutually exclusive — exactly one recordUsage
  * fires per call, so there is no double-count.
+ *
+ * PROACTIVE RATE LIMIT: BEFORE delegating to the provider impl we `acquire()` one
+ * token from the process-wide rate limiter (token bucket sized to `GEMINI_RPM`).
+ * Exactly ONE acquire per `generateContent` call. When `GEMINI_RPM` is unset the
+ * limiter is a no-op (acquire resolves immediately), so this is byte-identical to
+ * today. The reactive 429 retry in the provider stays as the safety net. The
+ * embedding path is NOT gated here — embeddings are a separate quota.
  */
 export async function generateContent(
   opts: GenerateContentOptions,
 ): Promise<GenerateContentResult> {
+  await getRateLimiter().acquire();
   try {
     const result = await getLlmProvider().generateContent(opts);
     recordUsage(opts.model, result.usage);
