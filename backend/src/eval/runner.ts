@@ -41,8 +41,19 @@ import * as path from 'path';
 // Tuning constants
 // ---------------------------------------------------------------------------
 
-/** Max test cases classified concurrently (bounded pool). */
-const CONCURRENCY = 8;
+/** Max test cases classified concurrently (bounded pool). Override via
+ * `EVAL_CONCURRENCY` (positive int) — lower it for free-tier rate-limit safety
+ * (free-tier Gemini RPM is low; 8 concurrent cases x ~4 LLM calls each can trip
+ * 429s and waste daily quota), raise it on paid tiers. Unset → default 8
+ * (committed behavior unchanged). */
+const CONCURRENCY = (() => {
+  const raw = process.env.EVAL_CONCURRENCY?.trim();
+  if (raw) {
+    const n = Number(raw);
+    if (Number.isInteger(n) && n > 0) return n;
+  }
+  return 8;
+})();
 
 /** Per-case wall-clock timeout (ms). A genuine 4x-Select repair/escalation case
  * runs ~60-75s (each L4 Select ~13-20s); 90s gives headroom without masking hangs.

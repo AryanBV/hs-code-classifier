@@ -36,11 +36,44 @@ vi.mock('@google/genai', () => ({
 }));
 
 import { GeminiDeveloperLlmProvider } from './gemini-developer-client';
+import * as backoff from './retry-backoff';
 import { MaxTokensError, type GenerateContentOptions } from './vertex-client';
 
 function apiError(status: number): Error & { status: number } {
   const e = new Error(`HTTP ${status}`) as Error & { status: number };
   e.status = status;
+  return e;
+}
+
+/**
+ * A 429 ApiError whose `message` is the JSON-stringified error body (matching the
+ * @google/genai SDK's `throwErrorIfNotOK`), optionally carrying a structured
+ * RetryInfo.retryDelay and/or a "Please retry in Ns" prose message.
+ */
+function rateLimitError(opts: {
+  retryDelay?: string;
+  proseSeconds?: number;
+}): Error & { status: number } {
+  const details: Array<Record<string, unknown>> = [];
+  if (opts.retryDelay !== undefined) {
+    details.push({
+      '@type': 'type.googleapis.com/google.rpc.RetryInfo',
+      retryDelay: opts.retryDelay,
+    });
+  }
+  details.push({
+    '@type': 'type.googleapis.com/google.rpc.QuotaFailure',
+    violations: [{ quotaMetric: 'generate_content_free_tier_requests' }],
+  });
+  const prose =
+    opts.proseSeconds !== undefined
+      ? `Resource has been exhausted. Please retry in ${opts.proseSeconds}s. Quota exceeded.`
+      : 'Resource has been exhausted (e.g. check quota).';
+  const body = {
+    error: { code: 429, status: 'RESOURCE_EXHAUSTED', message: prose, details },
+  };
+  const e = new Error(JSON.stringify(body)) as Error & { status: number };
+  e.status = 429;
   return e;
 }
 
@@ -52,14 +85,22 @@ const BASE_OPTS: GenerateContentOptions = {
 
 describe('GeminiDeveloperLlmProvider', () => {
   const originalKey = process.env.GEMINI_API_KEY;
+  let sleepSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
     mockGenerateContent.mockReset();
     mockCtor.mockReset();
     process.env.GEMINI_API_KEY = 'test-free-tier-key';
+    delete process.env.GEMINI_MAX_RETRY_WAIT_MS;
+    delete process.env.GEMINI_MAX_TOTAL_RETRY_WAIT_MS;
+    // Fake the backoff sleep so tests record the requested wait without waiting.
+    sleepSpy = vi.spyOn(backoff, 'sleep').mockResolvedValue(undefined);
   });
 
   afterEach(() => {
+    sleepSpy.mockRestore();
+    delete process.env.GEMINI_MAX_RETRY_WAIT_MS;
+    delete process.env.GEMINI_MAX_TOTAL_RETRY_WAIT_MS;
     if (originalKey === undefined) delete process.env.GEMINI_API_KEY;
     else process.env.GEMINI_API_KEY = originalKey;
   });
@@ -208,5 +249,94 @@ describe('GeminiDeveloperLlmProvider', () => {
     const p = new GeminiDeveloperLlmProvider();
     await expect(p.generateContent(BASE_OPTS)).rejects.toThrow(/GEMINI_API_KEY is not set/);
     expect(mockGenerateContent).not.toHaveBeenCalled();
+  });
+
+  it('429 with structured RetryInfo.retryDelay="8s" → waits ~8s then succeeds', async () => {
+    mockGenerateContent
+      .mockRejectedValueOnce(rateLimitError({ retryDelay: '8s' }))
+      .mockResolvedValueOnce({ text: 'cleared', candidates: [{ finishReason: 'STOP' }] });
+
+    const p = new GeminiDeveloperLlmProvider();
+    const res = await p.generateContent(BASE_OPTS);
+
+    expect(res.text).toBe('cleared');
+    expect(mockGenerateContent).toHaveBeenCalledTimes(2);
+    expect(sleepSpy).toHaveBeenCalledTimes(1);
+    const waited = sleepSpy.mock.calls[0][0] as number;
+    // 8000ms + 250ms jitter, well under the 30s cap.
+    expect(waited).toBe(8250);
+  });
+
+  it('429 with fractional RetryInfo.retryDelay="8.846031711s" → waits the rounded server delay', async () => {
+    mockGenerateContent
+      .mockRejectedValueOnce(rateLimitError({ retryDelay: '8.846031711s' }))
+      .mockResolvedValueOnce({ text: 'ok', candidates: [{ finishReason: 'STOP' }] });
+
+    const p = new GeminiDeveloperLlmProvider();
+    await p.generateContent(BASE_OPTS);
+    const waited = sleepSpy.mock.calls[0][0] as number;
+    // round(8.846031711 * 1000) = 8846, + 250 jitter.
+    expect(waited).toBe(9096);
+  });
+
+  it('429 with the delay ONLY in the prose message ("retry in 12.5s") → parses 12.5s', async () => {
+    mockGenerateContent
+      .mockRejectedValueOnce(rateLimitError({ proseSeconds: 12.5 }))
+      .mockResolvedValueOnce({ text: 'ok', candidates: [{ finishReason: 'STOP' }] });
+
+    const p = new GeminiDeveloperLlmProvider();
+    await p.generateContent(BASE_OPTS);
+    const waited = sleepSpy.mock.calls[0][0] as number;
+    expect(waited).toBe(12500 + 250);
+  });
+
+  it('429 with both details + prose → takes the MAX of the two', async () => {
+    mockGenerateContent
+      .mockRejectedValueOnce(rateLimitError({ retryDelay: '8s', proseSeconds: 15 }))
+      .mockResolvedValueOnce({ text: 'ok', candidates: [{ finishReason: 'STOP' }] });
+
+    const p = new GeminiDeveloperLlmProvider();
+    await p.generateContent(BASE_OPTS);
+    const waited = sleepSpy.mock.calls[0][0] as number;
+    // max(8000, 15000) + 250.
+    expect(waited).toBe(15000 + 250);
+  });
+
+  it('429 requested delay ABOVE the cap → waits only GEMINI_MAX_RETRY_WAIT_MS', async () => {
+    process.env.GEMINI_MAX_RETRY_WAIT_MS = '5000';
+    mockGenerateContent
+      .mockRejectedValueOnce(rateLimitError({ retryDelay: '40s' }))
+      .mockResolvedValueOnce({ text: 'ok', candidates: [{ finishReason: 'STOP' }] });
+
+    const p = new GeminiDeveloperLlmProvider();
+    await p.generateContent(BASE_OPTS);
+    const waited = sleepSpy.mock.calls[0][0] as number;
+    expect(waited).toBe(5000);
+  });
+
+  it('sustained 429 (always throttled) → gives up after the bounded attempts and throws', async () => {
+    // Always throttled; small server delay so the total-wait budget is not the binding limit.
+    mockGenerateContent.mockRejectedValue(rateLimitError({ retryDelay: '1s' }));
+
+    const p = new GeminiDeveloperLlmProvider();
+    await expect(p.generateContent(BASE_OPTS)).rejects.toThrow(/After \d+ retry attempts/);
+    // 5 attempts total for a 429 (4 sleeps then give up on the 5th).
+    expect(mockGenerateContent).toHaveBeenCalledTimes(5);
+    expect(sleepSpy).toHaveBeenCalledTimes(4);
+  });
+
+  it('503 → uses FAST exponential backoff, not the long rate-limit wait', async () => {
+    mockGenerateContent
+      .mockRejectedValueOnce(apiError(503))
+      .mockResolvedValueOnce({ text: 'recovered', candidates: [{ finishReason: 'STOP' }] });
+
+    const p = new GeminiDeveloperLlmProvider();
+    const res = await p.generateContent(BASE_OPTS);
+    expect(res.text).toBe('recovered');
+    expect(sleepSpy).toHaveBeenCalledTimes(1);
+    const waited = sleepSpy.mock.calls[0][0] as number;
+    // First exponential step is 2^0*500 + jitter(<200) → [500, 700), nowhere near 8s.
+    expect(waited).toBeGreaterThanOrEqual(500);
+    expect(waited).toBeLessThan(700);
   });
 });

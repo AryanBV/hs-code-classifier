@@ -42,6 +42,7 @@ import {
 } from './vertex-client';
 import type { ThinkingLevel } from './thinking-config';
 import type { LlmProvider } from './llm-provider';
+import * as backoff from './retry-backoff';
 
 /**
  * Usage augmented with the cached-token portion for A3. `cachedTokens` is the
@@ -109,11 +110,6 @@ function isRetryable(err: unknown): boolean {
   return false;
 }
 
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-const MAX_ATTEMPTS = 3;
 
 /**
  * LlmProvider impl on the Gemini Developer API (`@google/genai`).
@@ -167,10 +163,12 @@ export class GeminiDeveloperLlmProvider implements LlmProvider {
 
     const client = this.getClient();
 
-    let lastErr: unknown = null;
     const t0 = Date.now();
+    const retry = new backoff.RetryController();
+    let attempts = 0;
 
-    for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+    for (;;) {
+      attempts += 1;
       try {
         const resp = await client.models.generateContent(params);
         const latencyMs = Date.now() - t0;
@@ -206,22 +204,20 @@ export class GeminiDeveloperLlmProvider implements LlmProvider {
         if (e instanceof MaxTokensError) {
           throw e;
         }
-        lastErr = e;
-        if (attempt < MAX_ATTEMPTS - 1 && isRetryable(e)) {
-          const backoff = (2 ** attempt) * 500 + Math.floor(Math.random() * 200);
-          await sleep(backoff);
-          continue;
+        // Non-transient (other 4xx, etc.) → surface immediately, unchanged.
+        if (!isRetryable(e)) {
+          throw e;
         }
-        if (attempt === MAX_ATTEMPTS - 1 && isRetryable(e)) {
+        // Rate-limit-aware backoff: 429 honors the server delay (capped) with a
+        // higher attempt budget; 503/network keep the fast exponential backoff.
+        const waited = await retry.nextWait(e, backoff.sleep);
+        if (waited === null) {
           const msg = e instanceof Error ? e.message : String(e);
-          const wrapped = new Error(`[gemini-developer-client] After ${MAX_ATTEMPTS} retry attempts: ${msg}`);
+          const wrapped = new Error(`[gemini-developer-client] After ${attempts} retry attempts: ${msg}`);
           (wrapped as Error & { cause?: unknown }).cause = e;
           throw wrapped;
         }
-        throw e;
       }
     }
-
-    throw lastErr ?? new Error('[gemini-developer-client] retry loop exited unexpectedly');
   }
 }

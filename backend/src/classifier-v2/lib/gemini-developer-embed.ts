@@ -23,6 +23,7 @@ import {
   RetrievalProviderError,
   isTransientError,
 } from './retrieval-errors';
+import * as backoff from './retry-backoff';
 import type {
   EmbeddingProvider,
   EmbeddingTaskType,
@@ -31,7 +32,6 @@ import type {
 
 const MODEL = 'gemini-embedding-001';
 const DEFAULT_DIM = 1536;
-const MAX_ATTEMPTS = 3;
 const PROVIDER_NAME = 'developer/gemini-embedding-001';
 
 const VALID_TASK_TYPES: ReadonlySet<string> = new Set<EmbeddingTaskType>([
@@ -58,10 +58,6 @@ function isRetryable(err: unknown): boolean {
     return true;
   }
   return false;
-}
-
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 /**
@@ -134,10 +130,10 @@ export class GeminiDeveloperEmbeddingProvider implements EmbeddingProvider {
 
     const client = this.getClient();
 
-    let lastErr: unknown = null;
     const t0 = Date.now();
+    const retry = new backoff.RetryController();
 
-    for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+    for (;;) {
       try {
         const resp = await client.models.embedContent(params);
         const latencyMs = Date.now() - t0;
@@ -169,23 +165,24 @@ export class GeminiDeveloperEmbeddingProvider implements EmbeddingProvider {
         if (e instanceof RetrievalProviderError) {
           throw e;
         }
-        lastErr = e;
-        if (attempt < MAX_ATTEMPTS - 1 && isRetryable(e)) {
-          const backoff = (2 ** attempt) * 500 + Math.floor(Math.random() * 200);
-          await sleep(backoff);
-          continue;
+        // Non-transient (hard 4xx, etc.): wrap into the neutral error, no retry.
+        if (!isRetryable(e)) {
+          throw new RetrievalProviderError(
+            `Gemini Developer embed failed: ${e instanceof Error ? e.message : String(e)}`,
+            { provider: 'unknown', retryable: isTransientError(e), cause: e },
+          );
         }
-        // Exhausted or non-retryable: wrap into the neutral error.
-        throw new RetrievalProviderError(
-          `Gemini Developer embed failed: ${e instanceof Error ? e.message : String(e)}`,
-          { provider: 'unknown', retryable: isTransientError(e), cause: e },
-        );
+        // Rate-limit-aware backoff: 429 honors the server delay (capped) with a
+        // higher attempt budget; 503/network keep the fast exponential backoff.
+        const waited = await retry.nextWait(e, backoff.sleep);
+        if (waited === null) {
+          // Budget exhausted — wrap into the neutral error (transient, was retried).
+          throw new RetrievalProviderError(
+            `Gemini Developer embed failed: ${e instanceof Error ? e.message : String(e)}`,
+            { provider: 'unknown', retryable: isTransientError(e), cause: e },
+          );
+        }
       }
     }
-
-    throw new RetrievalProviderError(
-      `Gemini Developer embed failed: ${lastErr instanceof Error ? lastErr.message : String(lastErr)}`,
-      { provider: 'unknown', retryable: false, cause: lastErr },
-    );
   }
 }

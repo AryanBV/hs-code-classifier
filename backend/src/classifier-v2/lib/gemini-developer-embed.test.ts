@@ -26,6 +26,7 @@ vi.mock('@google/genai', () => ({
 }));
 
 import { GeminiDeveloperEmbeddingProvider } from './gemini-developer-embed';
+import * as backoff from './retry-backoff';
 import { RetrievalProviderError } from './retrieval-errors';
 
 /** A raw (non-unit) 1536-dim vector whose only nonzero entries are 3 and 4 (norm 5). */
@@ -42,20 +43,48 @@ function apiError(status: number): Error & { status: number } {
   return e;
 }
 
+/** A 429 ApiError whose message is the JSON error body, like the @google/genai SDK. */
+function rateLimitError(opts: { retryDelay?: string; proseSeconds?: number }): Error & {
+  status: number;
+} {
+  const details: Array<Record<string, unknown>> = [];
+  if (opts.retryDelay !== undefined) {
+    details.push({
+      '@type': 'type.googleapis.com/google.rpc.RetryInfo',
+      retryDelay: opts.retryDelay,
+    });
+  }
+  const prose =
+    opts.proseSeconds !== undefined
+      ? `Resource has been exhausted. Please retry in ${opts.proseSeconds}s.`
+      : 'Resource has been exhausted (e.g. check quota).';
+  const body = { error: { code: 429, status: 'RESOURCE_EXHAUSTED', message: prose, details } };
+  const e = new Error(JSON.stringify(body)) as Error & { status: number };
+  e.status = 429;
+  return e;
+}
+
 function l2norm(v: number[]): number {
   return Math.sqrt(v.reduce((s, x) => s + x * x, 0));
 }
 
 describe('GeminiDeveloperEmbeddingProvider', () => {
   const originalKey = process.env.GEMINI_API_KEY;
+  let sleepSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
     mockEmbedContent.mockReset();
     mockCtor.mockReset();
     process.env.GEMINI_API_KEY = 'test-free-tier-key';
+    delete process.env.GEMINI_MAX_RETRY_WAIT_MS;
+    delete process.env.GEMINI_MAX_TOTAL_RETRY_WAIT_MS;
+    sleepSpy = vi.spyOn(backoff, 'sleep').mockResolvedValue(undefined);
   });
 
   afterEach(() => {
+    sleepSpy.mockRestore();
+    delete process.env.GEMINI_MAX_RETRY_WAIT_MS;
+    delete process.env.GEMINI_MAX_TOTAL_RETRY_WAIT_MS;
     if (originalKey === undefined) delete process.env.GEMINI_API_KEY;
     else process.env.GEMINI_API_KEY = originalKey;
   });
@@ -175,5 +204,64 @@ describe('GeminiDeveloperEmbeddingProvider', () => {
       /GEMINI_API_KEY is not set/,
     );
     expect(mockEmbedContent).not.toHaveBeenCalled();
+  });
+
+  it('429 with structured RetryInfo.retryDelay="8s" → waits ~8s then succeeds', async () => {
+    mockEmbedContent
+      .mockRejectedValueOnce(rateLimitError({ retryDelay: '8s' }))
+      .mockResolvedValueOnce({ embeddings: [{ values: rawVec() }] });
+
+    const p = new GeminiDeveloperEmbeddingProvider();
+    const res = await p.embed('x', { taskType: 'RETRIEVAL_QUERY' });
+    expect(res.dim).toBe(1536);
+    expect(mockEmbedContent).toHaveBeenCalledTimes(2);
+    expect(sleepSpy).toHaveBeenCalledTimes(1);
+    expect(sleepSpy.mock.calls[0][0] as number).toBe(8250);
+  });
+
+  it('429 with the delay ONLY in the prose ("retry in 12.5s") → parses 12.5s', async () => {
+    mockEmbedContent
+      .mockRejectedValueOnce(rateLimitError({ proseSeconds: 12.5 }))
+      .mockResolvedValueOnce({ embeddings: [{ values: rawVec() }] });
+
+    const p = new GeminiDeveloperEmbeddingProvider();
+    await p.embed('x', { taskType: 'RETRIEVAL_QUERY' });
+    expect(sleepSpy.mock.calls[0][0] as number).toBe(12500 + 250);
+  });
+
+  it('429 requested delay ABOVE the cap → waits only GEMINI_MAX_RETRY_WAIT_MS', async () => {
+    process.env.GEMINI_MAX_RETRY_WAIT_MS = '5000';
+    mockEmbedContent
+      .mockRejectedValueOnce(rateLimitError({ retryDelay: '40s' }))
+      .mockResolvedValueOnce({ embeddings: [{ values: rawVec() }] });
+
+    const p = new GeminiDeveloperEmbeddingProvider();
+    await p.embed('x', { taskType: 'RETRIEVAL_QUERY' });
+    expect(sleepSpy.mock.calls[0][0] as number).toBe(5000);
+  });
+
+  it('sustained 429 → gives up after the bounded attempts and throws RetrievalProviderError (no infinite loop)', async () => {
+    mockEmbedContent.mockRejectedValue(rateLimitError({ retryDelay: '1s' }));
+
+    const p = new GeminiDeveloperEmbeddingProvider();
+    await expect(p.embed('x', { taskType: 'RETRIEVAL_QUERY' })).rejects.toBeInstanceOf(
+      RetrievalProviderError,
+    );
+    expect(mockEmbedContent).toHaveBeenCalledTimes(5);
+    expect(sleepSpy).toHaveBeenCalledTimes(4);
+  });
+
+  it('503 → uses FAST exponential backoff, not the long rate-limit wait', async () => {
+    mockEmbedContent
+      .mockRejectedValueOnce(apiError(503))
+      .mockResolvedValueOnce({ embeddings: [{ values: rawVec() }] });
+
+    const p = new GeminiDeveloperEmbeddingProvider();
+    const res = await p.embed('x', { taskType: 'RETRIEVAL_QUERY' });
+    expect(res.dim).toBe(1536);
+    expect(sleepSpy).toHaveBeenCalledTimes(1);
+    const waited = sleepSpy.mock.calls[0][0] as number;
+    expect(waited).toBeGreaterThanOrEqual(500);
+    expect(waited).toBeLessThan(700);
   });
 });
