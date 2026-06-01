@@ -23,6 +23,7 @@ import type {
   VerifierRuleFailure,
 } from './types';
 import { MaxTokensError } from './lib/vertex-client';
+import { TransportError } from './lib/transport-error';
 
 /* ---------------------------------------------------------------------------
  * Layer mocks (registered BEFORE importing the SUT)
@@ -1375,6 +1376,73 @@ describe('classify() — REFUSE paths + §7 system error (Task 10)', () => {
     // downstream layers never ran
     expect(retrieveMock).not.toHaveBeenCalled();
     expect(selectMock).not.toHaveBeenCalled();
+  });
+
+  // (b-gemini) B0: the LIVE runtime client (gemini-developer-client) prefix must
+  // ALSO convert to system_error. Before B0 the predicate matched only the vertex
+  // prefix, so a live gemini transport failure escaped as a 500 instead of 503.
+  it('(b-gemini) surfaces system_error when a gemini-developer-client transport error (plain Error w/ prefix) escapes triage', async () => {
+    const err = new Error('[gemini-developer-client] After 6 retry attempts: 503 Service Unavailable');
+    triageMock.mockRejectedValue(err);
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    expect(res.decision).toBe('REFUSE');
+    expect(res.classification).toBeUndefined();
+    expect(res.system_error).toBeDefined();
+    expect(res.system_error?.retryable).toBe(true);
+    expect(res.system_error?.stage).toBe('L1');
+    expect(res.system_error?.message).toContain('[gemini-developer-client] After');
+  });
+
+  // (b-typed-vertex) B0: a TransportError INSTANCE thrown from the vertex client
+  // is detected by TYPE (instanceof), not just the message prefix.
+  it('(b-typed-vertex) surfaces system_error for a TransportError instance (vertex prefix) escaping triage', async () => {
+    triageMock.mockRejectedValue(
+      new TransportError('[vertex-client] After 3 retry attempts: 503 Service Unavailable', {
+        cause: { response: { status: 503 } },
+      }),
+    );
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    expect(res.decision).toBe('REFUSE');
+    expect(res.classification).toBeUndefined();
+    expect(res.system_error).toBeDefined();
+    expect(res.system_error?.retryable).toBe(true);
+    expect(res.system_error?.stage).toBe('L1');
+  });
+
+  // (b-typed-gemini) B0: a TransportError INSTANCE thrown from the LIVE gemini
+  // client path is detected by TYPE → converts to system_error.
+  it('(b-typed-gemini) surfaces system_error for a TransportError instance (gemini prefix) escaping triage', async () => {
+    triageMock.mockRejectedValue(
+      new TransportError('[gemini-developer-client] After 6 retry attempts: 429 Too Many Requests'),
+    );
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    expect(res.decision).toBe('REFUSE');
+    expect(res.classification).toBeUndefined();
+    expect(res.system_error).toBeDefined();
+    expect(res.system_error?.retryable).toBe(true);
+    expect(res.system_error?.stage).toBe('L1');
+  });
+
+  // (b'') A TransportError from L4 select is attributed to stage L4.
+  it("(b'') surfaces system_error stage L4 for a TransportError instance thrown by select", async () => {
+    triageMock.mockResolvedValue(triageOut);
+    selectMock.mockRejectedValue(
+      new TransportError('[gemini-developer-client] After 6 retry attempts: 503 Service Unavailable'),
+    );
+
+    const res = await classify('stainless steel hex bolts M10');
+
+    expect(res.decision).toBe('REFUSE');
+    expect(res.classification).toBeUndefined();
+    expect(res.system_error).toBeDefined();
+    expect(res.system_error?.stage).toBe('L4');
+    expect(res.system_error?.retryable).toBe(true);
   });
 
   // (b') Programming errors must NOT be swallowed as system_error.

@@ -34,6 +34,9 @@ export interface ApiAlternative {
   description: string;
 }
 
+/** Coarse confidence band rendered as a 3-state UI (B5 frozen wire contract). */
+export type ApiConfidenceBand = 'high' | 'medium' | 'low';
+
 /** Wizard-facing classification payload (FLAT — frontend renders these top-level). */
 export interface ApiClassificationResponse {
   responseType:    'classification';
@@ -42,9 +45,20 @@ export interface ApiClassificationResponse {
   description:     string;
   /** 0-100 integer derived from self_confidence. */
   confidence:      number;
+  /**
+   * REQUIRED coarse band (B5 freeze) derived NOW from self_confidence
+   * (HIGH→high, MEDIUM→medium, LOW→low). Honest coarse signal at launch; the
+   * calibrated value lands later in `confidenceP` without a breaking change.
+   */
+  confidenceBand:  ApiConfidenceBand;
+  /**
+   * OPTIONAL reserved field (B5 freeze) for the post-launch ECE/Brier-calibrated
+   * probability (0..1). Absent at launch — adding it later is additive/non-breaking.
+   */
+  confidenceP?:    number;
   /** reasoning_chain joined with newlines. */
   reasoning:       string;
-  /** Alternatives hydrated to {code, description}; non-code entries filtered out. */
+  /** Alternatives hydrated to {code, description}; non-code entries filtered out. Capped at 3 (B1c/B5). */
   alternatives:    ApiAlternative[];
   isSixDigit:      boolean;
   exportPolicy:    string | null;
@@ -56,6 +70,11 @@ export interface ApiClassificationResponse {
   citation:        SelectCitation;
   /** GIR-3(b) component breakdown when present; null otherwise. */
   components:      SelectComponent[] | null;
+  /**
+   * Server-side wall-clock for this call, attached by the route (NOT the mapper).
+   * OPTIONAL (B5): the legacy answer path omits it, so it is not guaranteed.
+   */
+  processingTimeMs?: number;
 }
 
 /** One clarifying-question option. */
@@ -71,6 +90,8 @@ export interface ApiQuestionResponse {
   options:                 ApiQuestionOption[];
   questionId:              string;
   discriminatingAttribute: string;
+  /** Server-side wall-clock, attached by the route (NOT the mapper). OPTIONAL (B5). */
+  processingTimeMs?:       number;
 }
 
 /** Wizard-facing refusal payload (FLAT). */
@@ -79,6 +100,8 @@ export interface ApiRefusedResponse {
   message:      string;
   /** out_of_scope_class enum (or null for non-triage refusals). */
   reason:       string | null;
+  /** Server-side wall-clock, attached by the route (NOT the mapper). OPTIONAL (B5). */
+  processingTimeMs?: number;
 }
 
 /** The full external response discriminated union. */
@@ -97,6 +120,16 @@ const CONFIDENCE_PCT: Record<'HIGH' | 'MEDIUM' | 'LOW', number> = {
   MEDIUM: 60,
   LOW:    30,
 };
+
+/** Map the coarse self_confidence enum to the frozen wire band (B5). */
+const CONFIDENCE_BAND: Record<'HIGH' | 'MEDIUM' | 'LOW', ApiConfidenceBand> = {
+  HIGH:   'high',
+  MEDIUM: 'medium',
+  LOW:    'low',
+};
+
+/** Max alternatives surfaced — the literal "top-3" product promise (B1c/B5). */
+const MAX_ALTERNATIVES = 3;
 
 /* ---------------------------------------------------------------------------
  * DB hydration seam (injectable for tests — mirrors v2-adapter deps pattern)
@@ -154,7 +187,7 @@ export async function mapV2Result(
 
     // Hydrate alternatives, in original order, FILTERED to real tariff rows and
     // excluding the selected leaf itself (it is already `hsCode`).
-    const alternatives: ApiAlternative[] = [];
+    const resolvedAlternatives: ApiAlternative[] = [];
     const seenAlts = new Set<string>();
     for (const alt of c.alternatives_considered) {
       if (alt === c.code) continue;
@@ -162,14 +195,20 @@ export async function mapV2Result(
       const altDesc = descByCode.get(alt);
       if (altDesc === undefined) continue; // non-code / unresolved → filtered out
       seenAlts.add(alt);
-      alternatives.push({ code: alt, description: altDesc });
+      resolvedAlternatives.push({ code: alt, description: altDesc });
     }
+
+    // B1c/B5: cap at the first 3 (preserve model order, NEVER pad to reach 3) —
+    // the literal "top-3" product promise. Slicing happens AFTER leaf-drop +
+    // dedup + real-tariff-row filtering, so the 3 are 3 resolvable siblings.
+    const alternatives = resolvedAlternatives.slice(0, MAX_ALTERNATIVES);
 
     return {
       responseType:    'classification',
       hsCode:          c.code,
       description,
       confidence:      CONFIDENCE_PCT[c.self_confidence],
+      confidenceBand:  CONFIDENCE_BAND[c.self_confidence],
       reasoning:       c.reasoning_chain.join('\n'),
       alternatives,
       isSixDigit:      c.is_six_digit,

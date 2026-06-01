@@ -196,6 +196,19 @@ export function _setQueryRunnerForTesting(runner: QueryRunner | null): void {
   _runner = runner;
 }
 
+/**
+ * Public accessor for the shared (retry-wrapped, lazily-initialized) QueryRunner.
+ *
+ * Other backend modules that need raw parameterized SQL against the SAME pooled
+ * Supabase connection — e.g. the Phase B job-store (`src/api/job-store.ts`) —
+ * call this instead of constructing their own pool. It honors the
+ * `_setQueryRunnerForTesting` seam, so injecting a fake runner there also routes
+ * those modules' queries to the fake (no live pg required in unit tests).
+ */
+export function getQueryRunner(): QueryRunner {
+  return getRunner();
+}
+
 /* ---------------------------------------------------------------------------
  * Helpers
  * --------------------------------------------------------------------------- */

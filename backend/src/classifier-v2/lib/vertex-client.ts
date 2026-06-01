@@ -22,6 +22,7 @@
 import type { AuthClient } from 'google-auth-library';
 import { getAuthClient, getProjectId } from './auth';
 import { thinkingConfig, type ThinkingLevel } from './thinking-config';
+import { TransportError } from './transport-error';
 
 export type GeminiModel = 'gemini-3.5-flash' | 'gemini-3.1-pro-preview' | 'gemini-2.5-pro';
 
@@ -386,10 +387,13 @@ export async function generateContent(opts: GenerateContentOptions): Promise<Gen
       // Not retryable, or final attempt exhausted.
       if (attempt === MAX_ATTEMPTS - 1 && isRetryable(e)) {
         const msg = e instanceof Error ? e.message : String(e);
-        const wrapped = new Error(`[vertex-client] After ${MAX_ATTEMPTS} retry attempts: ${msg}`);
-        // Preserve original for callers that want the underlying status/code
-        (wrapped as Error & { cause?: unknown }).cause = e;
-        throw wrapped;
+        // B0: typed transport sentinel (back-compat message text PRESERVED, incl.
+        // the '[vertex-client] After ' prefix for logs + defensive prefix matching).
+        // Preserve the original error on `.cause` for callers that want status/code.
+        throw new TransportError(
+          `[vertex-client] After ${MAX_ATTEMPTS} retry attempts: ${msg}`,
+          { cause: e },
+        );
       }
       throw e;
     }

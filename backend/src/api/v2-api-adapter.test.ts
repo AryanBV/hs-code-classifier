@@ -151,6 +151,67 @@ describe('mapV2Result — CLASSIFY', () => {
     expect(out.description).toBe('');
   });
 
+  it('caps alternatives at 3 (preserves model order, never pads) when >3 resolve', async () => {
+    const r = classifyResult({
+      alternatives_considered: ['8708.99.00', '8708.80.00', '8708.70.00', '8708.50.00', '8708.40.00'],
+    });
+    const fetch = mockFetcher({
+      '8708.30.00': 'Brakes',
+      '8708.99.00': 'A',
+      '8708.80.00': 'B',
+      '8708.70.00': 'C',
+      '8708.50.00': 'D',
+      '8708.40.00': 'E',
+    });
+
+    const out = await mapV2Result(r, fetch);
+    if (out.responseType !== 'classification') throw new Error('unreachable');
+
+    // Exactly 3, in model order — the first three RESOLVABLE siblings.
+    expect(out.alternatives).toEqual([
+      { code: '8708.99.00', description: 'A' },
+      { code: '8708.80.00', description: 'B' },
+      { code: '8708.70.00', description: 'C' },
+    ]);
+  });
+
+  it('returns all alternatives WITHOUT padding when fewer than 3 resolve', async () => {
+    const r = classifyResult({
+      // 5 entries but only 2 resolve to real rows → 2 returned, NOT padded to 3.
+      alternatives_considered: ['8708.99.00', 'n/a', 'none', '9999.99.99', '8708.80.00'],
+    });
+    const fetch = mockFetcher({
+      '8708.30.00': 'Brakes',
+      '8708.99.00': 'A',
+      '8708.80.00': 'B',
+    });
+
+    const out = await mapV2Result(r, fetch);
+    if (out.responseType !== 'classification') throw new Error('unreachable');
+
+    expect(out.alternatives).toEqual([
+      { code: '8708.99.00', description: 'A' },
+      { code: '8708.80.00', description: 'B' },
+    ]);
+    expect(out.alternatives.length).toBe(2);
+  });
+
+  it('maps self_confidence → confidenceBand (HIGH→high, MEDIUM→medium, LOW→low)', async () => {
+    const fetch = mockFetcher({ '8708.30.00': 'desc' });
+    const high = await mapV2Result(classifyResult({ self_confidence: 'HIGH' }), fetch);
+    const medium = await mapV2Result(classifyResult({ self_confidence: 'MEDIUM' }), fetch);
+    const low = await mapV2Result(classifyResult({ self_confidence: 'LOW' }), fetch);
+
+    if (high.responseType !== 'classification') throw new Error('unreachable');
+    if (medium.responseType !== 'classification') throw new Error('unreachable');
+    if (low.responseType !== 'classification') throw new Error('unreachable');
+    expect(high.confidenceBand).toBe('high');
+    expect(medium.confidenceBand).toBe('medium');
+    expect(low.confidenceBand).toBe('low');
+    // confidenceP is reserved (optional) and absent at launch.
+    expect(high.confidenceP).toBeUndefined();
+  });
+
   it('hydrates the leaf + alternatives in a SINGLE fetch call (deduped)', async () => {
     const calls: string[][] = [];
     const fetch: TariffLineChainFetcher = async (codes) => {

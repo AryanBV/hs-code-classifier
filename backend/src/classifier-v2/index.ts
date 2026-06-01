@@ -38,6 +38,7 @@ import {
   noProgress,
 } from './escalation';
 import { MaxTokensError } from './lib/vertex-client';
+import { TransportError } from './lib/transport-error';
 import { runWithMeter, type TokenUsageTotals } from './lib/token-meter';
 import { LlmOutputValidationError } from './schemas';
 import type {
@@ -981,25 +982,37 @@ function selectToRefuse(selectOut: SelectOutput, state: PipelineRunState): Class
 }
 
 /**
- * Narrow an escaped error to a genuine Vertex transport/system failure per
+ * Narrow an escaped error to a genuine transport/system failure per
  * ARCHITECTURE §7 ("Vertex 5xx persistent").
  *
- * vertex-client does its OWN exponential backoff (max 3) on 5xx/429/transient
- * network errors; when that is exhausted it rethrows a generic `Error` whose
- * message is prefixed `[vertex-client] After N retry attempts:` (original on
- * `.cause`). We match THAT prefix exactly so the catch is surgical:
- *   - `MaxTokensError` (budget config, not transport) is excluded → propagates.
- *   - `LlmOutputValidationError` is never thrown to the orchestrator (the layers
- *     swallow it → incoherent_query REFUSE) but is excluded here defensively.
- *   - Programming bugs (TypeError, plain Errors without the prefix) are NOT
- *     matched → they propagate and surface in tests, never masked as a clean
- *     system_error.
+ * BOTH LLM clients (vertex-client AND gemini-developer-client — the LIVE runtime
+ * path) do their OWN exponential backoff on 5xx/429/transient network errors;
+ * when that is exhausted they throw a {@link TransportError} (the typed sentinel)
+ * whose message PRESERVES the per-client prefix `[vertex-client] After N retry
+ * attempts:` / `[gemini-developer-client] After N retry attempts:` (original on
+ * `.cause`). We key off the TYPE first so a future provider rename cannot
+ * silently re-break the §7 → 503 contract:
+ *   - PRIMARY: `err instanceof TransportError` (both clients throw this).
+ *   - DEFENSIVE FALLBACK: either message prefix (covers any path that still
+ *     throws a plain Error with the prefix — e.g. an older compiled module).
+ *
+ * Excluded so real defects/budget-config issues surface instead of masquerading
+ * as clean infra failures:
+ *   - `MaxTokensError` (budget config, not transport) → propagates.
+ *   - `LlmOutputValidationError` (layers swallow it → incoherent_query REFUSE;
+ *     excluded here defensively).
+ *   - Programming bugs (TypeError, plain Errors without either prefix) → NOT
+ *     matched, so they propagate and surface in tests.
  */
 function isVertexTransportError(err: unknown): err is Error {
   if (!(err instanceof Error)) return false;
   if (err instanceof MaxTokensError) return false;
   if (err instanceof LlmOutputValidationError) return false;
-  return err.message.startsWith('[vertex-client] After ');
+  if (err instanceof TransportError) return true;
+  return (
+    err.message.startsWith('[vertex-client] After ') ||
+    err.message.startsWith('[gemini-developer-client] After ')
+  );
 }
 
 /**

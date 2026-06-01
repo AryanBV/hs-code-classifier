@@ -43,6 +43,7 @@ import {
 import type { ThinkingLevel } from './thinking-config';
 import type { LlmProvider } from './llm-provider';
 import * as backoff from './retry-backoff';
+import { TransportError } from './transport-error';
 
 /**
  * Usage augmented with the cached-token portion for A3. `cachedTokens` is the
@@ -213,9 +214,13 @@ export class GeminiDeveloperLlmProvider implements LlmProvider {
         const waited = await retry.nextWait(e, backoff.sleep);
         if (waited === null) {
           const msg = e instanceof Error ? e.message : String(e);
-          const wrapped = new Error(`[gemini-developer-client] After ${attempts} retry attempts: ${msg}`);
-          (wrapped as Error & { cause?: unknown }).cause = e;
-          throw wrapped;
+          // B0: typed transport sentinel (back-compat message text PRESERVED, incl.
+          // the '[gemini-developer-client] After ' prefix for logs + defensive
+          // prefix matching). The orchestrator now keys §7 conversion off the TYPE.
+          throw new TransportError(
+            `[gemini-developer-client] After ${attempts} retry attempts: ${msg}`,
+            { cause: e },
+          );
         }
       }
     }

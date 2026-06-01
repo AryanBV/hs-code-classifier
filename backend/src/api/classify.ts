@@ -8,8 +8,66 @@ import {
 } from '../classifier-v2';
 import type { ClassifyResult } from '../classifier-v2/types';
 import { mapV2Result } from './v2-api-adapter';
+import { createJob, getJob } from './job-store';
+import { costMonitor, recordInputFromTokenUsage } from './cost-monitor';
+import { randomUUID } from 'crypto';
 
 const router = Router();
+
+/** Short per-request id for correlating the structured cost log line. */
+function newReqId(): string {
+  return randomUUID().slice(0, 8);
+}
+
+/**
+ * Emit ONE structured JSON cost-log line per v2 classification AND record it into
+ * the in-process daily cost monitor (B1b). The TRUTH for RPM/cost is
+ * `diagnostics.token_usage` (the meter) — `diagnostics.llm_calls` excludes the
+ * reranker + internal retries, so we read llmCalls/totalTokens/byModel from
+ * token_usage. Repair iterations come from the escalation diagnostics when
+ * present. This is the observability that was missing during the May overspend.
+ */
+function recordV2Cost(reqId: string, result: ClassifyResult, processingTimeMs: number): void {
+  const usage = result.diagnostics.token_usage;
+  const decision = result.system_error !== undefined ? 'system_error' : result.decision;
+  costMonitor.recordClassification(recordInputFromTokenUsage(usage, decision));
+  // repairIterations is derived from the escalation_path: each repair attempt
+  // records an `L5:repair*` entry (ESCALATION_REPAIR_PREFIX). No dedicated
+  // diagnostics field exists, so we count the markers (0 when none).
+  const repairIterations = result.diagnostics.escalation_path.filter((e) =>
+    e.startsWith('L5:repair'),
+  ).length;
+  const logLine = {
+    type:             'classification_cost',
+    reqId,
+    decision,
+    llmCalls:         usage?.llmCalls ?? 0,
+    totalTokens:      usage?.totalTokens ?? 0,
+    byModel:          usage?.byModel ?? {},
+    repairIterations,
+    processingTimeMs,
+  };
+  console.log(JSON.stringify(logLine));
+}
+
+/** 503 body for the hard daily-classification ceiling (B1b runaway-loop stop). */
+function dailyLimitReached(res: Response): Response {
+  return res.status(503).json({
+    error: 'Daily limit reached',
+    retryable: false,
+  });
+}
+
+/**
+ * Async (job-queue) mode. When `CLASSIFY_ASYNC === 'true'`, POST /api/classify
+ * and /api/classify/answer ENQUEUE a job (202 + jobId) instead of running the
+ * pipeline inline, and the single rate-limited worker drains it. Clients poll
+ * GET /api/classify/job/:id. DEFAULT OFF → the existing sync behavior (legacy or
+ * v2-inline per useV2()) is byte-for-byte unchanged until we cut over.
+ */
+function asyncMode(): boolean {
+  return process.env.CLASSIFY_ASYNC === 'true';
+}
 
 /* ---------------------------------------------------------------------------
  * v2 rewire — feature-flagged OFF by default (zero production change).
@@ -63,6 +121,27 @@ function v2Unavailable(res: Response): Response {
 }
 
 /**
+ * Route-level 500 fallback for an UNEXPECTED throw (not a handled timeout/
+ * system_error → those return 503). PRODUCTION HYGIENE (B0): in production the
+ * response body must NEVER echo the raw provider error text (it can contain a
+ * provider URL/key-shaped substring or internal detail); we scrub to a generic
+ * message and keep the real error in the server log only. In dev the message is
+ * surfaced to aid debugging.
+ */
+function classifyFailed(res: Response, error: unknown): Response {
+  console.error('[API] Classification error:', error);
+  const isProd = process.env.NODE_ENV === 'production';
+  return res.status(500).json({
+    error: 'Classification failed',
+    message: isProd
+      ? 'An unexpected error occurred'
+      : error instanceof Error
+        ? error.message
+        : 'Unknown error',
+  });
+}
+
+/**
  * POST /api/classify
  * Main classification endpoint
  */
@@ -86,26 +165,61 @@ router.post('/', async (req: Request, res: Response) => {
     console.log(`\n[API] Classification request: "${query}"`);
     const startTime = Date.now();
 
+    // Async (job-queue) mode — enqueue + 202; the worker drains it. Gated OFF by
+    // default so the inline sync behavior below is unchanged until cutover.
+    if (asyncMode()) {
+      const clientToken =
+        typeof req.body.clientToken === 'string' ? req.body.clientToken : null;
+      const created = await createJob({
+        kind: 'classify',
+        query,
+        previous_answers:
+          previousAnswers !== null && typeof previousAnswers === 'object'
+            ? (previousAnswers as Record<string, string>)
+            : {},
+        client_token: clientToken,
+      });
+      return res.status(202).json({
+        jobId:         created.id,
+        status:        created.status,
+        queuePosition: created.queue_position,
+      });
+    }
+
     if (useV2()) {
+      // HARD daily-classification ceiling (B1b): only active when
+      // MAX_CLASSIFICATIONS_PER_DAY is set. An in-app stop against a runaway loop
+      // repeating the May blind overspend BEFORE any LLM call is made.
+      if (costMonitor.isOverDailyLimit()) {
+        console.error('[API] Daily classification limit reached — refusing');
+        return dailyLimitReached(res);
+      }
+
+      const reqId = newReqId();
       let result: ClassifyResult;
       try {
         result = await withV2Timeout(classifyV2(query, { previousAnswers }));
       } catch (raceErr) {
         if (raceErr === V2_TIMEOUT_ERROR) {
-          console.error(`[API] v2 classification timed out after ${V2_TIMEOUT_MS}ms`);
+          console.error(`[API] [${reqId}] v2 classification timed out after ${V2_TIMEOUT_MS}ms`);
           return v2Unavailable(res);
         }
         throw raceErr;
       }
 
+      const processingTimeMs = Date.now() - startTime;
+      // Cost observability (B1b): record + emit the structured log line for EVERY
+      // metered outcome — incl. system_error — so the daily counter + cost truth
+      // reflect real token spend even on a 503.
+      recordV2Cost(reqId, result, processingTimeMs);
+
       // Persistent infra/transport failure (ARCHITECTURE §7) → 503 retryable.
       if (result.system_error !== undefined) {
-        console.error('[API] v2 system_error:', result.system_error.message);
+        console.error(`[API] [${reqId}] v2 system_error:`, result.system_error.message);
         return v2Unavailable(res);
       }
 
-      const processingTimeMs = Date.now() - startTime;
-      console.log(`[API] Completed (v2) in ${processingTimeMs}ms`);
+      console.log(`[API] [${reqId}] Completed (v2) in ${processingTimeMs}ms`);
       return res.json({
         ...(await mapV2Result(result)),
         processingTimeMs,
@@ -123,11 +237,7 @@ router.post('/', async (req: Request, res: Response) => {
     });
 
   } catch (error) {
-    console.error('[API] Classification error:', error);
-    return res.status(500).json({
-      error: 'Classification failed',
-      message: error instanceof Error ? error.message : 'Unknown error'
-    });
+    return classifyFailed(res, error);
   }
 });
 
@@ -138,6 +248,36 @@ router.post('/', async (req: Request, res: Response) => {
 router.post('/answer', async (req: Request, res: Response) => {
   try {
     const { originalQuery, answerId, answerLabel, questionId, previousAnswers, rounds } = req.body;
+
+    // Async (job-queue) mode — enqueue an 'answer' job + 202; the worker drains it.
+    // Gated OFF by default so the inline sync behavior below is unchanged.
+    if (asyncMode()) {
+      if (!originalQuery || !questionId || !answerId) {
+        return res.status(400).json({
+          error: 'Missing required parameters',
+          required: ['originalQuery', 'questionId', 'answerId'],
+        });
+      }
+      const clientToken =
+        typeof req.body.clientToken === 'string' ? req.body.clientToken : null;
+      const created = await createJob({
+        kind: 'answer',
+        query: originalQuery,
+        question_id: questionId,
+        answer_id: answerId,
+        previous_answers:
+          previousAnswers !== null && typeof previousAnswers === 'object'
+            ? (previousAnswers as Record<string, string>)
+            : {},
+        rounds: typeof rounds === 'number' ? rounds : 0,
+        client_token: clientToken,
+      });
+      return res.status(202).json({
+        jobId:         created.id,
+        status:        created.status,
+        queuePosition: created.queue_position,
+      });
+    }
 
     if (useV2()) {
       // v2 continuation: fold the answered question back into previousAnswers and
@@ -150,7 +290,15 @@ router.post('/answer', async (req: Request, res: Response) => {
         });
       }
 
+      // HARD daily-classification ceiling (B1b) — also gates the continuation
+      // path so a runaway multi-turn loop cannot bypass the cap.
+      if (costMonitor.isOverDailyLimit()) {
+        console.error('[API] Daily classification limit reached — refusing');
+        return dailyLimitReached(res);
+      }
+
       console.log(`[API] Continue (v2) with answer: "${answerId}" to "${questionId}"`);
+      const reqId = newReqId();
       const startTime = Date.now();
 
       let result: ClassifyResult;
@@ -164,18 +312,20 @@ router.post('/answer', async (req: Request, res: Response) => {
         );
       } catch (raceErr) {
         if (raceErr === V2_TIMEOUT_ERROR) {
-          console.error(`[API] v2 continuation timed out after ${V2_TIMEOUT_MS}ms`);
+          console.error(`[API] [${reqId}] v2 continuation timed out after ${V2_TIMEOUT_MS}ms`);
           return v2Unavailable(res);
         }
         throw raceErr;
       }
 
+      const processingTimeMs = Date.now() - startTime;
+      recordV2Cost(reqId, result, processingTimeMs);
+
       if (result.system_error !== undefined) {
-        console.error('[API] v2 system_error:', result.system_error.message);
+        console.error(`[API] [${reqId}] v2 system_error:`, result.system_error.message);
         return v2Unavailable(res);
       }
 
-      const processingTimeMs = Date.now() - startTime;
       return res.json({
         ...(await mapV2Result(result)),
         processingTimeMs,
@@ -196,10 +346,44 @@ router.post('/answer', async (req: Request, res: Response) => {
     return res.json(result);
 
   } catch (error) {
-    console.error('[API] Answer continuation error:', error);
+    return classifyFailed(res, error);
+  }
+});
+
+/**
+ * GET /api/classify/job/:id
+ * Poll a job's status/progress/result. 404 when unknown/expired.
+ *
+ * Always available (independent of CLASSIFY_ASYNC) so a job enqueued while async
+ * mode was on stays pollable. Returns the live queue position while pending.
+ */
+router.get('/job/:id', async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    if (id === undefined || id.length === 0) {
+      return res.status(400).json({ error: 'Missing job id' });
+    }
+    const view = await getJob(id);
+    if (view === null) {
+      return res.status(404).json({
+        error: 'Job not found',
+        jobId: id,
+      });
+    }
+    return res.json({
+      jobId:         view.id,
+      status:        view.status,
+      stage:         view.stage,
+      progress:      view.progress,
+      queuePosition: view.queue_position,
+      ...(view.result !== null ? { result: view.result } : {}),
+      ...(view.error !== null ? { error: view.error } : {}),
+    });
+  } catch (error) {
+    console.error('[API] Job poll error:', error);
     return res.status(500).json({
-      error: 'Classification failed',
-      message: error instanceof Error ? error.message : 'Unknown error'
+      error: 'Failed to fetch job',
+      message: error instanceof Error ? error.message : 'Unknown error',
     });
   }
 });
