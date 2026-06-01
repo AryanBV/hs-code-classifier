@@ -1,40 +1,122 @@
 import { ImageResponse } from "next/og";
 
 /**
- * Per-record social card for /r/{id}.
+ * Per-record social card for /r/{id} — the B2B referral channel's first
+ * impression. Rendered in the Customs-Ledger idiom: warm aged paper, a hairline
+ * certificate frame, the Fraunces wordmark + honesty tagline, and the
+ * checkmark-free archival seal (a register cross + nib, NEVER a "verified"
+ * tick).
  *
- * In this no-DB build the per-record data (the actual code + confidence band)
- * is NOT server-available, so we render a tasteful GENERIC branded certificate
- * card in the Customs-Ledger palette. `params` is awaited to satisfy the Next 16
- * Promise contract even though the id is not used here.
+ * Per-record data (the actual code + band + Record ID) is NOT server-available
+ * in this no-DB build, so the card is branded-generic. The hooks for the real
+ * per-record path are wired and commented below: once Supabase `shared_records`
+ * is provisioned, fetch the public, PII-scrubbed record by `id` and render the
+ * real code, band word, and Record ID in place of the generic headline.
  *
- * TODO (DB): once Supabase `shared_records` is provisioned, fetch the public,
- * PII-scrubbed record by id and render the real HS code + band on the card.
+ * Satori constraints (next/og): flexbox only (no grid), literal hex (no CSS
+ * tokens), fonts as ArrayBuffer in ttf/otf/woff. We mirror the Foundation's
+ * LIGHT-theme OKLCH ramp as exact sRGB hex so the card matches the product.
  *
- * Note: this is an ImageResponse (Satori). Only flexbox and a subset of CSS are
- * supported (no `display: grid`), and colors must be literal hex, not theme
- * tokens. We use the default font so there is no external font fetch to fail.
+ * Font note: Satori's parser throws `ltagTable is not defined` on fonts that
+ * carry an Apple AAT `ltag` table (Commit Mono does). So the card uses ONLY the
+ * clean Fraunces (display) + Hanken (body) TTF instances, and renders the
+ * Record ID in Hanken rather than the code mono. The codes do not appear on the
+ * generic card anyway; the per-record path (below) can render them in Hanken.
  */
 
-export const alt = "Prevyl · ITC-HS classification record";
+export const alt = "Prevyl · an Indian ITC-HS classification record you can verify before filing";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-// Customs-Ledger palette, literal for Satori.
-const PAPER = "#f4efe6";
-const PAPER_SUNK = "#ece5d8";
-const INK = "#23211c";
-const INK_MUTED = "#6b6358";
-const ACCENT = "#7a4b2b";
-const RULE = "#d8cfbe";
+// Foundation light-theme palette, converted from the globals.css OKLCH ramp to
+// sRGB hex (Satori cannot read CSS custom properties). Keep in sync with
+// globals.css :root if the ramp is ever re-tuned.
+const PAPER = "#fefcf8"; // --paper (the lifted sheet)
+const SURFACE = "#f9f6f1"; // --surface
+const DESK = "#e3dfd7"; // --bg (the desk)
+const SUNK = "#d9d4cb"; // --surface-sunk
+const INK = "#27221d"; // --ink
+const INK_MUTED = "#5f5952"; // --ink-muted
+const RULE = "#c7c2ba"; // --rule
+const RULE_STRONG = "#918b82"; // --rule-strong
+const ACCENT_QUIET = "#864b39"; // --accent-quiet (seal, citation rule, links)
+
+/** Fetch a font as ArrayBuffer; return null on any failure so the card still renders. */
+async function fetchFont(url: string): Promise<ArrayBuffer | null> {
+  try {
+    const res = await fetch(url, { cache: "force-cache" });
+    if (!res.ok) return null;
+    return await res.arrayBuffer();
+  } catch {
+    return null;
+  }
+}
+
+// Pinned fontsource TTF instances (small static cuts, not the full variable
+// fonts) — both verified free of the AAT `ltag` table that breaks Satori.
+// Pinned to a version for reproducible builds.
+const FRAUNCES_TTF =
+  "https://cdn.jsdelivr.net/fontsource/fonts/fraunces@5.2.5/latin-600-normal.ttf";
+const HANKEN_TTF =
+  "https://cdn.jsdelivr.net/fontsource/fonts/hanken-grotesk@5.2.5/latin-500-normal.ttf";
+
+/**
+ * The archival seal as inline SVG — concentric rings + a register cross + a nib
+ * lozenge. NEVER a checkmark, never a "verified" claim. Mirrors ui/seal.tsx.
+ */
+function Seal({ px }: { px: number }) {
+  return (
+    <svg
+      width={px}
+      height={px}
+      viewBox="0 0 100 100"
+      fill="none"
+      style={{ transform: "rotate(-4deg)" }}
+    >
+      <circle cx="50" cy="50" r="46" stroke={ACCENT_QUIET} strokeWidth="1.2" opacity="0.5" />
+      <circle cx="50" cy="50" r="39" stroke={ACCENT_QUIET} strokeWidth="2.4" opacity="0.85" />
+      <circle cx="50" cy="50" r="33" stroke={ACCENT_QUIET} strokeWidth="0.7" opacity="0.45" />
+      {/* register cross */}
+      <line x1="50" y1="38" x2="50" y2="62" stroke={ACCENT_QUIET} strokeWidth="1.8" opacity="0.92" />
+      <line x1="38" y1="50" x2="62" y2="50" stroke={ACCENT_QUIET} strokeWidth="1.8" opacity="0.92" />
+      <circle cx="50" cy="50" r="9" stroke={ACCENT_QUIET} strokeWidth="1.2" opacity="0.6" />
+      {/* nib lozenge */}
+      <path d="M50 45 l3.5 5 l-3.5 5 l-3.5 -5 z" fill={ACCENT_QUIET} opacity="0.85" />
+    </svg>
+  );
+}
 
 export default async function Image({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  // Awaited for the Next 16 contract; per-record rendering arrives with the DB.
-  await params;
+  // The Record ID is in the URL even without a DB. We display it as the record
+  // reference; the code/band stay generic until shared_records exists.
+  const { id } = await params;
+  const recordId = /^PRV-/i.test(id) ? id.toUpperCase() : "PRV · SHARED RECORD";
+
+  // PER-RECORD PATH (DB): when `shared_records` is live, replace the generic
+  // headline block with the real values, e.g.:
+  //   const rec = await getSharedRecord(id);   // public, PII-scrubbed
+  //   headline = rec ? segmentCode(rec.hsCode) : GENERIC;
+  //   bandWord = rec?.confidenceBand;           // render as WORD only, never a number
+  //   leafDesc = rec?.description;
+
+  const [fraunces, hanken] = await Promise.all([
+    fetchFont(FRAUNCES_TTF),
+    fetchFont(HANKEN_TTF),
+  ]);
+
+  const fonts: { name: string; data: ArrayBuffer; weight: 500 | 600; style: "normal" }[] = [];
+  if (fraunces) fonts.push({ name: "Fraunces", data: fraunces, weight: 600, style: "normal" });
+  if (hanken) fonts.push({ name: "Hanken Grotesk", data: hanken, weight: 500, style: "normal" });
+
+  const display = fraunces ? "Fraunces" : "serif";
+  const body = hanken ? "Hanken Grotesk" : "sans-serif";
+  // Record ID rendered in Hanken with wide tracking (Commit Mono carries an AAT
+  // ltag table that Satori cannot parse, so it is not loaded here).
+  const mono = body;
 
   return new ImageResponse(
     (
@@ -43,138 +125,140 @@ export default async function Image({
           width: "100%",
           height: "100%",
           display: "flex",
-          backgroundColor: PAPER,
-          padding: 56,
-          fontFamily: "sans-serif",
+          backgroundColor: DESK,
+          padding: 52,
+          fontFamily: body,
         }}
       >
-        {/* hairline certificate frame */}
+        {/* the one lifted sheet */}
         <div
           style={{
             flex: 1,
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            border: `2px solid ${RULE}`,
-            borderRadius: 20,
             backgroundColor: PAPER,
+            border: `1px solid ${RULE_STRONG}`,
+            borderRadius: 2,
             padding: 64,
-            boxShadow: "0 30px 80px -50px rgba(35,33,28,0.5)",
+            boxShadow: "0 24px 60px -36px rgba(39,34,29,0.55)",
+            position: "relative",
           }}
         >
-          {/* masthead: wordmark + record eyebrow */}
+          {/* masthead: wordmark + record reference */}
           <div
             style={{
               display: "flex",
-              alignItems: "center",
+              alignItems: "flex-start",
               justifyContent: "space-between",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <div style={{ display: "flex", flexDirection: "column" }}>
               <span
                 style={{
-                  fontSize: 46,
-                  fontWeight: 700,
-                  letterSpacing: 0.5,
+                  fontFamily: display,
+                  fontSize: 52,
+                  fontWeight: 600,
                   color: INK,
+                  letterSpacing: -0.5,
                 }}
               >
                 Prevyl
               </span>
               <span
                 style={{
-                  width: 12,
-                  height: 12,
-                  borderRadius: 12,
-                  backgroundColor: ACCENT,
-                  marginLeft: 12,
-                  marginBottom: 18,
+                  fontSize: 18,
+                  letterSpacing: 3,
+                  textTransform: "uppercase",
+                  color: INK_MUTED,
+                  marginTop: 8,
                 }}
-              />
+              >
+                ITC-HS classification record
+              </span>
             </div>
-            <span
-              style={{
-                fontSize: 18,
-                fontWeight: 600,
-                letterSpacing: 4,
-                textTransform: "uppercase",
-                color: INK_MUTED,
-              }}
-            >
-              Classification record
-            </span>
+            <Seal px={120} />
           </div>
 
-          {/* center: title + supporting line */}
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          {/* center: the honesty headline (generic until DB) */}
+          <div style={{ display: "flex", flexDirection: "column", maxWidth: 880 }}>
             <span
               style={{
-                fontSize: 16,
-                fontWeight: 600,
-                letterSpacing: 4,
+                fontSize: 15,
+                letterSpacing: 3,
                 textTransform: "uppercase",
-                color: ACCENT,
-                marginBottom: 18,
+                color: ACCENT_QUIET,
+                marginBottom: 20,
               }}
             >
-              ITC-HS export classification
+              The careful customs clerk, not the oracle
             </span>
             <span
               style={{
-                fontSize: 60,
+                fontFamily: display,
+                fontSize: 58,
                 fontWeight: 600,
-                lineHeight: 1.15,
+                lineHeight: 1.12,
                 color: INK,
-                maxWidth: 880,
               }}
             >
-              The right export code, with a cited rationale.
+              The right export code, with a rationale you can check.
             </span>
-            <span
-              style={{
-                fontSize: 26,
-                color: INK_MUTED,
-                marginTop: 22,
-                maxWidth: 820,
-              }}
-            >
-              Indian ITC-HS classification you can verify before filing.
+            <span style={{ fontSize: 25, color: INK_MUTED, marginTop: 22, lineHeight: 1.35 }}>
+              Describe your product. See the legal basis, and how sure it is, before you file.
             </span>
           </div>
 
-          {/* footer: ledger rule + stamp-ish chip */}
+          {/* footer: ledger rule, record id, advisory */}
           <div
             style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              borderTop: `2px solid ${RULE}`,
-              paddingTop: 28,
+              borderTop: `1px solid ${RULE}`,
+              paddingTop: 26,
             }}
           >
-            <span style={{ fontSize: 22, color: INK_MUTED }}>
-              hscode.prevyl.com
-            </span>
-            <span
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <span style={{ fontFamily: mono, fontSize: 23, fontWeight: 600, color: INK, letterSpacing: 2 }}>
+                {recordId}
+              </span>
+              <span style={{ fontSize: 18, color: INK_MUTED, marginTop: 6 }}>
+                hscode.prevyl.com
+              </span>
+            </div>
+            <div
               style={{
                 display: "flex",
+                alignItems: "center",
                 fontSize: 18,
-                fontWeight: 600,
-                letterSpacing: 2,
+                letterSpacing: 1.5,
                 textTransform: "uppercase",
-                color: ACCENT,
-                backgroundColor: PAPER_SUNK,
-                border: `1px solid ${RULE}`,
-                borderRadius: 999,
-                padding: "12px 22px",
+                color: ACCENT_QUIET,
+                backgroundColor: SURFACE,
+                border: `1px solid ${RULE_STRONG}`,
+                borderRadius: 2,
+                padding: "12px 20px",
               }}
             >
-              Rule-checked · Indicative
-            </span>
+              Indicative · verify before filing
+            </div>
           </div>
+
+          {/* a faint ledger gutter line, anchored left, for the document feel */}
+          <div
+            style={{
+              position: "absolute",
+              top: 64,
+              bottom: 64,
+              left: 40,
+              width: 1,
+              backgroundColor: SUNK,
+            }}
+          />
         </div>
       </div>
     ),
-    { ...size },
+    { ...size, fonts: fonts.length > 0 ? fonts : undefined },
   );
 }

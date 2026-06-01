@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Shield, ShieldAlert, ShieldCheck, type LucideIcon } from "lucide-react";
 
 import type { ConfidenceBand as ConfidenceBandValue } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -13,71 +12,106 @@ export interface ConfidenceBandProps {
 }
 
 /**
- * Per-band visual spec. Confidence is conveyed by WORD + ICON + SHAPE
- * (filled-segment position), never by a number and never by color alone.
- * `filled` = which of the 3 stacked segments (top→bottom) are inked.
+ * Per-band spec. Confidence is a CATEGORY we admit to, conveyed by WORD +
+ * STEPPED-INK SHAPE + a plain-English meaning line — never a number, never by
+ * color alone, never with a "verified / correct" icon.
+ *
+ * `inked` = how many of the 3 stacked segments are filled, DE-INVERTED so that
+ * MORE ink = MORE confidence (high = 3, medium = 2, low = 1). The band is the
+ * page's one chromatic event, on the colorblind-safe teal -> amber -> rust arc.
  */
 const BAND_SPEC: Record<
   ConfidenceBandValue,
   {
     word: string;
     label: string;
-    Icon: LucideIcon;
+    /** Plain-English consequence line shown under the word. */
+    meaning: string;
     color: string;
-    edge: string;
-    tint: string;
-    filled: [boolean, boolean, boolean];
+    wash: string;
+    seg: string;
+    /** Filled segments, top -> bottom; the FIRST `inked` are filled. */
+    inked: 1 | 2 | 3;
   }
 > = {
   high: {
     word: "High",
     label: "High confidence",
-    Icon: ShieldCheck,
+    meaning: "A strong, well-supported match. Confirm it against your product before filing.",
     color: "text-band-high",
-    edge: "border-[color-mix(in_srgb,var(--band-high)_38%,var(--rule))]",
-    tint: "bg-[color-mix(in_srgb,var(--band-high)_12%,var(--surface))]",
-    filled: [true, false, false],
+    wash: "band-wash-high",
+    seg: "bg-band-high border-band-high",
+    inked: 3,
   },
   medium: {
     word: "Medium",
     label: "Medium confidence",
-    Icon: Shield,
+    meaning: "A reasonable match with some uncertainty. Check the basis and the close alternatives.",
     color: "text-band-medium",
-    edge: "border-[color-mix(in_srgb,var(--band-medium)_38%,var(--rule))]",
-    tint: "bg-[color-mix(in_srgb,var(--band-medium)_12%,var(--surface))]",
-    filled: [true, true, false],
+    wash: "band-wash-medium",
+    seg: "bg-band-medium border-band-medium",
+    inked: 2,
   },
   low: {
     word: "Low",
     label: "Low confidence",
-    Icon: ShieldAlert,
+    meaning: "A weak reading. Treat it as a starting point and verify carefully before you rely on it.",
     color: "text-band-low",
-    edge: "border-[color-mix(in_srgb,var(--band-low)_38%,var(--rule))]",
-    tint: "bg-[color-mix(in_srgb,var(--band-low)_12%,var(--surface))]",
-    filled: [true, true, true],
+    wash: "band-wash-low",
+    seg: "bg-band-low border-band-low",
+    inked: 1,
   },
 };
 
-/** Per-band fill color for the inked meter segments. */
-const SEG_FILL: Record<ConfidenceBandValue, string> = {
-  high: "bg-band-high border-band-high",
-  medium: "bg-band-medium border-band-medium",
-  low: "bg-band-low border-band-low",
-};
+/** The accessible reading carries the honesty framing, not a bare value. */
+function bandAriaLabel(band: ConfidenceBandValue): string {
+  return `Confidence band: ${BAND_SPEC[band].label}. ${BAND_SPEC[band].meaning}`;
+}
+
+/** Three stacked bars, filled TOP-DOWN; more filled = more confidence. */
+function Segments({
+  band,
+  className,
+}: {
+  band: ConfidenceBandValue;
+  className?: string;
+}) {
+  const { inked, seg } = BAND_SPEC[band];
+  return (
+    <span
+      aria-hidden="true"
+      className={cn("flex flex-col-reverse gap-1.5", className)}
+    >
+      {[0, 1, 2].map((i) => {
+        const isFilled = i < inked;
+        return (
+          <span
+            key={i}
+            className={cn(
+              "h-3.5 rounded-sm border",
+              isFilled
+                ? cn(seg, "elev-1")
+                : "border-rule-strong bg-transparent",
+            )}
+          />
+        );
+      })}
+    </span>
+  );
+}
 
 function ConfidenceBand({ band, variant = "chip", className }: ConfidenceBandProps) {
   const spec = BAND_SPEC[band];
-  const { Icon } = spec;
-  const ariaLabel = `Confidence: ${band}`;
+  const ariaLabel = bandAriaLabel(band);
 
   if (variant === "inline") {
     return (
       <span
-        className={cn("inline-flex items-center gap-1.5", spec.color, className)}
+        className={cn("inline-flex items-center gap-2", spec.color, className)}
         aria-label={ariaLabel}
       >
-        <Icon className="size-[1.05em]" aria-hidden="true" strokeWidth={1.9} />
-        <span className="font-sans text-sm font-semibold">{spec.word}</span>
+        <Segments band={band} className="h-[1.05em] flex-row gap-[2px]" />
+        <span className="font-sans text-[0.95rem] font-semibold">{spec.word}</span>
       </span>
     );
   }
@@ -86,79 +120,57 @@ function ConfidenceBand({ band, variant = "chip", className }: ConfidenceBandPro
     return (
       <span
         className={cn(
-          "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1",
-          spec.edge,
-          spec.tint,
+          "inline-flex items-center gap-2 rounded-full border px-3 py-1",
+          spec.wash,
           spec.color,
           className,
         )}
         aria-label={ariaLabel}
       >
-        <Icon className="size-3.5" aria-hidden="true" strokeWidth={1.9} />
-        <span className="font-sans text-xs font-semibold uppercase tracking-[0.08em]">
+        <span aria-hidden="true" className="flex flex-row items-end gap-[2px]">
+          {[0, 1, 2].map((i) => (
+            <span
+              key={i}
+              className={cn(
+                "w-[3px] rounded-[1px]",
+                // stepped heights echo "more ink = more"
+                i === 0 ? "h-2" : i === 1 ? "h-2.5" : "h-3",
+                i < spec.inked ? spec.seg : "border border-rule-strong bg-transparent",
+              )}
+            />
+          ))}
+        </span>
+        <span className="font-sans text-eyebrow font-semibold uppercase tracking-[var(--tracking-eyebrow)]">
           {spec.word}
         </span>
       </span>
     );
   }
 
-  // meter — the 3-segment stacked shape from hero-B + worded readout.
+  // meter — the band IS the page's one chromatic event: the band word in
+  // display type as the largest thing, the stepped-ink segments, and a
+  // plain-English meaning line. No icon, no triangle, no "band only" chrome.
   return (
-    <div
-      className={cn("flex flex-col gap-3.5", className)}
-      role="img"
-      aria-label={ariaLabel}
-    >
-      <div className="flex max-w-[150px] flex-col gap-1.5">
-        {spec.filled.map((isFilled, i) => (
-          <span
-            key={i}
-            aria-hidden="true"
-            className={cn(
-              "h-4 rounded-sm border",
-              isFilled
-                ? cn(
-                    SEG_FILL[band],
-                    "shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_1px_0_rgba(35,33,28,0.04)]",
-                  )
-                : "border-rule bg-transparent",
-            )}
-          />
-        ))}
-      </div>
-      <div className="flex items-center gap-2.5">
-        <span
-          aria-hidden="true"
-          className={cn(
-            "grid size-8.5 shrink-0 place-items-center rounded-md border",
-            spec.edge,
-            spec.tint,
-            spec.color,
-          )}
-        >
-          <Icon className="size-[1.1rem]" strokeWidth={1.9} />
-        </span>
-        <span className="leading-tight">
+    <div className={cn("flex flex-col gap-3", className)} aria-label={ariaLabel}>
+      <p className="font-sans text-meta uppercase tracking-[var(--tracking-eyebrow)] text-ink-muted">
+        Confidence
+      </p>
+      <div className="flex items-stretch gap-3.5">
+        <Segments band={band} />
+        <div className="flex flex-col justify-center gap-1">
           <span
             className={cn(
-              "flex items-center gap-1.5 font-display text-lg font-semibold",
+              "font-display text-section font-[number:var(--weight-section)] leading-none",
               spec.color,
             )}
           >
-            <span
-              aria-hidden="true"
-              className={cn(
-                "inline-block size-0 border-x-[5px] border-b-[8px] border-x-transparent",
-                band === "high" && "border-b-band-high",
-                band === "medium" && "border-b-band-medium",
-                band === "low" && "border-b-band-low",
-              )}
-            />
             {spec.word}
           </span>
-          <span className="text-xs text-ink-muted">{spec.label} · band only</span>
-        </span>
+        </div>
       </div>
+      <p className="max-w-[34ch] font-sans text-meta leading-snug text-ink-muted">
+        {spec.meaning}
+      </p>
     </div>
   );
 }

@@ -90,13 +90,17 @@ export function Turnstile({
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const widgetIdRef = React.useRef<string | null>(null);
 
-  // Keep latest callbacks without re-rendering the widget.
+  // Keep latest callbacks without re-rendering the widget. Syncing the refs in
+  // an effect (not during render) keeps render pure: the rendered output never
+  // depends on these refs, so an effect is the correct, lint-clean place.
   const onVerifyRef = React.useRef(onVerify);
   const onErrorRef = React.useRef(onError);
   const onExpireRef = React.useRef(onExpire);
-  onVerifyRef.current = onVerify;
-  onErrorRef.current = onError;
-  onExpireRef.current = onExpire;
+  React.useEffect(() => {
+    onVerifyRef.current = onVerify;
+    onErrorRef.current = onError;
+    onExpireRef.current = onExpire;
+  }, [onVerify, onError, onExpire]);
 
   React.useEffect(() => {
     if (!SITE_KEY) {

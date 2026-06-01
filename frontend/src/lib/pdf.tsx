@@ -1,190 +1,363 @@
 "use client";
 
 import * as React from "react";
-import { Document, Page, Text, View, StyleSheet, pdf } from "@react-pdf/renderer";
+import {
+  Document,
+  Page,
+  Text,
+  View,
+  Svg,
+  Path,
+  Circle,
+  Line,
+  StyleSheet,
+  Font,
+  pdf,
+} from "@react-pdf/renderer";
 
 import type { ConfidenceBand, UiClassification } from "./types";
+import { makeRecordId, formatGeneratedAt } from "./record-id";
+import { toMatrix } from "./qr";
 
 /**
- * generateAndDownloadPdf — builds a formal "Classification Record" certificate
- * with @react-pdf/renderer and triggers a browser download. Uses the library's
- * built-in fonts (Times-Roman / Helvetica / Courier) so it never depends on a
- * network font fetch. Resilient to null/empty fields.
+ * generateAndDownloadPdf — builds a premium, filing-grade "Classification
+ * Record" certificate with @react-pdf/renderer and triggers a browser download.
+ *
+ * Design (per the UX brief): the three brand fonts are registered so the record
+ * reads as Prevyl, not the default Times/Helvetica/Courier PDF trio. The 8-digit
+ * code is the hero, segmented 4-2-2 with the broker-confirmed .00 demoted. The
+ * VERIFIABLE citation is visually separated from the GENERATED rationale. The
+ * confidence band is a WORD plus a plain-English meaning line, NEVER a number.
+ * A checkmark-free archival seal, a Record ID + timestamp, and a scannable QR to
+ * the record close the certificate. Resilient to null/empty fields throughout.
  */
 
-// Warm / neutral certificate palette (PDF needs literal hex; the theme tokens
-// are CSS-only). Kept close to the on-screen Customs-Ledger tones.
+// ---------------------------------------------------------------------------
+// Fonts. Registered from the fontsource CDN (static TTF instances). react-pdf
+// fetches these client-side when the PDF is built. Registration is wrapped so a
+// CDN failure degrades to the built-in fonts rather than throwing — the code
+// (Commit Mono) is the highest-value cut, then Fraunces (masthead) and Hanken.
+// ---------------------------------------------------------------------------
+const FONT_BASE = "https://cdn.jsdelivr.net/fontsource/fonts";
+let fontsRegistered = false;
+
+function registerFonts(): void {
+  if (fontsRegistered) return;
+  fontsRegistered = true;
+  try {
+    Font.register({
+      family: "Fraunces",
+      fonts: [
+        { src: `${FONT_BASE}/fraunces@5.2.5/latin-500-normal.ttf`, fontWeight: 500 },
+        { src: `${FONT_BASE}/fraunces@5.2.5/latin-600-normal.ttf`, fontWeight: 600 },
+        {
+          src: `${FONT_BASE}/fraunces@5.2.5/latin-400-italic.ttf`,
+          fontWeight: 400,
+          fontStyle: "italic",
+        },
+      ],
+    });
+    Font.register({
+      family: "Hanken Grotesk",
+      fonts: [
+        { src: `${FONT_BASE}/hanken-grotesk@5.2.5/latin-400-normal.ttf`, fontWeight: 400 },
+        { src: `${FONT_BASE}/hanken-grotesk@5.2.5/latin-500-normal.ttf`, fontWeight: 500 },
+        { src: `${FONT_BASE}/hanken-grotesk@5.2.5/latin-600-normal.ttf`, fontWeight: 600 },
+      ],
+    });
+    Font.register({
+      family: "Commit Mono",
+      fonts: [
+        { src: `${FONT_BASE}/commit-mono@5.2.5/latin-400-normal.ttf`, fontWeight: 400 },
+        { src: `${FONT_BASE}/commit-mono@5.2.5/latin-600-normal.ttf`, fontWeight: 600 },
+      ],
+    });
+    // Avoid hyphenated word-splitting in the certificate body.
+    Font.registerHyphenationCallback((word) => [word]);
+  } catch {
+    /* fall back to built-in fonts; the record still renders. */
+  }
+}
+
+// Family helpers so a registration failure cleanly degrades to built-ins.
+const DISPLAY = "Fraunces";
+const BODY = "Hanken Grotesk";
+const MONO = "Commit Mono";
+
+// ---------------------------------------------------------------------------
+// Palette — the Foundation LIGHT-theme OKLCH ramp converted to sRGB hex (PDFs
+// need literal color). Keep in sync with globals.css :root.
+// ---------------------------------------------------------------------------
 const C = {
-  bg: "#FBF8F1",
-  ink: "#23211C",
-  inkMuted: "#6B6457",
-  rule: "#D8CFBC",
-  accent: "#7A4B2B",
-  accentInk: "#5C3720",
-  sunk: "#EDE6D8",
+  desk: "#e3dfd7", // --bg
+  surface: "#f9f6f1", // --surface
+  paper: "#fefcf8", // --paper
+  sunk: "#d9d4cb", // --surface-sunk
+  ink: "#27221d", // --ink
+  inkMuted: "#5f5952", // --ink-muted
+  rule: "#c7c2ba", // --rule
+  ruleStrong: "#918b82", // --rule-strong
+  accent: "#893624", // --accent (oxblood)
+  accentQuiet: "#864b39", // --accent-quiet (seal, citation rule)
+  accentInk: "#732719", // --accent-ink
+  bandHigh: "#1b6255", // --band-high (teal)
+  bandMedium: "#916717", // --band-medium (amber)
+  bandLow: "#964426", // --band-low (rust)
 } as const;
 
+const BAND_COLOR: Record<ConfidenceBand, string> = {
+  high: C.bandHigh,
+  medium: C.bandMedium,
+  low: C.bandLow,
+};
+const BAND_WORD: Record<ConfidenceBand, string> = {
+  high: "High",
+  medium: "Medium",
+  low: "Low",
+};
+// Plain-English meaning lines (mirrors lib/content.ts BAND_MEANING).
+const BAND_MEANING: Record<ConfidenceBand, string> = {
+  high: "A clear, well-supported reading. The notes and rules point one way.",
+  medium:
+    "A reasonable reading, but a close alternative could fit. Worth a careful look.",
+  low: "An uncertain reading. The product sits near a boundary, so treat this as a lead, not an answer.",
+};
+// Graduated decision-point advisory (mirrors lib/content.ts BAND_ADVISORY).
+const BAND_ADVISORY: Record<ConfidenceBand, string> = {
+  high: "Confirm this against your actual product before you file.",
+  medium:
+    "Check this against your product details, and weigh the close alternative, before you file.",
+  low: "Do not file on this alone. Confirm the details with your customs broker first.",
+};
+// Filled segments per band (more ink = more confidence).
+const BAND_INKED: Record<ConfidenceBand, 1 | 2 | 3> = { high: 3, medium: 2, low: 1 };
+
 const styles = StyleSheet.create({
+  // Page padding clears the lifted-sheet inset (the desk margin around the
+  // paper). Top/bottom padding also reserves the band for the fixed header and
+  // fixed footer so flowing content never collides with them across pages.
   page: {
-    backgroundColor: C.bg,
+    backgroundColor: C.desk,
     color: C.ink,
-    paddingTop: 44,
-    paddingBottom: 56,
-    paddingHorizontal: 48,
-    fontFamily: "Helvetica",
+    paddingTop: 116,
+    paddingBottom: 96,
+    paddingHorizontal: 74,
+    fontFamily: BODY,
     fontSize: 10,
     lineHeight: 1.5,
+  },
+  // the lifted sheet — a fixed full-bleed paper background behind the content.
+  sheet: {
+    position: "absolute",
+    top: 34,
+    bottom: 34,
+    left: 34,
+    right: 34,
+    backgroundColor: C.paper,
+    border: `1px solid ${C.ruleStrong}`,
+    borderRadius: 2,
+  },
+  // the fixed masthead, pinned over the sheet's top edge.
+  headerFixed: {
+    position: "absolute",
+    top: 50,
+    left: 74,
+    right: 74,
+  },
+  // Pinned near the bottom of the A4 page using `top`, because react-pdf honors
+  // `top` (not `bottom`) for fixed absolutely-positioned elements. `top`/`left`
+  // are measured from the PAGE EDGE (not the content box), matching the fixed
+  // header at top:50. A4 = 841.89pt; footer block ~62pt, so top:768 ends ~830.
+  footerFixed: {
+    position: "absolute",
+    top: 742,
+    left: 74,
+    right: 150,
+  },
+  // The QR is positioned as its OWN fixed absolute element (bottom-right),
+  // independent of the footer text row, so flex sizing can never collapse it.
+  qrFixed: {
+    position: "absolute",
+    top: 742,
+    right: 74,
   },
   // header
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "flex-end",
+    alignItems: "flex-start",
     borderBottomWidth: 1,
-    borderBottomColor: C.rule,
-    paddingBottom: 12,
+    borderBottomColor: C.ruleStrong,
+    paddingBottom: 14,
     marginBottom: 20,
   },
-  wordmark: { fontFamily: "Times-Roman", fontSize: 17, color: C.ink },
-  headerRight: { textAlign: "right" },
-  headerTitle: {
-    fontFamily: "Times-Roman",
-    fontSize: 11,
-    color: C.accentInk,
-    letterSpacing: 1,
-  },
-  headerMeta: { fontSize: 8, color: C.inkMuted, marginTop: 2 },
-  // eyebrow + section
-  eyebrow: {
+  wordmark: { fontFamily: DISPLAY, fontSize: 22, fontWeight: 600, color: C.ink },
+  wordmarkSub: {
     fontSize: 8,
     color: C.inkMuted,
-    letterSpacing: 1.4,
+    letterSpacing: 2,
     textTransform: "uppercase",
-    marginBottom: 8,
+    marginTop: 4,
+  },
+  headerRight: { textAlign: "right", maxWidth: 230 },
+  headerTitle: {
+    fontFamily: DISPLAY,
+    fontSize: 13,
+    fontWeight: 600,
+    color: C.ink,
+  },
+  headerBandline: {
+    fontSize: 7,
+    color: C.accentInk,
+    letterSpacing: 1.5,
+    textTransform: "uppercase",
+    marginTop: 5,
+  },
+  headerMeta: { fontSize: 8, color: C.inkMuted, marginTop: 3 },
+  recordId: {
+    fontFamily: MONO,
+    fontSize: 10,
+    fontWeight: 600,
+    color: C.ink,
+    marginTop: 5,
+  },
+  // eyebrow + section
+  eyebrow: {
+    fontSize: 7.5,
+    color: C.inkMuted,
+    letterSpacing: 1.6,
+    textTransform: "uppercase",
+    marginBottom: 6,
   },
   sectionLabel: {
-    fontFamily: "Times-Roman",
-    fontSize: 11,
+    fontFamily: DISPLAY,
+    fontSize: 12,
+    fontWeight: 500,
     color: C.ink,
     borderBottomWidth: 1,
     borderBottomColor: C.rule,
     paddingBottom: 4,
-    marginBottom: 8,
-    marginTop: 18,
+    marginBottom: 10,
+    marginTop: 20,
   },
-  query: {
-    fontFamily: "Times-Roman",
-    fontSize: 12,
-    color: C.ink,
-    marginBottom: 18,
-  },
-  // headline code
-  codeBlock: {
-    backgroundColor: C.sunk,
-    borderWidth: 1,
-    borderColor: C.rule,
-    borderRadius: 6,
-    padding: 16,
-    marginBottom: 6,
-  },
-  code: {
-    fontFamily: "Courier-Bold",
-    fontSize: 30,
+  query: { fontFamily: MONO, fontSize: 11, color: C.ink, marginBottom: 4 },
+  // headline code (hero)
+  codeRow: { flexDirection: "row", alignItems: "flex-end", marginBottom: 6 },
+  codeMain: {
+    fontFamily: MONO,
+    fontSize: 40,
+    fontWeight: 600,
     color: C.ink,
     letterSpacing: 1,
   },
+  codeSep: { fontFamily: MONO, fontSize: 28, color: C.inkMuted, marginHorizontal: 5 },
+  codeTail: { fontFamily: MONO, fontSize: 40, fontWeight: 600, color: C.inkMuted, letterSpacing: 1 },
+  codeBaseline: { height: 1, backgroundColor: C.ruleStrong, marginTop: 2, marginBottom: 12 },
   leafDesc: {
-    fontFamily: "Times-Roman",
-    fontSize: 13,
+    fontFamily: DISPLAY,
+    fontSize: 12.5,
     color: C.ink,
-    marginTop: 10,
+    lineHeight: 1.4,
     marginBottom: 4,
+    maxWidth: 360,
   },
-  // assessment row
-  metaRow: { flexDirection: "row", flexWrap: "wrap", gap: 8, marginTop: 12 },
+  // assessment / band block
+  assessRow: { flexDirection: "row", gap: 14, marginTop: 14, alignItems: "stretch" },
+  bandCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 9,
+    borderWidth: 1,
+    borderColor: C.rule,
+    borderRadius: 2,
+    backgroundColor: C.surface,
+    paddingVertical: 9,
+    paddingHorizontal: 12,
+    minWidth: 188,
+  },
+  segCol: { flexDirection: "column-reverse", gap: 2.5 },
+  seg: { width: 13, height: 7, borderRadius: 1 },
+  bandWord: { fontFamily: DISPLAY, fontSize: 17, fontWeight: 600 },
+  bandHint: { fontSize: 7, color: C.inkMuted, letterSpacing: 1, textTransform: "uppercase" },
+  metaCol: { flexDirection: "column", gap: 6, flexGrow: 1 },
   metaCell: {
     borderWidth: 1,
     borderColor: C.rule,
-    borderRadius: 5,
-    paddingVertical: 6,
-    paddingHorizontal: 10,
-    minWidth: 120,
+    borderRadius: 2,
+    paddingVertical: 5,
+    paddingHorizontal: 9,
   },
   metaKey: {
-    fontSize: 7,
+    fontSize: 6.5,
     color: C.inkMuted,
     letterSpacing: 1,
     textTransform: "uppercase",
-    marginBottom: 2,
+    marginBottom: 1.5,
   },
-  metaVal: { fontSize: 10, color: C.ink },
-  // body text
-  para: { fontSize: 10, color: C.ink, marginBottom: 6 },
-  muted: { fontSize: 9, color: C.inkMuted },
-  // citation
-  citeBox: {
-    backgroundColor: C.sunk,
+  metaVal: { fontSize: 9.5, color: C.ink },
+  bandMeaning: { fontSize: 9, color: C.ink, marginTop: 9, maxWidth: 460, lineHeight: 1.45 },
+  // decision-point advisory
+  advisoryBox: {
+    flexDirection: "row",
+    gap: 9,
+    backgroundColor: C.surface,
     borderLeftWidth: 3,
     borderLeftColor: C.accent,
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 6,
-    borderBottomRightRadius: 6,
+    borderRadius: 2,
+    paddingVertical: 9,
+    paddingHorizontal: 12,
+    marginTop: 14,
+  },
+  advisoryStrong: { fontFamily: BODY, fontSize: 9.5, fontWeight: 600, color: C.accentInk },
+  advisoryText: { fontSize: 9, color: C.ink, lineHeight: 1.45 },
+  // body
+  generatedLabel: {
+    fontSize: 7.5,
+    color: C.inkMuted,
+    letterSpacing: 0.3,
+    marginBottom: 8,
+  },
+  claimRow: { flexDirection: "row", gap: 8, marginBottom: 5 },
+  claimBullet: { fontFamily: MONO, fontSize: 9, color: C.accentQuiet, marginTop: 0.5 },
+  claimText: { fontSize: 9.5, color: C.ink, flex: 1, lineHeight: 1.45 },
+  muted: { fontSize: 9, color: C.inkMuted, lineHeight: 1.45 },
+  // citation
+  citeBox: {
+    backgroundColor: C.surface,
+    borderLeftWidth: 3,
+    borderLeftColor: C.accentQuiet,
+    borderRadius: 2,
     paddingVertical: 10,
     paddingHorizontal: 12,
-    marginTop: 4,
   },
-  citeGir: {
-    fontFamily: "Courier-Bold",
-    fontSize: 9,
-    color: C.accentInk,
-    marginBottom: 4,
-  },
-  citeSrc: { fontSize: 8, color: C.inkMuted, marginBottom: 4 },
-  citeText: { fontFamily: "Times-Italic", fontSize: 10, color: C.ink },
+  citeHead: { flexDirection: "row", justifyContent: "space-between", marginBottom: 5 },
+  citeGir: { fontFamily: MONO, fontSize: 9, fontWeight: 600, color: C.accentInk },
+  citeSrc: { fontSize: 8, color: C.inkMuted },
+  citeText: { fontFamily: DISPLAY, fontSize: 10.5, fontStyle: "italic", color: C.ink, lineHeight: 1.5 },
   // alternatives / components
   altRow: {
     flexDirection: "row",
     borderBottomWidth: 1,
     borderBottomColor: C.rule,
     paddingVertical: 5,
-  },
-  altCode: {
-    fontFamily: "Courier",
-    fontSize: 10,
-    color: C.ink,
-    width: 90,
-  },
-  altDesc: { fontSize: 9, color: C.inkMuted, flex: 1 },
-  // advisory + footer
-  advisory: {
-    flexDirection: "row",
     alignItems: "center",
-    gap: 6,
-    borderTopWidth: 1,
-    borderTopColor: C.rule,
-    paddingTop: 10,
-    marginTop: 18,
   },
-  advisoryText: { fontSize: 9, color: C.inkMuted },
+  altCode: { fontFamily: MONO, fontSize: 10, color: C.ink, width: 92 },
+  altDesc: { fontSize: 9, color: C.inkMuted, flex: 1, lineHeight: 1.4 },
+  // footer
   footer: {
-    position: "absolute",
-    bottom: 28,
-    left: 48,
-    right: 48,
     borderTopWidth: 1,
     borderTopColor: C.rule,
-    paddingTop: 8,
+    paddingTop: 9,
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "flex-end",
   },
+  footerLeft: { flexDirection: "column", gap: 2 },
+  footerStrong: { fontFamily: MONO, fontSize: 8.5, color: C.ink },
   footerText: { fontSize: 7.5, color: C.inkMuted },
+  pageNo: { fontSize: 7.5, color: C.inkMuted },
 });
-
-const BAND_WORD: Record<ConfidenceBand, string> = {
-  high: "High",
-  medium: "Medium",
-  low: "Low",
-};
 
 function safe(value: string | null | undefined, fallback: string): string {
   const v = (value ?? "").trim();
@@ -198,152 +371,293 @@ function reasoningLines(reasoning: string | null | undefined): string[] {
     .filter((l) => l.length > 0);
 }
 
+/** Split an HS code into its 4-2-2 segments; tail (.00) is rendered demoted. */
+function codeSegments(code: string): { main: string; mid: string; tail: string } {
+  const parts = (code ?? "").split(".");
+  if (parts.length >= 3) {
+    return { main: parts[0], mid: parts[1], tail: parts[2] };
+  }
+  const digits = (code ?? "").replace(/[^0-9]/g, "");
+  if (digits.length >= 8) {
+    return { main: digits.slice(0, 4), mid: digits.slice(4, 6), tail: digits.slice(6, 8) };
+  }
+  if (digits.length >= 6) {
+    return { main: digits.slice(0, 4), mid: digits.slice(4, 6), tail: "" };
+  }
+  return { main: safe(code, "—"), mid: "", tail: "" };
+}
+
+/** The checkmark-free archival seal as vector. Mirrors ui/seal.tsx. */
+function SealVector({ size = 76 }: { size?: number }) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 100 100">
+      <Circle cx="50" cy="50" r="46" stroke={C.accentQuiet} strokeWidth={1.2} fillOpacity={0} />
+      <Circle cx="50" cy="50" r="39" stroke={C.accentQuiet} strokeWidth={2.4} fillOpacity={0} />
+      <Circle cx="50" cy="50" r="33" stroke={C.accentQuiet} strokeWidth={0.7} fillOpacity={0} />
+      <Line x1="50" y1="38" x2="50" y2="62" stroke={C.accentQuiet} strokeWidth={1.8} />
+      <Line x1="38" y1="50" x2="62" y2="50" stroke={C.accentQuiet} strokeWidth={1.8} />
+      <Circle cx="50" cy="50" r="9" stroke={C.accentQuiet} strokeWidth={1.2} fillOpacity={0} />
+      <Path d="M50 45 l3.5 5 l-3.5 5 l-3.5 -5 z" fill={C.accentQuiet} />
+    </Svg>
+  );
+}
+
+/** A scannable QR for the record URL, rendered as one vector Path. Null-safe. */
+function QrVector({ url, size = 70 }: { url: string; size?: number }) {
+  let matrix: boolean[][] | null = null;
+  try {
+    matrix = toMatrix(url);
+  } catch {
+    matrix = null;
+  }
+  if (!matrix) return null;
+  const n = matrix.length;
+  const margin = 2;
+  const dim = n + margin * 2;
+  let d = "";
+  for (let r = 0; r < n; r += 1) {
+    for (let c = 0; c < n; c += 1) {
+      if (matrix[r][c]) d += `M${c + margin} ${r + margin}h1v1h-1z`;
+    }
+  }
+  return (
+    <Svg width={size} height={size} viewBox={`0 0 ${dim} ${dim}`}>
+      <Path d={d} fill={C.ink} />
+    </Svg>
+  );
+}
+
 interface RecordInput {
   query: string;
   result: UiClassification;
+  /** Optional: override the minted Record ID (e.g. a stored permalink id). */
+  recordId?: string;
+  /** Optional: when the record was generated (defaults to now). */
+  generatedAt?: number;
+  /** Optional: the public permalink base; the QR/footer link uses this. */
+  shareBaseUrl?: string;
 }
 
-function CertificateDoc({ query, result }: RecordInput) {
+function CertificateDoc({
+  query,
+  result,
+  recordId,
+  generatedAt,
+  shareBaseUrl,
+}: RecordInput) {
   const r = result;
   const desc = safe(r.description, "Description not recorded");
-  const bandWord = BAND_WORD[r.confidenceBand] ?? "Medium";
+  const band = (r.confidenceBand ?? "medium") as ConfidenceBand;
+  const bandWord = BAND_WORD[band] ?? "Medium";
+  const bandColor = BAND_COLOR[band] ?? C.bandMedium;
+  const inked = BAND_INKED[band] ?? 2;
   const lines = reasoningLines(r.reasoning);
   const alternatives = Array.isArray(r.alternatives) ? r.alternatives : [];
   const components = Array.isArray(r.components) ? r.components : [];
   const citation = r.citation;
-  const generatedOn = new Date().toLocaleDateString("en-IN", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-  const altLabel = r.isSixDigit ? "8-digit candidates to verify" : "Alternatives to verify";
+  const seg = codeSegments(r.hsCode);
+
+  const id = safe(recordId, makeRecordId(query, r.hsCode));
+  // `generatedAt` is resolved by the caller (generateAndDownloadPdf) so render
+  // stays pure; the `?? 0` is only a type guard, never the live default.
+  const stamp = formatGeneratedAt(generatedAt ?? 0);
+  const base = safe(shareBaseUrl, "https://hscode.prevyl.com");
+  const recordUrl = `${base.replace(/\/+$/, "")}/r/${id}`;
+
+  const altLabel = r.isSixDigit ? "8-digit candidates to check" : "Close alternatives to check";
+  const headlineEyebrow = r.isSixDigit
+    ? "6-digit subheading · narrowed, not yet filed"
+    : "Best 8-digit match";
 
   return (
     <Document
-      title={`Prevyl Classification Record ${r.hsCode}`}
+      title={`Prevyl Classification Record ${id}`}
       author="Prevyl"
-      subject="ITC-HS classification record"
+      subject="Indicative ITC-HS classification record"
+      creator="Prevyl"
+      producer="Prevyl"
     >
       <Page size="A4" style={styles.page} wrap>
-        {/* header */}
-        <View style={styles.header} fixed>
-          <Text style={styles.wordmark}>Prevyl</Text>
+        {/* the lifted paper sheet — fixed full-bleed background on every page */}
+        <View style={styles.sheet} fixed />
+
+        {/* fixed masthead */}
+        <View style={[styles.headerFixed, styles.header]} fixed>
+          <View>
+            <Text style={styles.wordmark}>Prevyl</Text>
+            <Text style={styles.wordmarkSub}>The careful customs clerk</Text>
+          </View>
           <View style={styles.headerRight}>
-            <Text style={styles.headerTitle}>Classification Record</Text>
-            <Text style={styles.headerMeta}>Generated {generatedOn}</Text>
+            <Text style={styles.headerTitle}>Indicative Classification Record</Text>
+            <Text style={styles.headerBandline}>Indicative · not a customs ruling</Text>
+            <Text style={styles.recordId}>{id}</Text>
+            <Text style={styles.headerMeta}>{`Generated ${stamp}`}</Text>
             <Text style={styles.headerMeta}>Schedule 2 · ITC(HS) 2022</Text>
           </View>
         </View>
 
-        {/* query */}
-        <Text style={styles.eyebrow}>Description filed</Text>
-        <Text style={styles.query}>{`“${safe(query, "(no description)")}”`}</Text>
+        {/* flowing content */}
+        <View>
+          {/* query */}
+          <Text style={styles.eyebrow}>You asked</Text>
+          <Text style={styles.query}>{safe(query, "(no description)")}</Text>
 
-        {/* headline */}
-        <Text style={styles.eyebrow}>
-          {r.isSixDigit ? "6-digit subheading · careful narrowing" : "8-digit tariff line"}
-        </Text>
-        <View style={styles.codeBlock}>
-          <Text style={styles.code}>{safe(r.hsCode, "—")}</Text>
-        </View>
-        <Text style={styles.leafDesc}>{desc}</Text>
+          {/* headline code + seal */}
+          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start", marginTop: 16 }} wrap={false}>
+            <View style={{ maxWidth: 380 }}>
+              <Text style={styles.eyebrow}>{headlineEyebrow}</Text>
+              <View style={styles.codeRow}>
+                <Text style={styles.codeMain}>{seg.main}</Text>
+                {seg.mid ? <Text style={styles.codeSep}>·</Text> : null}
+                {seg.mid ? <Text style={styles.codeMain}>{seg.mid}</Text> : null}
+                {seg.tail ? <Text style={styles.codeSep}>·</Text> : null}
+                {seg.tail ? <Text style={styles.codeTail}>{seg.tail}</Text> : null}
+              </View>
+              <View style={[styles.codeBaseline, { width: 230 }]} />
+              <Text style={styles.leafDesc}>{desc}</Text>
+            </View>
+            <SealVector size={76} />
+          </View>
 
-        {/* assessment cells */}
-        <View style={styles.metaRow}>
-          <View style={styles.metaCell}>
-            <Text style={styles.metaKey}>Confidence band</Text>
-            <Text style={styles.metaVal}>{bandWord}</Text>
+          {/* assessment: band + policy meta */}
+          <View style={styles.assessRow}>
+            <View style={styles.bandCard}>
+              <View style={styles.segCol}>
+                {[0, 1, 2].map((i) => (
+                  <View
+                    key={i}
+                    style={[
+                      styles.seg,
+                      i < inked
+                        ? { backgroundColor: bandColor }
+                        : { backgroundColor: "transparent", borderWidth: 1, borderColor: C.ruleStrong },
+                    ]}
+                  />
+                ))}
+              </View>
+              <View>
+                <Text style={styles.bandHint}>Confidence band</Text>
+                <Text style={[styles.bandWord, { color: bandColor }]}>{bandWord}</Text>
+              </View>
+            </View>
+            <View style={styles.metaCol}>
+              <View style={styles.metaCell}>
+                <Text style={styles.metaKey}>Export policy</Text>
+                <Text style={styles.metaVal}>{safe(r.exportPolicy, "Not recorded")}</Text>
+              </View>
+              <View style={styles.metaCell}>
+                <Text style={styles.metaKey}>India-specific line</Text>
+                <Text style={styles.metaVal}>{r.indiaSpecific ? "Yes" : "No"}</Text>
+              </View>
+            </View>
           </View>
-          <View style={styles.metaCell}>
-            <Text style={styles.metaKey}>Export policy</Text>
-            <Text style={styles.metaVal}>{safe(r.exportPolicy, "Not recorded")}</Text>
-          </View>
-          <View style={styles.metaCell}>
-            <Text style={styles.metaKey}>India-specific</Text>
-            <Text style={styles.metaVal}>{r.indiaSpecific ? "Yes" : "No"}</Text>
-          </View>
-        </View>
-        {r.policyCondition ? (
-          <Text style={[styles.muted, { marginTop: 8 }]}>
-            {`Policy condition: ${r.policyCondition}`}
-          </Text>
-        ) : null}
-
-        {/* why this code */}
-        <Text style={styles.sectionLabel}>Why this code</Text>
-        {lines.length > 0 ? (
-          lines.map((line, i) => (
-            <Text key={i} style={styles.para}>
-              {line}
+          <Text style={styles.bandMeaning}>{BAND_MEANING[band]}</Text>
+          {r.policyCondition ? (
+            <Text style={[styles.muted, { marginTop: 6 }]}>
+              {`Policy condition: ${r.policyCondition}`}
             </Text>
-          ))
-        ) : (
-          <Text style={styles.muted}>No rationale was recorded for this result.</Text>
-        )}
+          ) : null}
 
-        {/* citation */}
-        {citation ? (
-          <>
-            <Text style={styles.sectionLabel}>Primary citation</Text>
-            <View style={styles.citeBox}>
-              <Text style={styles.citeGir}>{safe(citation.gir_applied, "GIR")}</Text>
-              <Text style={styles.citeSrc}>
-                {`Source · ${safe(citation.primary?.source_ref, "n/a")}`}
-              </Text>
-              <Text style={styles.citeText}>
-                {`“${safe(citation.primary?.verbatim_text, "No verbatim text recorded.")}”`}
-              </Text>
-            </View>
-          </>
-        ) : null}
+          {/* decision-point advisory, graduated by band */}
+          <View style={styles.advisoryBox}>
+            <Text style={styles.advisoryStrong}>Before you file</Text>
+            <Text style={styles.advisoryText}>{BAND_ADVISORY[band]}</Text>
+          </View>
 
-        {/* alternatives */}
-        <Text style={styles.sectionLabel}>{altLabel}</Text>
-        {alternatives.length > 0 ? (
-          alternatives.map((alt, i) => (
-            <View key={`${alt.code}-${i}`} style={styles.altRow}>
-              <Text style={styles.altCode}>{safe(alt.code, "—")}</Text>
-              <Text style={styles.altDesc}>{safe(alt.description, "—")}</Text>
-            </View>
-          ))
-        ) : (
-          <Text style={styles.muted}>
-            {r.isSixDigit
-              ? "No 8-digit candidates were listed for this subheading."
-              : "No adjacent leaves were flagged for this result."}
+          {/* why this code — GENERATED, clearly labelled */}
+          <Text style={styles.sectionLabel}>Why this code</Text>
+          <Text style={styles.generatedLabel}>
+            Generated explanation. The basis quoted below is the verifiable source.
           </Text>
-        )}
+          {lines.length > 0 ? (
+            lines.map((line, i) => (
+              <View key={i} style={styles.claimRow}>
+                <Text style={styles.claimBullet}>§{String(i + 1).padStart(2, "0")}</Text>
+                <Text style={styles.claimText}>{line}</Text>
+              </View>
+            ))
+          ) : (
+            <Text style={styles.muted}>
+              No supporting notes were recorded for this match, which is itself a reason to check it
+              closely.
+            </Text>
+          )}
 
-        {/* components */}
-        {components.length > 0 ? (
-          <>
-            <Text style={styles.sectionLabel}>Components</Text>
-            {components.map((c, i) => (
-              <View key={`${c.name}-${i}`} style={styles.altRow}>
-                <Text style={styles.altCode}>{safe(c.role, "—")}</Text>
-                <Text style={styles.altDesc}>
-                  {`${safe(c.name, "—")} · ${safe(c.material, "—")}`}
+          {/* basis in the schedule — VERIFIABLE */}
+          {citation ? (
+            <>
+              <Text style={styles.sectionLabel}>Basis in the schedule</Text>
+              <View style={styles.citeBox}>
+                <View style={styles.citeHead}>
+                  <Text style={styles.citeGir}>{safe(citation.gir_applied, "GIR applied")}</Text>
+                  <Text style={styles.citeSrc}>
+                    {`Source · ${safe(citation.primary?.source_ref, "n/a")}`}
+                  </Text>
+                </View>
+                <Text style={styles.citeText}>
+                  {`“${safe(citation.primary?.verbatim_text, "No verbatim text was recorded for this match.")}”`}
                 </Text>
               </View>
-            ))}
-          </>
-        ) : null}
+            </>
+          ) : null}
 
-        {/* advisory */}
-        <View style={styles.advisory}>
-          <Text style={styles.advisoryText}>
-            Indicative classification · verify before filing. This record reflects Prevyl&apos;s
-            best reading of the Indian ITC-HS schedule and is not a customs ruling.
+          {/* alternatives */}
+          <Text style={styles.sectionLabel}>{altLabel}</Text>
+          {alternatives.length > 0 ? (
+            alternatives.map((alt, i) => (
+              <View key={`${alt.code}-${i}`} style={styles.altRow}>
+                <Text style={styles.altCode}>{safe(alt.code, "—")}</Text>
+                <Text style={styles.altDesc}>{safe(alt.description, "—")}</Text>
+              </View>
+            ))
+          ) : (
+            <Text style={styles.muted}>
+              {r.isSixDigit
+                ? "No 8-digit candidates were listed for this subheading."
+                : "No close alternatives were flagged for this result."}
+            </Text>
+          )}
+
+          {/* components (GIR 3(b)) */}
+          {components.length > 0 ? (
+            <>
+              <Text style={styles.sectionLabel}>Components considered</Text>
+              {components.map((c, i) => (
+                <View key={`${c.name}-${i}`} style={styles.altRow}>
+                  <Text style={styles.altCode}>{safe(c.role, "—")}</Text>
+                  <Text style={styles.altDesc}>
+                    {`${safe(c.name, "—")} · ${safe(c.material, "—")}`}
+                  </Text>
+                </View>
+              ))}
+            </>
+          ) : null}
+
+          {/* the persistent global disclaimer */}
+          <Text style={[styles.muted, { marginTop: 18 }]}>
+            This record reflects Prevyl&apos;s best reading of the Indian ITC-HS schedule. It is
+            indicative and is not a customs ruling.
           </Text>
         </View>
 
-        {/* footer */}
-        <View style={styles.footer} fixed>
-          <Text style={styles.footerText}>Prevyl · ITC-HS classification</Text>
-          <Text
-            style={styles.footerText}
-            render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
-          />
+        {/* fixed footer text, repeated on every page */}
+        <View style={[styles.footerFixed, styles.footer]} fixed>
+          <View style={styles.footerLeft}>
+            <Text style={styles.footerStrong}>{id}</Text>
+            <Text style={styles.footerText}>{recordUrl}</Text>
+            <Text
+              style={styles.pageNo}
+              render={({ pageNumber, totalPages }) =>
+                `Prevyl · ITC-HS classification · page ${pageNumber} of ${totalPages}`
+              }
+            />
+          </View>
+        </View>
+
+        {/* scannable QR to the record — its own fixed element so flex sizing
+            can never collapse it, repeated on every page */}
+        <View style={styles.qrFixed} fixed>
+          <QrVector url={recordUrl} size={60} />
         </View>
       </Page>
     </Document>
@@ -356,8 +670,19 @@ function slugForFile(code: string): string {
 }
 
 export async function generateAndDownloadPdf(record: RecordInput): Promise<void> {
+  registerFonts();
+
+  // Resolve the timestamp here (not in render) so CertificateDoc stays pure.
+  const generatedAt = record.generatedAt ?? Date.now();
+
   const blob = await pdf(
-    <CertificateDoc query={record.query} result={record.result} />,
+    <CertificateDoc
+      query={record.query}
+      result={record.result}
+      recordId={record.recordId}
+      generatedAt={generatedAt}
+      shareBaseUrl={record.shareBaseUrl}
+    />,
   ).toBlob();
 
   const url = URL.createObjectURL(blob);

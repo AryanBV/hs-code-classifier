@@ -68,7 +68,15 @@ export default function RootLayout({
         </a>
         <Providers>
           <SiteHeader />
-          <main id="main" className="flex-1">
+          {/*
+            <main> is the focus target for skip-link + per-view focus handoff:
+            tabindex=-1 lets JS move focus here on async transitions without
+            making it a tab stop. Each page owns its OWN PageShell (the one
+            shared rail), so the layout no longer wraps children — this is what
+            stops the doubled gutter / conflicting max-width. The header and
+            footer keep their own PageShell, so all three share one rail.
+          */}
+          <main id="main" tabIndex={-1} className="flex flex-1 flex-col focus:outline-none">
             {children}
           </main>
           <SiteFooter />

@@ -18,9 +18,10 @@ const DialogOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-      // warm archival scrim
-      "fixed inset-0 z-50 bg-[color-mix(in_srgb,var(--ink)_55%,transparent)] backdrop-blur-[2px]",
-      "data-[state=open]:[animation:prevyl-overlay-in_200ms_var(--ease-ledger)]",
+      // warm archival scrim (oklab so it stays warm, never chalky)
+      "fixed inset-0 z-50 bg-[color-mix(in_oklab,var(--ink)_55%,transparent)] backdrop-blur-[2px]",
+      // entrance via the centralized reveal utility (reduced-motion -> instant)
+      "motion-safe:reveal-ink",
       className,
     )}
     {...props}
@@ -38,24 +39,25 @@ const DialogContent = React.forwardRef<
       ref={ref}
       className={cn(
         "fixed left-1/2 top-1/2 z-50 grid w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4",
-        "rounded-md border border-rule bg-surface p-6",
-        "shadow-[0_1px_0_rgba(35,33,28,0.03),0_28px_64px_-32px_rgba(35,33,28,0.5)]",
-        "data-[state=open]:[animation:prevyl-dialog-in_200ms_var(--ease-ledger)]",
+        // a genuinely elevated plane: rule-strong card edge + the reserved lift
+        "rounded-lg border border-rule-strong bg-surface p-6 elev-3",
+        // opacity-only entrance: the reveal keyframes drive `transform`, which
+        // would clobber the centering translate above, so the content fades
+        // (reduced-motion -> instant). Centering stays intact.
+        "motion-safe:reveal-ink",
         className,
       )}
       {...props}
     >
-      {/* Co-located dialog keyframes; the global reduced-motion guard zeroes them. */}
-      <style>{dialogKeyframes}</style>
       {children}
       <DialogPrimitive.Close
         className={cn(
-          "absolute right-4 top-4 grid size-9 place-items-center rounded-md text-ink-muted",
-          "transition-colors hover:bg-surface-sunk hover:text-ink",
+          "absolute right-3 top-3 grid size-11 place-items-center rounded-md text-ink-muted",
+          "transition-colors duration-150 ease-[var(--ease-ledger)] hover:bg-surface-sunk hover:text-ink",
           "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
         )}
       >
-        <X className="size-4" aria-hidden="true" />
+        <X className="size-[18px]" aria-hidden="true" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>
@@ -93,7 +95,7 @@ const DialogTitle = React.forwardRef<
   <DialogPrimitive.Title
     ref={ref}
     className={cn(
-      "font-display text-xl font-medium tracking-[0.005em] text-ink",
+      "font-display text-section font-semibold tracking-[0.005em] text-ink",
       className,
     )}
     {...props}
@@ -107,22 +109,11 @@ const DialogDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn("text-sm leading-relaxed text-ink-muted", className)}
+    className={cn("text-meta leading-relaxed text-ink-muted", className)}
     {...props}
   />
 ));
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
-
-const dialogKeyframes = `
-@keyframes prevyl-overlay-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-@keyframes prevyl-dialog-in {
-  from { opacity: 0; transform: translate(-50%, -48%) scale(0.97); }
-  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-}
-`;
 
 export {
   Dialog,

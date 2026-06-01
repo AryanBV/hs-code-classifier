@@ -9,6 +9,7 @@ import { z } from "zod";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Textarea, Label } from "@/components/ui/field";
+import { INPUT_LABEL, INPUT_PLACEHOLDER, SUBMIT_LABEL } from "@/lib/content";
 import { EXAMPLES } from "@/lib/examples";
 
 /** A trimmed description with at least 2 visible characters. */
@@ -26,8 +27,10 @@ const META_ID = "product-description-meta";
 
 /**
  * LandingForm — the interactive hero. A single ledger field that takes a product
- * description and files it. Example chips pre-fill the field; the primary action
- * routes to /classify?q=… On submit we trim and hand off to the wizard route.
+ * description and finds the code. Example chips pre-fill the field; the primary
+ * action routes to /classify?q=… On submit we trim and hand off to the wizard
+ * route. The field is a recessed well you write into; the input is DATA, not
+ * literature, so the query is set in plain sans/mono, never editorial italic.
  */
 export function LandingForm() {
   const router = useRouter();
@@ -97,39 +100,32 @@ export function LandingForm() {
       aria-label="Classify a product"
       className="w-full"
     >
-      {/* ---- The ledger field ---- */}
+      {/* ---- The ledger field: a recessed well you write into ---- */}
       <div
         className={cn(
-          "group relative rounded-lg border border-rule bg-surface text-left",
-          "shadow-[0_1px_0_rgba(35,33,28,0.03),0_18px_44px_-28px_rgba(35,33,28,0.34)]",
-          "transition-[border-color,box-shadow] duration-200 ease-[var(--ease-ledger)]",
-          "focus-within:border-[color-mix(in_srgb,var(--accent)_42%,var(--rule))]",
-          "focus-within:shadow-[0_18px_44px_-28px_rgba(35,33,28,0.4),0_0_0_3px_color-mix(in_srgb,var(--accent)_16%,transparent)]",
+          "group relative rounded-md border border-rule-strong bg-surface text-left elev-1",
+          "transition-[border-color,box-shadow] duration-150 ease-[var(--ease-ledger)]",
+          "focus-within:border-accent",
+          "focus-within:shadow-[var(--shadow-2),0_0_0_3px_color-mix(in_oklab,var(--focus)_24%,transparent)]",
         )}
       >
-        {/* field head: label · hairline · entry ref */}
-        <div className="flex items-center gap-2.5 px-4 pt-3.5 sm:px-5">
-          <span className="font-sans text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-ink-muted">
-            Description to file
-          </span>
-          <span aria-hidden="true" className="h-px flex-1 bg-rule" />
-          <span
-            aria-hidden="true"
-            className="font-mono text-[0.66rem] tracking-[0.02em] text-ink-muted"
+        {/* field head: the real label, a hairline */}
+        <div className="flex items-center gap-3 px-4 pt-3.5 sm:px-5">
+          <Label
+            htmlFor={FIELD_ID}
+            className="text-eyebrow font-semibold uppercase tracking-[var(--tracking-eyebrow)] text-ink-muted"
           >
-            Entry 01
-          </span>
+            {INPUT_LABEL}
+          </Label>
+          <span aria-hidden="true" className="h-px flex-1 bg-rule" />
         </div>
 
-        {/* field body: the description input, styled as a ledger line */}
+        {/* field body: the description input, in plain data type (not italic) */}
         <div className="px-4 pb-1 pt-1 sm:px-5">
-          <Label htmlFor={FIELD_ID} className="sr-only">
-            Product description
-          </Label>
           <Textarea
             id={FIELD_ID}
             rows={2}
-            placeholder="e.g. stainless steel hex bolts M10, grade A2-70"
+            placeholder={INPUT_PLACEHOLDER}
             aria-describedby={META_ID}
             spellCheck={false}
             {...queryField}
@@ -141,8 +137,8 @@ export function LandingForm() {
             className={cn(
               // Strip the primitive's chrome — the card owns the border + focus ring.
               "min-h-[3.4rem] resize-none border-0 bg-transparent px-0.5 py-2.5",
-              "font-display text-[clamp(1.12rem,2vw,1.42rem)] font-normal leading-snug text-ink",
-              "placeholder:italic placeholder:text-ink-muted/70",
+              "font-sans text-label leading-snug text-ink",
+              "placeholder:text-ink-muted",
               "hover:border-0 focus-visible:border-0 focus-visible:outline-none",
             )}
           />
@@ -157,12 +153,12 @@ export function LandingForm() {
         >
           <span
             id={META_ID}
-            className="order-2 inline-flex min-w-[10rem] flex-1 items-center gap-2 text-[0.78rem] text-ink-muted lg:order-1"
+            className="order-2 inline-flex min-w-[10rem] flex-1 items-center gap-2 font-sans text-meta text-ink-muted lg:order-1"
           >
-            <InfoIcon className="size-[0.95rem] shrink-0 text-accent opacity-85" />
+            <InfoIcon className="size-[0.95rem] shrink-0 text-accent-quiet" />
             <span>
               Material, form and use sharpen the match. e.g.{" "}
-              <span className="font-mono text-[0.74rem] text-accent-ink">
+              <span className="font-mono text-[0.78em] text-accent-ink">
                 grade A2-70
               </span>
               .
@@ -177,10 +173,10 @@ export function LandingForm() {
             className="order-1 w-full justify-center gap-3 lg:order-2 lg:w-auto"
           >
             <SearchIcon className="size-[1.05rem]" />
-            <span>Classify</span>
+            <span>{SUBMIT_LABEL}</span>
             <kbd
               aria-hidden="true"
-              className="ml-0.5 hidden rounded-[6px] bg-white/15 px-1.5 py-0.5 font-mono text-[0.66rem] font-medium tracking-[0.04em] sm:inline-block"
+              className="ml-0.5 hidden rounded-sm bg-accent-contrast/15 px-1.5 py-0.5 font-mono text-eyebrow font-medium tracking-[0.04em] sm:inline-block"
             >
               ↵
             </kbd>
@@ -188,10 +184,10 @@ export function LandingForm() {
         </div>
       </div>
 
-      {/* ---- Example chips ---- */}
-      <div className="mt-6 text-left sm:mt-7">
-        <p className="mb-3 flex items-center gap-2.5">
-          <span className="font-sans text-[0.64rem] font-semibold uppercase tracking-[0.16em] text-ink-muted">
+      {/* ---- Example chips (near-square, one tag idiom) ---- */}
+      <div className="mt-6 text-left">
+        <p className="mb-3 flex items-center gap-3">
+          <span className="font-sans text-eyebrow font-semibold uppercase tracking-[var(--tracking-eyebrow)] text-ink-muted">
             Try one
           </span>
           <span aria-hidden="true" className="h-px flex-1 bg-rule" />
@@ -207,16 +203,15 @@ export function LandingForm() {
               type="button"
               onClick={() => fillExample(example)}
               className={cn(
-                "inline-flex min-h-11 items-center gap-2 rounded-full border border-rule bg-surface px-4 py-2.5",
-                "font-sans text-[0.86rem] font-medium text-ink text-left",
-                "shadow-[0_1px_0_rgba(35,33,28,0.02),0_10px_28px_-22px_rgba(35,33,28,0.28)]",
+                "inline-flex min-h-11 items-center gap-2 rounded-sm border border-rule-strong bg-surface px-3.5 py-2 elev-1",
+                "font-sans text-meta font-medium text-ink text-left",
                 "transition-[background-color,border-color,transform] duration-150 ease-[var(--ease-ledger)]",
-                "hover:border-[color-mix(in_srgb,var(--accent)_30%,var(--rule))] hover:bg-[color-mix(in_srgb,var(--accent)_9%,var(--surface))]",
+                "hover:border-accent hover:bg-[color-mix(in_oklab,var(--accent)_9%,var(--surface))] hover:text-accent-ink",
                 "active:translate-y-px",
                 "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
               )}
             >
-              <PlusIcon className="size-[0.95rem] shrink-0 text-accent opacity-80" />
+              <PlusIcon className="size-[0.9rem] shrink-0 text-accent-quiet" />
               {example}
             </button>
           ))}

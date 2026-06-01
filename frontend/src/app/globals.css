@@ -5,56 +5,166 @@
 
 /*
   Prevyl — "Living Certificate / Customs Ledger" design tokens.
-  Light (aged paper) is the default; warm-dark (lamplit ledger) is parity.
+
+  Luminance-first OKLCH ramp. Light (aged paper on a desk) is the default;
+  warm-dark (lamplit ledger) is parity. Planes separate by PERCEPTUAL LIGHTNESS,
+  not by heavy shadow — so a sheet lifts off the desk because it is lighter,
+  the way real paper catches the light.
+
   Raw tokens live on :root / .dark; @theme inline maps them to Tailwind
-  utilities (bg-bg, text-ink, border-rule, font-display, ...) AND to the
-  shadcn semantic aliases so library components inherit the theme.
+  utilities (bg-bg, text-ink, border-rule, font-display, shadow-1, p-block, ...)
+  AND to the shadcn semantic aliases so library components inherit the theme.
+
+  Every legacy token NAME is preserved (--bg, --surface, --surface-sunk, --ink,
+  --ink-muted, --rule, --accent, --accent-ink, --accent-contrast,
+  --band-high/medium/low, --focus) so existing components keep working; values
+  are re-derived and new tokens are added alongside.
 */
 
 :root {
-  /* Customs-Ledger — light */
-  --bg: #f4efe6;
-  --surface: #fbf8f1;
-  --surface-sunk: #ede6d8;
-  --ink: #23211c;
-  --ink-muted: #6b6457;
-  --rule: #d8cfbc;
-  --accent: #7a4b2b;
-  --accent-ink: #5c3720;
-  --accent-contrast: #fbf8f1; /* text on accent fills */
-  --band-high: #2f5d50; /* verdigris-teal — NOT signal green */
-  --band-medium: #8a5e15; /* aged amber (AA-tuned) */
-  --band-low: #8a5a2b; /* muted sienna */
-  --focus: #7a4b2b;
-  --radius: 5px;
+  /* ---- Surfaces: a luminance staircase (desk -> paper -> lifted sheet) ---- */
+  --bg: oklch(0.905 0.012 83); /* desk: a real warm tone, NOT near-white */
+  --surface: oklch(0.975 0.008 86); /* default card paper (~7 ΔL above bg) */
+  --paper: oklch(0.992 0.006 88); /* the LIFTED document sheet: lighter + warmer (~8.7 ΔL) */
+  --surface-sunk: oklch(0.872 0.014 82); /* a recessed well you write into (below bg) */
+
+  /* ---- Ink: barely-warm charcoal so the one warm accent reads intentional ---- */
+  --ink: oklch(0.255 0.012 70); /* body/headlines — ~12:1 on paper */
+  --ink-muted: oklch(0.468 0.014 72); /* captions/meta — ~5.3:1 on surface (AA) */
+
+  /* ---- Rules: decorative hairline vs load-bearing boundary ---- */
+  --rule: oklch(0.815 0.012 80); /* faint flourish hairline */
+  --rule-strong: oklch(0.640 0.015 78); /* ≥3:1 vs surface — control/card borders, region splits */
+
+  /* ---- Accent split: action vs quiet vs a COOL focus that is NOT the brand ---- */
+  --accent: oklch(0.445 0.118 34); /* primary action only — deep oxblood / sealing-wax */
+  --accent-quiet: oklch(0.478 0.085 38); /* links, citation rule, seal, ticks (demoted) */
+  --accent-ink: oklch(0.385 0.110 33); /* darker accent for text-on-light + hover */
+  --accent-contrast: oklch(0.985 0.004 88); /* text on accent fills (~5.5:1 on --accent) */
+  --focus: oklch(0.520 0.110 248); /* cool slate-blue — a SYSTEM event, distinct from oxblood */
+
+  /* ---- Confidence band: the page's ONE chromatic event ----
+     teal -> amber -> rust on a colorblind-safe stepped-lightness arc.
+     Three distinct hues AND three distinct L values so they separate in
+     grayscale. These are the readable INK tones (AA on paper/surface);
+     washes derive from them via color-mix at call sites. */
+  --band-high: oklch(0.448 0.072 178); /* verdigris-teal — NOT signal green */
+  --band-medium: oklch(0.545 0.105 78); /* aged amber */
+  --band-low: oklch(0.488 0.118 40); /* red-orange sienna / rust */
+
+  /* ---- Theme-aware elevation: light lifts via shadow + a top highlight ---- */
+  --highlight: oklch(1 0 0 / 0.7); /* the letterpress top edge (inset light line) */
+  --shadow-1:
+    /* tight warm contact + soft ambient — flat chips/inputs */
+    0 1px 1px oklch(0.30 0.03 60 / 0.06),
+    0 1px 2px oklch(0.30 0.03 60 / 0.05);
+  --shadow-2:
+    /* the resting card */
+    0 1px 1px oklch(0.30 0.03 60 / 0.07),
+    0 4px 10px -2px oklch(0.30 0.03 60 / 0.10);
+  --shadow-3:
+    /* the ONE lifted document sheet — longer, lower, warmer directional cast */
+    0 1px 0 oklch(0.30 0.03 60 / 0.04),
+    0 10px 18px -6px oklch(0.32 0.04 55 / 0.14),
+    0 26px 44px -16px oklch(0.32 0.05 50 / 0.16);
+
+  /* ---- 4px spacing scale (NO 0.5-steps, NO bracket-pixel one-offs) ---- */
+  --space-1: 0.25rem; /*  4px */
+  --space-2: 0.5rem; /*  8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-5: 1.25rem; /* 20px */
+  --space-6: 1.5rem; /* 24px */
+  --space-8: 2rem; /* 32px */
+  --space-10: 2.5rem; /* 40px */
+  --space-12: 3rem; /* 48px */
+  --space-16: 4rem; /* 64px */
+  /* semantic spacing roles */
+  --space-tight: var(--space-2);
+  --space-block: var(--space-6);
+  --space-section: var(--space-12);
+  --pad-card: clamp(1.25rem, 3.5vw, 2rem);
+
+  /* ---- Inner measure tokens (only the measure changes between states) ---- */
+  --measure-wide: 1180px;
+  --measure-list: 760px;
+  --measure-read: 68ch;
+  --measure-focus: 560px;
+
+  /* ---- Role-named type scale (~1.2 ratio, 8 sizes). Display LIGHTENS as it grows. ---- */
+  --text-eyebrow: 0.75rem; /* 12px — labels, line numbers */
+  --text-meta: 0.8125rem; /* 13px — captions, marginalia */
+  --text-body: 1rem; /* 16px — body */
+  --text-label: 1.0625rem; /* 17px — mid-tier Fraunces label register */
+  --text-section: 1.5rem; /* 24px — section headlines */
+  --text-title: 2rem; /* 32px — page titles */
+  --text-display: clamp(2.6rem, 8vw, 4.25rem); /* the hero code / display */
+  --text-code: clamp(2.6rem, 8vw, 4.25rem); /* the HS code hero (mono) */
+
+  --leading-tight: 1.08;
+  --leading-snug: 1.25;
+  --leading-body: 1.55;
+  --tracking-display: -0.03em; /* tightens as size grows */
+  --tracking-title: -0.018em;
+  --tracking-body: 0em;
+  --tracking-eyebrow: 0.08em; /* opens up at small caps/labels */
+
+  /* display optical-size + weight pairing (Fraunces gets LIGHTER as it grows) */
+  --weight-display: 530; /* lighter than the bold UI labels around it */
+  --weight-title: 560;
+  --weight-section: 600;
+  --weight-label: 500;
+  --opsz-display: 144;
+  --opsz-section: 40;
+  --opsz-citation: 16;
+
+  --radius: 4px;
 }
 
 .dark {
-  /* Customs-Ledger — warm dark */
-  --bg: #1a1814;
-  --surface: #23201a;
-  --surface-sunk: #2b2720;
-  --ink: #ede6d6;
-  --ink-muted: #a89e8a;
-  --rule: #3a352b;
-  --accent: #c88a5a;
-  --accent-ink: #e0a877;
-  --accent-contrast: #1a1814;
-  --band-high: #6fa593;
-  --band-medium: #c9a05a;
-  --band-low: #c08a5c;
-  --focus: #c88a5a;
+  /* ---- Surfaces: dark elevates by getting LIGHTER, never by heavier shadow ---- */
+  --bg: oklch(0.205 0.010 74); /* the dark desk */
+  --surface: oklch(0.262 0.012 76); /* card (~5.7 ΔL above bg) */
+  --paper: oklch(0.318 0.014 78); /* lifted sheet: clearly lighter (~11 ΔL above bg) */
+  --surface-sunk: oklch(0.182 0.010 72); /* recessed well — darker than bg */
+
+  --ink: oklch(0.925 0.012 84); /* ~12:1 on surface */
+  --ink-muted: oklch(0.725 0.016 80); /* ~4.9:1 on surface (AA) */
+
+  --rule: oklch(0.345 0.012 74);
+  --rule-strong: oklch(0.545 0.018 78); /* ≥3:1 vs surface */
+
+  --accent: oklch(0.685 0.118 46); /* warm sealing-wax that reads on dark; AA with dark text */
+  --accent-quiet: oklch(0.640 0.090 44);
+  --accent-ink: oklch(0.760 0.115 52); /* accent as TEXT on dark surfaces (~5:1) */
+  --accent-contrast: oklch(0.205 0.020 60); /* dark text on the bright accent fill */
+  --focus: oklch(0.700 0.105 245); /* cool focus, lifted for dark */
+
+  --band-high: oklch(0.730 0.085 178); /* teal, lifted for dark AA */
+  --band-medium: oklch(0.775 0.110 80); /* amber */
+  --band-low: oklch(0.715 0.120 44); /* rust */
+
+  /* dark elevation = lighter surface + a top inner highlight; shadows stay faint */
+  --highlight: oklch(1 0 0 / 0.06);
+  --shadow-1: 0 1px 2px oklch(0 0 0 / 0.30);
+  --shadow-2: 0 2px 6px oklch(0 0 0 / 0.34);
+  --shadow-3:
+    0 12px 28px -10px oklch(0 0 0 / 0.45),
+    0 2px 0 oklch(1 0 0 / 0.04) inset; /* lamplit lift comes from the inset top line */
 }
 
 @theme inline {
-  /* Custom Customs-Ledger tokens */
+  /* ---- Custom Customs-Ledger color tokens (Tailwind utilities) ---- */
   --color-bg: var(--bg);
   --color-surface: var(--surface);
+  --color-paper: var(--paper);
   --color-surface-sunk: var(--surface-sunk);
   --color-ink: var(--ink);
   --color-ink-muted: var(--ink-muted);
   --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
   --color-accent: var(--accent);
+  --color-accent-quiet: var(--accent-quiet);
   --color-accent-ink: var(--accent-ink);
   --color-accent-contrast: var(--accent-contrast);
   --color-band-high: var(--band-high);
@@ -62,7 +172,7 @@
   --color-band-low: var(--band-low);
   --color-focus: var(--focus);
 
-  /* shadcn semantic aliases (so library components inherit the theme) */
+  /* ---- shadcn semantic aliases (library components inherit the theme) ---- */
   --color-background: var(--bg);
   --color-foreground: var(--ink);
   --color-card: var(--surface);
@@ -77,23 +187,64 @@
   --color-secondary-foreground: var(--ink);
   --color-accent-foreground: var(--accent-contrast);
   --color-border: var(--rule);
-  --color-input: var(--rule);
+  --color-input: var(--rule-strong);
   --color-ring: var(--focus);
   --color-destructive: var(--band-low);
   --color-destructive-foreground: var(--accent-contrast);
 
-  /* Fonts — CSS variables are set by next/font on <html> */
+  /* ---- Fonts — CSS variables are set by next/font on <html> ---- */
   --font-display: var(--font-fraunces), "Georgia", "Times New Roman", serif;
   --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-commit), ui-monospace, "SFMono-Regular", "Menlo", monospace;
 
-  /* Radii */
-  --radius-sm: 3px;
-  --radius-md: 5px;
-  --radius-lg: 8px;
+  /* ---- Type scale -> Tailwind text-* utilities (size + paired leading) ---- */
+  --text-eyebrow: var(--text-eyebrow);
+  --text-eyebrow--line-height: var(--leading-snug);
+  --text-eyebrow--letter-spacing: var(--tracking-eyebrow);
+  --text-meta: var(--text-meta);
+  --text-meta--line-height: var(--leading-snug);
+  --text-body: var(--text-body);
+  --text-body--line-height: var(--leading-body);
+  --text-label: var(--text-label);
+  --text-label--line-height: var(--leading-snug);
+  --text-section: var(--text-section);
+  --text-section--line-height: var(--leading-snug);
+  --text-section--letter-spacing: var(--tracking-title);
+  --text-title: var(--text-title);
+  --text-title--line-height: var(--leading-tight);
+  --text-title--letter-spacing: var(--tracking-title);
+  --text-display: var(--text-display);
+  --text-display--line-height: var(--leading-tight);
+  --text-display--letter-spacing: var(--tracking-display);
+  --text-code: var(--text-code);
+  --text-code--line-height: var(--leading-tight);
+  --text-code--letter-spacing: var(--tracking-display);
 
-  /* Motion easings (calm, entrance-only) */
+  /* ---- Spacing scale -> Tailwind spacing utilities (p-*, m-*, gap-*) ---- */
+  --spacing-tight: var(--space-tight);
+  --spacing-block: var(--space-block);
+  --spacing-section: var(--space-section);
+  --spacing-card: var(--pad-card);
+
+  /* ---- Elevation -> Tailwind shadow-* utilities ---- */
+  --shadow-1: var(--shadow-1);
+  --shadow-2: var(--shadow-2);
+  --shadow-3: var(--shadow-3);
+
+  /* ---- Inner-measure -> max-w-* utilities ---- */
+  --container-wide: var(--measure-wide);
+  --container-list: var(--measure-list);
+  --container-read: var(--measure-read);
+  --container-focus: var(--measure-focus);
+
+  /* ---- Radii (near-square — paper, not "app card") ---- */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+
+  /* ---- Motion (calm, entrance-only) ---- */
   --ease-ledger: cubic-bezier(0.2, 0.6, 0.2, 1);
+  --duration-reveal: 0.6s;
 }
 
 @layer base {
@@ -115,15 +266,23 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "kern" 1;
-    /* Subtle aged-paper atmosphere: warm vignette + faint grain. */
-    background-image:
-      radial-gradient(
-        125% 125% at 12% 0%,
-        color-mix(in oklab, var(--surface) 55%, transparent) 0%,
-        transparent 46%
-      ),
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
-    background-attachment: fixed;
+    /* Atmosphere only: a soft warm light pool. Grain now lives on SURFACES
+       (see .doc-sheet / .surface-grain), NOT on the scrolling viewport, so
+       there is no background-attachment:fixed (scroll-jank + iOS bugs gone). */
+    background-image: radial-gradient(
+      125% 125% at 12% -8%,
+      color-mix(in oklab, var(--surface) 60%, transparent) 0%,
+      transparent 52%
+    );
+  }
+
+  /* Display type uses Fraunces' real optical-size + character axes. */
+  .font-display,
+  [class*="font-display"] {
+    font-variation-settings:
+      "opsz" var(--opsz-section),
+      "SOFT" 24,
+      "WONK" 0;
   }
 
   ::selection {
@@ -159,10 +318,216 @@
 }
 
 @layer utilities {
-  /* A single hairline ledger rule. */
+  /* ----------------------------------------------------------------------
+     Hairline rules
+  ---------------------------------------------------------------------- */
   .rule-line {
     border: 0;
     border-top: 1px solid var(--rule);
+  }
+  /* a load-bearing separator / control border (WCAG 1.4.11 ≥3:1) */
+  .rule-strong-line {
+    border: 0;
+    border-top: 1px solid var(--rule-strong);
+  }
+
+  /* ----------------------------------------------------------------------
+     Elevation utilities (theme-aware; map to the shadow tokens)
+       .elev-1  flat chips / inputs (contact shadow only)
+       .elev-2  the resting card
+       .elev-3  the ONE lifted sheet — reserve it; elevation MEANS something
+     Each pairs the directional shadow with the letterpress top highlight.
+  ---------------------------------------------------------------------- */
+  .elev-1 {
+    box-shadow: var(--shadow-1), inset 0 1px 0 var(--highlight);
+  }
+  .elev-2 {
+    box-shadow: var(--shadow-2), inset 0 1px 0 var(--highlight);
+  }
+  .elev-3 {
+    box-shadow: var(--shadow-3), inset 0 1px 0 var(--highlight);
+  }
+  /* a recessed well: dark inner-top + light inner-bottom lip — "write into it" */
+  .sunk {
+    background-color: var(--surface-sunk);
+    box-shadow:
+      inset 0 1px 2px color-mix(in oklab, var(--ink) 18%, transparent),
+      inset 0 -1px 0 var(--highlight);
+  }
+
+  /* ----------------------------------------------------------------------
+     The lifted DOCUMENT SHEET — the single signature artifact.
+     Lighter+warmer paper, near-square corners, a letterpress top edge,
+     a longer/lower/warmer directional cast, faint surface-local grain,
+     and a ruled-baseline feel. Compose with `.doc-margin-rule` for the
+     left line-number gutter.
+  ---------------------------------------------------------------------- */
+  .doc-sheet {
+    position: relative;
+    background-color: var(--paper);
+    border-radius: var(--radius-sm); /* ≤2px — paper, not app-card */
+    box-shadow: var(--shadow-3), inset 0 1px 0 var(--highlight);
+    isolation: isolate;
+  }
+  /* surface-local paper grain (visible ~0.05, multiply) — NOT the invisible body noise */
+  .doc-sheet::before,
+  .surface-grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: -1;
+    mix-blend-mode: multiply;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+  }
+  .dark .doc-sheet::before,
+  .dark .surface-grain::before {
+    mix-blend-mode: screen;
+    opacity: 0.035;
+  }
+  /* drop grain onto ANY surface without the full sheet treatment */
+  .surface-grain {
+    position: relative;
+    isolation: isolate;
+  }
+  /* ruled baselines the body text sits on (faint, ~1.55 rhythm) */
+  .ruled-baselines {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(1.55em - 1px),
+      color-mix(in oklab, var(--rule) 55%, transparent) calc(1.55em - 1px),
+      color-mix(in oklab, var(--rule) 55%, transparent) 1.55em
+    );
+  }
+  /* left margin rule with room for line numbers (§01, §02) */
+  .doc-margin-rule {
+    border-left: 1px solid var(--rule-strong);
+    padding-left: var(--space-6);
+  }
+
+  /* ----------------------------------------------------------------------
+     Attached MARGINALIA — a clerk's annotation, subordinate to the sheet.
+     Sunk/flat (no big shadow), smaller type, hung on a vertical gutter rule.
+     Use for the assessment/confidence margin so it never reads as a co-equal
+     sidebar card.
+  ---------------------------------------------------------------------- */
+  .marginalia {
+    background-color: color-mix(in oklab, var(--surface-sunk) 60%, transparent);
+    border-left: 2px solid var(--rule-strong);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: var(--space-4) var(--space-5);
+    font-size: var(--text-meta);
+    color: var(--ink-muted);
+    box-shadow: none; /* subordinate: NEVER the big shadow */
+  }
+
+  /* ----------------------------------------------------------------------
+     Letterpress top edge as a standalone helper (struck-into-paper feel)
+  ---------------------------------------------------------------------- */
+  .letterpress-top {
+    box-shadow: inset 0 1px 0 var(--highlight);
+  }
+
+  /* ----------------------------------------------------------------------
+     Confidence band washes (derive softly from the band INK tones).
+     Color is never the ONLY signal — pair with the band word + meaning line.
+  ---------------------------------------------------------------------- */
+  .band-wash-high {
+    background-color: color-mix(in oklab, var(--band-high) 14%, var(--surface));
+    border-color: color-mix(in oklab, var(--band-high) 45%, transparent);
+  }
+  .band-wash-medium {
+    background-color: color-mix(in oklab, var(--band-medium) 16%, var(--surface));
+    border-color: color-mix(in oklab, var(--band-medium) 45%, transparent);
+  }
+  .band-wash-low {
+    background-color: color-mix(in oklab, var(--band-low) 16%, var(--surface));
+    border-color: color-mix(in oklab, var(--band-low) 45%, transparent);
+  }
+
+  /* ----------------------------------------------------------------------
+     Motion — centralized keyframes (compositor-only transform/opacity).
+     One owned reveal; behind motion-safe; reduced-motion makes it instant.
+  ---------------------------------------------------------------------- */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal-rise {
+      animation: ledger-rise var(--duration-reveal) var(--ease-ledger) both;
+    }
+    .reveal-clip {
+      animation: ledger-clip var(--duration-reveal) var(--ease-ledger) both;
+    }
+    .reveal-ink {
+      animation: ledger-ink var(--duration-reveal) var(--ease-ledger) both;
+    }
+    .press-once {
+      animation: ledger-press 0.42s var(--ease-ledger) both;
+    }
+    /* a calm, indeterminate "still working" gesture for the loading dot / active
+       step marker. Compositor-only (opacity + scale), slow and gentle — a quiet
+       breath, NOT the anxious heartbeat of animate-pulse. No fraction implied. */
+    .breathe {
+      animation: ledger-breathe 2.6s var(--ease-ledger) infinite;
+    }
+  }
+
+  @keyframes ledger-rise {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  /* code clip-reveals UPWARD — inscribed onto the baseline, not faded in */
+  @keyframes ledger-clip {
+    from {
+      opacity: 0;
+      clip-path: inset(100% 0 0 0);
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      clip-path: inset(0 0 0 0);
+      transform: translateY(0);
+    }
+  }
+  @keyframes ledger-ink {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  /* a slow, gentle breath — the calm indeterminate "working" pulse. Opacity +
+     a barely-there scale only, so it stays on the compositor. */
+  @keyframes ledger-breathe {
+    0%,
+    100% {
+      opacity: 0.45;
+      transform: scale(0.9);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.06);
+    }
+  }
+
+  /* seal presses ONCE (process mark, never a certainty claim — never loops) */
+  @keyframes ledger-press {
+    from {
+      opacity: 0;
+      transform: scale(1.06) rotate(-4deg);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) rotate(-4deg);
+    }
   }
 
   /* Honor reduced motion globally — entrance-only motion becomes instant. */

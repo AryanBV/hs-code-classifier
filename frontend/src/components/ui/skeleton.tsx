@@ -5,15 +5,19 @@ import { cn } from "@/lib/utils";
 export type SkeletonProps = React.HTMLAttributes<HTMLDivElement>;
 
 /**
- * Skeleton — a calm placeholder block. A gentle opacity pulse on surface-sunk
- * (no moving shimmer sweep). The global reduced-motion guard stops the pulse
- * for users who prefer reduced motion.
+ * Skeleton — a calm, shift-neutral placeholder block. A gentle opacity pulse on
+ * surface-sunk (no moving shimmer sweep, nothing that implies measured
+ * progress). Gated behind motion-safe so users who prefer reduced motion see a
+ * still block.
  */
 function Skeleton({ className, ...props }: SkeletonProps) {
   return (
     <div
       aria-hidden="true"
-      className={cn("animate-pulse rounded-md bg-surface-sunk", className)}
+      className={cn(
+        "rounded-md bg-surface-sunk motion-safe:animate-pulse",
+        className,
+      )}
       {...props}
     />
   );

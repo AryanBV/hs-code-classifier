@@ -1,25 +1,36 @@
+"use client";
+
 import * as React from "react";
-import { Filter, Info } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Plus } from "lucide-react";
+import { motion, useReducedMotion, type Variants } from "motion/react";
 
 import { Surface } from "@/components/ui/surface";
 import { MonoCode } from "@/components/ui/mono-code";
 import { ConfidenceBand } from "@/components/ui/confidence-band";
-import { Chip } from "@/components/ui/chip";
 import { RuleLine } from "@/components/ui/rule-line";
 import { SealEmblem } from "@/components/ui/seal";
 import { Expander } from "@/components/ui/expander";
 import { Badge } from "@/components/ui/badge";
+import { Chip } from "@/components/ui/chip";
 import { DocumentMargin } from "@/components/layout/document-margin";
 import { ResultActions } from "@/components/result/result-actions";
 import {
-  ADVISORY,
   ALTERNATIVES_LABEL,
+  BAND_ADVISORY,
+  CITATION_HEADING,
+  CLASSIFY_ANOTHER_LABEL,
   EIGHT_DIGIT_FRAMING,
+  GENERATED_EXPLANATION_LABEL,
+  QUERY_ECHO_LABEL,
+  RATIONALE_EMPTY,
+  RATIONALE_HEADING,
   SIX_DIGIT_CANDIDATES_LABEL,
   SIX_DIGIT_NARROWING,
   SIX_VS_EIGHT_EXPLAINER,
 } from "@/lib/content";
-import type { UiClassification } from "@/lib/types";
+import type { Citation, UiClassification } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 export interface ResultViewRecord {
   id?: string;
@@ -30,6 +41,10 @@ export interface ResultViewRecord {
 export interface ResultViewProps {
   record: ResultViewRecord;
 }
+
+// ----------------------------------------------------------------------------
+// Helpers
+// ----------------------------------------------------------------------------
 
 function descriptionFallback(r: UiClassification): string {
   const desc = (r.description ?? "").trim();
@@ -46,23 +61,146 @@ function reasoningLines(reasoning: string | null | undefined): string[] {
     .filter((l) => l.length > 0);
 }
 
-/** Left-pane "to verify" alternatives / candidates list. */
-function AlternativesSection({
+/** The verbatim note/exclusion text — the VERIFIABLE source. */
+function verbatim(citation: Citation | null | undefined): string {
+  return (citation?.primary?.verbatim_text ?? "").trim();
+}
+
+/** Humanize a DB locator into a readable source line. Falls back to the raw ref. */
+function humanizeSourceRef(citation: Citation | null | undefined): string {
+  const ref = (citation?.primary?.source_ref ?? "").trim();
+  if (!ref) return "Source not recorded";
+  const type = citation?.primary?.type;
+  // headings.7318 -> "Heading 7318" ; chapters.73 -> "Chapter 73"
+  const heading = ref.match(/headings?\.(\d{4})/i);
+  if (heading) return `Heading ${heading[1]}`;
+  const chapter = ref.match(/chapters?\.(\d{2})/i);
+  if (chapter) return `Chapter ${chapter[1]} note`;
+  if (type === "exclusion") return "Chapter exclusion rule";
+  if (type === "leaf_description") return "Tariff-line description";
+  return ref;
+}
+
+/**
+ * Chrome and substance move together. When there is no verbatim source text,
+ * the record is thin: we suppress the archival stamp and lower the citation's
+ * visual weight rather than presenting full confidence theatre over nothing.
+ */
+function evidenceIsThin(result: UiClassification): boolean {
+  return verbatim(result.citation).length === 0;
+}
+
+// ----------------------------------------------------------------------------
+// Motion — the ONE signature reveal. Entrance only, never loops. Sheet rises,
+// the code clip-reveals upward (inscribed onto the baseline), the band inks in,
+// the seal presses once. prefers-reduced-motion settles everything instantly.
+// ----------------------------------------------------------------------------
+
+const REVEAL_EASE = [0.2, 0.6, 0.2, 1] as const;
+
+function useReveal() {
+  const reduced = useReducedMotion();
+
+  const sheet: Variants = {
+    hidden: { opacity: reduced ? 1 : 0, y: reduced ? 0 : 10 },
+    shown: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: reduced ? 0 : 0.55, ease: REVEAL_EASE },
+    },
+  };
+
+  // The code is inscribed onto the baseline: it clip-reveals upward.
+  const code: Variants = {
+    hidden: {
+      opacity: reduced ? 1 : 0,
+      clipPath: reduced ? "inset(0 0 0 0)" : "inset(100% 0 0 0)",
+      y: reduced ? 0 : 6,
+    },
+    shown: {
+      opacity: 1,
+      clipPath: "inset(0% 0 0 0)",
+      y: 0,
+      transition: { duration: reduced ? 0 : 0.55, ease: REVEAL_EASE, delay: reduced ? 0 : 0.18 },
+    },
+  };
+
+  const ink: Variants = {
+    hidden: { opacity: reduced ? 1 : 0 },
+    shown: {
+      opacity: 1,
+      transition: { duration: reduced ? 0 : 0.5, ease: "easeOut", delay: reduced ? 0 : 0.42 },
+    },
+  };
+
+  // The seal presses ONCE (a process mark, never a certainty claim).
+  const seal: Variants = {
+    hidden: { opacity: reduced ? 1 : 0, scale: reduced ? 1 : 1.06 },
+    shown: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: reduced ? 0 : 0.42, ease: REVEAL_EASE, delay: reduced ? 0 : 0.62 },
+    },
+  };
+
+  return { sheet, code, ink, seal };
+}
+
+// ----------------------------------------------------------------------------
+// The hero code block — different SHAPE for 6-digit vs 8-digit.
+// ----------------------------------------------------------------------------
+
+function HeroCode({
   result,
+  codeVariants,
 }: {
   result: UiClassification;
+  codeVariants: Variants;
 }) {
+  if (!result.isSixDigit) {
+    return (
+      <motion.div variants={codeVariants}>
+        <MonoCode code={result.hsCode} size="display" baseline copyable />
+      </motion.div>
+    );
+  }
+
+  // 6-digit: render the resolved subheading at full strength, then a GHOSTED
+  // ".__.__" tail so the artifact visibly looks unfinished, because it is. The
+  // last two digit-pairs are what a broker confirms; we never invent them.
+  return (
+    <motion.div variants={codeVariants}>
+      <span className="inline-flex items-end gap-[0.16em] border-b border-rule-strong pb-1.5 letterpress-top">
+        <MonoCode code={result.hsCode} size="display" />
+        <span
+          aria-hidden="true"
+          className="select-none font-mono text-code leading-[var(--leading-tight)] tracking-[var(--tracking-display)] text-ink-muted/55"
+        >
+          <span className="mx-[0.16em] text-[0.62em]">.</span>__
+          <span className="mx-[0.16em] text-[0.62em]">.</span>__
+        </span>
+        <span className="sr-only">. Last two digit pairs not yet determined.</span>
+      </span>
+    </motion.div>
+  );
+}
+
+// ----------------------------------------------------------------------------
+// Alternatives / candidates. For 6-digit this is the PRIMARY "choose one to
+// verify" decision element (numbered, full-ink, generous rows). For 8-digit it
+// is a quieter "close alternatives to check" list.
+// ----------------------------------------------------------------------------
+
+function AlternativesSection({ result }: { result: UiClassification }) {
   const isSix = result.isSixDigit;
-  const label = isSix ? SIX_DIGIT_CANDIDATES_LABEL : ALTERNATIVES_LABEL;
   const alternatives = Array.isArray(result.alternatives) ? result.alternatives : [];
 
   if (alternatives.length === 0) {
-    // Honest one-liner for the six-digit case rather than an empty section.
     if (isSix) {
       return (
-        <section className="mt-8 sm:mt-9">
-          <RuleLine label={label} />
-          <p className="mt-3 font-sans text-[0.92rem] leading-relaxed text-ink-muted">
+        <section className="mt-9">
+          <RuleLine label={SIX_DIGIT_CANDIDATES_LABEL} lineNumber="02" />
+          <p className="mt-3 max-w-read font-sans text-body leading-relaxed text-ink-muted">
             The 8-digit lines under this subheading are not separately recorded here. A licensed
             customs broker confirms the final two digits from your product details before filing.
           </p>
@@ -72,26 +210,54 @@ function AlternativesSection({
     return null;
   }
 
+  if (isSix) {
+    // PRIMARY decision component: numbered, full ink, 44px+ rows.
+    return (
+      <section className="mt-9">
+        <RuleLine label={SIX_DIGIT_CANDIDATES_LABEL} lineNumber="02" />
+        <p className="mb-3 mt-3 max-w-read font-sans text-meta leading-relaxed text-ink-muted">
+          Choose the one that matches your product, then confirm it before filing. A customs broker
+          decides which line applies from the actual goods.
+        </p>
+        <ol className="flex flex-col gap-2">
+          {alternatives.map((alt, i) => (
+            <li key={`${alt.code}-${i}`}>
+              <div className="flex min-h-[3.25rem] items-center gap-4 rounded-md border border-rule-strong bg-surface px-3.5 py-2.5">
+                <span
+                  aria-hidden="true"
+                  className="grid size-7 shrink-0 place-items-center rounded-sm bg-surface-sunk font-mono text-meta text-ink-muted"
+                >
+                  {i + 1}
+                </span>
+                <MonoCode code={alt.code} size="sm" className="min-w-[10.5ch] shrink-0 font-medium" />
+                <span className="min-w-0 flex-1 font-sans text-[0.95rem] leading-snug text-ink">
+                  {(alt.description ?? "").trim() || "Description not recorded"}
+                </span>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+    );
+  }
+
+  // 8-digit: quieter "adjacent leaves worth a check".
   return (
-    <section className="mt-8 sm:mt-9">
-      <RuleLine label={label} />
-      <p className="mb-2.5 mt-2 font-sans text-[0.78rem] text-ink-muted">
-        {isSix
-          ? "These split this subheading by finer detail. One is the filing line. A customs broker confirms which from the actual product."
-          : "Adjacent leaves worth a check if your product carries a detail we did not see."}
+    <section className="mt-9">
+      <RuleLine label={ALTERNATIVES_LABEL} lineNumber="02" />
+      <p className="mb-2.5 mt-3 max-w-read font-sans text-meta leading-relaxed text-ink-muted">
+        Worth a check if your product carries a detail we did not see. These are leads, not lines to
+        file as they are.
       </p>
       <ul className="flex flex-col border-t border-rule">
         {alternatives.map((alt, i) => (
           <li
             key={`${alt.code}-${i}`}
-            className="flex items-center gap-4 border-b border-rule px-1 py-3"
+            className="flex min-h-11 items-center gap-4 border-b border-rule px-1 py-2.5"
           >
-            <MonoCode code={alt.code} size="sm" className="min-w-[11ch] shrink-0 font-medium" />
-            <span className="min-w-0 flex-1 text-[0.92rem] text-ink-muted">
+            <MonoCode code={alt.code} size="sm" className="min-w-[10.5ch] shrink-0" />
+            <span className="min-w-0 flex-1 font-sans text-[0.92rem] leading-snug text-ink-muted">
               {(alt.description ?? "").trim() || "Description not recorded"}
-            </span>
-            <span className="shrink-0 font-sans text-[0.68rem] font-semibold uppercase tracking-[0.1em] text-accent opacity-75">
-              Verify
             </span>
           </li>
         ))}
@@ -100,66 +266,83 @@ function AlternativesSection({
   );
 }
 
-/** The document pane (left). */
-function DocumentPane({ result }: { result: UiClassification }) {
+// ----------------------------------------------------------------------------
+// The document pane (the one lifted sheet).
+// ----------------------------------------------------------------------------
+
+function DocumentPane({
+  result,
+  reveal,
+}: {
+  result: UiClassification;
+  reveal: ReturnType<typeof useReveal>;
+}) {
   const isSix = result.isSixDigit;
   const lines = reasoningLines(result.reasoning);
-  const citation = result.citation;
-  const components = Array.isArray(result.components) ? result.components : [];
 
   return (
     <Surface
       as="article"
       variant="raised"
+      sheet
       role="region"
-      aria-label="Classification readout"
-      className="p-[clamp(22px,3vw,40px)] motion-safe:animate-[prevyl-settle_0.42s_ease_both]"
+      aria-label="Classification record"
+      className="p-card"
     >
-      {/* eyebrow */}
-      <p className="mb-[18px] flex items-center gap-2.5 font-sans text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-ink-muted">
-        <span aria-hidden="true" className="h-px w-[18px] bg-accent" />
-        {isSix ? "Narrowed · 6-digit subheading" : "Classified · 8-digit tariff line"}
-      </p>
+      <div className="doc-margin-rule">
+        {/* eyebrow + the hero heading. The <h1> is the outcome itself. */}
+        <p className="mb-4 font-sans text-eyebrow font-semibold uppercase tracking-[var(--tracking-eyebrow)] text-ink-muted">
+          {isSix ? "Narrowed to a 6-digit subheading" : "Proposed 8-digit tariff line"}
+        </p>
 
-      {/* headline code */}
-      <MonoCode code={result.hsCode} size="display" className="block" />
-      <p className="mt-3.5 max-w-[36ch] font-display text-[clamp(1.18rem,2.2vw,1.55rem)] font-normal leading-[1.32] text-ink">
-        {descriptionFallback(result)}
-      </p>
+        <h1 className="sr-only">
+          {isSix
+            ? `Narrowed to ITC-HS subheading ${result.hsCode}. ${descriptionFallback(result)}`
+            : `Proposed ITC-HS tariff line ${result.hsCode}. ${descriptionFallback(result)}`}
+        </h1>
 
-      {/* six-digit: narrowing framing + 6-vs-8 explainer */}
-      {isSix ? (
-        <>
-          <div className="mt-[18px] flex items-start gap-3 rounded-r-[10px] border border-[color-mix(in_srgb,var(--band-medium)_42%,var(--rule))] border-l-[3px] border-l-band-medium bg-[color-mix(in_srgb,var(--band-medium)_13%,var(--surface))] px-4 py-3.5">
-            <Filter
-              aria-hidden="true"
-              strokeWidth={1.7}
-              className="mt-0.5 size-[18px] shrink-0 text-band-medium"
-            />
-            <p className="font-sans text-[0.92rem] leading-relaxed text-ink">
+        {/* the hero code (clip-revealed onto the baseline). MonoCode owns its
+            own a11y: code segments are aria-hidden, the group carries an
+            aria-label, and the copy controls stay reachable. */}
+        <HeroCode result={result} codeVariants={reveal.code} />
+
+        {/* description demoted to a caption beneath the code */}
+        <p className="mt-4 max-w-[42ch] font-sans text-[clamp(1.02rem,1.6vw,1.2rem)] leading-snug text-ink-muted">
+          {descriptionFallback(result)}
+        </p>
+
+        {/* framing line, by shape */}
+        {isSix ? (
+          <div className="mt-5 flex items-start gap-3 rounded-sm border border-rule-strong border-l-[3px] border-l-band-medium bg-surface-sunk px-4 py-3.5">
+            <p className="font-sans text-[0.95rem] leading-relaxed text-ink">
               {SIX_DIGIT_NARROWING}
             </p>
           </div>
-          <p className="mt-3.5 border-t border-rule pt-3.5 font-sans text-[0.86rem] leading-relaxed text-ink-muted">
+        ) : (
+          <p className="mt-5 font-sans text-[0.95rem] leading-relaxed text-ink-muted">
+            {EIGHT_DIGIT_FRAMING}
+          </p>
+        )}
+      </div>
+
+      {/* 6-digit: candidate list is the PRIMARY decision; show it FIRST. */}
+      {isSix ? (
+        <>
+          <AlternativesSection result={result} />
+          <p className="mt-5 max-w-read font-sans text-meta leading-relaxed text-ink-muted">
             {SIX_VS_EIGHT_EXPLAINER}
           </p>
         </>
-      ) : (
-        <p className="mt-3.5 border-t border-rule pt-3.5 font-sans text-[0.86rem] leading-relaxed text-ink-muted">
-          {EIGHT_DIGIT_FRAMING}
+      ) : null}
+
+      {/* GENERATED reasoning — clearly labelled as generated, kept separate from
+          the verifiable citation that lives in the margin. */}
+      <section className="mt-9">
+        <RuleLine label={RATIONALE_HEADING} lineNumber={isSix ? "03" : "01"} />
+        <p className="mt-3 font-sans text-meta italic leading-relaxed text-ink-muted">
+          {GENERATED_EXPLANATION_LABEL}
         </p>
-      )}
-
-      {/* advisory */}
-      <p className="mt-[18px] flex items-center gap-2.5 border-t border-rule pt-4 font-sans text-[0.85rem] text-ink-muted">
-        <Info aria-hidden="true" strokeWidth={1.7} className="size-4 shrink-0 text-accent" />
-        {ADVISORY}
-      </p>
-
-      {/* why this code */}
-      <section className="mt-8 sm:mt-9">
-        <RuleLine label="Why this code" />
-        <div className="mt-3.5 max-w-[60ch] space-y-2.5">
+        <div className="mt-3 max-w-read space-y-2.5">
           {lines.length > 0 ? (
             lines.map((line, i) => (
               <p key={i} className="font-sans text-[0.98rem] leading-relaxed text-ink">
@@ -168,79 +351,36 @@ function DocumentPane({ result }: { result: UiClassification }) {
             ))
           ) : (
             <p className="font-sans text-[0.98rem] leading-relaxed text-ink-muted">
-              No rationale was recorded for this result.
+              {RATIONALE_EMPTY}
             </p>
           )}
         </div>
       </section>
 
-      {/* alternatives / candidates */}
-      <AlternativesSection result={result} />
+      {/* 8-digit: alternatives come after the reasoning (secondary). */}
+      {!isSix ? <AlternativesSection result={result} /> : null}
 
-      {/* expanders — full record, free to read */}
-      <div className="mt-7 flex flex-col gap-2.5" aria-label="Full record, free to read">
-        <Expander title="Full reasoning" meta="Read the trace">
-          <div className="space-y-2.5">
-            {lines.length > 0 ? (
-              lines.map((line, i) => <p key={i}>{line}</p>)
-            ) : (
-              <p>No rationale was recorded for this result.</p>
-            )}
-          </div>
+      {/* The full record, free to read. Down-weighted disclosure rows. */}
+      <div className="mt-9 flex flex-col gap-2.5" aria-label="The full record, free to read">
+        <Expander title="Components and materials" meta={componentsMeta(result)}>
+          <ComponentsBody result={result} />
         </Expander>
-
-        {citation ? (
-          <Expander title="Chapter & section notes (verbatim)" meta="Sources">
-            <div className="space-y-3">
-              <p className="border-l-2 border-accent py-0.5 pl-3.5 font-display text-[0.95rem] font-normal italic text-ink">
-                {(citation.primary?.verbatim_text ?? "").trim() || "No verbatim text recorded."}
-              </p>
-              <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5">
-                <dt className="text-[0.84rem] text-ink-muted">Source</dt>
-                <dd className="m-0 font-mono text-[0.84rem] text-accent-ink">
-                  {(citation.primary?.source_ref ?? "").trim() || "n/a"}
-                </dd>
-                <dt className="text-[0.84rem] text-ink-muted">Rule applied</dt>
-                <dd className="m-0 text-[0.9rem] text-ink">
-                  {(citation.gir_applied ?? "").trim() || "n/a"}
-                </dd>
-              </dl>
-            </div>
-          </Expander>
-        ) : null}
-
-        {components.length > 0 ? (
-          <Expander title="Components" meta={`${components.length} part${components.length === 1 ? "" : "s"}`}>
-            <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5">
-              {components.map((c, i) => (
-                <React.Fragment key={`${c.name}-${i}`}>
-                  <dt className="text-[0.84rem] capitalize text-ink-muted">
-                    {(c.role ?? "part").trim() || "part"}
-                  </dt>
-                  <dd className="m-0 text-[0.9rem] text-ink">
-                    {`${(c.name ?? "—").trim() || "—"} · ${(c.material ?? "—").trim() || "—"}`}
-                  </dd>
-                </React.Fragment>
-              ))}
-            </dl>
-          </Expander>
-        ) : null}
 
         <Expander title="Export policy detail" meta="India · ITC(HS)">
           <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5">
-            <dt className="text-[0.84rem] text-ink-muted">Export policy</dt>
+            <dt className="text-meta text-ink-muted">Export policy</dt>
             <dd className="m-0 text-[0.9rem] text-ink">
               {(result.exportPolicy ?? "").trim() || "Not recorded against this line."}
             </dd>
-            <dt className="text-[0.84rem] text-ink-muted">Policy condition</dt>
+            <dt className="text-meta text-ink-muted">Policy condition</dt>
             <dd className="m-0 text-[0.9rem] text-ink">
               {(result.policyCondition ?? "").trim() || "None recorded against this line."}
             </dd>
-            <dt className="text-[0.84rem] text-ink-muted">India-specific</dt>
+            <dt className="text-meta text-ink-muted">India-specific</dt>
             <dd className="m-0 text-[0.9rem] text-ink">
               {result.indiaSpecific
-                ? "Yes — this line is an Indian national breakout."
-                : "No — this line matches the WCO HS 2022 structure."}
+                ? "Yes. This line is an Indian national breakout."
+                : "No. This line matches the WCO HS 2022 structure."}
             </dd>
           </dl>
         </Expander>
@@ -249,143 +389,207 @@ function DocumentPane({ result }: { result: UiClassification }) {
   );
 }
 
-/** The living margin / assessment pane (right). */
-function MarginPane({ record }: { record: ResultViewRecord }) {
+function componentsMeta(result: UiClassification): string {
+  const components = Array.isArray(result.components) ? result.components : [];
+  if (components.length === 0) return "None recorded";
+  return `${components.length} part${components.length === 1 ? "" : "s"}`;
+}
+
+function ComponentsBody({ result }: { result: UiClassification }) {
+  const components = Array.isArray(result.components) ? result.components : [];
+  if (components.length === 0) {
+    return <p>No separate components were recorded for this product.</p>;
+  }
+  return (
+    <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5">
+      {components.map((c, i) => (
+        <React.Fragment key={`${c.name}-${i}`}>
+          <dt className="text-meta capitalize text-ink-muted">{(c.role ?? "part").trim() || "part"}</dt>
+          <dd className="m-0 text-[0.9rem] text-ink">
+            {`${(c.name ?? "—").trim() || "—"} · ${(c.material ?? "—").trim() || "—"}`}
+          </dd>
+        </React.Fragment>
+      ))}
+    </dl>
+  );
+}
+
+// ----------------------------------------------------------------------------
+// The living margin (attached marginalia, subordinate to the sheet).
+// ----------------------------------------------------------------------------
+
+function MarginPane({
+  record,
+  reveal,
+}: {
+  record: ResultViewRecord;
+  reveal: ReturnType<typeof useReveal>;
+}) {
   const result = record.result;
   const citation = result.citation;
-  const hasPolicyChip = Boolean((result.exportPolicy ?? "").trim());
+  const thin = evidenceIsThin(result);
+  const sourceLine = humanizeSourceRef(citation);
+  const quoted = verbatim(citation);
 
   return (
-    <div className="flex flex-col gap-[clamp(18px,2.2vw,22px)]">
-      {/* assessment card */}
-      <Surface
-        as="section"
-        variant="raised"
-        aria-label="Assessment"
-        className="relative p-[clamp(20px,2.4vw,26px)] motion-safe:animate-[prevyl-settle_0.42s_ease_both] motion-safe:[animation-delay:0.06s]"
-      >
-        {/* stamp emblem top-right */}
-        <div className="absolute right-[18px] top-[18px]">
-          <SealEmblem size={74} label="RULE-CHECKED" />
-        </div>
+    <div className="flex flex-col gap-5 px-1 py-1">
+      {/* ASSESSMENT: the band, the one stamp, the graduated advisory. */}
+      <section aria-label="Assessment" className="relative">
+        {/* ONE archival stamp — suppressed when the record is thin (chrome and
+            substance move together). It overlaps the gutter, pressed once. */}
+        {!thin ? (
+          <motion.div
+            variants={reveal.seal}
+            className="pointer-events-none absolute -top-1 right-0"
+            aria-hidden="true"
+          >
+            <SealEmblem size={66} label="RECORDED · NOT A RULING" />
+          </motion.div>
+        ) : null}
 
-        <p className="mb-4 font-sans text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-ink-muted">
+        <p className="mb-4 font-sans text-eyebrow font-semibold uppercase tracking-[var(--tracking-eyebrow)] text-ink-muted">
           Assessment
         </p>
 
-        <ConfidenceBand band={result.confidenceBand} variant="meter" />
+        <motion.div variants={reveal.ink}>
+          <ConfidenceBand band={result.confidenceBand} variant="meter" />
+        </motion.div>
 
-        <RuleLine className="my-4.5" />
+        {/* The single decision-point advisory, graduated by band. Said ONCE. */}
+        <p className="mt-4 border-t border-rule pt-3.5 font-sans text-meta leading-relaxed text-ink">
+          {BAND_ADVISORY[result.confidenceBand]}
+        </p>
+      </section>
 
-        {/* primary citation */}
-        {citation ? (
-          <div>
-            <div className="mb-2.5 flex items-center justify-between gap-2.5">
-              <span className="font-sans text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-ink-muted">
-                Primary citation
-              </span>
-              <Badge variant="accent" className="font-mono">
-                {(citation.gir_applied ?? "GIR").trim() || "GIR"}
-              </Badge>
-            </div>
-            <p className="mb-2 font-sans text-[0.78rem] text-ink-muted">
-              {`source · ${(citation.primary?.source_ref ?? "n/a").trim() || "n/a"}`}
-            </p>
-            <blockquote className="m-0 rounded-r-lg border-l-[3px] border-accent bg-surface-sunk px-3.5 py-3 font-display text-[0.95rem] font-normal italic leading-snug text-ink">
-              {(citation.primary?.verbatim_text ?? "").trim() ||
-                "No verbatim text recorded for this citation."}
-            </blockquote>
-          </div>
-        ) : null}
+      {/* THE VERIFIABLE SOURCE — kept visually distinct from the generated
+          reasoning in the document. This is the quote you can look up. */}
+      <section aria-label={CITATION_HEADING}>
+        <div className="mb-2.5 flex items-center justify-between gap-2.5">
+          <span className="font-sans text-eyebrow font-semibold uppercase tracking-[var(--tracking-eyebrow)] text-ink-muted">
+            {CITATION_HEADING}
+          </span>
+          {citation?.gir_applied ? (
+            <Badge variant="accent" className="font-mono">
+              {citation.gir_applied}
+            </Badge>
+          ) : null}
+        </div>
 
-        <RuleLine className="my-4.5" />
+        <p className="mb-2 font-sans text-meta text-ink-muted">{sourceLine}</p>
 
-        {/* policy + india chips */}
-        <div className="flex flex-wrap gap-2.5">
-          {hasPolicyChip ? (
+        {quoted ? (
+          <blockquote
+            className={cn(
+              "m-0 rounded-sm border-l-[3px] border-accent-quiet bg-surface-sunk px-3.5 py-3",
+              "font-display text-[0.95rem] font-normal italic leading-snug text-ink",
+            )}
+          >
+            {quoted}
+          </blockquote>
+        ) : (
+          <p className="rounded-sm border border-dashed border-rule-strong bg-surface-sunk px-3.5 py-3 font-sans text-meta leading-relaxed text-ink-muted">
+            No verbatim note was recorded for this match. With no source text to check, treat the
+            reading as a lead and verify it against the schedule yourself.
+          </p>
+        )}
+      </section>
+
+      {/* Policy / origin annotations. */}
+      {(result.exportPolicy || result.indiaSpecific) ? (
+        <section aria-label="Policy and origin" className="flex flex-wrap gap-2">
+          {(result.exportPolicy ?? "").trim() ? (
             <Chip variant="policy" className="normal-case tracking-normal">
               {`Export policy · ${(result.exportPolicy ?? "").trim()}`}
             </Chip>
-          ) : (
-            <Chip variant="neutral" className="normal-case tracking-normal">
-              Export policy · not recorded
-            </Chip>
-          )}
+          ) : null}
           {result.indiaSpecific ? (
             <Chip variant="india" className="normal-case tracking-normal">
               India-specific line
             </Chip>
           ) : null}
-        </div>
+        </section>
+      ) : null}
 
-        {result.policyCondition && (result.policyCondition ?? "").trim() ? (
-          <p className="mt-3 font-sans text-[0.8rem] leading-relaxed text-ink-muted">
-            {result.policyCondition}
-          </p>
-        ) : null}
-
-        <p className="mt-4 flex items-center gap-2 border-t border-rule pt-3.5 font-sans text-[0.8rem] text-ink-muted">
-          <Info aria-hidden="true" strokeWidth={1.7} className="size-3.5 shrink-0 text-accent" />
-          {ADVISORY}
-        </p>
-      </Surface>
-
-      {/* gated actions card */}
-      <Surface
-        as="section"
-        variant="raised"
-        aria-label="Record actions"
-        className="p-[clamp(20px,2.4vw,26px)] motion-safe:animate-[prevyl-settle_0.42s_ease_both] motion-safe:[animation-delay:0.1s]"
-      >
+      {/* RECORD ACTIONS — kept flat, never a co-equal card. */}
+      <section aria-label="Keep this record" className="border-t border-rule pt-5">
         <ResultActions record={record} />
-      </Surface>
+      </section>
+
+      {/* Verify it yourself — inviting verification is trust-building. */}
+      <a
+        href="https://www.indiantradeportal.in/vs.jsp?lang=0&id=0,1,9046"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={cn(
+          "inline-flex items-center gap-1.5 font-sans text-meta text-accent-ink underline-offset-4 hover:underline",
+          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus rounded-sm",
+        )}
+      >
+        Look this up in the official ITC(HS) schedule
+        <ArrowRight aria-hidden="true" strokeWidth={1.9} className="size-3.5" />
+      </a>
     </div>
   );
 }
 
+// ----------------------------------------------------------------------------
+// ResultView — the signature screen.
+// ----------------------------------------------------------------------------
+
 /**
- * ResultView — the hero readout (hero-B + state-sixdigit). A two-pane document /
- * margin layout: the classification document on the left, the assessment and
- * record actions in the living margin on the right. Branches on `isSixDigit` for
- * framing and labels. Confidence is band-only, via the ConfidenceBand primitive.
+ * ResultView — the hero readout. One lifted document sheet carries the HS code
+ * as the hero object (description demoted to a caption); the living margin holds
+ * the assessment band, one archival stamp, and the single VERIFIABLE citation,
+ * kept distinct from the GENERATED reasoning on the sheet. Branches on
+ * `isSixDigit` into a visibly different shape: a ghosted ".__.__" tail and a
+ * primary "choose one to verify" candidate list. Confidence is band-only.
+ *
+ * The one signature reveal (sheet rises, code clip-reveals, band inks, seal
+ * presses once) runs entrance-only via `motion`; prefers-reduced-motion settles
+ * everything instantly.
  */
 function ResultView({ record }: ResultViewProps) {
   const result = record.result;
+  const reveal = useReveal();
 
   return (
-    <div className="pb-24 sm:pb-12">
-      {/* Co-located entrance keyframe; the global reduced-motion guard zeroes it. */}
-      <style>{settleKeyframes}</style>
-
-      {/* query line */}
-      <div className="mb-[clamp(18px,2.4vw,28px)] flex flex-wrap items-center gap-3.5">
-        <span className="font-sans text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-ink-muted">
-          Description filed
+    <motion.div
+      className="pb-16 sm:pb-12"
+      initial="hidden"
+      animate="shown"
+      variants={reveal.sheet}
+    >
+      {/* query echo — this is the user's input, shown as plain data, not a
+          pull-quote (dressing a rough description as authoritative would lie). */}
+      <div className="mb-[clamp(16px,2.4vw,26px)] flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <span className="font-sans text-eyebrow font-semibold uppercase tracking-[var(--tracking-eyebrow)] text-ink-muted">
+          {QUERY_ECHO_LABEL}
         </span>
-        <span className="font-display text-[clamp(1.05rem,2vw,1.34rem)] font-normal italic text-ink">
-          <span aria-hidden="true" className="text-accent">
-            &ldquo;
-          </span>
-          {record.query}
-          <span aria-hidden="true" className="text-accent">
-            &rdquo;
-          </span>
-        </span>
+        <span className="font-mono text-[0.95rem] text-ink">{record.query}</span>
       </div>
 
       <DocumentMargin
-        document={<DocumentPane result={result} />}
-        margin={<MarginPane record={record} />}
+        document={<DocumentPane result={result} reveal={reveal} />}
+        margin={<MarginPane record={record} reveal={reveal} />}
       />
-    </div>
+
+      {/* Terminal action — close the loop. */}
+      <div className="mt-9 flex flex-wrap items-center gap-3">
+        <Link
+          href="/"
+          className={cn(
+            "inline-flex min-h-11 items-center gap-2 rounded-md border border-rule-strong bg-surface px-4 font-sans text-body font-semibold text-ink",
+            "transition-colors duration-150 ease-[var(--ease-ledger)]",
+            "hover:border-accent hover:text-accent-ink",
+            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
+          )}
+        >
+          <Plus aria-hidden="true" strokeWidth={2} className="size-[1.05rem]" />
+          {CLASSIFY_ANOTHER_LABEL}
+        </Link>
+      </div>
+    </motion.div>
   );
 }
-
-const settleKeyframes = `
-@keyframes prevyl-settle {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: none; }
-}
-`;
 
 export { ResultView };
