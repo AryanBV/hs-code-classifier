@@ -42,7 +42,7 @@ const SUNK = "#d9d4cb"; // --surface-sunk
 const INK = "#27221d"; // --ink
 const INK_MUTED = "#5f5952"; // --ink-muted
 const RULE = "#c7c2ba"; // --rule
-const RULE_STRONG = "#918b82"; // --rule-strong
+const RULE_STRONG = "#7f7971"; // --rule-strong (synced to the round-2 token nudge)
 const ACCENT_QUIET = "#864b39"; // --accent-quiet (seal, citation rule, links)
 
 /** Fetch a font as ArrayBuffer; return null on any failure so the card still renders. */

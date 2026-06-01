@@ -39,7 +39,10 @@
 
   /* ---- Rules: decorative hairline vs load-bearing boundary ---- */
   --rule: oklch(0.815 0.012 80); /* faint flourish hairline */
-  --rule-strong: oklch(0.640 0.015 78); /* ≥3:1 vs surface — control/card borders, region splits */
+  /* Darkened to clear WCAG 1.4.11 (>=3:1) against EVERY plane it borders, not
+     just paper. Worst case is the darkest light plane, --bg(0.888): now 3.06:1
+     (was 2.41:1). Also vs --surface 3.80:1, vs --paper 4.19:1. */
+  --rule-strong: oklch(0.580 0.015 78); /* >=3:1 vs bg/surface/paper — control/card borders, region splits */
 
   /* ---- Accent split: action vs quiet vs a COOL focus that is NOT the brand ---- */
   --accent: oklch(0.445 0.118 34); /* primary action only — deep oxblood / sealing-wax */
@@ -151,7 +154,10 @@
   --ink-muted: oklch(0.725 0.016 80); /* ~4.9:1 on surface (AA) */
 
   --rule: oklch(0.345 0.012 74);
-  --rule-strong: oklch(0.545 0.018 78); /* ≥3:1 vs surface */
+  /* Lightened to clear WCAG 1.4.11 (>=3:1) against EVERY plane it borders, not
+     just bg/surface. Worst case is the LIGHTEST dark plane, --paper(0.338): now
+     3.25:1 (was 2.39:1). Also vs --surface 4.33:1, vs --bg 4.92:1. */
+  --rule-strong: oklch(0.620 0.018 78); /* >=3:1 vs bg/surface/paper */
 
   --accent: oklch(0.685 0.118 46); /* warm sealing-wax that reads on dark; AA with dark text */
   --accent-quiet: oklch(0.640 0.090 44);

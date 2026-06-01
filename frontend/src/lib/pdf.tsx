@@ -17,6 +17,7 @@ import {
 
 import type { ConfidenceBand, UiClassification } from "./types";
 import { makeRecordId, formatGeneratedAt } from "./record-id";
+import { BAND_MEANING } from "./content";
 
 /**
  * generateAndDownloadPdf — builds a premium, filing-grade "Classification
@@ -103,7 +104,7 @@ const C = {
   ink: "#27221d", // --ink
   inkMuted: "#5f5952", // --ink-muted
   rule: "#c7c2ba", // --rule
-  ruleStrong: "#918b82", // --rule-strong
+  ruleStrong: "#7f7971", // --rule-strong (light) — darkened for WCAG 1.4.11 >=3:1
   accent: "#893624", // --accent (oxblood)
   accentQuiet: "#864b39", // --accent-quiet (seal, citation rule)
   accentInk: "#732719", // --accent-ink
@@ -122,13 +123,9 @@ const BAND_WORD: Record<ConfidenceBand, string> = {
   medium: "Medium",
   low: "Low",
 };
-// Plain-English meaning lines (mirrors lib/content.ts BAND_MEANING).
-const BAND_MEANING: Record<ConfidenceBand, string> = {
-  high: "A clear, well-supported reading. The notes and rules point one way.",
-  medium:
-    "A reasonable reading, but a close alternative could fit. Worth a careful look.",
-  low: "An uncertain reading. The product sits near a boundary, so treat this as a lead, not an answer.",
-};
+// Plain-English meaning lines: SINGLE SOURCE OF TRUTH is lib/content.ts
+// BAND_MEANING, imported above so the travelling PDF states the identical thing
+// as the on-screen band. Do NOT redefine these strings here.
 // Graduated decision-point advisory (mirrors lib/content.ts BAND_ADVISORY).
 const BAND_ADVISORY: Record<ConfidenceBand, string> = {
   high: "Confirm this against your actual product before you file.",

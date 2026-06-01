@@ -25,8 +25,9 @@ function SiteHeader({ className }: SiteHeaderProps) {
     <header
       className={cn(
         "sticky top-0 z-40 border-b border-rule-strong",
-        // Themed, legible backdrop so content scrolls cleanly beneath the rule.
-        "bg-bg/85 backdrop-blur-sm supports-[backdrop-filter]:bg-bg/70",
+        // The ledger is paper, not frosted glass: an OPAQUE surface so content
+        // scrolls cleanly beneath the rule with no backdrop-blur chrome idiom.
+        "bg-bg",
         className,
       )}
     >

@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import type { ConfidenceBand as ConfidenceBandValue } from "@/lib/types";
+import { BAND_MEANING } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 type BandVariant = "chip" | "meter" | "inline";
@@ -25,8 +26,6 @@ const BAND_SPEC: Record<
   {
     word: string;
     label: string;
-    /** Plain-English consequence line shown under the word. */
-    meaning: string;
     color: string;
     wash: string;
     /** AA-safe ink-toned swatch — used in the small chip/inline tick marks. */
@@ -42,7 +41,6 @@ const BAND_SPEC: Record<
   high: {
     word: "High",
     label: "High confidence",
-    meaning: "A strong, well-supported match. Confirm it against your product before filing.",
     color: "text-band-high",
     wash: "band-wash-high",
     seg: "bg-band-high border-band-high",
@@ -52,7 +50,6 @@ const BAND_SPEC: Record<
   medium: {
     word: "Medium",
     label: "Medium confidence",
-    meaning: "A reasonable match with some uncertainty. Check the basis and the close alternatives.",
     color: "text-band-medium",
     wash: "band-wash-medium",
     seg: "bg-band-medium border-band-medium",
@@ -62,7 +59,6 @@ const BAND_SPEC: Record<
   low: {
     word: "Low",
     label: "Low confidence",
-    meaning: "A weak reading. Treat it as a starting point and verify carefully before you rely on it.",
     color: "text-band-low",
     wash: "band-wash-low",
     seg: "bg-band-low border-band-low",
@@ -71,9 +67,11 @@ const BAND_SPEC: Record<
   },
 };
 
-/** The accessible reading carries the honesty framing, not a bare value. */
+/** The accessible reading carries the honesty framing, not a bare value.
+ *  The meaning line is sourced ONLY from content.ts BAND_MEANING so the screen,
+ *  the aria label, and the travelling PDF all state the identical thing. */
 function bandAriaLabel(band: ConfidenceBandValue): string {
-  return `Confidence band: ${BAND_SPEC[band].label}. ${BAND_SPEC[band].meaning}`;
+  return `Confidence band: ${BAND_SPEC[band].label}. ${BAND_MEANING[band]}`;
 }
 
 /**
@@ -192,7 +190,7 @@ function ConfidenceBand({ band, variant = "chip", className }: ConfidenceBandPro
         </div>
       </div>
       <p className="max-w-[34ch] font-sans text-meta leading-snug text-ink-muted">
-        {spec.meaning}
+        {BAND_MEANING[band]}
       </p>
     </div>
   );

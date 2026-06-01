@@ -1,6 +1,6 @@
-# Prevyl frontend — build handoff (2026-06-01)
+# Prevyl frontend — handoff (2026-06-02)
 
-A complete clean rebuild of the Prevyl ITC-HS classifier web app. Built autonomously while you were away. Branch: `feat/frontend-rebuild` (NOT pushed). Runs fully on a built-in mock, so you can review the whole thing with zero backend and zero paid calls.
+A complete, elevated, clean-rebuilt frontend for the Prevyl ITC-HS classifier. Built and refined autonomously across this session. Branch `feat/frontend-rebuild` (NOT pushed). Runs fully on a built-in mock, so the whole product is reviewable with zero backend and zero paid calls.
 
 ## Run it
 
@@ -10,56 +10,42 @@ npm install
 npm run dev      # http://localhost:3000
 ```
 
-With no env set, the app uses the built-in mock classifier and saves history to your browser (localStorage). Try the example chips on the landing, or type anything. A few queries exercise the different states:
+No env needed: the built-in mock classifier returns the exact frozen DTO and history saves to your browser. Example queries that exercise each state: anything → confident 8-digit; "printed cotton saree fabric" → 6-digit branch; "handbag" → a clarifying question; "graphic design consulting service" → a refusal. Routes: `/`, `/classify?q=…`, `/r/<id>` (a saved record), `/history`, `/about`, `/privacy`.
 
-- anything (e.g. "stainless steel hex bolts M10") -> confident 8-digit result
-- "printed cotton saree fabric" -> 6-digit subheading branch
-- "handbag" -> a clarifying question (ASK)
-- "graphic design consulting service" -> a refusal
-- routes: `/`, `/classify?q=...`, `/history`, `/r/<id>`, `/about`, `/privacy`
+## Design journey (why it looks the way it does)
 
-## Stack (all latest, verified at build)
+The first build was clean but generic. A multi-agent senior UX audit (~60 critics + benchmarks + personas) scored it **6/10** and gave a REFINE brief. We implemented it, re-audited (**7.8/10**), ran one surgical round, and a final panel scored it **8.5/10 — unanimous ship-ready, "AI-slop verdict retired."** The full record is in `design-mocks/`: `UX-AUDIT.md`, `RE-AUDIT.md`, `FINAL-VERDICT.md`, and before/after screenshots in `design-mocks/qa/` (before) and `design-mocks/qa3/` (after).
 
-Next 16.2.6 (App Router, Turbopack) · React 19.2 · Tailwind v4 · TypeScript · TanStack Query · next-themes · motion · RHF + Zod · Sonner · nuqs · next-intl (scaffold) · @supabase/ssr · @react-pdf/renderer · self-hosted Fraunces + Hanken Grotesk + Commit Mono.
+Theme: "Living Certificate / Customs Ledger." OKLCH luminance-first tokens (a desk→paper→lifted-sheet staircase), theme-aware elevation, a split accent with a cool focus, the confidence band as the page's one saturated chromatic event, a 4px spacing scale and role-named type scale; Fraunces (opsz/SOFT/WONK) + Hanken Grotesk + self-hosted Commit Mono. Light default + warm-dark.
 
-## What is built
+## What's built (elevated)
 
-- **Theme**: "Living Certificate / Customs Ledger", light default + warm-dark, the B "Instrument Readout" direction you picked. Tokens in `src/app/globals.css`. Confidence is shown as a band only, never a number; the typed client physically strips the numeric confidence so no component can render it.
-- **Screens**: landing/input, the classify flow (honest staged loading stepper -> result), the result hero (two-pane document + margin, layered free rationale, top-3, citation, policy, gated PDF + permalink), the 6-digit branch, the single-question ASK, the 5-bucket refuse, transient/daily error states, history, and a public permalink page with an OG image.
-- **PDF**: a formal "Classification Record" certificate (`src/lib/pdf.tsx`), generated on the client, gated as the conversion artifact.
-- **Infra**: error / not-found / global-error boundaries, env-guarded Supabase auth (`src/lib/supabase`, `src/components/auth`, `/auth/callback`, `src/middleware.ts`), env-guarded Cloudflare Turnstile (`src/components/cost/turnstile.tsx`), a next-intl scaffold (`src/i18n`, English only for now), and the un-applied DB migration SQL.
+- **Landing**: a two-column hero (value prop + a live example-record specimen), `?q=` carried-query aware, sunk input field, example chips.
+- **Result**: a lifted-document-sheet two-pane (document + true marginalia). The HS code is a struck hero with one-click copy (dotted + no-dots). Confidence is a BAND with a plain-English meaning line + a single graduated advisory (never a number). Verifiable citation is separated from generated reasoning. A "look this up in the official schedule" link. 6-digit branch is a distinct shape (ghosted tail, candidates promoted to "choose one"). **URL-addressable** (`/r/{id}`, so a refresh never re-spends the run). "Edit and run again" + "Classify another" on every terminal screen. Mobile: band-first + a sticky Copy/PDF action bar.
+- **Honest states**: a staged loading stepper (no fake timer/progress), a decoupled single-question ASK (explicit Continue), a calm 5-bucket refuse, distinct transient/timeout/daily-limit errors.
+- **History**: a real workspace — search, Record IDs (PRV-…), band chips, per-record actions.
+- **Artifacts**: a filing-grade PDF "Classification Record" (registered fonts, Record ID, verifiable citation, band as a word; no dead-end QR/link). A branded per-record OG image.
+- **Honesty system (hard rules, enforced)**: confidence band-only (the numeric value is stripped in the typed client); the seal is an archival mark, never a checkmark; "verify before filing"; the share link is honestly disabled until accounts exist (no dead-ending toast); italic means verbatim-quoted source only; no fabricated stats; no em-dashes.
+- **Infra**: error/404/global-error boundaries, env-guarded Supabase auth + Turnstile + next-intl scaffold, un-applied DB migration SQL (`supabase/migrations/0001_app_tables.sql`).
 
-## Things that need YOUR review or a decision (your sign-off items)
+Verified: `tsc` clean, eslint clean, `next build` green; visually checked at a true 1360px desktop two-pane + mobile, light + dark.
 
-1. **The 5 refuse messages** — `src/lib/refuse-copy.ts`. I drafted them in plain voice; tweak wording to taste.
-2. **The 6-vs-8-digit explainer + advisory** — `src/lib/content.ts` (`SIX_DIGIT_NARROWING`, `SIX_VS_EIGHT_EXPLAINER`, `ADVISORY`).
-3. **The global daily free-classification ceiling number** — I defaulted `NEXT_PUBLIC_DAILY_CEILING=200` in `.env.example`. Pick your real number. The enforcement hook is scaffolded; it activates with Supabase/Upstash (see below).
-4. **Brand assets** — I used a placeholder "Prevyl" wordmark and a simple `src/app/icon.svg`. You already have real brand assets in your Downloads (`prevyl-monogram-light.svg`, `prevyl-monogram-dark.svg`, `prevyl-og.svg`, `prevyl-brand-assets/`). Swap those into `src/components/layout/wordmark.tsx`, `src/app/icon.svg`, and add a real multi-size `favicon.ico` + `apple-icon`.
+## Your calls (review / tweak — none block ship)
 
-## Going live (when you are ready)
+- Copy is drafted in plain voice in `src/lib/content.ts` (tagline, band meanings + graduated advisories) and `src/lib/refuse-copy.ts` (the 5 refuse messages). Tweak to taste.
+- The daily free-classification ceiling defaults to `NEXT_PUBLIC_DAILY_CEILING=200` — pick your number.
+- Brand: the wordmark is typographic and `app/icon.svg` is the seal device. Swap in your real brand assets (you have monograms/OG in your Downloads) if you prefer.
 
-1. **Point at the real brain**: set `BACKEND_API_URL` to your Railway backend URL. The frontend proxies `/api/classify` and `/api/classify/answer` to it (keeps the URL server-side). Until then it uses the mock. No code change needed.
-2. **Provision the database** (user-gated, NOT done): apply `supabase/migrations/0001_app_tables.sql` via the Supabase MCP/CLI. It creates `classifications`, `classification_jobs`, `feedback`, `shared_records` with RLS, matching the frozen DTO. This unlocks: real accounts, cross-device history (migrate-on-login), public permalinks, and the shared daily ceiling.
-3. **Set Supabase env** (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`). Auth UX wakes up automatically (it shows "accounts coming soon" until then).
-4. **Re-gate the artifacts**: right now Download PDF and Share permalink work locally (so you can test them). Once auth is wired, gate them behind sign-in per the locked D6 decision (the soft "saved on this device, sign in to keep" note is already there).
-5. **Turnstile / Sentry / analytics**: set their env keys to turn them on. All are no-ops when unset.
-6. **Deploy**: Vercel for the frontend, `hscode.prevyl.com`. Set the env vars in the Vercel project.
+## "Make it sing" backlog (8.5 → 9.5, post-launch polish, from FINAL-VERDICT.md)
 
-## Decisions I made for you (all reversible)
+Non-blocking craft: deepen the seal deboss; lift paper grain off the perceptual floor; continuous margin-column gutter rhythm; remove a duplicate mobile band; tighten finish craft toward the Stripe/Linear ceiling.
 
-- Branch `feat/frontend-rebuild` off `feat/phase-4-pipeline-build`. Old throwaway `frontend/` removed (recoverable from git history). The old env held only a local API URL, so nothing was carried over; the new `frontend/.env.example` documents every variable.
-- The `design-mocks/` folder at the repo root is local scratch (the approved HTML mocks plus the QA screenshots). It is untracked and safe to delete.
-- Used Radix primitives directly with bespoke theming rather than the shadcn CLI, because `shadcn init` would overwrite the locked Customs-Ledger theme tokens. The component model is the same; the look is fully ours.
-- A backend-for-frontend mock so the whole app is demonstrable without the paid Gemini brain.
-- Guest-first: history in localStorage, ready to migrate on login.
+## To actually ship (your steps, not blocking)
 
-## Known minor items (non-blocking)
+1. Point `BACKEND_API_URL` at the real brain (Railway). The BFF proxies server-side; until then it uses the mock. **Note:** the free Gemini tier cannot complete a live classification within the 80s timeout (5 RPM throttle) — a live launch needs a small paid Tier-1 key.
+2. Apply `supabase/migrations/0001_app_tables.sql` (user-gated) for accounts/history-sync/permalinks/shared-records, then set the Supabase env. Auth UX and the real share/permalink wake up automatically; re-enable the share gate behind sign-in.
+3. Deploy: Vercel (frontend) at hscode.prevyl.com, Railway (backend, replicas=1).
 
-- `src/middleware.ts` works but Next 16 renamed the convention to `proxy.ts` (a build warning). Migrate later with `npx @next/codemod middleware-to-proxy`.
-- A cosmetic `/favicon.ico` 404 in the console until you add a real `favicon.ico` (the SVG tab icon already works).
-- The loading stepper flashes quickly on the mock (fast responses); it shows properly with the real ~40s backend. Tune `MOCK_DELAY_MS` to preview it.
+## Commits (branch `feat/frontend-rebuild`, not pushed)
 
-## Verification done
-
-- `tsc --noEmit` clean. `next build` green (all 9 routes compile and prerender).
-- Visual QA across every screen in light + dark + mobile via headless Chrome; screenshots saved under `design-mocks/qa/`. Confirmed: band-only (no numbers), verdigris-teal not green, two-pane reflow, the 6-digit branch, ASK, refuse, history, permalink, and the PDF action all work end-to-end on the mock.
+`f1823a9` clean rebuild → `c8dc9ee` UX elevation → `d8e703a` UX round 2 → (finalize polish to 9). `.env.example` documents every variable; with none set the app runs fully on the mock.

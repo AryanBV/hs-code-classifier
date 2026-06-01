@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ShieldQuestion, X } from "lucide-react";
+import { X } from "lucide-react";
 
 import { Surface } from "@/components/ui/surface";
 import { Stepper, type StepperStep } from "@/components/ui/stepper";
@@ -181,11 +181,12 @@ function LoadingView({ query, onCancel }: LoadingViewProps) {
         ) : null}
 
         <p className="mt-5 flex items-center justify-center gap-1.5 text-center font-sans text-meta tracking-[0.02em] text-ink-muted">
-          <ShieldQuestion
+          <span
             aria-hidden="true"
-            strokeWidth={1.7}
-            className="size-3.5 text-accent-quiet opacity-80"
-          />
+            className="font-display text-[0.95rem] leading-none text-accent-quiet opacity-80"
+          >
+            §
+          </span>
           Prevyl · Schedule 2 · ITC(HS) 2022
         </p>
       </div>
