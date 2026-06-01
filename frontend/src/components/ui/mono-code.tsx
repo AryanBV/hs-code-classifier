@@ -74,7 +74,9 @@ function MonoCode({
       className={cn(
         "inline-flex select-all items-baseline font-mono text-ink",
         isDisplay
-          ? "font-[number:var(--weight-label)] tracking-[var(--tracking-display)]"
+          ? // The hero code reads STRUCK into the sheet: lighter display weight,
+            // tight display tracking, and the letterpress relief text-shadow.
+            "font-[number:var(--weight-label)] tracking-[var(--tracking-display)] letterpress-text"
           : "font-medium",
         sizeClasses[size],
       )}
@@ -100,7 +102,13 @@ function MonoCode({
             )}
             <span
               aria-hidden="true"
-              className={cn(isTail && "text-ink-muted")}
+              className={cn(
+                // The trailing `.00` a broker confirms reads quieter than the
+                // struck live digits — on the hero, lighten it a touch more so
+                // the live-vs-tail ink contrast is legible.
+                isTail && "text-ink-muted",
+                isTail && isDisplay && "opacity-70",
+              )}
             >
               {part}
             </span>

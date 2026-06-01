@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { ArrowRight, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ArrowRight, Pencil, Plus } from "lucide-react";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 
 import { Surface } from "@/components/ui/surface";
@@ -14,12 +15,14 @@ import { Expander } from "@/components/ui/expander";
 import { Badge } from "@/components/ui/badge";
 import { Chip } from "@/components/ui/chip";
 import { DocumentMargin } from "@/components/layout/document-margin";
-import { ResultActions } from "@/components/result/result-actions";
+import { MobileActionBar, ResultActions } from "@/components/result/result-actions";
 import {
   ALTERNATIVES_LABEL,
   BAND_ADVISORY,
+  BAND_MEANING,
   CITATION_HEADING,
   CLASSIFY_ANOTHER_LABEL,
+  EDIT_AND_RERUN_LABEL,
   EIGHT_DIGIT_FRAMING,
   GENERATED_EXPLANATION_LABEL,
   QUERY_ECHO_LABEL,
@@ -323,6 +326,21 @@ function DocumentPane({
             {EIGHT_DIGIT_FRAMING}
           </p>
         )}
+
+        {/* C1 (mobile): the band is the one honest signal and must show high,
+            right under the code, not buried at the foot of a long column. On
+            `< lg` we hoist a compact band strip here (the full meter still
+            lives in the margin, which stacks below on mobile). The desktop
+            two-pane keeps the band only in the margin, so this is `lg:hidden`. */}
+        <div
+          className="mt-6 flex flex-col gap-2 border-t border-rule pt-4 lg:hidden"
+          aria-hidden="true"
+        >
+          <ConfidenceBand band={result.confidenceBand} variant="inline" />
+          <p className="max-w-read font-sans text-meta leading-snug text-ink-muted">
+            {BAND_MEANING[result.confidenceBand]}
+          </p>
+        </div>
       </div>
 
       {/* 6-digit: candidate list is the PRIMARY decision; show it FIRST. */}
@@ -339,7 +357,10 @@ function DocumentPane({
           the verifiable citation that lives in the margin. */}
       <section className="mt-9">
         <RuleLine label={RATIONALE_HEADING} lineNumber={isSix ? "03" : "01"} />
-        <p className="mt-3 font-sans text-meta italic leading-relaxed text-ink-muted">
+        {/* H10 (honesty): NO italic here. Italic is reserved strictly for the
+            verbatim quoted source in the margin; an italic on the GENERATED
+            label would muddy the single clearest honesty contrast. Upright sans. */}
+        <p className="mt-3 font-sans text-meta leading-relaxed text-ink-muted">
           {GENERATED_EXPLANATION_LABEL}
         </p>
         <div className="mt-3 max-w-read space-y-2.5">
@@ -436,11 +457,14 @@ function MarginPane({
       {/* ASSESSMENT: the band, the one stamp, the graduated advisory. */}
       <section aria-label="Assessment" className="relative">
         {/* ONE archival stamp — suppressed when the record is thin (chrome and
-            substance move together). It overlaps the gutter, pressed once. */}
+            substance move together). It overlaps the gutter, pressed once.
+            H9: the edge-overlap disc is a DESKTOP two-pane device; on a
+            full-width mobile margin it would float over the Assessment text and
+            clip the gutter, so it is `hidden lg:block`. */}
         {!thin ? (
           <motion.div
             variants={reveal.seal}
-            className="pointer-events-none absolute -top-1 right-0"
+            className="pointer-events-none absolute -top-1 right-0 hidden lg:block"
             aria-hidden="true"
           >
             <SealEmblem size={66} label="RECORDED · NOT A RULING" />
@@ -551,10 +575,21 @@ function MarginPane({
 function ResultView({ record }: ResultViewProps) {
   const result = record.result;
   const reveal = useReveal();
+  const router = useRouter();
+
+  // H8: "Edit and run again" carries the original query back to the input so an
+  // almost-right run becomes a one-detail edit, not a full retype. It routes to
+  // `/?q=` (the landing input reads `?q=` — Group C); "Classify another product"
+  // stays the distinct blank-start action.
+  const editAndRerun = React.useCallback(() => {
+    router.push(`/?q=${encodeURIComponent(record.query)}`);
+  }, [router, record.query]);
 
   return (
     <motion.div
-      className="pb-16 sm:pb-12"
+      // Reserve scroll room on mobile so the sticky bottom action bar (H11)
+      // never covers the terminal actions; desktop has no sticky bar.
+      className="pb-28 lg:pb-12"
       initial="hidden"
       animate="shown"
       variants={reveal.sheet}
@@ -573,10 +608,12 @@ function ResultView({ record }: ResultViewProps) {
         margin={<MarginPane record={record} reveal={reveal} />}
       />
 
-      {/* Terminal action — close the loop. */}
+      {/* Terminal actions — close the loop. "Edit and run again" carries the
+          query back to the input (H8); "Classify another product" starts blank. */}
       <div className="mt-9 flex flex-wrap items-center gap-3">
-        <Link
-          href="/"
+        <button
+          type="button"
+          onClick={editAndRerun}
           className={cn(
             "inline-flex min-h-11 items-center gap-2 rounded-md border border-rule-strong bg-surface px-4 font-sans text-body font-semibold text-ink",
             "transition-colors duration-150 ease-[var(--ease-ledger)]",
@@ -584,10 +621,27 @@ function ResultView({ record }: ResultViewProps) {
             "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
           )}
         >
+          <Pencil aria-hidden="true" strokeWidth={1.9} className="size-[1.05rem]" />
+          {EDIT_AND_RERUN_LABEL}
+        </button>
+        <Link
+          href="/"
+          className={cn(
+            "inline-flex min-h-11 items-center gap-2 rounded-md px-4 font-sans text-body font-semibold text-ink-muted",
+            "transition-colors duration-150 ease-[var(--ease-ledger)]",
+            "hover:text-accent-ink",
+            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus rounded-md",
+          )}
+        >
           <Plus aria-hidden="true" strokeWidth={2} className="size-[1.05rem]" />
           {CLASSIFY_ANOTHER_LABEL}
         </Link>
       </div>
+
+      {/* H11/C1: sticky bottom action bar (mobile only). Pins the CHA's two
+          load-bearing tasks (Copy code, Download PDF); `lg:hidden` internally
+          so the desktop two-pane is untouched. */}
+      <MobileActionBar record={record} />
     </motion.div>
   );
 }

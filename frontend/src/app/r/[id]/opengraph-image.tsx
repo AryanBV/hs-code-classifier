@@ -8,7 +8,11 @@ import { ImageResponse } from "next/og";
  * tick).
  *
  * Per-record data (the actual code + band + Record ID) is NOT server-available
- * in this no-DB build, so the card is branded-generic. The hooks for the real
+ * in this no-DB build, so the card is a tasteful BRANDED-GENERIC card. It makes
+ * no per-record claim: it shows no specific Record ID and no `/r/{id}` shareable
+ * URL, because that record does not resolve for a recipient yet (the matching
+ * /r/{id} page is localStorage-only and dead-ends off-device). Showing only the
+ * homepage brand mark keeps the preview honest. The hooks for the real
  * per-record path are wired and commented below: once Supabase `shared_records`
  * is provisioned, fetch the public, PII-scrubbed record by `id` and render the
  * real code, band word, and Record ID in place of the generic headline.
@@ -19,9 +23,9 @@ import { ImageResponse } from "next/og";
  *
  * Font note: Satori's parser throws `ltagTable is not defined` on fonts that
  * carry an Apple AAT `ltag` table (Commit Mono does). So the card uses ONLY the
- * clean Fraunces (display) + Hanken (body) TTF instances, and renders the
- * Record ID in Hanken rather than the code mono. The codes do not appear on the
- * generic card anyway; the per-record path (below) can render them in Hanken.
+ * clean Fraunces (display) + Hanken (body) TTF instances. The codes do not
+ * appear on the generic card anyway; the per-record path (below) can render them
+ * in Hanken when shared_records is live.
  */
 
 export const alt = "Prevyl · an Indian ITC-HS classification record you can verify before filing";
@@ -91,13 +95,15 @@ export default async function Image({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  // The Record ID is in the URL even without a DB. We display it as the record
-  // reference; the code/band stay generic until shared_records exists.
-  const { id } = await params;
-  const recordId = /^PRV-/i.test(id) ? id.toUpperCase() : "PRV · SHARED RECORD";
+  // Next 16: params is a Promise and must be awaited. We do NOT render the id as
+  // a per-record reference, because the matching /r/{id} page is localStorage-
+  // only and does not resolve for a recipient yet. Showing a specific Record ID
+  // here would imply a shareable, resolvable record that does not exist.
+  await params;
 
   // PER-RECORD PATH (DB): when `shared_records` is live, replace the generic
   // headline block with the real values, e.g.:
+  //   const { id } = await params;
   //   const rec = await getSharedRecord(id);   // public, PII-scrubbed
   //   headline = rec ? segmentCode(rec.hsCode) : GENERIC;
   //   bandWord = rec?.confidenceBand;           // render as WORD only, never a number
@@ -114,9 +120,6 @@ export default async function Image({
 
   const display = fraunces ? "Fraunces" : "serif";
   const body = hanken ? "Hanken Grotesk" : "sans-serif";
-  // Record ID rendered in Hanken with wide tracking (Commit Mono carries an AAT
-  // ltag table that Satori cannot parse, so it is not loaded here).
-  const mono = body;
 
   return new ImageResponse(
     (
@@ -220,8 +223,8 @@ export default async function Image({
             }}
           >
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <span style={{ fontFamily: mono, fontSize: 23, fontWeight: 600, color: INK, letterSpacing: 2 }}>
-                {recordId}
+              <span style={{ fontFamily: display, fontSize: 26, fontWeight: 600, color: INK, letterSpacing: 0 }}>
+                Classification record
               </span>
               <span style={{ fontSize: 18, color: INK_MUTED, marginTop: 6 }}>
                 hscode.prevyl.com

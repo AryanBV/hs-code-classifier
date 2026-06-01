@@ -37,10 +37,14 @@ function SealEmblem({
   return (
     <span
       className={cn(
-        // Pressed-into-paper look: a soft deboss inner shadow + a light top
-        // edge, rotated so it reads stamped (not parked in a box).
+        // Pressed-into-paper DEBOSS: a deeper inner-top shadow gives the disc a
+        // sunk rim, a specular inner-bottom lip catches the light, and a faint
+        // outer ring seats it on the paper. Theme-aware — the dark variant
+        // INVERTS (a dark inner well + a light top relief) so the mark stays a
+        // believable press in both themes instead of becoming a flat ring.
         "inline-grid place-items-center rounded-full text-accent-quiet",
-        "shadow-[inset_0_2px_4px_color-mix(in_oklab,var(--ink)_22%,transparent),inset_0_-1px_0_var(--highlight)]",
+        "shadow-[inset_0_2.5px_5px_color-mix(in_oklab,var(--ink)_30%,transparent),inset_0_-1px_0.5px_var(--specular),0_1px_1px_color-mix(in_oklab,var(--ink)_10%,transparent)]",
+        "dark:shadow-[inset_0_2px_5px_oklch(0_0_0/0.55),inset_0_-1px_0_var(--specular),0_1px_1px_oklch(0_0_0/0.4)]",
         "-rotate-[4deg]",
         className,
       )}
@@ -48,15 +52,15 @@ function SealEmblem({
         width: size,
         height: size,
         backgroundColor:
-          "color-mix(in oklab, var(--accent-quiet) 7%, var(--surface))",
+          "color-mix(in oklab, var(--accent-quiet) 12%, var(--surface-sunk))",
       }}
       aria-hidden="true"
     >
       <svg viewBox="0 0 100 100" fill="none" className="block size-[92%]">
-        {/* concentric emboss rings */}
-        <circle cx="50" cy="50" r="46" stroke="currentColor" strokeWidth="1.2" opacity="0.5" />
-        <circle cx="50" cy="50" r="39" stroke="currentColor" strokeWidth="2.2" opacity="0.85" />
-        <circle cx="50" cy="50" r="33" stroke="currentColor" strokeWidth="0.7" opacity="0.45" />
+        {/* concentric emboss rings — raised contrast so the press reads engraved */}
+        <circle cx="50" cy="50" r="46" stroke="currentColor" strokeWidth="1.4" opacity="0.65" />
+        <circle cx="50" cy="50" r="39" stroke="currentColor" strokeWidth="2.6" opacity="1" />
+        <circle cx="50" cy="50" r="33" stroke="currentColor" strokeWidth="0.9" opacity="0.6" />
 
         {/* inscribed ring label (non-affirmative registry text) */}
         <path
@@ -64,7 +68,7 @@ function SealEmblem({
           d="M50 17 a33 33 0 0 1 0 66 a33 33 0 0 1 0 -66"
           fill="none"
         />
-        <text className="fill-current font-mono" fontSize="6.4" letterSpacing="1.4" opacity="0.8">
+        <text className="fill-current font-mono" fontSize="6.4" letterSpacing="1.4" opacity="0.95">
           <textPath href={`#${pathId}`} startOffset="2%">
             {ringText}
           </textPath>

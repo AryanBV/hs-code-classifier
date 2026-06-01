@@ -17,7 +17,6 @@ import {
 
 import type { ConfidenceBand, UiClassification } from "./types";
 import { makeRecordId, formatGeneratedAt } from "./record-id";
-import { toMatrix } from "./qr";
 
 /**
  * generateAndDownloadPdf — builds a premium, filing-grade "Classification
@@ -28,8 +27,16 @@ import { toMatrix } from "./qr";
  * code is the hero, segmented 4-2-2 with the broker-confirmed .00 demoted. The
  * VERIFIABLE citation is visually separated from the GENERATED rationale. The
  * confidence band is a WORD plus a plain-English meaning line, NEVER a number.
- * A checkmark-free archival seal, a Record ID + timestamp, and a scannable QR to
- * the record close the certificate. Resilient to null/empty fields throughout.
+ * A checkmark-free archival seal plus a Record ID + timestamp close the
+ * certificate. Resilient to null/empty fields throughout.
+ *
+ * Honesty note: the certificate carries NO QR code and NO printed `/r/{id}`
+ * shareable link, because there is no server-side `shared_records` yet — such a
+ * link would dead-end ("not on this device") for any recipient. The Record ID
+ * (PRV-...) + the generated timestamp stay on paper as an honest reference that
+ * identifies the record without promising a working link. A non-clickable
+ * `hscode.prevyl.com` brand mark is the only URL shown. Restore the QR + record
+ * URL only once the link truly resolves for recipients.
  */
 
 // ---------------------------------------------------------------------------
@@ -172,13 +179,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 742,
     left: 74,
-    right: 150,
-  },
-  // The QR is positioned as its OWN fixed absolute element (bottom-right),
-  // independent of the footer text row, so flex sizing can never collapse it.
-  qrFixed: {
-    position: "absolute",
-    top: 742,
     right: 74,
   },
   // header
@@ -402,31 +402,6 @@ function SealVector({ size = 76 }: { size?: number }) {
   );
 }
 
-/** A scannable QR for the record URL, rendered as one vector Path. Null-safe. */
-function QrVector({ url, size = 70 }: { url: string; size?: number }) {
-  let matrix: boolean[][] | null = null;
-  try {
-    matrix = toMatrix(url);
-  } catch {
-    matrix = null;
-  }
-  if (!matrix) return null;
-  const n = matrix.length;
-  const margin = 2;
-  const dim = n + margin * 2;
-  let d = "";
-  for (let r = 0; r < n; r += 1) {
-    for (let c = 0; c < n; c += 1) {
-      if (matrix[r][c]) d += `M${c + margin} ${r + margin}h1v1h-1z`;
-    }
-  }
-  return (
-    <Svg width={size} height={size} viewBox={`0 0 ${dim} ${dim}`}>
-      <Path d={d} fill={C.ink} />
-    </Svg>
-  );
-}
-
 interface RecordInput {
   query: string;
   result: UiClassification;
@@ -434,7 +409,11 @@ interface RecordInput {
   recordId?: string;
   /** Optional: when the record was generated (defaults to now). */
   generatedAt?: number;
-  /** Optional: the public permalink base; the QR/footer link uses this. */
+  /**
+   * Optional: the public permalink base. Reserved (signature preserved) for when
+   * server-side `shared_records` exists; NOT currently printed as a link, since a
+   * `/r/{id}` URL would dead-end for recipients in the no-DB build.
+   */
   shareBaseUrl?: string;
 }
 
@@ -443,7 +422,6 @@ function CertificateDoc({
   result,
   recordId,
   generatedAt,
-  shareBaseUrl,
 }: RecordInput) {
   const r = result;
   const desc = safe(r.description, "Description not recorded");
@@ -461,8 +439,6 @@ function CertificateDoc({
   // `generatedAt` is resolved by the caller (generateAndDownloadPdf) so render
   // stays pure; the `?? 0` is only a type guard, never the live default.
   const stamp = formatGeneratedAt(generatedAt ?? 0);
-  const base = safe(shareBaseUrl, "https://hscode.prevyl.com");
-  const recordUrl = `${base.replace(/\/+$/, "")}/r/${id}`;
 
   const altLabel = r.isSixDigit ? "8-digit candidates to check" : "Close alternatives to check";
   const headlineEyebrow = r.isSixDigit
@@ -640,11 +616,14 @@ function CertificateDoc({
           </Text>
         </View>
 
-        {/* fixed footer text, repeated on every page */}
+        {/* fixed footer text, repeated on every page. The Record ID + the
+            non-clickable brand mark are an honest on-paper reference; no QR and
+            no `/r/{id}` link are printed, because that link does not yet resolve
+            for recipients (no server-side shared_records). */}
         <View style={[styles.footerFixed, styles.footer]} fixed>
           <View style={styles.footerLeft}>
             <Text style={styles.footerStrong}>{id}</Text>
-            <Text style={styles.footerText}>{recordUrl}</Text>
+            <Text style={styles.footerText}>hscode.prevyl.com</Text>
             <Text
               style={styles.pageNo}
               render={({ pageNumber, totalPages }) =>
@@ -652,12 +631,6 @@ function CertificateDoc({
               }
             />
           </View>
-        </View>
-
-        {/* scannable QR to the record — its own fixed element so flex sizing
-            can never collapse it, repeated on every page */}
-        <View style={styles.qrFixed} fixed>
-          <QrVector url={recordUrl} size={60} />
         </View>
       </Page>
     </Document>
@@ -681,7 +654,6 @@ export async function generateAndDownloadPdf(record: RecordInput): Promise<void>
       result={record.result}
       recordId={record.recordId}
       generatedAt={generatedAt}
-      shareBaseUrl={record.shareBaseUrl}
     />,
   ).toBlob();
 

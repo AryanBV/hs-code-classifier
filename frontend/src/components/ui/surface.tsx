@@ -9,8 +9,10 @@ export interface SurfaceProps extends React.HTMLAttributes<HTMLElement> {
   as?: React.ElementType;
   /**
    * Promote a `raised` surface to THE one signature document sheet: lighter +
-   * warmer paper, near-square corners, a directional cast shadow, a letterpress
-   * top edge, and faint surface-local grain. Additive — defaults off, so
+   * warmer paper that visibly LIFTS off the surrounding surface (>=3 ΔL),
+   * near-square corners, a top-lit gradient + a specular catch-light on the top
+   * edge, a deeper directional contact cast (`--shadow-3`), and visible
+   * surface-local grain (all in `.doc-sheet`). Additive — defaults off, so
    * ordinary `raised` cards stay a calm resting card. Reserve `sheet` for the
    * single hero artifact; elevation must mean something.
    */

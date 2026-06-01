@@ -25,22 +25,56 @@ type LandingValues = z.infer<typeof landingSchema>;
 const FIELD_ID = "product-description";
 const META_ID = "product-description-meta";
 
+export interface LandingFormProps {
+  /**
+   * H7 — the carried query. When a recovery exit (Cancel / refuse / error /
+   * "Edit and run again") routes back to `/?q=…`, the page reads that param
+   * server-side and hands it in here so the field returns PREFILLED with the
+   * person's words, not blank. Additive: defaults to "" so the cold-start
+   * landing is unchanged.
+   */
+  initialQuery?: string;
+}
+
 /**
  * LandingForm — the interactive hero. A single ledger field that takes a product
  * description and finds the code. Example chips pre-fill the field; the primary
  * action routes to /classify?q=… On submit we trim and hand off to the wizard
- * route. The field is a recessed well you write into; the input is DATA, not
- * literature, so the query is set in plain sans/mono, never editorial italic.
+ * route. The field is a recessed well (`.sunk`) you write into; the input is
+ * DATA, not literature, so the query is set in plain sans/mono, never editorial
+ * italic.
+ *
+ * The carried query (`initialQuery`) seeds the RHF default so the round-trip
+ * loop (result/refuse/error -> `/?q=…` -> here) actually prefills; on mount we
+ * drop the caret at the end so the person can keep typing where they left off.
  */
-export function LandingForm() {
+export function LandingForm({ initialQuery = "" }: LandingFormProps) {
   const router = useRouter();
   const textareaRef = React.useRef<HTMLTextAreaElement | null>(null);
 
   const { register, handleSubmit, setValue, control } = useForm<LandingValues>({
     resolver: zodResolver(landingSchema),
-    defaultValues: { query: "" },
+    defaultValues: { query: initialQuery },
     mode: "onSubmit",
   });
+
+  // H7 — when the field returns carrying a query, place the caret at the end so
+  // editing continues naturally. Runs once on mount only (prefill is the RHF
+  // default; this just positions the caret without stealing focus on cold start).
+  React.useEffect(() => {
+    if (!initialQuery) return;
+    const el = textareaRef.current;
+    if (!el) return;
+    el.focus();
+    const end = el.value.length;
+    try {
+      el.setSelectionRange(end, end);
+    } catch {
+      /* setSelectionRange is unsupported on some inputs; safe to ignore. */
+    }
+    // Mount-only: prefill positioning, not a reactive sync.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // The RHF ref is merged with our own so chips can focus the field.
   const { ref: rhfRef, ...queryField } = register("query");
@@ -100,10 +134,10 @@ export function LandingForm() {
       aria-label="Classify a product"
       className="w-full"
     >
-      {/* ---- The ledger field: a recessed well you write into ---- */}
+      {/* ---- The ledger field: a recessed well (.sunk) you write into ---- */}
       <div
         className={cn(
-          "group relative rounded-md border border-rule-strong bg-surface text-left elev-1",
+          "group relative rounded-md border border-rule-strong text-left sunk",
           "transition-[border-color,box-shadow] duration-150 ease-[var(--ease-ledger)]",
           "focus-within:border-accent",
           "focus-within:shadow-[var(--shadow-2),0_0_0_3px_color-mix(in_oklab,var(--focus)_24%,transparent)]",

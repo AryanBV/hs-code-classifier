@@ -171,14 +171,23 @@ function ClassifyClient({ query }: ClassifyClientProps) {
     if (!isPending) submitGuard.current = false;
   }, [isPending]);
 
-  // Persist a successful classification exactly once.
+  // Persist a successful classification exactly once, then make the result
+  // URL-ADDRESSABLE: replace the transient compute URL (/classify?q=…) with the
+  // durable record URL (/r/{id}). This holds for BOTH the initial classify and
+  // the multi-turn answer path (the save effect fires for any classification
+  // result, whichever mutation produced it). A refresh then reads the saved
+  // record from localStorage via /r/{id} instead of re-spending the ~40s
+  // rate-limited backend run. router.replace keeps it out of history so Back
+  // does not return to a recompute. The save+replace runs once per record;
+  // until it lands, the in-page ResultView still renders, so there is no flash.
   React.useEffect(() => {
     if (result?.responseType !== "classification") return;
     const key = `${originalQuery}::${result.hsCode}`;
     if (savedKey.current === key) return;
     savedKey.current = key;
-    saveHistory(originalQuery, result, Date.now());
-  }, [result, originalQuery]);
+    const saved = saveHistory(originalQuery, result, Date.now());
+    router.replace(`/r/${saved.id}`);
+  }, [result, originalQuery, router]);
 
   // Which discrete view is on screen — used to move focus on each transition.
   const viewKey = isPending
