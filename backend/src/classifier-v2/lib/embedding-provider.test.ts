@@ -178,16 +178,22 @@ describe('getEmbeddingProvider', () => {
     else process.env.EMBEDDING_PROVIDER = original;
   });
 
-  it('returns the Vertex provider by default (env unset)', () => {
+  it('returns the Gemini Developer provider by default (env unset) — Phase A2', () => {
     delete process.env.EMBEDDING_PROVIDER;
     const p = getEmbeddingProvider();
-    expect(p.name).toBe('vertex/gemini-embedding-001');
+    expect(p.name).toBe('developer/gemini-embedding-001');
     expect(p.dim).toBe(1536);
   });
 
-  it("returns the Vertex provider for EMBEDDING_PROVIDER='vertex'", () => {
+  it("returns the Gemini Developer provider for EMBEDDING_PROVIDER='developer'", () => {
+    process.env.EMBEDDING_PROVIDER = 'developer';
+    expect(getEmbeddingProvider().name).toBe('developer/gemini-embedding-001');
+  });
+
+  it("returns the Vertex provider for EMBEDDING_PROVIDER='vertex' (rollback path)", () => {
     process.env.EMBEDDING_PROVIDER = 'vertex';
     expect(getEmbeddingProvider().name).toBe('vertex/gemini-embedding-001');
+    expect(getEmbeddingProvider().dim).toBe(1536);
   });
 
   it('throws a clear RetrievalProviderError for an unknown provider', () => {

@@ -16,10 +16,12 @@ import type {
   TriageOutput,
 } from '../types';
 
-// ---- Mock the Vertex client BEFORE importing the SUT ------------------------
+// ---- Mock the LLM provider seam BEFORE importing the SUT --------------------
+// L1 now imports `generateContent` from the A2 provider seam (`../lib/llm-provider`),
+// so the mock targets that module (not `../lib/vertex-client`).
 const generateContentMock = vi.fn();
 
-vi.mock('../lib/vertex-client', () => ({
+vi.mock('../lib/llm-provider', () => ({
   generateContent: (...args: unknown[]) => generateContentMock(...args),
 }));
 

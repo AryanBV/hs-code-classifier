@@ -22,7 +22,7 @@
  */
 import * as fs from 'fs';
 import * as path from 'path';
-import { generateContent, type GeminiModel } from '../lib/vertex-client';
+import { generateContent, type GeminiModel } from '../lib/llm-provider';
 import type { ThinkingLevel } from '../lib/thinking-config';
 import {
   getSelectCandidateRows,

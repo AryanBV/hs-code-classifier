@@ -19,7 +19,7 @@
  */
 import * as fs from 'fs';
 import * as path from 'path';
-import { generateContent } from '../lib/vertex-client';
+import { generateContent } from '../lib/llm-provider';
 import { LlmOutputValidationError, TriageOutputZ, parseOrThrow } from '../schemas';
 import type {
   AttributeKey,

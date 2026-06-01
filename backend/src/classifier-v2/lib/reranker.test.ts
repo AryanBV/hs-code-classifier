@@ -1,7 +1,7 @@
 /**
  * Unit tests for the Reranker abstraction (mocked — no network).
  *
- * `./vertex-client` and `./cohere-client` are mocked. Asserts the GeminiFlash
+ * `./llm-provider` and `./cohere-client` are mocked. Asserts the GeminiFlash
  * reranker's recall-safety contract is exactly right:
  *  (a) correct id->score mapping, sort desc, topN cap;
  *  (b) an OMITTED candidate gets score 0 and is APPENDED (never dropped);
@@ -14,9 +14,16 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 const mockGenerateContent = vi.fn();
-vi.mock('./vertex-client', () => ({
-  generateContent: (...args: unknown[]) => mockGenerateContent(...args),
-}));
+// reranker now imports `generateContent` from the A2 provider seam, so the mock
+// must target `./llm-provider` (not `./vertex-client`). Keep the real type
+// re-exports the reranker relies on (VertexResponseSchema) via importOriginal.
+vi.mock('./llm-provider', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('./llm-provider')>();
+  return {
+    ...actual,
+    generateContent: (...args: unknown[]) => mockGenerateContent(...args),
+  };
+});
 
 const mockCohereRerank = vi.fn();
 // `vi.mock` factories are hoisted above the module body, so anything they

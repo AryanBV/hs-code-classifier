@@ -15,6 +15,7 @@
  */
 import { embedVertex, type EmbedTaskType } from './vertex-embed';
 import { RetrievalProviderError, isTransientError } from './retrieval-errors';
+import { GeminiDeveloperEmbeddingProvider } from './gemini-developer-embed';
 
 /* ---------------------------------------------------------------------------
  * Public contract
@@ -108,23 +109,26 @@ export class VertexEmbeddingProvider implements EmbeddingProvider {
  * Factory — single source of truth for the active embedding provider + its dim
  * --------------------------------------------------------------------------- */
 
-export type EmbeddingProviderName = 'vertex';
+export type EmbeddingProviderName = 'developer' | 'vertex';
 
 /**
  * Resolve the active embedding provider from env `EMBEDDING_PROVIDER`
- * (default 'vertex'). Only 'vertex' is implemented today; any other value throws
- * a clear error (Cohere embed is being retired; a future provider would add a
- * case here + its own client + dim).
+ * (default 'developer' as of Phase A2 — the Gemini Developer API free-tier key;
+ * Vertex billing was disabled 2026-06-01). 'vertex' stays selectable for
+ * rollback (it serves the SAME gemini-embedding-001 @1536 vectors via SA auth).
+ * Both provide L2-normalized 1536-dim vectors in the same cosine space.
  */
 export function getEmbeddingProvider(): EmbeddingProvider {
-  const choice = (process.env.EMBEDDING_PROVIDER ?? 'vertex').trim().toLowerCase();
+  const choice = (process.env.EMBEDDING_PROVIDER ?? 'developer').trim().toLowerCase();
   switch (choice) {
     case '':
+    case 'developer':
+      return new GeminiDeveloperEmbeddingProvider();
     case 'vertex':
       return new VertexEmbeddingProvider();
     default:
       throw new RetrievalProviderError(
-        `Unknown EMBEDDING_PROVIDER='${choice}'. Only 'vertex' (gemini-embedding-001, 1536-dim) is implemented.`,
+        `Unknown EMBEDDING_PROVIDER='${choice}'. Supported: 'developer' (default, Gemini Developer API) or 'vertex' (rollback). Both: gemini-embedding-001, 1536-dim.`,
         { provider: 'unknown', retryable: false },
       );
   }

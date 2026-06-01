@@ -14,7 +14,7 @@
  *
  * NOTE: not wired into L2 here — that is the next task.
  */
-import { generateContent, type VertexResponseSchema } from './vertex-client';
+import { generateContent, type VertexResponseSchema } from './llm-provider';
 import { rerank as cohereRerank, CohereError } from './cohere-client';
 import { RetrievalProviderError, isTransientError } from './retrieval-errors';
 

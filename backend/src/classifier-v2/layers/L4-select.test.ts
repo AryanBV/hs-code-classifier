@@ -24,18 +24,15 @@ import type {
 
 const generateContentMock = vi.fn();
 
-vi.mock('../lib/vertex-client', () => {
-  // Re-export MaxTokensError from the real module so SUT instanceof checks work.
-  // We use a stub class with the same name.
-  class MaxTokensError extends Error {
-    constructor(public readonly partialText: string, public readonly usage: unknown, public readonly model: string) {
-      super(`Mock MaxTokensError for ${model}`);
-      this.name = 'MaxTokensError';
-    }
-  }
+// L4 now imports `generateContent` from the A2 provider seam (`../lib/llm-provider`),
+// so the mock targets that module (not `../lib/vertex-client`). The real
+// `MaxTokensError` + types are re-exported from llm-provider; keep them via
+// importOriginal so any SUT instanceof check uses the genuine class.
+vi.mock('../lib/llm-provider', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../lib/llm-provider')>();
   return {
+    ...actual,
     generateContent: (...args: unknown[]) => generateContentMock(...args),
-    MaxTokensError,
   };
 });
 
