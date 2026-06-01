@@ -1,6 +1,7 @@
 // backend/src/eval/types.ts
 
 import type { RateCI, ReliabilityBin } from './metrics';
+import type { TokenUsageTotals } from '../classifier-v2/lib/token-meter';
 
 export interface EvalTestCase {
   id: string;                    // e.g., "TC001", "S5-AUTO-003", "INT-001"
@@ -174,15 +175,38 @@ export interface EvalReport {
   };
 
   /**
-   * Cost roll-up. `est_total_usd` = Σ per-case `est_cost_usd` (each itself an
-   * APPROX `llm_calls × representative-per-call`). Clearly ORDER-OF-MAGNITUDE —
-   * real per-token instrumentation is deferred (no runtime change here).
+   * Cost roll-up. `est_total_usd` = Σ per-case `est_cost_usd`. As of A3, when
+   * every scored case carried real `token_usage`, the per-case cost is the REAL
+   * per-token cost and `is_order_of_magnitude` is false; `token_totals` then
+   * carries the summed prompt/output/thoughts/cached tokens. If any scored case
+   * lacked token_usage (legacy fallback), the figure mixes real + flat estimates
+   * and `is_order_of_magnitude` is true. `token_totals` is present whenever at
+   * least one scored case surfaced token_usage.
    */
   cost: {
-    /** APPROX total USD across scored cases (order-of-magnitude only). */
+    /** Total USD across scored cases (REAL per-token when token_usage present, else flat fallback). */
     est_total_usd: number;
-    /** True — flags that this is NOT a real per-token billing figure. */
-    is_order_of_magnitude: true;
+    /**
+     * True when the figure is NOT a precise per-token billing total — i.e. at
+     * least one scored case fell back to the flat per-call estimate. False when
+     * every scored case carried real token_usage (then est_total_usd is real).
+     */
+    is_order_of_magnitude: boolean;
+    /**
+     * Suite-level REAL token sums across all scored cases that carried
+     * `token_usage` (A3). Absent when no scored case surfaced token usage
+     * (e.g. a legacy-classifier run) — so a legacy run's report is unchanged.
+     */
+    token_totals?: {
+      prompt_tokens: number;
+      output_tokens: number;
+      thoughts_tokens: number;
+      cached_tokens: number;
+      total_tokens: number;
+      llm_calls: number;
+      /** Cases that contributed real token_usage to these sums. */
+      cases_with_token_usage: number;
+    };
   };
 
   /**
@@ -353,14 +377,29 @@ export interface EvalDetail {
   /** Count of LLM calls made for this case (L1/L4/L6/L7). */
   llm_calls?: number;
   /**
-   * APPROXIMATE USD cost for this case. The orchestrator does NOT yet surface
-   * per-call token usage (only `llm_calls`), so precise USD is not computable
-   * per case. This is `llm_calls × REPRESENTATIVE_CALL_USD` (a documented flat
-   * per-call estimate — see runner.ts). Treat as an order-of-magnitude figure
-   * for relative comparison, NOT a billing number. Undefined when llm_calls is
-   * unavailable.
+   * USD cost for this case. As of A3, when the orchestrator surfaces real
+   * per-call token usage (`diagnostics.token_usage`), this is the REAL per-token
+   * cost summed across models (`cost_is_real: true`). When token_usage is absent
+   * (e.g. the legacy classifier), it falls back to `llm_calls ×
+   * REPRESENTATIVE_CALL_USD` (a flat per-call estimate — see runner.ts) and
+   * `cost_is_real` is false/absent. Undefined when llm_calls is unavailable.
    */
   est_cost_usd?: number;
+  /**
+   * True when `est_cost_usd` was computed from REAL per-token usage
+   * (`diagnostics.token_usage`); false/absent when it is the flat per-call
+   * fallback. Lets the report flag whether the cost figure is real or estimated.
+   */
+  cost_is_real?: boolean;
+  /**
+   * REAL per-call Gemini token sums for this case (A3), copied from
+   * `ClassifyResult.diagnostics.token_usage`. Present only when the v2
+   * orchestrator surfaced it (absent for the legacy classifier). `llmCalls`
+   * counts ALL metered generateContent calls (L1 + L4 + repair/backtrack selects
+   * + the L2 Gemini-Flash reranker) and is therefore a SUPERSET of (>=)
+   * `llm_calls`, which counts only L1/L4 (and would-be L6/L7) decision calls.
+   */
+  token_usage?: TokenUsageTotals;
   /**
    * True when the verifier rejected/escalated the chosen answer at least once
    * (escalation_path contains an 'L5:repair*' entry or 'L6:would_escalate')

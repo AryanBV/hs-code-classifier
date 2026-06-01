@@ -38,6 +38,7 @@ import {
   noProgress,
 } from './escalation';
 import { MaxTokensError } from './lib/vertex-client';
+import { runWithMeter, type TokenUsageTotals } from './lib/token-meter';
 import { LlmOutputValidationError } from './schemas';
 import type {
   ChapterCode,
@@ -61,6 +62,20 @@ import type {
 
 /** Default Q-budget per the v2 lock (sub-spec 02 §B.5). */
 const DEFAULT_Q_BUDGET = 3;
+
+/**
+ * All-zero token totals for pre-LLM short-circuit return paths (A3). A fresh
+ * object per call so a returned result can never alias and later mutate it.
+ */
+const EMPTY_TOKEN_USAGE = (): TokenUsageTotals => ({
+  promptTokens: 0,
+  outputTokens: 0,
+  thoughtsTokens: 0,
+  totalTokens: 0,
+  cachedTokens: 0,
+  llmCalls: 0,
+  byModel: {},
+});
 
 export interface ClassifyOptions {
   /** Multi-turn replay — populated on rounds 2+ per triage-v2.md (Task 11). */
@@ -1030,6 +1045,37 @@ export async function classify(
   query: string,
   opts: ClassifyOptions = {},
 ): Promise<ClassifyResult> {
+  // A3 token meter: wrap the WHOLE pipeline so every awaited LLM call (L1/L4/
+  // reranker, no matter how deep) records its real usageMetadata into ONE
+  // request-scoped meter, then attach the totals to diagnostics.token_usage.
+  // This is purely ADDITIVE — classifyInner's logic, ordering, and the existing
+  // llm_calls counting are untouched. Two concurrent classify() calls get
+  // independent meters (AsyncLocalStorage per-invocation context).
+  // token_usage.llmCalls counts ALL metered generateContent calls — L1 triage +
+  // L4 select + repair/backtrack selects + the L2 Gemini-Flash reranker — and is
+  // therefore a SUPERSET of (>=) diagnostics.llm_calls, which by long-standing
+  // semantics counts only L1/L4 (and would-be L6/L7) decision calls and
+  // intentionally excludes retrieval/reranking.
+  const { result, totals } = await runWithMeter(() => classifyInner(query, opts));
+  return {
+    ...result,
+    diagnostics: {
+      ...result.diagnostics,
+      token_usage: totals,
+    },
+  };
+}
+
+/**
+ * The classify() pipeline body. Kept as a separate function so `classify` can
+ * wrap it in the A3 token-meter scope (`runWithMeter`) without indenting or
+ * otherwise touching the pipeline logic. ALL prior return paths route through
+ * `finalize`, so the captureTrace seam is unchanged.
+ */
+async function classifyInner(
+  query: string,
+  opts: ClassifyOptions = {},
+): Promise<ClassifyResult> {
   const previousAnswers = opts.previousAnswers ?? {};
   const q_budget_remaining = opts.q_budget ?? DEFAULT_Q_BUDGET;
   const captureTrace = opts.captureTrace ?? false;
@@ -1347,7 +1393,12 @@ export async function continueWithAnswers(
         out_of_scope_class: 'function_only_no_substance',
         verifier_failures: [],
       },
-      diagnostics: buildDiagnostics(capState),
+      // Pre-LLM short-circuit: zero LLM calls AND zero metered generateContent
+      // (no triage/select/reranker runs), so attach an all-zero token_usage to
+      // keep the diagnostics contract uniform — here token_usage.llmCalls and
+      // llm_calls are both 0. This path does NOT enter classify()'s metered
+      // scope, so the totals are supplied explicitly.
+      diagnostics: { ...buildDiagnostics(capState), token_usage: EMPTY_TOKEN_USAGE() },
     };
   }
 

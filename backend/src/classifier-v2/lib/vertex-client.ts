@@ -188,6 +188,14 @@ export interface GenerateContentUsage {
   outputTokens:   number;
   thoughtsTokens: number;
   totalTokens:    number;
+  /**
+   * Cached-input token count (Phase A3). TYPE-ONLY optional field: the
+   * Developer-API client populates it (`cachedContentTokenCount`, the cached
+   * portion already INCLUDED in `promptTokens`); the Vertex adapter leaves it
+   * undefined — its runtime is unchanged (no field written), so the 'vertex'
+   * rollback path stays byte-identical. The token meter reads `cachedTokens ?? 0`.
+   */
+  cachedTokens?:  number;
 }
 
 export interface GenerateContentResult {

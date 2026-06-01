@@ -109,6 +109,69 @@ describe('extractDiagnostics (pure)', () => {
     const raw = classifyResult({ diagnostics: diag({ escalation_path: ['L4', 'L5', 'L6:would_escalate'] }) });
     expect(extractDiagnostics(raw, true).verifier_rejected_but_correct).toBe(true);
   });
+
+  it('A3: token_usage present → REAL per-token cost (cost_is_real=true) summed over byModel', () => {
+    const tokenUsage = {
+      promptTokens: 3000,
+      outputTokens: 600,
+      thoughtsTokens: 150,
+      totalTokens: 3750,
+      cachedTokens: 0,
+      llmCalls: 2,
+      byModel: {
+        'gemini-3.5-flash': {
+          calls: 2,
+          promptTokens: 3000,
+          outputTokens: 600,
+          thoughtsTokens: 150,
+          totalTokens: 3750,
+          cachedTokens: 0,
+        },
+      },
+    };
+    const raw = classifyResult({ diagnostics: diag({ llm_calls: 2, token_usage: tokenUsage }) });
+    const d = extractDiagnostics(raw, true);
+    expect(d.cost_is_real).toBe(true);
+    expect(d.token_usage).toEqual(tokenUsage);
+    // gemini-3.5-flash: in $1.50/1M, out $9.00/1M (thoughts billed as output).
+    // 3000/1e6*1.5 + (600+150)/1e6*9 = 0.0045 + 0.00675 = 0.01125
+    expect(d.est_cost_usd).toBeCloseTo(0.01125, 10);
+  });
+
+  it('A3: embedding model in byModel is priced at 0 (not thrown)', () => {
+    const tokenUsage = {
+      promptTokens: 1000,
+      outputTokens: 200,
+      thoughtsTokens: 0,
+      totalTokens: 1200,
+      cachedTokens: 0,
+      llmCalls: 2,
+      byModel: {
+        'gemini-3.5-flash': {
+          calls: 1, promptTokens: 1000, outputTokens: 200, thoughtsTokens: 0, totalTokens: 1200, cachedTokens: 0,
+        },
+        // Unknown-to-PRICE model: must contribute 0, never throw.
+        'gemini-embedding-001': {
+          calls: 1, promptTokens: 999, outputTokens: 0, thoughtsTokens: 0, totalTokens: 999, cachedTokens: 0,
+        },
+      },
+    };
+    const raw = classifyResult({ diagnostics: diag({ llm_calls: 2, token_usage: tokenUsage }) });
+    const d = extractDiagnostics(raw, true);
+    // 1000/1e6*1.5 + 200/1e6*9 = 0.0015 + 0.0018 = 0.0033 ; embedding adds 0.
+    expect(d.est_cost_usd).toBeCloseTo(0.0033, 10);
+  });
+
+  it('A3: token_usage ABSENT → flat fallback (cost_is_real=false, no token_usage)', () => {
+    const raw = classifyResult({ diagnostics: diag({ llm_calls: 3 }) }); // no token_usage
+    const d = extractDiagnostics(raw, true);
+    expect(d.cost_is_real).toBe(false);
+    expect(d.token_usage).toBeUndefined();
+    // Flat fallback = llm_calls × representative-per-call (>0, linear).
+    expect(d.est_cost_usd).toBeGreaterThan(0);
+    const d1 = extractDiagnostics(classifyResult({ diagnostics: diag({ llm_calls: 1 }) }), true);
+    expect(d.est_cost_usd!).toBeCloseTo(d1.est_cost_usd! * 3, 10);
+  });
 });
 
 describe('buildCandidateCodes (pure, EVAL-ONLY proxy)', () => {
@@ -506,6 +569,62 @@ describe('buildReportForTest — calibration, latency, cost', () => {
     expect(r.latency.median_ms).toBe(200);
     expect(r.cost.est_total_usd).toBeCloseTo(0.006, 10);
     expect(r.cost.is_order_of_magnitude).toBe(true);
+  });
+
+  it('A3: all cases carry real token_usage → REAL cost roll-up + token_totals, is_order_of_magnitude=false', () => {
+    const tu = (calls: number, prompt: number, output: number, cached: number) => ({
+      promptTokens: prompt,
+      outputTokens: output,
+      thoughtsTokens: 0,
+      totalTokens: prompt + output,
+      cachedTokens: cached,
+      llmCalls: calls,
+      byModel: {
+        'gemini-3.5-flash': {
+          calls, promptTokens: prompt, outputTokens: output, thoughtsTokens: 0, totalTokens: prompt + output, cachedTokens: cached,
+        },
+      },
+    });
+    const details: import('./types').EvalDetail[] = [
+      detail({
+        test_case_id: 'A', response_time_ms: 100,
+        est_cost_usd: 0.003, cost_is_real: true, token_usage: tu(2, 1000, 200, 50),
+      }),
+      detail({
+        test_case_id: 'B', response_time_ms: 200,
+        est_cost_usd: 0.006, cost_is_real: true, token_usage: tu(3, 2000, 400, 100),
+      }),
+    ];
+    const r = buildReportForTest(details);
+    expect(r.cost.est_total_usd).toBeCloseTo(0.009, 10);
+    expect(r.cost.is_order_of_magnitude).toBe(false); // every case real → not order-of-magnitude
+    expect(r.cost.token_totals).toBeDefined();
+    expect(r.cost.token_totals!.prompt_tokens).toBe(3000);
+    expect(r.cost.token_totals!.output_tokens).toBe(600);
+    expect(r.cost.token_totals!.cached_tokens).toBe(150);
+    expect(r.cost.token_totals!.total_tokens).toBe(3600);
+    expect(r.cost.token_totals!.llm_calls).toBe(5);
+    expect(r.cost.token_totals!.cases_with_token_usage).toBe(2);
+  });
+
+  it('A3: a mix of real + fallback cases → is_order_of_magnitude=true, token_totals only over real cases', () => {
+    const details: import('./types').EvalDetail[] = [
+      detail({
+        test_case_id: 'real', response_time_ms: 100, est_cost_usd: 0.003, cost_is_real: true,
+        token_usage: {
+          promptTokens: 1000, outputTokens: 200, thoughtsTokens: 0, totalTokens: 1200, cachedTokens: 0, llmCalls: 2,
+          byModel: { 'gemini-3.5-flash': { calls: 2, promptTokens: 1000, outputTokens: 200, thoughtsTokens: 0, totalTokens: 1200, cachedTokens: 0 } },
+        },
+      }),
+      // Legacy/fallback case: no token_usage, no cost_is_real.
+      detail({ test_case_id: 'flat', response_time_ms: 200, est_cost_usd: 0.002 }),
+    ];
+    const r = buildReportForTest(details);
+    expect(r.cost.is_order_of_magnitude).toBe(true); // a flat case is mixed in
+    expect(r.cost.est_total_usd).toBeCloseTo(0.005, 10);
+    expect(r.cost.token_totals).toBeDefined();
+    expect(r.cost.token_totals!.cases_with_token_usage).toBe(1); // only the real case
+    expect(r.cost.token_totals!.prompt_tokens).toBe(1000);
   });
 });
 

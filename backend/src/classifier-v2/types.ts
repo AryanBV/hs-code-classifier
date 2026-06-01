@@ -1,4 +1,5 @@
 import type { PredicateRef } from './db/predicate-dsl';
+import type { TokenUsageTotals } from './lib/token-meter';
 
 /**
  * Shared TypeScript interfaces for the Phase 4 v2 classifier pipeline.
@@ -685,6 +686,20 @@ export interface ClassifyResult {
     latency_ms:      number;
     /** Sum across L1, L4, L6, L7 calls. */
     llm_calls:       number;
+    /**
+     * REAL per-call Gemini token sums for this classify() invocation (Phase A3).
+     * Accumulated by the request-scoped token meter (lib/token-meter.ts) at the
+     * generateContent facade, so it reflects actual usageMetadata, not an
+     * estimate. `token_usage.llmCalls` counts ALL metered generateContent calls —
+     * L1 triage + L4 select + repair/backtrack selects + the L2 Gemini-Flash
+     * reranker — and is therefore a SUPERSET of (>=) `llm_calls`, which by
+     * long-standing semantics counts only L1/L4 (and would-be L6/L7) decision
+     * calls and intentionally excludes retrieval/reranking. Additive: present on
+     * every metered classify() result; absent only on paths that never enter the
+     * meter (e.g. the pre-LLM Q-budget REFUSE short-circuit). Consumed by the
+     * eval for real per-token cost.
+     */
+    token_usage?: TokenUsageTotals;
     /**
      * Full per-event trace with payloads. ONLY populated when classify() is
      * called with `captureTrace: true` (debug/CLI use only). Never set in

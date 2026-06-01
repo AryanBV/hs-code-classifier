@@ -25,10 +25,12 @@
  */
 import {
   generateContent as vertexGenerateContent,
+  MaxTokensError,
   type GenerateContentOptions,
   type GenerateContentResult,
 } from './vertex-client';
 import { GeminiDeveloperLlmProvider } from './gemini-developer-client';
+import { recordUsage } from './token-meter';
 
 /* Re-export the shared contract so call sites have a single import surface. */
 export type {
@@ -102,9 +104,33 @@ export function getLlmProvider(): LlmProvider {
 /**
  * FACADE — the single `generateContent` every call site imports. Delegates to
  * the active provider. Same signature + return contract as the Vertex client.
+ *
+ * A3 token meter: this is the SINGLE capture point for BOTH providers. After the
+ * impl returns (and before we return to the caller), the call's real token usage
+ * is recorded into the request-scoped meter via `recordUsage`. `recordUsage` is a
+ * no-op when no meter is active, so this is fully behavior-preserving — the
+ * returned result is byte-identical. `result.usage` may carry the Developer-API
+ * `cachedTokens` superset; the meter reads `cachedTokens ?? 0`, so the Vertex
+ * path (undefined) stays correct.
+ *
+ * MAX_TOKENS path: both providers throw `MaxTokensError` (which carries the real
+ * `usage` consumed before truncation) INSTEAD of returning a result, so the
+ * success-path recordUsage above never runs for those calls. We record the
+ * carried usage here in the catch and rethrow so the error still propagates
+ * unchanged. Success and throw are mutually exclusive — exactly one recordUsage
+ * fires per call, so there is no double-count.
  */
 export async function generateContent(
   opts: GenerateContentOptions,
 ): Promise<GenerateContentResult> {
-  return getLlmProvider().generateContent(opts);
+  try {
+    const result = await getLlmProvider().generateContent(opts);
+    recordUsage(opts.model, result.usage);
+    return result;
+  } catch (err) {
+    if (err instanceof MaxTokensError) {
+      recordUsage(opts.model, err.usage);
+    }
+    throw err;
+  }
 }

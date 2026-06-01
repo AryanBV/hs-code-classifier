@@ -33,8 +33,9 @@ vi.mock('./gemini-developer-client', () => ({
   },
 }));
 
-import { getLlmProvider, generateContent } from './llm-provider';
+import { getLlmProvider, generateContent, MaxTokensError } from './llm-provider';
 import type { GenerateContentOptions, GenerateContentResult } from './llm-provider';
+import { runWithMeter } from './token-meter';
 
 const OPTS: GenerateContentOptions = {
   model: 'gemini-3.5-flash',
@@ -128,5 +129,78 @@ describe('generateContent facade', () => {
     const res = await generateContent(OPTS);
     expect(res).toBe(RESULT);
     expect(mockDevGenerateContent).toHaveBeenCalledWith(OPTS);
+  });
+});
+
+describe('generateContent facade — A3 token metering', () => {
+  const original = process.env.LLM_PROVIDER;
+  beforeEach(() => {
+    mockVertexGenerateContent.mockReset();
+    mockDevGenerateContent.mockReset();
+    delete process.env.LLM_PROVIDER;
+  });
+  afterEach(() => {
+    if (original === undefined) delete process.env.LLM_PROVIDER;
+    else process.env.LLM_PROVIDER = original;
+  });
+
+  it('records the result usage into the active meter (keyed by opts.model)', async () => {
+    mockDevGenerateContent.mockResolvedValue(RESULT);
+    const { result, totals } = await runWithMeter(async () => {
+      return generateContent(OPTS);
+    });
+    // The facade returns the impl result UNCHANGED (behavior-preserving).
+    expect(result).toBe(RESULT);
+    // …and recorded its usage into the request-scoped meter.
+    expect(totals.llmCalls).toBe(1);
+    expect(totals.promptTokens).toBe(1);
+    expect(totals.outputTokens).toBe(2);
+    expect(totals.totalTokens).toBe(3);
+    expect(totals.byModel['gemini-3.5-flash'].calls).toBe(1);
+  });
+
+  it('captures the cachedTokens superset when the provider returns it', async () => {
+    const withCache: GenerateContentResult = {
+      ...RESULT,
+      usage: { promptTokens: 100, outputTokens: 10, thoughtsTokens: 0, totalTokens: 110, cachedTokens: 60 },
+    };
+    mockDevGenerateContent.mockResolvedValue(withCache);
+    const { totals } = await runWithMeter(async () => generateContent(OPTS));
+    expect(totals.cachedTokens).toBe(60);
+    expect(totals.byModel['gemini-3.5-flash'].cachedTokens).toBe(60);
+  });
+
+  it('is a no-op outside a meter scope (still returns the result)', async () => {
+    mockDevGenerateContent.mockResolvedValue(RESULT);
+    const res = await generateContent(OPTS);
+    expect(res).toBe(RESULT);
+  });
+
+  it('records the carried usage when the impl throws MaxTokensError, and still rethrows', async () => {
+    // Both providers throw MaxTokensError (carrying the usage consumed before
+    // truncation) INSTEAD of returning — so the success-path recordUsage never
+    // runs. The facade must record err.usage in the catch and rethrow unchanged.
+    const maxTokensUsage = { promptTokens: 800, outputTokens: 0, thoughtsTokens: 1200, totalTokens: 2000 };
+    const err = new MaxTokensError('partial...', maxTokensUsage, 'gemini-3.5-flash');
+    mockDevGenerateContent.mockRejectedValue(err);
+
+    let thrown: unknown;
+    const { totals } = await runWithMeter(async () => {
+      try {
+        await generateContent(OPTS);
+      } catch (e) {
+        thrown = e; // capture so the meter scope still closes with totals
+      }
+    });
+
+    // The error propagated unchanged (same instance) out of the facade.
+    expect(thrown).toBe(err);
+    expect(thrown).toBeInstanceOf(MaxTokensError);
+    // …and its usage was metered exactly once (no double-count: success path skipped).
+    expect(totals.llmCalls).toBe(1);
+    expect(totals.promptTokens).toBe(800);
+    expect(totals.thoughtsTokens).toBe(1200);
+    expect(totals.totalTokens).toBe(2000);
+    expect(totals.byModel['gemini-3.5-flash'].calls).toBe(1);
   });
 });

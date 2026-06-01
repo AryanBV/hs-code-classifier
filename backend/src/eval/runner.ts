@@ -10,7 +10,8 @@ import {
   ESCALATION_REPAIR_PREFIX,
   ESCALATION_WOULD_ESCALATE_MARKER,
 } from '../classifier-v2/escalation';
-import { estimateCostUsd } from '../classifier-v2/cost';
+import { estimateCostUsd, estimateCostUsdByModel } from '../classifier-v2/cost';
+import type { TokenUsageTotals } from '../classifier-v2/lib/token-meter';
 import { EvalTestCase, EvalReport, EvalDetail } from './types';
 import {
   normalizeHSCode,
@@ -165,9 +166,18 @@ export function filterByIds(
 export function extractDiagnostics(
   raw: ClassifyResult,
   codeCorrect: boolean,
-): Pick<EvalDetail, 'escalation_path' | 'llm_calls' | 'est_cost_usd' | 'verifier_rejected_but_correct'> {
+): Pick<
+  EvalDetail,
+  | 'escalation_path'
+  | 'llm_calls'
+  | 'est_cost_usd'
+  | 'cost_is_real'
+  | 'token_usage'
+  | 'verifier_rejected_but_correct'
+> {
   const path = raw.diagnostics.escalation_path;
   const llmCalls = raw.diagnostics.llm_calls;
+  const tokenUsage = raw.diagnostics.token_usage;
 
   // verifier rejected-then-recovered: a repair (L5:repair*) or a would-escalate
   // (L6:would_escalate) appears in the path AND the answer was ultimately correct.
@@ -175,10 +185,34 @@ export function extractDiagnostics(
     (p) => p.startsWith(ESCALATION_REPAIR_PREFIX) || p === ESCALATION_WOULD_ESCALATE_MARKER,
   );
 
+  // A3: prefer REAL per-token cost when the orchestrator surfaced token_usage —
+  // sum estimateCostUsdByModel over each model's actual token sums. Fall back to
+  // the flat llm_calls × REPRESENTATIVE_CALL_USD ONLY when token_usage is absent
+  // (e.g. the legacy classifier, which produces no token_usage).
+  let estCost: number;
+  let costIsReal: boolean;
+  if (tokenUsage !== undefined) {
+    estCost = 0;
+    for (const [model, t] of Object.entries(tokenUsage.byModel)) {
+      estCost += estimateCostUsdByModel(model, {
+        promptTokens: t.promptTokens,
+        outputTokens: t.outputTokens,
+        thoughtsTokens: t.thoughtsTokens,
+        totalTokens: t.totalTokens,
+      });
+    }
+    costIsReal = true;
+  } else {
+    estCost = llmCalls * REPRESENTATIVE_CALL_USD; // APPROX — see REPRESENTATIVE_CALL_USD
+    costIsReal = false;
+  }
+
   return {
     escalation_path: path,
     llm_calls: llmCalls,
-    est_cost_usd: llmCalls * REPRESENTATIVE_CALL_USD, // APPROX — see REPRESENTATIVE_CALL_USD
+    est_cost_usd: estCost,
+    cost_is_real: costIsReal,
+    ...(tokenUsage !== undefined ? { token_usage: tokenUsage } : {}),
     verifier_rejected_but_correct: verifierRejected && codeCorrect,
   };
 }
@@ -535,6 +569,37 @@ function buildReport(
   const latencies = scored.map(d => d.response_time_ms);
   const estTotalUsd = scored.reduce((s, d) => s + (d.est_cost_usd ?? 0), 0);
 
+  // A3 token roll-up. Sum REAL token usage across scored cases that carried it.
+  // `is_order_of_magnitude` is true iff ANY scored case fell back to the flat
+  // per-call estimate (cost_is_real !== true) — then the total mixes real + est.
+  const tokenScored = scored.filter(
+    (d): d is EvalDetail & { token_usage: TokenUsageTotals } => d.token_usage !== undefined,
+  );
+  const anyFlatFallback = scored.some(d => d.cost_is_real !== true);
+  const tokenTotals = tokenScored.length > 0
+    ? tokenScored.reduce(
+        (acc, d) => {
+          acc.prompt_tokens += d.token_usage.promptTokens;
+          acc.output_tokens += d.token_usage.outputTokens;
+          acc.thoughts_tokens += d.token_usage.thoughtsTokens;
+          acc.cached_tokens += d.token_usage.cachedTokens;
+          acc.total_tokens += d.token_usage.totalTokens;
+          acc.llm_calls += d.token_usage.llmCalls;
+          acc.cases_with_token_usage += 1;
+          return acc;
+        },
+        {
+          prompt_tokens: 0,
+          output_tokens: 0,
+          thoughts_tokens: 0,
+          cached_tokens: 0,
+          total_tokens: 0,
+          llm_calls: 0,
+          cases_with_token_usage: 0,
+        },
+      )
+    : undefined;
+
   // -------------------------------------------------------------------------
   // POPULATION CLOSURE (§2): partition the frozen gold population by routing so
   // the EFFECTIVE denominator can never silently leak a REFUSE/missing case.
@@ -658,7 +723,10 @@ function buildReport(
     },
     cost: {
       est_total_usd: estTotalUsd,
-      is_order_of_magnitude: true,
+      // Real per-token total iff EVERY scored case carried token_usage (no flat
+      // fallback was mixed in); order-of-magnitude otherwise.
+      is_order_of_magnitude: anyFlatFallback,
+      ...(tokenTotals !== undefined ? { token_totals: tokenTotals } : {}),
     },
     population_closure: {
       scored_with_gold: goldN,
@@ -863,7 +931,18 @@ function printSummary(report: EvalReport): void {
   // Latency + cost.
   console.log(`\nLATENCY / COST (n=${report.latency.sample_count})`);
   console.log(`  Median: ${report.latency.median_ms}ms  p95: ${report.latency.p95_ms}ms`);
-  console.log(`  Est total cost: $${report.cost.est_total_usd.toFixed(4)} (ORDER-OF-MAGNITUDE — not real per-token billing)`);
+  const costQual = report.cost.is_order_of_magnitude
+    ? 'ORDER-OF-MAGNITUDE — some cases used the flat per-call estimate'
+    : 'REAL per-token cost (A3 token meter)';
+  console.log(`  Est total cost: $${report.cost.est_total_usd.toFixed(4)} (${costQual})`);
+  const tt = report.cost.token_totals;
+  if (tt) {
+    console.log(
+      `  Tokens (real, ${tt.cases_with_token_usage} cases / ${tt.llm_calls} LLM calls): ` +
+        `prompt ${tt.prompt_tokens} | output ${tt.output_tokens} | thoughts ${tt.thoughts_tokens} | ` +
+        `cached ${tt.cached_tokens} | total ${tt.total_tokens}`,
+    );
+  }
 
   // Population closure (trust-spine invariant).
   const pc = report.population_closure;
