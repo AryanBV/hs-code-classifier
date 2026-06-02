@@ -1,5 +1,7 @@
 # Prevyl frontend — handoff (2026-06-02)
 
+> **NEXT DIRECTION (founder): keep the theme, build the experience.** See **`frontend/NEXT-UX-DIRECTION.md`** — a first-run preview/intro, a simpler hero, and a signature classify→loading→result experience, all within the current Customs-Ledger theme, with research-backed rationale ("signs"). The state below is the elevated build it starts from.
+
 A complete, elevated, clean-rebuilt frontend for the Prevyl ITC-HS classifier. Built and refined autonomously across this session. Branch `feat/frontend-rebuild` (NOT pushed). Runs fully on a built-in mock, so the whole product is reviewable with zero backend and zero paid calls.
 
 ## Run it
