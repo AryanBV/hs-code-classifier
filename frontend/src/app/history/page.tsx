@@ -27,6 +27,9 @@ import {
 } from "@/lib/history";
 import { makeRecordId } from "@/lib/record-id";
 import { PageShell } from "@/components/layout/page-shell";
+import { isSupabaseConfigured } from "@/lib/supabase/client";
+import { useUser } from "@/lib/supabase/use-user";
+import { listAccountHistory } from "@/lib/account";
 
 // ---------------------------------------------------------------------------
 // History store adapter.
@@ -420,6 +423,49 @@ export default function HistoryPage() {
   const hydrated = React.useSyncExternalStore(noopSubscribe, getIsClient, getIsServer);
   const nowDay = React.useSyncExternalStore(noopSubscribe, getClientNowDay, getServerNowDay);
 
+  // Cloud records for the signed-in user. Display-only: these are MERGED with the
+  // local store for rendering, but every mutation (delete / clear) still operates
+  // on the local store alone. When signed out / unconfigured this stays [], so the
+  // displayed list is exactly the local list (no behaviour change). Fetched in an
+  // effect; state is set only inside the async callback (never in the effect body).
+  const { user } = useUser();
+  const [cloudRecords, setCloudRecords] = React.useState<HistoryRecord[]>([]);
+
+  // Fetch the signed-in user's cloud records. State is set ONLY inside the async
+  // callback (never synchronously in the effect body, per react-hooks/set-state-in-
+  // effect). On sign-out we do NOT clear here; instead the union below ignores
+  // cloudRecords whenever there is no user, so the displayed list drops the cloud
+  // rows immediately and they are refreshed on the next sign-in.
+  React.useEffect(() => {
+    if (!isSupabaseConfigured() || !user) return;
+    let active = true;
+    void listAccountHistory().then((rows) => {
+      if (active) setCloudRecords(rows);
+    });
+    return () => {
+      active = false;
+    };
+  }, [user]);
+
+  // The DISPLAYED list: union of local + cloud, de-duped by (query + hsCode),
+  // newest first. Cloud rows count only while a user is present; otherwise this
+  // equals the local list exactly (no behaviour change signed-out / unconfigured).
+  const effectiveCloud = user ? cloudRecords : EMPTY;
+  const displayRecords = React.useMemo(() => {
+    if (effectiveCloud.length === 0) return records;
+    const seen = new Set<string>();
+    const merged: HistoryRecord[] = [];
+    // Local first so a local record's live id (used by /r/{id} this session) wins
+    // the de-dupe for an identical (query, code) pair.
+    for (const r of [...records, ...effectiveCloud]) {
+      const key = `${r.query}::${r.result.hsCode}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      merged.push(r);
+    }
+    return merged.sort((a, b) => b.createdAt - a.createdAt);
+  }, [records, effectiveCloud]);
+
   const [search, setSearch] = React.useState("");
   const [copiedId, setCopiedId] = React.useState<string | null>(null);
   // Two-step confirm for the destructive clear, kept local and calm.
@@ -485,12 +531,12 @@ export default function HistoryPage() {
   // Cheap client-side filter over code, query and description.
   const filtered = React.useMemo(() => {
     const q = search.trim().toLowerCase();
-    if (!q) return records;
-    return records.filter((r) => {
+    if (!q) return displayRecords;
+    return displayRecords.filter((r) => {
       const haystack = `${r.result.hsCode} ${r.query} ${r.result.description ?? ""}`.toLowerCase();
       return haystack.includes(q);
     });
-  }, [records, search]);
+  }, [displayRecords, search]);
 
   // Group the (already date-sorted) filtered list into date buckets.
   const groups = React.useMemo(() => {
@@ -508,8 +554,8 @@ export default function HistoryPage() {
     }));
   }, [filtered, nowDay]);
 
-  const hasRecords = hydrated && records.length > 0;
-  const countLabel = `${records.length} record${records.length === 1 ? "" : "s"}`;
+  const hasRecords = hydrated && displayRecords.length > 0;
+  const countLabel = `${displayRecords.length} record${displayRecords.length === 1 ? "" : "s"}`;
 
   return (
     <PageShell width="list" className="py-[clamp(20px,3vw,44px)]">

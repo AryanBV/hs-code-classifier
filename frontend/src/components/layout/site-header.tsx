@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { PageShell } from "@/components/layout/page-shell";
 import { Wordmark } from "@/components/layout/wordmark";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { AccountMenu } from "@/components/auth/account-menu";
 
 export interface SiteHeaderProps {
   className?: string;
@@ -59,6 +60,7 @@ function SiteHeader({ className }: SiteHeaderProps) {
             History
           </Link>
           <ThemeToggle />
+          <AccountMenu />
         </nav>
       </PageShell>
     </header>

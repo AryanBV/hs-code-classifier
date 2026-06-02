@@ -8,6 +8,7 @@ import { answer as answerApi, classify as classifyApi, ClassifyTimeoutError } fr
 import { ClassifyError } from "@/lib/types";
 import type { ClassifyResult, UiClassification, UiQuestion, UiRefused } from "@/lib/types";
 import { saveHistory } from "@/lib/history";
+import { isSupabaseConfigured } from "@/lib/supabase/client";
 
 import { PageShell } from "@/components/layout/page-shell";
 import { LoadingView } from "@/components/result/loading-view";
@@ -186,6 +187,12 @@ function ClassifyClient({ query }: ClassifyClientProps) {
     if (savedKey.current === key) return;
     savedKey.current = key;
     const saved = saveHistory(originalQuery, result, Date.now());
+    // Additive, best-effort cloud sync: fire-and-forget when Supabase is
+    // configured. Never awaited, never blocks the local save or the redirect,
+    // and the helper itself never throws (no-op when signed out / unconfigured).
+    if (isSupabaseConfigured()) {
+      void import("@/lib/account").then((m) => m.saveClassification(saved));
+    }
     router.replace(`/r/${saved.id}`);
   }, [result, originalQuery, router]);
 
