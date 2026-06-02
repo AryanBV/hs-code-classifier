@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 
 import { PageShell } from "@/components/layout/page-shell";
 import { LandingForm } from "@/components/landing/landing-form";
-import { Surface } from "@/components/ui/surface";
-import { MonoCode } from "@/components/ui/mono-code";
-import { TAGLINE, VALUE_PROP, VALUE_SUB, TRUST_POINTS } from "@/lib/content";
+import { FirstRunIntro, ExampleTrigger } from "@/components/landing/first-run-intro";
+import { HOW_IT_WORKS, VALUE_PROP, VALUE_SUB } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "The right ITC-HS export code, with a rationale you can verify",
@@ -19,18 +18,17 @@ interface HomeProps {
 }
 
 /**
- * Landing / input screen — the first impression and the brand moment.
+ * Landing / input screen — the first impression.
  *
- * An off-center, anchored composition: the brand line, value proposition and
- * ledger field on the left; a static example RECORD specimen on the right (at
- * `lg`) so a stranger SEES the artifact the instrument produces before waiting
- * for one. The specimen is clearly labelled "An example result" so it is never
- * mistaken for a live classification.
+ * Rebuilt for the 5-second test: ONE outcome headline, ONE supporting line, and
+ * the ledger field as the hero action, centered in a focused column. The
+ * specimen card, the trust strip and the eyebrow tagline that used to crowd the
+ * fold are gone (Hick's Law: every extra hero element slows the decision). What
+ * the tool produces is now SHOWN by the first-run replay and recalled in a quiet
+ * "how it works" below the fold, not asserted above it.
  *
- * H7 — the page reads `?q=` server-side (it already awaits searchParams) and
- * hands it to <LandingForm/> as `initialQuery`, so a recovery exit that routes
- * back to `/?q=…` returns the field PREFILLED. Server component; the interactive
- * field lives in <LandingForm/>. Renders its OWN PageShell (the one shared rail).
+ * Server component; it reads `?q=` server-side (awaits searchParams) and hands it
+ * to <LandingForm/> as `initialQuery` so every recovery exit returns PREFILLED.
  * Entrance motion uses the shared reveal-rise utility (reduced-motion settles
  * instantly).
  */
@@ -44,135 +42,82 @@ export default async function Home({ searchParams }: HomeProps) {
       as="section"
       width="wide"
       aria-label="Classify a product"
-      className="flex flex-1 flex-col justify-center py-section"
+      className="flex flex-1 flex-col"
     >
-      <div className="grid grid-cols-1 items-center gap-x-[clamp(28px,5vw,72px)] gap-y-block lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)]">
-        {/* ---- Left column: the brand moment + the ledger field ---- */}
-        <div className="flex max-w-focus flex-col">
-          {/* hero copy */}
-          <div className="flex flex-col gap-4 text-left">
-            <p className="reveal-rise text-eyebrow font-semibold uppercase tracking-[var(--tracking-eyebrow)] text-accent-ink">
-              {TAGLINE}
-            </p>
+      {/* First-run replay — once only, skippable; never shown to returning users.
+          Suppressed when arriving with a carried query (a recovery round-trip). */}
+      <FirstRunIntro suppressed={initialQuery.length > 0} />
 
-            {/* H4 — the ONE serif that reaches the display register (opsz 144,
-                lighter/opener cut), the page's display-scale typographic event. */}
-            <h1 className="reveal-rise max-w-[15ch] text-balance font-display opsz-display text-title font-[number:var(--weight-display)] leading-[var(--leading-tight)] tracking-[var(--tracking-title)] text-ink sm:text-display">
-              {VALUE_PROP}
-            </h1>
+      {/* ---- Hero: input-first, centered, fills the first view ---- */}
+      <div className="flex flex-1 flex-col items-center justify-center py-section">
+        <div className="flex w-full max-w-[42rem] flex-col items-center gap-5 text-center">
+          {/* The ONE display-register typographic event (opsz 144, lighter cut). */}
+          <h1 className="reveal-rise text-balance font-display opsz-display text-title font-[number:var(--weight-display)] leading-[var(--leading-tight)] tracking-[var(--tracking-title)] text-ink sm:text-display">
+            {VALUE_PROP}
+          </h1>
 
-            <p className="reveal-rise max-w-[46ch] text-balance font-sans text-body leading-relaxed text-ink-muted">
-              {VALUE_SUB}
-            </p>
-          </div>
-
-          {/* the ledger field + examples (carries the prefilled query) */}
-          <div className="reveal-rise mt-block">
-            <LandingForm initialQuery={initialQuery} />
-          </div>
+          <p className="reveal-rise max-w-[48ch] text-balance font-sans text-body leading-relaxed text-ink-muted">
+            {VALUE_SUB}
+          </p>
         </div>
 
-        {/* ---- Right column: the static example specimen ---- */}
-        <div className="reveal-rise hidden lg:block">
-          <ExampleRecord />
+        {/* The ledger field — the hero action. Centered container, left-aligned
+            data inside (you type left-aligned text into the well). */}
+        <div className="reveal-rise mt-block w-full max-w-focus text-left">
+          <LandingForm initialQuery={initialQuery} />
+        </div>
+
+        {/* Quiet re-entry to the example, for anyone who skipped the first-run
+            preview or came straight here. The auto-once preview stays primary. */}
+        <div className="reveal-rise mt-5">
+          <ExampleTrigger />
         </div>
       </div>
 
-      {/* ---- Trust strip: quiet, honest, no hype ---- */}
-      <div className="reveal-rise mt-section border-t border-rule pt-6">
-        <ul className="flex flex-col gap-2.5">
-          {TRUST_POINTS.map((point) => (
-            <li
-              key={point}
-              className="flex items-center gap-2.5 font-sans text-meta text-ink-muted"
-            >
-              <TickIcon className="size-[0.95rem] shrink-0 text-accent-quiet" />
-              <span>{point}</span>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-4 font-sans text-meta leading-relaxed text-ink-muted">
-          <span className="font-semibold text-accent-ink">
-            Built for Indian exporters and customs brokers.
-          </span>{" "}
-          Every code comes with the chapter, heading and legal basis behind it.
-        </p>
-      </div>
+      {/* ---- How it works (below the fold; quiet, on-theme) ---- */}
+      <HowItWorks />
     </PageShell>
   );
 }
 
 /**
- * ExampleRecord — H3. A small, static SPECIMEN of a finished record so the
- * landing SHOWS what it produces, not just claims it: the lifted document sheet,
- * the HS code as the hero object, a confidence band on its keyed wash, and ONE
- * verbatim citation line. It is plainly marked "An example result" and is NOT a
- * live classification: no copy controls, no actions, no seal. Honesty holds —
- * the band is a word + meaning, never a number; the italic line is a real
- * verbatim quote from the schedule (italic = verbatim-source only).
+ * HowItWorks — a quiet, ledger-idiom three-step strip below the fold. It carries
+ * the substance the hero deliberately sheds, in the marginal-note voice: line
+ * numbers, a hairline, a Fraunces step title, a plain caption. No icons-as-
+ * decoration, no fabricated stats.
  */
-function ExampleRecord() {
+function HowItWorks() {
   return (
-    <figure className="m-0">
-      <Surface
-        variant="raised"
-        sheet
-        className="surface-grain flex flex-col gap-5 p-[clamp(1.1rem,2.4vw,1.6rem)]"
-        aria-hidden="true"
-      >
-        <p className="font-sans text-eyebrow font-semibold uppercase tracking-[var(--tracking-eyebrow)] text-ink-muted">
-          An example result
-        </p>
-
-        {/* the code as the hero object (static, not copyable here) */}
-        <MonoCode code="7318.15.00" size="lg" />
-
-        <p className="max-w-[34ch] font-sans text-meta leading-snug text-ink-muted">
-          Threaded bolts and screws of iron or steel, other.
-        </p>
-
-        {/* the one chromatic event, on its keyed wash. Word + meaning, no number. */}
-        <div className="band-wash-high flex flex-col gap-1 rounded-md border px-3.5 py-3">
-          <span className="font-sans text-eyebrow font-semibold uppercase tracking-[var(--tracking-eyebrow)] text-band-high">
-            High confidence
-          </span>
-          <span className="font-sans text-meta leading-snug text-ink-muted">
-            A clear, well-supported reading.
-          </span>
-        </div>
-
-        {/* one verbatim citation line. Italic ONLY because it is quoted source. */}
-        <div className="flex flex-col gap-1.5 border-t border-rule pt-3.5">
-          <span className="font-sans text-eyebrow font-semibold uppercase tracking-[var(--tracking-eyebrow)] text-ink-muted">
-            Basis in the schedule
-          </span>
-          <blockquote className="m-0 border-l-[3px] border-accent-quiet pl-3 font-display opsz-citation text-meta italic leading-snug text-ink">
-            Heading 7318: Screws, bolts, nuts ... of iron or steel.
-          </blockquote>
-        </div>
-      </Surface>
-
-      <figcaption className="mt-2.5 text-center font-sans text-meta text-ink-muted">
-        A sample of what every classification returns. Not a live result.
-      </figcaption>
-    </figure>
-  );
-}
-
-/** A hairline tick. Decorative, currentColor; never a "verified" claim. */
-function TickIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.9}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      className={className}
-    >
-      <path d="M20 6L9 17l-5-5" />
-    </svg>
+    <section aria-label="How it works" className="border-t border-rule py-section">
+      <p className="mb-7 font-sans text-eyebrow font-semibold uppercase tracking-[var(--tracking-eyebrow)] text-ink-muted">
+        How it works
+      </p>
+      <ol className="grid grid-cols-1 gap-x-[clamp(32px,4vw,64px)] gap-y-8 sm:grid-cols-3">
+        {HOW_IT_WORKS.map((step, i) => (
+          <li key={step.title} className="flex flex-col">
+            <span
+              aria-hidden="true"
+              className="font-mono text-meta text-accent-quiet"
+            >
+              {`0${i + 1}`}
+            </span>
+            <span aria-hidden="true" className="mt-2 h-px w-full bg-rule" />
+            <h3 className="mt-3.5 font-display opsz-section text-label font-[number:var(--weight-section)] leading-snug text-ink">
+              {step.title}
+            </h3>
+            <p className="mt-2 font-sans text-meta leading-relaxed text-ink-muted">
+              {step.body}
+            </p>
+          </li>
+        ))}
+      </ol>
+      <p className="mt-9 max-w-[64ch] font-sans text-meta leading-relaxed text-ink-muted">
+        <span className="font-semibold text-accent-ink">
+          Built for Indian exporters and customs brokers.
+        </span>{" "}
+        Free to use. Every code comes with the chapter, heading and legal basis
+        behind it.
+      </p>
+    </section>
   );
 }

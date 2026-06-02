@@ -98,10 +98,49 @@ export const TRUST_POINTS = [
   "Honest about what it is not sure of",
 ];
 
-/** One-line value proposition. */
-export const VALUE_PROP = "The right 8-digit export code, with a rationale you can verify.";
+/** One-line value proposition. Outcome-first, <=8 words (5-second test). */
+export const VALUE_PROP = "The right export code, with its legal basis.";
+/** One supporting sentence. Anchors the high-stakes purpose under the input. */
 export const VALUE_SUB =
-  "Describe your product. Prevyl finds the Indian ITC-HS code, shows the legal basis for it, and tells you how sure it is.";
+  "Describe your product and get its 8-digit Indian ITC-HS export code, with the chapter and heading cited so you can verify it before filing.";
+
+/**
+ * How it works, in three plain steps. Below the fold on the landing: substance
+ * for returning users and search engines, without crowding the hero. Honest
+ * voice (it reads the schedule, it does not guess), no fabricated stats.
+ */
+export const HOW_IT_WORKS = [
+  {
+    title: "Describe your product",
+    body: "A few plain words is enough. Material, form and use sharpen the match.",
+  },
+  {
+    title: "We read the schedule",
+    body: "Prevyl works through the ITC-HS chapters, headings and legal notes in order. It reads the schedule, it does not guess.",
+  },
+  {
+    title: "You get a cited code",
+    body: "An 8-digit line with its legal basis and an honest confidence band. Verify it before filing.",
+  },
+] as const;
+
+// ----------------------------------------------------------------------------
+// The wait (loading). Honest domain micro-lessons shown as marginalia during
+// the genuine ~40s classification. Occupied time feels shorter and the wait
+// doubles as just-in-time onboarding. Every line is true and checkable; none
+// claims progress or a fraction. No fabricated stats, no em-dashes.
+// ----------------------------------------------------------------------------
+
+export const WAIT_LESSONS = [
+  "A confidence band is a category we admit to, not a percentage. High means the notes and rules point one way.",
+  "Indian ITC-HS codes have 8 digits. The first 6 follow the world HS system; the last 2 are India's own breakdown.",
+  "A product's chapter is decided first by what it is and what it is made of, before what it is used for.",
+  "Legal notes at the top of each chapter can pull a product in or push it out. Prevyl reads those, not just the words.",
+  "When a description does not flag a special variant, the plain residual line is usually the right one.",
+  "The General Interpretive Rules settle ties. GIR-1 says the headings and the legal notes govern first.",
+  "Two products that look alike can sit in different chapters. Material and processing often decide which.",
+  "A cited heading you can look up is worth more than a confident guess you cannot check.",
+] as const;
 
 // ----------------------------------------------------------------------------
 // Operating-loop labels (literal, not costume)

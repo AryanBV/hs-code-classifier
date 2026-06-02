@@ -35,7 +35,7 @@
 
   /* ---- Ink: barely-warm charcoal so the one warm accent reads intentional ---- */
   --ink: oklch(0.255 0.012 70); /* body/headlines — ~12:1 on paper */
-  --ink-muted: oklch(0.468 0.014 72); /* captions/meta — ~5.3:1 on surface (AA) */
+  --ink-muted: oklch(0.450 0.014 72); /* captions/meta — AA on EVERY plane incl. surface-sunk (>=4.5:1) */
 
   /* ---- Rules: decorative hairline vs load-bearing boundary ---- */
   --rule: oklch(0.815 0.012 80); /* faint flourish hairline */
@@ -46,7 +46,7 @@
 
   /* ---- Accent split: action vs quiet vs a COOL focus that is NOT the brand ---- */
   --accent: oklch(0.445 0.118 34); /* primary action only — deep oxblood / sealing-wax */
-  --accent-quiet: oklch(0.478 0.085 38); /* links, citation rule, seal, ticks (demoted) */
+  --accent-quiet: oklch(0.465 0.085 38); /* links, citation rule, seal, ticks (demoted; AA as text on bg/surface/marginalia) */
   --accent-ink: oklch(0.385 0.110 33); /* darker accent for text-on-light + hover */
   --accent-contrast: oklch(0.985 0.004 88); /* text on accent fills (~5.5:1 on --accent) */
   --focus: oklch(0.520 0.110 248); /* cool slate-blue — a SYSTEM event, distinct from oxblood */
@@ -167,7 +167,7 @@
 
   --band-high: oklch(0.730 0.085 178); /* teal, lifted for dark AA */
   --band-medium: oklch(0.775 0.110 80); /* amber */
-  --band-low: oklch(0.715 0.120 44); /* rust */
+  --band-low: oklch(0.732 0.120 44); /* rust (lifted to clear AA as the band word on the dark sheet) */
 
   /* fills: brighter still on dark so the band is the one saturated moment */
   --band-high-fill: oklch(0.745 0.115 178);
@@ -575,6 +575,12 @@
     .breathe {
       animation: ledger-breathe 2.6s var(--ease-ledger) infinite;
     }
+    /* a slow, serene placeholder pulse for the loading skeleton (the result
+       card assembling). Opacity-only, ~3.2s — calmer than animate-pulse, and it
+       never sweeps or implies a fraction. Reduced-motion settles it still. */
+    .skeleton-calm {
+      animation: ledger-skeleton 3.2s var(--ease-ledger) infinite;
+    }
   }
 
   @keyframes ledger-rise {
@@ -619,6 +625,17 @@
     50% {
       opacity: 1;
       transform: scale(1.06);
+    }
+  }
+
+  /* the loading skeleton's serene breath — opacity only, no sweep, no fraction */
+  @keyframes ledger-skeleton {
+    0%,
+    100% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.82;
     }
   }
 

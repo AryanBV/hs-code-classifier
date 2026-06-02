@@ -163,7 +163,11 @@ function HeroCode({
   if (!result.isSixDigit) {
     return (
       <motion.div variants={codeVariants}>
-        <MonoCode code={result.hsCode} size="display" baseline copyable />
+        {/* The code is select-all; the single copy home is the margin actions
+            block (mirrored by the mobile bar), so we do not duplicate a copy
+            control here. That removes the confusing two-place / two-format
+            copy and keeps the hero code clean. */}
+        <MonoCode code={result.hsCode} size="display" baseline />
       </motion.div>
     );
   }
@@ -177,7 +181,7 @@ function HeroCode({
         <MonoCode code={result.hsCode} size="display" />
         <span
           aria-hidden="true"
-          className="select-none font-mono text-code leading-[var(--leading-tight)] tracking-[var(--tracking-display)] text-ink-muted/55"
+          className="select-none font-mono text-code leading-[var(--leading-tight)] tracking-[var(--tracking-display)] text-ink-muted/70"
         >
           <span className="mx-[0.16em] text-[0.62em]">.</span>__
           <span className="mx-[0.16em] text-[0.62em]">.</span>__

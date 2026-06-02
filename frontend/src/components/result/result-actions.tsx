@@ -123,10 +123,10 @@ function ResultActions({ record }: ResultActionsProps) {
           size="lg"
           onClick={() => copyCode(withoutDots(code), "plain")}
           className="shrink-0 px-3 font-mono text-meta"
-          aria-label={`Copy code without dots, ${withoutDots(code)}`}
-          title="Copy without dots"
+          aria-label={`Copy without dots, ${withoutDots(code)}`}
+          title="Copy without dots (digits only)"
         >
-          {copied === "plain" ? "Copied" : "no dots"}
+          {copied === "plain" ? "Copied" : withoutDots(code)}
         </Button>
       </div>
 
