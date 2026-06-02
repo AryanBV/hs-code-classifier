@@ -27,7 +27,11 @@ const STEP_LABELS = [
  * final notes-check stage is never marked done by a timer. Each entry is the
  * ms-from-start at which that stage becomes the active one.
  */
-const STAGE_ENTER_MS = [0, 2600, 7000, 13000, 20000, 27000] as const;
+// Spread gradually with the LATER stages longest, so the walk never races to
+// "5 of 6 done" and then stalls (which would read like a fake progress bar).
+// For a typical ~40s run the active stage is still mid-list, and the final
+// stage genuinely dwells in "Working" until the real result swaps in.
+const STAGE_ENTER_MS = [0, 4000, 10000, 19000, 32000, 50000] as const;
 
 /** Rotating honest sub-status for the active stage. Never claims a fraction. */
 const SUBSTATUS = [

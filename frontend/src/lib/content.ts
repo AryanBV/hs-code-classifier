@@ -37,7 +37,7 @@ export const BAND_LABEL: Record<ConfidenceBand, string> = {
 
 /** Plain-English consequence of each band. What it means for the reader. */
 export const BAND_MEANING: Record<ConfidenceBand, string> = {
-  high: "A clear, well-supported reading. The notes and rules point one way.",
+  high: "A clear, well-supported reading. The notes and rules agree here.",
   medium: "A reasonable reading, but a close alternative could fit. Worth a careful look.",
   low: "An uncertain reading. The product sits near a boundary, so treat this as a lead, not an answer.",
 };
@@ -65,9 +65,11 @@ export const SIX_DIGIT_NARROWING =
 export const SIX_VS_EIGHT_EXPLAINER =
   "The 8-digit lines below split this subheading by finer details such as material or grade. Treat them as candidates to check, not lines to file as they are.";
 
-/** Framing for the confident 8-digit case. Literal and direct. */
+/** Framing for the confident 8-digit case. Literal and direct. The
+ *  verify-before-filing reminder is said ONCE, by the band advisory, so it is
+ *  not repeated here. */
 export const EIGHT_DIGIT_FRAMING =
-  "This is the best 8-digit match for what you described. Confirm it against your product before filing.";
+  "This is the best 8-digit match for what you described.";
 
 export const ALTERNATIVES_LABEL = "Close alternatives to check";
 export const SIX_DIGIT_CANDIDATES_LABEL = "8-digit candidates to check";
@@ -78,9 +80,11 @@ export const SIX_DIGIT_CANDIDATES_LABEL = "8-digit candidates to check";
 
 /** Heading for the model's own reasoning steps. */
 export const RATIONALE_HEADING = "Why this code";
-/** Honesty label that sits above the generated reasoning. */
+/** Honesty label that sits above the generated reasoning. Layout-neutral (the
+ *  verifiable citation sits in the margin on desktop, below on mobile), so it
+ *  names the source rather than pointing a direction. */
 export const GENERATED_EXPLANATION_LABEL =
-  "Generated explanation. The citation below is the verifiable source.";
+  "Prevyl's own reasoning. The verifiable source is the cited basis in the schedule.";
 /** Heading for the quoted legal text the reasoning leans on. */
 export const CITATION_HEADING = "Basis in the schedule";
 /** Shown when no reasoning was recorded. Treat emptiness as a signal, not a gap. */

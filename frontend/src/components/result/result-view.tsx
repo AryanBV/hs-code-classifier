@@ -361,11 +361,14 @@ function DocumentPane({
           the verifiable citation that lives in the margin. */}
       <section className="mt-9">
         <RuleLine label={RATIONALE_HEADING} lineNumber={isSix ? "03" : "01"} />
-        {/* H10 (honesty): NO italic here. Italic is reserved strictly for the
-            verbatim quoted source in the margin; an italic on the GENERATED
-            label would muddy the single clearest honesty contrast. Upright sans. */}
-        <p className="mt-3 font-sans text-meta leading-relaxed text-ink-muted">
-          {GENERATED_EXPLANATION_LABEL}
+        {/* H10 (honesty): a clear GENERATED tag makes the boundary between the
+            model's own reasoning and the verifiable citation unmissable. NO
+            italic here; italic is reserved strictly for the verbatim source. */}
+        <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1.5 font-sans text-meta leading-relaxed text-ink-muted">
+          <span className="inline-flex items-center rounded-sm border border-rule-strong bg-surface-sunk px-1.5 py-0.5 text-eyebrow font-semibold uppercase tracking-[var(--tracking-eyebrow)] text-ink">
+            Generated
+          </span>
+          <span>{GENERATED_EXPLANATION_LABEL}</span>
         </p>
         <div className="mt-3 max-w-read space-y-2.5">
           {lines.length > 0 ? (

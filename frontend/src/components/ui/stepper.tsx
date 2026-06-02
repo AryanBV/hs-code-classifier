@@ -22,8 +22,10 @@ export interface StepperProps {
   activeNote?: string;
 }
 
+// "Done" = this step has run (the pipeline executes them in order), NOT
+// "verified correct" — the marker is a nib, never a checkmark.
 const STATE_WORD: Record<StepStatus, string> = {
-  done: "Checked",
+  done: "Done",
   active: "Working",
   pending: "Next",
 };
