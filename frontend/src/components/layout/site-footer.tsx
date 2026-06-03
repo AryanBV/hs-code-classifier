@@ -10,7 +10,7 @@ export interface SiteFooterProps {
 }
 
 /**
- * SiteFooter — the global disclaimer plus the accountable-entity line, so the
+ * SiteFooter: the global disclaimer plus the accountable-entity line, so the
  * tool reads as something a real operator stands behind. The full-width <footer>
  * carries the overline edge-to-edge; content runs through PageShell to share the
  * one rail with the masthead and page bodies. Server component.
@@ -28,8 +28,9 @@ function SiteFooter({ className }: SiteFooterProps) {
           <div className="flex flex-col gap-1.5">
             <p className="m-0 font-medium text-ink">{ADVISORY}</p>
             <p className="m-0">
-              {BRAND} is an indicative classification tool for Indian ITC-HS
-              export codes. Built in India.
+              {BRAND} gives AI-generated, indicative ITC-HS export codes. It is
+              not official customs or legal advice. Verify with a licensed
+              customs broker before filing. Built in India.
             </p>
             <p className="m-0">
               Questions or a code that looks wrong?{" "}
@@ -61,6 +62,12 @@ function SiteFooter({ className }: SiteFooterProps) {
               className="rounded-sm font-medium transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
             >
               Privacy
+            </Link>
+            <Link
+              href="/terms"
+              className="rounded-sm font-medium transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+            >
+              Terms
             </Link>
           </nav>
         </div>

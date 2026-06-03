@@ -22,6 +22,9 @@ function Section({ label, children }: { label: string; children: React.ReactNode
   );
 }
 
+// DRAFT COPY FOR FOUNDER REVIEW. Plain-language about page for a free,
+// pre-revenue tool. No legal entity, address, or claims about a registered
+// company are made; review before relying on it.
 export default function AboutPage() {
   return (
     <PageShell width="read" className="py-section">
@@ -32,8 +35,8 @@ export default function AboutPage() {
             {TAGLINE}
           </h1>
           <p className="text-body leading-relaxed text-ink-muted">
-            {BRAND} is the careful customs clerk, not the oracle. It reads a plain description of
-            your product, applies the legal rules, and issues a record you can check. Then it tells
+            {BRAND} works like a careful customs clerk, not an oracle. It reads a plain description of
+            your product, applies the legal rules, and gives you a record you can check. Then it tells
             you to verify before you file.
           </p>
         </header>
@@ -45,11 +48,11 @@ export default function AboutPage() {
             the 8-digit tariff line that best fits what you wrote.
           </p>
           <p>
-            With every result it shows its working: the rule it applied, the note or exclusion it
-            relied on, and the quoted text from the schedule that the match rests on. It also lists
-            the closest alternatives, because the honest picture often includes a near miss worth a
-            second look. The reasoning is on screen so you can confirm the code against your actual
-            product, not take it on faith.
+            Every result shows its working: the rule it applied, the note or exclusion it relied on,
+            and the text quoted from the schedule that the match rests on. It also lists the closest
+            alternatives, because an honest answer often includes a near miss worth a second look.
+            The reasoning is on screen so you can confirm the code against your actual product
+            instead of taking it on faith.
           </p>
         </Section>
 
@@ -61,17 +64,17 @@ export default function AboutPage() {
             short description cannot always carry that.
           </p>
           <p>
-            That is why every result comes with a confidence band in plain English, not a score
-            dressed up as certainty. When the answer is uncertain, {BRAND} says so, sometimes by
-            asking one more question, sometimes by narrowing only to the 6-digit subheading and
-            leaving the last two digits to confirm. We would rather tell you we are not sure than
-            hand you a clean-looking code that is wrong.
+            So every result comes with a confidence band in plain English, not a score dressed up as
+            certainty. When the answer is uncertain, {BRAND} says so. Sometimes it asks one more
+            question. Sometimes it narrows only to the 6-digit subheading and leaves the last two
+            digits for you to confirm. We would rather tell you we are not sure than hand you a
+            clean-looking code that is wrong.
           </p>
         </Section>
 
         <Section label="Who is behind it">
           <p>
-            {BRAND} is built and operated by Prevyl, a bootstrapped venture serving Indian exporters
+            {BRAND} is built and run by Prevyl, a bootstrapped venture serving Indian exporters
             and customs brokers. It is free to use. If you spot a code that looks off, or want a
             shared record removed, write to{" "}
             <a

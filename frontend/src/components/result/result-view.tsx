@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { Chip } from "@/components/ui/chip";
 import { DocumentMargin } from "@/components/layout/document-margin";
 import { MobileActionBar, ResultActions } from "@/components/result/result-actions";
+import { ResultFeedback } from "@/components/result/result-feedback";
 import {
   ALTERNATIVES_LABEL,
   BAND_ADVISORY,
@@ -28,6 +29,7 @@ import {
   QUERY_ECHO_LABEL,
   RATIONALE_EMPTY,
   RATIONALE_HEADING,
+  RESULT_DISCLAIMER,
   SIX_DIGIT_CANDIDATES_LABEL,
   SIX_DIGIT_NARROWING,
   SIX_VS_EIGHT_EXPLAINER,
@@ -490,6 +492,14 @@ function MarginPane({
         <p className="mt-4 border-t border-rule pt-3.5 font-sans text-meta leading-relaxed text-ink">
           {BAND_ADVISORY[result.confidenceBand]}
         </p>
+
+        {/* Explicit, calm record disclaimer: names WHAT this is (indicative,
+            AI-generated, not official advice). The graduated advisory above says
+            "verify"; this names the boundary so it is unmissable on every result,
+            not only implied by the hedging. */}
+        <p className="mt-2.5 font-sans text-meta leading-relaxed text-ink-muted">
+          {RESULT_DISCLAIMER}
+        </p>
       </section>
 
       {/* THE VERIFIABLE SOURCE — kept visually distinct from the generated
@@ -545,6 +555,10 @@ function MarginPane({
       <section aria-label="Keep this record" className="border-t border-rule pt-5">
         <ResultActions record={record} />
       </section>
+
+      {/* FEEDBACK — lightweight "was this code right?" with a report path. Fail-
+          safe: a failed submit never breaks this view. */}
+      <ResultFeedback record={record} />
 
       {/* Verify it yourself — inviting verification is trust-building. */}
       <a

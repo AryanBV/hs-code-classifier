@@ -111,16 +111,26 @@ export function recordToRow(
   };
 }
 
-/** Best-effort save of one classification to the cloud. Never throws. */
+/**
+ * Best-effort save of one classification to the cloud. Never throws.
+ *
+ * Robust against the immediate post-save navigation (`router.replace("/r/…")`):
+ * the owner id is read from the LOCAL session via `getSession()` (no network
+ * round-trip) instead of `getUser()` (which revalidates against the auth server
+ * and was the slow hop most likely to be cut off mid-navigation). RLS still
+ * enforces `auth.uid() = user_id` server-side from the JWT, so security is
+ * unchanged; the insert simply has a real chance to dispatch before unmount.
+ */
 export async function saveClassification(rec: HistoryRecord): Promise<void> {
   try {
     const supabase = createClient();
     if (!supabase) return;
 
-    const { data, error } = await supabase.auth.getUser();
-    if (error || !data.user) return;
+    const { data, error } = await supabase.auth.getSession();
+    const userId = data.session?.user?.id;
+    if (error || !userId) return;
 
-    await supabase.from(TABLE).insert(recordToRow(data.user.id, rec));
+    await supabase.from(TABLE).insert(recordToRow(userId, rec));
   } catch {
     /* fail-safe: cloud save is best-effort, never breaks the guest flow */
   }

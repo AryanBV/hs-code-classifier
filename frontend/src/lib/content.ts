@@ -157,3 +157,25 @@ export const CLASSIFY_ANOTHER_LABEL = "Classify another product";
 export const EDIT_AND_RERUN_LABEL = "Edit and run again";
 /** What the user gave us. Plain, not "Description filed". */
 export const QUERY_ECHO_LABEL = "You asked";
+
+// ----------------------------------------------------------------------------
+// Result-level explicit disclaimer. The graduated BAND_ADVISORY says "verify
+// before filing" at the decision point; this short tag names WHAT the record is
+// (indicative, AI-generated, not official advice) so the boundary is explicit on
+// every result, not only implied by the hedging copy. Calm, not alarming.
+// ----------------------------------------------------------------------------
+export const RESULT_DISCLAIMER =
+  "Indicative · AI-generated · not official customs or legal advice. Verify with a licensed customs broker before filing.";
+
+// ----------------------------------------------------------------------------
+// Feedback on a result (was this code right?). Lightweight, unobtrusive.
+// ----------------------------------------------------------------------------
+export const FEEDBACK_PROMPT = "Was this code right?";
+export const FEEDBACK_UP_LABEL = "Yes, this looks right";
+export const FEEDBACK_DOWN_LABEL = "No, this looks wrong";
+export const FEEDBACK_REPORT_LABEL = "Report a wrong code";
+export const FEEDBACK_NOTE_PLACEHOLDER =
+  "Optional: what looked off, or the code you expected.";
+export const FEEDBACK_SUBMIT_LABEL = "Send feedback";
+export const FEEDBACK_THANKS = "Thanks. This helps Prevyl get better.";
+export const FEEDBACK_ERROR = "Could not save just now. Please try again.";

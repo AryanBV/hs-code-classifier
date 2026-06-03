@@ -10,6 +10,10 @@ export const metadata: Metadata = {
   description: "What Prevyl stores, and what it does not.",
 };
 
+// DRAFT COPY FOR FOUNDER REVIEW. Plain-language, DPDP-aware privacy notice for a
+// free, pre-revenue tool. No legal entity or address is invented; review with a
+// lawyer before treating this as a binding notice.
+
 function Section({ heading, children }: { heading: string; children: React.ReactNode }) {
   return (
     <section className="flex flex-col gap-3">
@@ -29,34 +33,48 @@ export default function PrivacyPage() {
             We keep this simple.
           </h1>
           <p className="text-body leading-relaxed text-ink-muted">
-            {BRAND} collects as little as it can to do the job, and it tells you plainly what that
-            is. This is the short, honest version.
+            {BRAND} collects as little as it can to do the job, and it tells you
+            plainly what that is. Here is the short version.
           </p>
         </header>
 
         <Section heading="No account needed">
-          You can use {BRAND} without signing in. Your past classifications are saved only in your
-          own browser, on your own device, so you can open them again later. Clearing your browser
-          data clears them, and we never see them.
+          You can use {BRAND} without signing in. Your past classifications are
+          saved only in your own browser, on your own device, so you can open
+          them again later. Clear your browser data and they are gone. We never
+          see them.
         </Section>
 
         <Section heading="What we send to classify">
-          When you classify a product, the description you type is sent to our service to find the
-          code, and a short technical log helps us keep the service running. Please do not put
-          personal details in a product description, because you never need to.
+          When you classify a product, the description you type goes to our
+          service to find the code. A short technical log helps us keep the
+          service running. We use your product descriptions and any feedback you
+          send only to run and improve the service. We do not sell your data.
+          Please do not put personal details in a product description. You never
+          need to.
         </Section>
 
         <Section heading="When accounts arrive">
-          If you choose to create an account later, we will keep only what is needed to save your
-          records and let you share them: your sign-in email and your saved classifications. Sharing
-          a record is always your explicit choice, and a shared record carries no personal
-          information. This follows India&apos;s Digital Personal Data Protection principles of
-          collecting the minimum and being clear about it.
+          If you create an account later, we will keep only what is needed to
+          save your records and let you share them. That is your sign-in email
+          and your saved classifications. Sharing a record is always your own
+          choice, and a shared record carries no personal information. This
+          follows India&apos;s Digital Personal Data Protection principles:
+          collect the minimum, and be clear about it.
+        </Section>
+
+        <Section heading="Your rights, including deletion">
+          Under India&apos;s Digital Personal Data Protection principles you can
+          ask us what we hold about you, ask us to correct it, and ask us to
+          delete it. Write to us and we will delete your account, your saved
+          classifications, and any feedback tied to you. If you used {BRAND}{" "}
+          without an account, your history lives only in your own browser, so
+          clearing your browser data removes it yourself.
         </Section>
 
         <Section heading="Who holds this and how to reach us">
-          {BRAND} is operated by Prevyl. If you want a record removed, or have any question about
-          your data, write to{" "}
+          {BRAND} is operated by Prevyl. If you want a record removed, want your
+          data deleted, or have any question about your data, write to{" "}
           <a
             href="mailto:hello@prevyl.com"
             className="text-accent-ink underline decoration-accent-quiet underline-offset-4 hover:decoration-accent"

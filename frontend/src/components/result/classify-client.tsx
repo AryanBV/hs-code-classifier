@@ -207,13 +207,43 @@ function ClassifyClient({ query }: ClassifyClientProps) {
     if (savedKey.current === key) return;
     savedKey.current = key;
     const saved = saveHistory(originalQuery, result, Date.now());
-    // Additive, best-effort cloud sync: fire-and-forget when Supabase is
-    // configured. Never awaited, never blocks the local save or the redirect,
-    // and the helper itself never throws (no-op when signed out / unconfigured).
-    if (isSupabaseConfigured()) {
-      void import("@/lib/account").then((m) => m.saveClassification(saved));
+
+    // Additive, best-effort cloud sync. The local save above is the source of
+    // truth; the cloud insert is strictly additive and never throws. Earlier the
+    // insert was fire-and-forget and `router.replace` ran on the SAME tick, so
+    // the navigation unmounted this component (and tore down the async chunk
+    // load + insert) before the row was dispatched — most reliably on the
+    // answer-continuation path. We now AWAIT the cloud save (raced against a
+    // short ceiling so a slow/hung save can never block the redirect) and only
+    // then navigate. The save still never blocks the local save, never throws,
+    // and is a no-op when signed out / unconfigured.
+    if (!isSupabaseConfigured()) {
+      router.replace(`/r/${saved.id}`);
+      return;
     }
-    router.replace(`/r/${saved.id}`);
+
+    let navigated = false;
+    const navigate = (): void => {
+      if (navigated) return;
+      navigated = true;
+      router.replace(`/r/${saved.id}`);
+    };
+    // Hard ceiling: never let cloud sync delay the redirect for long.
+    const fallback = window.setTimeout(navigate, 1500);
+
+    void import("@/lib/account")
+      .then((m) => m.saveClassification(saved))
+      .catch(() => {
+        /* helper is fail-safe; this guards a chunk-load failure too */
+      })
+      .finally(() => {
+        window.clearTimeout(fallback);
+        navigate();
+      });
+
+    // Clear the fallback timer if this effect tears down before the save settles
+    // (e.g. unmount). The `navigated` guard already prevents a double redirect.
+    return () => window.clearTimeout(fallback);
   }, [result, originalQuery, router]);
 
   // Which discrete view is on screen — used to move focus on each transition.

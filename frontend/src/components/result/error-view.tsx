@@ -44,8 +44,8 @@ const COPY: Record<
   },
   daily_limit: {
     eyebrow: "At capacity · free daily limit reached",
-    title: "We have hit today's free limit.",
-    body: "Prevyl is free, so we cap how many classifications we run each day. Please come back tomorrow and we will pick up right where you left off.",
+    title: "We have reached today's free limit.",
+    body: "Prevyl is free, so we cap how many classifications we run each day. We have reached that cap for today. Please try again tomorrow.",
     canRetry: false,
   },
 };
