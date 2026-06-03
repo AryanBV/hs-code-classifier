@@ -127,6 +127,37 @@ describe('B5 contract — CLASSIFICATION variant shape', () => {
     );
     if (out.responseType !== 'classification') throw new Error('unreachable');
     expect(out.alternatives.length).toBe(3);
+    // Cap preserves the FIRST 3 in model order (no reorder).
+    expect(out.alternatives.map((a) => a.code)).toEqual(['a1', 'a2', 'a3']);
+  });
+
+  it('alternatives are NOT padded to reach 3 when fewer resolve', async () => {
+    const r = {
+      ...base,
+      decision: 'CLASSIFY',
+      classification: {
+        code: '7318.15.00',
+        is_six_digit: false,
+        export_policy: null,
+        policy_condition: null,
+        india_specific: false,
+        citation,
+        reasoning_chain: [],
+        self_confidence: 'LOW',
+        // Two real siblings + one non-code token the model emitted ('n/a').
+        alternatives_considered: ['a1', 'n/a', 'a2'],
+        components: null,
+        escalated_to_deep_think: false,
+      },
+    } as ClassifyResult;
+
+    // 'n/a' has no tariff row -> filtered out; only a1 + a2 survive (no padding).
+    const out = await mapV2Result(
+      r,
+      fetcher({ '7318.15.00': 'L', a1: '1', a2: '2' }),
+    );
+    if (out.responseType !== 'classification') throw new Error('unreachable');
+    expect(out.alternatives.map((a) => a.code)).toEqual(['a1', 'a2']);
   });
 });
 

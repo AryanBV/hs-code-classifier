@@ -35,7 +35,7 @@ Verified: `tsc` clean, eslint clean, `next build` green; visually checked at a t
 ## Your calls (review / tweak — none block ship)
 
 - Copy is drafted in plain voice in `src/lib/content.ts` (tagline, band meanings + graduated advisories) and `src/lib/refuse-copy.ts` (the 5 refuse messages). Tweak to taste.
-- The daily free-classification ceiling defaults to `NEXT_PUBLIC_DAILY_CEILING=200` — pick your number.
+- The daily free-classification ceiling is **enforced and owned by the BACKEND** (`MAX_CLASSIFICATIONS_PER_DAY`, live value **30** on Railway; the backend `DEFAULT_MAX_PER_DAY=200` is only the dev/test fail-safe). There is intentionally **no `NEXT_PUBLIC_DAILY_CEILING` read in the UI** — the frontend never displays or promises a capacity number, so it can never contradict the real cap. The at-capacity screen (`error-view.tsx` → `daily_limit`) stays honest and number-free ("we have reached today's free limit"). If you ever surface a number on-screen, drive it from one source (the backend cap) — do not hardcode it. Adjust the real cap by changing `MAX_CLASSIFICATIONS_PER_DAY` on Railway.
 - Brand: the wordmark is typographic and `app/icon.svg` is the seal device. Swap in your real brand assets (you have monograms/OG in your Downloads) if you prefer.
 
 ## "Make it sing" backlog (8.5 → 9.5, post-launch polish, from FINAL-VERDICT.md)

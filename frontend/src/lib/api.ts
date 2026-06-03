@@ -37,6 +37,10 @@ function looksLikeTimeout(message: string | undefined): boolean {
  * Strip the hidden numeric signals (`confidence`, `confidenceP`, `selfConfidence`)
  * so components physically cannot render the percentage. Components only ever
  * see the band.
+ *
+ * `UiClassification` is `Omit<WireClassification, HiddenConfidenceKey>`, so the
+ * destructured rest is structurally exactly the UI type — the assignment is
+ * type-sound, not a hand-maintained parallel shape that can drift.
  */
 function toUi(w: WireResponse): ClassifyResult {
   if (w.responseType === "classification") {
@@ -44,7 +48,8 @@ function toUi(w: WireResponse): ClassifyResult {
     void _c;
     void _p;
     void _s;
-    return rest as UiClassification;
+    const ui: UiClassification = rest;
+    return ui;
   }
   return w;
 }

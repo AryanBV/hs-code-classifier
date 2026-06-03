@@ -131,39 +131,24 @@ export type WireResponse = WireClassification | WireQuestion | WireRefused;
 
 // ----------------------------------------------------------------------------
 // UI types — what components consume. Numeric confidence is NOT present.
+//
+// STRUCTURAL honesty guarantee: the UI types are DERIVED from the Wire types by
+// OMITTING the hidden numeric signals (`confidence`, `confidenceP`,
+// `selfConfidence`). They are not hand-maintained parallel interfaces, so they
+// cannot drift back into exposing a number — if a hidden field is ever added to
+// a Wire type, it is absent from the UI type by construction, and the `toUi`
+// strip in `lib/api.ts` stays type-sound. Components consuming `ClassifyResult`
+// have NO type-level access to the percentage; the band is the only signal.
 // ----------------------------------------------------------------------------
 
-export interface UiClassification {
-  responseType: 'classification';
-  hsCode: string;
-  description: string;
-  confidenceBand: ConfidenceBand;
-  reasoning: string;
-  alternatives: Alternative[];
-  isSixDigit: boolean;
-  exportPolicy: string | null;
-  policyCondition: string | null;
-  indiaSpecific: boolean;
-  citation: Citation;
-  components: ClassificationComponent[] | null;
-  processingTimeMs?: number;
-}
+/** The keys stripped at the wire→UI boundary so the percentage can never render. */
+export type HiddenConfidenceKey = 'confidence' | 'confidenceP' | 'selfConfidence';
 
-export interface UiQuestion {
-  responseType: 'question';
-  question: string;
-  options: QuestionOption[];
-  questionId: string;
-  discriminatingAttribute: AttributeKey | string;
-  processingTimeMs?: number;
-}
+export type UiClassification = Omit<WireClassification, HiddenConfidenceKey>;
 
-export interface UiRefused {
-  responseType: 'refused';
-  message: string;
-  reason: RefuseReason | null;
-  processingTimeMs?: number;
-}
+export type UiQuestion = WireQuestion;
+
+export type UiRefused = WireRefused;
 
 export type ClassifyResult = UiClassification | UiQuestion | UiRefused;
 
