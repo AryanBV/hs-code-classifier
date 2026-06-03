@@ -6,11 +6,224 @@
 import type {
   AnswerRequest,
   RefuseReason,
+  TradeIntelligence,
   WireClassification,
   WireQuestion,
   WireRefused,
   WireResponse,
 } from "./types";
+
+// ----------------------------------------------------------------------------
+// Trade-intelligence mock fixtures. Realistic DATED values across all four
+// severity cases so the whole block is reviewable on localhost with zero paid
+// calls. Each leaf carries asOn + sourceUrl + indicative:true. The disclaimer is
+// the §6 three-line stack. NOTE: dates/rates here are ILLUSTRATIVE mock values
+// for UI review only, not a sourced trade-intel feed.
+// ----------------------------------------------------------------------------
+
+const TRADE_INTEL_DISCLAIMER =
+  "Indicative classification for guidance only. This export-policy status, any conditions and any rates are drawn from official Indian sources but are not legal, tax or customs advice and carry no legal force. A correct code does not by itself mean the goods are cleared for export. Verify against the current ITC(HS) Schedule and DGFT/CBIC notifications, or a licensed Customs House Agent, before filing.";
+
+const DGFT_URL = "https://www.dgft.gov.in/CP/";
+const CBIC_URL = "https://www.cbic.gov.in/entities/cbic-content-mst/MTE1MDA=";
+const SCOMET_URL = "https://www.dgft.gov.in/CP/?opt=scomet";
+
+/** Free: calm, compact, neutral (the 99.6% case). */
+const TI_FREE: TradeIntelligence = {
+  exportPolicy: {
+    status: "Free",
+    statusPlain: "No DGFT export licence is needed for this line.",
+    severity: "notice",
+    conditionVerbatim: null,
+    conditionMissing: false,
+    asOn: "12 May 2026",
+    sourceUrl: DGFT_URL,
+    stale: false,
+    staleAdvisory: null,
+    indicative: true,
+  },
+  exportDuty: {
+    isNil: true,
+    rateText: null,
+    conditionVerbatim: null,
+    mappable: true,
+    verify: false,
+    asOn: "01 Feb 2026",
+    sourceUrl: CBIC_URL,
+    indicative: true,
+  },
+  incentive: {
+    kind: "rodtep",
+    ratePct: 0.8,
+    cap: "1.40",
+    capUnit: "Rs/kg",
+    asOn: "23 Mar 2026",
+    sourceUrl: DGFT_URL,
+    indicative: true,
+  },
+  uqc: { code: "KGS", label: "Kilograms" },
+  flags: [],
+  disclaimer: TRADE_INTEL_DISCLAIMER,
+};
+
+/** Free apparel: shows RoSCTL (replaces RoDTEP on Ch.61/62/63). */
+const TI_FREE_APPAREL: TradeIntelligence = {
+  exportPolicy: {
+    status: "Free",
+    statusPlain: "No DGFT export licence is needed for this line.",
+    severity: "notice",
+    conditionVerbatim: null,
+    conditionMissing: false,
+    asOn: "12 May 2026",
+    sourceUrl: DGFT_URL,
+    stale: false,
+    staleAdvisory: null,
+    indicative: true,
+  },
+  exportDuty: {
+    isNil: true,
+    rateText: null,
+    conditionVerbatim: null,
+    mappable: true,
+    verify: false,
+    asOn: "01 Feb 2026",
+    sourceUrl: CBIC_URL,
+    indicative: true,
+  },
+  incentive: {
+    kind: "rosctl",
+    ratePct: 6.05,
+    cap: "53",
+    capUnit: "Rs/piece",
+    asOn: "10 Apr 2026",
+    sourceUrl: DGFT_URL,
+    indicative: true,
+  },
+  uqc: { code: "PCS", label: "Pieces" },
+  flags: [],
+  disclaimer: TRADE_INTEL_DISCLAIMER,
+};
+
+/** Restricted: amber WARNING, verbatim condition, promoted. */
+const TI_RESTRICTED: TradeIntelligence = {
+  exportPolicy: {
+    status: "Restricted",
+    statusPlain: "This line needs a DGFT authorisation before export.",
+    severity: "warning",
+    conditionVerbatim:
+      "Export permitted subject to registration and quantitative ceilings under Policy Condition 1 of this Chapter.",
+    conditionMissing: false,
+    asOn: "12 May 2026",
+    sourceUrl: DGFT_URL,
+    stale: false,
+    staleAdvisory: null,
+    indicative: true,
+  },
+  exportDuty: {
+    isNil: true,
+    rateText: null,
+    conditionVerbatim: null,
+    mappable: true,
+    verify: false,
+    asOn: "01 Feb 2026",
+    sourceUrl: CBIC_URL,
+    indicative: true,
+  },
+  incentive: null,
+  uqc: { code: "MTS", label: "Metric tonnes" },
+  flags: [],
+  disclaimer: TRADE_INTEL_DISCLAIMER,
+};
+
+/** Prohibited: red DANGER, promoted to the top. */
+const TI_PROHIBITED: TradeIntelligence = {
+  exportPolicy: {
+    status: "Prohibited",
+    statusPlain: "Export of this line is prohibited under current policy.",
+    severity: "danger",
+    conditionVerbatim:
+      "Export prohibited with effect from 13 May 2026 until further orders (Notification No. 16/2026-27).",
+    conditionMissing: false,
+    asOn: "13 May 2026",
+    sourceUrl: DGFT_URL,
+    stale: false,
+    staleAdvisory: null,
+    indicative: true,
+  },
+  exportDuty: null,
+  incentive: null,
+  uqc: { code: "QTL", label: "Quintals" },
+  flags: [],
+  disclaimer: TRADE_INTEL_DISCLAIMER,
+};
+
+/** Null status: grey "not specified", NEVER rendered as Free. */
+const TI_NULL: TradeIntelligence = {
+  exportPolicy: {
+    status: null,
+    statusPlain: "This status is not in our data for this line. Check the DGFT ITC(HS) schedule.",
+    severity: "grey",
+    conditionVerbatim: null,
+    conditionMissing: false,
+    asOn: null,
+    sourceUrl: DGFT_URL,
+    stale: false,
+    staleAdvisory: null,
+    indicative: true,
+  },
+  exportDuty: null,
+  incentive: null,
+  uqc: null,
+  flags: [],
+  disclaimer: TRADE_INTEL_DISCLAIMER,
+};
+
+/** Free, but carrying a SCOMET advisory flag (dual-use chapter). */
+const TI_FREE_WITH_FLAG: TradeIntelligence = {
+  exportPolicy: {
+    status: "Free",
+    statusPlain: "No DGFT export licence is needed for this line.",
+    severity: "notice",
+    conditionVerbatim: null,
+    conditionMissing: false,
+    asOn: "12 May 2026",
+    sourceUrl: DGFT_URL,
+    stale: false,
+    staleAdvisory: null,
+    indicative: true,
+  },
+  exportDuty: {
+    isNil: true,
+    rateText: null,
+    conditionVerbatim: null,
+    mappable: true,
+    verify: false,
+    asOn: "01 Feb 2026",
+    sourceUrl: CBIC_URL,
+    indicative: true,
+  },
+  incentive: {
+    kind: "rodtep",
+    ratePct: 1.3,
+    cap: "8.50",
+    capUnit: "Rs/unit",
+    asOn: "23 Mar 2026",
+    sourceUrl: DGFT_URL,
+    indicative: true,
+  },
+  uqc: { code: "NOS", label: "Numbers" },
+  flags: [
+    {
+      type: "scomet",
+      message:
+        "Items in this chapter may be SCOMET-controlled (dual-use). Check Appendix 3 before export.",
+      sourceUrl: SCOMET_URL,
+      versionDate: "App.3 v.2026",
+      absenceNotClearance: true,
+    },
+  ],
+  disclaimer: TRADE_INTEL_DISCLAIMER,
+};
 
 export type MockOutcome =
   | { kind: "ok"; body: WireResponse }
@@ -96,6 +309,7 @@ function lookup(q: string): WireResponse | null {
         gir_applied: "GIR-6",
       },
       components: null,
+      tradeIntelligence: TI_FREE_APPAREL,
     });
   }
 
@@ -128,6 +342,7 @@ function lookup(q: string): WireResponse | null {
         gir_applied: "GIR-1",
       },
       components: null,
+      tradeIntelligence: TI_FREE,
     });
   }
 
@@ -158,6 +373,7 @@ function lookup(q: string): WireResponse | null {
         gir_applied: "GIR-1",
       },
       components: null,
+      tradeIntelligence: TI_FREE_WITH_FLAG,
     });
   }
 
@@ -192,6 +408,101 @@ function lookup(q: string): WireResponse | null {
         { name: "body", material: "leather", role: "primary" },
         { name: "clasp", material: "base metal", role: "auxiliary" },
       ],
+      tradeIntelligence: TI_FREE,
+    });
+  }
+
+  // Restricted (amber WARNING, promoted): a sandalwood-oil style line ----
+  if (has(q, "sandalwood", "sandal wood", "red sanders", "restricted")) {
+    return classification({
+      hsCode: "3301.29.16",
+      description: "Essential oils of sandalwood",
+      confidence: 80,
+      confidenceBand: "medium",
+      reasoning:
+        "Sandalwood oil is an essential oil, classified in Chapter 33 (essential oils), heading 3301.\nSubheading 3301.29 covers other essential oils; the sandalwood breakout is 3301.29.16.\nVerify the exact botanical source before filing.",
+      alternatives: [
+        { code: "3301.29.90", description: "Other essential oils" },
+        { code: "3301.25.90", description: "Essential oils of other mints" },
+      ],
+      isSixDigit: false,
+      exportPolicy: "Restricted",
+      policyCondition: "Export permitted subject to Policy Condition 1 of this Chapter.",
+      indiaSpecific: true,
+      selfConfidence: "MEDIUM",
+      citation: {
+        primary: {
+          type: "note",
+          source_ref: "headings.3301",
+          verbatim_text:
+            "Essential oils (terpeneless or not), including concretes and absolutes; resinoids; extracted oleoresins.",
+          note_or_exclusion_id: null,
+        },
+        gir_applied: "GIR-1",
+      },
+      components: null,
+      tradeIntelligence: TI_RESTRICTED,
+    });
+  }
+
+  // Prohibited (red DANGER, promoted): a sugar line moved to Prohibited -----
+  if (has(q, "sugar", "prohibited")) {
+    return classification({
+      hsCode: "1701.99.90",
+      description: "Cane or beet sugar, other",
+      confidence: 90,
+      confidenceBand: "high",
+      reasoning:
+        "Refined sugar is classified in Chapter 17 (sugars), heading 1701.\nSubheading 1701.99 covers other cane or beet sugar; the residual leaf is 1701.99.90.\nThe leaf applies under GIR-1 and GIR-6.",
+      alternatives: [
+        { code: "1701.99.10", description: "Sugar cubes" },
+        { code: "1701.14.90", description: "Other cane sugar, other" },
+      ],
+      isSixDigit: false,
+      exportPolicy: "Prohibited",
+      policyCondition: "Export prohibited with effect from 13 May 2026 (Notification 16/2026-27).",
+      indiaSpecific: false,
+      selfConfidence: "HIGH",
+      citation: {
+        primary: {
+          type: "note",
+          source_ref: "headings.1701",
+          verbatim_text: "Cane or beet sugar and chemically pure sucrose, in solid form.",
+          note_or_exclusion_id: null,
+        },
+        gir_applied: "GIR-1",
+      },
+      components: null,
+      tradeIntelligence: TI_PROHIBITED,
+    });
+  }
+
+  // Null / not-specified policy (grey, NEVER Free): a niche line -----------
+  if (has(q, "meteorite", "specimen", "not specified", "unknown policy")) {
+    return classification({
+      hsCode: "7106.91.00",
+      description: "Silver, unwrought",
+      confidence: 70,
+      confidenceBand: "medium",
+      reasoning:
+        "Unwrought silver is classified in Chapter 71 (precious metals), heading 7106.\nSubheading 7106.91 covers silver in unwrought forms.\nConfirm the form and purity before filing.",
+      alternatives: [{ code: "7106.92.90", description: "Silver, semi-manufactured, other" }],
+      isSixDigit: false,
+      exportPolicy: null,
+      policyCondition: null,
+      indiaSpecific: false,
+      selfConfidence: "MEDIUM",
+      citation: {
+        primary: {
+          type: "note",
+          source_ref: "headings.7106",
+          verbatim_text: "Silver (including silver plated with gold or platinum), unwrought or in semi-manufactured forms, or in powder form.",
+          note_or_exclusion_id: null,
+        },
+        gir_applied: "GIR-1",
+      },
+      components: null,
+      tradeIntelligence: TI_NULL,
     });
   }
 
@@ -248,6 +559,7 @@ function defaultBolt(): WireClassification {
       gir_applied: "GIR-1",
     },
     components: null,
+    tradeIntelligence: TI_FREE,
   });
 }
 

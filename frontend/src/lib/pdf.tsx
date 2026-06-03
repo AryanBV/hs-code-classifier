@@ -15,9 +15,24 @@ import {
   pdf,
 } from "@react-pdf/renderer";
 
-import type { ConfidenceBand, UiClassification } from "./types";
+import type {
+  ConfidenceBand,
+  TradeExportDuty,
+  TradeIncentive,
+  TradeIntelligence,
+  TradeVerifyState,
+  UiClassification,
+} from "./types";
 import { makeRecordId, formatGeneratedAt } from "./record-id";
-import { BAND_MEANING } from "./content";
+import {
+  BAND_MEANING,
+  TRADE_INTEL_ABSENCE_NOT_CLEARANCE,
+  TRADE_INTEL_CONDITION_MISSING,
+  TRADE_INTEL_DUTY_VERIFY,
+  TRADE_INTEL_HEADING,
+  TRADE_INTEL_INCENTIVE_VERIFY,
+  TRADE_INTEL_STALE_VERIFY,
+} from "./content";
 
 /**
  * generateAndDownloadPdf — builds a premium, filing-grade "Classification
@@ -112,6 +127,15 @@ const C = {
   bandMedium: "#916717", // --band-medium (amber)
   bandLow: "#964426", // --band-low (rust)
 } as const;
+
+// Severity -> color for the trade-intel status (reuses the band family so a
+// Prohibited rust matches a Low-confidence rust). grey = muted ink.
+const SEVERITY_COLOR: Record<string, string> = {
+  danger: C.bandLow,
+  warning: C.bandMedium,
+  notice: C.bandHigh,
+  grey: C.inkMuted,
+};
 
 const BAND_COLOR: Record<ConfidenceBand, string> = {
   high: C.bandHigh,
@@ -331,6 +355,40 @@ const styles = StyleSheet.create({
   citeGir: { fontFamily: MONO, fontSize: 9, fontWeight: 600, color: C.accentInk },
   citeSrc: { fontSize: 8, color: C.inkMuted },
   citeText: { fontFamily: DISPLAY, fontSize: 10.5, fontStyle: "italic", color: C.ink, lineHeight: 1.5 },
+  // trade intelligence
+  tiStatusBox: {
+    borderLeftWidth: 3,
+    borderRadius: 2,
+    backgroundColor: C.surface,
+    paddingVertical: 9,
+    paddingHorizontal: 12,
+    marginBottom: 8,
+  },
+  tiStatusWord: { fontFamily: DISPLAY, fontSize: 15, fontWeight: 600, marginBottom: 3 },
+  tiStatusPlain: { fontSize: 9.5, color: C.ink, lineHeight: 1.45 },
+  tiAsOn: { fontSize: 7.5, color: C.inkMuted, marginTop: 4 },
+  tiRow: {
+    flexDirection: "row",
+    borderBottomWidth: 1,
+    borderBottomColor: C.rule,
+    paddingVertical: 4,
+    alignItems: "flex-start",
+  },
+  tiRowLabel: { fontSize: 8, color: C.inkMuted, width: 92 },
+  tiRowValue: { fontFamily: MONO, fontSize: 9.5, color: C.ink, flex: 1 },
+  tiRowMeta: { fontSize: 7, color: C.inkMuted, marginTop: 1.5 },
+  tiFlag: {
+    flexDirection: "column",
+    borderLeftWidth: 3,
+    borderLeftColor: C.bandMedium,
+    backgroundColor: C.surface,
+    borderRadius: 2,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    marginTop: 5,
+  },
+  tiFlagText: { fontSize: 8.5, color: C.ink, lineHeight: 1.4 },
+  tiFlagAbsence: { fontSize: 7.5, color: C.inkMuted, marginTop: 2 },
   // alternatives / components
   altRow: {
     flexDirection: "row",
@@ -396,6 +454,153 @@ function SealVector({ size = 76 }: { size?: number }) {
       <Circle cx="50" cy="50" r="9" stroke={C.accentQuiet} strokeWidth={1.2} fillOpacity={0} />
       <Path d="M50 45 l3.5 5 l-3.5 5 l-3.5 -5 z" fill={C.accentQuiet} />
     </Svg>
+  );
+}
+
+/** Type guard for a stale/withheld datum (matches the screen logic). */
+function isVerifyState(
+  v: TradeExportDuty | TradeIncentive | TradeVerifyState | null | undefined,
+): v is TradeVerifyState {
+  return !!v && (v as TradeVerifyState).verifyOnly === true;
+}
+
+const TI_INCENTIVE_LABEL: Record<TradeIncentive["kind"], string> = {
+  rodtep: "RoDTEP",
+  rosctl: "RoSCTL",
+};
+
+/**
+ * TradeIntelSection — the trade-intel status + dated rows + flags + disclaimer
+ * for the PDF, so the certificate matches the screen (single source of truth).
+ * Honesty mirrors the screen exactly: stale never shows a value; null is never
+ * Free; a missing condition is named, not blank; a verify-state never shows a
+ * bare rate; every datum carries its as-on date. Renders nothing when absent.
+ */
+function TradeIntelSection({ intel }: { intel: TradeIntelligence | null | undefined }) {
+  if (!intel) return null;
+  const ep = intel.exportPolicy;
+
+  // Stale: replace the value with the verify advisory; never show the stale word.
+  const stale = ep.stale;
+  const statusWord = stale ? "Verify" : safe(ep.status, "Not specified");
+  const statusColor = stale ? C.inkMuted : (SEVERITY_COLOR[ep.severity] ?? C.inkMuted);
+  const statusPlain = stale
+    ? safe(ep.staleAdvisory, TRADE_INTEL_STALE_VERIFY)
+    : ep.statusPlain;
+
+  const conditionVerbatim = (ep.conditionVerbatim ?? "").trim();
+  const showCondition = !stale && (conditionVerbatim.length > 0 || ep.conditionMissing);
+
+  const duty = intel.exportDuty;
+  const incentive = intel.incentive;
+  const uqc = intel.uqc;
+  const flags = Array.isArray(intel.flags) ? intel.flags : [];
+
+  function dutyValue(): string {
+    if (duty == null) return "";
+    if (isVerifyState(duty)) return TRADE_INTEL_DUTY_VERIFY;
+    if (duty.verify || !duty.mappable) return TRADE_INTEL_DUTY_VERIFY;
+    if (duty.isNil) return "NIL";
+    return safe(duty.rateText, TRADE_INTEL_DUTY_VERIFY);
+  }
+
+  function incentiveRow(): { label: string; value: string; meta: string } | null {
+    if (incentive == null) return null;
+    if (isVerifyState(incentive)) {
+      return { label: "Incentive", value: TRADE_INTEL_INCENTIVE_VERIFY, meta: incentiveMeta(incentive.asOn) };
+    }
+    const cap = (incentive.cap ?? "").trim();
+    const capUnit = (incentive.capUnit ?? "").trim();
+    const capText = cap ? `cap ${cap}${capUnit ? ` ${capUnit}` : ""}` : "";
+    return {
+      label: TI_INCENTIVE_LABEL[incentive.kind],
+      value: `${incentive.ratePct}%`,
+      meta: [capText, incentiveMeta(incentive.asOn)].filter(Boolean).join(" · "),
+    };
+  }
+
+  function incentiveMeta(asOn: string | null): string {
+    const a = (asOn ?? "").trim();
+    return a ? `as on ${a}` : "";
+  }
+
+  const dutyAsOn = duty != null ? (duty.asOn ?? "").trim() : "";
+  const inc = incentiveRow();
+
+  return (
+    <>
+      <Text style={styles.sectionLabel}>{TRADE_INTEL_HEADING}</Text>
+
+      {/* status */}
+      <View style={[styles.tiStatusBox, { borderLeftColor: statusColor }]}>
+        <Text style={[styles.tiStatusWord, { color: statusColor }]}>{statusWord}</Text>
+        <Text style={styles.tiStatusPlain}>{statusPlain}</Text>
+        {!stale && (ep.asOn ?? "").trim() ? (
+          <Text style={styles.tiAsOn}>{`as on ${(ep.asOn ?? "").trim()} · DGFT ITC(HS) Schedule`}</Text>
+        ) : null}
+      </View>
+
+      {/* verbatim condition (or the honest "we don't hold it" line) */}
+      {showCondition ? (
+        <View style={styles.citeBox}>
+          <Text style={styles.citeSrc}>Official text (verbatim)</Text>
+          <Text style={styles.citeText}>
+            {conditionVerbatim
+              ? `“${conditionVerbatim}”`
+              : TRADE_INTEL_CONDITION_MISSING}
+          </Text>
+        </View>
+      ) : null}
+
+      {/* dated money rows */}
+      {duty != null ? (
+        <View style={styles.tiRow}>
+          <Text style={styles.tiRowLabel}>Export duty</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.tiRowValue}>{dutyValue()}</Text>
+            {dutyAsOn ? <Text style={styles.tiRowMeta}>{`as on ${dutyAsOn} · Customs Tariff`}</Text> : null}
+          </View>
+        </View>
+      ) : null}
+      {inc ? (
+        <View style={styles.tiRow}>
+          <Text style={styles.tiRowLabel}>{inc.label}</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.tiRowValue}>{inc.value}</Text>
+            {inc.meta ? <Text style={styles.tiRowMeta}>{`${inc.meta} · DGFT`}</Text> : null}
+          </View>
+        </View>
+      ) : null}
+      {uqc != null ? (
+        <View style={styles.tiRow}>
+          <Text style={styles.tiRowLabel}>Unit (UQC)</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.tiRowValue}>{safe(uqc.code, "Not specified")}</Text>
+            {(uqc.label ?? "").trim() ? <Text style={styles.tiRowMeta}>{(uqc.label ?? "").trim()}</Text> : null}
+          </View>
+        </View>
+      ) : null}
+
+      {/* advisory flags — never assert, absence is not a clearance */}
+      {flags.length > 0 ? (
+        <>
+          <Text style={[styles.eyebrow, { marginTop: 10 }]}>Advisory flags</Text>
+          {flags.map((f, i) => (
+            <View key={`${f.type}-${i}`} style={styles.tiFlag}>
+              <Text style={styles.tiFlagText}>{f.message}</Text>
+              <Text style={styles.tiFlagAbsence}>
+                {`${TRADE_INTEL_ABSENCE_NOT_CLEARANCE}${
+                  (f.versionDate ?? "").trim() ? ` ${(f.versionDate ?? "").trim()}` : ""
+                }`}
+              </Text>
+            </View>
+          ))}
+        </>
+      ) : null}
+
+      {/* the §6 disclaimer travels with the record */}
+      <Text style={[styles.muted, { marginTop: 10 }]}>{intel.disclaimer}</Text>
+    </>
   );
 }
 
@@ -605,6 +810,10 @@ function CertificateDoc({
               ))}
             </>
           ) : null}
+
+          {/* trade intelligence — status + dated rows + flags + disclaimer.
+              Renders nothing when the result carries no trade-intel data. */}
+          <TradeIntelSection intel={r.tradeIntelligence} />
 
           {/* the persistent global disclaimer */}
           <Text style={[styles.muted, { marginTop: 18 }]}>

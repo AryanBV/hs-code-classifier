@@ -18,6 +18,10 @@ import { DocumentMargin } from "@/components/layout/document-margin";
 import { MobileActionBar, ResultActions } from "@/components/result/result-actions";
 import { ResultFeedback } from "@/components/result/result-feedback";
 import {
+  TradeIntelBlock,
+  shouldPromoteTradeIntel,
+} from "@/components/result/trade-intel-block";
+import {
   ALTERNATIVES_LABEL,
   BAND_ADVISORY,
   BAND_MEANING,
@@ -349,6 +353,17 @@ function DocumentPane({
         </div>
       </div>
 
+      {/* TRADE INTELLIGENCE — promoted alert (Prohibited/Restricted/STE). A
+          control warning must be unmissable, so it sits at the TOP of the
+          document pane, right under the code/description (EXPERIENCE-DESIGN
+          §4.2). Renders nothing when there is no trade intel or the status is
+          calm (Free/null), which falls to the compact block below. */}
+      {result.tradeIntelligence && shouldPromoteTradeIntel(result.tradeIntelligence) ? (
+        <div className="mt-7">
+          <TradeIntelBlock intel={result.tradeIntelligence} placement="promoted" />
+        </div>
+      ) : null}
+
       {/* 6-digit: candidate list is the PRIMARY decision; show it FIRST. */}
       {isSix ? (
         <>
@@ -415,6 +430,16 @@ function DocumentPane({
           </dl>
         </Expander>
       </div>
+
+      {/* TRADE INTELLIGENCE — calm compact block (Free/null). Sits after the
+          rationale/alternatives and the disclosure rows (EXPERIENCE-DESIGN
+          §4.2): a compact status chip with the duty/incentive rows behind a
+          quiet expander. Promoted alerts (Prohibited/Restricted/STE) render at
+          the TOP instead, so this is skipped for them. Renders nothing when
+          there is no trade intel at all (sparse-friendly, pre-ingest state). */}
+      {result.tradeIntelligence && !shouldPromoteTradeIntel(result.tradeIntelligence) ? (
+        <TradeIntelBlock intel={result.tradeIntelligence} placement="document" />
+      ) : null}
     </Surface>
   );
 }

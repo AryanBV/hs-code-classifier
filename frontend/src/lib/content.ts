@@ -168,6 +168,32 @@ export const RESULT_DISCLAIMER =
   "Indicative · AI-generated · not official customs or legal advice. Verify with a licensed customs broker before filing.";
 
 // ----------------------------------------------------------------------------
+// Trade intelligence (additive section). All copy here is DATED/INDICATIVE and
+// honest by construction: nothing asserts a yes/no for a line, stale is never
+// shown, a null status is never "Free", a missing condition is named not blank,
+// and a flag's absence is explicitly not a clearance. No em-dashes.
+// ----------------------------------------------------------------------------
+export const TRADE_INTEL_HEADING = "Export and policy";
+export const TRADE_INTEL_META = "India · ITC(HS)";
+/** The grouped money rows (duty, incentive, UQC). */
+export const TRADE_INTEL_MONEY_LABEL = "Duty, incentives and unit";
+export const TRADE_INTEL_FLAGS_LABEL = "Advisory flags";
+export const TRADE_INTEL_OFFICIAL_TEXT_LABEL = "Official text (verbatim)";
+/** Shown when a Restricted/Prohibited line carries no condition text. Never blank. */
+export const TRADE_INTEL_CONDITION_MISSING =
+  "We do not hold the specific condition for this line. Check the DGFT ITC(HS) schedule and notifications.";
+/** Used instead of a (possibly wrong) value when a datum is stale-past-budget. */
+export const TRADE_INTEL_STALE_VERIFY =
+  "This status may have changed. Verify the current status on the DGFT ITC(HS) schedule.";
+/** Verify-state placeholders — never a bare rate when we do not reliably hold it. */
+export const TRADE_INTEL_DUTY_VERIFY = "Verify on CBIC";
+export const TRADE_INTEL_INCENTIVE_VERIFY = "Verify on DGFT";
+/** The standing caveat on every advisory flag. */
+export const TRADE_INTEL_ABSENCE_NOT_CLEARANCE = "Absence of this flag is not a clearance.";
+/** The verify-it-yourself link label on a promoted alert. */
+export const TRADE_INTEL_VERIFY_LINK_LABEL = "Verify on the DGFT ITC(HS) schedule";
+
+// ----------------------------------------------------------------------------
 // Feedback on a result (was this code right?). Lightweight, unobtrusive.
 // ----------------------------------------------------------------------------
 export const FEEDBACK_PROMPT = "Was this code right?";
