@@ -1,6 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { mapV2Result } from './v2-api-adapter';
-import type { HydratedChainRow, TariffLineChainFetcher } from './v2-api-adapter';
+import type {
+  HydratedChainRow,
+  TariffLineChainFetcher,
+  SubheadingRowFetcher,
+  SubheadingChildrenFetcher,
+} from './v2-api-adapter';
 import type { ClassifyResult, PipelineSystemError, SelectCitation } from '../classifier-v2/types';
 
 const base = { diagnostics: { escalation_path: [], latency_ms: 1, llm_calls: 1 } };
@@ -227,6 +232,126 @@ describe('mapV2Result — CLASSIFY', () => {
     expect(calls.length).toBe(1);
     // Leaf first, then unique alternatives (the leaf dup is removed).
     expect(calls[0]).toEqual(['8708.30.00', '8708.99.00']);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 6-digit shape-aware hydration (item 8). When is_six_digit=true, description
+// comes from the subheading row, and `alternatives` are the REAL 8-digit children
+// (NOT alternatives_considered). The 8-digit deps must stay UNINVOKED.
+// ---------------------------------------------------------------------------
+
+describe('mapV2Result — CLASSIFY (6-digit branch)', () => {
+  /** Mock subheading-row fetcher backed by an in-memory code→title table. */
+  function mockSubFetcher(table: Record<string, string>): SubheadingRowFetcher {
+    return async (codes: string[]): Promise<HydratedChainRow[]> =>
+      codes.filter((c) => c in table).map((c) => ({ code: c, description: table[c]! }));
+  }
+
+  /** Mock children fetcher backed by an in-memory subheading→children table. */
+  function mockChildrenFetcher(
+    table: Record<string, HydratedChainRow[]>,
+  ): SubheadingChildrenFetcher {
+    return async (subs: string[]): Promise<HydratedChainRow[]> =>
+      subs.flatMap((s) => table[s] ?? []);
+  }
+
+  it('resolves the headline description from the subheading mock (not the leaf fetcher)', async () => {
+    let chainCalled = false;
+    const chainFetch: TariffLineChainFetcher = async () => {
+      chainCalled = true;
+      return [];
+    };
+    const r = classifyResult({ code: '5208.52', is_six_digit: true, alternatives_considered: ['x'] });
+
+    const out = await mapV2Result(
+      r,
+      chainFetch,
+      mockSubFetcher({ '5208.52': 'Plain weave cotton, printed, weighing not more than 200 g/m2' }),
+      mockChildrenFetcher({}),
+    );
+    if (out.responseType !== 'classification') throw new Error('unreachable');
+
+    expect(out.hsCode).toBe('5208.52');
+    expect(out.isSixDigit).toBe(true);
+    expect(out.description).toBe('Plain weave cotton, printed, weighing not more than 200 g/m2');
+    // The 8-digit leaf-chain fetcher must NOT be used on the 6-digit branch.
+    expect(chainCalled).toBe(false);
+  });
+
+  it('alternatives come from the REAL 8-digit children (NOT alternatives_considered)', async () => {
+    const r = classifyResult({
+      code: '5208.52',
+      is_six_digit: true,
+      // These sibling guesses must be IGNORED on the 6-digit branch.
+      alternatives_considered: ['5208.53', '5208.59'],
+    });
+
+    const out = await mapV2Result(
+      r,
+      mockFetcher({}),
+      mockSubFetcher({ '5208.52': 'Printed plain-weave cotton' }),
+      mockChildrenFetcher({
+        '5208.52': [
+          { code: '5208.52.10', description: 'Printed cotton shirting' },
+          { code: '5208.52.20', description: 'Printed cotton sheeting' },
+        ],
+      }),
+    );
+    if (out.responseType !== 'classification') throw new Error('unreachable');
+
+    expect(out.alternatives).toEqual([
+      { code: '5208.52.10', description: 'Printed cotton shirting' },
+      { code: '5208.52.20', description: 'Printed cotton sheeting' },
+    ]);
+  });
+
+  it('caps 6-digit children at MAX_SIX_DIGIT_CHILDREN (8), in code order', async () => {
+    const children: HydratedChainRow[] = Array.from({ length: 10 }, (_, i) => ({
+      code: `5208.52.${String(i).padStart(2, '0')}`,
+      description: `child ${i}`,
+    }));
+    const r = classifyResult({ code: '5208.52', is_six_digit: true, alternatives_considered: [] });
+
+    const out = await mapV2Result(
+      r,
+      mockFetcher({}),
+      mockSubFetcher({ '5208.52': 'd' }),
+      mockChildrenFetcher({ '5208.52': children }),
+    );
+    if (out.responseType !== 'classification') throw new Error('unreachable');
+
+    expect(out.alternatives.length).toBe(8);
+    expect(out.alternatives[0]!.code).toBe('5208.52.00');
+    expect(out.alternatives[7]!.code).toBe('5208.52.07');
+  });
+
+  it('returns alternatives [] when the subheading has no 8-digit children', async () => {
+    const r = classifyResult({ code: '5208.52', is_six_digit: true, alternatives_considered: ['5208.53'] });
+
+    const out = await mapV2Result(
+      r,
+      mockFetcher({}),
+      mockSubFetcher({ '5208.52': 'desc' }),
+      mockChildrenFetcher({}), // no children
+    );
+    if (out.responseType !== 'classification') throw new Error('unreachable');
+
+    expect(out.alternatives).toEqual([]);
+  });
+
+  it('falls back to empty description when the subheading row is missing', async () => {
+    const r = classifyResult({ code: '5208.52', is_six_digit: true, alternatives_considered: [] });
+
+    const out = await mapV2Result(
+      r,
+      mockFetcher({}),
+      mockSubFetcher({}), // no row
+      mockChildrenFetcher({}),
+    );
+    if (out.responseType !== 'classification') throw new Error('unreachable');
+
+    expect(out.description).toBe('');
   });
 });
 

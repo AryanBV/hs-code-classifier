@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { CostMonitor, recordInputFromTokenUsage } from './cost-monitor';
+import { CostMonitor, recordInputFromTokenUsage, DEFAULT_MAX_PER_DAY } from './cost-monitor';
 import type { RecordInput } from './cost-monitor';
 import type { TokenUsageTotals } from '../classifier-v2/lib/token-meter';
 
@@ -32,27 +32,43 @@ afterEach(() => {
   delete process.env.MAX_CLASSIFICATIONS_PER_DAY;
 });
 
-describe('CostMonitor — record + getDailyStats', () => {
-  it('accumulates requests, llmCalls, tokens, byModel and byDecision for the current UTC day', () => {
+describe('CostMonitor — reserveSlot + recordUsage + getDailyStats', () => {
+  it('reserveSlot counts requests; recordUsage accumulates token usage WITHOUT touching requests', () => {
     const clock = clockAt('2026-06-01T08:00:00.000Z');
     const m = new CostMonitor(clock.now);
 
-    m.recordClassification(input({ decision: 'CLASSIFY' }));
-    m.recordClassification(input({ llmCalls: 2, totalTokens: 800, decision: 'ASK' }));
+    // The live shape: reserve a slot at entry, then record usage on completion.
+    expect(m.reserveSlot()).toBe(true);
+    m.recordUsage(input({ decision: 'CLASSIFY' }));
+    expect(m.reserveSlot()).toBe(true);
+    m.recordUsage(input({ llmCalls: 2, totalTokens: 800, decision: 'ASK' }));
 
     const stats = m.getDailyStats();
     expect(stats.utcDay).toBe('2026-06-01');
-    expect(stats.requests).toBe(2);
-    // Top-level totalTokens sums the per-call inputs (1200 + 800).
+    expect(stats.requests).toBe(2); // counted by reserveSlot, exactly once each
     expect(stats.llmCalls).toBe(5);
     expect(stats.totalTokens).toBe(2000);
     expect(stats.byDecision).toEqual({ CLASSIFY: 1, ASK: 1 });
-    // byModel sums the byModel breakdown of each call (the helper's default
-    // bucket carries totalTokens=1200 regardless of the top-level override), so
-    // both calls contribute 1200 → 2400 here.
     expect(stats.byModel['gemini-3.5-flash']).toEqual({ calls: 6, totalTokens: 2400 });
-    expect(stats.maxPerDay).toBeNull();
-    expect(stats.overLimit).toBe(false);
+  });
+
+  it('recordUsage alone does NOT increment requests (count-on-entry property)', () => {
+    const clock = clockAt('2026-06-01T08:00:00.000Z');
+    const m = new CostMonitor(clock.now);
+
+    m.recordUsage(input());
+    m.recordUsage(input());
+    expect(m.getDailyStats().requests).toBe(0); // never reserved
+    expect(m.getDailyStats().totalTokens).toBe(2400); // usage still recorded
+  });
+
+  it('recordClassification is a back-compat shim for recordUsage (no request increment)', () => {
+    const clock = clockAt('2026-06-01T08:00:00.000Z');
+    const m = new CostMonitor(clock.now);
+
+    m.recordClassification(input());
+    expect(m.getDailyStats().requests).toBe(0);
+    expect(m.getDailyStats().totalTokens).toBe(1200);
   });
 
   it('starts empty', () => {
@@ -70,8 +86,10 @@ describe('CostMonitor — UTC-day rollover', () => {
     const clock = clockAt('2026-06-01T23:59:00.000Z');
     const m = new CostMonitor(clock.now);
 
-    m.recordClassification(input());
-    m.recordClassification(input());
+    m.reserveSlot();
+    m.recordUsage(input());
+    m.reserveSlot();
+    m.recordUsage(input());
     expect(m.getDailyStats().requests).toBe(2);
     expect(m.getDailyStats().utcDay).toBe('2026-06-01');
 
@@ -83,70 +101,103 @@ describe('CostMonitor — UTC-day rollover', () => {
     expect(next.totalTokens).toBe(0);
 
     // New-day records accumulate from zero.
-    m.recordClassification(input());
+    m.reserveSlot();
     expect(m.getDailyStats().requests).toBe(1);
   });
 
-  it('rolls over on recordClassification too (not only on getDailyStats)', () => {
+  it('rolls over on reserveSlot too (not only on getDailyStats)', () => {
     const clock = clockAt('2026-06-01T23:59:00.000Z');
     const m = new CostMonitor(clock.now);
-    m.recordClassification(input());
+    m.reserveSlot();
     expect(m.getDailyStats().requests).toBe(1);
 
     clock.set('2026-06-02T00:05:00.000Z');
-    m.recordClassification(input()); // rollover happens here
+    expect(m.reserveSlot()).toBe(true); // rollover happens here
     const stats = m.getDailyStats();
     expect(stats.utcDay).toBe('2026-06-02');
     expect(stats.requests).toBe(1);
   });
+
+  it('rolls over on recordUsage too', () => {
+    const clock = clockAt('2026-06-01T23:59:00.000Z');
+    const m = new CostMonitor(clock.now);
+    m.reserveSlot();
+    m.recordUsage(input());
+    expect(m.getDailyStats().totalTokens).toBe(1200);
+
+    clock.set('2026-06-02T00:05:00.000Z');
+    m.recordUsage(input()); // rollover happens here
+    const stats = m.getDailyStats();
+    expect(stats.utcDay).toBe('2026-06-02');
+    expect(stats.requests).toBe(0); // rolled over, no new reservation
+    expect(stats.totalTokens).toBe(1200);
+  });
+});
+
+describe('CostMonitor — fail-safe default ceiling', () => {
+  it('falls back to DEFAULT_MAX_PER_DAY (200) when env is unset', () => {
+    const clock = clockAt('2026-06-01T08:00:00.000Z');
+    const m = new CostMonitor(clock.now);
+    expect(DEFAULT_MAX_PER_DAY).toBe(200);
+    expect(m.getDailyStats().maxPerDay).toBe(200);
+    // The ceiling is real: reserveSlot eventually denies at 200.
+    for (let i = 0; i < 200; i++) expect(m.reserveSlot()).toBe(true);
+    expect(m.reserveSlot()).toBe(false); // 201st denied
+    expect(m.isOverDailyLimit()).toBe(true);
+  });
+
+  it('falls back to 200 when env is invalid/<=0', () => {
+    const clock = clockAt('2026-06-01T08:00:00.000Z');
+
+    process.env.MAX_CLASSIFICATIONS_PER_DAY = '0';
+    expect(new CostMonitor(clock.now).getDailyStats().maxPerDay).toBe(200);
+
+    process.env.MAX_CLASSIFICATIONS_PER_DAY = 'not-a-number';
+    expect(new CostMonitor(clock.now).getDailyStats().maxPerDay).toBe(200);
+  });
 });
 
 describe('CostMonitor — hard daily ceiling (MAX_CLASSIFICATIONS_PER_DAY)', () => {
-  it('no ceiling when env is unset (default — dev/tests unaffected)', () => {
-    const clock = clockAt('2026-06-01T08:00:00.000Z');
-    const m = new CostMonitor(clock.now);
-    for (let i = 0; i < 100; i++) m.recordClassification(input());
-    expect(m.isOverDailyLimit()).toBe(false);
-    expect(m.getDailyStats().overLimit).toBe(false);
-  });
-
-  it('isOverDailyLimit flips true once requests reach the configured ceiling', () => {
+  it('reserveSlot denies once the configured ceiling is reached, WITHOUT incrementing', () => {
     process.env.MAX_CLASSIFICATIONS_PER_DAY = '3';
     const clock = clockAt('2026-06-01T08:00:00.000Z');
     const m = new CostMonitor(clock.now);
 
-    expect(m.isOverDailyLimit()).toBe(false);
-    m.recordClassification(input());
-    m.recordClassification(input());
-    expect(m.isOverDailyLimit()).toBe(false); // 2 < 3
-    m.recordClassification(input());
-    expect(m.isOverDailyLimit()).toBe(true); // 3 >= 3
+    expect(m.reserveSlot()).toBe(true); // 1
+    expect(m.reserveSlot()).toBe(true); // 2
+    expect(m.reserveSlot()).toBe(true); // 3
+    expect(m.isOverDailyLimit()).toBe(true);
+    // 4th is DENIED and must NOT increment past the ceiling.
+    expect(m.reserveSlot()).toBe(false);
+    expect(m.getDailyStats().requests).toBe(3);
     expect(m.getDailyStats().overLimit).toBe(true);
     expect(m.getDailyStats().maxPerDay).toBe(3);
+  });
+
+  it('isOverDailyLimit flips true once requests reach the configured ceiling', () => {
+    process.env.MAX_CLASSIFICATIONS_PER_DAY = '2';
+    const clock = clockAt('2026-06-01T08:00:00.000Z');
+    const m = new CostMonitor(clock.now);
+
+    expect(m.isOverDailyLimit()).toBe(false);
+    m.reserveSlot();
+    expect(m.isOverDailyLimit()).toBe(false); // 1 < 2
+    m.reserveSlot();
+    expect(m.isOverDailyLimit()).toBe(true); // 2 >= 2
   });
 
   it('the ceiling resets after a UTC-day rollover', () => {
     process.env.MAX_CLASSIFICATIONS_PER_DAY = '2';
     const clock = clockAt('2026-06-01T23:00:00.000Z');
     const m = new CostMonitor(clock.now);
-    m.recordClassification(input());
-    m.recordClassification(input());
+    m.reserveSlot();
+    m.reserveSlot();
+    expect(m.reserveSlot()).toBe(false); // ceiling hit
     expect(m.isOverDailyLimit()).toBe(true);
 
     clock.set('2026-06-02T00:01:00.000Z');
     expect(m.isOverDailyLimit()).toBe(false); // fresh day
-  });
-
-  it('treats invalid/<=0 env as no ceiling', () => {
-    const clock = clockAt('2026-06-01T08:00:00.000Z');
-    const m = new CostMonitor(clock.now);
-
-    process.env.MAX_CLASSIFICATIONS_PER_DAY = '0';
-    m.recordClassification(input());
-    expect(m.isOverDailyLimit()).toBe(false);
-
-    process.env.MAX_CLASSIFICATIONS_PER_DAY = 'not-a-number';
-    expect(m.isOverDailyLimit()).toBe(false);
+    expect(m.reserveSlot()).toBe(true); // can reserve again
   });
 });
 

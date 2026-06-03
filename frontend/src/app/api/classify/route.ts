@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { mockClassify } from "@/lib/mock-data";
+import { stripHiddenConfidence } from "@/lib/strip-confidence";
 
 // Backend-for-frontend: keeps the real backend URL server-side; falls back to
 // the deterministic mock so the UI runs with zero paid calls.
@@ -8,6 +9,7 @@ export const dynamic = "force-dynamic";
 
 const BACKEND = process.env.BACKEND_API_URL;
 const MOCK_DELAY = Number(process.env.MOCK_DELAY_MS ?? 2600);
+const MAX_QUERY_LENGTH = 1000;
 
 export async function POST(request: Request) {
   let body: { query?: string };
@@ -24,17 +26,31 @@ export async function POST(request: Request) {
       { status: 400 },
     );
   }
+  if (query.length > MAX_QUERY_LENGTH) {
+    return NextResponse.json(
+      {
+        error: "Product description is too long — please shorten it to under 1000 characters.",
+        retryable: false,
+      },
+      { status: 400 },
+    );
+  }
 
   if (BACKEND) {
     try {
+      const headers: Record<string, string> = { "content-type": "application/json" };
+      const internalToken = process.env.INTERNAL_API_TOKEN;
+      if (internalToken) {
+        headers["x-internal-token"] = internalToken;
+      }
       const res = await fetch(`${BACKEND}/api/classify`, {
         method: "POST",
-        headers: { "content-type": "application/json" },
+        headers,
         body: JSON.stringify({ query }),
         signal: AbortSignal.timeout(90_000),
       });
-      const data = await res.json();
-      return NextResponse.json(data, { status: res.status });
+      const data: unknown = await res.json();
+      return NextResponse.json(stripHiddenConfidence(data), { status: res.status });
     } catch {
       return NextResponse.json(
         { error: "Classification temporarily unavailable", retryable: true },
@@ -45,7 +61,7 @@ export async function POST(request: Request) {
 
   await new Promise((r) => setTimeout(r, MOCK_DELAY));
   const outcome = mockClassify(query);
-  return NextResponse.json(outcome.body, {
+  return NextResponse.json(stripHiddenConfidence(outcome.body), {
     status: outcome.kind === "error" ? outcome.status : 200,
   });
 }

@@ -1,3 +1,10 @@
+// NOTE: classify.ts reads CLASSIFY_MAX_CONCURRENCY + V2_TIMEOUT_MS into
+// module-level consts at import time, so they MUST be set BEFORE the dynamic
+// import of './classify' in start(). We pin a small concurrency cap (so the gate
+// is exercisable) and a long-but-finite timeout default here at module scope.
+process.env.CLASSIFY_MAX_CONCURRENCY = '1';
+process.env.V2_TIMEOUT_MS = '300';
+
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import express, { type Express } from 'express';
 import type { Server } from 'http';
@@ -34,16 +41,24 @@ vi.mock('./v2-api-adapter', () => ({
   mapV2Result: vi.fn(async () => ({ responseType: 'refused', message: 'm', reason: null })),
 }));
 
-// Cost monitor: control the ceiling + spy on recordClassification (B1b).
-const isOverDailyLimitMock = vi.fn(() => false);
-const recordClassificationMock = vi.fn();
+// Cost monitor: control the ceiling via reserveSlot + spy on recordUsage (B1b).
+// reserveSlot returns true (slot admitted) by default; tests flip it to false to
+// simulate the daily ceiling.
+const reserveSlotMock = vi.fn(() => true);
+const recordUsageMock = vi.fn();
 vi.mock('./cost-monitor', () => ({
   costMonitor: {
-    isOverDailyLimit: () => isOverDailyLimitMock(),
-    recordClassification: (...args: unknown[]) => recordClassificationMock(...args),
+    reserveSlot: () => reserveSlotMock(),
+    recordUsage: (...args: unknown[]) => recordUsageMock(...args),
     getDailyStats: () => ({}),
   },
   recordInputFromTokenUsage: (usage: unknown, decision: string) => ({ usage, decision }),
+}));
+
+// Rate limiter: the per-route classify limiter is a pass-through in these tests
+// (we exercise it separately in rateLimiter.test.ts).
+vi.mock('../middleware/rateLimiter', () => ({
+  classifyRateLimiter: () => (_req: unknown, _res: unknown, next: () => void) => next(),
 }));
 
 /** Minimal v2 ClassifyResult-shaped object the route can map/record. */
@@ -100,7 +115,7 @@ async function get(path: string): Promise<{ status: number; json: any }> {
 
 beforeEach(async () => {
   vi.clearAllMocks();
-  isOverDailyLimitMock.mockReturnValue(false);
+  reserveSlotMock.mockReturnValue(true);
   delete process.env.CLASSIFY_ASYNC;
   delete process.env.USE_V2_CLASSIFIER;
   delete process.env.NODE_ENV;
@@ -301,8 +316,10 @@ describe('v2 inline path — B1b cost observability + daily ceiling', () => {
     const { status } = await post('/api/classify', { query: 'stainless steel hex bolts' });
 
     expect(status).toBe(200);
-    expect(recordClassificationMock).toHaveBeenCalledTimes(1);
-    expect(recordClassificationMock.mock.calls[0]![0]).toMatchObject({ decision: 'CLASSIFY' });
+    // Slot reserved exactly once at entry; usage recorded exactly once on completion.
+    expect(reserveSlotMock).toHaveBeenCalledTimes(1);
+    expect(recordUsageMock).toHaveBeenCalledTimes(1);
+    expect(recordUsageMock.mock.calls[0]![0]).toMatchObject({ decision: 'CLASSIFY' });
   });
 
   it('records even a system_error outcome (cost truth on a 503)', async () => {
@@ -313,25 +330,25 @@ describe('v2 inline path — B1b cost observability + daily ceiling', () => {
     const { status } = await post('/api/classify', { query: 'stainless steel hex bolts' });
 
     expect(status).toBe(503);
-    expect(recordClassificationMock).toHaveBeenCalledTimes(1);
-    expect(recordClassificationMock.mock.calls[0]![0]).toMatchObject({ decision: 'system_error' });
+    expect(recordUsageMock).toHaveBeenCalledTimes(1);
+    expect(recordUsageMock.mock.calls[0]![0]).toMatchObject({ decision: 'system_error' });
   });
 
-  it('enforces the hard daily ceiling: 503 {Daily limit reached, retryable:false} BEFORE classifying', async () => {
-    isOverDailyLimitMock.mockReturnValue(true);
+  it('enforces the hard daily ceiling: 503 (retryable:false) BEFORE classifying when reserveSlot denies', async () => {
+    reserveSlotMock.mockReturnValue(false);
 
     const { status, json } = await post('/api/classify', { query: 'stainless steel hex bolts' });
 
     expect(status).toBe(503);
-    expect(json.error).toBe('Daily limit reached');
+    expect(json.error).toBe("We've hit today's free classification limit. Please try again tomorrow.");
     expect(json.retryable).toBe(false);
     // The classifier must NOT have run (the ceiling gates BEFORE any LLM call).
     expect(v2ClassifyMock).not.toHaveBeenCalled();
-    expect(recordClassificationMock).not.toHaveBeenCalled();
+    expect(recordUsageMock).not.toHaveBeenCalled();
   });
 
   it('ceiling also gates the /answer continuation path', async () => {
-    isOverDailyLimitMock.mockReturnValue(true);
+    reserveSlotMock.mockReturnValue(false);
 
     const { status, json } = await post('/api/classify/answer', {
       originalQuery: 'orig',
@@ -340,7 +357,150 @@ describe('v2 inline path — B1b cost observability + daily ceiling', () => {
     });
 
     expect(status).toBe(503);
-    expect(json.error).toBe('Daily limit reached');
+    expect(json.error).toBe("We've hit today's free classification limit. Please try again tomorrow.");
     expect(v2ContinueMock).not.toHaveBeenCalled();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Query length cap (item 3).
+// ---------------------------------------------------------------------------
+
+describe('query length cap', () => {
+  it('POST / rejects a query over 1000 chars with 400 (retryable:false)', async () => {
+    const { status, json } = await post('/api/classify', { query: 'x'.repeat(1001) });
+    expect(status).toBe(400);
+    expect(json.error).toBe(
+      'Product description is too long — please shorten it to under 1000 characters.',
+    );
+    expect(json.retryable).toBe(false);
+    expect(legacyClassifyMock).not.toHaveBeenCalled();
+    expect(v2ClassifyMock).not.toHaveBeenCalled();
+  });
+
+  it('POST / accepts a query at exactly 1000 chars', async () => {
+    legacyClassifyMock.mockResolvedValue({ responseType: 'classification', hsCode: '0101.21.00' });
+    const { status } = await post('/api/classify', { query: 'x'.repeat(1000) });
+    expect(status).toBe(200);
+  });
+
+  it('POST /answer rejects an originalQuery over 1000 chars with 400', async () => {
+    const { status, json } = await post('/api/classify/answer', {
+      originalQuery: 'x'.repeat(1001),
+      answerId: 'a1',
+      answerLabel: 'Label',
+    });
+    expect(status).toBe(400);
+    expect(json.error).toBe(
+      'Product description is too long — please shorten it to under 1000 characters.',
+    );
+    expect(legacyContinueMock).not.toHaveBeenCalled();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Internal shared-secret gate (item 2). The middleware is NOT mocked, so it runs
+// for real; only INTERNAL_API_TOKEN controls it.
+// ---------------------------------------------------------------------------
+
+describe('internal shared-secret gate', () => {
+  afterEach(() => {
+    delete process.env.INTERNAL_API_TOKEN;
+  });
+
+  it('fails OPEN when INTERNAL_API_TOKEN is unset (no header required)', async () => {
+    legacyClassifyMock.mockResolvedValue({ responseType: 'classification', hsCode: '0101.21.00' });
+    const { status } = await post('/api/classify', { query: 'live horses' });
+    expect(status).toBe(200);
+  });
+
+  it('returns 403 when the token is set but the header is missing/wrong', async () => {
+    process.env.INTERNAL_API_TOKEN = 'sekret';
+    const { status, json } = await post('/api/classify', { query: 'live horses' });
+    expect(status).toBe(403);
+    expect(json.error).toBe('Forbidden');
+    expect(json.retryable).toBe(false);
+    expect(legacyClassifyMock).not.toHaveBeenCalled();
+  });
+
+  it('allows the request when the correct token header is presented', async () => {
+    process.env.INTERNAL_API_TOKEN = 'sekret';
+    legacyClassifyMock.mockResolvedValue({ responseType: 'classification', hsCode: '0101.21.00' });
+    const res = await fetch(`${baseUrl}/api/classify`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-internal-token': 'sekret' },
+      body: JSON.stringify({ query: 'live horses' }),
+    });
+    expect(res.status).toBe(200);
+  });
+
+  it('gates the /answer route too (403 with a set token + no header)', async () => {
+    process.env.INTERNAL_API_TOKEN = 'sekret';
+    const { status } = await post('/api/classify/answer', {
+      originalQuery: 'orig',
+      answerId: 'a1',
+      answerLabel: 'Label',
+    });
+    expect(status).toBe(403);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Concurrency gate + honest timeout body (items 1 + 6) on the v2 inline path.
+// ---------------------------------------------------------------------------
+
+describe('v2 inline path — concurrency gate + timeout body', () => {
+  // CLASSIFY_MAX_CONCURRENCY=1 + V2_TIMEOUT_MS=300 are pinned at module scope
+  // (top of file) because classify.ts reads them into consts at import time.
+  beforeEach(() => {
+    process.env.USE_V2_CLASSIFIER = 'true';
+  });
+
+  it('returns a 503 busy body when the in-flight cap is reached', async () => {
+    // First request blocks until we release it; second should hit the gate.
+    let release: () => void = () => {};
+    const gate = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    v2ClassifyMock.mockImplementation(async () => {
+      await gate;
+      return v2Result();
+    });
+
+    const first = post('/api/classify', { query: 'first request here' });
+    // Give the first request a tick to enter the pipeline (inFlight++).
+    await new Promise((r) => setTimeout(r, 30));
+
+    const second = await post('/api/classify', { query: 'second request here' });
+    expect(second.status).toBe(503);
+    expect(second.json.error).toBe(
+      'The classifier is busy right now. Please try again in a moment.',
+    );
+    expect(second.json.retryable).toBe(true);
+
+    // Release the first BEFORE the 300ms timeout would fire.
+    release();
+    const firstResolved = await first;
+    expect(firstResolved.status).toBe(200);
+  });
+
+  it('the in-flight slot is released after completion (next request succeeds)', async () => {
+    v2ClassifyMock.mockResolvedValue(v2Result());
+    const a = await post('/api/classify', { query: 'sequential one' });
+    const b = await post('/api/classify', { query: 'sequential two' });
+    expect(a.status).toBe(200);
+    expect(b.status).toBe(200);
+  });
+
+  it('a server-side timeout returns the honest timeout 503 body', async () => {
+    // V2_TIMEOUT_MS=300 (module scope) → a never-resolving pipeline times out.
+    v2ClassifyMock.mockImplementation(
+      () => new Promise(() => {/* never resolves → timeout fires */}),
+    );
+
+    const { status, json } = await post('/api/classify', { query: 'will time out here' });
+    expect(status).toBe(503);
+    expect(json.error).toBe('Classification timed out — it is taking longer than expected.');
+    expect(json.retryable).toBe(true);
   });
 });

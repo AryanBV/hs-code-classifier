@@ -45,7 +45,7 @@ export interface DailyModelTotals {
 export interface DailyStats {
   /** UTC day key 'YYYY-MM-DD' the counters belong to. */
   utcDay:           string;
-  /** Number of recorded classifications today. */
+  /** Number of reserved classification slots today (counted at ENTRY). */
   requests:         number;
   /** Sum of metered LLM calls today. */
   llmCalls:         number;
@@ -55,9 +55,13 @@ export interface DailyStats {
   byModel:          Record<string, DailyModelTotals>;
   /** Decision tally today (CLASSIFY/ASK/REFUSE/...). */
   byDecision:       Record<string, number>;
-  /** Configured hard ceiling (null = no ceiling configured). */
-  maxPerDay:        number | null;
-  /** True when the ceiling is set AND today's requests have reached it. */
+  /**
+   * Active hard ceiling. NEVER null now: when MAX_CLASSIFICATIONS_PER_DAY is
+   * unset/invalid we fall back to a real backstop (DEFAULT_MAX_PER_DAY) instead
+   * of "no ceiling", so a misconfigured prod can never fly blind again.
+   */
+  maxPerDay:        number;
+  /** True when today's reserved slots have reached the ceiling. */
   overLimit:        boolean;
 }
 
@@ -66,12 +70,24 @@ function utcDayKey(nowMs: number): string {
   return new Date(nowMs).toISOString().slice(0, 10);
 }
 
-/** Read the optional hard daily ceiling from env. null when unset/invalid/<=0. */
-function readMaxPerDay(): number | null {
+/**
+ * Fail-safe default ceiling used when MAX_CLASSIFICATIONS_PER_DAY is unset or
+ * invalid. A REAL backstop (not "no ceiling"): the May overspend happened
+ * because nothing capped a runaway loop. Prod overrides this to 30; dev/tests
+ * that never set the env get this generous-but-finite guard.
+ */
+export const DEFAULT_MAX_PER_DAY = 200;
+
+/**
+ * Read the hard daily ceiling from env, falling back to DEFAULT_MAX_PER_DAY when
+ * unset/invalid/<=0. Always returns a positive integer — the ceiling is now
+ * effectively never absent.
+ */
+function readMaxPerDay(): number {
   const raw = process.env.MAX_CLASSIFICATIONS_PER_DAY;
-  if (raw === undefined || raw.trim() === '') return null;
+  if (raw === undefined || raw.trim() === '') return DEFAULT_MAX_PER_DAY;
   const n = Number(raw);
-  if (!Number.isFinite(n) || n <= 0) return null;
+  if (!Number.isFinite(n) || n <= 0) return DEFAULT_MAX_PER_DAY;
   return Math.floor(n);
 }
 
@@ -106,10 +122,30 @@ export class CostMonitor {
     }
   }
 
-  /** Record one classification's metered usage into today's counters. */
-  recordClassification(input: RecordInput): void {
+  /**
+   * Reserve one classification slot AT ENTRY (count-on-entry). Rolls over first,
+   * then: if today's reservations have already hit the ceiling, return false
+   * WITHOUT incrementing (the caller refuses the request); otherwise increment
+   * the request counter and return true. This is the atomic admit/deny check —
+   * it is the ONLY thing that touches `requests`, so a request is counted exactly
+   * once even if it later fails, times out, or throws.
+   */
+  reserveSlot(): boolean {
     this.rolloverIfNeeded();
+    const maxPerDay = readMaxPerDay();
+    if (this.requests >= maxPerDay) return false;
     this.requests += 1;
+    return true;
+  }
+
+  /**
+   * Record one classification's metered token usage into today's counters. Does
+   * NOT touch `requests` — counting happens at entry via reserveSlot(). Adds the
+   * llmCalls/totalTokens/byModel/byDecision so cost truth reflects real spend on
+   * EVERY outcome (incl. a 503), independent of the entry reservation.
+   */
+  recordUsage(input: RecordInput): void {
+    this.rolloverIfNeeded();
     this.llmCalls += input.llmCalls;
     this.totalTokens += input.totalTokens;
     this.byDecision[input.decision] = (this.byDecision[input.decision] ?? 0) + 1;
@@ -119,6 +155,16 @@ export class CostMonitor {
       bucket.totalTokens += t.totalTokens;
       this.byModel[model] = bucket;
     }
+  }
+
+  /**
+   * BACKWARD-COMPAT shim: record metered usage WITHOUT incrementing `requests`.
+   * Counting is now split out into reserveSlot() (called at entry), so this
+   * delegates to recordUsage() only — a single classification that reserves at
+   * entry then records on completion is counted exactly once (no double count).
+   */
+  recordClassification(input: RecordInput): void {
+    this.recordUsage(input);
   }
 
   /** Snapshot of today's usage (rolls over first so a stale day reads zero). */
@@ -133,20 +179,18 @@ export class CostMonitor {
       byModel:     { ...this.byModel },
       byDecision:  { ...this.byDecision },
       maxPerDay,
-      overLimit:   maxPerDay !== null && this.requests >= maxPerDay,
+      overLimit:   this.requests >= maxPerDay,
     };
   }
 
   /**
-   * True when a hard daily ceiling is configured AND today's recorded
-   * classifications have reached it. Always false when MAX_CLASSIFICATIONS_PER_DAY
-   * is unset (default: no ceiling, so dev/tests are unaffected).
+   * True when today's reserved slots have reached the (now always-present)
+   * ceiling. Retained for /health + back-compat; the live admit/deny decision
+   * should use reserveSlot() so the slot is counted atomically at entry.
    */
   isOverDailyLimit(): boolean {
     this.rolloverIfNeeded();
-    const maxPerDay = readMaxPerDay();
-    if (maxPerDay === null) return false;
-    return this.requests >= maxPerDay;
+    return this.requests >= readMaxPerDay();
   }
 }
 

@@ -21,7 +21,11 @@
 //     note/exclusion text, not the product line).
 //   - `system_error` is NOT handled here — the route inspects it and returns 503.
 
-import { getTariffLineParentChains } from '../classifier-v2/lib/supabase-client';
+import {
+  getTariffLineParentChains,
+  getSubheadingDescriptions,
+  getTariffLinesForSubheadings,
+} from '../classifier-v2/lib/supabase-client';
 import type { ClassifyResult, SelectComponent, SelectCitation } from '../classifier-v2/types';
 
 /* ---------------------------------------------------------------------------
@@ -131,6 +135,12 @@ const CONFIDENCE_BAND: Record<'HIGH' | 'MEDIUM' | 'LOW', ApiConfidenceBand> = {
 /** Max alternatives surfaced — the literal "top-3" product promise (B1c/B5). */
 const MAX_ALTERNATIVES = 3;
 
+/**
+ * Max 8-digit children listed under a 6-digit result. These are the lines the
+ * exporter must CHOOSE FROM (not a top-3 sibling promise), so the cap is wider.
+ */
+const MAX_SIX_DIGIT_CHILDREN = 8;
+
 /* ---------------------------------------------------------------------------
  * DB hydration seam (injectable for tests — mirrors v2-adapter deps pattern)
  * --------------------------------------------------------------------------- */
@@ -146,6 +156,19 @@ export interface HydratedChainRow {
  * `getTariffLineParentChains`; tests inject a mock so no Postgres is required.
  */
 export type TariffLineChainFetcher = (codes: string[]) => Promise<HydratedChainRow[]>;
+
+/**
+ * Fetch subheading (6-digit) descriptions. Defaults to the real
+ * `getSubheadingDescriptions`; used only on the 6-digit CLASSIFY branch.
+ */
+export type SubheadingRowFetcher = (codes: string[]) => Promise<HydratedChainRow[]>;
+
+/**
+ * Fetch the REAL 8-digit children of a set of subheadings, as {code,description}.
+ * Defaults to a thin wrapper over `getTariffLinesForSubheadings`; used only on
+ * the 6-digit CLASSIFY branch to list the lines the exporter must choose from.
+ */
+export type SubheadingChildrenFetcher = (subheadings: string[]) => Promise<HydratedChainRow[]>;
 
 /* ---------------------------------------------------------------------------
  * mapV2Result
@@ -166,42 +189,69 @@ export type TariffLineChainFetcher = (codes: string[]) => Promise<HydratedChainR
  * here it would map as a refusal; the route's guard ensures it never does.
  *
  * @param result The v2 result.
- * @param fetchChains DB hydration fn (injectable). Defaults to the real query.
+ * @param fetchChains DB hydration fn for 8-digit leaf + alternatives (injectable).
+ * @param fetchSubheadingRows DB hydration fn for a 6-digit subheading's OWN title.
+ * @param fetchSubheadingChildren DB fn for a 6-digit subheading's real 8-digit children.
  */
 export async function mapV2Result(
   result: ClassifyResult,
   fetchChains: TariffLineChainFetcher = getTariffLineParentChains,
+  fetchSubheadingRows: SubheadingRowFetcher = getSubheadingDescriptions,
+  fetchSubheadingChildren: SubheadingChildrenFetcher = (subs) =>
+    getTariffLinesForSubheadings(subs).then((rows) =>
+      rows.map((r) => ({ code: r.code, description: r.description })),
+    ),
 ): Promise<ApiClassifyResponse> {
   if (result.decision === 'CLASSIFY' && result.classification) {
     const c = result.classification;
 
-    // Codes to hydrate in ONE DB round trip: the leaf + every alternative. The
-    // alternatives list is FREE TEXT (model may emit non-codes like "n/a"); only
-    // those resolving to a real tariff_lines row survive into the response.
-    const codesToHydrate = dedupe([c.code, ...c.alternatives_considered]);
-    const rows = await fetchChains(codesToHydrate);
-    const descByCode = new Map(rows.map((r) => [r.code, r.description]));
+    let description: string;
+    let alternatives: ApiAlternative[];
 
-    // LEAF description from the DB — NOT the citation verbatim_text (note text).
-    const description = descByCode.get(c.code) ?? '';
+    if (c.is_six_digit) {
+      // 6-DIGIT branch: the headline code's own description lives in `subheadings`
+      // (NOT `tariff_lines`), and the "alternatives" are the REAL 8-digit children
+      // the exporter must choose from — NOT the model's sibling list. When the
+      // subheading has no children, alternatives is [] so the frontend renders an
+      // accurate empty state (no misleading "top-3" promise).
+      const [subRows, childRows] = await Promise.all([
+        fetchSubheadingRows([c.code]),
+        fetchSubheadingChildren([c.code]),
+      ]);
+      description = new Map(subRows.map((r) => [r.code, r.description])).get(c.code) ?? '';
+      alternatives = childRows
+        .map((r) => ({ code: r.code, description: r.description }))
+        .slice(0, MAX_SIX_DIGIT_CHILDREN);
+    } else {
+      // 8-DIGIT branch (UNCHANGED): hydrate the leaf + every alternative in ONE
+      // DB round trip. The alternatives list is FREE TEXT (model may emit
+      // non-codes like "n/a"); only those resolving to a real tariff_lines row
+      // survive into the response.
+      const codesToHydrate = dedupe([c.code, ...c.alternatives_considered]);
+      const rows = await fetchChains(codesToHydrate);
+      const descByCode = new Map(rows.map((r) => [r.code, r.description]));
 
-    // Hydrate alternatives, in original order, FILTERED to real tariff rows and
-    // excluding the selected leaf itself (it is already `hsCode`).
-    const resolvedAlternatives: ApiAlternative[] = [];
-    const seenAlts = new Set<string>();
-    for (const alt of c.alternatives_considered) {
-      if (alt === c.code) continue;
-      if (seenAlts.has(alt)) continue;
-      const altDesc = descByCode.get(alt);
-      if (altDesc === undefined) continue; // non-code / unresolved → filtered out
-      seenAlts.add(alt);
-      resolvedAlternatives.push({ code: alt, description: altDesc });
+      // LEAF description from the DB — NOT the citation verbatim_text (note text).
+      description = descByCode.get(c.code) ?? '';
+
+      // Hydrate alternatives, in original order, FILTERED to real tariff rows and
+      // excluding the selected leaf itself (it is already `hsCode`).
+      const resolvedAlternatives: ApiAlternative[] = [];
+      const seenAlts = new Set<string>();
+      for (const alt of c.alternatives_considered) {
+        if (alt === c.code) continue;
+        if (seenAlts.has(alt)) continue;
+        const altDesc = descByCode.get(alt);
+        if (altDesc === undefined) continue; // non-code / unresolved → filtered out
+        seenAlts.add(alt);
+        resolvedAlternatives.push({ code: alt, description: altDesc });
+      }
+
+      // B1c/B5: cap at the first 3 (preserve model order, NEVER pad to reach 3) —
+      // the literal "top-3" product promise. Slicing happens AFTER leaf-drop +
+      // dedup + real-tariff-row filtering, so the 3 are 3 resolvable siblings.
+      alternatives = resolvedAlternatives.slice(0, MAX_ALTERNATIVES);
     }
-
-    // B1c/B5: cap at the first 3 (preserve model order, NEVER pad to reach 3) —
-    // the literal "top-3" product promise. Slicing happens AFTER leaf-drop +
-    // dedup + real-tariff-row filtering, so the 3 are 3 resolvable siblings.
-    const alternatives = resolvedAlternatives.slice(0, MAX_ALTERNATIVES);
 
     return {
       responseType:    'classification',

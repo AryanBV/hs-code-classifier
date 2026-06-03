@@ -1,12 +1,12 @@
 -- =============================================================================
--- NOT APPLIED. THIS IS REFERENCE SQL.
--- APPLY VIA SUPABASE MCP/CLI WHEN READY (USER-GATED). MIRRORS THE FROZEN DTO.
+-- APPLIED. THESE TABLES ARE LIVE IN THE SUPABASE PROJECT.
+-- This file is the canonical migration of record; it mirrors the frozen DTO.
 -- =============================================================================
 --
--- These four tables back the frontend app layer. The live Supabase project
--- currently holds ONLY the 11 ITC-HS corpus tables; provisioning these is a
--- deliberate, user-approved step (apply_migration). Column shapes mirror the
--- frozen DTO in `frontend/src/lib/types.ts` (UiClassification + Citation +
+-- These four tables back the frontend app layer and have been applied to the
+-- live Supabase project (alongside the 11 ITC-HS corpus tables) via
+-- apply_migration. Column shapes mirror the frozen DTO in
+-- `frontend/src/lib/types.ts` (UiClassification + Citation +
 -- ClassificationComponent) and the dormant backend `classification_jobs`.
 --
 -- All tables get Row Level Security:

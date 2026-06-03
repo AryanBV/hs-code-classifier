@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { timingSafeEqual } from 'crypto';
 import { logger } from './utils/logger';
 import { rateLimiter, startRateLimitCleanup } from './middleware/rateLimiter';
 import { connectDatabase, disconnectDatabase } from './utils/prisma';
@@ -77,23 +78,45 @@ app.use((req: Request, res: Response, next) => {
 // Routes
 // ========================================
 
-// Health check endpoint
+/**
+ * Constant-time check that a presented x-internal-token matches INTERNAL_API_TOKEN.
+ * Returns false (no detail leaked) when the env is unset or the header mismatches.
+ */
+function hasValidInternalToken(req: Request): boolean {
+  const expected = process.env.INTERNAL_API_TOKEN;
+  if (expected === undefined || expected === '') return false;
+  const provided = req.header('x-internal-token');
+  if (typeof provided !== 'string') return false;
+  const a = Buffer.from(provided);
+  const b = Buffer.from(expected);
+  if (a.length !== b.length) return false;
+  return timingSafeEqual(a, b);
+}
+
+// Health check endpoint. PUBLIC response is intentionally minimal (status +
+// timestamp) so an unauthenticated probe leaks NO operational detail. The
+// internal observability block (env shape + daily cost counter) is included ONLY
+// when a valid x-internal-token is presented (and only when the env is set).
 app.get('/health', (req: Request, res: Response) => {
-  res.status(200).json({
+  const body: Record<string, unknown> = {
     status: 'ok',
-    message: 'Crozza HS Code Classifier API is running',
     timestamp: new Date().toISOString(),
-    environment: {
+  };
+
+  if (hasValidInternalToken(req)) {
+    body.service = 'Prevyl HS Code Classifier';
+    body.environment = {
       nodeEnv: process.env.NODE_ENV,
       hasDatabase: !!process.env.DATABASE_URL,
-      hasOpenAI: !!process.env.OPENAI_API_KEY,
-      port: process.env.PORT || 3001
-    },
+      port: process.env.PORT || 3001,
+    };
     // B1b: today's in-process usage (single-replica counter) so cost/RPD is
     // observable without log-diving — the guard against repeating the May
     // blind-flying overspend.
-    cost: costMonitor.getDailyStats()
-  });
+    body.cost = costMonitor.getDailyStats();
+  }
+
+  res.status(200).json(body);
 });
 
 // Classification routes

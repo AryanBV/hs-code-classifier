@@ -475,6 +475,37 @@ export async function getTariffLineParentChains(
   return res.rows;
 }
 
+/** Subheading title lookup row (6-digit code → its own description). */
+export interface SubheadingDescriptionRow {
+  code:        string;
+  description: string;
+}
+
+/**
+ * Fetch the title (description) for a set of 6-digit subheading codes. Used by
+ * the API adapter to hydrate the headline description of a 6-digit CLASSIFY
+ * result (whose own row lives in `subheadings`, NOT `tariff_lines`).
+ *
+ * Returns one row per existing subheading (codes not present are silently
+ * dropped). Mirrors the parameterized `$1`/return-rows style of the other
+ * helpers in this file.
+ */
+export async function getSubheadingDescriptions(
+  codes: string[],
+): Promise<SubheadingDescriptionRow[]> {
+  if (codes.length === 0) return [];
+  const runner = getRunner();
+  const sql = `
+    SELECT
+      subheading AS code,
+      title      AS description
+    FROM subheadings
+    WHERE subheading = ANY($1)
+  `;
+  const res = await runner.query<SubheadingDescriptionRow>(sql, [codes]);
+  return res.rows;
+}
+
 /**
  * For each subheading, return the count of tariff_line children. Used by L2 to
  * detect the "single-child subheading shortcut" (60% case per recon).

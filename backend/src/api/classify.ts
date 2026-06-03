@@ -1,6 +1,6 @@
 // backend/src/api/classify.ts
 
-import { Router, Request, Response } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import { classify, continueWithAnswer } from '../classifier';
 import {
   classify as classifyV2,
@@ -10,9 +10,75 @@ import type { ClassifyResult } from '../classifier-v2/types';
 import { mapV2Result } from './v2-api-adapter';
 import { createJob, getJob } from './job-store';
 import { costMonitor, recordInputFromTokenUsage } from './cost-monitor';
-import { randomUUID } from 'crypto';
+import { classifyRateLimiter } from '../middleware/rateLimiter';
+import { randomUUID, timingSafeEqual } from 'crypto';
 
 const router = Router();
+
+/* ---------------------------------------------------------------------------
+ * Input bounds
+ * --------------------------------------------------------------------------- */
+
+/** Max accepted product-description length (after trim). Cross-package contract. */
+const MAX_QUERY_LENGTH = 1000;
+
+/* ---------------------------------------------------------------------------
+ * Concurrency gate (highest-value availability fix)
+ *
+ * The v2 pipeline is slow (p95 ~40-80s) and the free-tier LLM is RPM-bounded, so
+ * a burst of concurrent classifications would queue at the provider and blow the
+ * timeout for everyone. We cap the number of v2 pipelines running AT ONCE in this
+ * (single) process. Over the cap → an immediate, honest 503 instead of a slow
+ * failure. This is in-memory and single-replica (same invariant as the cost
+ * monitor + rate limiter). It does NOT reserve a daily slot (that is separate).
+ * --------------------------------------------------------------------------- */
+
+/** Max v2 pipelines running concurrently in this process. */
+const CLASSIFY_MAX_CONCURRENCY = Number(process.env.CLASSIFY_MAX_CONCURRENCY ?? 2);
+
+/** Live count of v2 pipelines in flight (incremented under the gate, always decremented). */
+let inFlight = 0;
+
+/** 503 body for the concurrency gate (busy now, retry shortly). */
+function v2Busy(res: Response): Response {
+  return res.status(503).json({
+    error: 'The classifier is busy right now. Please try again in a moment.',
+    retryable: true,
+  });
+}
+
+/* ---------------------------------------------------------------------------
+ * Internal shared-secret gate (no-op until INTERNAL_API_TOKEN is set)
+ *
+ * The public classify endpoints are intended to be reached ONLY via the frontend
+ * BFF, which forwards an `x-internal-token` header. When INTERNAL_API_TOKEN is
+ * set we require an exact (constant-time) match, else 403. When it is unset we
+ * SKIP the check entirely (fail-open) so nothing breaks before the founder sets
+ * it. Applied to POST '/' and POST '/answer' only (NOT health / job poll).
+ * --------------------------------------------------------------------------- */
+
+/** Constant-time string compare that also returns false on a length mismatch. */
+function safeEqual(a: string, b: string): boolean {
+  const bufA = Buffer.from(a);
+  const bufB = Buffer.from(b);
+  if (bufA.length !== bufB.length) return false;
+  return timingSafeEqual(bufA, bufB);
+}
+
+/** Express middleware: enforce the internal token IFF INTERNAL_API_TOKEN is set. */
+function requireInternalToken(req: Request, res: Response, next: NextFunction): void {
+  const expected = process.env.INTERNAL_API_TOKEN;
+  if (expected === undefined || expected === '') {
+    next(); // fail-open: gate disabled until the secret is configured
+    return;
+  }
+  const provided = req.header('x-internal-token');
+  if (typeof provided !== 'string' || !safeEqual(provided, expected)) {
+    res.status(403).json({ error: 'Forbidden', retryable: false });
+    return;
+  }
+  next();
+}
 
 /** Short per-request id for correlating the structured cost log line. */
 function newReqId(): string {
@@ -30,7 +96,9 @@ function newReqId(): string {
 function recordV2Cost(reqId: string, result: ClassifyResult, processingTimeMs: number): void {
   const usage = result.diagnostics.token_usage;
   const decision = result.system_error !== undefined ? 'system_error' : result.decision;
-  costMonitor.recordClassification(recordInputFromTokenUsage(usage, decision));
+  // Record TOKEN usage only (the request was already counted at entry via
+  // reserveSlot, so this must NOT increment the daily request counter again).
+  costMonitor.recordUsage(recordInputFromTokenUsage(usage, decision));
   // repairIterations is derived from the escalation_path: each repair attempt
   // records an `L5:repair*` entry (ESCALATION_REPAIR_PREFIX). No dedicated
   // diagnostics field exists, so we count the markers (0 when none).
@@ -53,7 +121,7 @@ function recordV2Cost(reqId: string, result: ClassifyResult, processingTimeMs: n
 /** 503 body for the hard daily-classification ceiling (B1b runaway-loop stop). */
 function dailyLimitReached(res: Response): Response {
   return res.status(503).json({
-    error: 'Daily limit reached',
+    error: "We've hit today's free classification limit. Please try again tomorrow.",
     retryable: false,
   });
 }
@@ -91,7 +159,7 @@ function useV2(): boolean {
  * the route maps to a 503 retryable response — identical to the system_error
  * path so the frontend treats both transient failures the same way.
  */
-const V2_TIMEOUT_MS = 80_000;
+const V2_TIMEOUT_MS = Number(process.env.V2_TIMEOUT_MS ?? 80_000);
 const V2_TIMEOUT_ERROR = Symbol('v2-timeout');
 
 /**
@@ -112,10 +180,18 @@ function withV2Timeout(work: Promise<ClassifyResult>): Promise<ClassifyResult> {
   });
 }
 
-/** Standard 503 body for a transient v2 failure (timeout or system_error). */
+/** Standard 503 body for a transient v2 failure (system_error / infra). */
 function v2Unavailable(res: Response): Response {
   return res.status(503).json({
     error: 'Classification temporarily unavailable',
+    retryable: true,
+  });
+}
+
+/** 503 body for the server-side timeout race (honest: it ran too long). */
+function v2TimedOut(res: Response): Response {
+  return res.status(503).json({
+    error: 'Classification timed out — it is taking longer than expected.',
     retryable: true,
   });
 }
@@ -145,7 +221,7 @@ function classifyFailed(res: Response, error: unknown): Response {
  * POST /api/classify
  * Main classification endpoint
  */
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', requireInternalToken, classifyRateLimiter(), async (req: Request, res: Response) => {
   try {
     const { query, previousAnswers } = req.body;
 
@@ -159,6 +235,13 @@ router.post('/', async (req: Request, res: Response) => {
     if (query.length < 3) {
       return res.status(400).json({
         error: 'Query too short. Please provide a more detailed product description.'
+      });
+    }
+
+    if (query.length > MAX_QUERY_LENGTH) {
+      return res.status(400).json({
+        error: 'Product description is too long — please shorten it to under 1000 characters.',
+        retryable: false,
       });
     }
 
@@ -187,43 +270,56 @@ router.post('/', async (req: Request, res: Response) => {
     }
 
     if (useV2()) {
-      // HARD daily-classification ceiling (B1b): only active when
-      // MAX_CLASSIFICATIONS_PER_DAY is set. An in-app stop against a runaway loop
-      // repeating the May blind overspend BEFORE any LLM call is made.
-      if (costMonitor.isOverDailyLimit()) {
+      // Concurrency gate FIRST (does NOT reserve a daily slot): an immediate 503
+      // when too many pipelines are already running, so a burst fails fast rather
+      // than queuing at the RPM-bounded provider and timing everyone out.
+      if (inFlight >= CLASSIFY_MAX_CONCURRENCY) {
+        console.warn('[API] v2 concurrency gate — busy, refusing');
+        return v2Busy(res);
+      }
+
+      // HARD daily-classification ceiling (B1b): reserve a slot AT ENTRY. Counts
+      // the request exactly once (even if it later fails/times out) and refuses
+      // BEFORE any LLM call when the day's ceiling is reached.
+      if (!costMonitor.reserveSlot()) {
         console.error('[API] Daily classification limit reached — refusing');
         return dailyLimitReached(res);
       }
 
       const reqId = newReqId();
-      let result: ClassifyResult;
+      inFlight++;
       try {
-        result = await withV2Timeout(classifyV2(query, { previousAnswers }));
-      } catch (raceErr) {
-        if (raceErr === V2_TIMEOUT_ERROR) {
-          console.error(`[API] [${reqId}] v2 classification timed out after ${V2_TIMEOUT_MS}ms`);
+        let result: ClassifyResult;
+        try {
+          result = await withV2Timeout(classifyV2(query, { previousAnswers }));
+        } catch (raceErr) {
+          if (raceErr === V2_TIMEOUT_ERROR) {
+            console.error(`[API] [${reqId}] v2 classification timed out after ${V2_TIMEOUT_MS}ms`);
+            return v2TimedOut(res);
+          }
+          throw raceErr;
+        }
+
+        const processingTimeMs = Date.now() - startTime;
+        // Cost observability (B1b): record + emit the structured log line for EVERY
+        // metered outcome — incl. system_error — so the daily counter + cost truth
+        // reflect real token spend even on a 503.
+        recordV2Cost(reqId, result, processingTimeMs);
+
+        // Persistent infra/transport failure (ARCHITECTURE §7) → 503 retryable.
+        if (result.system_error !== undefined) {
+          console.error(`[API] [${reqId}] v2 system_error:`, result.system_error.message);
           return v2Unavailable(res);
         }
-        throw raceErr;
+
+        console.log(`[API] [${reqId}] Completed (v2) in ${processingTimeMs}ms`);
+        return res.json({
+          ...(await mapV2Result(result)),
+          processingTimeMs,
+        });
+      } finally {
+        inFlight--;
       }
-
-      const processingTimeMs = Date.now() - startTime;
-      // Cost observability (B1b): record + emit the structured log line for EVERY
-      // metered outcome — incl. system_error — so the daily counter + cost truth
-      // reflect real token spend even on a 503.
-      recordV2Cost(reqId, result, processingTimeMs);
-
-      // Persistent infra/transport failure (ARCHITECTURE §7) → 503 retryable.
-      if (result.system_error !== undefined) {
-        console.error(`[API] [${reqId}] v2 system_error:`, result.system_error.message);
-        return v2Unavailable(res);
-      }
-
-      console.log(`[API] [${reqId}] Completed (v2) in ${processingTimeMs}ms`);
-      return res.json({
-        ...(await mapV2Result(result)),
-        processingTimeMs,
-      });
     }
 
     const result = await classify(query, { previousAnswers });
@@ -245,9 +341,18 @@ router.post('/', async (req: Request, res: Response) => {
  * POST /api/classify/answer
  * Continue classification after user answers a question
  */
-router.post('/answer', async (req: Request, res: Response) => {
+router.post('/answer', requireInternalToken, classifyRateLimiter(), async (req: Request, res: Response) => {
   try {
     const { originalQuery, answerId, answerLabel, questionId, previousAnswers, rounds } = req.body;
+
+    // Query-length cap on originalQuery — placed where it is first known so it
+    // covers BOTH the async + v2 continuation branches below.
+    if (typeof originalQuery === 'string' && originalQuery.length > MAX_QUERY_LENGTH) {
+      return res.status(400).json({
+        error: 'Product description is too long — please shorten it to under 1000 characters.',
+        retryable: false,
+      });
+    }
 
     // Async (job-queue) mode — enqueue an 'answer' job + 202; the worker drains it.
     // Gated OFF by default so the inline sync behavior below is unchanged.
@@ -290,9 +395,15 @@ router.post('/answer', async (req: Request, res: Response) => {
         });
       }
 
-      // HARD daily-classification ceiling (B1b) — also gates the continuation
-      // path so a runaway multi-turn loop cannot bypass the cap.
-      if (costMonitor.isOverDailyLimit()) {
+      // Concurrency gate FIRST (does NOT reserve a daily slot).
+      if (inFlight >= CLASSIFY_MAX_CONCURRENCY) {
+        console.warn('[API] v2 concurrency gate — busy, refusing');
+        return v2Busy(res);
+      }
+
+      // HARD daily-classification ceiling (B1b): reserve a slot AT ENTRY so a
+      // runaway multi-turn loop cannot bypass the cap, counted exactly once.
+      if (!costMonitor.reserveSlot()) {
         console.error('[API] Daily classification limit reached — refusing');
         return dailyLimitReached(res);
       }
@@ -301,35 +412,40 @@ router.post('/answer', async (req: Request, res: Response) => {
       const reqId = newReqId();
       const startTime = Date.now();
 
-      let result: ClassifyResult;
+      inFlight++;
       try {
-        result = await withV2Timeout(
-          continueWithAnswersV2(
-            originalQuery,
-            { [questionId]: answerId },
-            { previousAnswers, rounds },
-          ),
-        );
-      } catch (raceErr) {
-        if (raceErr === V2_TIMEOUT_ERROR) {
-          console.error(`[API] [${reqId}] v2 continuation timed out after ${V2_TIMEOUT_MS}ms`);
+        let result: ClassifyResult;
+        try {
+          result = await withV2Timeout(
+            continueWithAnswersV2(
+              originalQuery,
+              { [questionId]: answerId },
+              { previousAnswers, rounds },
+            ),
+          );
+        } catch (raceErr) {
+          if (raceErr === V2_TIMEOUT_ERROR) {
+            console.error(`[API] [${reqId}] v2 continuation timed out after ${V2_TIMEOUT_MS}ms`);
+            return v2TimedOut(res);
+          }
+          throw raceErr;
+        }
+
+        const processingTimeMs = Date.now() - startTime;
+        recordV2Cost(reqId, result, processingTimeMs);
+
+        if (result.system_error !== undefined) {
+          console.error(`[API] [${reqId}] v2 system_error:`, result.system_error.message);
           return v2Unavailable(res);
         }
-        throw raceErr;
+
+        return res.json({
+          ...(await mapV2Result(result)),
+          processingTimeMs,
+        });
+      } finally {
+        inFlight--;
       }
-
-      const processingTimeMs = Date.now() - startTime;
-      recordV2Cost(reqId, result, processingTimeMs);
-
-      if (result.system_error !== undefined) {
-        console.error(`[API] [${reqId}] v2 system_error:`, result.system_error.message);
-        return v2Unavailable(res);
-      }
-
-      return res.json({
-        ...(await mapV2Result(result)),
-        processingTimeMs,
-      });
     }
 
     if (!originalQuery || !answerId || !answerLabel) {
