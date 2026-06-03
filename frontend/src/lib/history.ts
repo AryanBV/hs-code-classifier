@@ -16,6 +16,19 @@ export interface HistoryRecord {
 const KEY = "prevyl.history.v1";
 
 /**
+ * Owner sentinel for the device-global history store.
+ *
+ * The history store (KEY) is device-global, not per-account. Clearing only on
+ * SIGNED_OUT leaves a leak: a silent session EXPIRY (or tab hand-over) never
+ * fires SIGNED_OUT, so account A's local records survive for whoever signs in
+ * next as account B. The sentinel records WHICH uid currently owns the local
+ * store, so any account take-over — whether via clean switch or post-expiry —
+ * is detected and the prior owner's records are wiped before the new user can
+ * see or migrate them.
+ */
+const OWNER_KEY = "prevyl.auth.owner";
+
+/**
  * Hygiene: records persisted BEFORE the band-only structural-honesty change may
  * carry the hidden numeric signals (`confidence`, `confidenceP`, `selfConfidence`)
  * inside `result`. The wire→UI strip (`lib/api.ts`) only runs on fresh API
@@ -95,6 +108,49 @@ export function clearHistory(): void {
   if (typeof window === "undefined") return;
   try {
     window.localStorage.removeItem(KEY);
+  } catch {
+    /* ignore */
+  }
+}
+
+/**
+ * Reconcile the device-global history store against the account that now holds
+ * the session. Call on every authenticated auth event (INITIAL_SESSION /
+ * SIGNED_IN / TOKEN_REFRESHED), BEFORE the new user is adopted by the UI.
+ *
+ * - Stored owner exists AND differs from `currentUid` → a DIFFERENT account is
+ *   taking over (clean switch, or a silent expiry followed by another login):
+ *   wipe the prior owner's local records, then claim ownership for `currentUid`.
+ * - No stored owner → this is a guest who just signed in; their local records
+ *   must SURVIVE so they can be migrated to the new account. We claim ownership
+ *   but do NOT clear.
+ * - Stored owner === `currentUid` → same account; nothing to do.
+ */
+export function reconcileHistoryOwner(currentUid: string): void {
+  if (typeof window === "undefined") return;
+  try {
+    const storedOwner = window.localStorage.getItem(OWNER_KEY);
+    if (storedOwner !== null && storedOwner !== currentUid) {
+      // A different account is taking over: never let it inherit A's records.
+      clearHistory();
+    }
+    if (storedOwner !== currentUid) {
+      window.localStorage.setItem(OWNER_KEY, currentUid);
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
+/**
+ * Sign-out cleanup: drop the local records AND release ownership, so a fresh
+ * guest session (or the next account) starts from a clean, unowned store.
+ */
+export function clearHistoryForSignOut(): void {
+  clearHistory();
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.removeItem(OWNER_KEY);
   } catch {
     /* ignore */
   }

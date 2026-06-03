@@ -429,6 +429,12 @@ export default function HistoryPage() {
   // displayed list is exactly the local list (no behaviour change). Fetched in an
   // effect; state is set only inside the async callback (never in the effect body).
   const { user } = useUser();
+  // Depend on the user IDENTITY, not the object ref: onAuthStateChange hands us a
+  // fresh `session.user` object on every TOKEN_REFRESHED, so keying effects on the
+  // object would re-fire on routine token churn. The id only changes on a real
+  // identity change (sign-in / switch / sign-out), which is exactly when we must
+  // re-read the (possibly just-cleared) local store.
+  const userId = user?.id ?? null;
   const [cloudRecords, setCloudRecords] = React.useState<HistoryRecord[]>([]);
 
   // Fetch the signed-in user's cloud records. State is set ONLY inside the async
@@ -453,9 +459,12 @@ export default function HistoryPage() {
   // cached snapshot would otherwise linger on screen until the next mutation or
   // reload. emit() invalidates the cache and notifies useSyncExternalStore so the
   // cleared list is reflected immediately. Data-source sync only — no visual change.
+  // Keyed on the user IDENTITY (userId) not the object ref, so it fires only on a
+  // real identity change (incl. after a sentinel-driven clear), not on every
+  // TOKEN_REFRESHED object churn.
   React.useEffect(() => {
     emit();
-  }, [user]);
+  }, [userId]);
 
   // The DISPLAYED list: union of local + cloud, de-duped by (query + hsCode),
   // newest first. Cloud rows count only while a user is present; otherwise this

@@ -4,7 +4,7 @@ import * as React from "react";
 import type { User } from "@supabase/supabase-js";
 
 import { createClient, isSupabaseConfigured } from "./client";
-import { clearHistory } from "@/lib/history";
+import { clearHistoryForSignOut, reconcileHistoryOwner } from "@/lib/history";
 
 /**
  * Current-user hook.
@@ -48,14 +48,21 @@ export function useUser(): { user: User | null; loading: boolean } {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
       if (!active) return;
-      // Cross-account privacy: device-global guest history (lib/history.ts) must
-      // not survive a sign-out, or the next account on a shared device would both
-      // SEE the prior user's records and have them copied up by the login-sync
-      // (account.ts migrateLocalHistory). Gate STRICTLY on SIGNED_OUT — never on
-      // INITIAL_SESSION or a null session at load, which would wipe a legitimate
-      // guest's history on every page load.
+      // Cross-account privacy via an OWNER SENTINEL (lib/history.ts). The local
+      // history store is device-global, so it must never carry across accounts.
+      // Clearing only on SIGNED_OUT left a leak: a silent session EXPIRY / tab
+      // hand-over does NOT fire SIGNED_OUT, so account A's records survived for
+      // account B. We reconcile ownership on EVERY authenticated event
+      // (INITIAL_SESSION / SIGNED_IN / TOKEN_REFRESHED): if a different uid is now
+      // signed in, the prior owner's local store is wiped before the new user is
+      // adopted (below) and before account-menu's migrate effect (keyed on the
+      // user) can run. A first-time guest sign-in has NO stored owner, so their
+      // local records are preserved for migration. Runs synchronously before
+      // setUser so the migrate effect never copies a prior account's records.
       if (event === "SIGNED_OUT") {
-        clearHistory();
+        clearHistoryForSignOut();
+      } else if (session?.user?.id) {
+        reconcileHistoryOwner(session.user.id);
       }
       setUser(session?.user ?? null);
       setLoading(false);
