@@ -114,3 +114,26 @@ create policy "feedback_insert_own"
 create policy "shared_records_public_read"
   on public.shared_records for select
   using (public = true);
+
+-- =============================================================================
+-- Base role privileges (REQUIRED for RLS to be reachable).
+--
+-- RLS is a FILTER applied on top of base table privileges; without these GRANTs
+-- Postgres rejects the browser request at the privilege layer (SQLSTATE 42501
+-- "permission denied for schema public") BEFORE any policy is evaluated. This
+-- project's `public` schema had no anon/authenticated grants, so the browser
+-- insert silently failed and `classifications` stayed at 0 rows. These grants
+-- are the minimum that matches the policies above; per-user isolation is still
+-- enforced entirely by RLS. Applied to the live DB 2026-06 alongside this file.
+-- =============================================================================
+grant usage on schema public to anon, authenticated;
+
+-- classifications: owner-only select+insert (RLS scopes to auth.uid()).
+grant select, insert on table public.classifications to authenticated;
+
+-- feedback: owner select+insert, plus the anon guest-insert policy.
+grant select, insert on table public.feedback to authenticated;
+grant insert on table public.feedback to anon;
+
+-- shared_records: public read of published rows.
+grant select on table public.shared_records to anon, authenticated;

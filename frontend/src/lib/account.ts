@@ -41,8 +41,13 @@ interface ClassificationRow {
   created_at: string | null;
 }
 
-/** Insert payload (no id / created_at — DB defaults those). */
+/**
+ * Insert payload. We send the LOCAL record id explicitly so the cloud row shares
+ * the local record's id; this keeps `/r/{id}` resolvable from the cloud on any
+ * device (cross-device id-consistency). `created_at` is still DB-defaulted.
+ */
 interface ClassificationInsert {
+  id?: string;
   user_id: string;
   query: string;
   hs_code: string;
@@ -62,6 +67,19 @@ function normalizeBand(band: string | null): ConfidenceBand {
   return band === "high" || band === "medium" || band === "low"
     ? band
     : "low";
+}
+
+/**
+ * The `classifications.id` column is a uuid PRIMARY KEY. Local record ids are
+ * normally `crypto.randomUUID()`, but lib/history.ts has a legacy `r_…` fallback
+ * for environments without `crypto.randomUUID`. Sending a non-uuid id would fail
+ * the uuid cast and (silently, via the fail-safe) drop the row, so we only carry
+ * the id through when it is a valid uuid and otherwise let the DB mint one.
+ */
+const UUID_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+function isUuid(value: string): boolean {
+  return UUID_RE.test(value);
 }
 
 /** Map a DB row -> the local HistoryRecord shape consumed by the UI. */
@@ -95,6 +113,12 @@ export function recordToRow(
 ): ClassificationInsert {
   const r = rec.result;
   return {
+    // Same id as the local HistoryRecord, so the cloud row is addressable by the
+    // exact same /r/{id} on every device (id-consistency). recordToRow is the
+    // single insert builder, so this covers both the live save and migration.
+    // Guarded: a legacy non-uuid local id is omitted so the DB mints one rather
+    // than failing the uuid cast and silently dropping the row.
+    ...(isUuid(rec.id) ? { id: rec.id } : {}),
     user_id: userId,
     query: rec.query,
     hs_code: r.hsCode,
@@ -130,9 +154,40 @@ export async function saveClassification(rec: HistoryRecord): Promise<void> {
     const userId = data.session?.user?.id;
     if (error || !userId) return;
 
-    await supabase.from(TABLE).insert(recordToRow(userId, rec));
+    // Upsert (not insert) keyed on the id so a re-save of the same record — same
+    // id, e.g. the save effect re-running, or a record already migrated — is a
+    // clean no-op instead of a primary-key error that the fail-safe would hide.
+    // RLS still enforces auth.uid() = user_id from the JWT on the write.
+    await supabase
+      .from(TABLE)
+      .upsert(recordToRow(userId, rec), { onConflict: "id", ignoreDuplicates: true });
   } catch {
     /* fail-safe: cloud save is best-effort, never breaks the guest flow */
+  }
+}
+
+/**
+ * One cloud record by id for the signed-in owner. Returns null on any failure
+ * (unconfigured / signed out / not found / RLS). Lets `/r/{id}` resolve from the
+ * cloud on a device where the local copy is absent (e.g. after logout cleared
+ * local, or a second device) — possible because the cloud row carries the SAME
+ * id as the local record. RLS still scopes this to the owner.
+ */
+export async function getAccountRecord(id: string): Promise<HistoryRecord | null> {
+  try {
+    const supabase = createClient();
+    if (!supabase) return null;
+
+    const { data, error } = await supabase
+      .from(TABLE)
+      .select("*")
+      .eq("id", id)
+      .maybeSingle();
+
+    if (error || !data) return null;
+    return rowToRecord(data as ClassificationRow);
+  } catch {
+    return null;
   }
 }
 
@@ -190,7 +245,11 @@ export async function migrateLocalHistory(): Promise<void> {
       .map((rec) => recordToRow(userId, rec));
 
     if (toInsert.length === 0) return;
-    await supabase.from(TABLE).insert(toInsert);
+    // Upsert keyed on id so re-running migration (or a record whose id already
+    // exists in the cloud) never trips the primary-key constraint.
+    await supabase
+      .from(TABLE)
+      .upsert(toInsert, { onConflict: "id", ignoreDuplicates: true });
   } catch {
     /* fail-safe: migration is best-effort, never breaks anything */
   }

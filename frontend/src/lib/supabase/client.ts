@@ -18,9 +18,20 @@ export const isSupabaseConfigured = (): boolean =>
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   );
 
+/**
+ * Memoized so every caller (save, list, migrate, auth hook) shares ONE browser
+ * client. `@supabase/ssr` already singletons internally in the browser, but a
+ * module-level cache is the documented pattern and makes the shared, cookie-backed
+ * session unambiguous: the client that holds the auth session is the same one
+ * that dispatches the insert, so the request carries the JWT RLS needs.
+ */
+let cached: SupabaseClient | null = null;
+
 export function createClient(): SupabaseClient | null {
   if (!url || !anonKey) {
     return null;
   }
-  return createBrowserClient(url, anonKey);
+  if (cached) return cached;
+  cached = createBrowserClient(url, anonKey);
+  return cached;
 }

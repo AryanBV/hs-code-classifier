@@ -10,6 +10,8 @@ import { ResultView } from "@/components/result/result-view";
 import { PageShell } from "@/components/layout/page-shell";
 import { getHistoryRecord, type HistoryRecord } from "@/lib/history";
 import { formatGeneratedAt, makeRecordId } from "@/lib/record-id";
+import { isSupabaseConfigured } from "@/lib/supabase/client";
+import { getAccountRecord } from "@/lib/account";
 
 export interface PermalinkRecordProps {
   id: string;
@@ -165,9 +167,43 @@ function PermalinkRecord({ id }: PermalinkRecordProps) {
     () => true,
     () => false,
   );
-  const record = React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const localRecord = React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+
+  // Cloud fallback: when the record is not in THIS browser (e.g. after logout
+  // cleared the local store, or on a second device), try the signed-in owner's
+  // cloud copy by id. Possible because the cloud row carries the SAME id as the
+  // local record; RLS scopes it to the owner. Fail-safe: any failure leaves
+  // cloudRecord null and the honest "not on this device" panel shows as before.
+  // State is set only inside the async callback, never in the effect body.
+  const [cloudRecord, setCloudRecord] = React.useState<HistoryRecord | null>(null);
+  const [cloudTried, setCloudTried] = React.useState(false);
+  React.useEffect(() => {
+    // Only reach for the cloud when local missed and Supabase is configured.
+    if (localRecord || !isSupabaseConfigured()) return;
+    let active = true;
+    void getAccountRecord(id).then((rec) => {
+      if (!active) return;
+      setCloudRecord(rec);
+      setCloudTried(true);
+    });
+    return () => {
+      active = false;
+    };
+  }, [id, localRecord]);
+
+  const record = localRecord ?? cloudRecord;
 
   if (!hydrated) {
+    return (
+      <PageShell width="wide">
+        <RecordSkeleton />
+      </PageShell>
+    );
+  }
+
+  // Local missed but a cloud lookup is in flight (configured, not yet settled):
+  // keep the calm skeleton rather than flashing "not on this device".
+  if (!record && isSupabaseConfigured() && !cloudTried) {
     return (
       <PageShell width="wide">
         <RecordSkeleton />
