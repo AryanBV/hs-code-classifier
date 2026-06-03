@@ -78,10 +78,10 @@ export default function AboutPage() {
             and customs brokers. It is free to use. If you spot a code that looks off, or want a
             shared record removed, write to{" "}
             <a
-              href="mailto:hello@prevyl.com"
+              href="mailto:aryan@prevyl.com"
               className="text-accent-ink underline decoration-accent-quiet underline-offset-4 hover:decoration-accent"
             >
-              hello@prevyl.com
+              aryan@prevyl.com
             </a>{" "}
             and a person will read it.
           </p>

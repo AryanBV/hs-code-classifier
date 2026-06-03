@@ -558,7 +558,7 @@ export default function HistoryPage() {
   const countLabel = `${displayRecords.length} record${displayRecords.length === 1 ? "" : "s"}`;
 
   return (
-    <PageShell width="list" className="py-[clamp(20px,3vw,44px)]">
+    <PageShell width="wide" className="py-[clamp(20px,3vw,44px)]">
       {/* masthead */}
       <header className="mb-[clamp(18px,2.6vw,28px)]">
         <p className="mb-2 font-sans text-eyebrow font-semibold uppercase tracking-[var(--tracking-eyebrow)] text-ink-muted">
@@ -581,7 +581,7 @@ export default function HistoryPage() {
       {/* toolbar: search + clear. Only when there is something to work with. */}
       {hasRecords ? (
         <div className="mb-[clamp(16px,2.2vw,22px)] flex flex-wrap items-center gap-3">
-          <div className="relative min-w-[12rem] flex-1">
+          <div className="relative min-w-[12rem] flex-1 sm:max-w-md">
             <Search
               aria-hidden="true"
               strokeWidth={1.8}
@@ -630,8 +630,8 @@ export default function HistoryPage() {
 
       {/* body: stable shell until hydrated, then list / empty / no-matches */}
       {!hydrated ? (
-        <ul className="flex flex-col gap-3" aria-hidden="true">
-          {[0, 1, 2].map((i) => (
+        <ul className="grid grid-cols-1 gap-3 xl:grid-cols-2" aria-hidden="true">
+          {[0, 1, 2, 3].map((i) => (
             <li key={i}>
               <Surface
                 variant="raised"
@@ -657,7 +657,12 @@ export default function HistoryPage() {
                   {group.records.length}
                 </span>
               </h2>
-              <ul className="flex flex-col gap-3">
+              {/* On desktop the records open out into a two-up grid so a long
+                  ledger uses the page width instead of a single narrow column;
+                  mobile and tablet stay single-column. Each row's own internal
+                  two-column layout (code rail + readable middle) keeps a cell
+                  comfortable at this width. */}
+              <ul className="grid grid-cols-1 gap-3 xl:grid-cols-2">
                 {group.records.map((record) => (
                   <HistoryRow
                     key={record.id}

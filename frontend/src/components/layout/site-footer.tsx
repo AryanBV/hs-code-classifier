@@ -35,13 +35,13 @@ function SiteFooter({ className }: SiteFooterProps) {
             <p className="m-0">
               Questions or a code that looks wrong?{" "}
               <a
-                href="mailto:hello@prevyl.com"
+                href="mailto:aryan@prevyl.com"
                 className={cn(
                   "rounded-sm font-medium text-accent-ink underline-offset-4 hover:underline",
                   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
                 )}
               >
-                hello@prevyl.com
+                aryan@prevyl.com
               </a>
             </p>
           </div>

@@ -48,10 +48,17 @@ export default function PrivacyPage() {
         <Section heading="What we send to classify">
           When you classify a product, the description you type goes to our
           service to find the code. A short technical log helps us keep the
-          service running. We use your product descriptions and any feedback you
-          send only to run and improve the service. We do not sell your data.
-          Please do not put personal details in a product description. You never
-          need to.
+          service running. We use your product description to run the
+          classification, and if you choose to send feedback on a result, we use
+          that feedback to improve the service. We do not train any AI model on
+          what you type. We do not sell your data. Please do not put personal
+          details in a product description. You never need to.
+        </Section>
+
+        <Section heading="Cookies and tracking">
+          We do not run analytics, advertising, or third-party tracking on this
+          site. If you sign in, we use the essential cookies needed to keep you
+          signed in for that session. That is all.
         </Section>
 
         <Section heading="When accounts arrive">
@@ -66,20 +73,22 @@ export default function PrivacyPage() {
         <Section heading="Your rights, including deletion">
           Under India&apos;s Digital Personal Data Protection principles you can
           ask us what we hold about you, ask us to correct it, and ask us to
-          delete it. Write to us and we will delete your account, your saved
-          classifications, and any feedback tied to you. If you used {BRAND}{" "}
+          delete it. There is no self-serve delete button yet; to remove an
+          account, the saved classifications tied to it, and any feedback you
+          sent, email us and a person will do it by hand. If you used {BRAND}{" "}
           without an account, your history lives only in your own browser, so
-          clearing your browser data removes it yourself.
+          clearing your browser data, or using the clear option on the history
+          page, removes it yourself.
         </Section>
 
         <Section heading="Who holds this and how to reach us">
           {BRAND} is operated by Prevyl. If you want a record removed, want your
           data deleted, or have any question about your data, write to{" "}
           <a
-            href="mailto:hello@prevyl.com"
+            href="mailto:aryan@prevyl.com"
             className="text-accent-ink underline decoration-accent-quiet underline-offset-4 hover:decoration-accent"
           >
-            hello@prevyl.com
+            aryan@prevyl.com
           </a>{" "}
           and a person will take care of it.
         </Section>

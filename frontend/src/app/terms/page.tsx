@@ -102,10 +102,10 @@ export default function TermsPage() {
           lives on this page. If anything here is unclear, or you want a record
           removed, write to{" "}
           <a
-            href="mailto:hello@prevyl.com"
+            href="mailto:aryan@prevyl.com"
             className="text-accent-ink underline decoration-accent-quiet underline-offset-4 hover:decoration-accent"
           >
-            hello@prevyl.com
+            aryan@prevyl.com
           </a>{" "}
           and a person will read it.
         </Section>
