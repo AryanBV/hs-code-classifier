@@ -51,7 +51,9 @@ const ROSCTL_FILES = ['61', '62', '63'].map((c) =>
   path.join(DATA_ROOT, 'rosctl', `${c}.json`),
 );
 const UQC_DIR = path.join(DATA_ROOT, 'uqc');
-const UQC_CHUNK_COUNT = 41; // o2-0 .. o2-40
+// UQC rows come from ALL output/uqc/*.json files: the o2-0..o2-40 chunks PLUS
+// the gap-NN.json backfills for chapters 01,20,26,28,39,54,59,61,81,94 that the
+// o2 chunks dropped. Glob both families; dedupe-by-code makes any overlap safe.
 
 const BATCH_SIZE = 500;
 const CODE_RE = /^\d{4}\.\d{2}\.\d{2}$/;
@@ -140,6 +142,24 @@ const CANONICAL_AS_ON: Readonly<Record<'export_duty' | 'rosctl' | 'uqc', string>
 };
 
 /**
+ * Canonical UQC provenance — ONE consistent source across ALL uqc rows.
+ *
+ * The build chunks (o2-* and gap-*) carry mixed/imprecise UQC provenance: ~33
+ * distinct notification_ref strings, 16 distinct source_url values, and four
+ * as_on stamps (2022-01-01/2022-02-01/2023-04-01/2023-05-01). Some o2 rows even
+ * cite the DGFT ITC(HS) export-policy doc, which is NOT where the Unit column
+ * lives. The verifier flagged this. The TRUE source of the UQC "Unit" column is
+ * the CBIC Customs Tariff of India 2023 (First Schedule to the Customs Tariff
+ * Act, 1975, as effective from 01-05-2023). Every uqc row — o2-* and gap-* —
+ * is reconciled to that single CBIC source. The gap-* files already use exactly
+ * these values; this normalization makes the o2-* rows match them.
+ */
+const CANONICAL_UQC_SOURCE_URL =
+  'https://www.cbic.gov.in/resources//htdocs-cbec/customs/cst2023-300323/cst2023-300323-idx.html';
+const CANONICAL_UQC_NOTIFICATION_REF =
+  'Customs Tariff of India 2023, First Schedule (eff. 01-05-2023)';
+
+/**
  * RoSCTL cap_unit -> canonical UQC vocabulary.
  *
  * The uqc table's vocabulary (observed across the corpus) uses:
@@ -225,14 +245,13 @@ const SOURCE_REGISTRY_ROWS: ReadonlyArray<SourceRow> = [
   {
     scheme: 'uqc',
     as_on: CANONICAL_AS_ON.uqc,
-    source_url:
-      'https://www.cbic.gov.in/resources//htdocs-cbec/customs/cst2023-300323/cst2023-300323-idx.html',
+    source_url: CANONICAL_UQC_SOURCE_URL,
     notification_ref:
       'CBIC Customs Tariff of India 2023 — First Schedule to the Customs Tariff Act, 1975, as effective from 01-05-2023 (Unit column). Build file: data/pdfs/cbic-official-tariff.pdf.',
     freshness_budget_days: 180,
     last_checked: TODAY,
     note:
-      'Unit Quantity Code per 8-digit line from the CBIC 2023 tariff Unit column. tariff_lines.unit is 100% NULL — this is the canonical UQC source. NOTE coverage gap: chapters 01,20,26,28,39,54,59,61,81,94 have no UQC rows (see ingest report) — flag for re-extraction.',
+      'Unit Quantity Code per 8-digit line from the CBIC 2023 tariff Unit column. tariff_lines.unit is 100% NULL — this is the canonical UQC source. Every uqc row reconciled to this one CBIC source (as_on/source_url/notification_ref). Coverage gap (chapters 01,20,26,28,39,54,59,61,81,94) FILLED via the gap-*.json backfills.',
   },
 ];
 
@@ -340,10 +359,17 @@ function loadUqc(): UqcLoadResult {
   const all: Array<{ rec: Json; chunk: string }> = [];
   const emptyChunks: string[] = [];
 
-  for (let i = 0; i < UQC_CHUNK_COUNT; i++) {
-    const chunk = `o2-${i}`;
-    const file = path.join(UQC_DIR, `${chunk}.json`);
-    if (!fs.existsSync(file)) continue;
+  // Glob every UQC source file: the o2-* extraction chunks AND the gap-*
+  // backfills (chapters 01,20,26,28,39,54,59,61,81,94). Sorted for stable,
+  // deterministic dedupe ordering.
+  const chunkFiles = fs
+    .readdirSync(UQC_DIR)
+    .filter((f) => f.endsWith('.json') && (f.startsWith('o2-') || f.startsWith('gap-')))
+    .sort();
+
+  for (const fileName of chunkFiles) {
+    const chunk = fileName.replace(/\.json$/, '');
+    const file = path.join(UQC_DIR, fileName);
     const rows = loadJsonArray(file);
     if (rows.length === 0) {
       emptyChunks.push(chunk);
@@ -406,8 +432,13 @@ function loadUqc(): UqcLoadResult {
     }
 
     const row = project(winner, UQC_COLUMNS);
-    // Stamp every UQC row with the single canonical edition date.
+    // Reconcile EVERY uqc row (o2-* and gap-*) to the ONE canonical CBIC source:
+    // single edition date + the CBIC Customs Tariff URL + a single notification
+    // ref. This overrides the mixed/imprecise per-chunk provenance the verifier
+    // flagged (incl. rows that wrongly cited the DGFT export-policy doc).
     row.as_on = CANONICAL_AS_ON.uqc;
+    row.source_url = CANONICAL_UQC_SOURCE_URL;
+    row.notification_ref = CANONICAL_UQC_NOTIFICATION_REF;
     rows.push(row);
   }
 
@@ -733,6 +764,15 @@ async function main(): Promise<void> {
     console.log(`  export_duty -> ${CANONICAL_AS_ON.export_duty} (uniform in source; 2nd-Sch consolidated to 28/22 dt.21.05.2022)`);
     console.log(`  rosctl      -> ${CANONICAL_AS_ON.rosctl} (61/62=2026-04-01, 63=2026-09-30 window-END; same MoT notfn 14/26/2016-IT; snapshot = window START)`);
     console.log(`  uqc         -> ${CANONICAL_AS_ON.uqc} (CBIC tariff 2023 "as effective from 01-05-2023"; mixed 2022/2023 stamps = artifacts)`);
+
+    console.log('\n===== uqc PROVENANCE RECONCILIATION (ALL rows -> ONE CBIC source) =====');
+    console.log(`  source_url       -> ${CANONICAL_UQC_SOURCE_URL}`);
+    console.log(`  notification_ref -> ${CANONICAL_UQC_NOTIFICATION_REF}`);
+    const uqcSrcDist = new Set(uqcRows.map((r) => String(r.source_url)));
+    const uqcRefDist = new Set(uqcRows.map((r) => String(r.notification_ref)));
+    const uqcAsOnDist = new Set(uqcRows.map((r) => String(r.as_on)));
+    console.log(`  post-normalize distinct: source_url=${uqcSrcDist.size}, notification_ref=${uqcRefDist.size}, as_on=${uqcAsOnDist.size} (each MUST be 1)`);
+    console.log(`  (verifier flagged mixed/imprecise UQC provenance — incl. rows citing the DGFT export-policy doc; reconciled to CBIC Customs Tariff)`);
 
     console.log('\n===== rosctl cap_unit NORMALIZATION =====');
     const capUnitDist: Record<string, number> = {};
