@@ -86,6 +86,81 @@ export interface QuestionOption {
 }
 
 // ----------------------------------------------------------------------------
+// Trade-intelligence (additive). Mirrors the backend `TradeIntelligence` shape
+// in `backend/src/api/trade-intel-assembler.ts` (EXPERIENCE-DESIGN §4.4 /
+// TRADE-INTELLIGENCE-PLAN §5). Every datum carries `asOn` + `sourceUrl` +
+// `indicative: true`. Sparse-friendly: each sub-block may be null. This is a
+// hand-mirrored contract — keep it byte-aligned with the backend type.
+// ----------------------------------------------------------------------------
+
+export type ExportPolicyStatus = 'Free' | 'Restricted' | 'Prohibited' | 'STE';
+export type PolicySeverity = 'danger' | 'warning' | 'notice' | 'grey';
+
+export interface TradeExportPolicy {
+  status: ExportPolicyStatus | null;
+  statusPlain: string;
+  severity: PolicySeverity;
+  conditionVerbatim: string | null;
+  conditionMissing: boolean;
+  asOn: string | null;
+  sourceUrl: string;
+  stale: boolean;
+  staleAdvisory: string | null;
+  indicative: true;
+}
+
+export interface TradeExportDuty {
+  isNil: boolean;
+  rateText: string | null;
+  conditionVerbatim: string | null;
+  mappable: boolean;
+  verify: boolean;
+  asOn: string | null;
+  sourceUrl: string | null;
+  indicative: true;
+}
+
+export interface TradeIncentive {
+  kind: 'rosctl' | 'rodtep';
+  ratePct: number;
+  cap: string | null;
+  capUnit: string | null;
+  asOn: string;
+  sourceUrl: string;
+  indicative: true;
+}
+
+export interface TradeUqc {
+  code: string;
+  label: string | null;
+}
+
+/** A datum withheld for being stale-past-budget (not export policy, which is never hidden). */
+export interface TradeVerifyState {
+  verifyOnly: true;
+  asOn: string | null;
+  sourceUrl: string | null;
+  indicative: true;
+}
+
+export interface TradeFlag {
+  type: 'scomet' | 'qco' | 'adcvd';
+  message: string;
+  sourceUrl: string;
+  versionDate: string | null;
+  absenceNotClearance: true;
+}
+
+export interface TradeIntelligence {
+  exportPolicy: TradeExportPolicy;
+  exportDuty: TradeExportDuty | TradeVerifyState | null;
+  incentive: TradeIncentive | TradeVerifyState | null;
+  uqc: TradeUqc | null;
+  flags: TradeFlag[];
+  disclaimer: string;
+}
+
+// ----------------------------------------------------------------------------
 // WIRE types — exactly what the backend sends. Internal to lib/api.ts.
 // ----------------------------------------------------------------------------
 
@@ -109,6 +184,14 @@ export interface WireClassification {
   citation: Citation;
   components: ClassificationComponent[] | null;
   processingTimeMs?: number;
+  /**
+   * ADDITIVE (Track A): dated/indicative trade-intelligence for the final code.
+   * Best-effort + OPTIONAL — null/absent when the backend holds no trade-intel
+   * data (Phase-1 pre-ingest) or a query fails. NOT a hidden field, so it flows
+   * through to `UiClassification` via the Omit untouched (the band-only strip in
+   * `lib/api.ts` only removes the confidence signals).
+   */
+  tradeIntelligence?: TradeIntelligence | null;
 }
 
 export interface WireQuestion {

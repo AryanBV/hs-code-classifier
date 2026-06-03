@@ -27,6 +27,10 @@ import {
   getTariffLinesForSubheadings,
 } from '../classifier-v2/lib/supabase-client';
 import type { ClassifyResult, SelectComponent, SelectCitation } from '../classifier-v2/types';
+import {
+  assembleTradeIntelligenceForCode,
+  type TradeIntelligence,
+} from './trade-intel-assembler';
 
 /* ---------------------------------------------------------------------------
  * External DTO (the FLAT shape returned to the frontend)
@@ -79,6 +83,15 @@ export interface ApiClassificationResponse {
    * OPTIONAL (B5): the legacy answer path omits it, so it is not guaranteed.
    */
   processingTimeMs?: number;
+  /**
+   * ADDITIVE (Track A): dated/indicative trade-intelligence for the final code —
+   * export policy + duty + RoSCTL/RoDTEP incentive + UQC + the §6 disclaimer.
+   * Best-effort and OPTIONAL: null/absent when the trade-intel tables hold no data
+   * (Phase-1 pre-ingest) or a query fails. It NEVER blocks or delays the
+   * classification — the existing fields above are unaffected. Shape:
+   * `TradeIntelligence` from `trade-intel-assembler.ts` (EXPERIENCE-DESIGN §4.4).
+   */
+  tradeIntelligence?: TradeIntelligence | null;
 }
 
 /** One clarifying-question option. */
@@ -170,6 +183,14 @@ export type SubheadingRowFetcher = (codes: string[]) => Promise<HydratedChainRow
  */
 export type SubheadingChildrenFetcher = (subheadings: string[]) => Promise<HydratedChainRow[]>;
 
+/**
+ * Best-effort trade-intelligence assembler shape. Defaults to the live
+ * `assembleTradeIntelligenceForCode`; tests inject a stub so no Postgres (or
+ * trade-intel data) is required. MUST be fail-safe — it returns null on any
+ * failure and never throws, so the classification is emitted regardless.
+ */
+export type TradeIntelligenceFetcher = (code: string) => Promise<TradeIntelligence | null>;
+
 /* ---------------------------------------------------------------------------
  * mapV2Result
  * --------------------------------------------------------------------------- */
@@ -192,6 +213,9 @@ export type SubheadingChildrenFetcher = (subheadings: string[]) => Promise<Hydra
  * @param fetchChains DB hydration fn for 8-digit leaf + alternatives (injectable).
  * @param fetchSubheadingRows DB hydration fn for a 6-digit subheading's OWN title.
  * @param fetchSubheadingChildren DB fn for a 6-digit subheading's real 8-digit children.
+ * @param fetchTradeIntelligence Best-effort trade-intel assembler (injectable for
+ *   tests). Defaults to the live assembler; on any failure it returns null and the
+ *   classification is emitted WITHOUT a `tradeIntelligence` field (never throws).
  */
 export async function mapV2Result(
   result: ClassifyResult,
@@ -201,6 +225,8 @@ export async function mapV2Result(
     getTariffLinesForSubheadings(subs).then((rows) =>
       rows.map((r) => ({ code: r.code, description: r.description })),
     ),
+  fetchTradeIntelligence: TradeIntelligenceFetcher = (code) =>
+    assembleTradeIntelligenceForCode(code),
 ): Promise<ApiClassifyResponse> {
   if (result.decision === 'CLASSIFY' && result.classification) {
     const c = result.classification;
@@ -253,7 +279,14 @@ export async function mapV2Result(
       alternatives = resolvedAlternatives.slice(0, MAX_ALTERNATIVES);
     }
 
-    return {
+    // ADDITIVE trade-intelligence (best-effort). The assembler is fail-safe
+    // (returns null, never throws), so this can never break or delay the
+    // classification. We attach the field ONLY when a non-null block is produced,
+    // keeping the DTO key set unchanged when there is no trade-intel data (the
+    // Phase-1 pre-ingest default), so the frozen contract is preserved.
+    const tradeIntelligence = await fetchTradeIntelligence(c.code);
+
+    const response: ApiClassificationResponse = {
       responseType:    'classification',
       hsCode:          c.code,
       description,
@@ -269,6 +302,10 @@ export async function mapV2Result(
       citation:        c.citation,
       components:      c.components,
     };
+    if (tradeIntelligence !== null) {
+      response.tradeIntelligence = tradeIntelligence;
+    }
+    return response;
   }
 
   if (result.decision === 'ASK' && result.question) {

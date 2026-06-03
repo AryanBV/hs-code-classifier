@@ -13,9 +13,20 @@ import { mapV2Result } from './v2-api-adapter';
 import type {
   HydratedChainRow,
   TariffLineChainFetcher,
+  SubheadingRowFetcher,
+  SubheadingChildrenFetcher,
+  TradeIntelligenceFetcher,
   ApiConfidenceBand,
 } from './v2-api-adapter';
 import type { ClassifyResult, SelectCitation } from '../classifier-v2/types';
+
+// No-op trade-intel fetcher: keeps the contract test DB-free and pins the EXISTING
+// key set (the additive `tradeIntelligence` field is OMITTED when null, so the
+// frozen contract is preserved). The non-null case is covered in the assembler
+// suite + the dedicated contract case below.
+const noTradeIntel: TradeIntelligenceFetcher = async () => null;
+const subRows: SubheadingRowFetcher = async () => [];
+const subChildren: SubheadingChildrenFetcher = async () => [];
 
 const base = { diagnostics: { escalation_path: [], latency_ms: 1, llm_calls: 1 } };
 
@@ -74,6 +85,9 @@ describe('B5 contract — CLASSIFICATION variant shape', () => {
     const out = await mapV2Result(
       r,
       fetcher({ '7318.15.00': 'Bolts', '7318.16.00': 'Nuts' }),
+      subRows,
+      subChildren,
+      noTradeIntel,
     );
     if (out.responseType !== 'classification') throw new Error('unreachable');
 
@@ -124,6 +138,9 @@ describe('B5 contract — CLASSIFICATION variant shape', () => {
     const out = await mapV2Result(
       r,
       fetcher({ '7318.15.00': 'L', a1: '1', a2: '2', a3: '3', a4: '4', a5: '5' }),
+      subRows,
+      subChildren,
+      noTradeIntel,
     );
     if (out.responseType !== 'classification') throw new Error('unreachable');
     expect(out.alternatives.length).toBe(3);
@@ -155,9 +172,85 @@ describe('B5 contract — CLASSIFICATION variant shape', () => {
     const out = await mapV2Result(
       r,
       fetcher({ '7318.15.00': 'L', a1: '1', a2: '2' }),
+      subRows,
+      subChildren,
+      noTradeIntel,
     );
     if (out.responseType !== 'classification') throw new Error('unreachable');
     expect(out.alternatives.map((a) => a.code)).toEqual(['a1', 'a2']);
+  });
+
+  it('ADDITIVE: tradeIntelligence is OMITTED when the assembler returns null (frozen key set holds)', async () => {
+    const r = {
+      ...base,
+      decision: 'CLASSIFY',
+      classification: {
+        code: '7318.15.00',
+        is_six_digit: false,
+        export_policy: 'Free',
+        policy_condition: null,
+        india_specific: false,
+        citation,
+        reasoning_chain: ['r1'],
+        self_confidence: 'HIGH',
+        alternatives_considered: [],
+        components: null,
+        escalated_to_deep_think: false,
+      },
+    } as ClassifyResult;
+
+    const out = await mapV2Result(r, fetcher({ '7318.15.00': 'Bolts' }), subRows, subChildren, noTradeIntel);
+    if (out.responseType !== 'classification') throw new Error('unreachable');
+    // Null → key absent → the pre-trade-intel CLASSIFICATION_KEYS set is unchanged.
+    expect('tradeIntelligence' in out).toBe(false);
+    expect(Object.keys(out).sort()).toEqual(CLASSIFICATION_KEYS);
+  });
+
+  it('ADDITIVE: tradeIntelligence is INCLUDED as an extra key when the assembler returns a block', async () => {
+    const r = {
+      ...base,
+      decision: 'CLASSIFY',
+      classification: {
+        code: '7318.15.00',
+        is_six_digit: false,
+        export_policy: 'Free',
+        policy_condition: null,
+        india_specific: false,
+        citation,
+        reasoning_chain: ['r1'],
+        self_confidence: 'HIGH',
+        alternatives_considered: [],
+        components: null,
+        escalated_to_deep_think: false,
+      },
+    } as ClassifyResult;
+
+    const withTi: TradeIntelligenceFetcher = async () => ({
+      exportPolicy: {
+        status: 'Free',
+        statusPlain: 'No DGFT export licence is needed for this line.',
+        severity: 'notice',
+        conditionVerbatim: null,
+        conditionMissing: false,
+        asOn: '2022-01-01',
+        sourceUrl: 'https://example.test/dgft',
+        stale: false,
+        staleAdvisory: null,
+        indicative: true,
+      },
+      exportDuty: null,
+      incentive: null,
+      uqc: null,
+      flags: [],
+      disclaimer: 'Indicative classification for guidance only.',
+    });
+
+    const out = await mapV2Result(r, fetcher({ '7318.15.00': 'Bolts' }), subRows, subChildren, withTi);
+    if (out.responseType !== 'classification') throw new Error('unreachable');
+    // The additive key is present and is exactly the original set + tradeIntelligence.
+    expect('tradeIntelligence' in out).toBe(true);
+    expect(Object.keys(out).sort()).toEqual([...CLASSIFICATION_KEYS, 'tradeIntelligence'].sort());
+    expect(out.tradeIntelligence?.exportPolicy.status).toBe('Free');
   });
 });
 

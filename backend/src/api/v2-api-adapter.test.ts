@@ -5,8 +5,22 @@ import type {
   TariffLineChainFetcher,
   SubheadingRowFetcher,
   SubheadingChildrenFetcher,
+  TradeIntelligenceFetcher,
 } from './v2-api-adapter';
 import type { ClassifyResult, PipelineSystemError, SelectCitation } from '../classifier-v2/types';
+
+/**
+ * No-op trade-intelligence fetcher for the adapter unit tests: returns null so the
+ * adapter omits the additive `tradeIntelligence` field. This keeps these tests
+ * DB-free and pins the EXISTING (pre-trade-intel) key set; the trade-intel
+ * behaviour itself is covered in trade-intel-assembler.test.ts. Passed as the 5th
+ * positional arg on the CLASSIFY-path calls (ASK/REFUSE never reach it).
+ */
+const noTradeIntel: TradeIntelligenceFetcher = async () => null;
+
+/** The default 8-digit-branch fetchers used when a test only overrides chains. */
+const subRows: SubheadingRowFetcher = async () => [];
+const subChildren: SubheadingChildrenFetcher = async () => [];
 
 const base = { diagnostics: { escalation_path: [], latency_ms: 1, llm_calls: 1 } };
 
@@ -55,7 +69,7 @@ describe('mapV2Result — CLASSIFY', () => {
     const r = classifyResult({ alternatives_considered: [] });
     const fetch = mockFetcher({ '8708.30.00': 'Brake pads for motor vehicles' });
 
-    const out = await mapV2Result(r, fetch);
+    const out = await mapV2Result(r, fetch, subRows, subChildren, noTradeIntel);
 
     expect(out.responseType).toBe('classification');
     if (out.responseType !== 'classification') throw new Error('unreachable');
@@ -76,9 +90,9 @@ describe('mapV2Result — CLASSIFY', () => {
   it('converts self_confidence enum → 0-100 integer (HIGH=90, MEDIUM=60, LOW=30)', async () => {
     const fetch = mockFetcher({ '8708.30.00': 'desc' });
 
-    const high = await mapV2Result(classifyResult({ self_confidence: 'HIGH' }), fetch);
-    const medium = await mapV2Result(classifyResult({ self_confidence: 'MEDIUM' }), fetch);
-    const low = await mapV2Result(classifyResult({ self_confidence: 'LOW' }), fetch);
+    const high = await mapV2Result(classifyResult({ self_confidence: 'HIGH' }), fetch, subRows, subChildren, noTradeIntel);
+    const medium = await mapV2Result(classifyResult({ self_confidence: 'MEDIUM' }), fetch, subRows, subChildren, noTradeIntel);
+    const low = await mapV2Result(classifyResult({ self_confidence: 'LOW' }), fetch, subRows, subChildren, noTradeIntel);
 
     expect((high as { confidence: number }).confidence).toBe(90);
     expect((medium as { confidence: number }).confidence).toBe(60);
@@ -101,7 +115,7 @@ describe('mapV2Result — CLASSIFY', () => {
       '8708.80.00': 'Suspension systems',
     });
 
-    const out = await mapV2Result(r, fetch);
+    const out = await mapV2Result(r, fetch, subRows, subChildren, noTradeIntel);
     if (out.responseType !== 'classification') throw new Error('unreachable');
 
     expect(out.alternatives).toEqual([
@@ -120,7 +134,7 @@ describe('mapV2Result — CLASSIFY', () => {
       // 'none applicable', 'n/a', '9999.99.99' deliberately absent → filtered.
     });
 
-    const out = await mapV2Result(r, fetch);
+    const out = await mapV2Result(r, fetch, subRows, subChildren, noTradeIntel);
     if (out.responseType !== 'classification') throw new Error('unreachable');
 
     expect(out.alternatives).toEqual([
@@ -137,7 +151,7 @@ describe('mapV2Result — CLASSIFY', () => {
       '8708.99.00': 'Other parts and accessories',
     });
 
-    const out = await mapV2Result(r, fetch);
+    const out = await mapV2Result(r, fetch, subRows, subChildren, noTradeIntel);
     if (out.responseType !== 'classification') throw new Error('unreachable');
 
     // Selected leaf (8708.30.00) excluded; duplicate collapsed to one.
@@ -150,7 +164,7 @@ describe('mapV2Result — CLASSIFY', () => {
     const r = classifyResult({ alternatives_considered: [] });
     const fetch = mockFetcher({}); // empty table
 
-    const out = await mapV2Result(r, fetch);
+    const out = await mapV2Result(r, fetch, subRows, subChildren, noTradeIntel);
     if (out.responseType !== 'classification') throw new Error('unreachable');
 
     expect(out.description).toBe('');
@@ -169,7 +183,7 @@ describe('mapV2Result — CLASSIFY', () => {
       '8708.40.00': 'E',
     });
 
-    const out = await mapV2Result(r, fetch);
+    const out = await mapV2Result(r, fetch, subRows, subChildren, noTradeIntel);
     if (out.responseType !== 'classification') throw new Error('unreachable');
 
     // Exactly 3, in model order — the first three RESOLVABLE siblings.
@@ -191,7 +205,7 @@ describe('mapV2Result — CLASSIFY', () => {
       '8708.80.00': 'B',
     });
 
-    const out = await mapV2Result(r, fetch);
+    const out = await mapV2Result(r, fetch, subRows, subChildren, noTradeIntel);
     if (out.responseType !== 'classification') throw new Error('unreachable');
 
     expect(out.alternatives).toEqual([
@@ -203,9 +217,9 @@ describe('mapV2Result — CLASSIFY', () => {
 
   it('maps self_confidence → confidenceBand (HIGH→high, MEDIUM→medium, LOW→low)', async () => {
     const fetch = mockFetcher({ '8708.30.00': 'desc' });
-    const high = await mapV2Result(classifyResult({ self_confidence: 'HIGH' }), fetch);
-    const medium = await mapV2Result(classifyResult({ self_confidence: 'MEDIUM' }), fetch);
-    const low = await mapV2Result(classifyResult({ self_confidence: 'LOW' }), fetch);
+    const high = await mapV2Result(classifyResult({ self_confidence: 'HIGH' }), fetch, subRows, subChildren, noTradeIntel);
+    const medium = await mapV2Result(classifyResult({ self_confidence: 'MEDIUM' }), fetch, subRows, subChildren, noTradeIntel);
+    const low = await mapV2Result(classifyResult({ self_confidence: 'LOW' }), fetch, subRows, subChildren, noTradeIntel);
 
     if (high.responseType !== 'classification') throw new Error('unreachable');
     if (medium.responseType !== 'classification') throw new Error('unreachable');
@@ -227,7 +241,7 @@ describe('mapV2Result — CLASSIFY', () => {
     };
     const r = classifyResult({ alternatives_considered: ['8708.99.00', '8708.30.00'] });
 
-    await mapV2Result(r, fetch);
+    await mapV2Result(r, fetch, subRows, subChildren, noTradeIntel);
 
     expect(calls.length).toBe(1);
     // Leaf first, then unique alternatives (the leaf dup is removed).
@@ -269,6 +283,7 @@ describe('mapV2Result — CLASSIFY (6-digit branch)', () => {
       chainFetch,
       mockSubFetcher({ '5208.52': 'Plain weave cotton, printed, weighing not more than 200 g/m2' }),
       mockChildrenFetcher({}),
+      noTradeIntel,
     );
     if (out.responseType !== 'classification') throw new Error('unreachable');
 
@@ -297,6 +312,7 @@ describe('mapV2Result — CLASSIFY (6-digit branch)', () => {
           { code: '5208.52.20', description: 'Printed cotton sheeting' },
         ],
       }),
+      noTradeIntel,
     );
     if (out.responseType !== 'classification') throw new Error('unreachable');
 
@@ -318,6 +334,7 @@ describe('mapV2Result — CLASSIFY (6-digit branch)', () => {
       mockFetcher({}),
       mockSubFetcher({ '5208.52': 'd' }),
       mockChildrenFetcher({ '5208.52': children }),
+      noTradeIntel,
     );
     if (out.responseType !== 'classification') throw new Error('unreachable');
 
@@ -334,6 +351,7 @@ describe('mapV2Result — CLASSIFY (6-digit branch)', () => {
       mockFetcher({}),
       mockSubFetcher({ '5208.52': 'desc' }),
       mockChildrenFetcher({}), // no children
+      noTradeIntel,
     );
     if (out.responseType !== 'classification') throw new Error('unreachable');
 
@@ -348,6 +366,7 @@ describe('mapV2Result — CLASSIFY (6-digit branch)', () => {
       mockFetcher({}),
       mockSubFetcher({}), // no row
       mockChildrenFetcher({}),
+      noTradeIntel,
     );
     if (out.responseType !== 'classification') throw new Error('unreachable');
 
