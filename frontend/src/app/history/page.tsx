@@ -447,6 +447,16 @@ export default function HistoryPage() {
     };
   }, [user]);
 
+  // Re-read the local store whenever the auth user changes. Sign-out clears the
+  // device-global local history (lib/supabase/use-user.ts, gated on SIGNED_OUT)
+  // to close the cross-account leak; that write happens OUTSIDE this page, so the
+  // cached snapshot would otherwise linger on screen until the next mutation or
+  // reload. emit() invalidates the cache and notifies useSyncExternalStore so the
+  // cleared list is reflected immediately. Data-source sync only — no visual change.
+  React.useEffect(() => {
+    emit();
+  }, [user]);
+
   // The DISPLAYED list: union of local + cloud, de-duped by (query + hsCode),
   // newest first. Cloud rows count only while a user is present; otherwise this
   // equals the local list exactly (no behaviour change signed-out / unconfigured).
