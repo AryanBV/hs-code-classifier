@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { mockAnswer } from "@/lib/mock-data";
 import { stripHiddenConfidence } from "@/lib/strip-confidence";
+import { firstForwardedIp, verifyTurnstile } from "@/lib/turnstile-verify";
 import type { AnswerRequest } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -11,7 +12,7 @@ const MOCK_DELAY = Number(process.env.MOCK_DELAY_MS ?? 2200);
 const MAX_QUERY_LENGTH = 1000;
 
 export async function POST(request: Request) {
-  let body: Partial<AnswerRequest>;
+  let body: Partial<AnswerRequest> & { turnstileToken?: unknown };
   try {
     body = await request.json();
   } catch {
@@ -35,6 +36,23 @@ export async function POST(request: Request) {
     );
   }
 
+  // Bot check. No-op (skipped) unless TURNSTILE_SECRET_KEY is set; only then is
+  // a valid token required.
+  const verification = await verifyTurnstile({
+    token: body.turnstileToken,
+    remoteip: firstForwardedIp(request.headers.get("x-forwarded-for")),
+  });
+  if (!verification.ok) {
+    return NextResponse.json(
+      { error: "Verification failed. Please try again.", retryable: false },
+      { status: 403 },
+    );
+  }
+
+  // Never forward the Turnstile token upstream: strip it from the proxied body.
+  const { turnstileToken: _turnstileToken, ...proxiedBody } = body;
+  void _turnstileToken;
+
   if (BACKEND) {
     try {
       const headers: Record<string, string> = { "content-type": "application/json" };
@@ -45,7 +63,7 @@ export async function POST(request: Request) {
       const res = await fetch(`${BACKEND}/api/classify/answer`, {
         method: "POST",
         headers,
-        body: JSON.stringify(body),
+        body: JSON.stringify(proxiedBody),
         signal: AbortSignal.timeout(90_000),
       });
       const data: unknown = await res.json();

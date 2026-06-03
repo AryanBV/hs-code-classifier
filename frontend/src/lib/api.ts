@@ -105,10 +105,30 @@ async function post(url: string, payload: unknown): Promise<ClassifyResult> {
   throw new ClassifyError(errBody?.error ?? "Something went wrong.", "transient", true);
 }
 
-export function classify(query: string): Promise<ClassifyResult> {
-  return post("/api/classify", { query });
+/**
+ * Attach a Turnstile token to the request body ONLY when one was issued. When
+ * `token` is null/undefined (the disabled no-op state, or a skipped check) the
+ * returned body is byte-for-byte identical to the original — the key is never
+ * added — so the wire payload is unchanged from before Turnstile existed.
+ */
+function withTurnstile<T extends object>(
+  body: T,
+  token: string | null | undefined,
+): T | (T & { turnstileToken: string }) {
+  if (!token) return body;
+  return { ...body, turnstileToken: token };
 }
 
-export function answer(req: AnswerRequest): Promise<ClassifyResult> {
-  return post("/api/classify/answer", req);
+export function classify(
+  query: string,
+  turnstileToken?: string | null,
+): Promise<ClassifyResult> {
+  return post("/api/classify", withTurnstile({ query }, turnstileToken));
+}
+
+export function answer(
+  req: AnswerRequest,
+  turnstileToken?: string | null,
+): Promise<ClassifyResult> {
+  return post("/api/classify/answer", withTurnstile(req, turnstileToken));
 }

@@ -9,6 +9,7 @@ import { ClassifyError } from "@/lib/types";
 import type { ClassifyResult, UiClassification, UiQuestion, UiRefused } from "@/lib/types";
 import { saveHistory } from "@/lib/history";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
+import { TurnstileError, useTurnstile } from "@/components/cost/turnstile";
 
 import { PageShell } from "@/components/layout/page-shell";
 import { LoadingView } from "@/components/result/loading-view";
@@ -25,6 +26,9 @@ function errorKind(err: unknown): ErrorKind {
   // Timeout is a distinct kind even though it extends ClassifyError as a
   // retryable transient (so the base shape stays compatible).
   if (err instanceof ClassifyTimeoutError) return "timeout";
+  // A failed bot check is recoverable: a retry mints a fresh token. Surfaced as
+  // a friendly transient so the existing retry affordance applies.
+  if (err instanceof TurnstileError) return "transient";
   if (err instanceof ClassifyError) {
     if (err.kind === "daily_limit") return "daily_limit";
     if (err.kind === "network") return "network";
@@ -71,6 +75,11 @@ function statusSummary(args: {
 function ClassifyClient({ query }: ClassifyClientProps) {
   const router = useRouter();
 
+  // Invisible bot check. When NEXT_PUBLIC_TURNSTILE_SITE_KEY is unset this is a
+  // pure no-op: `getToken()` resolves to null and the rendered widget is null,
+  // so the request body is exactly as it was before Turnstile existed.
+  const turnstile = useTurnstile();
+
   // Session state held constant across clarifying rounds.
   const originalQuery = query;
   const previousAnswers = React.useRef<Record<string, string>>({});
@@ -95,13 +104,19 @@ function ClassifyClient({ query }: ClassifyClientProps) {
   // Region focus target — moved into on each async transition.
   const regionRef = React.useRef<HTMLDivElement | null>(null);
 
-  const classifyMutation = useMutation<ClassifyResult, ClassifyError, string>({
-    mutationFn: (q: string) => classifyApi(q) as Promise<ClassifyResult>,
+  // The error type is `Error`: the thrown value is either a ClassifyError (API
+  // path) or a TurnstileError (bot check failed) — `errorKind` discriminates.
+  const classifyMutation = useMutation<ClassifyResult, Error, string>({
+    mutationFn: async (q: string) => {
+      // No-op (null) when Turnstile is unconfigured; the body stays unchanged.
+      const token = await turnstile.getToken();
+      return classifyApi(q, token) as Promise<ClassifyResult>;
+    },
   });
 
   const answerMutation = useMutation<
     ClassifyResult,
-    ClassifyError,
+    Error,
     {
       questionId: string;
       answerId: string;
@@ -109,17 +124,22 @@ function ClassifyClient({ query }: ClassifyClientProps) {
       priorRounds: number;
     }
   >({
-    mutationFn: ({ questionId, answerId, priorAnswers, priorRounds }) =>
-      answerApi({
-        originalQuery,
-        questionId,
-        answerId,
-        // Per the v2 contract: previousAnswers carries PRIOR rounds only; the
-        // current answer is sent separately as answerId, and rounds counts
-        // rounds already completed before this one.
-        previousAnswers: priorAnswers,
-        rounds: priorRounds,
-      }) as Promise<ClassifyResult>,
+    mutationFn: async ({ questionId, answerId, priorAnswers, priorRounds }) => {
+      const token = await turnstile.getToken();
+      return answerApi(
+        {
+          originalQuery,
+          questionId,
+          answerId,
+          // Per the v2 contract: previousAnswers carries PRIOR rounds only; the
+          // current answer is sent separately as answerId, and rounds counts
+          // rounds already completed before this one.
+          previousAnswers: priorAnswers,
+          rounds: priorRounds,
+        },
+        token,
+      ) as Promise<ClassifyResult>;
+    },
   });
 
   // Kick off the initial classification once.
@@ -306,6 +326,9 @@ function ClassifyClient({ query }: ClassifyClientProps) {
       <div ref={regionRef} tabIndex={-1} aria-busy={isPending} className="outline-none">
         {body}
       </div>
+
+      {/* Invisible Turnstile widget — null unless a site key is configured. */}
+      {turnstile.widget}
     </PageShell>
   );
 }

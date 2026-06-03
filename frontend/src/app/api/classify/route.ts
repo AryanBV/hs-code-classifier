@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { mockClassify } from "@/lib/mock-data";
 import { stripHiddenConfidence } from "@/lib/strip-confidence";
+import { firstForwardedIp, verifyTurnstile } from "@/lib/turnstile-verify";
 
 // Backend-for-frontend: keeps the real backend URL server-side; falls back to
 // the deterministic mock so the UI runs with zero paid calls.
@@ -12,7 +13,7 @@ const MOCK_DELAY = Number(process.env.MOCK_DELAY_MS ?? 2600);
 const MAX_QUERY_LENGTH = 1000;
 
 export async function POST(request: Request) {
-  let body: { query?: string };
+  let body: { query?: string; turnstileToken?: unknown };
   try {
     body = await request.json();
   } catch {
@@ -33,6 +34,20 @@ export async function POST(request: Request) {
         retryable: false,
       },
       { status: 400 },
+    );
+  }
+
+  // Bot check. No-op (skipped) unless TURNSTILE_SECRET_KEY is set; only then is
+  // a valid token required. The token is NEVER forwarded to the backend (the
+  // proxied body is rebuilt as { query } below).
+  const verification = await verifyTurnstile({
+    token: body.turnstileToken,
+    remoteip: firstForwardedIp(request.headers.get("x-forwarded-for")),
+  });
+  if (!verification.ok) {
+    return NextResponse.json(
+      { error: "Verification failed. Please try again.", retryable: false },
+      { status: 403 },
     );
   }
 
