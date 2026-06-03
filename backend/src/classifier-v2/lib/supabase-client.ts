@@ -210,6 +210,147 @@ export function getQueryRunner(): QueryRunner {
 }
 
 /* ---------------------------------------------------------------------------
+ * Durable usage counter (one row per classification)
+ * --------------------------------------------------------------------------- */
+
+/** One classification's metered usage to persist into `usage_events`. */
+export interface UsageEventInput {
+  /** Pipeline decision (CLASSIFY/ASK/REFUSE/system_error). */
+  decision:    string;
+  /** Metered generateContent calls for this request (token_usage.llmCalls). */
+  llmCalls:    number;
+  /** Total tokens across all metered calls (token_usage.totalTokens). */
+  totalTokens: number;
+  /** Per-model breakdown (token_usage.byModel); stored as jsonb. */
+  byModel:     unknown;
+  /** Short per-request id for log correlation. */
+  reqId:       string;
+}
+
+/**
+ * Persist ONE classification's usage as a durable row in `public.usage_events`.
+ *
+ * This is the durable counterpart to the in-memory `costMonitor` (which resets on
+ * every redeploy). It runs through `getRunner()` — the postgres-role connection
+ * that BYPASSES RLS — so it can insert into the policy-less, locked table.
+ *
+ * BEST-EFFORT / NON-BLOCKING contract: callers on the classify hot-path MUST NOT
+ * await this in a way that delays the HTTP response, and a DB error here must
+ * NEVER break or delay a classification. This function itself never throws — any
+ * insert failure is swallowed and logged — so a caller can also safely
+ * fire-and-forget it. `utc_day` / `created_at` / `id` are filled by DB defaults.
+ */
+export async function recordUsageEvent(input: UsageEventInput): Promise<void> {
+  try {
+    const runner = getRunner();
+    const sql = `
+      INSERT INTO usage_events (decision, llm_calls, total_tokens, by_model, req_id)
+      VALUES ($1, $2, $3, $4::jsonb, $5)
+    `;
+    await runner.query(sql, [
+      input.decision,
+      input.llmCalls,
+      input.totalTokens,
+      JSON.stringify(input.byModel ?? {}),
+      input.reqId,
+    ]);
+  } catch (err: unknown) {
+    // Best-effort: a persistence failure must never affect the classification.
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error(`[supabase-client] recordUsageEvent failed (non-fatal): ${msg}`);
+  }
+}
+
+/** Aggregate totals for a usage window (today / all-time bucket). */
+export interface UsageTotals {
+  classifications: number;
+  llmCalls:        number;
+  totalTokens:     number;
+}
+
+/** One per-day usage row in the last-7-days series. */
+export interface UsageDayTotals extends UsageTotals {
+  utcDay: string;
+}
+
+/** Full durable usage summary returned by the gated `/usage` endpoint. */
+export interface UsageSummary {
+  today:     UsageTotals;
+  last7Days: UsageDayTotals[];
+  allTime:   UsageTotals;
+}
+
+/**
+ * Compute the durable usage summary from `usage_events` via SQL aggregates:
+ *   - today    = rows where utc_day = current UTC date
+ *   - last7Days = per-day totals for the last 7 UTC days (most recent first)
+ *   - allTime  = totals across every row
+ *
+ * `classifications` counts rows; `llmCalls`/`totalTokens` sum the columns.
+ * Runs through the shared (RLS-bypassing) postgres runner.
+ */
+export async function getUsageSummary(): Promise<UsageSummary> {
+  const runner = getRunner();
+
+  const todaySql = `
+    SELECT
+      COUNT(*)::int                        AS classifications,
+      COALESCE(SUM(llm_calls), 0)::int     AS llm_calls,
+      COALESCE(SUM(total_tokens), 0)::bigint AS total_tokens
+    FROM usage_events
+    WHERE utc_day = (now() AT TIME ZONE 'utc')::date
+  `;
+  const allTimeSql = `
+    SELECT
+      COUNT(*)::int                        AS classifications,
+      COALESCE(SUM(llm_calls), 0)::int     AS llm_calls,
+      COALESCE(SUM(total_tokens), 0)::bigint AS total_tokens
+    FROM usage_events
+  `;
+  const last7Sql = `
+    SELECT
+      utc_day::text                        AS utc_day,
+      COUNT(*)::int                        AS classifications,
+      COALESCE(SUM(llm_calls), 0)::int     AS llm_calls,
+      COALESCE(SUM(total_tokens), 0)::bigint AS total_tokens
+    FROM usage_events
+    WHERE utc_day >= (now() AT TIME ZONE 'utc')::date - INTERVAL '6 days'
+    GROUP BY utc_day
+    ORDER BY utc_day DESC
+  `;
+
+  interface TotalsRowRaw {
+    classifications: number | string;
+    llm_calls:       number | string;
+    total_tokens:    number | string;
+  }
+  interface DayRowRaw extends TotalsRowRaw {
+    utc_day: string;
+  }
+
+  const toTotals = (r: TotalsRowRaw | undefined): UsageTotals => ({
+    classifications: Number(r?.classifications ?? 0),
+    llmCalls:        Number(r?.llm_calls ?? 0),
+    totalTokens:     Number(r?.total_tokens ?? 0),
+  });
+
+  const [todayRes, allTimeRes, last7Res] = await Promise.all([
+    runner.query<TotalsRowRaw>(todaySql),
+    runner.query<TotalsRowRaw>(allTimeSql),
+    runner.query<DayRowRaw>(last7Sql),
+  ]);
+
+  return {
+    today:   toTotals(todayRes.rows[0]),
+    allTime: toTotals(allTimeRes.rows[0]),
+    last7Days: last7Res.rows.map((r) => ({
+      utcDay:          r.utc_day,
+      ...toTotals(r),
+    })),
+  };
+}
+
+/* ---------------------------------------------------------------------------
  * Helpers
  * --------------------------------------------------------------------------- */
 

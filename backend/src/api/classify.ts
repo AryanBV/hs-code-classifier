@@ -10,6 +10,7 @@ import type { ClassifyResult } from '../classifier-v2/types';
 import { mapV2Result } from './v2-api-adapter';
 import { createJob, getJob } from './job-store';
 import { costMonitor, recordInputFromTokenUsage } from './cost-monitor';
+import { recordUsageEvent } from '../classifier-v2/lib/supabase-client';
 import { classifyRateLimiter } from '../middleware/rateLimiter';
 import { randomUUID, timingSafeEqual } from 'crypto';
 
@@ -126,6 +127,17 @@ function recordV2Cost(reqId: string, result: ClassifyResult, processingTimeMs: n
   // Record TOKEN usage only (the request was already counted at entry via
   // reserveSlot, so this must NOT increment the daily request counter again).
   costMonitor.recordUsage(recordInputFromTokenUsage(usage, decision));
+  // DURABLE persistence (survives redeploys). Fire-and-forget: the HTTP response
+  // must NOT wait on the DB write, and a DB error must NEVER break or delay the
+  // classification. recordUsageEvent swallows its own errors; the extra .catch is
+  // belt-and-suspenders so an unexpected synchronous reject can never bubble.
+  void recordUsageEvent({
+    decision,
+    llmCalls:    usage?.llmCalls ?? 0,
+    totalTokens: usage?.totalTokens ?? 0,
+    byModel:     usage?.byModel ?? {},
+    reqId,
+  }).catch(() => { /* already logged inside recordUsageEvent; never throw */ });
   // repairIterations is derived from the escalation_path: each repair attempt
   // records an `L5:repair*` entry (ESCALATION_REPAIR_PREFIX). No dedicated
   // diagnostics field exists, so we count the markers (0 when none).

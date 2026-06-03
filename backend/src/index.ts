@@ -9,6 +9,7 @@ import classifyRouter from './api/classify';
 import { startWorker, stopWorker } from './api/classifier-worker';
 import { sweepExpired } from './api/job-store';
 import { costMonitor } from './api/cost-monitor';
+import { getUsageSummary } from './classifier-v2/lib/supabase-client';
 
 // Load environment variables
 dotenv.config();
@@ -117,6 +118,36 @@ app.get('/health', (req: Request, res: Response) => {
   }
 
   res.status(200).json(body);
+});
+
+// Durable usage counter. Unlike /health's in-process snapshot (which resets on
+// redeploy), this reads the persistent `usage_events` table for today / last-7-days
+// / all-time totals. GATED + FAIL-CLOSED (operator-only, never public):
+//   - INTERNAL_API_TOKEN unset in production → 503 (refuse rather than expose).
+//   - token unset in dev → still requires a (missing) header → 403.
+//   - header missing/wrong → 403.
+// Mirrors the constant-time check used by /health and the classify routes.
+app.get('/usage', async (req: Request, res: Response) => {
+  if (
+    process.env.NODE_ENV === 'production' &&
+    !process.env.INTERNAL_API_TOKEN?.trim()
+  ) {
+    res.status(503).json({ error: 'Service Unavailable' });
+    return;
+  }
+  if (!hasValidInternalToken(req)) {
+    res.status(403).json({ error: 'Forbidden' });
+    return;
+  }
+  try {
+    const summary = await getUsageSummary();
+    res.status(200).json(summary);
+  } catch (err: unknown) {
+    logger.error(
+      `/usage aggregation failed: ${err instanceof Error ? err.message : String(err)}`,
+    );
+    res.status(500).json({ error: 'Failed to compute usage' });
+  }
 });
 
 // Classification routes
