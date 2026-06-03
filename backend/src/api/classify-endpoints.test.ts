@@ -281,12 +281,22 @@ describe('v2 inline path — B0 error contract (503 vs scrubbed 500)', () => {
 
   it('PROD: an unexpected throw returns a SCRUBBED 500 (no raw provider text leaked)', async () => {
     process.env.NODE_ENV = 'production';
+    // In production the internal-token gate fails CLOSED when unset, so to reach
+    // the handler (and exercise the 500-scrubbing path) we configure the token
+    // and present the matching header.
+    process.env.INTERNAL_API_TOKEN = 'sekret';
     const secret = 'connect ECONNREFUSED https://secret-host.internal:443 key=sk-LEAK';
     v2ClassifyMock.mockRejectedValue(new Error(secret));
 
-    const { status, json } = await post('/api/classify', { query: 'stainless steel hex bolts' });
+    const res = await fetch(`${baseUrl}/api/classify`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-internal-token': 'sekret' },
+      body: JSON.stringify({ query: 'stainless steel hex bolts' }),
+    });
+    const json = await res.json();
+    delete process.env.INTERNAL_API_TOKEN;
 
-    expect(status).toBe(500);
+    expect(res.status).toBe(500);
     expect(json.error).toBe('Classification failed');
     expect(json.message).toBe('An unexpected error occurred');
     // The raw provider text must NOT leak in production.
@@ -408,10 +418,34 @@ describe('internal shared-secret gate', () => {
     delete process.env.INTERNAL_API_TOKEN;
   });
 
-  it('fails OPEN when INTERNAL_API_TOKEN is unset (no header required)', async () => {
+  it('fails OPEN in dev/test when INTERNAL_API_TOKEN is unset (no header required)', async () => {
+    // NODE_ENV is deleted in the outer beforeEach → non-production (dev/test).
     legacyClassifyMock.mockResolvedValue({ responseType: 'classification', hsCode: '0101.21.00' });
     const { status } = await post('/api/classify', { query: 'live horses' });
     expect(status).toBe(200);
+  });
+
+  it('fails CLOSED in production when INTERNAL_API_TOKEN is unset → 503 Service not configured', async () => {
+    process.env.NODE_ENV = 'production';
+    const { status, json } = await post('/api/classify', { query: 'live horses' });
+    expect(status).toBe(503);
+    expect(json.error).toBe('Service not configured');
+    expect(json.retryable).toBe(false);
+    // Gate refuses BEFORE the classifier runs.
+    expect(legacyClassifyMock).not.toHaveBeenCalled();
+  });
+
+  it('fails CLOSED in production on /answer too when INTERNAL_API_TOKEN is unset → 503', async () => {
+    process.env.NODE_ENV = 'production';
+    const { status, json } = await post('/api/classify/answer', {
+      originalQuery: 'orig',
+      answerId: 'a1',
+      answerLabel: 'Label',
+    });
+    expect(status).toBe(503);
+    expect(json.error).toBe('Service not configured');
+    expect(json.retryable).toBe(false);
+    expect(legacyContinueMock).not.toHaveBeenCalled();
   });
 
   it('returns 403 when the token is set but the header is missing/wrong', async () => {

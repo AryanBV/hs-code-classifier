@@ -48,13 +48,18 @@ function v2Busy(res: Response): Response {
 }
 
 /* ---------------------------------------------------------------------------
- * Internal shared-secret gate (no-op until INTERNAL_API_TOKEN is set)
+ * Internal shared-secret gate
  *
  * The public classify endpoints are intended to be reached ONLY via the frontend
  * BFF, which forwards an `x-internal-token` header. When INTERNAL_API_TOKEN is
- * set we require an exact (constant-time) match, else 403. When it is unset we
- * SKIP the check entirely (fail-open) so nothing breaks before the founder sets
- * it. Applied to POST '/' and POST '/answer' only (NOT health / job poll).
+ * set we require an exact (constant-time) match, else 403.
+ *
+ * When it is UNSET, behavior is environment-dependent (fail-CLOSED in prod):
+ *   - production: respond 503 'Service not configured' and RETURN. A production
+ *     deploy missing the secret is a MISCONFIGURATION, never an open door.
+ *   - dev/test:   log a warning and call next() (fail-open for local convenience).
+ *
+ * Applied to POST '/' and POST '/answer' only (NOT health / job poll).
  * --------------------------------------------------------------------------- */
 
 /** Constant-time string compare that also returns false on a length mismatch. */
@@ -65,11 +70,33 @@ function safeEqual(a: string, b: string): boolean {
   return timingSafeEqual(bufA, bufB);
 }
 
-/** Express middleware: enforce the internal token IFF INTERNAL_API_TOKEN is set. */
+/** Once-guards so the unconfigured-gate notice is logged once, not per request. */
+let loggedUnconfiguredProd = false;
+let loggedUnconfiguredDev = false;
+
+/** Express middleware: enforce the internal token; fail-CLOSED in production. */
 function requireInternalToken(req: Request, res: Response, next: NextFunction): void {
   const expected = process.env.INTERNAL_API_TOKEN;
   if (expected === undefined || expected === '') {
-    next(); // fail-open: gate disabled until the secret is configured
+    if (process.env.NODE_ENV === 'production') {
+      // Fail-CLOSED: a production deploy missing the secret is a misconfiguration.
+      if (!loggedUnconfiguredProd) {
+        loggedUnconfiguredProd = true;
+        console.error(
+          '[API] INTERNAL_API_TOKEN is not configured in production — refusing classify requests (fail-closed).',
+        );
+      }
+      res.status(503).json({ error: 'Service not configured', retryable: false });
+      return;
+    }
+    // dev/test: fail-open for local convenience.
+    if (!loggedUnconfiguredDev) {
+      loggedUnconfiguredDev = true;
+      console.warn(
+        '[API] INTERNAL_API_TOKEN is not set — internal-token gate disabled (dev/test only).',
+      );
+    }
+    next();
     return;
   }
   const provided = req.header('x-internal-token');
