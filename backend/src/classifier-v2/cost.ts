@@ -19,6 +19,24 @@ const PRICE: Record<GeminiModel, { in: number; out: number }> = {
   'gemini-2.5-pro':         { in: 1.25, out: 10.00 },
 };
 
+/**
+ * OpenRouter candidate-model prices (USD per 1M tokens), for the EVAL-ONLY
+ * `LLM_PROVIDER=openrouter` A/B lever. Sourced from OpenRouter `/api/v1/models`
+ * (2026-06-03). Keyed by the OpenRouter model id (the value of `OPENROUTER_MODEL`)
+ * so the A3 token meter can price a candidate run with REAL per-token cost
+ * instead of falling back to the $0 unpriced path. NOT part of the Gemini
+ * `PRICE` table (those are `GeminiModel`-typed); these ids are arbitrary strings.
+ *
+ * NOTE: Qwen3.7-Max prompt/completion reflected an active 50%-off promo at
+ * capture time ($1.25 in / $3.75 out); re-verify against OpenRouter before
+ * trusting the cost roll-up if the promo has ended.
+ */
+const OPENROUTER_PRICE: Record<string, { in: number; out: number }> = {
+  'qwen/qwen3.7-max':       { in: 1.25,  out: 3.75 },
+  'moonshotai/kimi-k2.6':   { in: 0.684, out: 3.42 },
+  'xiaomi/mimo-v2.5-pro':   { in: 0.435, out: 0.87 },
+};
+
 /** Estimated USD for one Gemini call. thoughtsTokens bill as output on Gemini. */
 export function estimateCostUsd(model: GeminiModel, u: GenerateContentUsage): number {
   const p = PRICE[model];
@@ -61,6 +79,13 @@ const warnedUnpricedModels = new Set<string>();
 export function estimateCostUsdByModel(model: string, u: GenerateContentUsage): number {
   if (isPricedGeminiModel(model)) {
     return estimateCostUsd(model, u);
+  }
+  // EVAL-ONLY OpenRouter candidate models: price from the OpenRouter table so an
+  // A/B run reports REAL per-token cost (thoughtsTokens bill at the output rate,
+  // same convention as Gemini).
+  const orPrice = OPENROUTER_PRICE[model];
+  if (orPrice !== undefined) {
+    return (u.promptTokens / 1e6) * orPrice.in + ((u.outputTokens + u.thoughtsTokens) / 1e6) * orPrice.out;
   }
   if (!KNOWN_EMBEDDING_MODELS.has(model) && !warnedUnpricedModels.has(model)) {
     warnedUnpricedModels.add(model);

@@ -77,4 +77,16 @@ describe('estimateCostUsdByModel — cost-integrity guard (FIX 4)', () => {
     expect(warn).toHaveBeenCalledTimes(1);
     expect(warn.mock.calls[0][0]).toContain(drifted);
   });
+
+  it('prices EVAL-ONLY OpenRouter candidate models (no warning)', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+    // moonshotai/kimi-k2.6 → in $0.684/1M, out $3.42/1M; thoughts bill as output.
+    const u = { promptTokens: 1000, outputTokens: 400, thoughtsTokens: 100, totalTokens: 1500 };
+    const c = estimateCostUsdByModel('moonshotai/kimi-k2.6', u);
+    expect(c).toBeCloseTo((1000 / 1e6) * 0.684 + ((400 + 100) / 1e6) * 3.42, 9);
+    // xiaomi/mimo-v2.5-pro → in $0.435/1M, out $0.87/1M.
+    const c2 = estimateCostUsdByModel('xiaomi/mimo-v2.5-pro', u);
+    expect(c2).toBeCloseTo((1000 / 1e6) * 0.435 + ((400 + 100) / 1e6) * 0.87, 9);
+    expect(warn).not.toHaveBeenCalled();
+  });
 });

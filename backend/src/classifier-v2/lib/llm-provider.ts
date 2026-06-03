@@ -30,6 +30,7 @@ import {
   type GenerateContentResult,
 } from './vertex-client';
 import { GeminiDeveloperLlmProvider } from './gemini-developer-client';
+import { OpenRouterLlmProvider } from './openrouter-client';
 import { recordUsage } from './token-meter';
 import { getRateLimiter } from './rate-limiter';
 
@@ -61,7 +62,7 @@ class VertexLlmProvider implements LlmProvider {
   }
 }
 
-export type LlmProviderName = 'developer' | 'vertex';
+export type LlmProviderName = 'developer' | 'vertex' | 'openrouter';
 
 let cached: LlmProvider | null = null;
 let cachedFor: string | null = null;
@@ -70,6 +71,9 @@ let cachedFor: string | null = null;
  * Resolve the active LLM provider from env `LLM_PROVIDER`:
  *   - unset / 'developer' → GeminiDeveloperLlmProvider (DEFAULT, Gemini Dev API)
  *   - 'vertex'            → VertexLlmProvider (preserved Vertex path, rollback)
+ *   - 'openrouter'        → OpenRouterLlmProvider (⚠️ EVAL-ONLY A/B lever —
+ *                           routes L1/L4/reranker to an OpenRouter candidate model
+ *                           via `OPENROUTER_MODEL`. NEVER set this in production.)
  *   - anything else       → throws a clear error
  *
  * Cached as a module singleton, keyed by the resolved choice so a test (or a
@@ -91,9 +95,15 @@ export function getLlmProvider(): LlmProvider {
     case 'vertex':
       provider = new VertexLlmProvider();
       break;
+    case 'openrouter':
+      // EVAL-ONLY: A/B candidate models against the frozen Gemini baseline on the
+      // gold suite. Inert unless explicitly selected; must never be set in Railway.
+      provider = new OpenRouterLlmProvider();
+      break;
     default:
       throw new Error(
-        `Unknown LLM_PROVIDER='${choice}'. Supported: 'developer' (default, Gemini Developer API) or 'vertex' (rollback).`,
+        `Unknown LLM_PROVIDER='${choice}'. Supported: 'developer' (default, Gemini Developer API), ` +
+          `'vertex' (rollback), or 'openrouter' (EVAL-ONLY A/B lever — set OPENROUTER_MODEL; never in production).`,
       );
   }
 
@@ -134,11 +144,15 @@ export async function generateContent(
   await getRateLimiter().acquire();
   try {
     const result = await getLlmProvider().generateContent(opts);
-    recordUsage(opts.model, result.usage);
+    // Key the meter on the model the provider actually used (result.model),
+    // not the requested literal — under LLM_PROVIDER=openrouter opts.model is a
+    // Gemini placeholder, so eval cost must attribute to the real candidate id.
+    // On the Gemini path result.model === opts.model, so behavior is unchanged.
+    recordUsage(result.model ?? opts.model, result.usage);
     return result;
   } catch (err) {
     if (err instanceof MaxTokensError) {
-      recordUsage(opts.model, err.usage);
+      recordUsage(err.model ?? opts.model, err.usage);
     }
     throw err;
   }

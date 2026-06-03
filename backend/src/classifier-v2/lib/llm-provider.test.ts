@@ -15,6 +15,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 const mockVertexGenerateContent = vi.fn();
 const mockDevGenerateContent = vi.fn();
+const mockOpenRouterGenerateContent = vi.fn();
 
 vi.mock('./vertex-client', async (importOriginal) => {
   // Keep the real types/MaxTokensError/sanitizeResponseSchema; stub only the call.
@@ -29,6 +30,14 @@ vi.mock('./gemini-developer-client', () => ({
   GeminiDeveloperLlmProvider: class {
     generateContent(...args: unknown[]): unknown {
       return mockDevGenerateContent(...args);
+    }
+  },
+}));
+
+vi.mock('./openrouter-client', () => ({
+  OpenRouterLlmProvider: class {
+    generateContent(...args: unknown[]): unknown {
+      return mockOpenRouterGenerateContent(...args);
     }
   },
 }));
@@ -57,6 +66,7 @@ describe('getLlmProvider', () => {
   beforeEach(() => {
     mockVertexGenerateContent.mockReset();
     mockDevGenerateContent.mockReset();
+    mockOpenRouterGenerateContent.mockReset();
     // The factory caches per resolved choice; flipping env between tests proves
     // re-resolution, but reset env each time for isolation.
     delete process.env.LLM_PROVIDER;
@@ -92,6 +102,16 @@ describe('getLlmProvider', () => {
     // The adapter forwards the exact opts object to the preserved Vertex path.
     expect(mockVertexGenerateContent).toHaveBeenCalledWith(OPTS);
     expect(mockDevGenerateContent).not.toHaveBeenCalled();
+  });
+
+  it("returns the OpenRouter EVAL provider for LLM_PROVIDER='openrouter'", async () => {
+    process.env.LLM_PROVIDER = 'openrouter';
+    mockOpenRouterGenerateContent.mockResolvedValue(RESULT);
+    const res = await getLlmProvider().generateContent(OPTS);
+    expect(res).toBe(RESULT);
+    expect(mockOpenRouterGenerateContent).toHaveBeenCalledTimes(1);
+    expect(mockDevGenerateContent).not.toHaveBeenCalled();
+    expect(mockVertexGenerateContent).not.toHaveBeenCalled();
   });
 
   it('throws a clear error for an unknown LLM_PROVIDER', () => {
