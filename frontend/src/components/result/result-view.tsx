@@ -19,6 +19,7 @@ import { MobileActionBar, ResultActions } from "@/components/result/result-actio
 import { ResultFeedback } from "@/components/result/result-feedback";
 import {
   TradeIntelBlock,
+  buildFallbackTradeIntel,
   shouldPromoteTradeIntel,
 } from "@/components/result/trade-intel-block";
 import {
@@ -293,6 +294,12 @@ function DocumentPane({
   const isSix = result.isSixDigit;
   const lines = reasoningLines(result.reasoning);
 
+  // Export policy must ALWAYS render. Prefer the rich assembler output when the
+  // backend ships it; otherwise synthesise a minimal export-policy block from the
+  // flat `exportPolicy`/`policyCondition` fields so the section is never missing
+  // (e.g. a deploy window before the assembler lands, or its fail-safe null).
+  const intel = result.tradeIntelligence ?? buildFallbackTradeIntel(result);
+
   return (
     <Surface
       as="article"
@@ -358,9 +365,9 @@ function DocumentPane({
           document pane, right under the code/description (EXPERIENCE-DESIGN
           §4.2). Renders nothing when there is no trade intel or the status is
           calm (Free/null), which falls to the compact block below. */}
-      {result.tradeIntelligence && shouldPromoteTradeIntel(result.tradeIntelligence) ? (
+      {intel && shouldPromoteTradeIntel(intel) ? (
         <div className="mt-7">
-          <TradeIntelBlock intel={result.tradeIntelligence} placement="promoted" />
+          <TradeIntelBlock intel={intel} placement="promoted" />
         </div>
       ) : null}
 
@@ -411,16 +418,12 @@ function DocumentPane({
           <ComponentsBody result={result} />
         </Expander>
 
-        <Expander title="Export policy detail" meta="India · ITC(HS)">
+        {/* Export policy (status + verbatim condition) now lives in the single
+            "Export and policy" trade-intel block below; the old expander that
+            duplicated it was removed. Only the India-specific ORIGIN datum (not
+            an export-policy field) is retained here so no detail is lost. */}
+        <Expander title="Tariff line origin" meta="India · ITC(HS)">
           <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5">
-            <dt className="text-meta text-ink-muted">Export policy</dt>
-            <dd className="m-0 text-[0.9rem] text-ink">
-              {(result.exportPolicy ?? "").trim() || "Not recorded against this line."}
-            </dd>
-            <dt className="text-meta text-ink-muted">Policy condition</dt>
-            <dd className="m-0 text-[0.9rem] text-ink">
-              {(result.policyCondition ?? "").trim() || "None recorded against this line."}
-            </dd>
             <dt className="text-meta text-ink-muted">India-specific</dt>
             <dd className="m-0 text-[0.9rem] text-ink">
               {result.indiaSpecific
@@ -437,8 +440,8 @@ function DocumentPane({
           quiet expander. Promoted alerts (Prohibited/Restricted/STE) render at
           the TOP instead, so this is skipped for them. Renders nothing when
           there is no trade intel at all (sparse-friendly, pre-ingest state). */}
-      {result.tradeIntelligence && !shouldPromoteTradeIntel(result.tradeIntelligence) ? (
-        <TradeIntelBlock intel={result.tradeIntelligence} placement="document" />
+      {intel && !shouldPromoteTradeIntel(intel) ? (
+        <TradeIntelBlock intel={intel} placement="document" />
       ) : null}
     </Surface>
   );

@@ -23,11 +23,14 @@ import {
   TRADE_INTEL_VERIFY_LINK_LABEL,
 } from "@/lib/content";
 import type {
+  ExportPolicyStatus,
   PolicySeverity,
   TradeExportDuty,
+  TradeExportPolicy,
   TradeIncentive,
   TradeIntelligence,
   TradeVerifyState,
+  UiClassification,
 } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -44,6 +47,99 @@ export function isPromotedSeverity(severity: PolicySeverity): boolean {
 export function shouldPromoteTradeIntel(intel: TradeIntelligence | null | undefined): boolean {
   if (!intel) return false;
   return isPromotedSeverity(intel.exportPolicy.severity);
+}
+
+// ----------------------------------------------------------------------------
+// FALLBACK BUILDER — keeps export policy on-screen when the backend has NOT
+// shipped the trade-intel assembler yet (a brief deploy window) or its
+// best-effort assembly returned null. We synthesise a MINIMAL export-policy
+// block from the always-present flat `UiClassification.exportPolicy` /
+// `policyCondition` fields so the section is never missing after the old
+// "Export policy detail" expander was removed. Money rows / incentives / flags
+// stay empty (we never fabricate them). Mirrors the canonical backend mapping in
+// `backend/src/api/trade-intel-constants.ts` (status normalise → severity →
+// fixed per-status plain sentence). Returns null ONLY when there is genuinely no
+// policy data at all (no raw status AND no condition).
+// ----------------------------------------------------------------------------
+
+const DGFT_ITCHS_SCHEDULE_URL = "https://www.dgft.gov.in/CP/?opt=itc-hs-export-schedule-2";
+
+/** Mirror of the §6 indicative-not-official disclaimer (kept aligned with the assembler). */
+const FALLBACK_DISCLAIMER =
+  "Indicative classification for guidance only. This export-policy status and any conditions are drawn from the official DGFT ITC(HS) Schedule but are not legal, tax or customs advice and carry no legal force. A correct code does not by itself mean the goods are cleared for export. Verify against the current ITC(HS) Schedule and DGFT/CBIC notifications, or a licensed Customs House Agent, before filing.";
+
+/** Map a raw `export_policy` string to the canonical enum (mirror of the backend). */
+function normalizePolicyStatus(raw: string | null | undefined): ExportPolicyStatus | null {
+  if (raw === null || raw === undefined) return null;
+  const v = raw.trim().toLowerCase();
+  if (v.length === 0) return null;
+  if (v === "free") return "Free";
+  if (v === "restricted") return "Restricted";
+  if (v === "prohibited") return "Prohibited";
+  if (v === "ste" || v === "state trading enterprise" || v === "state trading") return "STE";
+  return null;
+}
+
+const FALLBACK_POLICY_SEVERITY: Record<ExportPolicyStatus, Exclude<PolicySeverity, "grey">> = {
+  Prohibited: "danger",
+  Restricted: "warning",
+  STE: "warning",
+  Free: "notice",
+};
+
+const FALLBACK_POLICY_PLAIN: Record<ExportPolicyStatus | "null", string> = {
+  Free: "No DGFT export licence is needed for this line.",
+  Restricted: "This line needs a DGFT authorisation before export.",
+  Prohibited: "Export of this line is prohibited under current policy.",
+  STE: "This line may be exported only through a designated State Trading Enterprise.",
+  null: "This export-policy status is not specified in our data for this line. Check the DGFT ITC(HS) schedule.",
+};
+
+/**
+ * Build a minimal `TradeIntelligence` (export-policy only) from the flat
+ * `UiClassification` policy fields. Used ONLY when `result.tradeIntelligence`
+ * is null/absent. Returns null when there is no policy data to show at all.
+ */
+export function buildFallbackTradeIntel(
+  result: UiClassification,
+): TradeIntelligence | null {
+  const rawStatus = (result.exportPolicy ?? "").trim();
+  const condition = (result.policyCondition ?? "").trim();
+
+  // Genuinely no policy data → render nothing (matches the assembler's null).
+  if (rawStatus.length === 0 && condition.length === 0) return null;
+
+  const status = normalizePolicyStatus(rawStatus);
+  const severity: PolicySeverity = status ? FALLBACK_POLICY_SEVERITY[status] : "grey";
+  const statusPlain = FALLBACK_POLICY_PLAIN[status ?? "null"];
+
+  // A control status (Restricted/Prohibited/STE) with no verbatim condition is
+  // flagged missing so the UI says so explicitly, never blank.
+  const conditionMissing =
+    condition.length === 0 &&
+    (status === "Restricted" || status === "Prohibited" || status === "STE");
+
+  const exportPolicy: TradeExportPolicy = {
+    status,
+    statusPlain,
+    severity,
+    conditionVerbatim: condition.length > 0 ? condition : null,
+    conditionMissing,
+    asOn: null,
+    sourceUrl: DGFT_ITCHS_SCHEDULE_URL,
+    stale: false,
+    staleAdvisory: null,
+    indicative: true,
+  };
+
+  return {
+    exportPolicy,
+    exportDuty: null,
+    incentive: null,
+    uqc: null,
+    flags: [],
+    disclaimer: FALLBACK_DISCLAIMER,
+  };
 }
 
 function isVerifyState(
