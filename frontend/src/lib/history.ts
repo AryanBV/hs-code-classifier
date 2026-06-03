@@ -15,13 +15,45 @@ export interface HistoryRecord {
 
 const KEY = "prevyl.history.v1";
 
+/**
+ * Hygiene: records persisted BEFORE the band-only structural-honesty change may
+ * carry the hidden numeric signals (`confidence`, `confidenceP`, `selfConfidence`)
+ * inside `result`. The wire→UI strip (`lib/api.ts`) only runs on fresh API
+ * responses, never on what is already in localStorage, so a legacy record could
+ * reintroduce the number at runtime. We scrub those keys on every read so they
+ * can never reach a component or a downstream cloud insert. Behaviour-only: the
+ * UI already renders the band, never the number — this just guarantees the number
+ * is not present to be read.
+ */
+function scrubLegacyConfidence(record: HistoryRecord): HistoryRecord {
+  const result = record.result as Record<string, unknown>;
+  if (
+    "confidence" in result ||
+    "confidenceP" in result ||
+    "selfConfidence" in result
+  ) {
+    const {
+      confidence: _confidence,
+      confidenceP: _confidenceP,
+      selfConfidence: _selfConfidence,
+      ...cleanResult
+    } = result;
+    void _confidence;
+    void _confidenceP;
+    void _selfConfidence;
+    return { ...record, result: cleanResult as HistoryRecord["result"] };
+  }
+  return record;
+}
+
 function safeRead(): HistoryRecord[] {
   if (typeof window === "undefined") return [];
   try {
     const raw = window.localStorage.getItem(KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw) as HistoryRecord[];
-    return Array.isArray(parsed) ? parsed : [];
+    if (!Array.isArray(parsed)) return [];
+    return parsed.map(scrubLegacyConfidence);
   } catch {
     return [];
   }

@@ -15,10 +15,11 @@ import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
  *   - user_id <- the signed-in user's id (from the server Supabase client),
  *                left to the DB default (null) for guests.
  *
- * RLS: feedback insert is owner-only (auth.uid() = user_id), so a SIGNED-IN
- * insert succeeds and a guest insert is rejected by RLS. Either way this route
- * fails SAFE: it returns a calm JSON status and never throws, so the result view
- * can show "couldn't save, try again" without breaking.
+ * RLS: a SIGNED-IN insert is owner-only (auth.uid() = user_id); a GUEST insert
+ * is allowed by the anon-guest policy when user_id IS NULL (so guest feedback now
+ * persists). Either way this route fails SAFE: it returns a calm JSON status and
+ * never throws, so the result view can show "couldn't save, try again" without
+ * breaking.
  *
  * No new PII: we store only the query + code (already in the record) and the
  * optional note the user chose to write.
@@ -98,14 +99,11 @@ export async function POST(request: Request) {
     });
 
     if (error) {
-      // A guest insert is rejected by owner-only RLS (an expected, by-design
-      // outcome the user cannot fix by retrying). Treat that as a soft success
-      // so the UI thanks them rather than showing an unresolvable error. Any
-      // OTHER DB error is a genuine transient failure -> 503 so the UI offers a
-      // retry. We distinguish via the user being signed in.
-      if (!user) {
-        return NextResponse.json({ ok: true, saved: false }, { status: 202 });
-      }
+      // Guest inserts are now ALLOWED by the anon-guest RLS policy (user_id IS
+      // NULL), so an error here is no longer the expected "guests are rejected"
+      // case — it is a genuine transient failure for guest and signed-in alike.
+      // Surface it as a retryable 503 so the UI can offer a retry rather than
+      // silently swallowing a failed save and thanking the user for nothing.
       return NextResponse.json({ error: "Could not save feedback." }, { status: 503 });
     }
 
