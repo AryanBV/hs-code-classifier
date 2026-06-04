@@ -51,6 +51,11 @@ const ROSCTL_FILES = ['61', '62', '63'].map((c) =>
   path.join(DATA_ROOT, 'rosctl', `${c}.json`),
 );
 const UQC_DIR = path.join(DATA_ROOT, 'uqc');
+const RODTEP_DIR = path.join(DATA_ROOT, 'rodtep');
+// RoDTEP rows come from the 41 corrected per-chunk files output/rodtep/o2-0..o2-40.json.
+// Files are mixed-shape: most are a bare JSON array of row objects; some are a
+// wrapper object carrying the rows under a `rows` key. Both shapes are handled.
+// 4R ONLY — 4RE is deferred and never ingested here.
 // UQC rows come from ALL output/uqc/*.json files: the o2-0..o2-40 chunks PLUS
 // the gap-NN.json backfills for chapters 01,20,26,28,39,54,59,61,81,94 that the
 // o2 chunks dropped. Glob both families; dedupe-by-code makes any overlap safe.
@@ -98,6 +103,20 @@ const UQC_COLUMNS = [
   'as_on',
   'source_url',
   'notification_ref',
+] as const;
+
+const RODTEP_COLUMNS = [
+  'code',
+  'rate_pct',
+  'cap_text',
+  'cap_value',
+  'cap_unit',
+  'appendix',
+  'condition_text',
+  'as_on',
+  'source_url',
+  'notification_ref',
+  'mappable',
 ] as const;
 
 const SOURCES_COLUMNS = [
@@ -181,6 +200,42 @@ const ROSCTL_CAP_UNIT_MAP: ReadonlyMap<string, string> = new Map([
 ]);
 
 /**
+ * RoDTEP cap_unit -> canonical UQC vocabulary (matches the live `uqc` table:
+ * KGS/NOS/SQM/MTQ/TON ... and what rosctl_rates already uses, KGS/NOS).
+ *
+ * The 4R extraction emits 13 raw unit tokens that are casing/synonym variants of
+ * the same handful of physical units. They are reconciled here (case-insensitive
+ * on the raw token) so dedupe-on-code is stable and the rendered unit is
+ * consistent. The verbatim cap_text ("Rs 8.2 per m2", "Rs 1 per UQC", ...) is
+ * preserved untouched, so no information is lost by canonicalizing the token.
+ *
+ *   kg | Kg | per kg       -> KGS  (Kilograms)
+ *   unit | number | per unit | u -> NOS  (Numbers)
+ *   m2 | per sqm           -> SQM  (Square Metres)
+ *   m3                     -> MTQ  (Cubic Metres)
+ *   mt                     -> TON  (Tonne / metric tonne)
+ *   INR_per_UQC | per UQC (Rs.) -> null (generic "per UQC", no specific physical
+ *                                  unit named in 4R; cap_text carries the verbatim)
+ *
+ * Unmapped tokens are left as-is so validation surfaces them rather than silently
+ * corrupting the data.
+ */
+const RODTEP_CAP_UNIT_MAP: ReadonlyMap<string, string | null> = new Map<string, string | null>([
+  ['KG', 'KGS'],
+  ['PER KG', 'KGS'],
+  ['UNIT', 'NOS'],
+  ['NUMBER', 'NOS'],
+  ['PER UNIT', 'NOS'],
+  ['U', 'NOS'],
+  ['M2', 'SQM'],
+  ['PER SQM', 'SQM'],
+  ['M3', 'MTQ'],
+  ['MT', 'TON'],
+  ['INR_PER_UQC', null],
+  ['PER UQC (RS.)', null],
+]);
+
+/**
  * 6904.10.00 UQC real conflict resolution.
  * o2-34 says TU (Thousand); o2-36 says THD (Thousands). The CBIC official
  * tariff (data/pdfs/cbic-official-tariff.pdf, heading 6904 "CERAMIC BUILDING
@@ -241,6 +296,18 @@ const SOURCE_REGISTRY_ROWS: ReadonlyArray<SourceRow> = [
     last_checked: TODAY,
     note:
       'RoSCTL rebate for apparel/made-ups Ch.61/62/63 only. Mutually exclusive with RoDTEP on these chapters. Window 01-Apr-2026..30-Sep-2026; re-check before the window end.',
+  },
+  {
+    scheme: 'rodtep',
+    as_on: '2024-10-10',
+    source_url:
+      'https://content.dgft.gov.in/Website/Appendix+4R+wef+10th+October+2024.pdf',
+    notification_ref:
+      'DGFT Appendix 4R (RoDTEP Schedule for DTA exports), w.e.f. 10.10.2024 per Notfn. 32/2024-25 dt. 30.09.2024; line-level amendments per Notfn. 15/2026-27 dt. 30.04.2026 (w.e.f. 01.05.2026) merged in.',
+    freshness_budget_days: 30,
+    last_checked: TODAY,
+    note:
+      'RoDTEP rate + per-unit value cap per 8-digit line, Appendix 4R only (4RE deferred). Rate and cap ALWAYS render together. Ch.61/62/63 excluded (RoSCTL applies). Volatile — 30d budget. 9,821 distinct 4R codes; 97 carry a fixed per-unit specific rebate (rate_pct null, amount in cap_value/cap_unit).',
   },
   {
     scheme: 'uqc',
@@ -453,6 +520,146 @@ function loadUqc(): UqcLoadResult {
   };
 }
 
+/* ---------------------------------------------------------------------------
+ * RoDTEP loader (Appendix 4R only).
+ *
+ * Reads the 41 corrected per-chunk files (o2-0..o2-40.json), each either a bare
+ * array of rows or a wrapper object with the rows under `rows`. Column-projects
+ * every row, normalizes cap_unit to the canonical UQC vocabulary, drops any 4RE
+ * row (4R only), then DEDUPES on `code`: the remediation confirmed all cross-file
+ * duplicate codes are byte-identical on rate/cap, so the winner is unambiguous on
+ * the value columns; where several dated rows exist for a code the MOST RECENT
+ * as_on wins (latest in-force amendment) — mirroring the read path's
+ * `ORDER BY as_on DESC LIMIT 1`.
+ * --------------------------------------------------------------------------- */
+
+interface RodtepLoadResult {
+  rows: Json[];
+  rawRowCount: number;
+  emptyChunks: string[];
+  fourReSkipped: number;          // rows dropped because appendix !== '4R'
+  collisionCount: number;         // codes seen in >1 row
+  identicalSafeCount: number;     // collisions where all variants agree on rate+cap
+  valueConflicts: Array<{ code: string; variants: string[] }>; // differing rate/cap_value
+  capUnitMappedFrom: Record<string, number>; // raw token -> count (pre-normalization)
+}
+
+function loadRodtepRows(filePath: string): Json[] {
+  if (!fs.existsSync(filePath)) die(`File not found: ${filePath}`, 1);
+  const parsed = JSON.parse(fs.readFileSync(filePath, 'utf-8')) as unknown;
+  if (Array.isArray(parsed)) return parsed as Json[];
+  if (parsed && typeof parsed === 'object') {
+    const rows = (parsed as Record<string, unknown>).rows;
+    if (Array.isArray(rows)) return rows as Json[];
+    if (rows === undefined) return []; // EMPTY-result wrapper (no `rows` key) — legitimately 0 rows
+  }
+  die(`Unexpected RoDTEP file shape (not array, not {rows:[]}): ${filePath}`, 1);
+}
+
+function normalizeRodtepCapUnit(raw: unknown): string | null {
+  if (raw === null || raw === undefined || raw === '') return null;
+  if (typeof raw !== 'string') return null;
+  const mapped = RODTEP_CAP_UNIT_MAP.get(raw.trim().toUpperCase());
+  // `undefined` => token not in the map; leave the raw token so validation flags it.
+  return mapped === undefined ? raw : mapped;
+}
+
+function loadRodtep(): RodtepLoadResult {
+  const files = fs
+    .readdirSync(RODTEP_DIR)
+    .filter((f) => /^o2-\d+\.json$/.test(f))
+    .sort((a, b) => Number(a.match(/\d+/)![0]) - Number(b.match(/\d+/)![0]));
+
+  const all: Array<{ rec: Json; chunk: string }> = [];
+  const emptyChunks: string[] = [];
+  let fourReSkipped = 0;
+  const capUnitMappedFrom: Record<string, number> = {};
+
+  for (const fileName of files) {
+    const chunk = fileName.replace(/\.json$/, '');
+    const rows = loadRodtepRows(path.join(RODTEP_DIR, fileName));
+    if (rows.length === 0) {
+      emptyChunks.push(chunk);
+      continue;
+    }
+    for (const rec of rows) {
+      // 4R ONLY — never ingest 4RE (deferred).
+      if (String(rec.appendix) !== '4R') {
+        fourReSkipped++;
+        continue;
+      }
+      const rawUnit = rec.cap_unit;
+      if (rawUnit !== null && rawUnit !== undefined && rawUnit !== '') {
+        const k = String(rawUnit);
+        capUnitMappedFrom[k] = (capUnitMappedFrom[k] ?? 0) + 1;
+      }
+      all.push({ rec, chunk });
+    }
+  }
+
+  // Group by code to dedupe.
+  const byCode = new Map<string, Array<{ rec: Json; chunk: string }>>();
+  for (const item of all) {
+    const code = String(item.rec.code);
+    const arr = byCode.get(code) ?? [];
+    arr.push(item);
+    byCode.set(code, arr);
+  }
+
+  let collisionCount = 0;
+  let identicalSafeCount = 0;
+  const valueConflicts: RodtepLoadResult['valueConflicts'] = [];
+  const rows: Json[] = [];
+
+  for (const [code, variants] of byCode) {
+    if (variants.length > 1) collisionCount++;
+
+    // Value signature ignores cap_unit text (a casing/synonym variant) — it is
+    // canonicalized below. A true value conflict differs on rate_pct/cap_value.
+    const valueSig = (r: Json): string =>
+      JSON.stringify([r.rate_pct ?? null, r.cap_value ?? null]);
+    const distinctValueSigs = new Set(variants.map((v) => valueSig(v.rec)));
+    if (variants.length > 1) {
+      if (distinctValueSigs.size === 1) {
+        identicalSafeCount++;
+      } else {
+        valueConflicts.push({
+          code,
+          variants: variants.map((v) => `${v.chunk}=${valueSig(v.rec)}`),
+        });
+      }
+    }
+
+    // Winner = most-recent as_on; deterministic tiebreak on the value signature
+    // (lexicographically smallest) so a re-run always picks the same row.
+    const winner = [...variants].sort((a, b) => {
+      const da = String(a.rec.as_on);
+      const db = String(b.rec.as_on);
+      if (da !== db) return da < db ? 1 : -1; // DESC by date
+      return valueSig(a.rec) < valueSig(b.rec) ? -1 : 1;
+    })[0]!.rec;
+
+    const row = project(winner, RODTEP_COLUMNS);
+    row.cap_unit = normalizeRodtepCapUnit(row.cap_unit);
+    // appendix is guaranteed '4R' by the filter above; keep it explicit.
+    row.appendix = '4R';
+    // `mappable` is NOT NULL DEFAULT true in the DB — fill any missing flag.
+    if (row.mappable === null || row.mappable === undefined) row.mappable = true;
+    rows.push(row);
+  }
+
+  return {
+    rows,
+    rawRowCount: all.length,
+    emptyChunks,
+    fourReSkipped,
+    collisionCount,
+    identicalSafeCount,
+    valueConflicts,
+    capUnitMappedFrom,
+  };
+}
+
 /* ===========================================================================
  * Validation (mirrors the DB CHECK / NOT NULL constraints — pre-ingest gate)
  * =========================================================================== */
@@ -524,6 +731,48 @@ function validateUqc(rows: Json[]): ValidationIssue[] {
     }
     if (!r.as_on || !r.source_url) {
       issues.push({ scheme: 'uqc', code, message: `as_on/source_url required` });
+    }
+  }
+  return issues;
+}
+
+/** Canonical UQC tokens a normalized RoDTEP cap_unit is allowed to be (or null). */
+const RODTEP_ALLOWED_CAP_UNITS: ReadonlySet<string> = new Set([
+  'KGS', 'NOS', 'SQM', 'MTQ', 'TON', 'MTR', 'MTK', 'LTR', 'PRS', 'THD', 'TU', 'CTM', 'KWH',
+]);
+
+function validateRodtep(rows: Json[]): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  for (const r of rows) {
+    const code = String(r.code);
+    if (typeof r.code !== 'string' || !CODE_RE.test(code)) {
+      issues.push({ scheme: 'rodtep', code, message: `bad code format` });
+    }
+    // RoSCTL chapters must NOT appear (mutually exclusive with RoDTEP).
+    if (['61', '62', '63'].includes(code.slice(0, 2))) {
+      issues.push({ scheme: 'rodtep', code, message: `RoSCTL chapter (61/62/63) must not appear in RoDTEP` });
+    }
+    if (r.appendix !== '4R') {
+      issues.push({ scheme: 'rodtep', code, message: `appendix must be '4R' (4RE deferred)` });
+    }
+    // DB CHECK rodtep_rates_rate_or_cap_present: a rate OR a cap must be present.
+    if (r.rate_pct == null && r.cap_value == null) {
+      issues.push({ scheme: 'rodtep', code, message: `neither rate_pct nor cap_value present` });
+    }
+    if (r.rate_pct != null && typeof r.rate_pct !== 'number') {
+      issues.push({ scheme: 'rodtep', code, message: `rate_pct must be number|null` });
+    }
+    if (r.cap_value != null && typeof r.cap_value !== 'number') {
+      issues.push({ scheme: 'rodtep', code, message: `cap_value must be number|null` });
+    }
+    if (typeof r.mappable !== 'boolean') {
+      issues.push({ scheme: 'rodtep', code, message: `mappable must be boolean` });
+    }
+    if (!r.as_on || !r.source_url) {
+      issues.push({ scheme: 'rodtep', code, message: `as_on/source_url required` });
+    }
+    if (r.cap_unit != null && !RODTEP_ALLOWED_CAP_UNITS.has(String(r.cap_unit))) {
+      issues.push({ scheme: 'rodtep', code, message: `cap_unit '${String(r.cap_unit)}' not in canonical UQC vocabulary` });
     }
   }
   return issues;
@@ -678,8 +927,13 @@ async function upsert(
  * =========================================================================== */
 
 async function main(): Promise<void> {
-  const isIngest = process.argv.slice(2).includes('--ingest');
-  const mode = isIngest ? 'INGEST' : 'DRY-RUN';
+  const args = process.argv.slice(2);
+  const isIngest = args.includes('--ingest');
+  // --rodtep-only restricts writes to rodtep_rates (+ the rodtep source-registry
+  // row), leaving the already-populated export_duty/rosctl/uqc tables untouched.
+  // Load + validate + FK-check still cover all schemes (read-only).
+  const rodtepOnly = args.includes('--rodtep-only');
+  const mode = isIngest ? (rodtepOnly ? 'INGEST (rodtep-only)' : 'INGEST') : 'DRY-RUN';
   console.log(`\nPhase-1 Trade-Intel Ingest — mode: ${mode}`);
   console.log('='.repeat(60));
 
@@ -688,6 +942,8 @@ async function main(): Promise<void> {
   const rosctlRows = loadRosctl();
   const uqcResult = loadUqc();
   const uqcRows = uqcResult.rows;
+  const rodtepResult = loadRodtep();
+  const rodtepRows = rodtepResult.rows;
   const sourceRows: Json[] = SOURCE_REGISTRY_ROWS.map((r) => project(r as unknown as Json, SOURCES_COLUMNS));
 
   // ---- Validate -------------------------------------------------------------
@@ -695,6 +951,7 @@ async function main(): Promise<void> {
     ...validateExportDuty(exportDutyRows),
     ...validateRosctl(rosctlRows),
     ...validateUqc(uqcRows),
+    ...validateRodtep(rodtepRows),
   ];
   if (issues.length > 0) {
     console.error(`\n[VALIDATION] ${issues.length} issue(s):`);
@@ -720,6 +977,7 @@ async function main(): Promise<void> {
       export_duty: exportDutyRows.map((r) => String(r.code)),
       rosctl: rosctlRows.map((r) => String(r.code)),
       uqc: uqcRows.map((r) => String(r.code)),
+      rodtep: rodtepRows.map((r) => String(r.code)),
     });
 
     const coverage = await analyzeUqcCoverage(pool, uqcRows.map((r) => String(r.code)));
@@ -730,12 +988,14 @@ async function main(): Promise<void> {
     console.log(`  export_duty_rates : ${exportDutyRows.length}`);
     console.log(`  rosctl_rates      : ${rosctlRows.length}`);
     console.log(`  uqc               : ${uqcRows.length}  (from ${uqcResult.rawRowCount} raw rows after dedupe)`);
+    console.log(`  rodtep_rates      : ${rodtepRows.length}  (from ${rodtepResult.rawRowCount} raw 4R rows after dedupe-on-code)`);
     console.log(`  trade_intel_sources: ${sourceRows.length}`);
 
     console.log('\n===== DISTINCT CODE COUNTS =====');
     console.log(`  export_duty : ${new Set(exportDutyRows.map((r) => r.code)).size}`);
     console.log(`  rosctl      : ${new Set(rosctlRows.map((r) => r.code)).size}`);
     console.log(`  uqc         : ${new Set(uqcRows.map((r) => r.code)).size}`);
+    console.log(`  rodtep      : ${new Set(rodtepRows.map((r) => r.code)).size}  (expected 9821)`);
 
     console.log('\n===== FK VALIDITY vs tariff_lines =====');
     for (const [scheme, r] of Object.entries(fk)) {
@@ -804,6 +1064,35 @@ async function main(): Promise<void> {
       console.log(`  >>> FLAG: real chapters dropped from UQC extraction — re-extract before launch.`);
     }
 
+    console.log('\n===== RoDTEP (Appendix 4R) =====');
+    console.log(`  4R rows after dedupe-on-code: ${rodtepRows.length}  (distinct codes ${new Set(rodtepRows.map((r) => r.code)).size})`);
+    console.log(`  raw 4R rows pre-dedupe      : ${rodtepResult.rawRowCount}`);
+    console.log(`  4RE rows skipped            : ${rodtepResult.fourReSkipped} (deferred — never ingested)`);
+    console.log(`  empty chunks (0 rows)       : ${rodtepResult.emptyChunks.join(', ') || '(none)'}`);
+    console.log(`  code collisions             : ${rodtepResult.collisionCount}  (identical-on-value kept-one: ${rodtepResult.identicalSafeCount})`);
+    if (rodtepResult.valueConflicts.length > 0) {
+      console.log(`  >>> VALUE CONFLICTS (differing rate/cap_value across files):`);
+      for (const c of rodtepResult.valueConflicts.slice(0, 20)) {
+        console.log(`        ${c.code}: ${c.variants.join(' | ')}`);
+      }
+      if (rodtepResult.valueConflicts.length > 20) console.log(`        ... ${rodtepResult.valueConflicts.length - 20} more`);
+    } else {
+      console.log(`  value conflicts             : 0 (all duplicate codes byte-identical on rate+cap)`);
+    }
+    const rodtepNullRate = rodtepRows.filter((r) => r.rate_pct == null).length;
+    console.log(`  null-rate (specific-rebate) rows: ${rodtepNullRate} (rate in cap_value/cap_unit; rate_pct null by design)`);
+    console.log(`  cap_unit raw->canonical map (raw token counts pre-normalization):`);
+    console.log(`        ${JSON.stringify(rodtepResult.capUnitMappedFrom)}`);
+    const rodtepCapUnitDist: Record<string, number> = {};
+    for (const r of rodtepRows) {
+      const k = r.cap_unit == null ? '(null)' : String(r.cap_unit);
+      rodtepCapUnitDist[k] = (rodtepCapUnitDist[k] ?? 0) + 1;
+    }
+    console.log(`  cap_unit normalized distribution: ${JSON.stringify(rodtepCapUnitDist)}`);
+    const rodtepAsOnDist: Record<string, number> = {};
+    for (const r of rodtepRows) rodtepAsOnDist[String(r.as_on)] = (rodtepAsOnDist[String(r.as_on)] ?? 0) + 1;
+    console.log(`  as_on distribution (winner = most-recent per code): ${JSON.stringify(rodtepAsOnDist)}`);
+
     console.log('\n===== trade_intel_sources REGISTRY ROWS =====');
     for (const r of sourceRows) {
       console.log(`  ${String(r.scheme).padEnd(13)} as_on=${r.as_on} budget=${r.freshness_budget_days}d`);
@@ -814,10 +1103,18 @@ async function main(): Promise<void> {
       console.log('\n===== INGEST =====');
       const anyFkMissing = Object.values(fk).some((r) => r.missing.length > 0);
       if (anyFkMissing) die('FK-invalid codes present — refusing to ingest', 1);
-      await upsert(pool, 'export_duty_rates', EXPORT_DUTY_COLUMNS, ['code', 'as_on'], exportDutyRows);
-      await upsert(pool, 'rosctl_rates', ROSCTL_COLUMNS, ['code', 'as_on'], rosctlRows);
-      await upsert(pool, 'uqc', UQC_COLUMNS, ['code'], uqcRows);
-      await upsert(pool, 'trade_intel_sources', SOURCES_COLUMNS, ['scheme', 'as_on', 'source_url'], sourceRows);
+      if (rodtepOnly) {
+        console.log('  (--rodtep-only: skipping export_duty/rosctl/uqc; writing rodtep_rates + rodtep source row)');
+        await upsert(pool, 'rodtep_rates', RODTEP_COLUMNS, ['code', 'as_on'], rodtepRows);
+        const rodtepSourceRows = sourceRows.filter((r) => r.scheme === 'rodtep');
+        await upsert(pool, 'trade_intel_sources', SOURCES_COLUMNS, ['scheme', 'as_on', 'source_url'], rodtepSourceRows);
+      } else {
+        await upsert(pool, 'export_duty_rates', EXPORT_DUTY_COLUMNS, ['code', 'as_on'], exportDutyRows);
+        await upsert(pool, 'rosctl_rates', ROSCTL_COLUMNS, ['code', 'as_on'], rosctlRows);
+        await upsert(pool, 'uqc', UQC_COLUMNS, ['code'], uqcRows);
+        await upsert(pool, 'rodtep_rates', RODTEP_COLUMNS, ['code', 'as_on'], rodtepRows);
+        await upsert(pool, 'trade_intel_sources', SOURCES_COLUMNS, ['scheme', 'as_on', 'source_url'], sourceRows);
+      }
       console.log('\nIngest complete.');
     } else {
       console.log('\nDry-run complete. No writes. Pass --ingest to write.');
