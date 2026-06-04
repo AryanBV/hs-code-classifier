@@ -302,6 +302,154 @@ function stripCode(code: string): string {
   return code.replace(/\./g, '').replace(/\s/g, '');
 }
 
+/* ============================================================================
+ * OVER-ASK / UNDER-ASK split metrics (CALIBRATED-ASK-EVAL-PLAN.md §2)
+ *
+ * Pure + deterministic, like every other primitive here so it is unit-testable
+ * with hand-computed values. The runner folds per-case EvalDetail rows into the
+ * `RoutingSplitCase` shape below and calls `routingSplitMetrics`; the report just
+ * carries the result. NO behavior change to the classifier — these read the
+ * already-recorded ground-truth routing + the system's actual routing.
+ * ============================================================================ */
+
+/** Lever vocabulary for the trigger slice (mirrors ClarifyingQuestion.trigger). */
+export type AskTrigger = 'triage' | 'sibling' | 'cross_subheading';
+
+/** Default trigger bucket for an ASK with no explicit lever (the live L1 ask). */
+export const DEFAULT_ASK_TRIGGER: AskTrigger = 'triage';
+
+/** Minimal per-case input the split metrics need (folded from an EvalDetail). */
+export interface RoutingSplitCase {
+  /** Ground-truth routing label for the case (from EvalTestCase.expected_routing). */
+  expectedRouting: 'classify' | 'ask' | 'reject';
+  /** What the system actually did ('classify' | 'ask' | 'reject' | 'error' | …). */
+  actualRouting: string;
+  /**
+   * Which lever raised the question when the system ASKed (from the v2
+   * `question.trigger`). Undefined on a non-ASK case, OR on an ASK whose question
+   * carried no trigger — the latter is bucketed under {@link DEFAULT_ASK_TRIGGER}.
+   */
+  askTrigger?: AskTrigger;
+  /**
+   * GT axis→lever mapping for an UNDER-ASK case (a missed ask has no fired
+   * trigger, so it cannot be sliced by `askTrigger`). When the gold case declares
+   * which lever SHOULD have fired, pass it here so the under-ask slice is
+   * attributable; else the case is aggregated under {@link DEFAULT_ASK_TRIGGER}.
+   */
+  expectedTrigger?: AskTrigger;
+  /**
+   * Whether this case carries a simulated ASK-recovery attempt (only set when
+   * `--simulate-answers` ran AND the system ASKed AND a gold answer existed).
+   * Undefined/false → the case does not enter the recoverability denominator.
+   */
+  hasRecoveryAttempt?: boolean;
+  /** When `hasRecoveryAttempt`, did the recovery reach the correct gold code? */
+  recoveredCorrect?: boolean;
+}
+
+/** The over-ask / under-ask / recoverability result over a population + slices. */
+export interface RoutingSplitResult {
+  over_ask_rate: RateCI;
+  under_ask_rate: RateCI;
+  ask_recoverability: RateCI;
+  expected_classify_count: number;
+  expected_ask_count: number;
+  by_trigger: Array<{
+    trigger: AskTrigger;
+    over_ask: RateCI;
+    under_ask: RateCI;
+    ask_recoverability: RateCI;
+  }>;
+}
+
+/** True iff the system delivered a question (a false/real ASK). */
+function isActualAsk(actualRouting: string): boolean {
+  return actualRouting === 'ask';
+}
+
+/** True iff the system delivered a classification. */
+function isActualClassify(actualRouting: string): boolean {
+  return actualRouting === 'classify';
+}
+
+/**
+ * OVER-ASK / UNDER-ASK / ASK-RECOVERABILITY split metrics
+ * (CALIBRATED-ASK-EVAL-PLAN.md §2). Pure + deterministic.
+ *
+ *  - over_ask_rate  = |expected=classify ∧ actual=ask|  / |expected=classify|.
+ *      A FALSE ask (the system asked when it should have classified). The metric
+ *      that catches a repeat of the prior 33% over-fire.
+ *  - under_ask_rate = |expected=ask ∧ actual=classify| / |expected=ask|.
+ *      A MISSED ask (the system guessed a code when it should have asked) — the
+ *      bug class the RDC-X / cross-subheading lever exists to drive toward 0.
+ *  - ask_recoverability = |recoveryAttempt ∧ recoveredCorrect| / |recoveryAttempt|.
+ *      Of the asks we DID make (and simulated), the fraction reaching the gold
+ *      code after the gold answer — "the questions we ask must be answerable".
+ *
+ * Each is a {@link RateCI} (Wilson 95% CI). NO-OP SAFETY: an empty population, or
+ * a population with no labeled classify/ask cases, yields rate 0 over n=0 with the
+ * full [0,1] interval — never a throw, never a NaN — so the existing 385-case run
+ * (which carries no `ask`-routing gold cases for under-ask, etc.) is unaffected.
+ *
+ * SLICING: `by_trigger` partitions each rate by lever. The OVER-ASK slice uses the
+ * FIRED `askTrigger` (which lever actually over-asked); the UNDER-ASK slice uses
+ * the gold `expectedTrigger` (a missed ask has no fired trigger). Triggers with no
+ * contributing case are omitted, so a frozen run yields `by_trigger: []`.
+ */
+export function routingSplitMetrics(cases: RoutingSplitCase[]): RoutingSplitResult {
+  const expectedClassify = cases.filter((c) => c.expectedRouting === 'classify');
+  const expectedAsk = cases.filter((c) => c.expectedRouting === 'ask');
+
+  // OVER-ASK: of GT-classify cases, the system ASKed.
+  const overAskHits = expectedClassify.filter((c) => isActualAsk(c.actualRouting));
+  // UNDER-ASK: of GT-ask cases, the system CLASSIFIED.
+  const underAskHits = expectedAsk.filter((c) => isActualClassify(c.actualRouting));
+
+  // RECOVERABILITY: of cases carrying a simulated recovery attempt, recovered ok.
+  const recoveryCases = cases.filter((c) => c.hasRecoveryAttempt === true);
+  const recoveredCorrect = recoveryCases.filter((c) => c.recoveredCorrect === true);
+
+  // Per-trigger slices. Collect every trigger that appears in either an over-ask
+  // (fired askTrigger), an under-ask (gold expectedTrigger), or a recovery case.
+  const triggers = new Set<AskTrigger>();
+  for (const c of overAskHits) triggers.add(c.askTrigger ?? DEFAULT_ASK_TRIGGER);
+  for (const c of underAskHits) triggers.add(c.expectedTrigger ?? DEFAULT_ASK_TRIGGER);
+  for (const c of recoveryCases) triggers.add(c.askTrigger ?? DEFAULT_ASK_TRIGGER);
+
+  // Deterministic slice order.
+  const TRIGGER_ORDER: AskTrigger[] = ['triage', 'sibling', 'cross_subheading'];
+  const by_trigger = TRIGGER_ORDER.filter((t) => triggers.has(t)).map((t) => {
+    // OVER-ASK slice: over-asked cases whose FIRED lever is t, over GT-classify
+    // cases (same denominator — the over-ask population is shared, the numerator
+    // is restricted to this lever's false asks).
+    const overK = overAskHits.filter((c) => (c.askTrigger ?? DEFAULT_ASK_TRIGGER) === t).length;
+    // UNDER-ASK slice: missed asks whose GT axis maps to lever t, over GT-ask
+    // cases whose GT axis maps to t (so the slice rate is meaningful per lever).
+    const underDenomCases = expectedAsk.filter(
+      (c) => (c.expectedTrigger ?? DEFAULT_ASK_TRIGGER) === t,
+    );
+    const underK = underDenomCases.filter((c) => isActualClassify(c.actualRouting)).length;
+    // RECOVERABILITY slice: this lever's fired+simulated asks.
+    const recCases = recoveryCases.filter((c) => (c.askTrigger ?? DEFAULT_ASK_TRIGGER) === t);
+    const recK = recCases.filter((c) => c.recoveredCorrect === true).length;
+    return {
+      trigger: t,
+      over_ask: wilsonInterval(overK, expectedClassify.length),
+      under_ask: wilsonInterval(underK, underDenomCases.length),
+      ask_recoverability: wilsonInterval(recK, recCases.length),
+    };
+  });
+
+  return {
+    over_ask_rate: wilsonInterval(overAskHits.length, expectedClassify.length),
+    under_ask_rate: wilsonInterval(underAskHits.length, expectedAsk.length),
+    ask_recoverability: wilsonInterval(recoveredCorrect.length, recoveryCases.length),
+    expected_classify_count: expectedClassify.length,
+    expected_ask_count: expectedAsk.length,
+    by_trigger,
+  };
+}
+
 /**
  * top-k code accuracy over a frozen population: the fraction of cases whose gold
  * code appears among the FIRST `k` candidate codes (selected + alternatives).

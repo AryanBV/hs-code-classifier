@@ -810,3 +810,108 @@ describe('buildReportForTest — end_to_end_metrics', () => {
     expect(e.sibling_ask_recoverability_rate).toBeCloseTo(50, 5); // 1/2
   });
 });
+
+// ---------------------------------------------------------------------------
+// routing_split_metrics (over-ask / under-ask) folded through buildReport.
+// Proves the runner wiring (EvalDetail → RoutingSplitCase) + the option_-
+// answerability counting. The pure metric is unit-tested in metrics.test.ts.
+// ---------------------------------------------------------------------------
+
+describe('buildReportForTest — routing_split_metrics (over-ask / under-ask)', () => {
+  const detail = (over: Partial<import('./types').EvalDetail>): import('./types').EvalDetail => ({
+    test_case_id: 'x', query: 'q', expected_routing: 'classify', actual_routing: 'classify',
+    routing_correct: true, response_time_ms: 1, score: 100, ...over,
+  });
+
+  it('always present and no-op-safe on a GT-classify-only frozen-style run', () => {
+    const r = buildReportForTest([
+      detail({ test_case_id: 'C1', expected_code: '7318.15.00', actual_code: '7318.15.00', code_correct: true }),
+      detail({ test_case_id: 'C2', expected_code: '0901.21.90', actual_code: '0901.21.90', code_correct: true }),
+    ]);
+    const rs = r.routing_split_metrics;
+    expect(rs).toBeDefined();
+    // No false asks → over-ask 0/2; no GT-ask cases → under-ask 0/0; no sims.
+    expect(rs.over_ask_rate.k).toBe(0);
+    expect(rs.over_ask_rate.n).toBe(2);
+    expect(rs.under_ask_rate.n).toBe(0);
+    expect(rs.ask_recoverability.n).toBe(0);
+    expect(rs.by_trigger).toEqual([]);
+    // No human-judged answerability label → all unjudged.
+    expect(rs.option_answerability_counts).toEqual({ answerable: 0, hard: 0, unanswerable: 0, unjudged: 2 });
+  });
+
+  it('counts an over-ask (GT classify, system ASKed) and slices by the fired trigger', () => {
+    const details: import('./types').EvalDetail[] = [
+      // GT classify, system classified — fine.
+      detail({ test_case_id: 'C1', expected_code: '7318.15.00', actual_code: '7318.15.00', code_correct: true,
+        option_answerability: 'answerable' }),
+      // GT classify, system ASKed via cross_subheading → OVER-ASK.
+      detail({ test_case_id: 'O1', expected_routing: 'classify', actual_routing: 'ask', routing_correct: false,
+        expected_code: '0207.12.00', ask_trigger: 'cross_subheading', option_answerability: 'answerable' }),
+    ];
+    const r = buildReportForTest(details);
+    const rs = r.routing_split_metrics;
+    expect(rs.over_ask_rate.k).toBe(1);
+    expect(rs.over_ask_rate.n).toBe(2);
+    expect(rs.over_ask_rate.rate).toBeCloseTo(0.5, 10);
+    const xsub = rs.by_trigger.find((t) => t.trigger === 'cross_subheading')!;
+    expect(xsub).toBeDefined();
+    expect(xsub.over_ask.k).toBe(1);
+    expect(xsub.over_ask.n).toBe(2);
+    // both cases carry the human-judged label.
+    expect(rs.option_answerability_counts.answerable).toBe(2);
+    expect(rs.option_answerability_counts.unjudged).toBe(0);
+  });
+
+  it('counts an under-ask (GT ask, system CLASSIFIED) over the GT-ask denominator', () => {
+    const details: import('./types').EvalDetail[] = [
+      // GT ask, system asked correctly.
+      detail({ test_case_id: 'A1', expected_routing: 'ask', actual_routing: 'ask', routing_correct: true,
+        expected_code: '0207.12.00', ask_trigger: 'triage' }),
+      // GT ask, system CLASSIFIED instead → UNDER-ASK (missed ask).
+      detail({ test_case_id: 'U1', expected_routing: 'ask', actual_routing: 'classify', routing_correct: false,
+        expected_code: '0207.14.00', actual_code: '0207.12.00', code_correct: false }),
+    ];
+    const r = buildReportForTest(details);
+    const rs = r.routing_split_metrics;
+    expect(rs.expected_ask_count).toBe(2);
+    expect(rs.under_ask_rate.k).toBe(1);
+    expect(rs.under_ask_rate.n).toBe(2);
+    expect(rs.under_ask_rate.rate).toBeCloseTo(0.5, 10);
+    // over-ask population is empty here.
+    expect(rs.over_ask_rate.n).toBe(0);
+  });
+
+  it('ask_recoverability folds from ask_recovery_attempt.code_correct_after_recovery', () => {
+    const details: import('./types').EvalDetail[] = [
+      detail({
+        test_case_id: 'A1', expected_routing: 'ask', actual_routing: 'ask', routing_correct: true,
+        expected_code: '0207.12.00', ask_trigger: 'cross_subheading',
+        ask_recovery_attempt: {
+          initial_question_id: 'q', ask_trigger: 'cross_subheading', rounds_attempted: 1,
+          final_decision: 'CLASSIFY', final_code_if_classify: '0207.12.00',
+          code_correct_after_recovery: true, chapter_correct_after_recovery: true,
+          heading_correct_after_recovery: true, answer_matches: [],
+        },
+      }),
+      detail({
+        test_case_id: 'A2', expected_routing: 'ask', actual_routing: 'ask', routing_correct: true,
+        expected_code: '0207.14.00', ask_trigger: 'cross_subheading',
+        ask_recovery_attempt: {
+          initial_question_id: 'q', ask_trigger: 'cross_subheading', rounds_attempted: 1,
+          final_decision: 'CLASSIFY', final_code_if_classify: '0207.12.00',
+          code_correct_after_recovery: false, chapter_correct_after_recovery: true,
+          heading_correct_after_recovery: true, answer_matches: [],
+        },
+      }),
+    ];
+    const r = buildReportForTest(details);
+    const rs = r.routing_split_metrics;
+    expect(rs.ask_recoverability.k).toBe(1);
+    expect(rs.ask_recoverability.n).toBe(2);
+    expect(rs.ask_recoverability.rate).toBeCloseTo(0.5, 10);
+    const xsub = rs.by_trigger.find((t) => t.trigger === 'cross_subheading')!;
+    expect(xsub.ask_recoverability.k).toBe(1);
+    expect(xsub.ask_recoverability.n).toBe(2);
+  });
+});

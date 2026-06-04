@@ -29,8 +29,10 @@ import {
   bootstrapECE,
   percentile,
   topKCodeAccuracy,
+  routingSplitMetrics,
   type CalibrationSample,
   type TopKCase,
+  type RoutingSplitCase,
 } from './metrics';
 import { masterSuite, validateSuite } from './test-suites/master-suite';
 import { quickSuite } from './test-suites/quick-suite';
@@ -367,6 +369,10 @@ export async function runTestCase(
         confidence: result.confidence,
         response_time_ms: elapsed,
         score: routingCorrect ? scoring.score : 0,
+        // STAGED gold label (S0): human-judged option_answerability carried through
+        // for report counting (e.g. a should-ASK case the system instead CLASSIFIED
+        // — an under-ask — still carries its answerability). Absent on frozen cases.
+        ...(tc.option_answerability !== undefined ? { option_answerability: tc.option_answerability } : {}),
         // EVAL-ONLY (additive): ranked candidate codes (selected first) for top-k.
         // Spread so the key is ABSENT (not undefined) when not a classification.
         ...(() => {
@@ -399,6 +405,16 @@ export async function runTestCase(
         ...(tc.expected_chapter !== undefined ? { expected_chapter: tc.expected_chapter } : {}),
         ...(tc.expected_heading !== undefined ? { expected_heading: tc.expected_heading } : {}),
         ...(tc.expected_code !== undefined ? { expected_code: tc.expected_code } : {}),
+        // EVAL-ONLY (S0, behavior-neutral): which lever raised the question, copied
+        // verbatim from the v2 result. Present on EVERY ASK (not only simulated
+        // cases) so the over-ask/under-ask metrics can slice by trigger without
+        // --simulate-answers. Spread so the key is ABSENT (not undefined) when the
+        // question carried no trigger — the current live L1 ask, reported under the
+        // 'triage' slice by convention in routingSplitMetrics.
+        ...(raw.question?.trigger ? { ask_trigger: raw.question.trigger } : {}),
+        // STAGED gold label (S0): human-judged option_answerability, copied through
+        // for report counting. Absent on frozen cases. Never auto-derived.
+        ...(tc.option_answerability !== undefined ? { option_answerability: tc.option_answerability } : {}),
         question_asked: result.question,
         question_score: qScore,
         response_time_ms: elapsed,
@@ -452,6 +468,7 @@ export async function runTestCase(
       ...(tc.expected_chapter !== undefined ? { expected_chapter: tc.expected_chapter } : {}),
       ...(tc.expected_heading !== undefined ? { expected_heading: tc.expected_heading } : {}),
       ...(tc.expected_code !== undefined ? { expected_code: tc.expected_code } : {}),
+      ...(tc.option_answerability !== undefined ? { option_answerability: tc.option_answerability } : {}),
       response_time_ms: elapsed,
       score: 0,
       ...extractDiagnostics(raw, false),
@@ -648,6 +665,42 @@ function buildReport(
   // uses the frozen goldN denominator (passed in) so the REFUSE leak is closed.
   const endToEnd = buildEndToEndMetrics(scored, goldCases);
 
+  // -------------------------------------------------------------------------
+  // OVER-ASK / UNDER-ASK split metrics (CALIBRATED-ASK-EVAL-PLAN.md §2). Folded
+  // from scored details. ADDITIVE + no-op-safe: on the frozen 385-suite (no
+  // `ask`-routing gold cases, no trigger labels) over_ask is computed over the
+  // real GT-classify population, under_ask is 0/0, by_trigger is [], and the
+  // answerability counts are all `unjudged` — so the report shape is unchanged.
+  // Uses ONLY already-recorded fields (expected_routing / actual_routing /
+  // ask_trigger / ask_recovery_attempt) — no classifier behavior is read.
+  // -------------------------------------------------------------------------
+  const splitCases: RoutingSplitCase[] = scored
+    .filter((d): d is EvalDetail & { expected_routing: 'classify' | 'ask' | 'reject' } =>
+      d.expected_routing === 'classify' || d.expected_routing === 'ask' || d.expected_routing === 'reject',
+    )
+    .map((d) => ({
+      expectedRouting: d.expected_routing,
+      actualRouting: d.actual_routing,
+      ...(d.ask_trigger ? { askTrigger: d.ask_trigger } : {}),
+      ...(d.ask_recovery_attempt
+        ? {
+            hasRecoveryAttempt: true,
+            recoveredCorrect: d.ask_recovery_attempt.code_correct_after_recovery,
+          }
+        : {}),
+    }));
+  const split = routingSplitMetrics(splitCases);
+
+  // option_answerability counts (human-judged; never auto-derived). Diagnostic.
+  const answerabilityCounts = { answerable: 0, hard: 0, unanswerable: 0, unjudged: 0 };
+  for (const d of scored) {
+    const oa = d.option_answerability;
+    if (oa === 'answerable') answerabilityCounts.answerable++;
+    else if (oa === 'hard') answerabilityCounts.hard++;
+    else if (oa === 'unanswerable') answerabilityCounts.unanswerable++;
+    else answerabilityCounts.unjudged++;
+  }
+
   return {
     metadata: {
       timestamp: startTime.toISOString(),
@@ -755,6 +808,18 @@ function buildReport(
     // Spread so the key is ABSENT (not `undefined`) on a baseline run — keeps the
     // serialized report byte-for-byte identical when --simulate-answers is off.
     ...(endToEnd ? { end_to_end_metrics: endToEnd } : {}),
+    // OVER-ASK / UNDER-ASK split (CALIBRATED-ASK-EVAL-PLAN.md §2) — always present;
+    // no-op-safe (0/empty when no labeled cases). NOT spread-conditional: a stable
+    // additive block that downstream gates can read unconditionally.
+    routing_split_metrics: {
+      over_ask_rate: split.over_ask_rate,
+      under_ask_rate: split.under_ask_rate,
+      ask_recoverability: split.ask_recoverability,
+      expected_classify_count: split.expected_classify_count,
+      expected_ask_count: split.expected_ask_count,
+      by_trigger: split.by_trigger,
+      option_answerability_counts: answerabilityCounts,
+    },
     details,
   };
 }
@@ -953,6 +1018,22 @@ function printSummary(report: EvalReport): void {
         `prompt ${tt.prompt_tokens} | output ${tt.output_tokens} | thoughts ${tt.thoughts_tokens} | ` +
         `cached ${tt.cached_tokens} | total ${tt.total_tokens}`,
     );
+  }
+
+  // OVER-ASK / UNDER-ASK split (CALIBRATED-ASK-EVAL-PLAN.md §2 — the RDC-X gate).
+  const rs = report.routing_split_metrics;
+  if (rs) {
+    console.log(`\nOVER-ASK / UNDER-ASK SPLIT (RDC-X gate; CALIBRATED-ASK-EVAL-PLAN §2)`);
+    console.log(`  over-ask  (GT classify -> system ASK):  ${fmtCI(rs.over_ask_rate)}`);
+    console.log(`  under-ask (GT ask -> system CLASSIFY):  ${fmtCI(rs.under_ask_rate)}`);
+    console.log(`  ask-recoverability (simulated asks):    ${fmtCI(rs.ask_recoverability)}${rs.ask_recoverability.n < 30 ? '  [n<30 — do NOT gate]' : ''}`);
+    for (const t of rs.by_trigger) {
+      console.log(`    [${t.trigger}] over-ask ${fmtCI(t.over_ask)} | under-ask ${fmtCI(t.under_ask)} | recoverability ${fmtCI(t.ask_recoverability)}`);
+    }
+    const oac = rs.option_answerability_counts;
+    if (oac.answerable + oac.hard + oac.unanswerable > 0) {
+      console.log(`  option_answerability (human-judged): answerable ${oac.answerable} | hard ${oac.hard} | unanswerable ${oac.unanswerable} | unjudged ${oac.unjudged}`);
+    }
   }
 
   // Population closure (trust-spine invariant).

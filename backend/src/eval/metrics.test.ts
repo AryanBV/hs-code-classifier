@@ -7,8 +7,10 @@ import {
   percentile,
   mean,
   topKCodeAccuracy,
+  routingSplitMetrics,
   type CalibrationSample,
   type TopKCase,
+  type RoutingSplitCase,
 } from './metrics';
 
 // ---------------------------------------------------------------------------
@@ -278,5 +280,153 @@ describe('topKCodeAccuracy', () => {
   it('k<=0 yields 0 hits (defensive)', () => {
     const cases: TopKCase[] = [{ goldCode: '7318.15.00', candidateCodes: ['7318.15.00'] }];
     expect(topKCodeAccuracy(cases, 0).k).toBe(0);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// routingSplitMetrics — OVER-ASK / UNDER-ASK / recoverability (CALIBRATED-ASK §2)
+// ---------------------------------------------------------------------------
+
+describe('routingSplitMetrics', () => {
+  const c = (over: Partial<RoutingSplitCase> = {}): RoutingSplitCase => ({
+    expectedRouting: 'classify',
+    actualRouting: 'classify',
+    ...over,
+  });
+
+  it('empty population → all rates 0/0 with [0,1] interval, no slices, no crash', () => {
+    const r = routingSplitMetrics([]);
+    expect(r.over_ask_rate.n).toBe(0);
+    expect(r.over_ask_rate.rate).toBe(0);
+    expect(r.over_ask_rate.lower).toBe(0);
+    expect(r.over_ask_rate.upper).toBe(1);
+    expect(r.under_ask_rate.n).toBe(0);
+    expect(r.ask_recoverability.n).toBe(0);
+    expect(r.expected_classify_count).toBe(0);
+    expect(r.expected_ask_count).toBe(0);
+    expect(r.by_trigger).toEqual([]);
+  });
+
+  it('OVER-ASK: of GT-classify cases, the fraction the system ASKed', () => {
+    // 4 GT-classify cases; 1 of them was (wrongly) asked → over-ask 1/4.
+    const cases: RoutingSplitCase[] = [
+      c({ actualRouting: 'classify' }),
+      c({ actualRouting: 'classify' }),
+      c({ actualRouting: 'ask', askTrigger: 'cross_subheading' }), // false ASK
+      c({ actualRouting: 'classify' }),
+    ];
+    const r = routingSplitMetrics(cases);
+    expect(r.expected_classify_count).toBe(4);
+    expect(r.over_ask_rate.k).toBe(1);
+    expect(r.over_ask_rate.n).toBe(4);
+    expect(r.over_ask_rate.rate).toBeCloseTo(0.25, 10);
+    // under-ask has no GT-ask case → 0/0.
+    expect(r.under_ask_rate.n).toBe(0);
+  });
+
+  it('UNDER-ASK: of GT-ask cases, the fraction the system CLASSIFIED (missed ask)', () => {
+    // 3 GT-ask cases; 2 were classified directly (missed ask) → under-ask 2/3.
+    const cases: RoutingSplitCase[] = [
+      c({ expectedRouting: 'ask', actualRouting: 'classify' }), // missed
+      c({ expectedRouting: 'ask', actualRouting: 'classify' }), // missed
+      c({ expectedRouting: 'ask', actualRouting: 'ask', askTrigger: 'triage' }), // correctly asked
+    ];
+    const r = routingSplitMetrics(cases);
+    expect(r.expected_ask_count).toBe(3);
+    expect(r.under_ask_rate.k).toBe(2);
+    expect(r.under_ask_rate.n).toBe(3);
+    expect(r.under_ask_rate.rate).toBeCloseTo(2 / 3, 10);
+    // over-ask has no GT-classify case → 0/0.
+    expect(r.over_ask_rate.n).toBe(0);
+  });
+
+  it('ASK-RECOVERABILITY: of simulated asks, the fraction recovered to gold', () => {
+    // 3 cases carry a recovery attempt; 2 recovered correct → 2/3.
+    const cases: RoutingSplitCase[] = [
+      c({ expectedRouting: 'ask', actualRouting: 'ask', hasRecoveryAttempt: true, recoveredCorrect: true }),
+      c({ expectedRouting: 'ask', actualRouting: 'ask', hasRecoveryAttempt: true, recoveredCorrect: true }),
+      c({ expectedRouting: 'ask', actualRouting: 'ask', hasRecoveryAttempt: true, recoveredCorrect: false }),
+      // a case with NO recovery attempt must NOT enter the recoverability denom.
+      c({ expectedRouting: 'ask', actualRouting: 'ask' }),
+    ];
+    const r = routingSplitMetrics(cases);
+    expect(r.ask_recoverability.k).toBe(2);
+    expect(r.ask_recoverability.n).toBe(3); // the no-attempt case excluded
+    expect(r.ask_recoverability.rate).toBeCloseTo(2 / 3, 10);
+  });
+
+  it('by_trigger slices over-ask by the FIRED lever (isolates cross_subheading)', () => {
+    // 5 GT-classify cases; 2 over-asked by cross_subheading, 1 by sibling.
+    const cases: RoutingSplitCase[] = [
+      c({ actualRouting: 'ask', askTrigger: 'cross_subheading' }),
+      c({ actualRouting: 'ask', askTrigger: 'cross_subheading' }),
+      c({ actualRouting: 'ask', askTrigger: 'sibling' }),
+      c({ actualRouting: 'classify' }),
+      c({ actualRouting: 'classify' }),
+    ];
+    const r = routingSplitMetrics(cases);
+    expect(r.over_ask_rate.k).toBe(3); // 3 total false asks of 5 classify
+    expect(r.over_ask_rate.n).toBe(5);
+    // Slice order is deterministic: triage, sibling, cross_subheading.
+    const sibling = r.by_trigger.find((t) => t.trigger === 'sibling')!;
+    const xsub = r.by_trigger.find((t) => t.trigger === 'cross_subheading')!;
+    expect(sibling.over_ask.k).toBe(1);
+    expect(sibling.over_ask.n).toBe(5); // shared classify denominator
+    expect(xsub.over_ask.k).toBe(2);
+    expect(xsub.over_ask.n).toBe(5);
+    // No triage over-ask → triage slice absent.
+    expect(r.by_trigger.find((t) => t.trigger === 'triage')).toBeUndefined();
+  });
+
+  it('an ASK without an explicit trigger is bucketed under "triage" by convention', () => {
+    const cases: RoutingSplitCase[] = [
+      c({ actualRouting: 'ask' }), // no askTrigger → triage bucket
+      c({ actualRouting: 'classify' }),
+    ];
+    const r = routingSplitMetrics(cases);
+    const triage = r.by_trigger.find((t) => t.trigger === 'triage')!;
+    expect(triage).toBeDefined();
+    expect(triage.over_ask.k).toBe(1);
+    expect(triage.over_ask.n).toBe(2);
+  });
+
+  it('under-ask slice uses the gold expectedTrigger (missed asks have no fired lever)', () => {
+    const cases: RoutingSplitCase[] = [
+      // missed ask whose GT axis maps to cross_subheading.
+      c({ expectedRouting: 'ask', actualRouting: 'classify', expectedTrigger: 'cross_subheading' }),
+      // correctly-asked GT-cross_subheading case (in the slice denom, not numerator).
+      c({ expectedRouting: 'ask', actualRouting: 'ask', askTrigger: 'cross_subheading', expectedTrigger: 'cross_subheading' }),
+    ];
+    const r = routingSplitMetrics(cases);
+    const xsub = r.by_trigger.find((t) => t.trigger === 'cross_subheading')!;
+    expect(xsub.under_ask.k).toBe(1); // one missed ask
+    expect(xsub.under_ask.n).toBe(2); // both GT-ask cases mapping to this lever
+    expect(xsub.under_ask.rate).toBeCloseTo(0.5, 10);
+  });
+
+  it('reject GT cases never contribute to over-ask or under-ask', () => {
+    const cases: RoutingSplitCase[] = [
+      c({ expectedRouting: 'reject', actualRouting: 'ask' }),     // not a classify → not over-ask
+      c({ expectedRouting: 'reject', actualRouting: 'classify' }), // not an ask → not under-ask
+    ];
+    const r = routingSplitMetrics(cases);
+    expect(r.expected_classify_count).toBe(0);
+    expect(r.expected_ask_count).toBe(0);
+    expect(r.over_ask_rate.n).toBe(0);
+    expect(r.under_ask_rate.n).toBe(0);
+  });
+
+  it('mirrors the frozen-suite no-op: GT-classify-only population, no triggers → over-ask 0, empty slices', () => {
+    const cases: RoutingSplitCase[] = [
+      c({ actualRouting: 'classify' }),
+      c({ actualRouting: 'classify' }),
+      c({ actualRouting: 'classify' }),
+    ];
+    const r = routingSplitMetrics(cases);
+    expect(r.over_ask_rate.k).toBe(0);
+    expect(r.over_ask_rate.n).toBe(3);
+    expect(r.under_ask_rate.n).toBe(0);
+    expect(r.ask_recoverability.n).toBe(0);
+    expect(r.by_trigger).toEqual([]);
   });
 });

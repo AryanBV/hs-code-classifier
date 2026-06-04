@@ -22,6 +22,35 @@ export interface EvalTestCase {
   tier?: 1 | 2 | 3;
   notes?: string;
   ground_truth_confidence?: 'high' | 'medium' | 'low';
+
+  /* ---- STAGED calibrated-ASK fields (S0; OPTIONAL, additive) --------------- *
+   * These fields are carried ONLY by the STAGED divergence-staging gold cases
+   * (backend/src/eval/gold/divergence-staging.ts) and are absent on every frozen
+   * master-suite case, so the frozen suite + report are unaffected. They drive the
+   * over-ask / under-ask split metrics (CALIBRATED-ASK-EVAL-PLAN.md §2). All
+   * OPTIONAL so the existing 385-case run never carries them.                    */
+
+  /**
+   * The discriminating attribute axis the case turns on (e.g. 'form',
+   * 'composition', 'processing_state'). For a should-ASK case this is the silent
+   * axis the system must ask about; for a should-NOT-ask residual-default case it
+   * documents the single axis that is already pinned (or absent). Free-form label
+   * — NOT validated against the AttributeKey enum, since staged axes may be
+   * coarser than the runtime attribute vocabulary. Undefined on frozen cases.
+   */
+  expected_axis?: string;
+
+  /**
+   * SEPARATE, HUMAN-JUDGED signal (CALIBRATED-ASK-EVAL-PLAN.md §2): whether the
+   * silent axis is genuinely answerable by a typical exporter from a single
+   * targeted clarifying question with concrete options. This is a CURATION
+   * judgement recorded by the gold author — it is DISTINCT from, and never
+   * auto-derived from, the TLA-driven answer simulator (`answer-simulator.ts`),
+   * which measures whether the GOLD attribute value happens to match an offered
+   * option. The report surfaces COUNTS of this field; it never computes it.
+   * `undefined`/null on frozen cases and wherever a human has not judged it.
+   */
+  option_answerability?: 'answerable' | 'hard' | 'unanswerable' | null;
 }
 
 export interface EvalReport {
@@ -309,7 +338,94 @@ export interface EvalReport {
     sibling_ask_recoverability_rate: number;
   };
 
+  /**
+   * OVER-ASK / UNDER-ASK split metrics (CALIBRATED-ASK-EVAL-PLAN.md §2 — the
+   * RDC-X / cross-subheading-ASK flip gate). ADDITIVE: present on EVERY report
+   * (the rates are simply 0/empty when no labeled cases exist), so the frozen
+   * 385-case run is unaffected. These are computed PURELY from the per-case
+   * ground-truth `expected_routing` + the system's `actual_routing` (+ the
+   * optional `ask_trigger` slice), so they NEVER require `--simulate-answers` for
+   * the two rates themselves; `ask_recoverability` reuses the simulation path.
+   *
+   * Definitions (see metrics.ts `routingSplitMetrics`):
+   *  - over_ask  = of gold cases whose `expected_routing === 'classify'`, the
+   *    fraction the system routed to ASK (a FALSE ask). Wilson 95% CI.
+   *  - under_ask = of gold cases whose `expected_routing === 'ask'`, the fraction
+   *    the system delivered a classification (a MISSED ask). Wilson 95% CI.
+   *  - ask_recoverability = of cases that the system ASKed AND that carry a
+   *    simulated recovery attempt, the fraction that reached the correct gold
+   *    8-digit code after the gold answer (the "answerable question" signal).
+   *    Empty (0/0) when `--simulate-answers` did not run.
+   *  - `by_trigger` slices each rate by the lever that fired (triage / sibling /
+   *    cross_subheading), so the cross-subheading lever's contribution to
+   *    over-ask is isolated (CALIBRATED-ASK-EVAL-PLAN.md §2). A slice key is
+   *    present only when ≥1 case carries that trigger.
+   */
+  routing_split_metrics: RoutingSplitMetrics;
+
   details: EvalDetail[];
+}
+
+/**
+ * One trigger-sliced view of the over-ask / under-ask / recoverability rates.
+ * For `over_ask` the slice is "of the cases the system over-asked WITH this
+ * lever, …". For `under_ask` it is "of the missed asks, the subset whose
+ * ground-truth axis maps to this lever, …" (a missed ask has no FIRED trigger, so
+ * the slice is keyed by the case's GT axis→trigger mapping when present, else
+ * aggregated under `triage`). For `ask_recoverability` it is "of THIS lever's
+ * fired asks, the fraction recovered". See metrics.ts `routingSplitMetrics`.
+ */
+export interface RoutingSplitByTrigger {
+  /** Lever label: 'triage' | 'sibling' | 'cross_subheading'. */
+  trigger: string;
+  over_ask: RateCI;
+  under_ask: RateCI;
+  ask_recoverability: RateCI;
+}
+
+/** OVER-ASK / UNDER-ASK split metric block (CALIBRATED-ASK-EVAL-PLAN.md §2). */
+export interface RoutingSplitMetrics {
+  /**
+   * OVER-ASK rate: of gold cases whose ground-truth `expected_routing` is
+   * `classify`, the fraction the system returned `responseType === 'question'`
+   * (a false ASK). Wilson 95% CI. n=0 → rate 0, [0,1] (no labeled classify case).
+   */
+  over_ask_rate: RateCI;
+  /**
+   * UNDER-ASK rate: of gold cases whose ground-truth `expected_routing` is `ask`,
+   * the fraction the system returned `responseType === 'classification'` (a
+   * missed ASK). Wilson 95% CI. n=0 → rate 0, [0,1] (no labeled ask case).
+   */
+  under_ask_rate: RateCI;
+  /**
+   * ASK-RECOVERABILITY: of cases the system ASKed that carry a simulated recovery
+   * attempt (i.e. `--simulate-answers` ran AND a gold answer existed), the
+   * fraction that reached the correct gold 8-digit code after the gold answer.
+   * Wilson 95% CI. n=0 → rate 0, [0,1] (no simulated ask case).
+   */
+  ask_recoverability: RateCI;
+  /** Number of gold cases with `expected_routing === 'classify'` (over-ask denom). */
+  expected_classify_count: number;
+  /** Number of gold cases with `expected_routing === 'ask'` (under-ask denom). */
+  expected_ask_count: number;
+  /**
+   * Per-trigger slices. Present only for triggers that ≥1 case carries — empty
+   * array when no case carries a trigger (the frozen-suite default). Lets a gate
+   * isolate the cross-subheading lever's over-ask contribution.
+   */
+  by_trigger: RoutingSplitByTrigger[];
+  /**
+   * Counts of the SEPARATE, human-judged `option_answerability` label across
+   * cases that carry it (CALIBRATED-ASK-EVAL-PLAN.md §2). Diagnostic only — NOT a
+   * rate, NEVER auto-derived. All zero when no case carries the label (frozen).
+   */
+  option_answerability_counts: {
+    answerable: number;
+    hard: number;
+    unanswerable: number;
+    /** Cases carrying NO human judgement (label absent/null). */
+    unjudged: number;
+  };
 }
 
 export interface EvalDetail {
@@ -329,6 +445,36 @@ export interface EvalDetail {
   code_correct?: boolean;
   alternative_chapters?: string[];
   alternative_match?: boolean;
+
+  /**
+   * STAGED gold-case label (S0, OPTIONAL, additive): the case's GROUND-TRUTH
+   * expected routing axis for the over-ask / under-ask split metrics, copied
+   * verbatim from `EvalTestCase.expected_routing`. Already a top-level GT label,
+   * but mirrored onto the detail so the metrics + a saved report can slice by it
+   * without re-joining the suite. Absent has no effect (frozen cases keep it).
+   */
+  // (expected_routing above already carries the GT routing — no extra field.)
+
+  /**
+   * EVAL-ONLY (S0; OPTIONAL, additive, behavior-neutral): which lever raised the
+   * clarifying question on an ASK detail, copied from the v2 result's
+   * `question.trigger` (`'triage' | 'sibling' | 'cross_subheading'`). Present on
+   * ANY ASK case (NOT only simulated-recovery cases), so the over-ask / under-ask
+   * rates can be sliced by trigger even without `--simulate-answers`. Absent on
+   * non-ASK details and on ASK details whose question carried no trigger (legacy /
+   * the current live L1 triage ask, which is therefore reported under the
+   * `triage` slice by convention). This is a SUPERSET surface of the
+   * `ask_recovery_attempt.ask_trigger` (which exists only on simulated cases).
+   */
+  ask_trigger?: 'triage' | 'sibling' | 'cross_subheading';
+
+  /**
+   * STAGED gold-case label (S0; OPTIONAL, additive): SEPARATE, human-judged
+   * option-answerability copied from `EvalTestCase.option_answerability` for
+   * report counting. NEVER auto-derived (it is a curation judgement, distinct
+   * from the answer-simulator's TLA match). Absent/null on frozen cases.
+   */
+  option_answerability?: 'answerable' | 'hard' | 'unanswerable' | null;
 
   /**
    * EVAL-ONLY instrumentation (additive, behavior-neutral). The ranked list of
