@@ -548,7 +548,7 @@ export type { Predicate, PredicateRef, PredicateEvalResult } from './db/predicat
 
 /** Trace event captured at each layer for audit + eval. */
 export interface PipelineTraceEvent {
-  layer:    'L0' | 'L1' | 'L2' | 'L3' | 'L4' | 'L5' | 'L6' | 'L7' | 'L8' | 'QGS' | 'SIBLING-ASK' | 'CALIBRATED-CLASSIFY';
+  layer:    'L0' | 'L1' | 'L2' | 'L3' | 'L4' | 'L5' | 'L6' | 'L7' | 'L8' | 'QGS' | 'SIBLING-ASK' | 'CALIBRATED-CLASSIFY' | 'CROSS-SUBHEADING-ASK';
   /** Wall-clock ms from pipeline start to this event. */
   t_ms:     number;
   /** Stage label / sub-event id. */
@@ -612,9 +612,14 @@ export interface ClarifyingQuestion {
    *   - `'sibling'` — the SIBLING-ASK lever fired AFTER L3 (between candidates):
    *     L4 would have to guess a leaf-level discriminating attribute the user
    *     never specified, so we ask one targeted question instead.
+   *   - `'cross_subheading'` — the CROSS-SUBHEADING ASK lever fired AFTER L3: the
+   *     survivors concentrate into 2+ DIFFERENT subheadings (e.g. 0207.12 whole
+   *     vs 0207.14 cuts) that differ on one forced-choice axis the query is silent
+   *     on, with no residual default to absorb the product. A targeted one-axis
+   *     question is asked instead of guessing the subheading.
    * Absent on questions produced before this field existed (treated as triage).
    */
-  trigger?:                 'triage' | 'sibling';
+  trigger?:                 'triage' | 'sibling' | 'cross_subheading';
 }
 
 /**

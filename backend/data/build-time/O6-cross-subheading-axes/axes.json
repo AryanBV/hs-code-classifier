@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "description": "Cross-subheading forced-choice axis table. Each entry names a 4-digit heading where one QGS-answerable axis splits the heading across 2+ subheadings with NO residual catch-all leaf, so a query silent on that axis cannot pick a leaf and the brain is forced to guess. Derived build-time from tariff_lines + tariff_line_attributes (no Gemini); see DERIVATION.md. Loaded at runtime by lib/cross-subheading-axis-table.ts. This table is a NECESSARY-not-sufficient pre-filter; the runtime gate additionally requires retrieval concentration + query-silence + non-decisive rerank before it asks.",
+  "derived_at": "2026-06-04",
+  "entries": [
+    {
+      "heading": "0201",
+      "attribute": "form",
+      "classes": {
+        "whole": { "values": ["carcass", "half-carcass", "whole-bird", "whole"], "subheadings": ["0201.10"], "example_code": "0201.10.00", "label": "Whole carcasses / half-carcasses" },
+        "cut":   { "values": ["cut", "offal", "boneless", "piece", "fillet"], "subheadings": ["0201.20", "0201.30"], "example_code": "0201.20.00", "label": "Cuts (with bone in or boneless)" }
+      },
+      "question_text": "Is this whole carcasses/half-carcasses, or cuts?",
+      "notes": "Bovine meat, fresh or chilled. No residual 'Other' leaf — a product silent on form cannot default to a leaf. Corpus-verified: whole_subs=1, cut_subs=2, has_bare_residual=false."
+    },
+    {
+      "heading": "0202",
+      "attribute": "form",
+      "classes": {
+        "whole": { "values": ["carcass", "half-carcass", "whole-bird", "whole"], "subheadings": ["0202.10"], "example_code": "0202.10.00", "label": "Whole carcasses / half-carcasses" },
+        "cut":   { "values": ["cut", "offal", "boneless", "piece", "fillet"], "subheadings": ["0202.20", "0202.30"], "example_code": "0202.20.00", "label": "Cuts (with bone in or boneless)" }
+      },
+      "question_text": "Is this whole carcasses/half-carcasses, or cuts?",
+      "notes": "Bovine meat, frozen. No residual 'Other' leaf. Corpus-verified: whole_subs=1, cut_subs=2, has_bare_residual=false."
+    },
+    {
+      "heading": "0204",
+      "attribute": "form",
+      "classes": {
+        "whole": { "values": ["carcass", "half-carcass", "whole-bird", "whole"], "subheadings": ["0204.10", "0204.21", "0204.30", "0204.41"], "example_code": "0204.10.00", "label": "Whole carcasses / half-carcasses" },
+        "cut":   { "values": ["cut", "offal", "boneless", "piece", "fillet"], "subheadings": ["0204.22", "0204.23", "0204.42", "0204.43"], "example_code": "0204.22.00", "label": "Cuts (with bone in or boneless)" }
+      },
+      "question_text": "Is this whole carcasses/half-carcasses, or cuts?",
+      "notes": "Sheep/goat meat. No residual 'Other' leaf. Corpus-verified: whole_subs=4, cut_subs=4, has_bare_residual=false. NOTE: the processing_state (fresh-or-chilled vs frozen) sub-axis is usually pinned by the query; form is the residual silent axis."
+    },
+    {
+      "heading": "0207",
+      "attribute": "form",
+      "classes": {
+        "whole": { "values": ["carcass", "half-carcass", "whole-bird", "whole"], "subheadings": ["0207.11", "0207.12", "0207.24", "0207.25", "0207.41", "0207.42", "0207.51", "0207.52"], "example_code": "0207.12.00", "label": "Whole bird (not cut in pieces)" },
+        "cut":   { "values": ["cut", "offal", "boneless", "piece", "fillet"], "subheadings": ["0207.13", "0207.14", "0207.26", "0207.27", "0207.43", "0207.44", "0207.45", "0207.53", "0207.54", "0207.55"], "example_code": "0207.14.00", "label": "Cuts and offal" }
+      },
+      "question_text": "Is this a whole bird (not cut in pieces), or cuts/offal?",
+      "notes": "Poultry meat (the canonical bug: 'frozen chicken' pins processing_state=frozen but is silent on form, so 0207.12 whole-bird and 0207.14 cuts both survive). No residual 'Other' leaf on the form axis within a species. Corpus-verified: whole_subs=8, cut_subs=10, has_bare_residual=false."
+    }
+  ]
+}

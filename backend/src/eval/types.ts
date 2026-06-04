@@ -422,12 +422,14 @@ export interface EvalDetail {
     initial_question_id: string;
     /**
      * Which lever raised the initial clarifying question this recovery attempt
-     * answered: `'triage'` (L1 chapter-level ASK) or `'sibling'` (the SIBLING-ASK
-     * leaf-disambiguation lever, fired between L3 and L4). Mirrors
-     * `ClarifyingQuestion.trigger`. Absent when the trigger is unknown (treated as
-     * triage). Lets the report split recoverability by lever (sibling_ask_*).
+     * answered: `'triage'` (L1 chapter-level ASK), `'sibling'` (the SIBLING-ASK
+     * leaf-disambiguation lever, fired between L3 and L4), or `'cross_subheading'`
+     * (the CROSS-SUBHEADING ASK lever, also fired between L3 and L4 but spanning
+     * 2+ subheadings). Mirrors `ClarifyingQuestion.trigger`. Absent when the
+     * trigger is unknown (treated as triage). Lets the report split recoverability
+     * by lever (sibling_ask_*, cross_subheading_ask_*).
      */
-    ask_trigger?: 'triage' | 'sibling';
+    ask_trigger?: 'triage' | 'sibling' | 'cross_subheading';
     rounds_attempted: number;
     final_decision: 'CLASSIFY' | 'ASK' | 'REFUSE' | 'UNANSWERABLE';
     final_code_if_classify?: string;

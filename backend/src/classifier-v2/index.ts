@@ -29,6 +29,15 @@ import {
   computeSiblingRerankMargin,
   evaluateCalibratedClassify,
 } from './lib/sibling-ask-trigger';
+import { getAxisEntryForHeading } from './lib/cross-subheading-axis-table';
+import {
+  evaluateCrossSubheadingAsk,
+  buildCrossSubheadingQuestion,
+  computeCrossSubheadingConcentration,
+  headingOfCandidate,
+  subheadingOfCandidate,
+  isResidualLeafDescription,
+} from './lib/cross-subheading-ask';
 import { getTariffLineParentChains } from './lib/supabase-client';
 import { selectToClassifyResult, buildDiagnostics } from './select-to-result';
 import {
@@ -547,6 +556,194 @@ async function maybeSiblingAskPostL4(params: {
  */
 function toPublicAttribute(dbField: string): string {
   return dbField === 'function_' ? 'function' : dbField;
+}
+
+/* ---------------------------------------------------------------------------
+ * CROSS-SUBHEADING ASK lever (POST-L3 uncertainty gate; env-gated; default OFF →
+ * byte-identical).
+ *
+ * The POST-L4 SIBLING-ASK lever above is SAME-SUBHEADING only — it scopes to the
+ * selected leaf's own 6-digit subheading. It structurally cannot fix the "frozen
+ * chicken" class of bug, where the surviving leaves concentrate into TWO DIFFERENT
+ * subheadings (0207.12 whole-bird vs 0207.14 cuts) that differ on a single
+ * QGS-answerable axis (`form`) the query is silent on, with NO residual default to
+ * absorb the product. This lever runs BEFORE L4 (so we never pay the L4/L5/repair
+ * cost just to throw the answer away on an ASK) and asks ONE forced-choice
+ * question whose options come from the O6 axis table — guaranteeing the gold leaf's
+ * class is always selectable (answerability).
+ *
+ * It is UNCERTAINTY-GATED (concentration + query-silence + non-decisive rerank +
+ * calibrated abstention score), NOT attribute-gated, so the prior 33% over-fire is
+ * not repeated. The whole decision core is pure (lib/cross-subheading-ask.ts); this
+ * orchestrator helper only resolves the table entry + the residual-leaf-winner flag
+ * (one PK description fetch) and maps a FIRE to a ClassifyResult.
+ *
+ * GATE: behind `CROSS_SUBHEADING_ASK_ENABLED === 'true'`. Unset/anything else →
+ * returns null BEFORE any table/DB/compute work, so the committed pipeline is
+ * byte-for-byte unchanged. Opt-in for A/B; flipped on only after the eval gate
+ * (backend/docs/CALIBRATED-ASK-EVAL-PLAN.md) passes.
+ *
+ * Tunability (threshold sweeps without code changes):
+ *   - CROSS_SUBHEADING_ASK_ENABLED        'true' → on; anything else → off (default).
+ *   - CROSS_SUBHEADING_ASK_MARGIN         float, default 0.05 (decisiveness cutoff).
+ *   - CROSS_SUBHEADING_ASK_ABSTENTION     float, default 0.50 (abstention-score floor).
+ * --------------------------------------------------------------------------- */
+
+/** True only when the lever is explicitly enabled for this process. */
+function crossSubheadingAskEnabled(): boolean {
+  return process.env.CROSS_SUBHEADING_ASK_ENABLED === 'true';
+}
+
+/** Read + parse the (sweepable) cross-subheading decisiveness margin cutoff. */
+function crossSubheadingAskMargin(): number {
+  const raw = process.env.CROSS_SUBHEADING_ASK_MARGIN;
+  if (raw === undefined) return 0.05;
+  const parsed = Number.parseFloat(raw);
+  return Number.isFinite(parsed) ? parsed : 0.05;
+}
+
+/** Read + parse the (sweepable) calibrated abstention-score floor. */
+function crossSubheadingAskAbstentionFloor(): number {
+  const raw = process.env.CROSS_SUBHEADING_ASK_ABSTENTION;
+  if (raw === undefined) return 0.5;
+  const parsed = Number.parseFloat(raw);
+  return Number.isFinite(parsed) ? parsed : 0.5;
+}
+
+/**
+ * Resolve the DOMINANT 4-digit heading among the L3 survivors: the heading of the
+ * single highest-scored candidate (rerank_score, cosine fallback). Used to look up
+ * the O6 axis-table entry. Pure; '' when no candidate resolves a heading.
+ */
+function dominantHeading(candidates: RetrievalCandidate[]): string {
+  let best: RetrievalCandidate | null = null;
+  let bestScore = -Infinity;
+  for (const c of candidates) {
+    const score = c.rerank_score ?? c.cosine_score;
+    if (score > bestScore) {
+      bestScore = score;
+      best = c;
+    }
+  }
+  return best === null ? '' : headingOfCandidate(best);
+}
+
+/**
+ * The 6-digit subheading of the single highest-scored survivor — the leaf the
+ * brain would otherwise classify into. Used to fetch its description for the
+ * residual-leaf-winner flag. Pure; '' when unresolvable.
+ */
+function topSurvivorSubheading(candidates: RetrievalCandidate[]): string {
+  let best: RetrievalCandidate | null = null;
+  let bestScore = -Infinity;
+  for (const c of candidates) {
+    const score = c.rerank_score ?? c.cosine_score;
+    if (score > bestScore) {
+      bestScore = score;
+      best = c;
+    }
+  }
+  return best === null ? '' : subheadingOfCandidate(best);
+}
+
+/**
+ * POST-L3 CROSS-SUBHEADING ASK gate. Called AFTER L3 produced survivors but BEFORE
+ * L4. Returns a `ClassifyResult` (decision:'ASK', `question.trigger='cross_
+ * subheading'`) when the pure gate fires, else `null` (⇒ the orchestrator proceeds
+ * to L4 unchanged). NEVER throws — any internal error yields null (proceed to L4).
+ *
+ * GATE env-OFF (default) returns null with ZERO table/DB/compute work, so the
+ * committed pipeline is byte-for-byte identical.
+ */
+async function maybeCrossSubheadingAskPostL3(params: {
+  candidates:          RetrievalCandidate[];
+  extractedAttributes: TriageExtractedAttributes;
+  rawTokens:           string[];
+  qBudgetRemaining:    number;
+  state:               PipelineRunState;
+}): Promise<ClassifyResult | null> {
+  // GATE — default OFF. Return BEFORE any work so the default pipeline is unchanged.
+  if (!crossSubheadingAskEnabled()) return null;
+
+  try {
+    const { candidates, extractedAttributes, rawTokens, qBudgetRemaining, state } = params;
+
+    // Cheap preconditions (no I/O): need budget + ≥2 candidates to have a split.
+    if (qBudgetRemaining <= 0) return null;
+    if (candidates.length < 2) return null;
+
+    // Resolve the dominant heading and its forced-choice-axis table entry. A miss
+    // here (the common case) exits before any DB work.
+    const heading = dominantHeading(candidates);
+    if (heading.length === 0) return null;
+    const entry = getAxisEntryForHeading(heading);
+    if (entry === null) return null;
+
+    // Concentration is the cheapest discriminating signal — compute it first so we
+    // only pay the description fetch on a genuine cross-subheading split.
+    const concentration = computeCrossSubheadingConcentration(candidates, entry);
+    if (!concentration.isCrossSubheadingSplit) return null;
+
+    // Is the axis already pinned by the query? (pure, no I/O)
+    const axisPinned = isAttributePinnedByQuery(entry.attribute, extractedAttributes, rawTokens);
+
+    // Residual-leaf-winner flag: fetch ONLY the top survivor's description (one PK
+    // lookup, no LLM). For O6 table headings this is false by construction, but the
+    // flag keeps the gate honest if the table later admits residual-bearing axes.
+    let residualLeafWinner = false;
+    const topSub = topSurvivorSubheading(candidates);
+    if (topSub.length > 0) {
+      // The top survivor's 8-digit leaf code (when it is a leaf) for the lookup.
+      const topLeaf = candidates
+        .filter((c) => subheadingOfCandidate(c) === topSub && /^\d{4}\.\d{2}\.\d{2}$/.test(c.code))
+        .sort((a, b) => (b.rerank_score ?? b.cosine_score) - (a.rerank_score ?? a.cosine_score))[0];
+      if (topLeaf !== undefined) {
+        const chains = await getTariffLineParentChains([topLeaf.code]);
+        const chain = chains.find((c) => c.code === topLeaf.code);
+        residualLeafWinner = isResidualLeafDescription(chain?.description ?? null);
+      }
+    }
+
+    const decision = evaluateCrossSubheadingAsk({
+      candidates,
+      entry,
+      axisPinnedByQuery: axisPinned,
+      residualLeafWinner,
+      options: {
+        marginThreshold: crossSubheadingAskMargin(),
+        abstentionFloor: crossSubheadingAskAbstentionFloor(),
+      },
+    });
+    if (!decision.fire) return null;
+
+    const question = buildCrossSubheadingQuestion(entry, decision.concentration ?? undefined);
+    if (question === null) return null;
+
+    const batch: ClarifyingQuestionBatch = {
+      questions: [question],
+      total_ig_potential: question.info_gain_score ?? 0,
+    };
+
+    recordLayer(state, 'CROSS-SUBHEADING-ASK', 'ask', {
+      heading: entry.heading,
+      attribute: entry.attribute,
+      subheadings: decision.concentration?.subheadings ?? [],
+      classes: decision.concentration?.classes ?? [],
+      margin: decision.margin,
+      abstention_score: decision.abstentionScore,
+    });
+
+    return {
+      decision: 'ASK',
+      question,
+      questions: batch,
+      diagnostics: buildDiagnostics(state),
+    };
+  } catch {
+    // The lever must NEVER throw — a DB/compute hiccup degrades gracefully:
+    // return null ⇒ the orchestrator proceeds to L4 unchanged.
+    return null;
+  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -1258,6 +1455,19 @@ async function classifyInner(
   if (activeRulesOut.filtered_candidates.length === 0) {
     return finalize(BaselineEscalation.onZeroCandidates(state), state, captureTrace);
   }
+
+  // --- POST-L3 CROSS-SUBHEADING ASK gate (env-gated; default OFF) ----------
+  // Fires BEFORE L4 when the survivors concentrate into 2+ subheadings of an O6
+  // forced-choice-axis heading the query is silent on (the "frozen chicken" bug).
+  // Off by default → returns null with zero work → byte-identical legacy path.
+  const crossSubAsk = await maybeCrossSubheadingAskPostL3({
+    candidates:          activeRulesOut.filtered_candidates,
+    extractedAttributes: activeTriageOut.extracted_attributes,
+    rawTokens:           normalized.raw_tokens,
+    qBudgetRemaining:    q_budget_remaining,
+    state,
+  });
+  if (crossSubAsk !== null) return finalize(crossSubAsk, state, captureTrace);
 
   /* ---- L4 — Select + L5 — Verify (with repair loop, Task 7) ----------- *
    * Delegated to the shared runSelectVerifyRepair runner (also driven by the

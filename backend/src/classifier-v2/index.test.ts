@@ -2495,3 +2495,216 @@ describe('classify() — CALIBRATED-CLASSIFY lever GATE ON', () => {
     expect(getParentChainsMock).toHaveBeenCalledTimes(1);
   });
 });
+
+/* ---------------------------------------------------------------------------
+ * CROSS-SUBHEADING ASK lever (POST-L3 gate; env-gated; default OFF →
+ * byte-identical). Fires BEFORE L4 when L3 survivors concentrate into 2+
+ * subheadings of an O6 forced-choice-axis heading (the real committed table is
+ * read from disk — `getAxisEntryForHeading` is NOT mocked) that the query is
+ * silent on. The "frozen chicken" bug: 0207.12 (whole) vs 0207.14 (cuts).
+ * `isAttributePinnedByQuery` and `getTariffLineParentChains` are mocked.
+ * --------------------------------------------------------------------------- */
+
+/** L3 survivors concentrating into 0207.12 (whole) + 0207.14 (cuts), confusably close. */
+const CHICKEN_CROSS_SUB: RetrievalCandidate[] = [
+  mkSibling('0207.12.00', 0.86), // whole bird, frozen
+  mkSibling('0207.14.00', 0.85), // cuts, frozen (margin 0.01 < 0.05)
+];
+/** Both survivors in 0207.12 only → single-subheading concentration (no cross-sub split). */
+const CHICKEN_SINGLE_SUB: RetrievalCandidate[] = [
+  mkSibling('0207.12.00', 0.90),
+  mkSibling('0207.12.00', 0.88),
+];
+/** Decisive: 0207.12 clearly preferred over 0207.14 (margin 0.50 ≥ 0.05). */
+const CHICKEN_DECISIVE: RetrievalCandidate[] = [
+  mkSibling('0207.12.00', 0.95),
+  mkSibling('0207.14.00', 0.45),
+];
+
+/** Non-residual leaf description for the top survivor (the common case for 0207). */
+const CHICKEN_PARENT_CHAINS = [
+  { code: '0207.12.00', description: 'Not cut in pieces, frozen', subheading: '0207.12', heading: '0207', chapter: '02' },
+];
+
+describe('classify() — CROSS-SUBHEADING ASK lever GATE OFF (default → byte-identical)', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    delete process.env.CROSS_SUBHEADING_ASK_ENABLED;
+    delete process.env.SIBLING_ASK_ENABLED; // keep the post-L4 lever off too
+    normalizeMock.mockResolvedValue(normalizedOut);
+    triageMock.mockResolvedValue(triageOut); // CLASSIFY
+    retrieveMock.mockResolvedValue(retrievalOut);
+    // A genuine cross-subheading split so ONLY the env gate suppresses the lever.
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(CHICKEN_CROSS_SUB));
+    selectMock.mockResolvedValue({ ...selectOut, selected_code: '0207.12.00' });
+    verifyMock.mockResolvedValue(verifierPass);
+    getParentChainsMock.mockResolvedValue(CHICKEN_PARENT_CHAINS);
+    isAttributePinnedMock.mockReturnValue(false);
+  });
+
+  afterEach(() => {
+    delete process.env.CROSS_SUBHEADING_ASK_ENABLED;
+  });
+
+  it('returns a CLASSIFY (proceeds to L4) and does ZERO lever work', async () => {
+    const res = await classify('frozen chicken');
+
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.classification?.code).toBe('0207.12.00');
+    // The cross-subheading lever runs BEFORE L4; with the gate off it does NO work:
+    // no PK lookup, no pin check. L4/L5 ran normally.
+    expect(getParentChainsMock).not.toHaveBeenCalled();
+    expect(isAttributePinnedMock).not.toHaveBeenCalled();
+    expect(selectMock).toHaveBeenCalledTimes(1);
+    expect(verifyMock).toHaveBeenCalledTimes(1);
+    // Unchanged escalation path — no CROSS-SUBHEADING-ASK hop.
+    expect(res.diagnostics.escalation_path).not.toContain('CROSS-SUBHEADING-ASK');
+  });
+});
+
+describe('classify() — CROSS-SUBHEADING ASK lever GATE ON', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    process.env.CROSS_SUBHEADING_ASK_ENABLED = 'true';
+    delete process.env.CROSS_SUBHEADING_ASK_MARGIN;
+    delete process.env.CROSS_SUBHEADING_ASK_ABSTENTION;
+    delete process.env.SIBLING_ASK_ENABLED;
+    normalizeMock.mockResolvedValue(normalizedOut);
+    triageMock.mockResolvedValue(triageOut); // CLASSIFY → reaches the post-L3 gate
+    retrieveMock.mockResolvedValue(retrievalOut);
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(CHICKEN_CROSS_SUB));
+    selectMock.mockResolvedValue({ ...selectOut, selected_code: '0207.12.00' });
+    verifyMock.mockResolvedValue(verifierPass);
+    getParentChainsMock.mockResolvedValue(CHICKEN_PARENT_CHAINS);
+    isAttributePinnedMock.mockReturnValue(false); // form NOT pinned → ASK
+  });
+
+  afterEach(() => {
+    delete process.env.CROSS_SUBHEADING_ASK_ENABLED;
+    delete process.env.CROSS_SUBHEADING_ASK_MARGIN;
+    delete process.env.CROSS_SUBHEADING_ASK_ABSTENTION;
+  });
+
+  it('fires an ASK (trigger=cross_subheading) for "frozen chicken" BEFORE L4 runs', async () => {
+    const res = await classify('frozen chicken', { captureTrace: true });
+
+    expect(res.decision).toBe('ASK');
+    expect(res.question?.discriminating_attribute).toBe('form');
+    expect(res.question?.trigger).toBe('cross_subheading');
+    // BOTH macro-class options present + the escape hatch (answerability).
+    const ids = res.question?.options.map((o) => o.id) ?? [];
+    expect(ids).toContain('whole');
+    expect(ids).toContain('cut');
+    expect(ids).toContain('other');
+
+    // CRITICAL: the gate fired BEFORE L4 — Select/Verify NEVER ran (we don't pay
+    // the L4 cost just to throw it away on an ASK).
+    expect(selectMock).not.toHaveBeenCalled();
+    expect(verifyMock).not.toHaveBeenCalled();
+
+    // Trace + path record the CROSS-SUBHEADING-ASK hop with the split metadata.
+    const trace = res.diagnostics.trace ?? [];
+    const step = trace.find((t) => t.layer === 'CROSS-SUBHEADING-ASK' && t.event === 'ask');
+    expect(step).toBeDefined();
+    expect(step?.payload?.heading).toBe('0207');
+    expect(step?.payload?.attribute).toBe('form');
+    expect(step?.payload?.subheadings).toEqual(['0207.12', '0207.14']);
+    const path = res.diagnostics.escalation_path;
+    expect(path[path.length - 1]).toBe('CROSS-SUBHEADING-ASK');
+  });
+
+  it('does NOT fire when form is PINNED ("whole frozen chicken") → proceeds to L4 CLASSIFY', async () => {
+    isAttributePinnedMock.mockReturnValue(true); // user said "whole"
+
+    const res = await classify('whole frozen chicken');
+
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.classification?.code).toBe('0207.12.00');
+    expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('does NOT fire on a single-subheading concentration → proceeds to L4', async () => {
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(CHICKEN_SINGLE_SUB));
+
+    const res = await classify('frozen chicken');
+
+    expect(res.decision).toBe('CLASSIFY');
+    // No cross-subheading split → never reaches the PK lookup / pin check.
+    expect(getParentChainsMock).not.toHaveBeenCalled();
+    expect(isAttributePinnedMock).not.toHaveBeenCalled();
+    expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('does NOT fire when retrieval is DECISIVE (large cross-subheading margin) → L4', async () => {
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(CHICKEN_DECISIVE));
+
+    const res = await classify('frozen chicken');
+
+    expect(res.decision).toBe('CLASSIFY');
+    expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('does NOT fire when the dominant heading is NOT in the axis table → L4', async () => {
+    // 7318 fasteners are not a forced-choice-axis heading.
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(SIBLINGS_SMALL_MARGIN));
+    selectMock.mockResolvedValue(selectOut);
+
+    const res = await classify('hex bolts');
+
+    expect(res.decision).toBe('CLASSIFY');
+    // No table entry → the lever exits before any PK/pin work.
+    expect(getParentChainsMock).not.toHaveBeenCalled();
+    expect(isAttributePinnedMock).not.toHaveBeenCalled();
+    expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('does NOT fire when a residual default leaf wins → L4', async () => {
+    // Top survivor description is a bare "Other" residual → a safe default exists.
+    getParentChainsMock.mockResolvedValue([
+      { code: '0207.12.00', description: 'Fresh or chilled : -- Other', subheading: '0207.12', heading: '0207', chapter: '02' },
+    ]);
+
+    const res = await classify('frozen chicken');
+
+    expect(res.decision).toBe('CLASSIFY');
+    expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('does NOT fire when the Q-budget is exhausted (q_budget=0) → L4', async () => {
+    const res = await classify('frozen chicken', { q_budget: 0 });
+
+    expect(res.decision).toBe('CLASSIFY');
+    expect(getParentChainsMock).not.toHaveBeenCalled();
+    expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('degrades to L4 (never throws) when the lever internals throw', async () => {
+    getParentChainsMock.mockRejectedValue(new Error('DB hiccup'));
+
+    const res = await classify('frozen chicken');
+
+    // Graceful degrade: a thrown error inside the lever proceeds to L4.
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.classification?.code).toBe('0207.12.00');
+    expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('CROSS_SUBHEADING_ASK_MARGIN=0.005 excludes the 0.01 margin → proceeds to L4', async () => {
+    process.env.CROSS_SUBHEADING_ASK_MARGIN = '0.005'; // 0.01 ≥ 0.005 → decisive
+
+    const res = await classify('frozen chicken');
+
+    expect(res.decision).toBe('CLASSIFY');
+    expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('CROSS_SUBHEADING_ASK_ABSTENTION=0.99 suppresses the ASK (score below floor) → L4', async () => {
+    // The 0.01-margin chicken case scores high but below 0.99 → no fire.
+    process.env.CROSS_SUBHEADING_ASK_ABSTENTION = '0.99';
+
+    const res = await classify('frozen chicken');
+
+    expect(res.decision).toBe('CLASSIFY');
+    expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+});
