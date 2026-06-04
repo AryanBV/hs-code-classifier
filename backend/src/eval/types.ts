@@ -426,6 +426,52 @@ export interface RoutingSplitMetrics {
     /** Cases carrying NO human judgement (label absent/null). */
     unjudged: number;
   };
+
+  /**
+   * ASK-RATE-PER-SLICE (Stage 3b — make OVER-asking directly visible). The raw,
+   * UNCONDITIONAL fraction of cases that returned a QUESTION, sliced by
+   * ground-truth `expected_routing` (`should_not_ask` = GT-classify, `should_ask`
+   * = GT-ask, `should_reject` = GT-reject) AND, within each slice, by the firing
+   * lever (`ask_trigger`). Complements over_ask/under_ask: the `should_not_ask`
+   * slice's `ask_rate` IS the over-ask rate (a directly readable view of the
+   * catastrophic over-ask mode that the McNemar OUTRIGHT/top-3 gate is blind to
+   * under --simulate-answers), and the `should_ask` slice's `ask_rate` is
+   * 1 − under_ask (the asker's recall). Each is a Wilson-CI'd {@link RateCI}.
+   * ADDITIVE + no-op-safe: on the frozen 385-suite the `should_not_ask` slice
+   * carries the real GT-classify population (ask_rate ~0), `should_ask` /
+   * `should_reject` are 0/0 over [0,1], and every `by_trigger` is empty — so the
+   * report shape is unchanged. See metrics.ts `askRateMetrics`.
+   */
+  ask_rate_metrics: AskRateMetrics;
+}
+
+/** One ground-truth-routing slice of the ask-rate (Stage 3b). See metrics.ts. */
+export interface AskRateSliceReport {
+  /** Of the cases in this slice, the fraction the system ASKED (Wilson 95% CI). */
+  ask_rate: RateCI;
+  /**
+   * Per-lever breakdown WITHIN this slice (shared slice denominator): of the cases
+   * in the slice, the fraction asked WITH each lever. Present only for triggers a
+   * case in the slice actually fired — empty array on the frozen run.
+   */
+  by_trigger: Array<{ trigger: string; ask_rate: RateCI }>;
+}
+
+/**
+ * ASK-RATE-PER-SLICE block (Stage 3b). The unconditional ask volume sliced by
+ * ground-truth routing + by firing lever; `should_not_ask.ask_rate` == over-ask,
+ * `should_ask.ask_rate` == 1 − under-ask. All slices are no-op-safe (0/0 over
+ * [0,1] when empty), so this block is inert on the frozen suite.
+ */
+export interface AskRateMetrics {
+  /** GT-classify cases (should-NOT-ask): ask_rate here == the over-ask rate. */
+  should_not_ask: AskRateSliceReport;
+  /** GT-ask cases (should-ask): ask_rate here == 1 − under-ask (asker recall). */
+  should_ask: AskRateSliceReport;
+  /** GT-reject cases: a non-zero ask_rate is a reject→ask confusion. */
+  should_reject: AskRateSliceReport;
+  /** Over ALL cases regardless of GT routing — the raw unconditional ask volume. */
+  overall: AskRateSliceReport;
 }
 
 export interface EvalDetail {

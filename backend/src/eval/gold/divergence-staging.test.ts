@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   divergenceStagingGroupA,
   divergenceStagingGroupB,
+  divergenceStagingGroupC,
   divergenceStagingSuite,
 } from './divergence-staging';
 import { masterSuite } from '../test-suites/master-suite';
@@ -18,7 +19,7 @@ describe('divergence-staging (STAGED gold — over-ask / under-ask)', () => {
   it('every case has a unique XSUB id and an 8-digit gold code', () => {
     const ids = new Set<string>();
     for (const tc of divergenceStagingSuite) {
-      expect(tc.id).toMatch(/^XSUB-[AB]\d{2}$/);
+      expect(tc.id).toMatch(/^XSUB-[ABC]\d{2}$/);
       expect(ids.has(tc.id)).toBe(false);
       ids.add(tc.id);
       expect(tc.expected_code).toBeDefined();
@@ -40,11 +41,49 @@ describe('divergence-staging (STAGED gold — over-ask / under-ask)', () => {
     }
   });
 
-  it('Group B is should-NOT-ask residual/default negatives', () => {
-    expect(divergenceStagingGroupB.length).toBeGreaterThanOrEqual(8);
+  it('Group B is should-NOT-ask residual/default negatives (incl. the Stage-3b over-ask traps)', () => {
+    // Stage 3b expanded Group B with ~10 incidental-axis over-ask traps.
+    expect(divergenceStagingGroupB.length).toBeGreaterThanOrEqual(18);
     for (const tc of divergenceStagingGroupB) {
       expect(tc.expected_routing).toBe('classify');
     }
+  });
+
+  it('Group B Stage-3b over-ask traps cover the review-named incidental axes', () => {
+    const byId = new Map(divergenceStagingGroupB.map((t) => [t.id, t]));
+    // Unflagged-handloom -> mill/Other default (the review-named trap), two chapters.
+    expect(byId.get('XSUB-B11')!.expected_code).toBe('6204.62.90'); // women's cotton trousers
+    expect(byId.get('XSUB-B12')!.expected_code).toBe('6302.21.90'); // printed cotton bed linen
+    // Embellishment / special-variant (ballistic) -> residual.
+    expect(byId.get('XSUB-B13')!.expected_code).toBe('6914.90.90');
+    // NUMERIC-BAND case with answerability 'hard'.
+    expect(byId.get('XSUB-B14')!.option_answerability).toBe('hard');
+    // unmarked-default-wins across different chapters (gold codes, residual leaves).
+    expect(byId.get('XSUB-B16')!.expected_code).toBe('5208.21.90');
+    expect(byId.get('XSUB-B17')!.expected_code).toBe('7113.19.19');
+  });
+
+  it('Group C is a stratified cross-chapter sample with honest human-judged routing', () => {
+    // ~20-30 cases drawn broadly across chapters (NOT the special-cased families).
+    expect(divergenceStagingGroupC.length).toBeGreaterThanOrEqual(20);
+    const chapters = new Set(divergenceStagingGroupC.map((t) => t.expected_chapter));
+    // Broad chapter spread — at least ~15 distinct chapters.
+    expect(chapters.size).toBeGreaterThanOrEqual(15);
+    for (const tc of divergenceStagingGroupC) {
+      // Every Group C case is honestly labeled classify OR ask (never reject here).
+      expect(['classify', 'ask']).toContain(tc.expected_routing);
+      // Conservative ruler: ask cases must document why (ambiguity) + answerability.
+      if (tc.expected_routing === 'ask') {
+        expect(tc.expected_ambiguity).toBeDefined();
+        expect(tc.option_answerability).toBeDefined();
+      }
+    }
+    // The sample IS mixed (not all one label) — it must carry both should-ask and
+    // should-NOT-ask cases to measure over- AND under-ask corpus-wide.
+    const askN = divergenceStagingGroupC.filter((t) => t.expected_routing === 'ask').length;
+    const classifyN = divergenceStagingGroupC.filter((t) => t.expected_routing === 'classify').length;
+    expect(askN).toBeGreaterThanOrEqual(1);
+    expect(classifyN).toBeGreaterThanOrEqual(1);
   });
 
   it('includes the REQUIRED Group A discriminator cases', () => {

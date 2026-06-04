@@ -450,6 +450,109 @@ export function routingSplitMetrics(cases: RoutingSplitCase[]): RoutingSplitResu
   };
 }
 
+/* ============================================================================
+ * ASK-RATE-PER-SLICE metric (Stage 3b — make OVER-asking directly visible)
+ *
+ * The over_ask/under_ask split above answers "of GT-classify, how many false
+ * asks?" and "of GT-ask, how many missed?". The ask_rate is the COMPLEMENTARY,
+ * raw view: the unconditional fraction of cases that returned a QUESTION, sliced
+ * BOTH by ground-truth routing (should-ask vs should-NOT-ask) AND by the lever
+ * (`ask_trigger`) that fired. Combined with over_ask/under_ask it makes the
+ * over-ask rate fall straight out of the report:
+ *
+ *   - ask_rate within the `should_not_ask` slice  ==  over_ask_rate  (a FALSE ask
+ *     of a case that should have classified — the catastrophic mode the review
+ *     named, which is INVISIBLE to the McNemar OUTRIGHT/top-3 gate under
+ *     --simulate-answers because an over-ask still lands the right code).
+ *   - ask_rate within the `should_ask` slice  ==  1 − under_ask_rate  (the recall
+ *     of the asker on cases that genuinely need a question).
+ *
+ * Pure + deterministic + Wilson-CI'd like every other primitive here, and
+ * NO-OP-SAFE: an empty population (or a slice with no member cases) yields rate 0
+ * over n=0 with the full [0,1] interval, so the frozen 385 run (whose only labeled
+ * routing is `classify`) is unaffected — its `should_not_ask` slice carries the
+ * real GT-classify population while `should_ask` is 0/0 and `by_trigger` is empty.
+ * ============================================================================ */
+
+/** Minimal per-case input the ask-rate metric needs (folded from an EvalDetail). */
+export interface AskRateCase {
+  /** Ground-truth routing label for the case (from EvalTestCase.expected_routing). */
+  expectedRouting: 'classify' | 'ask' | 'reject';
+  /** What the system actually did ('classify' | 'ask' | 'reject' | 'error' | …). */
+  actualRouting: string;
+  /**
+   * The lever that raised the question when the system ASKed (from the v2
+   * `question.trigger`). Undefined on a non-ASK case, OR on an ASK whose question
+   * carried no trigger — the latter is bucketed under {@link DEFAULT_ASK_TRIGGER}.
+   */
+  askTrigger?: AskTrigger;
+}
+
+/** One ground-truth-routing slice of the ask-rate (its trigger breakdown nested). */
+export interface AskRateSlice {
+  /** Cases the system ASKED in this slice (k) over all cases in the slice (n), Wilson CI. */
+  ask_rate: RateCI;
+  /**
+   * Per-lever breakdown WITHIN this slice: of all cases in the slice (shared
+   * denominator), the fraction the system asked WITH this lever. Present only for
+   * triggers that ≥1 asked case in the slice carries — empty when none asked.
+   */
+  by_trigger: Array<{ trigger: AskTrigger; ask_rate: RateCI }>;
+}
+
+/** ask-rate result: one slice per ground-truth routing class, plus an overall rate. */
+export interface AskRateResult {
+  /** Of GT-classify cases (should-NOT-ask): ask_rate here == over_ask_rate. */
+  should_not_ask: AskRateSlice;
+  /** Of GT-ask cases (should-ask): ask_rate here == 1 − under_ask_rate (asker recall). */
+  should_ask: AskRateSlice;
+  /** Of GT-reject cases: a non-zero rate is a different (reject→ask) confusion. */
+  should_reject: AskRateSlice;
+  /** Over ALL cases regardless of GT routing — the raw unconditional ask volume. */
+  overall: AskRateSlice;
+}
+
+/**
+ * Build one ask-rate slice (overall rate + per-trigger breakdown) from a case
+ * subset. The per-trigger denominator is the WHOLE subset (so each lever's rate is
+ * "of these cases, the fraction asked with this lever") and triggers with no asked
+ * case are omitted, keeping the frozen-run breakdown empty. Pure helper.
+ */
+function buildAskRateSlice(slice: AskRateCase[]): AskRateSlice {
+  const n = slice.length;
+  const asked = slice.filter((c) => isActualAsk(c.actualRouting));
+  const triggers = new Set<AskTrigger>();
+  for (const c of asked) triggers.add(c.askTrigger ?? DEFAULT_ASK_TRIGGER);
+  const TRIGGER_ORDER: AskTrigger[] = ['triage', 'sibling', 'cross_subheading', 'divergence'];
+  const by_trigger = TRIGGER_ORDER.filter((t) => triggers.has(t)).map((t) => {
+    const k = asked.filter((c) => (c.askTrigger ?? DEFAULT_ASK_TRIGGER) === t).length;
+    return { trigger: t, ask_rate: wilsonInterval(k, n) };
+  });
+  return { ask_rate: wilsonInterval(asked.length, n), by_trigger };
+}
+
+/**
+ * ASK-RATE-PER-SLICE (Stage 3b). The fraction of cases that returned a QUESTION,
+ * sliced by ground-truth routing AND by the firing lever. Pure + deterministic +
+ * no-op-safe (every slice is a {@link RateCI}; an empty slice is 0/0 over [0,1]).
+ *
+ * The `should_not_ask` slice's `ask_rate` IS the over-ask rate (a directly visible
+ * read of the catastrophic over-ask mode); the `should_ask` slice's `ask_rate` is
+ * the asker's recall (1 − under-ask). `by_trigger` isolates which lever drove the
+ * asks in each slice (e.g. the cross_subheading lever's over-ask contribution).
+ */
+export function askRateMetrics(cases: AskRateCase[]): AskRateResult {
+  const classify = cases.filter((c) => c.expectedRouting === 'classify');
+  const ask = cases.filter((c) => c.expectedRouting === 'ask');
+  const reject = cases.filter((c) => c.expectedRouting === 'reject');
+  return {
+    should_not_ask: buildAskRateSlice(classify),
+    should_ask: buildAskRateSlice(ask),
+    should_reject: buildAskRateSlice(reject),
+    overall: buildAskRateSlice(cases),
+  };
+}
+
 /**
  * top-k code accuracy over a frozen population: the fraction of cases whose gold
  * code appears among the FIRST `k` candidate codes (selected + alternatives).

@@ -30,9 +30,11 @@ import {
   percentile,
   topKCodeAccuracy,
   routingSplitMetrics,
+  askRateMetrics,
   type CalibrationSample,
   type TopKCase,
   type RoutingSplitCase,
+  type AskRateCase,
 } from './metrics';
 import { masterSuite, validateSuite } from './test-suites/master-suite';
 import { quickSuite } from './test-suites/quick-suite';
@@ -691,6 +693,20 @@ function buildReport(
     }));
   const split = routingSplitMetrics(splitCases);
 
+  // ASK-RATE-PER-SLICE (Stage 3b — make OVER-asking directly visible). Reuses the
+  // SAME folded source as the split metrics (every scored case carries
+  // expected_routing + actual_routing + the optional ask_trigger). The
+  // `should_not_ask.ask_rate` == over_ask_rate and `should_ask.ask_rate` ==
+  // 1 − under_ask, sliced by firing lever. No-op-safe: on the frozen suite the
+  // should_not_ask slice carries the real GT-classify population and the rest are
+  // 0/0 with empty trigger breakdowns.
+  const askRateCases: AskRateCase[] = splitCases.map((c) => ({
+    expectedRouting: c.expectedRouting,
+    actualRouting: c.actualRouting,
+    ...(c.askTrigger ? { askTrigger: c.askTrigger } : {}),
+  }));
+  const askRate = askRateMetrics(askRateCases);
+
   // option_answerability counts (human-judged; never auto-derived). Diagnostic.
   const answerabilityCounts = { answerable: 0, hard: 0, unanswerable: 0, unjudged: 0 };
   for (const d of scored) {
@@ -819,6 +835,10 @@ function buildReport(
       expected_ask_count: split.expected_ask_count,
       by_trigger: split.by_trigger,
       option_answerability_counts: answerabilityCounts,
+      // ASK-RATE-PER-SLICE (Stage 3b): unconditional ask volume by GT routing +
+      // lever. should_not_ask.ask_rate == over-ask; should_ask.ask_rate ==
+      // 1 − under-ask. No-op-safe on the frozen suite.
+      ask_rate_metrics: askRate,
     },
     details,
   };
@@ -1033,6 +1053,17 @@ function printSummary(report: EvalReport): void {
     const oac = rs.option_answerability_counts;
     if (oac.answerable + oac.hard + oac.unanswerable > 0) {
       console.log(`  option_answerability (human-judged): answerable ${oac.answerable} | hard ${oac.hard} | unanswerable ${oac.unanswerable} | unjudged ${oac.unjudged}`);
+    }
+    // ASK-RATE-PER-SLICE (Stage 3b — over-ask directly visible).
+    const ar = rs.ask_rate_metrics;
+    if (ar) {
+      console.log(`  ASK-RATE per slice (Stage 3b — should_not_ask.ask_rate == over-ask):`);
+      console.log(`    should_NOT_ask (GT classify): ${fmtCI(ar.should_not_ask.ask_rate)}  <- OVER-ASK`);
+      console.log(`    should_ask     (GT ask):      ${fmtCI(ar.should_ask.ask_rate)}  (== 1 − under-ask)`);
+      console.log(`    overall ask volume:           ${fmtCI(ar.overall.ask_rate)}`);
+      for (const t of ar.should_not_ask.by_trigger) {
+        console.log(`      [over-ask via ${t.trigger}] ${fmtCI(t.ask_rate)}`);
+      }
     }
   }
 

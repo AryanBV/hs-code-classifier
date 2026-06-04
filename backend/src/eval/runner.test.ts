@@ -914,4 +914,35 @@ describe('buildReportForTest — routing_split_metrics (over-ask / under-ask)', 
     expect(xsub.ask_recoverability.k).toBe(1);
     expect(xsub.ask_recoverability.n).toBe(2);
   });
+
+  it('ask_rate_metrics folds through buildReport (over-ask directly visible per slice)', () => {
+    const details: import('./types').EvalDetail[] = [
+      // GT classify, classified — fine.
+      detail({ test_case_id: 'C1', expected_code: '7318.15.00', actual_code: '7318.15.00', code_correct: true }),
+      // GT classify, system ASKed via cross_subheading → an OVER-ASK in should_not_ask.
+      detail({ test_case_id: 'O1', expected_routing: 'classify', actual_routing: 'ask', routing_correct: false,
+        expected_code: '0207.12.00', ask_trigger: 'cross_subheading' }),
+      // GT ask, asked correctly → should_ask.ask_rate numerator.
+      detail({ test_case_id: 'A1', expected_routing: 'ask', actual_routing: 'ask', routing_correct: true,
+        expected_code: '0207.12.00', ask_trigger: 'triage' }),
+    ];
+    const r = buildReportForTest(details);
+    const ar = r.routing_split_metrics.ask_rate_metrics;
+    expect(ar).toBeDefined();
+    // should_not_ask (GT classify): 2 cases, 1 over-asked → ask_rate 1/2 == over_ask.
+    expect(ar.should_not_ask.ask_rate.k).toBe(1);
+    expect(ar.should_not_ask.ask_rate.n).toBe(2);
+    expect(ar.should_not_ask.ask_rate.rate).toBeCloseTo(0.5, 10);
+    expect(ar.should_not_ask.ask_rate.rate).toBeCloseTo(r.routing_split_metrics.over_ask_rate.rate, 10);
+    // over-ask sliced by the firing lever.
+    const xsub = ar.should_not_ask.by_trigger.find((t) => t.trigger === 'cross_subheading')!;
+    expect(xsub.ask_rate.k).toBe(1);
+    expect(xsub.ask_rate.n).toBe(2);
+    // should_ask (GT ask): 1 case, asked → ask_rate 1/1.
+    expect(ar.should_ask.ask_rate.k).toBe(1);
+    expect(ar.should_ask.ask_rate.n).toBe(1);
+    // overall: 2 asks of 3 cases.
+    expect(ar.overall.ask_rate.k).toBe(2);
+    expect(ar.overall.ask_rate.n).toBe(3);
+  });
 });

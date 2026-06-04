@@ -8,9 +8,11 @@ import {
   mean,
   topKCodeAccuracy,
   routingSplitMetrics,
+  askRateMetrics,
   type CalibrationSample,
   type TopKCase,
   type RoutingSplitCase,
+  type AskRateCase,
 } from './metrics';
 
 // ---------------------------------------------------------------------------
@@ -428,5 +430,145 @@ describe('routingSplitMetrics', () => {
     expect(r.under_ask_rate.n).toBe(0);
     expect(r.ask_recoverability.n).toBe(0);
     expect(r.by_trigger).toEqual([]);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// askRateMetrics — ASK-RATE-PER-SLICE (Stage 3b: make OVER-asking visible)
+// ---------------------------------------------------------------------------
+
+describe('askRateMetrics', () => {
+  const a = (over: Partial<AskRateCase> = {}): AskRateCase => ({
+    expectedRouting: 'classify',
+    actualRouting: 'classify',
+    ...over,
+  });
+
+  it('empty population → every slice 0/0 with the full [0,1] interval, no crash', () => {
+    const r = askRateMetrics([]);
+    for (const slice of [r.should_not_ask, r.should_ask, r.should_reject, r.overall]) {
+      expect(slice.ask_rate.n).toBe(0);
+      expect(slice.ask_rate.rate).toBe(0);
+      expect(slice.ask_rate.lower).toBe(0);
+      expect(slice.ask_rate.upper).toBe(1);
+      expect(slice.by_trigger).toEqual([]);
+    }
+  });
+
+  it('OVER-ASK is directly visible: should_not_ask.ask_rate == over_ask_rate', () => {
+    // 4 GT-classify cases; 1 over-asked → should_not_ask.ask_rate = 1/4.
+    const cases: AskRateCase[] = [
+      a({ actualRouting: 'classify' }),
+      a({ actualRouting: 'classify' }),
+      a({ actualRouting: 'ask', askTrigger: 'cross_subheading' }), // FALSE ask
+      a({ actualRouting: 'classify' }),
+    ];
+    const ar = askRateMetrics(cases);
+    expect(ar.should_not_ask.ask_rate.k).toBe(1);
+    expect(ar.should_not_ask.ask_rate.n).toBe(4);
+    expect(ar.should_not_ask.ask_rate.rate).toBeCloseTo(0.25, 10);
+    // Cross-check the equivalence the whole metric exists to prove.
+    const split = routingSplitMetrics(cases as RoutingSplitCase[]);
+    expect(ar.should_not_ask.ask_rate.rate).toBeCloseTo(split.over_ask_rate.rate, 10);
+    expect(ar.should_not_ask.ask_rate.k).toBe(split.over_ask_rate.k);
+  });
+
+  it('should_ask.ask_rate == 1 − under_ask_rate (the asker recall view)', () => {
+    // 3 GT-ask cases; 2 correctly asked, 1 missed (classified) → ask_rate 2/3,
+    // under-ask 1/3, and 2/3 == 1 − 1/3.
+    const cases: AskRateCase[] = [
+      a({ expectedRouting: 'ask', actualRouting: 'ask', askTrigger: 'triage' }),
+      a({ expectedRouting: 'ask', actualRouting: 'ask', askTrigger: 'triage' }),
+      a({ expectedRouting: 'ask', actualRouting: 'classify' }), // missed ask
+    ];
+    const ar = askRateMetrics(cases);
+    expect(ar.should_ask.ask_rate.k).toBe(2);
+    expect(ar.should_ask.ask_rate.n).toBe(3);
+    expect(ar.should_ask.ask_rate.rate).toBeCloseTo(2 / 3, 10);
+    const split = routingSplitMetrics(cases as RoutingSplitCase[]);
+    expect(ar.should_ask.ask_rate.rate).toBeCloseTo(1 - split.under_ask_rate.rate, 10);
+  });
+
+  it('slices over-ask by the FIRED lever (isolates cross_subheading vs sibling)', () => {
+    // 5 GT-classify; 2 over-asked by cross_subheading, 1 by sibling.
+    const cases: AskRateCase[] = [
+      a({ actualRouting: 'ask', askTrigger: 'cross_subheading' }),
+      a({ actualRouting: 'ask', askTrigger: 'cross_subheading' }),
+      a({ actualRouting: 'ask', askTrigger: 'sibling' }),
+      a({ actualRouting: 'classify' }),
+      a({ actualRouting: 'classify' }),
+    ];
+    const ar = askRateMetrics(cases);
+    expect(ar.should_not_ask.ask_rate.k).toBe(3);
+    expect(ar.should_not_ask.ask_rate.n).toBe(5);
+    const xsub = ar.should_not_ask.by_trigger.find((t) => t.trigger === 'cross_subheading')!;
+    const sibling = ar.should_not_ask.by_trigger.find((t) => t.trigger === 'sibling')!;
+    expect(xsub.ask_rate.k).toBe(2);
+    expect(xsub.ask_rate.n).toBe(5); // shared slice denominator
+    expect(sibling.ask_rate.k).toBe(1);
+    expect(sibling.ask_rate.n).toBe(5);
+    // triage never fired in this slice → absent.
+    expect(ar.should_not_ask.by_trigger.find((t) => t.trigger === 'triage')).toBeUndefined();
+    // Deterministic slice order: triage(absent), sibling, cross_subheading.
+    expect(ar.should_not_ask.by_trigger.map((t) => t.trigger)).toEqual([
+      'sibling',
+      'cross_subheading',
+    ]);
+  });
+
+  it('an ASK with no explicit trigger is bucketed under "triage" by convention', () => {
+    const cases: AskRateCase[] = [
+      a({ actualRouting: 'ask' }), // no trigger → triage
+      a({ actualRouting: 'classify' }),
+    ];
+    const ar = askRateMetrics(cases);
+    const triage = ar.should_not_ask.by_trigger.find((t) => t.trigger === 'triage')!;
+    expect(triage).toBeDefined();
+    expect(triage.ask_rate.k).toBe(1);
+    expect(triage.ask_rate.n).toBe(2);
+  });
+
+  it('overall slice is the raw unconditional ask volume across all GT classes', () => {
+    const cases: AskRateCase[] = [
+      a({ expectedRouting: 'classify', actualRouting: 'ask', askTrigger: 'triage' }),
+      a({ expectedRouting: 'ask', actualRouting: 'ask', askTrigger: 'triage' }),
+      a({ expectedRouting: 'classify', actualRouting: 'classify' }),
+      a({ expectedRouting: 'reject', actualRouting: 'reject' }),
+    ];
+    const ar = askRateMetrics(cases);
+    expect(ar.overall.ask_rate.k).toBe(2); // two asks total
+    expect(ar.overall.ask_rate.n).toBe(4);
+    expect(ar.overall.ask_rate.rate).toBeCloseTo(0.5, 10);
+  });
+
+  it('reject GT cases populate should_reject (reject→ask confusion is visible)', () => {
+    const cases: AskRateCase[] = [
+      a({ expectedRouting: 'reject', actualRouting: 'ask', askTrigger: 'triage' }),
+      a({ expectedRouting: 'reject', actualRouting: 'reject' }),
+    ];
+    const ar = askRateMetrics(cases);
+    expect(ar.should_reject.ask_rate.k).toBe(1);
+    expect(ar.should_reject.ask_rate.n).toBe(2);
+    expect(ar.should_reject.ask_rate.rate).toBeCloseTo(0.5, 10);
+    // No GT-ask case here.
+    expect(ar.should_ask.ask_rate.n).toBe(0);
+  });
+
+  it('no-op-safe frozen mirror: GT-classify-only, zero asks → should_not_ask 0/n, others 0/0', () => {
+    const cases: AskRateCase[] = [
+      a({ actualRouting: 'classify' }),
+      a({ actualRouting: 'classify' }),
+      a({ actualRouting: 'classify' }),
+    ];
+    const ar = askRateMetrics(cases);
+    expect(ar.should_not_ask.ask_rate.k).toBe(0);
+    expect(ar.should_not_ask.ask_rate.n).toBe(3); // real GT-classify denom
+    expect(ar.should_not_ask.ask_rate.rate).toBe(0);
+    expect(ar.should_not_ask.by_trigger).toEqual([]);
+    expect(ar.should_ask.ask_rate.n).toBe(0); // 0/0 [0,1]
+    expect(ar.should_ask.ask_rate.upper).toBe(1);
+    expect(ar.should_reject.ask_rate.n).toBe(0);
+    expect(ar.overall.ask_rate.k).toBe(0);
+    expect(ar.overall.ask_rate.n).toBe(3);
   });
 });
