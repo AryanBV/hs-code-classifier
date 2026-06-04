@@ -310,9 +310,9 @@
        (see .doc-sheet / .surface-grain), NOT on the scrolling viewport, so
        there is no background-attachment:fixed (scroll-jank + iOS bugs gone). */
     background-image: radial-gradient(
-      125% 125% at 12% -8%,
-      color-mix(in oklab, var(--surface) 60%, transparent) 0%,
-      transparent 52%
+      120% 120% at 50% -10%,
+      color-mix(in oklab, var(--surface) 38%, transparent) 0%,
+      transparent 100%
     );
   }
 
@@ -512,9 +512,9 @@
     /* a top-lit warm pool so the desk has depth, brightest where the sheet
        sits — light falls from above, the same idiom as the sheet's toplight */
     background-image: radial-gradient(
-      130% 90% at 50% -12%,
-      color-mix(in oklab, var(--surface) 52%, transparent) 0%,
-      transparent 58%
+      135% 100% at 50% -15%,
+      color-mix(in oklab, var(--surface) 32%, transparent) 0%,
+      transparent 100%
     );
   }
   /* The desk's paper grain + the framing rules. The grain is the SAME fractal
@@ -534,30 +534,15 @@
     mix-blend-mode: screen;
     opacity: 0.04;
   }
-  /* Framing rules — only where there is surplus margin to frame (>=lg). Two
-     faint vertical rules bracket the fixed 1180px column so the surrounding
-     desk reads as the EDGE OF THE WORK, not emptiness. Composited over the
-     grain via a second background layer on the same pseudo-element. */
-  @media (min-width: 1024px) {
-    .workspace-surface::after {
-      opacity: 0.5;
-      background-image:
-        linear-gradient(
-          to right,
-          transparent calc(50% - (var(--measure-wide) / 2) - 1px),
-          color-mix(in oklab, var(--rule) 55%, transparent) calc(50% - (var(--measure-wide) / 2)),
-          transparent calc(50% - (var(--measure-wide) / 2) + 1px),
-          transparent calc(50% + (var(--measure-wide) / 2) - 1px),
-          color-mix(in oklab, var(--rule) 55%, transparent) calc(50% + (var(--measure-wide) / 2)),
-          transparent calc(50% + (var(--measure-wide) / 2) + 1px)
-        ),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.42' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
-      background-size: 100% 100%, 160px 160px;
-    }
-    .dark .workspace-surface::after {
-      opacity: 0.42;
-    }
-  }
+  /* (Framing rules removed 2026-06-04. They lived on the SAME pseudo-element as
+     the grain, so making the rules visible at >=lg required bumping the shared
+     opacity to ~0.5 — which also amplified the 160px grain tile into a visibly
+     repeating "boxed" texture, and the rules themselves read as hard vertical
+     seams. The desk now keeps the grain at a constant whisper at every width and
+     relies on the soft top-light pool + the sheet's own directional cast for
+     depth, so the surface stays even and seamless. If an "edge of work" frame is
+     ever wanted again, render it on a SEPARATE layer with its own baked-in alpha
+     — never via the grain element's opacity.) */
   /* ruled baselines the body text sits on (faint, ~1.55 rhythm) */
   .ruled-baselines {
     background-image: repeating-linear-gradient(
