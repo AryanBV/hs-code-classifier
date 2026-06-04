@@ -43,6 +43,7 @@ import {
   type RodtepRow,
   type UqcRow,
   type FreshnessBudgets,
+  type ExportDutySource,
 } from './trade-intel-queries';
 import {
   normalizePolicyStatus,
@@ -207,6 +208,21 @@ function isStale(ageDays: number | null | undefined, budgetDays: number): boolea
   return ageDays > budgetDays;
 }
 
+/**
+ * Whole-day age of a YYYY-MM-DD snapshot vs today (UTC), or null when the date is
+ * null/unparseable. The rate getters compute `age_days` in Postgres; the
+ * export-duty SOURCE row (used to date the NIL default) does not carry an age, so
+ * we derive it here in UTC to stay timezone-stable and mirror the SQL semantics.
+ */
+function ageDaysFromAsOn(asOn: string | null): number | null {
+  if (asOn === null) return null;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(asOn)) return null;
+  const then = Date.parse(`${asOn}T00:00:00Z`);
+  if (Number.isNaN(then)) return null;
+  const now = Date.parse(`${new Date().toISOString().slice(0, 10)}T00:00:00Z`);
+  return Math.floor((now - then) / 86_400_000);
+}
+
 /* ---------------------------------------------------------------------------
  * Per-scheme builders
  * --------------------------------------------------------------------------- */
@@ -272,16 +288,20 @@ function buildExportDuty(
 ): TradeExportDuty | TradeVerifyState | null {
   if (row === null) {
     // No row at all: NIL default IF we have a registered export-duty source to
-    // date it to; otherwise null (we will not assert NIL with no source).
+    // date it to; otherwise null (we will not assert NIL with no source). Per
+    // Customs-Tariff 2nd-Schedule Note 4, any line not listed there carries NIL
+    // export duty — but we still DATE it to the source snapshot so a duty that
+    // appears between scrapes is the tracked risk (SHOW-WITH-ADVISORY, not hide).
     if (dutySource.sourceUrl === null) return null;
+    const nilStale = isStale(ageDaysFromAsOn(dutySource.asOn), budgetFor('export_duty', budgets));
     return {
       isNil:             true,
       rateText:          null,
       conditionVerbatim: null,
       mappable:          true,
       verify:            false,
-      stale:             false,
-      staleAdvisory:     null,
+      stale:             nilStale,
+      staleAdvisory:     nilStale ? EXPORT_DUTY_STALE_ADVISORY : null,
       asOn:              dutySource.asOn,
       sourceUrl:         dutySource.sourceUrl,
       indicative:        true,
@@ -420,6 +440,7 @@ export async function assembleTradeIntelligence(
       rodtepRow,
       uqcRow,
       budgets,
+      dutySource,
     ] = await Promise.all([
       safe(queries.getPolicy(code), null),
       safe(queries.getExportDuty(code), null),
@@ -427,6 +448,7 @@ export async function assembleTradeIntelligence(
       isApparel ? Promise.resolve(null) : safe(queries.getRodtep(code), null),
       safe(queries.getUqc(code), null),
       safe(queries.getFreshnessBudgets(), {} as FreshnessBudgets),
+      safe(queries.getExportDutySource(), { asOn: null, sourceUrl: null } as ExportDutySource),
     ]);
 
     const exportPolicy = buildExportPolicy(
@@ -438,11 +460,14 @@ export async function assembleTradeIntelligence(
     );
 
     // Export-duty NIL default needs a registered export-duty source to date it to.
-    // We read that scheme's most-recent source via the budgets/source registry —
-    // but the budgets map carries no asOn/url, so when there is NO export-duty row
-    // and NO duty source, buildExportDuty returns null (we do not assert NIL with
-    // no source). When a duty row exists, its own as_on + source_url are used.
-    const exportDuty = buildExportDuty(dutyRow, budgets, { asOn: null, sourceUrl: null });
+    // `dutySource` is the most-recent `trade_intel_sources` row for scheme=
+    // 'export_duty' (as_on 2022-05-21 + the India-Code 2nd-Schedule URL). Threading
+    // it lets the ~12,374 lines with NO export_duty_rates row show "NIL · as on
+    // 2022-05-21 · verify on CBIC" instead of no duty datum at all. When a duty row
+    // exists, ITS own as_on + source_url win (dutySource is used only for the NIL
+    // default). When neither a row NOR a registered source exists, NIL is not
+    // asserted (buildExportDuty returns null).
+    const exportDuty = buildExportDuty(dutyRow, budgets, dutySource);
 
     // EXCLUSIVITY enforced structurally above; here we simply pick the one built.
     const incentive = isApparel ? buildRosctl(rosctlRow, budgets) : buildRodtep(rodtepRow, budgets);

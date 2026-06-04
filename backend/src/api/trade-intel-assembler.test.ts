@@ -20,6 +20,7 @@ import type {
   RodtepRow,
   UqcRow,
   FreshnessBudgets,
+  ExportDutySource,
 } from './trade-intel-queries';
 
 /* ---------------------------------------------------------------------------
@@ -28,22 +29,36 @@ import type {
  * assembler falls back to DEFAULT_FRESHNESS_BUDGET_DAYS.
  * --------------------------------------------------------------------------- */
 function mockQueries(over: Partial<{
-  policy:   PolicyRow | null;
-  duty:     ExportDutyRow | null;
-  rosctl:   RosctlRow | null;
-  rodtep:   RodtepRow | null;
-  uqc:      UqcRow | null;
-  budgets:  FreshnessBudgets;
+  policy:      PolicyRow | null;
+  duty:        ExportDutyRow | null;
+  rosctl:      RosctlRow | null;
+  rodtep:      RodtepRow | null;
+  uqc:         UqcRow | null;
+  budgets:     FreshnessBudgets;
+  dutySource:  ExportDutySource;
 }> = {}): TradeIntelQueries {
   return {
-    getPolicy:            async () => over.policy   ?? null,
-    getExportDuty:        async () => over.duty     ?? null,
-    getRosctl:            async () => over.rosctl   ?? null,
-    getRodtep:            async () => over.rodtep   ?? null,
-    getUqc:               async () => over.uqc      ?? null,
-    getFreshnessBudgets:  async () => over.budgets  ?? {},
+    getPolicy:             async () => over.policy     ?? null,
+    getExportDuty:         async () => over.duty       ?? null,
+    getRosctl:             async () => over.rosctl     ?? null,
+    getRodtep:             async () => over.rodtep     ?? null,
+    getUqc:                async () => over.uqc        ?? null,
+    getFreshnessBudgets:   async () => over.budgets    ?? {},
+    // Default: NO registered export-duty source (so the absence-of-source path is
+    // the default and existing tests are unaffected). Tests that exercise the NIL
+    // default pass an explicit dutySource.
+    getExportDutySource:   async () => over.dutySource ?? { asOn: null, sourceUrl: null },
   };
 }
+
+/** The registered export-duty source, mirroring the live trade_intel_sources row. */
+const DUTY_SOURCE: ExportDutySource = {
+  asOn:      '2022-05-21',
+  sourceUrl: 'https://upload.indiacode.nic.in/schedulefile?aid=AC_CEN_2_2_00039_197551_1554713855359&rid=791',
+};
+
+/** Today as YYYY-MM-DD (UTC) — for the "fresh NIL default" case (age 0 < budget). */
+const TODAY_ISO = new Date().toISOString().slice(0, 10);
 
 const FREE_POLICY: PolicyRow = {
   export_policy:    'Free',
@@ -145,10 +160,88 @@ describe('assembleTradeIntelligence — 7318.15.00 (Free / NIL duty / UQC / no i
   it('no export-duty row AND no duty source → exportDuty null (does not assert NIL without a source)', async () => {
     const ti = await assembleTradeIntelligence(
       '7318.15.00', '73',
-      mockQueries({ policy: FREE_POLICY }), // no duty row
+      mockQueries({ policy: FREE_POLICY }), // no duty row, no source (default)
     );
     if (ti === null) throw new Error('unreachable');
     expect(ti.exportDuty).toBeNull();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// NIL-DEFAULT WIRE (FIX 1) — for the ~12,374 lines with NO export_duty_rates row,
+// the registered export-duty SOURCE dates the 2nd-Schedule-Note-4 NIL default so
+// non-dutiable goods show "NIL · as on 2022-05-21 · verify on CBIC", not nothing.
+// ---------------------------------------------------------------------------
+describe('assembleTradeIntelligence — export-duty NIL default dated to the registered source (FIX 1)', () => {
+  it('no duty row BUT a registered source → NIL default dated + sourced (not null, not hidden)', async () => {
+    const ti = await assembleTradeIntelligence(
+      '7318.15.00', '73',
+      mockQueries({ policy: FREE_POLICY, dutySource: DUTY_SOURCE }),
+    );
+    if (ti === null) throw new Error('unreachable');
+    const duty = ti.exportDuty as TradeExportDuty;
+    // The NIL default fires (it no longer returns null when a source is present).
+    expect('verifyOnly' in duty).toBe(false);
+    expect(duty.isNil).toBe(true);
+    expect(duty.rateText).toBeNull();
+    expect(duty.mappable).toBe(true);
+    expect(duty.verify).toBe(false); // NIL is not the misattribution guard
+    // Dated + sourced to the registered export-duty source.
+    expect(duty.asOn).toBe('2022-05-21');
+    expect(duty.sourceUrl).toBe(DUTY_SOURCE.sourceUrl);
+    expect(duty.indicative).toBe(true);
+  });
+
+  it('the dated NIL default is past the 180d budget → stale=true with a CBIC verify advisory', async () => {
+    // The registered source as_on is 2022-05-21, far past the 180d export_duty
+    // budget — the NIL default is SHOWN dated, with the advisory (show-with-advisory).
+    const ti = await assembleTradeIntelligence(
+      '7318.15.00', '73',
+      mockQueries({ policy: FREE_POLICY, dutySource: DUTY_SOURCE }),
+    );
+    if (ti === null) throw new Error('unreachable');
+    const duty = ti.exportDuty as TradeExportDuty;
+    expect(duty.isNil).toBe(true);
+    expect(duty.stale).toBe(true);
+    expect(duty.staleAdvisory).not.toBeNull();
+    expect(duty.staleAdvisory ?? '').toMatch(/CBIC/);
+  });
+
+  it('a recent (in-budget) registered source → NIL default shown fresh (stale=false, no advisory)', async () => {
+    const recent: ExportDutySource = { asOn: TODAY_ISO, sourceUrl: DUTY_SOURCE.sourceUrl };
+    const ti = await assembleTradeIntelligence(
+      '7318.15.00', '73',
+      mockQueries({ policy: FREE_POLICY, dutySource: recent }),
+    );
+    if (ti === null) throw new Error('unreachable');
+    const duty = ti.exportDuty as TradeExportDuty;
+    expect(duty.isNil).toBe(true);
+    expect(duty.stale).toBe(false);
+    expect(duty.staleAdvisory).toBeNull();
+    expect(duty.asOn).toBe(TODAY_ISO);
+  });
+
+  it('an ACTUAL duty row still wins over the source (its own as_on/source_url are used)', async () => {
+    // A registered source is present AND a real row exists — the row's own data
+    // must be used (the source dates only the NIL default, never an existing row).
+    const ti = await assembleTradeIntelligence(
+      '7318.15.00', '73',
+      mockQueries({ policy: FREE_POLICY, duty: NIL_DUTY, dutySource: DUTY_SOURCE }),
+    );
+    if (ti === null) throw new Error('unreachable');
+    const duty = ti.exportDuty as TradeExportDuty;
+    expect(duty.asOn).toBe('2026-02-01'); // NIL_DUTY.as_on, NOT the source date
+    expect(duty.sourceUrl).toBe('https://example.test/customs-tariff');
+  });
+
+  it('NIL default for a NON-apparel chapter does not change incentive routing (RoDTEP family, null here)', async () => {
+    const ti = await assembleTradeIntelligence(
+      '7318.15.00', '73',
+      mockQueries({ policy: FREE_POLICY, dutySource: DUTY_SOURCE }),
+    );
+    if (ti === null) throw new Error('unreachable');
+    expect((ti.exportDuty as TradeExportDuty).isNil).toBe(true);
+    expect(ti.incentive).toBeNull();
   });
 });
 
@@ -442,12 +535,13 @@ describe('assembleTradeIntelligence — freshness (show-with-advisory)', () => {
 describe('assembleTradeIntelligence — fail-safe', () => {
   it('a single scheme throwing → that scheme null, the rest still assemble', async () => {
     const q: TradeIntelQueries = {
-      getPolicy:           async () => FREE_POLICY,
-      getExportDuty:       async () => { throw new Error('boom duty'); },
-      getRosctl:           async () => null,
-      getRodtep:           async () => null,
-      getUqc:              async () => null,
-      getFreshnessBudgets: async () => ({}),
+      getPolicy:            async () => FREE_POLICY,
+      getExportDuty:        async () => { throw new Error('boom duty'); },
+      getRosctl:            async () => null,
+      getRodtep:            async () => null,
+      getUqc:               async () => null,
+      getFreshnessBudgets:  async () => ({}),
+      getExportDutySource:  async () => ({ asOn: null, sourceUrl: null }),
     };
     const ti = await assembleTradeIntelligence('7318.15.00', '73', q);
     expect(ti).not.toBeNull();
@@ -460,12 +554,13 @@ describe('assembleTradeIntelligence — fail-safe', () => {
   it('ALL queries throwing → still returns a (sparse) block, never throws', async () => {
     const boom = (): never => { throw new Error('boom'); };
     const q: TradeIntelQueries = {
-      getPolicy:           async () => boom(),
-      getExportDuty:       async () => boom(),
-      getRosctl:           async () => boom(),
-      getRodtep:           async () => boom(),
-      getUqc:              async () => boom(),
-      getFreshnessBudgets: async () => boom(),
+      getPolicy:            async () => boom(),
+      getExportDuty:        async () => boom(),
+      getRosctl:            async () => boom(),
+      getRodtep:            async () => boom(),
+      getUqc:               async () => boom(),
+      getFreshnessBudgets:  async () => boom(),
+      getExportDutySource:  async () => boom(),
     };
     // Must not reject.
     const ti = await assembleTradeIntelligence('7318.15.00', '73', q);

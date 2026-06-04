@@ -91,6 +91,18 @@ export interface UqcRow {
 /** Per-scheme freshness budget read from `trade_intel_sources`. */
 export type FreshnessBudgets = Record<string, number>;
 
+/**
+ * The registered export-duty SOURCE (most-recent `trade_intel_sources` row for
+ * scheme='export_duty'). Used to DATE the NIL default for the ~12,374 lines that
+ * carry no `export_duty_rates` row: a non-dutiable good shows "NIL · as on <date>
+ * · verify on CBIC" rather than no duty datum at all. `asOn`/`sourceUrl` are null
+ * only when no export-duty source row is registered (then we do not assert NIL).
+ */
+export interface ExportDutySource {
+  asOn:      string | null;
+  sourceUrl: string | null;
+}
+
 /* ---------------------------------------------------------------------------
  * The injectable query interface the assembler depends on.
  * --------------------------------------------------------------------------- */
@@ -103,6 +115,8 @@ export interface TradeIntelQueries {
   getUqc(code: string):          Promise<UqcRow | null>;
   /** Map of scheme → freshness_budget_days from trade_intel_sources (most recent per scheme). */
   getFreshnessBudgets():         Promise<FreshnessBudgets>;
+  /** The most-recent registered export-duty source (asOn + sourceUrl) to date the NIL default. */
+  getExportDutySource():         Promise<ExportDutySource>;
 }
 
 /* ---------------------------------------------------------------------------
@@ -229,6 +243,24 @@ export function createTradeIntelQueries(runner: QueryRunner = getQueryRunner()):
         out[r.scheme] = Number(r.freshness_budget_days);
       }
       return out;
+    },
+
+    async getExportDutySource(): Promise<ExportDutySource> {
+      // Most-recent registered export-duty source row. `as_on::text` keeps the
+      // date timezone-stable (same discipline as the rate getters above). When no
+      // row is registered we return nulls and the assembler will NOT assert NIL.
+      const sql = `
+        SELECT
+          as_on::text   AS as_on,
+          source_url
+        FROM trade_intel_sources
+        WHERE scheme = 'export_duty'
+        ORDER BY as_on DESC
+        LIMIT 1
+      `;
+      const res = await runner.query<{ as_on: string; source_url: string }>(sql);
+      const row = res.rows[0];
+      return { asOn: row?.as_on ?? null, sourceUrl: row?.source_url ?? null };
     },
   };
 }
