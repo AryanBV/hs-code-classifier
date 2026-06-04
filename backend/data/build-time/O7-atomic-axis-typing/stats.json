@@ -2,16 +2,16 @@
   "derived_at": "2026-06-04",
   "multi_leaf_subheadings": 2241,
   "classification_counts": {
-    "residual_default": 1991,
-    "askable_no_residual": 50,
-    "single_axis_resolved": 54,
-    "untypable": 146
+    "residual_default": 1968,
+    "askable_no_residual": 56,
+    "single_axis_resolved": 55,
+    "untypable": 162
   },
-  "askable_no_residual_plus_single_axis": 104,
-  "askable_no_residual_only": 50,
-  "single_axis_resolved_only": 54,
-  "residual_default_count": 1991,
-  "residual_detection_coverage_pct": 88.8,
+  "askable_no_residual_plus_single_axis": 111,
+  "askable_no_residual_only": 56,
+  "single_axis_resolved_only": 55,
+  "residual_default_count": 1968,
+  "residual_detection_coverage_pct": 87.8,
   "fully_typed_count": 118,
   "fully_typed_pct": 5.3,
   "axis_usage": {
@@ -48,8 +48,8 @@
     "retail_packing": 1,
     "pipe_construction": 1
   },
-  "untypable_count": 146,
-  "partial_coverage_count": 48,
+  "untypable_count": 162,
+  "partial_coverage_count": 55,
   "hand_verify_families": {
     "3923": {
       "multi_leaf_subheadings": 5,
@@ -817,6 +817,11 @@
       ]
     },
     {
+      "subheading": "1604.13",
+      "leaves": 2,
+      "unclassified_varying": []
+    },
+    {
       "subheading": "2201.10",
       "leaves": 2,
       "unclassified_varying": [
@@ -969,11 +974,6 @@
         "intended_use::chemical-synthesis",
         "intended_use::veterinary-use"
       ]
-    },
-    {
-      "subheading": "3002.10",
-      "leaves": 2,
-      "unclassified_varying": []
     }
   ],
   "notable_partial_coverage_sample": [
@@ -1102,6 +1102,22 @@
         "intended_use::metallurgy",
         "intended_use::wood-preservative",
         "processing_state::anhydrous"
+      ]
+    },
+    {
+      "subheading": "2816.10",
+      "leaves": 2,
+      "axes": [
+        "physical_form"
+      ],
+      "unclassified_varying": [
+        "composition::h",
+        "form::slurry",
+        "intended_use::antacid-laxative",
+        "intended_use::aquaculture-oxygen-release",
+        "intended_use::flame-retardant-additive",
+        "intended_use::soil-remediation",
+        "intended_use::specialty-chemical"
       ]
     },
     {
@@ -1246,6 +1262,39 @@
       ]
     },
     {
+      "subheading": "2903.76",
+      "leaves": 3,
+      "axes": [
+        "physical_form",
+        "chem_structure"
+      ],
+      "unclassified_varying": [
+        "composition::bromochlorodifluoromethane",
+        "composition::bromotrifluoromethane",
+        "composition::dibromotetrafluoroethane",
+        "intended_use::aviation",
+        "processing_state::fluorinated"
+      ]
+    },
+    {
+      "subheading": "2903.77",
+      "leaves": 16,
+      "axes": [
+        "physical_form",
+        "chem_structure"
+      ],
+      "unclassified_varying": [
+        "composition::1,2-dichlorotetrafluoroethane",
+        "composition::chloroheptafluoropropane",
+        "composition::chloropentafluoroethane",
+        "composition::chlorotrifluoromethane",
+        "composition::dichlorodifluoromethane",
+        "composition::dichlorohexafluoropropane",
+        "composition::heptachlorofluoropropane",
+        "composition::hexachlorodifluoropropane"
+      ]
+    },
+    {
       "subheading": "2903.91",
       "leaves": 3,
       "axes": [
@@ -1318,6 +1367,23 @@
         "composition::methacrylic-acid",
         "intended_use::methacrylate-polymerization",
         "intended_use::polymer-additive"
+      ]
+    },
+    {
+      "subheading": "2922.29",
+      "leaves": 16,
+      "axes": [
+        "physical_form"
+      ],
+      "unclassified_varying": [
+        "composition::2-5-dimethoxyaniline",
+        "composition::2-amino-4-nitrophenol",
+        "composition::2-amino-phenol-4-sulphonic-acid",
+        "composition::3-aminophenol",
+        "composition::3-diethylaminophenol",
+        "composition::4-aminophenol",
+        "composition::6-nitro-2-amino-phenol-4-sulphonic-acid",
+        "composition::m-phenylenediamine-4-sulphonic-acid"
       ]
     },
     {
@@ -1397,6 +1463,23 @@
         "intended_use::food-additive",
         "processing_state::non-plasticised",
         "processing_state::plasticised"
+      ]
+    },
+    {
+      "subheading": "3916.90",
+      "leaves": 17,
+      "axes": [
+        "polymer"
+      ],
+      "unclassified_varying": [
+        "composition::acrylate",
+        "composition::cellulose",
+        "composition::formaldehyde",
+        "composition::isocyanate",
+        "composition::methacrylate",
+        "composition::nitrate",
+        "composition::phenol",
+        "composition::polyol"
       ]
     },
     {
@@ -1484,64 +1567,6 @@
       ],
       "unclassified_varying": [
         "intended_use::industrial-textile"
-      ]
-    },
-    {
-      "subheading": "5514.30",
-      "leaves": 4,
-      "axes": [
-        "weave"
-      ],
-      "unclassified_varying": [
-        "composition::other-synthetic-staple-under-85pct-mixed-with-cotton",
-        "composition::polyester-staple-under-85pct-mixed-with-cotton",
-        "intended_use::uniform-fabric",
-        "processing_state::other-weave-of-polyester-staple"
-      ]
-    },
-    {
-      "subheading": "6101.30",
-      "leaves": 2,
-      "axes": [
-        "fiber_type"
-      ],
-      "unclassified_varying": [
-        "form::wind-jacket"
-      ]
-    },
-    {
-      "subheading": "6103.10",
-      "leaves": 4,
-      "axes": [
-        "fiber_type"
-      ],
-      "unclassified_varying": [
-        "form::ensemble",
-        "form::suit"
-      ]
-    },
-    {
-      "subheading": "7114.11",
-      "leaves": 2,
-      "axes": [
-        "end_use"
-      ],
-      "unclassified_varying": [
-        "intended_use::decorative",
-        "intended_use::gift",
-        "processing_state::part"
-      ]
-    },
-    {
-      "subheading": "7114.19",
-      "leaves": 3,
-      "axes": [
-        "end_use"
-      ],
-      "unclassified_varying": [
-        "intended_use::decorative",
-        "intended_use::gift",
-        "processing_state::part"
       ]
     }
   ]

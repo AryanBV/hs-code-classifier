@@ -74,6 +74,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { Client } from 'pg';
+import { isResidualDescription } from '../residual-detection';
 
 /* ===========================================================================
  * 1) CONCEPT-AXIS DICTIONARY
@@ -552,13 +553,14 @@ function lookupToken(col: SourceCol, token: string): TokenAxisHit[] {
  * shape (.90 / .99 tail) is a SECONDARY corroborating signal — the description is
  * the primary, since some .90 lines are real named products (e.g. 0901.90.20
  * "Coffee substitutes") and some residuals are not .90 (.29/.19 "Other").
+ *
+ * The detector lives in the SHARED build-time util `../residual-detection`
+ * (`isResidualDescription`), which both O7 and O8 use so the two levels agree.
+ * It uses a WORD-BOUNDARY pattern: the original O7 regex `n\.?e\.?s` collapsed to
+ * the bare substring "nes" and false-flagged "sardiNES" / "magNESium" / long
+ * species & chemical titles as residual (a safe-but-wrong UNDER-ask). The shared
+ * util fixes that — see its header.
  * =========================================================================== */
-
-const BARE_RESIDUAL_RE = /(^|:\s*|-+\s*)(other|others)\s*$|n\.?e\.?s|not elsewhere (specified|included)|not specified/i;
-
-function isResidualDescription(description: string): boolean {
-  return BARE_RESIDUAL_RE.test(description.trim());
-}
 
 /** The last two digits of the 8-digit code, e.g. "90" / "99" / "00". */
 function codeTail(code: string): string {

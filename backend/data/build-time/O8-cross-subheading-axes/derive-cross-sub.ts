@@ -78,6 +78,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { Client } from 'pg';
 import { lookupToken } from '../O7-atomic-axis-typing/derive-atomic-axes';
+import { isResidualDescription } from '../residual-detection';
 
 /* ===========================================================================
  * 0) SHARED CONFIG
@@ -87,24 +88,15 @@ type SourceCol = 'form' | 'processing_state' | 'intended_use' | 'composition';
 const COLS: SourceCol[] = ['form', 'processing_state', 'intended_use', 'composition'];
 
 /**
- * O8-LOCAL bare-residual detector. We deliberately do NOT reuse O7's
- * `isResidualDescription`: its unanchored `n\.?e\.?s` alternation matches the
- * substring "nes" anywhere (e.g. "sardiNES", "liNES"), which catastrophically
- * mis-flags long species-list fish descriptions in Ch.03 as residual. O7 only ever
- * runs it on short LEAF descriptions where that never bit; O8 runs it on long
- * subheading titles + leaf descriptions, so we tighten it with word boundaries:
- *   - a trailing bare "Other"/"Others" after start / ":" / dashes,
- *   - the dotted "n.e.s" / "n.e.i" abbreviation as a whole token (boundary-guarded),
- *   - "not elsewhere specified/included" / "not specified".
- * This is a STRICTER superset-safe variant (it still matches every genuine residual
- * the O6/O7 examples expect: "Other", ":-- Other", "---- Other", "foo n.e.s.").
+ * Bare-residual detector — now the SHARED build-time util `../residual-detection`
+ * (`isResidualDescription`, imported above). It uses the word-boundary pattern O8
+ * pioneered: O7's original unanchored `n\.?e\.?s` collapsed to the bare substring
+ * "nes" and false-flagged "sardiNES" / "liNES" / long species & chemical titles as
+ * residual; O8 always ran on long subheading titles + leaf descriptions, so it
+ * tightened the detector with word boundaries. As of Stage 3c, O7 and O8 share the
+ * SAME util so both levels agree (the util's pattern is byte-identical to O8's old
+ * `O8_BARE_RESIDUAL_RE`, so O8's output is unchanged). See the util's header.
  */
-const O8_BARE_RESIDUAL_RE =
-  /(^|:\s*|-+\s*)(other|others)\s*$|(^|[^a-z])n\.e\.[si]\.?(?![a-z])|not elsewhere (specified|included)|not specified/i;
-
-function isResidualDescription(description: string): boolean {
-  return O8_BARE_RESIDUAL_RE.test(description.trim());
-}
 
 /**
  * QGS-answerable AttributeKeys the runtime O6 loader will accept on `attribute`

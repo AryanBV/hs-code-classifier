@@ -3,12 +3,12 @@
   "description": "Stage S3 askable surface. Bounded, human-facing per-subheading enrichment for the S4 divergence engine: plain-trade questions, MECE exporter-language options mapping to real leaves, honest residual escapes, branch order, answerability flags. Two enrichment kinds: no_residual (cannot default -> ask) and primary_residual_override (refined ASK rule -> ask a PRIMARY axis even over a residual; coffee 0901.11). Derived build-time from atomic-axes.json + axis-primacy.json + corpus leaf descriptions; no Gemini. Loaded read-only by lib/askable-surface-table.ts. DARK until S4 wires it.",
   "derived_at": "2026-06-04",
   "stats": {
-    "total_enriched": 80,
-    "no_residual_askable": 77,
+    "total_enriched": 84,
+    "no_residual_askable": 81,
     "primary_residual_overrides": 3,
-    "fallback_only_subs": 25,
+    "fallback_only_subs": 26,
     "answerability_hard_flags": 16,
-    "dropped_no_clean_axis": 27
+    "dropped_no_clean_axis": 30
   },
   "subheadings": [
     {
@@ -490,6 +490,91 @@
       ]
     },
     {
+      "subheading": "2903.76",
+      "heading": "2903",
+      "chapter": "29",
+      "leaf_count": 3,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "physical_form",
+          "is_primary": true,
+          "question": "What physical form is it in?",
+          "options": [
+            {
+              "id": "gas",
+              "label": "Gas",
+              "codes": [
+                "2903.76.10",
+                "2903.76.20"
+              ]
+            },
+            {
+              "id": "liquid",
+              "label": "Liquid",
+              "codes": [
+                "2903.76.30"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "2903.77",
+      "heading": "2903",
+      "chapter": "29",
+      "leaf_count": 16,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "physical_form",
+          "is_primary": true,
+          "question": "What physical form is it in?",
+          "options": [
+            {
+              "id": "liquid",
+              "label": "Liquid",
+              "codes": [
+                "2903.77.23",
+                "2903.77.24",
+                "2903.77.25",
+                "2903.77.33",
+                "2903.77.34",
+                "2903.77.35",
+                "2903.77.36",
+                "2903.77.37"
+              ]
+            },
+            {
+              "id": "gas",
+              "label": "Gas",
+              "codes": [
+                "2903.77.11",
+                "2903.77.12",
+                "2903.77.21",
+                "2903.77.22"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
       "subheading": "2903.91",
       "heading": "2903",
       "chapter": "29",
@@ -635,6 +720,50 @@
           "residual_escape": null,
           "branch_order": 1,
           "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "3916.90",
+      "heading": "3916",
+      "chapter": "39",
+      "leaf_count": 17,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "polymer",
+          "is_primary": true,
+          "question": "What plastic / polymer is it made of?",
+          "options": [
+            {
+              "id": "acrylic",
+              "label": "Acrylic polymer",
+              "codes": [
+                "3916.90.32"
+              ]
+            },
+            {
+              "id": "polypropylene",
+              "label": "Polypropylene (PP)",
+              "codes": [
+                "3916.90.27"
+              ]
+            },
+            {
+              "id": "polystyrene",
+              "label": "Polystyrene (PS)",
+              "codes": [
+                "3916.90.31"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "moderate",
           "answerability_flag": false
         }
       ]
@@ -2620,6 +2749,50 @@
           "branch_order": 1,
           "option_answerability": "hard",
           "answerability_flag": true
+        }
+      ]
+    },
+    {
+      "subheading": "8422.90",
+      "heading": "8422",
+      "chapter": "84",
+      "leaf_count": 3,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "end_use",
+          "is_primary": false,
+          "question": "What is the intended end use?",
+          "options": [
+            {
+              "id": "household",
+              "label": "Household / home use",
+              "codes": [
+                "8422.90.20"
+              ]
+            },
+            {
+              "id": "industrial",
+              "label": "Industrial use",
+              "codes": [
+                "8422.90.90"
+              ]
+            },
+            {
+              "id": "packaging",
+              "label": "Packaging",
+              "codes": [
+                "8422.90.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "moderate",
+          "answerability_flag": false
         }
       ]
     },
