@@ -1,0 +1,686 @@
+{
+  "derived_at": "2026-06-04",
+  "structural_confidence_min": 0.6,
+  "subheading_dominance_min": 0.75,
+  "headings_with_2plus_subheadings": 957,
+  "headings_with_clean_cross_sub_axis": 252,
+  "headings_unclassified_varying": 705,
+  "clean_axis_coverage_pct": 26.3,
+  "runtime_loadable_headings": 228,
+  "dark_only_headings_composition_primary": 24,
+  "multi_axis_headings_count": 44,
+  "axis_usage": {
+    "machine_part": 91,
+    "physical_form": 64,
+    "end_use": 55,
+    "fiber_type": 22,
+    "textile_finish": 12,
+    "thermal": 8,
+    "presentation": 7,
+    "chem_structure": 7,
+    "metal_working": 7,
+    "worked_state": 5,
+    "weave": 4,
+    "cellularity": 3,
+    "coil_state": 3,
+    "roasted": 2,
+    "retail_packing": 2,
+    "polymer": 2,
+    "fabric_weight": 2,
+    "decaffeinated": 1,
+    "gem_quality": 1,
+    "electric_machine": 1
+  },
+  "hand_verify_families": {
+    "2902": {
+      "child_subheadings": 12,
+      "residual_subheadings": [
+        "2902.19",
+        "2902.90"
+      ],
+      "axes": [
+        {
+          "axis": "chem_structure",
+          "attribute": "processing_state",
+          "runtime_loadable": true,
+          "structural_confidence": 1,
+          "classes": {
+            "saturated": [
+              "2902.11"
+            ],
+            "aromatic": [
+              "2902.20",
+              "2902.30",
+              "2902.41",
+              "2902.42",
+              "2902.43",
+              "2902.44",
+              "2902.50",
+              "2902.60",
+              "2902.70"
+            ]
+          }
+        }
+      ],
+      "unclassified_varying": null
+    },
+    "5208": {
+      "child_subheadings": 19,
+      "residual_subheadings": [],
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "attribute": "processing_state",
+          "runtime_loadable": true,
+          "structural_confidence": 1,
+          "classes": {
+            "unbleached": [
+              "5208.11",
+              "5208.12",
+              "5208.13",
+              "5208.19"
+            ],
+            "bleached": [
+              "5208.21",
+              "5208.22",
+              "5208.23",
+              "5208.29"
+            ],
+            "dyed": [
+              "5208.31",
+              "5208.32",
+              "5208.33",
+              "5208.39"
+            ],
+            "yarn_dyed": [
+              "5208.41",
+              "5208.42",
+              "5208.43",
+              "5208.49"
+            ],
+            "printed": [
+              "5208.51",
+              "5208.52",
+              "5208.59"
+            ]
+          }
+        },
+        {
+          "axis": "weave",
+          "attribute": "processing_state",
+          "runtime_loadable": true,
+          "structural_confidence": 0.895,
+          "classes": {
+            "plain_weave": [
+              "5208.11",
+              "5208.12",
+              "5208.21",
+              "5208.22",
+              "5208.31",
+              "5208.32",
+              "5208.41",
+              "5208.42",
+              "5208.51",
+              "5208.52"
+            ],
+            "other_weave": [
+              "5208.19",
+              "5208.29",
+              "5208.39",
+              "5208.59"
+            ],
+            "twill": [
+              "5208.23",
+              "5208.33",
+              "5208.43"
+            ]
+          }
+        },
+        {
+          "axis": "fabric_weight",
+          "attribute": "processing_state",
+          "runtime_loadable": true,
+          "structural_confidence": 1,
+          "classes": {
+            "not_more_than_100gsm": [
+              "5208.11",
+              "5208.21",
+              "5208.31",
+              "5208.41",
+              "5208.51"
+            ],
+            "weight_100_to_200gsm": [
+              "5208.12",
+              "5208.22",
+              "5208.32",
+              "5208.42",
+              "5208.52"
+            ],
+            "not_more_than_200gsm": [
+              "5208.13",
+              "5208.19",
+              "5208.23",
+              "5208.29",
+              "5208.33",
+              "5208.39",
+              "5208.43",
+              "5208.49",
+              "5208.59"
+            ]
+          }
+        }
+      ],
+      "unclassified_varying": null
+    },
+    "7304": {
+      "child_subheadings": 13,
+      "residual_subheadings": [
+        "7304.19",
+        "7304.29",
+        "7304.39",
+        "7304.49",
+        "7304.59",
+        "7304.90"
+      ],
+      "axes": [],
+      "unclassified_varying": []
+    },
+    "7306": {
+      "child_subheadings": 10,
+      "residual_subheadings": [
+        "7306.19",
+        "7306.29",
+        "7306.90"
+      ],
+      "axes": [],
+      "unclassified_varying": []
+    },
+    "8708": {
+      "child_subheadings": 15,
+      "residual_subheadings": [
+        "8708.29",
+        "8708.99"
+      ],
+      "axes": [],
+      "unclassified_varying": []
+    },
+    "0207": {
+      "child_subheadings": 19,
+      "residual_subheadings": [],
+      "axes": [
+        {
+          "axis": "thermal",
+          "attribute": "processing_state",
+          "runtime_loadable": true,
+          "structural_confidence": 1,
+          "classes": {
+            "fresh_or_chilled": [
+              "0207.11",
+              "0207.13",
+              "0207.24",
+              "0207.26",
+              "0207.41",
+              "0207.43",
+              "0207.44",
+              "0207.51",
+              "0207.53",
+              "0207.54",
+              "0207.60"
+            ],
+            "frozen": [
+              "0207.12",
+              "0207.14",
+              "0207.25",
+              "0207.27",
+              "0207.42",
+              "0207.45",
+              "0207.52",
+              "0207.55"
+            ]
+          }
+        },
+        {
+          "axis": "presentation",
+          "attribute": "form",
+          "runtime_loadable": true,
+          "structural_confidence": 1,
+          "classes": {
+            "whole": [
+              "0207.11",
+              "0207.12",
+              "0207.24",
+              "0207.25",
+              "0207.41",
+              "0207.42",
+              "0207.51",
+              "0207.52",
+              "0207.60"
+            ],
+            "cut": [
+              "0207.13",
+              "0207.14",
+              "0207.26",
+              "0207.27",
+              "0207.44",
+              "0207.45",
+              "0207.54",
+              "0207.55"
+            ],
+            "offal": [
+              "0207.43",
+              "0207.53"
+            ]
+          }
+        }
+      ],
+      "unclassified_varying": null
+    },
+    "0901": {
+      "child_subheadings": 5,
+      "residual_subheadings": [
+        "0901.90"
+      ],
+      "axes": [
+        {
+          "axis": "roasted",
+          "attribute": "processing_state",
+          "runtime_loadable": true,
+          "structural_confidence": 1,
+          "classes": {
+            "not_roasted": [
+              "0901.11",
+              "0901.12"
+            ],
+            "roasted": [
+              "0901.21",
+              "0901.22"
+            ]
+          }
+        },
+        {
+          "axis": "decaffeinated",
+          "attribute": "processing_state",
+          "runtime_loadable": true,
+          "structural_confidence": 1,
+          "classes": {
+            "not_decaffeinated": [
+              "0901.11",
+              "0901.21"
+            ],
+            "decaffeinated": [
+              "0901.12",
+              "0901.22"
+            ]
+          }
+        }
+      ],
+      "unclassified_varying": null
+    },
+    "0201": {
+      "child_subheadings": 3,
+      "residual_subheadings": [],
+      "axes": [
+        {
+          "axis": "presentation",
+          "attribute": "form",
+          "runtime_loadable": true,
+          "structural_confidence": 1,
+          "classes": {
+            "whole": [
+              "0201.10"
+            ],
+            "cut": [
+              "0201.20",
+              "0201.30"
+            ]
+          }
+        }
+      ],
+      "unclassified_varying": null
+    },
+    "0202": {
+      "child_subheadings": 3,
+      "residual_subheadings": [],
+      "axes": [
+        {
+          "axis": "presentation",
+          "attribute": "form",
+          "runtime_loadable": true,
+          "structural_confidence": 1,
+          "classes": {
+            "whole": [
+              "0202.10"
+            ],
+            "cut": [
+              "0202.20",
+              "0202.30"
+            ]
+          }
+        }
+      ],
+      "unclassified_varying": null
+    },
+    "0204": {
+      "child_subheadings": 9,
+      "residual_subheadings": [],
+      "axes": [
+        {
+          "axis": "thermal",
+          "attribute": "processing_state",
+          "runtime_loadable": true,
+          "structural_confidence": 1,
+          "classes": {
+            "fresh_or_chilled": [
+              "0204.10",
+              "0204.21",
+              "0204.22",
+              "0204.23",
+              "0204.50"
+            ],
+            "frozen": [
+              "0204.30",
+              "0204.41",
+              "0204.42",
+              "0204.43"
+            ]
+          }
+        },
+        {
+          "axis": "presentation",
+          "attribute": "form",
+          "runtime_loadable": true,
+          "structural_confidence": 1,
+          "classes": {
+            "whole": [
+              "0204.10",
+              "0204.21",
+              "0204.30",
+              "0204.41",
+              "0204.50"
+            ],
+            "cut": [
+              "0204.22",
+              "0204.23",
+              "0204.42",
+              "0204.43"
+            ]
+          }
+        }
+      ],
+      "unclassified_varying": null
+    },
+    "0303": {
+      "child_subheadings": 44,
+      "residual_subheadings": [
+        "0303.19",
+        "0303.29",
+        "0303.39",
+        "0303.49",
+        "0303.59",
+        "0303.69",
+        "0303.89",
+        "0303.99"
+      ],
+      "axes": [],
+      "unclassified_varying": []
+    }
+  },
+  "unclassified_varying_sample": [
+    {
+      "heading": "0101",
+      "child_subheadings": 4,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0102",
+      "child_subheadings": 5,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0103",
+      "child_subheadings": 3,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0104",
+      "child_subheadings": 2,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0105",
+      "child_subheadings": 7,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0106",
+      "child_subheadings": 13,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0208",
+      "child_subheadings": 6,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0209",
+      "child_subheadings": 2,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0301",
+      "child_subheadings": 8,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0302",
+      "child_subheadings": 45,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0303",
+      "child_subheadings": 44,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0309",
+      "child_subheadings": 2,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0401",
+      "child_subheadings": 4,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0403",
+      "child_subheadings": 2,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0404",
+      "child_subheadings": 2,
+      "unclassified_varying": [
+        "physical_form::mixed",
+        "physical_form::powder"
+      ]
+    },
+    {
+      "heading": "0407",
+      "child_subheadings": 5,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0408",
+      "child_subheadings": 4,
+      "unclassified_varying": [
+        "physical_form::liquid",
+        "physical_form::powder"
+      ]
+    },
+    {
+      "heading": "0410",
+      "child_subheadings": 2,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0502",
+      "child_subheadings": 2,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0505",
+      "child_subheadings": 2,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0506",
+      "child_subheadings": 2,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0507",
+      "child_subheadings": 2,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0511",
+      "child_subheadings": 3,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0601",
+      "child_subheadings": 2,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0602",
+      "child_subheadings": 5,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0603",
+      "child_subheadings": 7,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0604",
+      "child_subheadings": 2,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0701",
+      "child_subheadings": 2,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0703",
+      "child_subheadings": 3,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0704",
+      "child_subheadings": 3,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0705",
+      "child_subheadings": 4,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0706",
+      "child_subheadings": 2,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0708",
+      "child_subheadings": 3,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0709",
+      "child_subheadings": 16,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0710",
+      "child_subheadings": 8,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0711",
+      "child_subheadings": 5,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0712",
+      "child_subheadings": 7,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0713",
+      "child_subheadings": 12,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0714",
+      "child_subheadings": 6,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0801",
+      "child_subheadings": 7,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0802",
+      "child_subheadings": 17,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0803",
+      "child_subheadings": 2,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0804",
+      "child_subheadings": 5,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0805",
+      "child_subheadings": 7,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0806",
+      "child_subheadings": 2,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0807",
+      "child_subheadings": 3,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0808",
+      "child_subheadings": 3,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0809",
+      "child_subheadings": 5,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0810",
+      "child_subheadings": 8,
+      "unclassified_varying": []
+    },
+    {
+      "heading": "0811",
+      "child_subheadings": 3,
+      "unclassified_varying": []
+    }
+  ]
+}

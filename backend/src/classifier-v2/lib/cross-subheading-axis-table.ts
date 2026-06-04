@@ -2,26 +2,34 @@
  * Cross-subheading forced-choice axis table — runtime loader (Phase 4.x,
  * CROSS_SUBHEADING_ASK lever).
  *
- * Loads the build-time O6 artifact
- * (`backend/data/build-time/O6-cross-subheading-axes/axes.json`) into a typed,
+ * Loads the build-time **O8** artifact
+ * (`backend/data/build-time/O8-cross-subheading-axes/axes.json`) into a typed,
  * indexed lookup the orchestrator's POST-L3 cross-subheading gate uses. The table
  * names headings where ONE QGS-answerable axis (form / processing_state /
- * intended_use) splits the heading across 2+ subheadings with NO residual
- * catch-all leaf — so a query silent on that axis cannot pick a leaf and the brain
- * is forced to guess (the "frozen chicken" → 0207.12 vs 0207.14 bug).
+ * intended_use) splits the heading across 2+ subheadings — so a query silent on
+ * that axis cannot pick a leaf and the brain is forced to guess (the "frozen
+ * chicken" → 0207.12 vs 0207.14 bug).
+ *
+ * O8 SUPERSEDES O6: where O6 was a five-row hand-curated table with ONE
+ * `FORM_AXIS` vocabulary, O8 is a GENERAL, corpus-wide, data-driven derivation
+ * (every heading; axes un-fused into the shared O7 concept-axis namespace). The
+ * artifact stays SHAPE-COMPATIBLE: this loader still reads `entries[]` with the
+ * same per-entry fields (`heading`, `attribute`, `classes:{id:{values,
+ * subheadings,label,example_code}}`, `question_text`), so the dark lever's consumer
+ * is byte-identical. Each O8 entry additionally carries the O7 `axis` name and an
+ * `all_axes` block (full multi-axis detail) — both IGNORED here, present for
+ * downstream composition. Derivation: O8-cross-subheading-axes/DERIVATION.md.
  *
  * Loading is FAIL-SAFE (mirrors L0's alias-map loader): a missing/corrupt file
  * yields an EMPTY table, so the lever simply never fires rather than throwing — it
  * can never break the pipeline. The parsed table is cached at module scope; a
  * test-only reset hook clears it.
- *
- * Derivation: backend/data/build-time/O6-cross-subheading-axes/DERIVATION.md
  */
 import * as fs from 'fs';
 import * as path from 'path';
 import type { AttributeKey } from '../types';
 
-/** Path to the O6 axis table (resolved from this module's location). */
+/** Path to the O8 axis table (resolved from this module's location). */
 const AXIS_TABLE_PATH = path.resolve(
   __dirname,
   '..',
@@ -29,7 +37,7 @@ const AXIS_TABLE_PATH = path.resolve(
   '..',
   'data',
   'build-time',
-  'O6-cross-subheading-axes',
+  'O8-cross-subheading-axes',
   'axes.json',
 );
 
@@ -58,8 +66,15 @@ export interface AxisClass {
 export interface CrossSubheadingAxisEntry {
   /** 4-digit heading the axis applies to. */
   heading: string;
-  /** The determining (silent-default-absent) axis. */
+  /** The determining (silent-default-absent) axis, as a QGS AttributeKey. */
   attribute: AttributeKey;
+  /**
+   * The O8/O7 concept-axis NAME (shared namespace, e.g. `presentation`,
+   * `roasted`) when present in the artifact — additive, NOT load-bearing for the
+   * dark lever (the gate keys off `attribute`/`classes`). Lets a downstream
+   * consumer compose this cross-sub fork with the within-sub O7 axes by name.
+   */
+  axis?: string;
   /** macro-class id -> class definition (≥2 classes). */
   classes: Record<string, AxisClass>;
   /** Curated whole-vs-cut style question text. */
@@ -128,6 +143,7 @@ function parseEntry(raw: unknown): CrossSubheadingAxisEntry | null {
     classes,
     question_text: o.question_text,
   };
+  if (typeof o.axis === 'string' && o.axis.length > 0) entry.axis = o.axis;
   if (typeof o.notes === 'string') entry.notes = o.notes;
   return entry;
 }
