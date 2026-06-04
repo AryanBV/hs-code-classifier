@@ -38,6 +38,7 @@ import {
 } from './metrics';
 import { masterSuite, validateSuite } from './test-suites/master-suite';
 import { quickSuite } from './test-suites/quick-suite';
+import { realWorldStaging } from './gold/real-world-staging';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -107,7 +108,7 @@ const REPRESENTATIVE_CALL_USD = estimateCostUsd('gemini-3.5-flash', {
 // ---------------------------------------------------------------------------
 
 interface RunConfig {
-  suite: 'master' | 'quick';
+  suite: 'master' | 'quick' | 'realworld';
   category?: string;
   runId: string;
   /**
@@ -128,7 +129,7 @@ interface RunConfig {
 
 function parseArgs(): RunConfig {
   const args = process.argv.slice(2);
-  let suite: 'master' | 'quick' = 'master';
+  let suite: 'master' | 'quick' | 'realworld' = 'master';
   let category: string | undefined;
   let runId = `eval-${new Date().toISOString().slice(0, 10)}`;
   let simulateAnswers = false;
@@ -137,7 +138,7 @@ function parseArgs(): RunConfig {
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
     const next = args[i + 1];
-    if (arg === '--suite' && next) { suite = next as 'master' | 'quick'; i++; }
+    if (arg === '--suite' && next) { suite = next as 'master' | 'quick' | 'realworld'; i++; }
     else if (arg === '--category' && next) { category = next; i++; }
     else if (arg === '--run-id' && next) { runId = next; i++; }
     else if (arg === '--simulate-answers') { simulateAnswers = true; }
@@ -1136,6 +1137,11 @@ async function main(): Promise<void> {
   let testCases: EvalTestCase[];
   if (config.suite === 'quick') {
     testCases = quickSuite;
+  } else if (config.suite === 'realworld') {
+    // Staged real-world (messy-input) suite. NOT validated like the frozen master
+    // (it is gold-pending-approval); scored with the SAME metrics so we get a
+    // real-world accuracy number alongside the clean 385.
+    testCases = realWorldStaging;
   } else {
     validateSuite(masterSuite);
     testCases = masterSuite;
