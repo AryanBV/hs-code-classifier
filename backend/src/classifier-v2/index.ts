@@ -45,6 +45,8 @@ import { repopulateSiblings } from './lib/sibling-repopulation';
 import {
   evaluateDivergenceAsk,
   toClarifyingQuestion,
+  dominantHeadingByCount,
+  dominantSubheadingByCount,
   type DivergenceEngineInput,
 } from './lib/divergence-engine';
 import { selectToClassifyResult, buildDiagnostics } from './select-to-result';
@@ -833,6 +835,15 @@ function divergenceLlmPhrasingEnabled(): boolean {
  * In BOTH cases the score is `computeAbstentionScore` (HIGHER = more uncertain).
  * Repopulated siblings carry `rerank_score:null` (sentinel) so they widen the
  * POPULATION without polluting the decisiveness margin. Pure; never throws.
+ *
+ * LOCUS-UNIFIED: the dominant heading (cross-sub) AND the dominant subheading
+ * (within-sub) are resolved with the engine's COUNT-based helpers
+ * (`dominantHeadingByCount` / `dominantSubheadingByCount`) — the EXACT logic the
+ * engine forks over — NOT index.ts's score-based `dominantHeading`. After
+ * `repopulateSiblings` inflates counts, score-based and count-based dominance can
+ * diverge, which would gate the abstention over a DIFFERENT locus than the fork and
+ * mis-gate the ask. Using the same helpers keeps the gating signal and the fork
+ * reason over one locus.
  */
 function computeDivergenceAbstention(survivors: RetrievalCandidate[]): number {
   // (1) Distinct surviving 6-digit subheadings (drives the spread term either way).
@@ -844,8 +855,9 @@ function computeDivergenceAbstention(survivors: RetrievalCandidate[]): number {
   const competingSubheadings = subSet.size;
 
   // (2) Cross-sub path: a forced-choice-axis dominant heading → use the cross-sub
-  // concentration + cross-sub margin (mirrors maybeCrossSubheadingAskPostL3).
-  const heading = dominantHeading(survivors);
+  // concentration + cross-sub margin (mirrors maybeCrossSubheadingAskPostL3). The
+  // dominant heading is resolved by COUNT — the same locus the engine forks over.
+  const heading = dominantHeadingByCount(survivors);
   if (heading.length > 0) {
     const entry = getAxisEntryForHeading(heading);
     if (entry !== null) {
@@ -862,20 +874,9 @@ function computeDivergenceAbstention(survivors: RetrievalCandidate[]): number {
   }
 
   // (3) Within-sub path: score from the dominant subheading's within-sub margin.
-  // The dominant subheading = the one carrying the most surviving leaves.
-  const counts = new Map<string, number>();
-  for (const c of survivors) {
-    const sub = subheadingOfCandidate(c);
-    if (/^\d{4}\.\d{2}$/.test(sub)) counts.set(sub, (counts.get(sub) ?? 0) + 1);
-  }
-  let domSub = '';
-  let domN = 0;
-  for (const [sub, n] of counts) {
-    if (n > domN || (n === domN && (domSub === '' || sub < domSub))) {
-      domSub = sub;
-      domN = n;
-    }
-  }
+  // The dominant subheading = the one carrying the most surviving leaves, resolved
+  // by the engine's COUNT-based helper so the gate and the fork share one locus.
+  const domSub = dominantSubheadingByCount(survivors);
   const { margin } = domSub.length > 0
     ? computeSiblingRerankMargin(survivors, domSub)
     : { margin: null as number | null };

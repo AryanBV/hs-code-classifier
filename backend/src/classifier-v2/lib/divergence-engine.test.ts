@@ -25,6 +25,8 @@ import {
   withinSubQuestionId,
   axisToAttributeKey,
   toClarifyingQuestion,
+  dominantHeadingByCount,
+  dominantSubheadingByCount,
   type DivergenceEngineInput,
 } from './divergence-engine';
 import {
@@ -282,6 +284,41 @@ describe('question-id + consumed-axis helpers', () => {
     expect(axisToAttributeKey('fiber_type')).toBe('material');
     expect(axisToAttributeKey('end_use')).toBe('intended_use');
     expect(axisToAttributeKey('grade')).toBeNull();
+  });
+});
+
+/* ---------------------------------------------------------------------------
+ * 0b) Count-based dominant-locus helpers (the SHARED gating + forking locus, Fix 2)
+ * --------------------------------------------------------------------------- */
+
+describe('dominant-locus helpers (count-based — shared by gate + fork)', () => {
+  it('dominantHeadingByCount picks the heading carrying the MOST survivors (not the top-scored)', () => {
+    // A single high-scored 0207 candidate vs THREE lower-scored 0901 candidates. A
+    // score-based pick would choose 0207; the count-based engine fork (and now the
+    // abstention gate) must agree on 0901 — the locus mismatch this fix removes.
+    const survivors: RetrievalCandidate[] = [
+      cand('0207.12.00', 0.99), // highest score, lone in its heading
+      cand('0901.11.11', 0.40),
+      cand('0901.11.21', 0.41),
+      cand('0901.21.10', 0.42),
+    ];
+    expect(dominantHeadingByCount(survivors)).toBe('0901');
+  });
+
+  it('dominantSubheadingByCount picks the subheading carrying the MOST surviving leaves', () => {
+    const survivors: RetrievalCandidate[] = [
+      cand('0901.21.10', 0.99), // highest score, lone in 0901.21
+      cand('0901.11.11', 0.30),
+      cand('0901.11.21', 0.31),
+      cand('0901.11.31', 0.32),
+    ];
+    expect(dominantSubheadingByCount(survivors)).toBe('0901.11');
+  });
+
+  it('ties resolve lexically smallest; empty / malformed → empty string', () => {
+    expect(dominantHeadingByCount([cand('0207.12.00'), cand('0901.11.11')])).toBe('0207');
+    expect(dominantHeadingByCount([])).toBe('');
+    expect(dominantSubheadingByCount([cand('!!!')])).toBe('');
   });
 });
 
@@ -613,5 +650,41 @@ describe('toClarifyingQuestion adapter', () => {
     expect(last.label).toMatch(/not elsewhere specified/i);
     // real options precede it and carry exporter labels (no blank Other among them)
     expect(cq.options.length).toBeGreaterThanOrEqual(3);
+  });
+
+  it('a CROSS-SUB fork (residual-absent) gets the generic escape as the LAST option (Fix 1)', () => {
+    const r = evaluateDivergenceAsk(
+      baseInput({ survivors: [cand('0207.12.00'), cand('0207.14.00')] }),
+    );
+    expect(r).not.toBeNull();
+    expect(r!.level).toBe('cross_sub');
+    expect(r!.question.residual_escape).toBeNull(); // residual-absent by construction
+    const cq = toClarifyingQuestion(r!.question);
+    const last = cq.options[cq.options.length - 1]!;
+    expect(last.id).toBe('other'); // escape RESTORED for cross-sub forks
+    expect(last.label).toMatch(/not listed/i); // honest generic escape, no codes
+    // the real MECE options still precede the escape
+    const realIds = cq.options.slice(0, -1).map((o) => o.id);
+    expect(realIds).toContain('whole');
+    expect(realIds).toContain('cut');
+    expect(realIds).not.toContain('other');
+  });
+
+  it('EVERY cross_sub fork the engine can emit carries an escape after toClarifyingQuestion', () => {
+    // Drive both cross-sub headings the fixture table knows (0207 + 0901) and assert
+    // each, once adapted, ends in an 'other' escape — the no-dead-end invariant.
+    const crossSubCases: RetrievalCandidate[][] = [
+      [cand('0207.12.00'), cand('0207.14.00')], // poultry whole vs cuts
+      [cand('0901.11.11'), cand('0901.21.10')], // coffee green vs roasted
+    ];
+    for (const survivors of crossSubCases) {
+      const r = evaluateDivergenceAsk(baseInput({ survivors }));
+      expect(r).not.toBeNull();
+      expect(r!.level).toBe('cross_sub');
+      const cq = toClarifyingQuestion(r!.question);
+      const ids = cq.options.map((o) => o.id);
+      expect(ids[ids.length - 1]).toBe('other'); // escape is always the last option
+      expect(ids.filter((id) => id === 'other')).toHaveLength(1); // exactly one escape
+    }
   });
 });

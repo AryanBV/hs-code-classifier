@@ -209,8 +209,12 @@ function survivorSubheadings(survivors: RetrievalCandidate[]): string[] {
 /**
  * The dominant 6-digit subheading among survivors: the one carrying the most
  * surviving leaves. Ties → lexically smallest (deterministic). '' on none.
+ *
+ * EXPORTED so the orchestrator's abstention gate resolves the within-sub locus with
+ * the EXACT SAME count-based logic the engine forks over (avoids a score-vs-count
+ * locus mismatch after sibling-repopulation inflates the survivor set).
  */
-function dominantSubheading(survivors: RetrievalCandidate[]): string {
+export function dominantSubheadingByCount(survivors: RetrievalCandidate[]): string {
   const counts = new Map<string, number>();
   for (const c of survivors) {
     const sub = subheadingOfCandidate(c);
@@ -230,8 +234,14 @@ function dominantSubheading(survivors: RetrievalCandidate[]): string {
 /**
  * The dominant 4-digit heading among survivors: the one carrying the most surviving
  * candidates. Ties → lexically smallest. '' on none.
+ *
+ * EXPORTED so the orchestrator's abstention gate resolves the cross-sub locus with
+ * the EXACT SAME count-based logic the engine forks over. The orchestrator's own
+ * `dominantHeading` (index.ts) is SCORE-based and can resolve to a DIFFERENT heading
+ * once `repopulateSiblings` inflates counts — gating + forking over different loci
+ * mis-gates the ask. Using this everywhere keeps the gate and the fork in lockstep.
  */
-function dominantHeading(survivors: RetrievalCandidate[]): string {
+export function dominantHeadingByCount(survivors: RetrievalCandidate[]): string {
   const counts = new Map<string, number>();
   for (const c of survivors) {
     const head = headingOfCandidate(c);
@@ -408,7 +418,7 @@ function buildCrossSubAxisCandidate(
   survivors: RetrievalCandidate[],
   table: CrossSubheadingAxisTable,
 ): { candidate: AxisCandidate; isPrimary: boolean; separatedCodes: string[]; entry: CrossSubheadingAxisEntry } | null {
-  const heading = dominantHeading(survivors);
+  const heading = dominantHeadingByCount(survivors);
   if (heading.length === 0) return null;
   const entry = table.byHeading.get(heading);
   if (entry === undefined) return null;
@@ -486,7 +496,7 @@ function buildWithinSubAxisCandidates(
   entry: AskableSubEntry;
   axisEntry: AskableAxisEntry;
 }> {
-  const subheading = dominantSubheading(survivors);
+  const subheading = dominantSubheadingByCount(survivors);
   if (subheading.length === 0) return [];
   const entry = table.bySubheading.get(subheading);
   if (entry === undefined) return [];
@@ -837,8 +847,18 @@ export function evaluateDivergenceAsk(
  * Convert the engine's structured `DivergenceQuestion` into the wizard-facing
  * `ClarifyingQuestion` shape (the same shape `buildCrossSubheadingQuestion`
  * returns), so Stage 3 can drop a divergence ASK into a `ClassifyResult` exactly
- * like the cross-subheading lever. The residual escape (when present) is appended
- * as the LAST option (honest, real leaf) — never a blank Other/None. Pure + total.
+ * like the cross-subheading lever. EVERY divergence question carries an honest
+ * escape as the LAST option so the user can always recover if their true class was
+ * not retrieved:
+ *   - WITHIN-SUB: the REAL residual leaf (when one survives) — a concrete leaf
+ *     description, never a blank Other/None.
+ *   - CROSS-SUB: a residual-absent fork by construction (no real residual leaf to
+ *     offer), so we append the legacy generic escape `Other / not listed (please
+ *     describe)`. It carries NO codes (no filter); the engine's
+ *     `pruneByCrossSubAnswers` treats an `'other'` answer as "apply no filter,
+ *     consume the axis" so the escape is reachable AND cannot re-fire the axis.
+ * This restores parity with the legacy `buildCrossSubheadingQuestion`, which always
+ * appended that generic escape to a cross-subheading fork. Pure + total.
  *
  * NOTE: `ClarifyingQuestion.options` is `TriageFallbackOption[]` (id+label only);
  * the leaf `codes` per option are carried separately on the engine's
@@ -850,9 +870,18 @@ export function evaluateDivergenceAsk(
 export function toClarifyingQuestion(q: DivergenceQuestion): ClarifyingQuestion {
   const options: TriageFallbackOption[] = q.options.map((o) => ({ id: o.id, label: o.label }));
   if (q.residual_escape !== null) {
+    // WITHIN-SUB: honest real-leaf residual escape.
     options.push({
       id: 'other',
       label: q.residual_escape.description,
+    });
+  } else if (q.level === 'cross_sub') {
+    // CROSS-SUB: residual-absent fork → honest generic escape (no codes; the engine
+    // consumes the axis and applies no filter on an 'other' answer). Restores the
+    // legacy cross-subheading escape so the user can always recover.
+    options.push({
+      id: 'other',
+      label: 'Other / not listed (please describe)',
     });
   }
   return {

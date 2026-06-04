@@ -2849,11 +2849,16 @@ describe('classify() — DIVERGENCE ASK lever GATE ON', () => {
     expect(res.decision).toBe('ASK');
     expect(res.question?.trigger).toBe('divergence');
     expect(res.question?.question_id).toBe('div_cross_0207_presentation');
-    // MECE real options present + the cross-sub fork has NO residual escape.
+    // MECE real options present + an honest generic escape as the LAST option (the
+    // cross-sub fork is residual-absent, so the escape is the legacy "Other / not
+    // listed" — restored so the user can recover if their true class wasn't retrieved).
     const ids = res.question?.options.map((o) => o.id) ?? [];
     expect(ids).toContain('whole');
     expect(ids).toContain('cut');
-    expect(ids).not.toContain('other'); // cross-sub fork = residual-absent
+    expect(ids).toContain('other'); // cross-sub escape RESTORED (Fix 1)
+    const opts = res.question?.options ?? [];
+    expect(opts[opts.length - 1]!.id).toBe('other'); // escape is the LAST option
+    expect(opts[opts.length - 1]!.label).toMatch(/not listed/i); // generic, no codes
 
     // The gate fired BEFORE L4 — Select/Verify NEVER ran.
     expect(selectMock).not.toHaveBeenCalled();
@@ -2867,6 +2872,20 @@ describe('classify() — DIVERGENCE ASK lever GATE ON', () => {
     expect(trace.find((t) => t.layer === 'CROSS-SUBHEADING-ASK')).toBeUndefined();
     const path = res.diagnostics.escalation_path;
     expect(path[path.length - 1]).toBe('DIVERGENCE-ASK');
+  });
+
+  it('answering the cross-sub escape ("other") consumes the axis → it does NOT re-fire (CLASSIFY)', async () => {
+    // Round 1 fires the cross-sub presentation fork (proven above). The wizard now
+    // sends back the generic escape. There is no other axis on a pure 0207 cross-sub
+    // set, so the consumed-axis ledger blocks a re-fire and the brain classifies.
+    const r2 = await continueWithAnswers(
+      'frozen chicken',
+      { div_cross_0207_presentation: 'other' },
+      { previousAnswers: {}, rounds: 1 },
+    );
+    expect(r2.decision).toBe('CLASSIFY'); // axis consumed → no re-fire of presentation
+    expect(r2.question?.question_id).not.toBe('div_cross_0207_presentation');
+    expect(selectMock).toHaveBeenCalledTimes(1); // proceeded to L4
   });
 
   it('does NOT fire when the axis is PINNED by the query → proceeds to L4 CLASSIFY', async () => {
@@ -2885,6 +2904,27 @@ describe('classify() — DIVERGENCE ASK lever GATE ON', () => {
     const res = await classify('frozen chicken');
     expect(res.decision).toBe('CLASSIFY');
     expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('abstention gate uses the SAME count-dominant locus as the fork (Fix 2)', async () => {
+    // Mixed-heading survivors: ONE top-scored 7318 leaf (non-table heading, lone) +
+    // TWO lower-scored 0207 leaves (the cross-sub TABLE heading, count-dominant).
+    // SCORE-based dominance (the old gate) would resolve 7318 → no cross-sub split →
+    // the abstention is computed for the WRONG locus than the 0207 fork. With the
+    // count-based unification, BOTH the gate and the fork resolve 0207, so the cross-
+    // sub presentation ASK fires (proving gate + fork now share one locus).
+    rulesFilterMock.mockResolvedValue(
+      rulesFilterWith([
+        mkSibling('7318.15.00', 0.99), // highest score, lone in 7318 (no table entry)
+        mkSibling('0207.12.00', 0.40), // 0207 count-dominant (2 leaves), confusably close
+        mkSibling('0207.14.00', 0.39),
+      ]),
+    );
+    const res = await classify('frozen chicken');
+    expect(res.decision).toBe('ASK');
+    expect(res.question?.trigger).toBe('divergence');
+    expect(res.question?.question_id).toBe('div_cross_0207_presentation');
+    expect(selectMock).not.toHaveBeenCalled();
   });
 
   it('coffee round 1 → cross-sub roasted fork; round 2 (answer not_roasted) → within-sub coffee_form', async () => {
