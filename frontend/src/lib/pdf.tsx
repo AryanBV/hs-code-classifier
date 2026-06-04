@@ -32,6 +32,7 @@ import {
   TRADE_INTEL_HEADING,
   TRADE_INTEL_INCENTIVE_VERIFY,
   TRADE_INTEL_STALE_VERIFY,
+  TRADE_INTEL_STALE_VERIFY_SHORT,
 } from "./content";
 
 /**
@@ -480,10 +481,15 @@ function TradeIntelSection({ intel }: { intel: TradeIntelligence | null | undefi
   if (!intel) return null;
   const ep = intel.exportPolicy;
 
-  // Stale: replace the value with the verify advisory; never show the stale word.
+  // Stale: keep the STATUS WORD + its date + color visible (never drop them
+  // behind a bare "Verify"); the plain line flags it may have changed and a
+  // "Verify current on DGFT" advisory is appended to the as-on line below.
+  // Mirrors the screen (PolicyStatusBlock) exactly.
   const stale = ep.stale;
-  const statusWord = stale ? "Verify" : safe(ep.status, "Not specified");
-  const statusColor = stale ? C.inkMuted : (SEVERITY_COLOR[ep.severity] ?? C.inkMuted);
+  const statusWord = safe(ep.status, "Not specified");
+  const statusColor = stale && !ep.status
+    ? C.inkMuted
+    : (SEVERITY_COLOR[ep.severity] ?? C.inkMuted);
   const statusPlain = stale
     ? safe(ep.staleAdvisory, TRADE_INTEL_STALE_VERIFY)
     : ep.statusPlain;
@@ -540,8 +546,18 @@ function TradeIntelSection({ intel }: { intel: TradeIntelligence | null | undefi
       <View style={[styles.tiStatusBox, { borderLeftColor: statusColor }]}>
         <Text style={[styles.tiStatusWord, { color: statusColor }]}>{statusWord}</Text>
         <Text style={styles.tiStatusPlain}>{statusPlain}</Text>
-        {!stale && (ep.asOn ?? "").trim() ? (
-          <Text style={styles.tiAsOn}>{`as on ${(ep.asOn ?? "").trim()} · DGFT ITC(HS) Schedule`}</Text>
+        {/* as-on date + source, with a "Verify current on DGFT" advisory appended
+            when stale (the status word + date above stay shown in full). */}
+        {((ep.asOn ?? "").trim() || stale) ? (
+          <Text style={styles.tiAsOn}>
+            {[
+              (ep.asOn ?? "").trim() ? `as on ${(ep.asOn ?? "").trim()}` : "",
+              "DGFT ITC(HS) Schedule",
+              stale ? TRADE_INTEL_STALE_VERIFY_SHORT : "",
+            ]
+              .filter(Boolean)
+              .join(" · ")}
+          </Text>
         ) : null}
       </View>
 

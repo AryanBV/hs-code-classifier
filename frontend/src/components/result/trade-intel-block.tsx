@@ -20,6 +20,7 @@ import {
   TRADE_INTEL_MONEY_LABEL,
   TRADE_INTEL_OFFICIAL_TEXT_LABEL,
   TRADE_INTEL_STALE_VERIFY,
+  TRADE_INTEL_STALE_VERIFY_SHORT,
   TRADE_INTEL_VERIFY_LINK_LABEL,
 } from "@/lib/content";
 import type {
@@ -63,6 +64,14 @@ export function shouldPromoteTradeIntel(intel: TradeIntelligence | null | undefi
 // ----------------------------------------------------------------------------
 
 const DGFT_ITCHS_SCHEDULE_URL = "https://www.dgft.gov.in/CP/?opt=itc-hs-export-schedule-2";
+/**
+ * The as-on date for the fallback export-policy datum. The flat
+ * `UiClassification` policy fields are sourced from the ITC(HS) Export Schedule 2
+ * (2022) corpus, so the fallback carries that corpus date rather than null — a
+ * dated value is more honest than an undated one (the reader sees how current
+ * the basis is). The richer assembler ships its own live `asOn` when present.
+ */
+const FALLBACK_POLICY_AS_ON = "21 May 2022";
 
 /** Mirror of the §6 indicative-not-official disclaimer (kept aligned with the assembler). */
 const FALLBACK_DISCLAIMER =
@@ -125,7 +134,7 @@ export function buildFallbackTradeIntel(
     severity,
     conditionVerbatim: condition.length > 0 ? condition : null,
     conditionMissing,
-    asOn: null,
+    asOn: FALLBACK_POLICY_AS_ON,
     sourceUrl: DGFT_ITCHS_SCHEDULE_URL,
     stale: false,
     staleAdvisory: null,
@@ -301,17 +310,29 @@ function PolicyStatusBlock({
 }) {
   const { exportPolicy } = intel;
 
-  // Stale: never display the stale status value; replace with "verify on DGFT".
+  // Stale: keep the STATUS WORD and its date visible (never drop them behind a
+  // bare "Verify" chip), and append a calm "Verify current on DGFT" advisory so
+  // the line reads e.g. "Free · as on 21 May 2022 · Verify current on DGFT".
+  // The plain sentence still flags that the status may have changed. When the
+  // status word itself is unknown we keep the grey "Not specified" treatment.
   if (exportPolicy.stale) {
+    const staleWord = exportPolicy.status ?? "Not specified";
+    const staleSeverity: PolicySeverity = exportPolicy.status
+      ? exportPolicy.severity
+      : "grey";
     return (
       <PolicyStatus
-        severity="grey"
-        statusWord="Verify"
+        severity={staleSeverity}
+        statusWord={staleWord}
         plain={(exportPolicy.staleAdvisory ?? "").trim() || TRADE_INTEL_STALE_VERIFY}
         prominence={prominence}
-        sourceLabel="DGFT"
+        asOn={exportPolicy.asOn}
+        sourceLabel="DGFT ITC(HS) Schedule"
         sourceUrl={exportPolicy.sourceUrl}
-      />
+        advisory={TRADE_INTEL_STALE_VERIFY_SHORT}
+      >
+        {prominence === "alert" ? <VerifyLink url={exportPolicy.sourceUrl} /> : null}
+      </PolicyStatus>
     );
   }
 

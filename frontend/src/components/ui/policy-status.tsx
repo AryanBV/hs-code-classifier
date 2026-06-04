@@ -22,6 +22,13 @@ export interface PolicyStatusProps {
   sourceLabel?: string | null;
   /** Optional official-source deep link. */
   sourceUrl?: string | null;
+  /**
+   * Optional calm advisory appended after the status word + date, e.g.
+   * "Verify current on DGFT" for a stale status. The status word and its date
+   * stay shown in full; this never replaces them. Mirrors the dated-value-row
+   * advisory idiom so a stale status reads "Free · as on … · Verify current".
+   */
+  advisory?: string | null;
   /** Optional children rendered inside an alert block (verbatim source, action). */
   children?: React.ReactNode;
   className?: string;
@@ -81,15 +88,18 @@ function SourceLine({
   asOn,
   sourceLabel,
   sourceUrl,
+  advisory,
 }: {
   asOn?: string | null;
   sourceLabel?: string | null;
   sourceUrl?: string | null;
+  advisory?: string | null;
 }) {
   const asOnText = (asOn ?? "").trim();
   const href = (sourceUrl ?? "").trim();
   const srcLabel = (sourceLabel ?? "").trim();
-  if (!asOnText && !href && !srcLabel) return null;
+  const advisoryText = (advisory ?? "").trim();
+  if (!asOnText && !href && !srcLabel && !advisoryText) return null;
 
   return (
     <span className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5 font-sans text-eyebrow text-ink-muted">
@@ -109,6 +119,9 @@ function SourceLine({
       ) : srcLabel ? (
         <span>{srcLabel}</span>
       ) : null}
+      {/* stale advisory — appended after the date/source so the status word and
+          its date are never dropped behind a bare "verify" chip. */}
+      {advisoryText ? <span className="italic">{advisoryText}</span> : null}
     </span>
   );
 }
@@ -128,12 +141,14 @@ function PolicyStatus({
   asOn,
   sourceLabel,
   sourceUrl,
+  advisory,
   children,
   className,
 }: PolicyStatusProps) {
   const spec = SEVERITY_SPEC[severity];
   const { Icon } = spec;
   const word = (statusWord ?? "").trim() || "Not specified";
+  const advisoryText = (advisory ?? "").trim();
 
   if (prominence === "alert") {
     return (
@@ -158,7 +173,7 @@ function PolicyStatus({
           </span>
         </div>
         <p className="max-w-read font-sans text-[0.98rem] leading-relaxed text-ink">{plain}</p>
-        <SourceLine asOn={asOn} sourceLabel={sourceLabel} sourceUrl={sourceUrl} />
+        <SourceLine asOn={asOn} sourceLabel={sourceLabel} sourceUrl={sourceUrl} advisory={advisoryText} />
         {children}
       </section>
     );
@@ -180,7 +195,7 @@ function PolicyStatus({
         </span>
         <span className="font-sans text-[0.92rem] leading-snug text-ink">{plain}</span>
       </div>
-      <SourceLine asOn={asOn} sourceLabel={sourceLabel} sourceUrl={sourceUrl} />
+      <SourceLine asOn={asOn} sourceLabel={sourceLabel} sourceUrl={sourceUrl} advisory={advisoryText} />
       {children}
     </div>
   );

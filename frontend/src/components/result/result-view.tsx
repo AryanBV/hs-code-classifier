@@ -563,19 +563,16 @@ function MarginPane({
         )}
       </section>
 
-      {/* Policy / origin annotations. */}
-      {(result.exportPolicy || result.indiaSpecific) ? (
-        <section aria-label="Policy and origin" className="flex flex-wrap gap-2">
-          {(result.exportPolicy ?? "").trim() ? (
-            <Chip variant="policy" className="normal-case tracking-normal">
-              {`Export policy · ${(result.exportPolicy ?? "").trim()}`}
-            </Chip>
-          ) : null}
-          {result.indiaSpecific ? (
-            <Chip variant="india" className="normal-case tracking-normal">
-              India-specific line
-            </Chip>
-          ) : null}
+      {/* Origin annotation. The export-policy status is rendered ONCE, by the
+          dated/sourced TradeIntelBlock in the document pane (single source of
+          truth); the old undated "Export policy · {status}" chip here was a
+          duplicate render and has been removed. Only the India-specific origin
+          flag — which the trade-intel block does not carry — remains here. */}
+      {result.indiaSpecific ? (
+        <section aria-label="Origin" className="flex flex-wrap gap-2">
+          <Chip variant="india" className="normal-case tracking-normal">
+            India-specific line
+          </Chip>
         </section>
       ) : null}
 

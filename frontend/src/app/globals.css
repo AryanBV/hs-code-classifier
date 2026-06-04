@@ -105,7 +105,12 @@
   --space-section: var(--space-12);
   --pad-card: clamp(1.25rem, 3.5vw, 2rem);
 
-  /* ---- Inner measure tokens (only the measure changes between states) ---- */
+  /* ---- Inner measure tokens (only the measure changes between states) ----
+     `--measure-wide` (1180px) is the CAP and stays fixed: the ~64% reading
+     column must not stretch past ~75ch or the legibility/measure system breaks.
+     A wide desktop is filled NOT by widening this column but by turning the
+     surrounding full-bleed space into a deliberate "desk canvas" (see the
+     `.workspace-surface` desk + the lifted sheet) — the sheet on a desk. */
   --measure-wide: 1180px;
   --measure-list: 760px;
   --measure-read: 68ch;
@@ -478,6 +483,80 @@
   .surface-grain {
     position: relative;
     isolation: isolate;
+  }
+
+  /* ----------------------------------------------------------------------
+     The WORKSPACE DESK — the "sheet on a desk" canvas. The 1180px working
+     column stays fixed (legibility cap); a wide desktop is filled by turning
+     the surrounding FULL-BLEED space into a deliberate desk surface so the
+     centered record reads as a sheet of paper laid on a real desk, NOT a web
+     page floating in an empty void. The desk carries: a soft top-lit warm
+     light pool (depth), the same low-opacity paper grain the sheet uses (a
+     real surface, not flat fill), and — only where there is margin to frame
+     (>=lg) — a faint pair of vertical "edge of the working area" rules bracketing
+     the 1180px column so the margins read as INTENTIONAL workspace. Calm and
+     on-theme (reuses --bg / --surface / --rule); stays well below the band's one
+     chromatic event. Mobile/tablet get the warm pool + grain but no framing
+     rules (there is no surplus margin to frame), so nothing is wasted.
+  ---------------------------------------------------------------------- */
+  .workspace-surface {
+    position: relative;
+    isolation: isolate;
+  }
+  .workspace-surface::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    /* a top-lit warm pool so the desk has depth, brightest where the sheet
+       sits — light falls from above, the same idiom as the sheet's toplight */
+    background-image: radial-gradient(
+      130% 90% at 50% -12%,
+      color-mix(in oklab, var(--surface) 52%, transparent) 0%,
+      transparent 58%
+    );
+  }
+  /* The desk's paper grain + the framing rules. The grain is the SAME fractal
+     speckle the sheet uses, at a whisper opacity, so the whole desk reads as a
+     real surface the sheet sits on. The framing rules are layered on top (>=lg). */
+  .workspace-surface::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.42' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+  }
+  .dark .workspace-surface::after {
+    mix-blend-mode: screen;
+    opacity: 0.04;
+  }
+  /* Framing rules — only where there is surplus margin to frame (>=lg). Two
+     faint vertical rules bracket the fixed 1180px column so the surrounding
+     desk reads as the EDGE OF THE WORK, not emptiness. Composited over the
+     grain via a second background layer on the same pseudo-element. */
+  @media (min-width: 1024px) {
+    .workspace-surface::after {
+      opacity: 0.5;
+      background-image:
+        linear-gradient(
+          to right,
+          transparent calc(50% - (var(--measure-wide) / 2) - 1px),
+          color-mix(in oklab, var(--rule) 55%, transparent) calc(50% - (var(--measure-wide) / 2)),
+          transparent calc(50% - (var(--measure-wide) / 2) + 1px),
+          transparent calc(50% + (var(--measure-wide) / 2) - 1px),
+          color-mix(in oklab, var(--rule) 55%, transparent) calc(50% + (var(--measure-wide) / 2)),
+          transparent calc(50% + (var(--measure-wide) / 2) + 1px)
+        ),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.42' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+      background-size: 100% 100%, 160px 160px;
+    }
+    .dark .workspace-surface::after {
+      opacity: 0.42;
+    }
   }
   /* ruled baselines the body text sits on (faint, ~1.55 rhythm) */
   .ruled-baselines {

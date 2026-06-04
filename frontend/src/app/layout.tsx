@@ -76,7 +76,11 @@ export default function RootLayout({
             stops the doubled gutter / conflicting max-width. The header and
             footer keep their own PageShell, so all three share one rail.
           */}
-          <main id="main" tabIndex={-1} className="flex flex-1 flex-col focus:outline-none">
+          <main
+            id="main"
+            tabIndex={-1}
+            className="workspace-surface flex flex-1 flex-col focus:outline-none"
+          >
             {children}
           </main>
           <SiteFooter />

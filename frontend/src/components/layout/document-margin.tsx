@@ -15,6 +15,11 @@ export interface DocumentMarginProps {
  * (document, then margin). At `lg` (>=1024px) it becomes a CSS grid: the
  * document sheet ~64% beside the margin ~36%, top-aligned; the margin sticks.
  *
+ * The two-pane lives INSIDE the fixed 1180px working column (`--measure-wide`),
+ * so the reading measure never stretches past its legible cap; a wide desktop
+ * is filled by the surrounding desk canvas (`.workspace-surface`) and the
+ * lifted sheet, not by widening this column.
+ *
  * The margin is rendered as TRUE attached marginalia, NOT a co-equal sidebar
  * card: it is hung off a vertical gutter rule, sits in a subordinate sunk wash
  * with smaller meta type, and carries NO big shadow. It reads as a clerk's

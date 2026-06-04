@@ -185,6 +185,13 @@ export const TRADE_INTEL_CONDITION_MISSING =
 /** Used instead of a (possibly wrong) value when a datum is stale-past-budget. */
 export const TRADE_INTEL_STALE_VERIFY =
   "This status may have changed. Verify the current status on the DGFT ITC(HS) schedule.";
+/**
+ * The SHORT stale advisory shown inline beside a stale export-policy status. The
+ * status WORD and its date are still shown in full (never dropped behind a bare
+ * "Verify" chip); this is appended as the advisory so the line reads e.g.
+ * "Free · as on 21 May 2022 · Verify current on DGFT".
+ */
+export const TRADE_INTEL_STALE_VERIFY_SHORT = "Verify current on DGFT";
 /** Verify-state placeholders — never a bare rate when we do not reliably hold it. */
 export const TRADE_INTEL_DUTY_VERIFY = "Verify on CBIC";
 export const TRADE_INTEL_INCENTIVE_VERIFY = "Verify on DGFT";
