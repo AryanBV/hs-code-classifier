@@ -30,13 +30,18 @@ const LONG_NOTE = "Complex products can take the full minute. Still working.";
 
 /**
  * The rotation cycle for the gloss / micro-lesson cross-fade decks. Authored to
- * pair with the `gloss-cycle` keyframe (tuned for a ~6-item deck): with a 21s
- * cycle each line gets a ~3.5s visible window. PURELY a CSS concern — no JS
- * timer drives it. Kept here only so the per-item negative animation-delay
- * (which staggers the deck) is computed against the same number.
+ * pair with the `gloss-cycle` keyframe whose visible footprint is a fixed ~12%
+ * of the cycle: with the gloss cycle at 56s over 7 lines (8.0s/line) and the
+ * lesson cycle at 64s over 8 lines (8.0s/line), each line holds solid for a
+ * readable ~6-8s, then a clean fade leaves a brief empty rest beat before the
+ * next line settles in (never two lines at once). The 12% footprint is < the
+ * tightest per-line slot (1/8 = 12.5%), so exactly one line shows for BOTH
+ * decks. PURELY a CSS concern — no JS timer drives it. Kept here only so the
+ * per-item negative animation-delay (which staggers the deck) is computed
+ * against the same number.
  */
-const GLOSS_CYCLE_MS = 21000;
-const LESSON_CYCLE_MS = 24000;
+const GLOSS_CYCLE_MS = 56000;
+const LESSON_CYCLE_MS = 64000;
 
 export interface LoadingViewProps {
   query: string;

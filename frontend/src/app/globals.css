@@ -831,24 +831,33 @@
     }
   }
 
-  /* One shared cross-fade cycle for a stacked rotation deck. The line is
-     visibly opaque for ~1/6 of the cycle with a short fade at each edge, then
-     stays hidden. Per-item negative animation-delay (set inline) offsets each
-     line by 1/n of the cycle so exactly one shows at a time. The visible
-     window (1/6) is >= 1/n for every deck up to 6 items (exact tiling) and for
-     7-8 item decks just yields a slightly longer cross-fade overlap — never a
-     blank gap. Pure CSS — no JS timer, no setState on a tick. */
+  /* One shared cross-fade cycle for a stacked rotation deck. The line eases in,
+     holds SOLID on a long flat plateau, eases out, then RESTS empty until the
+     next line settles in. Total visible footprint is a fixed ~12% of the cycle.
+     Per-item negative animation-delay (set inline) offsets each line by 1/n of
+     the cycle so exactly one shows at a time. 12% < the tightest per-line slot
+     (1/8 = 12.5% for the 8-line lessons deck), so there is ALWAYS a brief empty
+     rest beat between lines and never two lines at once (the old ~1/6 window
+     over-ran the 1/8 slot and double-showed — the "transition not good" bug).
+     The intermediate 0.55 stops give the linear-driven fade an eased,
+     ink-settling feel. Pure CSS — no JS timer, no setState on a tick. */
   @keyframes gloss-cycle {
     0% {
       opacity: 0;
     }
-    2% {
+    1% {
+      opacity: 0.55;
+    }
+    2.5% {
       opacity: 1;
     }
-    14.66% {
+    9.5% {
       opacity: 1;
     }
-    16.66% {
+    11% {
+      opacity: 0.55;
+    }
+    12% {
       opacity: 0;
     }
     100% {
