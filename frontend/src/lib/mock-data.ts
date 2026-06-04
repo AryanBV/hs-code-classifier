@@ -294,6 +294,16 @@ function lookup(q: string): WireResponse | null {
     return question();
   }
 
+  // Chained divergence demo (no paid calls) ------------------------------
+  // A bare "coffee" query (without "roast", which has its own confident branch)
+  // opens a TWO-ROUND divergence flow so a reviewer can click through
+  // round1 (roasted-vs-green) -> round2 (variety/form) -> result and see the
+  // honest `id:'other'` residual escape rendered both times. The chain is
+  // continued in mockAnswer, keyed off these questionIds.
+  if (has(q, "coffee")) {
+    return coffeeDivergenceRound1();
+  }
+
   // 6-digit narrowing ----------------------------------------------------
   if (has(q, "saree fabric", "printed cotton", "cotton cloth", "printed fabric", "shirting fabric")) {
     return classification({
@@ -543,6 +553,84 @@ function question(): WireQuestion {
   };
 }
 
+// ---- Chained divergence fixtures (coffee) ----------------------------------
+// These mirror the v2 divergence contract: `trigger:'divergence'` and a LAST
+// option `id:'other'` whose label is a REAL residual leaf description (NOT a
+// fabricated sentinel). Round 1 narrows roasted-vs-green; Round 2 narrows the
+// leaf; the third answer resolves to a classification (see mockAnswer).
+
+const COFFEE_Q1_ID = "q_coffee_roast_1";
+const COFFEE_Q2_ID = "q_coffee_form_2";
+
+/** Round 1: is the coffee roasted? Escape = the real residual "not roasted" leaf. */
+function coffeeDivergenceRound1(): WireQuestion {
+  return {
+    responseType: "question",
+    question: "Is this coffee roasted, or green (not roasted)?",
+    options: [
+      { id: "roasted", label: "Roasted" },
+      { id: "green", label: "Green (not roasted)" },
+      // honest residual escape — a REAL leaf description, appended last.
+      { id: "other", label: "Coffee, not roasted, not decaffeinated" },
+    ],
+    questionId: COFFEE_Q1_ID,
+    discriminatingAttribute: "processing_state",
+    trigger: "divergence",
+    processingTimeMs: 8700,
+  };
+}
+
+/** Round 2: how is the (roasted) coffee presented? Escape = a real residual leaf. */
+function coffeeDivergenceRound2(): WireQuestion {
+  return {
+    responseType: "question",
+    question: "How is the roasted coffee presented?",
+    options: [
+      { id: "not_decaffeinated", label: "Not decaffeinated" },
+      { id: "decaffeinated", label: "Decaffeinated" },
+      // honest residual escape — a REAL leaf description, appended last.
+      { id: "other", label: "Coffee, roasted, other" },
+    ],
+    questionId: COFFEE_Q2_ID,
+    discriminatingAttribute: "form",
+    trigger: "divergence",
+    processingTimeMs: 8900,
+  };
+}
+
+/** Terminal coffee result for the chained demo. */
+function coffeeResult(): WireClassification {
+  return classification({
+    hsCode: "0901.21.00",
+    description: "Coffee, roasted, not decaffeinated",
+    confidence: 90,
+    confidenceBand: "high",
+    reasoning:
+      "Roasted coffee is classified in Chapter 09 (coffee, tea, spices), heading 0901.\nSubheading 0901.21 covers roasted coffee that is not decaffeinated.\nWith the roast and decaffeination details you confirmed, the leaf 0901.21.00 applies under GIR-1 and GIR-6.",
+    alternatives: [
+      { code: "0901.22.00", description: "Coffee, roasted, decaffeinated" },
+      { code: "0901.11.00", description: "Coffee, not roasted, not decaffeinated" },
+    ],
+    isSixDigit: false,
+    exportPolicy: "Free",
+    policyCondition: null,
+    indiaSpecific: false,
+    selfConfidence: "HIGH",
+    citation: {
+      primary: {
+        type: "note",
+        source_ref: "headings.0901",
+        verbatim_text:
+          "Coffee, whether or not roasted or decaffeinated; coffee husks and skins; coffee substitutes containing coffee in any proportion.",
+        note_or_exclusion_id: null,
+      },
+      gir_applied: "GIR-1",
+    },
+    components: null,
+    tradeIntelligence: TI_FREE,
+  });
+}
+
 /** Default confident result (the hero case). */
 function defaultBolt(): WireClassification {
   return classification({
@@ -593,6 +681,16 @@ export function mockClassify(rawQuery: string): MockOutcome {
 
 /** Mock multi-turn continuation: resolve a material answer to a leaf. */
 export function mockAnswer(req: AnswerRequest): MockOutcome {
+  // Chained divergence demo (coffee): round1 answer -> round2 question;
+  // round2 answer -> classification. Any answerId (including the 'other' escape)
+  // advances the chain so the reviewer can exercise the escape at each step.
+  if (req.questionId === COFFEE_Q1_ID) {
+    return { kind: "ok", body: coffeeDivergenceRound2() };
+  }
+  if (req.questionId === COFFEE_Q2_ID) {
+    return { kind: "ok", body: coffeeResult() };
+  }
+
   const byMaterial: Record<string, WireClassification> = {
     leather: classification({
       hsCode: "4202.21.00",

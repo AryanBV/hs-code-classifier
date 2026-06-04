@@ -5,10 +5,19 @@ import { ArrowRight, CircleHelp, HelpCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { QUERY_ECHO_LABEL } from "@/lib/content";
-import type { UiQuestion } from "@/lib/types";
+import type { QuestionOption, UiQuestion } from "@/lib/types";
 
-/** Sentinel answer id for the "None of these / not sure" escape. */
-export const UNSURE_ANSWER_ID = "__unsure__";
+/**
+ * The backend's honest escape-option id. For a divergence/sibling/cross-sub
+ * question the engine appends an option with THIS id as the LAST option, whose
+ * label is the REAL residual leaf description (within-sub, e.g. "Coffee, not
+ * roasted, not decaffeinated") or "Other / not listed (please describe)"
+ * (cross-sub). It is a REAL answerId the backend understands — NOT a fabricated
+ * sentinel. We render it as the calm "none of these" escape and submit its real
+ * id verbatim. Triage (`ask_<attr>`) questions carry NO such option; we render
+ * no fabricated escape for them.
+ */
+const ESCAPE_OPTION_ID = "other";
 
 const LETTERS = ["A", "B", "C", "D", "E", "F"] as const;
 
@@ -51,7 +60,25 @@ function QuestionView({
   onSubmit,
   submitting = false,
 }: QuestionViewProps) {
-  const options = Array.isArray(question.options) ? question.options : [];
+  const allOptions = Array.isArray(question.options) ? question.options : [];
+
+  // Detect the backend's honest escape WITHIN the offered options: the option
+  // whose id is 'other' (appended last for divergence/sibling/cross-sub). This
+  // is the robust primary signal — `question.trigger` only corroborates it. When
+  // no such option exists (triage `ask_<attr>` questions), there is NO escape to
+  // render and NO token to fabricate: the user picks among the real options,
+  // which already include the model's fallback choices.
+  // FOLLOW-UP: if a triage "skip / not sure" path is ever wanted, it must be a
+  // REAL backend-understood id — do NOT reintroduce a client-side sentinel, which
+  // is serialized verbatim into the L1-triage LLM prompt and corrupts re-triage.
+  const escapeOption: QuestionOption | null =
+    allOptions.find((o) => o.id === ESCAPE_OPTION_ID) ?? null;
+  // The real radio options are everything except the escape (which renders as a
+  // visually-distinct, separated control below the radio group).
+  const options = escapeOption
+    ? allOptions.filter((o) => o.id !== ESCAPE_OPTION_ID)
+    : allOptions;
+
   const groupId = React.useId();
   const headingRef = React.useRef<HTMLHeadingElement | null>(null);
 
@@ -176,31 +203,37 @@ function QuestionView({
         })}
       </fieldset>
 
-      {/* tertiary escape — selectable like any option, submitted via Continue */}
-      <div className="mb-block flex flex-wrap items-center gap-x-3.5 gap-y-2">
-        <button
-          type="button"
-          disabled={submitting}
-          onClick={() => handleSelect(UNSURE_ANSWER_ID)}
-          aria-pressed={selected === UNSURE_ANSWER_ID}
-          className={[
-            "inline-flex min-h-11 items-center gap-2.5 rounded-md border px-3.5 py-2 font-sans text-body font-semibold text-accent-ink",
-            "transition-colors disabled:pointer-events-none disabled:opacity-55",
-            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
-            selected === UNSURE_ANSWER_ID
-              ? "border-accent bg-[color-mix(in_oklab,var(--accent)_10%,var(--surface))]"
-              : "border-transparent bg-transparent hover:border-rule-strong hover:bg-[color-mix(in_oklab,var(--accent)_8%,var(--surface))]",
-          ].join(" ")}
-        >
-          <HelpCircle aria-hidden="true" strokeWidth={1.9} className="size-4 text-accent" />
-          <span className="underline decoration-[color-mix(in_oklab,var(--accent)_45%,var(--rule))] underline-offset-[3px]">
-            None of these · not sure
+      {/* honest escape — rendered ONLY when the backend offers an `id:'other'`
+          residual option. It is separated from the real radios and labelled with
+          the backend's REAL option label; selecting it submits its real id
+          ('other'), which the engine understands. Triage questions have no such
+          option, so nothing fabricated is rendered. */}
+      {escapeOption ? (
+        <div className="mb-block flex flex-wrap items-center gap-x-3.5 gap-y-2">
+          <button
+            type="button"
+            disabled={submitting}
+            onClick={() => handleSelect(escapeOption.id)}
+            aria-pressed={selected === escapeOption.id}
+            className={[
+              "inline-flex min-h-11 items-center gap-2.5 rounded-md border px-3.5 py-2 font-sans text-body font-semibold text-accent-ink",
+              "transition-colors disabled:pointer-events-none disabled:opacity-55",
+              "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
+              selected === escapeOption.id
+                ? "border-accent bg-[color-mix(in_oklab,var(--accent)_10%,var(--surface))]"
+                : "border-transparent bg-transparent hover:border-rule-strong hover:bg-[color-mix(in_oklab,var(--accent)_8%,var(--surface))]",
+            ].join(" ")}
+          >
+            <HelpCircle aria-hidden="true" strokeWidth={1.9} className="size-4 text-accent" />
+            <span className="text-left underline decoration-[color-mix(in_oklab,var(--accent)_45%,var(--rule))] underline-offset-[3px]">
+              {escapeOption.label}
+            </span>
+          </button>
+          <span className="font-sans text-meta text-ink-muted">
+            Pick this if none of the options above fit; we will continue with what we have.
           </span>
-        </button>
-        <span className="font-sans text-meta text-ink-muted">
-          We will classify with what we have and flag the uncertainty.
-        </span>
-      </div>
+        </div>
+      ) : null}
 
       {/* EXPLICIT submit — selecting an option never fires the run */}
       <div className="flex flex-wrap items-center gap-3.5 border-t border-rule pt-block">

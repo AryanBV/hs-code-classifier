@@ -85,6 +85,16 @@ export interface QuestionOption {
   label: string;
 }
 
+/**
+ * The lever that produced this clarifying question. Emitted by the backend
+ * adapter (`v2-api-adapter.ts`). Drives nothing load-bearing on its own — the
+ * primary escape-detection is "is there an option with id 'other'" — but is
+ * surfaced so a divergence ASK is distinguishable and the wizard can label it.
+ * `'divergence'` / `'cross_subheading'` / `'sibling'` carry an `id:'other'`
+ * residual escape as the LAST option; `'triage'` (`ask_<attr>`) does NOT.
+ */
+export type QuestionTrigger = 'triage' | 'sibling' | 'cross_subheading' | 'divergence';
+
 // ----------------------------------------------------------------------------
 // Trade-intelligence (additive). Mirrors the backend `TradeIntelligence` shape
 // in `backend/src/api/trade-intel-assembler.ts` (EXPERIENCE-DESIGN §4.4 /
@@ -207,6 +217,13 @@ export interface WireQuestion {
   options: QuestionOption[];
   questionId: string;
   discriminatingAttribute: AttributeKey | string;
+  /**
+   * The lever that produced the question. ADDITIVE — absent when the underlying
+   * question carries no trigger (legacy triage/QGS fallback). When present and a
+   * divergence/sibling/cross-sub lever, `options` ends with an `id:'other'`
+   * residual escape (a REAL leaf description or "Other / not listed").
+   */
+  trigger?: QuestionTrigger;
   processingTimeMs?: number;
 }
 

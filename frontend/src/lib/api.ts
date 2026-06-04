@@ -51,6 +51,12 @@ function toUi(w: WireResponse): ClassifyResult {
     const ui: UiClassification = rest;
     return ui;
   }
+  // Question + refused carry no hidden confidence signals and pass through
+  // unchanged. For a question this preserves `trigger` (the divergence/sibling/
+  // cross-sub lever) and the full `options` array — including the `id:'other'`
+  // residual escape appended by the backend — so the wizard can render the
+  // honest "none of these" escape from the real option. (`UiQuestion` is
+  // `WireQuestion`, so the pass-through is type-sound.)
   return w;
 }
 
