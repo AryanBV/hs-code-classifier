@@ -69,6 +69,17 @@ export const POLICY_PLAIN: Record<ExportPolicyStatus | 'null', string> = {
 export const DGFT_ITCHS_SCHEDULE_URL = 'https://www.dgft.gov.in/CP/?opt=itc-hs-export-schedule-2';
 
 /**
+ * Bovine-meat legal-sensitivity note (type 'legal_sensitivity' TradeFlag).
+ * Attached by the assembler to bovine meat/offal lines (headings 0201/0202/0206/0210).
+ * Verbatim authored copy — a fixed, code-independent legal caveat, NOT a paraphrase
+ * of any specific code's condition text. Indian policy prohibits cow/ox/calf beef
+ * export outright; only carabeef (boneless buffalo meat) may be exported under
+ * APEDA/FSSAI/DGFT conditions. Indicative, not legal advice.
+ */
+export const BOVINE_LEGAL_NOTE_MESSAGE =
+  'This product is legally sensitive to export from India, so read this before you act on the code. Beef from cows, oxen and calves cannot be exported. India prohibits the export of cow, ox and calf beef outright, so no shipment of it can be filed regardless of the code shown here. The export of bovine meat in general is restricted under Indian policy. Boneless buffalo meat (carabeef) is the main bovine meat that may be exported, and only under conditions set by APEDA, FSSAI and DGFT, including registration of the plant, a veterinary certificate that the animal was not used for breeding, health and quality certification, and any licence the current policy requires. Buffalo carcasses and bone-in cuts do not get that exemption. This note is indicative and is not legal advice. Confirm the exact status and conditions for your specific product with DGFT or a licensed customs broker before you ship. Prevyl is not your customs broker and is not liable for export decisions made on this note.';
+
+/**
  * The §6 three-line indicative-not-official disclaimer. Rides EVERY trade-intel
  * block (proximity, FTC), verbatim from TRADE-INTELLIGENCE-PLAN.md §6. No
  * em-dashes; never the words "guaranteed/accurate/correct".

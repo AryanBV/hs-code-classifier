@@ -168,6 +168,57 @@ describe('assembleTradeIntelligence — 7318.15.00 (Free / NIL duty / UQC / no i
 });
 
 // ---------------------------------------------------------------------------
+// BOVINE LEGAL-SENSITIVITY FLAG — bovine meat/offal lines (0201/0202/0206 bovine
+// offal/0210.20.00) carry EXACTLY ONE 'legal_sensitivity' flag with the fixed
+// bovine copy; swine (0206.30.00) and non-Ch.02 (7318.15.00) carry NONE.
+// ---------------------------------------------------------------------------
+describe('assembleTradeIntelligence — bovine legal-sensitivity flag', () => {
+  const BOVINE_CODES = ['0202.10.00', '0201.30.00', '0206.21.00', '0210.20.00'];
+  const NON_BOVINE_CODES = ['0206.30.00', '7318.15.00'];
+
+  for (const code of BOVINE_CODES) {
+    it(`${code} carries exactly one 'legal_sensitivity' flag with the bovine copy`, async () => {
+      const chapter = code.slice(0, 2);
+      const ti = await assembleTradeIntelligence(
+        code, chapter,
+        mockQueries({ policy: FREE_POLICY }),
+      );
+      if (ti === null) throw new Error('unreachable');
+      const legalFlags = ti.flags.filter((f) => f.type === 'legal_sensitivity');
+      expect(legalFlags).toHaveLength(1);
+      const flag = legalFlags[0];
+      expect(flag.message).toContain('legally sensitive to export from India');
+      expect(flag.message).toContain('cow, ox and calf beef');
+      expect(flag.message).toContain('carabeef');
+      expect(flag.absenceNotClearance).toBe(true);
+      expect(flag.versionDate).toBeNull();
+      expect(flag.sourceUrl.length).toBeGreaterThan(0);
+    });
+  }
+
+  for (const code of NON_BOVINE_CODES) {
+    it(`${code} carries NO 'legal_sensitivity' flag`, async () => {
+      const chapter = code.slice(0, 2);
+      const ti = await assembleTradeIntelligence(
+        code, chapter,
+        mockQueries({ policy: FREE_POLICY }),
+      );
+      if (ti === null) throw new Error('unreachable');
+      expect(ti.flags.filter((f) => f.type === 'legal_sensitivity')).toHaveLength(0);
+    });
+  }
+
+  it('7318.15.00 (non-Ch.02) keeps flags:[] entirely (no flags of any type)', async () => {
+    const ti = await assembleTradeIntelligence(
+      '7318.15.00', '73',
+      mockQueries({ policy: FREE_POLICY, duty: NIL_DUTY }),
+    );
+    if (ti === null) throw new Error('unreachable');
+    expect(ti.flags).toEqual([]);
+  });
+});
+
+// ---------------------------------------------------------------------------
 // NIL-DEFAULT WIRE (FIX 1) — for the ~12,374 lines with NO export_duty_rates row,
 // the registered export-duty SOURCE dates the 2nd-Schedule-Note-4 NIL default so
 // non-dutiable goods show "NIL · as on 2022-05-21 · verify on CBIC", not nothing.

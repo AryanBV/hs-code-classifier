@@ -50,6 +50,7 @@ import {
   POLICY_SEVERITY,
   POLICY_PLAIN,
   DGFT_ITCHS_SCHEDULE_URL,
+  BOVINE_LEGAL_NOTE_MESSAGE,
   TRADE_INTEL_DISCLAIMER,
   EXPORT_POLICY_STALE_ADVISORY,
   EXPORT_DUTY_STALE_ADVISORY,
@@ -158,9 +159,9 @@ export interface TradeVerifyState {
   indicative: true;
 }
 
-/** Phase-1 advisory flag (SCOMET/QCO/AD-CVD). Reserved shape, empty in Phase 1. */
+/** Phase-1 advisory flag (SCOMET/QCO/AD-CVD/legal_sensitivity). */
 export interface TradeFlag {
-  type:                'scomet' | 'qco' | 'adcvd';
+  type:                'scomet' | 'qco' | 'adcvd' | 'legal_sensitivity';
   message:             string;
   sourceUrl:           string;
   versionDate:         string | null;
@@ -388,6 +389,43 @@ function buildRodtep(
   };
 }
 
+/**
+ * The bovine meat/offal lines that carry the legal-sensitivity note. Cow/ox/calf
+ * beef export is prohibited outright; only carabeef (boneless buffalo meat) may be
+ * exported under conditions. The note is the same fixed copy for every such line.
+ *   - 0201 (meat of bovine animals, fresh/chilled)
+ *   - 0202 (meat of bovine animals, frozen)
+ *   - 0206.10/21/22/29 (edible offal of bovine animals — the bovine offal lines)
+ *   - 0210.20.00 (meat of bovine animals, salted/dried/smoked)
+ */
+const BOVINE_OFFAL_CODES: ReadonlySet<string> = new Set([
+  '0206.10.00',
+  '0206.21.00',
+  '0206.22.00',
+  '0206.29.00',
+]);
+
+/**
+ * Build the bovine legal-sensitivity flag for a final 8-digit code, or null when
+ * the code is not a bovine meat/offal line. Pure + synchronous (no DB, never
+ * throws): a string-prefix / set-membership test on the code only.
+ */
+function buildBovineLegalNote(code: string): TradeFlag | null {
+  const isBovine =
+    code.startsWith('0201') ||
+    code.startsWith('0202') ||
+    code === '0210.20.00' ||
+    (code.startsWith('0206') && BOVINE_OFFAL_CODES.has(code));
+  if (!isBovine) return null;
+  return {
+    type:                'legal_sensitivity',
+    message:             BOVINE_LEGAL_NOTE_MESSAGE,
+    sourceUrl:           DGFT_ITCHS_SCHEDULE_URL,
+    versionDate:         null,
+    absenceNotClearance: true,
+  };
+}
+
 /** Build the UQC block (no freshness gate — UQC is a stable identifier). */
 function buildUqc(row: UqcRow | null): TradeUqc | null {
   if (row === null) return null;
@@ -474,12 +512,16 @@ export async function assembleTradeIntelligence(
 
     const uqc = buildUqc(uqcRow);
 
+    // Pure, synchronous, no DB: attach the bovine legal-sensitivity note for
+    // bovine meat/offal lines (cow/ox/calf beef export is prohibited outright).
+    const bovineFlag = buildBovineLegalNote(code);
+
     return {
       exportPolicy,
       exportDuty,
       incentive,
       uqc,
-      flags: [],
+      flags: bovineFlag ? [bovineFlag] : [],
       disclaimer: TRADE_INTEL_DISCLAIMER,
     };
   } catch (err: unknown) {

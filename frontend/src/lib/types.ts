@@ -161,7 +161,7 @@ export interface TradeVerifyState {
 }
 
 export interface TradeFlag {
-  type: 'scomet' | 'qco' | 'adcvd';
+  type: 'scomet' | 'qco' | 'adcvd' | 'legal_sensitivity';
   message: string;
   sourceUrl: string;
   versionDate: string | null;
