@@ -13,8 +13,8 @@
 // change (with their own GOLD-REMEDIATION-LOG entry).
 // ============================================================================
 //
-// PURPOSE — FOUR groups for the RDC-X / cross-subheading-ASK flip gate AND the
-// Stage 3b corpus-wide OVER-ASK measurement:
+// PURPOSE — three groups (A / B / C) for the RDC-X / cross-subheading-ASK flip
+// gate AND the Stage 3b corpus-wide OVER-ASK measurement:
 //
 //   GROUP A (should-ASK, silent-discriminator): the query pins every axis EXCEPT
 //     one forced-choice axis the corpus splits on, with NO residual default to
@@ -39,21 +39,22 @@
 //   rate (visible INDEPENDENT of the answer-simulator — see metrics.ts
 //   askRateMetrics / CALIBRATED-ASK-EVAL-PLAN.md §2).
 //
-//   GROUP B+ (PRIMARY-DRIVEN / INCIDENTAL OVER-ASK negatives): ~13 cases where a
-//     naive system might be TEMPTED to ask but MUST classify
+//   The OVER-ASK negatives live INSIDE Group B (ids `XSUB-B11..B20`): cases where
+//     a naive system might be TEMPTED to ask but MUST classify
 //     (`expected_routing: 'classify'`). Patterns: a NUMERIC-BAND axis
 //     (power/capacity/diameter — incidental, defaults), an UNFLAGGED
 //     special-variant (generic → mill/residual default, NOT the special leaf), a
-//     query that ALREADY PINS the deciding axis, and a single-axis high-leaf
-//     heading. Ids `XSUB-C01..C13`.
+//     query that ALREADY PINS the deciding axis, and single-axis high-leaf
+//     headings.
 //
-//   GROUP D (STRATIFIED RANDOM cross-chapter sample): ~27 realistic
-//     fully-specified exporter queries sampled across DIVERSE chapters (animal /
-//     veg / mineral / chemical / plastic / textile / metal / machinery /
-//     electronics / vehicle / instrument) — NOT the special-cased families. Each
-//     resolves to ONE code (`expected_routing: 'classify'`). THIS is what
-//     measures corpus-wide over-ask: any of these the system ASKs is a false ask
-//     surfaced directly in the `should_not_ask` slice. Ids `XSUB-D01..D27`.
+//   GROUP C (STRATIFIED RANDOM cross-chapter sample, ids `XSUB-C01..C41`, ~34
+//     chapters): realistic fully-specified exporter queries sampled across DIVERSE
+//     sections (animal / veg / mineral / chemical / plastic / textile / metal /
+//     machinery / electronics / vehicle / instrument) — NOT the special-cased
+//     families. Almost all resolve to ONE code (`expected_routing: 'classify'`;
+//     a couple are genuine `ask`), so any the system ASKs is a false ask surfaced
+//     directly in the `should_not_ask` slice. THIS makes corpus-wide over-ask
+//     falsifiable.
 // ============================================================================
 //
 // EVERY 8-digit code below was VERIFIED to exist in the live corpus
