@@ -86,6 +86,21 @@ export const TRADE_INTEL_DISCLAIMER =
 export const EXPORT_POLICY_STALE_ADVISORY =
   'This status reflects our last schedule snapshot and may be out of date. Verify the current status on DGFT before relying on it.';
 
+/**
+ * Per-scheme stale advisories for the money rows. SHOW-WITH-ADVISORY policy: a
+ * datum past its freshness budget is still SHOWN with its asOn date, and one of
+ * these calm secondary lines is attached (the same treatment the export-policy
+ * baseline already gets). The value is never hidden for staleness alone; the
+ * separate honesty guards (export-duty mappable=false, NIL, missing condition)
+ * are unaffected. Each advisory names the authority to re-check on.
+ */
+export const EXPORT_DUTY_STALE_ADVISORY =
+  'This rate reflects our last Customs Tariff snapshot and may be out of date. Verify the current export duty on CBIC before relying on it.';
+export const ROSCTL_STALE_ADVISORY =
+  'This rebate reflects our last RoSCTL snapshot and may be out of date. Verify the current RoSCTL rate on DGFT before relying on it.';
+export const RODTEP_STALE_ADVISORY =
+  'This rate reflects our last RoDTEP snapshot and may be out of date. Verify the current RoDTEP rate on DGFT before relying on it.';
+
 /** The apparel/made-up chapters where RoSCTL REPLACES RoDTEP (PLAN §3, mutual exclusivity). */
 export const ROSCTL_CHAPTERS: ReadonlySet<string> = new Set(['61', '62', '63']);
 

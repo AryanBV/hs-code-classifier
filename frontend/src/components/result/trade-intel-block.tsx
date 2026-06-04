@@ -194,6 +194,7 @@ function MoneyRows({ intel }: { intel: TradeIntelligence }) {
             asOn={exportDuty.asOn}
             sourceLabel="Customs Tariff"
             sourceUrl={exportDuty.sourceUrl}
+            advisory={exportDuty.staleAdvisory}
           />
         )
       ) : null}
@@ -222,6 +223,7 @@ function MoneyRows({ intel }: { intel: TradeIntelligence }) {
             asOn={incentive.asOn}
             sourceLabel="DGFT"
             sourceUrl={incentive.sourceUrl}
+            advisory={incentive.staleAdvisory}
           />
         )
       ) : null}

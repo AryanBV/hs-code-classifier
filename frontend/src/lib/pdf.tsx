@@ -525,6 +525,11 @@ function TradeIntelSection({ intel }: { intel: TradeIntelligence | null | undefi
   }
 
   const dutyAsOn = duty != null ? (duty.asOn ?? "").trim() : "";
+  // Stale advisories ride only on a shown value object (never on a verify-state).
+  const dutyAdvisory =
+    duty != null && !isVerifyState(duty) ? (duty.staleAdvisory ?? "").trim() : "";
+  const incAdvisory =
+    incentive != null && !isVerifyState(incentive) ? (incentive.staleAdvisory ?? "").trim() : "";
   const inc = incentiveRow();
 
   return (
@@ -559,6 +564,7 @@ function TradeIntelSection({ intel }: { intel: TradeIntelligence | null | undefi
           <View style={{ flex: 1 }}>
             <Text style={styles.tiRowValue}>{dutyValue()}</Text>
             {dutyAsOn ? <Text style={styles.tiRowMeta}>{`as on ${dutyAsOn} · Customs Tariff`}</Text> : null}
+            {dutyAdvisory ? <Text style={styles.tiRowMeta}>{dutyAdvisory}</Text> : null}
           </View>
         </View>
       ) : null}
@@ -568,6 +574,7 @@ function TradeIntelSection({ intel }: { intel: TradeIntelligence | null | undefi
           <View style={{ flex: 1 }}>
             <Text style={styles.tiRowValue}>{inc.value}</Text>
             {inc.meta ? <Text style={styles.tiRowMeta}>{`${inc.meta} · DGFT`}</Text> : null}
+            {incAdvisory ? <Text style={styles.tiRowMeta}>{incAdvisory}</Text> : null}
           </View>
         </View>
       ) : null}

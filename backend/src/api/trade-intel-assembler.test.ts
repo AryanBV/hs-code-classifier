@@ -11,7 +11,6 @@ import {
   assembleTradeIntelligenceForCode,
   type TradeIncentive,
   type TradeExportDuty,
-  type TradeVerifyState,
 } from './trade-intel-assembler';
 import type {
   TradeIntelQueries,
@@ -266,25 +265,49 @@ describe('assembleTradeIntelligence — Ch.41 (export_duty mappable=false)', () 
 });
 
 // ---------------------------------------------------------------------------
-// FRESHNESS — stale duty/incentive → verify-state; stale export-policy → SHOWN
-// (baseline exception) with a verify advisory.
+// FRESHNESS = SHOW-WITH-ADVISORY (not hide). A stale duty/incentive/policy is
+// STILL SHOWN with its asOn date + a `stale`/`staleAdvisory` line. Hiding a
+// verified-current value (every 2nd-Schedule duty row is dated 2022-05-21, far
+// past the 180d budget) is worse UX than showing it dated with an advisory. The
+// separate honesty guards (mappable=false / null / conditionMissing) are NOT
+// staleness and are unaffected (covered elsewhere).
 // ---------------------------------------------------------------------------
-describe('assembleTradeIntelligence — freshness', () => {
-  it('stale export duty (age > 180) → verify-state (value withheld)', async () => {
+describe('assembleTradeIntelligence — freshness (show-with-advisory)', () => {
+  it('stale export duty (age > 180) → value SHOWN with stale + advisory (not withheld)', async () => {
     const staleDuty: ExportDutyRow = { ...NIL_DUTY, is_nil: false, rate_text: '30%', rate_pct: '30', age_days: 200 };
     const ti = await assembleTradeIntelligence(
       '7318.15.00', '73',
       mockQueries({ policy: FREE_POLICY, duty: staleDuty }),
     );
     if (ti === null) throw new Error('unreachable');
-    const duty = ti.exportDuty as TradeVerifyState;
-    expect(duty.verifyOnly).toBe(true);
+    const duty = ti.exportDuty as TradeExportDuty;
+    // The value is SHOWN, not hidden — no verify-state.
+    expect('verifyOnly' in duty).toBe(false);
+    expect(duty.rateText).toBe('30%');
+    expect(duty.mappable).toBe(true);
+    expect(duty.verify).toBe(false); // staleness does NOT set the misattribution-verify flag
+    // ... but flagged stale, with the advisory + the as-on date.
+    expect(duty.stale).toBe(true);
+    expect(duty.staleAdvisory).not.toBeNull();
+    expect((duty.staleAdvisory ?? '')).toMatch(/CBIC/);
+    expect(duty.asOn).toBe(staleDuty.as_on);
     expect(duty.sourceUrl).toBe(staleDuty.source_url);
-    // No rate field leaks on a verify-state.
-    expect('rateText' in duty).toBe(false);
   });
 
-  it('stale RoDTEP (age > 30) → verify-state', async () => {
+  it('fresh export duty → shown with stale=false and no advisory', async () => {
+    const freshDuty: ExportDutyRow = { ...NIL_DUTY, is_nil: false, rate_text: '30%', rate_pct: '30', age_days: 10 };
+    const ti = await assembleTradeIntelligence(
+      '7318.15.00', '73',
+      mockQueries({ policy: FREE_POLICY, duty: freshDuty }),
+    );
+    if (ti === null) throw new Error('unreachable');
+    const duty = ti.exportDuty as TradeExportDuty;
+    expect(duty.rateText).toBe('30%');
+    expect(duty.stale).toBe(false);
+    expect(duty.staleAdvisory).toBeNull();
+  });
+
+  it('stale RoDTEP (age > 30) → rate SHOWN with stale + advisory (not withheld)', async () => {
     const staleRodtep: RodtepRow = {
       rate_pct: '0.8', cap_text: 'Rs. 1.4 per kg', cap_value: '1.4', cap_unit: 'KGS',
       appendix: '4R', condition_text: null, mappable: true,
@@ -295,10 +318,17 @@ describe('assembleTradeIntelligence — freshness', () => {
       mockQueries({ policy: FREE_POLICY, rodtep: staleRodtep }),
     );
     if (ti === null) throw new Error('unreachable');
-    expect((ti.incentive as TradeVerifyState).verifyOnly).toBe(true);
+    const inc = ti.incentive as TradeIncentive;
+    expect('verifyOnly' in inc).toBe(false);
+    expect(inc.kind).toBe('rodtep');
+    expect(inc.ratePct).toBe(0.8);
+    expect(inc.cap).toBe('Rs. 1.4 per kg');
+    expect(inc.stale).toBe(true);
+    expect(inc.staleAdvisory).not.toBeNull();
+    expect((inc.staleAdvisory ?? '')).toMatch(/RoDTEP/);
   });
 
-  it('registry budget overrides the default (rodtep budget 7 → age 10 is now stale)', async () => {
+  it('registry budget overrides the default (rodtep budget 7 → age 10 now stale but still SHOWN)', async () => {
     const rodtep: RodtepRow = {
       rate_pct: '0.8', cap_text: null, cap_value: null, cap_unit: null,
       appendix: '4R', condition_text: null, mappable: true,
@@ -310,7 +340,55 @@ describe('assembleTradeIntelligence — freshness', () => {
       mockQueries({ policy: FREE_POLICY, rodtep, budgets: { rodtep: 7 } }),
     );
     if (ti === null) throw new Error('unreachable');
-    expect((ti.incentive as TradeVerifyState).verifyOnly).toBe(true);
+    const inc = ti.incentive as TradeIncentive;
+    expect('verifyOnly' in inc).toBe(false);
+    expect(inc.ratePct).toBe(0.8);
+    expect(inc.stale).toBe(true);
+    expect(inc.staleAdvisory).not.toBeNull();
+  });
+
+  it('stale RoSCTL (age > 180) → rate SHOWN with stale + advisory (apparel chapter)', async () => {
+    const staleRosctl: RosctlRow = {
+      rebate_pct: '6.05', cap_text: 'Rs. 50 per piece', cap_value: '50', cap_unit: 'PCS',
+      condition_text: null, mappable: true,
+      as_on: '2019-03-07', age_days: 2600, source_url: 'https://example.test/rosctl', notification_ref: null,
+    };
+    const ti = await assembleTradeIntelligence(
+      '6109.10.00', '61',
+      mockQueries({ policy: FREE_POLICY, rosctl: staleRosctl }),
+    );
+    if (ti === null) throw new Error('unreachable');
+    const inc = ti.incentive as TradeIncentive;
+    expect('verifyOnly' in inc).toBe(false);
+    expect(inc.kind).toBe('rosctl');
+    expect(inc.ratePct).toBe(6.05);
+    expect(inc.stale).toBe(true);
+    expect((inc.staleAdvisory ?? '')).toMatch(/RoSCTL/);
+  });
+
+  it('stale + mappable=false export duty → bare rate STILL withheld (guard intact), advisory rides', async () => {
+    const staleUnmappable: ExportDutyRow = {
+      is_nil: false, rate_text: '60% on FOB', rate_pct: '60', rate_specific: null,
+      condition_text: 'Export duty on raw and semi-finished hides, skins and leather (2nd Schedule).',
+      mappable: false, as_on: '2022-05-21', age_days: 1475,
+      source_url: 'https://example.test/customs-tariff-2nd-sched', notification_ref: null,
+    };
+    const ti = await assembleTradeIntelligence(
+      '4101.20.10', '41',
+      mockQueries({ policy: FREE_POLICY, duty: staleUnmappable }),
+    );
+    if (ti === null) throw new Error('unreachable');
+    const duty = ti.exportDuty as TradeExportDuty;
+    // mappable=false honesty guard is INDEPENDENT of staleness: bare rate withheld.
+    expect(duty.mappable).toBe(false);
+    expect(duty.verify).toBe(true);
+    expect(duty.rateText).toBeNull();
+    expect(duty.conditionVerbatim).toBe(
+      'Export duty on raw and semi-finished hides, skins and leather (2nd Schedule).',
+    );
+    // The date is still honest: stale flagged + advisory.
+    expect(duty.stale).toBe(true);
+    expect(duty.staleAdvisory).not.toBeNull();
   });
 
   it('EXPORT-POLICY BASELINE EXCEPTION: a stale policy snapshot is SHOWN (not hidden) with an advisory', async () => {

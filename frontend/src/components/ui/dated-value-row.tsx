@@ -16,6 +16,12 @@ export interface DatedValueRowProps {
   sourceLabel?: string | null;
   /** The official source deep link. */
   sourceUrl?: string | null;
+  /**
+   * A calm secondary advisory line shown under the date/source when the datum is
+   * past its freshness budget, e.g. "Verify the current rate on CBIC". The value
+   * itself is still shown in full — this never replaces it.
+   */
+  advisory?: string | null;
   className?: string;
 }
 
@@ -33,12 +39,14 @@ function DatedValueRow({
   asOn,
   sourceLabel,
   sourceUrl,
+  advisory,
   className,
 }: DatedValueRowProps) {
   const asOnText = (asOn ?? "").trim();
   const detailText = (detail ?? "").trim();
   const srcLabel = (sourceLabel ?? "").trim();
   const href = (sourceUrl ?? "").trim();
+  const advisoryText = (advisory ?? "").trim();
 
   return (
     <div
@@ -75,6 +83,12 @@ function DatedValueRow({
             ) : srcLabel ? (
               <span>{srcLabel}</span>
             ) : null}
+          </span>
+        ) : null}
+        {/* stale advisory — a calm secondary line; the value above is still shown in full */}
+        {advisoryText ? (
+          <span className="font-sans text-eyebrow italic leading-snug text-ink-muted">
+            {advisoryText}
           </span>
         ) : null}
       </div>

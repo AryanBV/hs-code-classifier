@@ -6,25 +6,33 @@
 // TRADE-INTELLIGENCE-PLAN §5). NO Gemini. Read-only. Best-effort.
 //
 // THREE LOAD-BEARING BEHAVIOURS (each is documented inline at its site):
-//   1. FRESHNESS — a datum older than its scheme's freshness_budget_days is
-//      returned as a `verifyOnly` state (sourceUrl only, value withheld) rather
-//      than shown stale. (EXCEPTION: the export-policy baseline — see below.)
+//   1. FRESHNESS = SHOW-WITH-ADVISORY (not hide). A datum older than its scheme's
+//      freshness_budget_days is STILL SHOWN, with its asOn date and a per-scheme
+//      `staleAdvisory` ("verify the current rate on CBIC/DGFT"). Hiding a
+//      verified-current value behind a "verify only" placeholder is worse UX than
+//      showing it dated with an advisory — the user loses the actual number that
+//      is, in fact, correct (every 2nd-Schedule duty row is dated 2022-05-21, so
+//      the strict-hide rule hid ALL of them). The separate honesty guards below
+//      are NOT staleness and are unaffected:
+//        - export-duty mappable=false → still WITHHOLDS the bare rate, shows the
+//          verbatim condition + `verify` (a misattribution guard, not staleness);
+//        - null status → grey "not specified", never Free;
+//        - a control status with no condition → conditionMissing.
+//      (The `TradeVerifyState` shape is retained for genuinely volatile schemes
+//      should one ever need a true hide; Phase-1 never emits it for staleness.)
 //   2. EXCLUSIVITY — Ch.61/62/63 → RoSCTL ONLY, never RoDTEP. Even if a stray
 //      RoDTEP row exists for an apparel code, it is suppressed here.
 //   3. FAIL-SAFE — any query throw / missing data yields a null-or-sparse
 //      `TradeIntelligence` (or null). It NEVER throws, so it can never break or
 //      delay a classification (the caller fire-and-forgets / swallows).
 //
-// EXPORT-POLICY BASELINE EXCEPTION (intentional, do not "fix"):
-//   Export policy is the only policy data we hold (the 2022 DGFT ITC(HS)
-//   snapshot on tariff_lines). If we applied the normal "hide if stale" rule to
-//   it, an aged snapshot would HIDE the single most important datum — the very
-//   under-statement-of-a-control failure this feature exists to prevent. So for
-//   export policy ONLY we SHOW the status WITH its asOn date and attach a
-//   "verify current on DGFT" advisory (`stale: true`) instead of withholding it.
-//   Every other scheme (duty / incentive / uqc) follows the strict hide-if-stale
-//   rule via `verifyOnly`. This matches TRADE-INTELLIGENCE-PLAN §0 rule 2's
-//   stated exception and EXPERIENCE-DESIGN §4.1.
+// EXPORT-POLICY BASELINE (the original show-with-advisory case, now the rule for
+// every scheme): export policy is the anchor datum (the 2022 DGFT ITC(HS)
+// snapshot on tariff_lines). It was always SHOWN with its asOn + a "verify
+// current on DGFT" advisory when stale, never hidden — hiding a control status
+// would have caused the very under-statement failure this feature prevents. As of
+// this change every scheme (duty / incentive) follows that same show-with-advisory
+// rule. This matches TRADE-INTELLIGENCE-PLAN §0 rule 2 and EXPERIENCE-DESIGN §4.1.
 
 import type { ClassifyResult } from '../classifier-v2/types';
 import {
@@ -43,6 +51,9 @@ import {
   DGFT_ITCHS_SCHEDULE_URL,
   TRADE_INTEL_DISCLAIMER,
   EXPORT_POLICY_STALE_ADVISORY,
+  EXPORT_DUTY_STALE_ADVISORY,
+  ROSCTL_STALE_ADVISORY,
+  RODTEP_STALE_ADVISORY,
   ROSCTL_CHAPTERS,
   DEFAULT_FRESHNESS_BUDGET_DAYS,
   type ExportPolicyStatus,
@@ -94,8 +105,16 @@ export interface TradeExportDuty {
    * instead, so the UI shows "see source", never a misattributed number.
    */
   mappable:          boolean;
-  /** TRUE when not mappable OR stale — the UI must route the user to the source. */
+  /**
+   * TRUE only for the mappable=false honesty guard (route the user to the source
+   * instead of a misattributed number). Staleness no longer sets this — a stale
+   * value is now SHOWN with `stale`/`staleAdvisory`, not withheld.
+   */
   verify:            boolean;
+  /** TRUE when the snapshot is past its freshness budget. The value is still SHOWN. */
+  stale:             boolean;
+  /** The "verify current on CBIC" advisory, present only when `stale`. */
+  staleAdvisory:     string | null;
   asOn:              string | null;
   sourceUrl:         string | null;
   indicative:        true;
@@ -103,16 +122,20 @@ export interface TradeExportDuty {
 
 /** RoSCTL / RoDTEP incentive (mutually exclusive). Rate + cap ALWAYS travel together. */
 export interface TradeIncentive {
-  kind:       'rosctl' | 'rodtep';
+  kind:          'rosctl' | 'rodtep';
   /** The rebate/rate percent as a number (e.g. 6.05). */
-  ratePct:    number;
+  ratePct:       number;
   /** Verbatim per-unit value cap (e.g. "Rs. 1.4 per kg"), or null. */
-  cap:        string | null;
+  cap:           string | null;
   /** The UQC the cap is denominated in (e.g. "KGS"), or null. */
-  capUnit:    string | null;
-  asOn:       string;
-  sourceUrl:  string;
-  indicative: true;
+  capUnit:       string | null;
+  /** TRUE when the snapshot is past its freshness budget. The value is still SHOWN. */
+  stale:         boolean;
+  /** The "verify current on DGFT" advisory, present only when `stale`. */
+  staleAdvisory: string | null;
+  asOn:          string;
+  sourceUrl:     string;
+  indicative:    true;
 }
 
 /** Unit Quantity Code. */
@@ -232,14 +255,15 @@ function buildExportPolicy(
 }
 
 /**
- * Build the export-duty block.
+ * Build the export-duty block. SHOW-WITH-ADVISORY for staleness.
  *   - No row → NIL default (Customs Tariff Note-4), dated to the export-duty
  *     SOURCE registry entry (NOT undated): "NIL — no export duty" still carries
  *     as_on + sourceUrl so a duty appearing between scrapes is the tracked risk.
  *     When no export-duty source is registered either, returns null (nothing to show).
  *   - mappable=false → never surface a bare rate; set `verify` and carry the
- *     verbatim condition instead.
- *   - stale → return a verify-state (value withheld).
+ *     verbatim condition instead. (A misattribution guard, NOT staleness.)
+ *   - stale → still SHOW the value, with `stale: true` + a "verify on CBIC"
+ *     advisory. The number is never hidden for age alone.
  */
 function buildExportDuty(
   row: ExportDutyRow | null,
@@ -256,18 +280,21 @@ function buildExportDuty(
       conditionVerbatim: null,
       mappable:          true,
       verify:            false,
+      stale:             false,
+      staleAdvisory:     null,
       asOn:              dutySource.asOn,
       sourceUrl:         dutySource.sourceUrl,
       indicative:        true,
     };
   }
 
-  // Stale → strict hide-if-stale: a verify-state, value withheld.
-  if (isStale(row.age_days, budgetFor('export_duty', budgets))) {
-    return { verifyOnly: true, asOn: row.as_on, sourceUrl: row.source_url, indicative: true };
-  }
+  // Staleness is shown, not hidden: compute it and attach the advisory below.
+  const stale = isStale(row.age_days, budgetFor('export_duty', budgets));
+  const staleAdvisory = stale ? EXPORT_DUTY_STALE_ADVISORY : null;
 
-  // mappable=false → never a bare rate; verify + verbatim condition only.
+  // mappable=false → never a bare rate; verify + verbatim condition only. This is
+  // a misattribution honesty guard (unchanged), independent of staleness — when a
+  // mappable=false row is ALSO stale, the advisory still rides so the date is honest.
   if (!row.mappable) {
     return {
       isNil:             false,
@@ -275,6 +302,8 @@ function buildExportDuty(
       conditionVerbatim: row.condition_text,
       mappable:          false,
       verify:            true,
+      stale,
+      staleAdvisory,
       asOn:              row.as_on,
       sourceUrl:         row.source_url,
       indicative:        true,
@@ -287,53 +316,55 @@ function buildExportDuty(
     conditionVerbatim: row.condition_text,
     mappable:          true,
     verify:            false,
+    stale,
+    staleAdvisory,
     asOn:              row.as_on,
     sourceUrl:         row.source_url,
     indicative:        true,
   };
 }
 
-/** Build a RoSCTL incentive from a row (or null), applying freshness. */
+/** Build a RoSCTL incentive from a row (or null). Stale → SHOWN with an advisory. */
 function buildRosctl(
   row: RosctlRow | null,
   budgets: FreshnessBudgets,
 ): TradeIncentive | TradeVerifyState | null {
   if (row === null) return null;
-  if (isStale(row.age_days, budgetFor('rosctl', budgets))) {
-    return { verifyOnly: true, asOn: row.as_on, sourceUrl: row.source_url, indicative: true };
-  }
   const ratePct = toNum(row.rebate_pct);
   if (ratePct === null) return null;
+  const stale = isStale(row.age_days, budgetFor('rosctl', budgets));
   return {
-    kind:       'rosctl',
+    kind:          'rosctl',
     ratePct,
-    cap:        row.cap_text,
-    capUnit:    row.cap_unit,
-    asOn:       row.as_on,
-    sourceUrl:  row.source_url,
-    indicative: true,
+    cap:           row.cap_text,
+    capUnit:       row.cap_unit,
+    stale,
+    staleAdvisory: stale ? ROSCTL_STALE_ADVISORY : null,
+    asOn:          row.as_on,
+    sourceUrl:     row.source_url,
+    indicative:    true,
   };
 }
 
-/** Build a RoDTEP incentive from a row (or null), applying freshness. */
+/** Build a RoDTEP incentive from a row (or null). Stale → SHOWN with an advisory. */
 function buildRodtep(
   row: RodtepRow | null,
   budgets: FreshnessBudgets,
 ): TradeIncentive | TradeVerifyState | null {
   if (row === null) return null;
-  if (isStale(row.age_days, budgetFor('rodtep', budgets))) {
-    return { verifyOnly: true, asOn: row.as_on, sourceUrl: row.source_url, indicative: true };
-  }
   const ratePct = toNum(row.rate_pct);
   if (ratePct === null) return null;
+  const stale = isStale(row.age_days, budgetFor('rodtep', budgets));
   return {
-    kind:       'rodtep',
+    kind:          'rodtep',
     ratePct,
-    cap:        row.cap_text,
-    capUnit:    row.cap_unit,
-    asOn:       row.as_on,
-    sourceUrl:  row.source_url,
-    indicative: true,
+    cap:           row.cap_text,
+    capUnit:       row.cap_unit,
+    stale,
+    staleAdvisory: stale ? RODTEP_STALE_ADVISORY : null,
+    asOn:          row.as_on,
+    sourceUrl:     row.source_url,
+    indicative:    true,
   };
 }
 

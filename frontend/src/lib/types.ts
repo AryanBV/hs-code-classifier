@@ -114,7 +114,11 @@ export interface TradeExportDuty {
   rateText: string | null;
   conditionVerbatim: string | null;
   mappable: boolean;
+  /** TRUE only for the mappable=false misattribution guard (not staleness). */
   verify: boolean;
+  /** TRUE when past the freshness budget. The value is still SHOWN (with advisory). */
+  stale: boolean;
+  staleAdvisory: string | null;
   asOn: string | null;
   sourceUrl: string | null;
   indicative: true;
@@ -125,6 +129,9 @@ export interface TradeIncentive {
   ratePct: number;
   cap: string | null;
   capUnit: string | null;
+  /** TRUE when past the freshness budget. The value is still SHOWN (with advisory). */
+  stale: boolean;
+  staleAdvisory: string | null;
   asOn: string;
   sourceUrl: string;
   indicative: true;
