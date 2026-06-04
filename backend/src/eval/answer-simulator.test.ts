@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import {
   deriveAnswerId,
+  deriveDivergenceAnswerId,
   simulateAnswerRecovery,
   type GoldAttributeLookup,
   type ContinueWithAnswersFn,
@@ -286,6 +287,98 @@ describe('deriveAnswerId (pure gold→option mapping)', () => {
 });
 
 // ---------------------------------------------------------------------------
+// deriveDivergenceAnswerId (pure) — leaf-grounded divergence-ask derivation.
+// A divergence option carries `target_codes` (the real 8-digit leaves it selects);
+// the gold answer is the FIRST option whose target leaf == gold (normalizeHSCode
+// equality). Escape options carry no target_codes and must NEVER be picked.
+// ---------------------------------------------------------------------------
+
+describe('deriveDivergenceAnswerId (pure leaf-grounded mapping)', () => {
+  /** Frozen-chicken divergence ASK, shaped exactly like toClarifyingQuestion output:
+   *  real options carry target_codes; the appended generic escape does NOT. */
+  const frozenChickenQuestion = {
+    options: [
+      { id: 'whole', label: 'Whole bird (not cut in pieces)', target_codes: ['0207.12.00'] },
+      { id: 'cut', label: 'Cuts and offal', target_codes: ['0207.14.00'] },
+      { id: 'other', label: 'Other / not listed (please describe)' }, // escape: no target_codes
+    ],
+  };
+
+  it('frozen-chicken: gold 0207.12.00 derives the "whole" option (not the LLM label)', () => {
+    const d = deriveDivergenceAnswerId(frozenChickenQuestion, '0207.12.00');
+    expect(d.answer_found).toBe(true);
+    expect(d.derived_answer_id).toBe('whole');
+  });
+
+  it('frozen-chicken: gold 0207.14.00 derives the "cut" option', () => {
+    const d = deriveDivergenceAnswerId(frozenChickenQuestion, '0207.14.00');
+    expect(d.answer_found).toBe(true);
+    expect(d.derived_answer_id).toBe('cut');
+  });
+
+  it('normalizes both sides: dotless gold 02071200 still matches 0207.12.00 target', () => {
+    const d = deriveDivergenceAnswerId(frozenChickenQuestion, '02071200');
+    expect(d.answer_found).toBe(true);
+    expect(d.derived_answer_id).toBe('whole');
+  });
+
+  it('NEVER picks the escape option even when gold is absent from every real option', () => {
+    // Gold not in any real option's target_codes; the escape has no target_codes →
+    // must remain unanswerable (escape can never be selected). Honesty invariant.
+    const d = deriveDivergenceAnswerId(frozenChickenQuestion, '0207.99.00');
+    expect(d.answer_found).toBe(false);
+    expect(d.derived_answer_id).toBeNull();
+  });
+
+  it('multi-leaf option (cross-sub class): gold matching ANY leaf in the option wins', () => {
+    const q = {
+      options: [
+        { id: 'green', label: 'Not roasted', target_codes: ['0901.11.11', '0901.12.10'] },
+        { id: 'roasted', label: 'Roasted', target_codes: ['0901.21.10', '0901.22.10'] },
+        { id: 'other', label: 'Other / not listed (please describe)' },
+      ],
+    };
+    expect(deriveDivergenceAnswerId(q, '0901.22.10').derived_answer_id).toBe('roasted');
+    expect(deriveDivergenceAnswerId(q, '0901.12.10').derived_answer_id).toBe('green');
+  });
+
+  it('returns the FIRST matching option when (degenerate) multiple options carry gold', () => {
+    const q = {
+      options: [
+        { id: 'a', label: 'A', target_codes: ['0207.12.00'] },
+        { id: 'b', label: 'B', target_codes: ['0207.12.00'] },
+      ],
+    };
+    expect(deriveDivergenceAnswerId(q, '0207.12.00').derived_answer_id).toBe('a');
+  });
+
+  it('a text-match (triage/sibling/QGS) question with NO target_codes is non-derivable here', () => {
+    // This is the no-op that makes the existing text-match path byte-identical: a
+    // question whose options lack target_codes returns answer_found=false, so the
+    // caller falls through to deriveAnswerId unchanged.
+    const q = { options: [{ id: 'roasted', label: 'Roasted' }, { id: 'green', label: 'Green' }] };
+    const d = deriveDivergenceAnswerId(q, '0901.21.00');
+    expect(d.answer_found).toBe(false);
+    expect(d.derived_answer_id).toBeNull();
+  });
+
+  it('empty target_codes array is skipped (treated like an escape)', () => {
+    const q = {
+      options: [
+        { id: 'whole', label: 'Whole', target_codes: [] },
+        { id: 'cut', label: 'Cuts', target_codes: ['0207.14.00'] },
+      ],
+    };
+    expect(deriveDivergenceAnswerId(q, '0207.12.00').answer_found).toBe(false); // empty array skipped
+    expect(deriveDivergenceAnswerId(q, '0207.14.00').derived_answer_id).toBe('cut');
+  });
+
+  it('a null/empty gold code is non-derivable', () => {
+    expect(deriveDivergenceAnswerId(frozenChickenQuestion, '').answer_found).toBe(false);
+  });
+});
+
+// ---------------------------------------------------------------------------
 // simulateAnswerRecovery (multi-round loop, deps injected)
 // ---------------------------------------------------------------------------
 
@@ -539,5 +632,105 @@ describe('simulateAnswerRecovery', () => {
     expect(out.final_decision).toBe('UNANSWERABLE');
     expect(out.answer_matches).toHaveLength(2);
     expect(out.answer_matches.every((m) => m.answer_found === false)).toBe(true);
+  });
+
+  // -------------------------------------------------------------------------
+  // DIVERGENCE-ask integration: the loop runs deriveDivergenceAnswerId FIRST. A
+  // leaf-grounded option (target_codes) is selected by gold-code equality even
+  // when its LLM-phrased label would NOT text-match the gold attribute value —
+  // the exact false-negative this fix removes.
+  // -------------------------------------------------------------------------
+
+  /** Frozen-chicken divergence ASK as it actually reaches the simulator (toClarifyingQuestion shape). */
+  const divergenceChickenQuestion = (): ClarifyingQuestion => ({
+    question_id: 'div_cross_0207_presentation',
+    question_text: 'Is this a whole bird (not cut in pieces), or cuts/offal?',
+    discriminating_attribute: 'form',
+    options: [
+      { id: 'whole', label: 'Whole bird (not cut in pieces)', target_codes: ['0207.12.00'] },
+      { id: 'cut', label: 'Cuts and offal', target_codes: ['0207.14.00'] },
+      { id: 'other', label: 'Other / not listed (please describe)' },
+    ],
+    qgs_used: false,
+    trigger: 'divergence',
+  });
+
+  it('divergence: derives the gold-leaf option even when the gold ATTRIBUTE value would not text-match the label', async () => {
+    // The stored attribute value ("carcass, whole-bird") does NOT text-match the
+    // LLM label "Whole bird (not cut in pieces)" — under the old path this was a
+    // false negative. The divergence branch keys off target_codes == gold instead.
+    const lookup: GoldAttributeLookup = vi.fn(async () => ['carcass, whole-bird']);
+    const cont: ContinueWithAnswersFn = vi.fn(async (_q, batch) => {
+      expect(batch).toEqual({ div_cross_0207_presentation: 'whole' });
+      return classifyResult('0207.12.00');
+    });
+
+    const out = await simulateAnswerRecovery({
+      originalQuery: 'frozen chicken',
+      initialAsk: askResult(divergenceChickenQuestion(), ['L0', 'L1', 'L2', 'L3', 'DIVERGENCE-ASK']),
+      goldCode: '0207.12.00',
+      lookup,
+      continueWithAnswers: cont,
+    });
+
+    expect(out.final_decision).toBe('CLASSIFY');
+    expect(out.final_code_if_classify).toBe('0207.12.00');
+    expect(out.code_correct_after_recovery).toBe(true);
+    expect(out.answer_matches[0]!.answer_found).toBe(true);
+    expect(out.answer_matches[0]!.derived_answer_id).toBe('whole');
+    expect(cont).toHaveBeenCalledTimes(1);
+  });
+
+  it('divergence: never selects the escape; gold absent from all real options → falls through to UNANSWERABLE', async () => {
+    // Gold not in any option's target_codes; the gold attribute value also matches
+    // no real option label (and 'other' is an escape) → no fabrication, unanswerable.
+    const lookup: GoldAttributeLookup = vi.fn(async () => ['some unlisted variety']);
+    const cont: ContinueWithAnswersFn = vi.fn(async () => classifyResult('0207.12.00'));
+
+    const out = await simulateAnswerRecovery({
+      originalQuery: 'frozen chicken',
+      initialAsk: askResult(divergenceChickenQuestion(), ['L0', 'L1', 'L2', 'L3', 'DIVERGENCE-ASK']),
+      goldCode: '0207.99.00', // not a target of any option
+      lookup,
+      continueWithAnswers: cont,
+    });
+
+    expect(out.final_decision).toBe('UNANSWERABLE');
+    expect(out.code_correct_after_recovery).toBe(false);
+    expect(cont).not.toHaveBeenCalled();
+  });
+
+  it('divergence falls through to text-match when options carry NO target_codes (mixed safety)', async () => {
+    // A divergence-flavored question that (defensively) lost its target_codes still
+    // recovers via the existing gold-attribute text-match path — proving the
+    // fall-through is intact and the two paths compose.
+    const q: ClarifyingQuestion = {
+      question_id: 'div_cross_0207_presentation',
+      question_text: 'Whole or cuts?',
+      discriminating_attribute: 'form',
+      options: [
+        { id: 'whole', label: 'Whole' },
+        { id: 'cut', label: 'Cuts' },
+      ],
+      qgs_used: false,
+      trigger: 'divergence',
+    };
+    const lookup: GoldAttributeLookup = vi.fn(async () => ['whole']); // text-match resolves it
+    const cont: ContinueWithAnswersFn = vi.fn(async (_q, batch) => {
+      expect(batch).toEqual({ div_cross_0207_presentation: 'whole' });
+      return classifyResult('0207.12.00');
+    });
+
+    const out = await simulateAnswerRecovery({
+      originalQuery: 'frozen chicken',
+      initialAsk: askResult(q, ['L0', 'L1', 'L2', 'L3', 'DIVERGENCE-ASK']),
+      goldCode: '0207.12.00',
+      lookup,
+      continueWithAnswers: cont,
+    });
+
+    expect(out.final_decision).toBe('CLASSIFY');
+    expect(out.answer_matches[0]!.derived_answer_id).toBe('whole');
+    expect(cont).toHaveBeenCalledTimes(1);
   });
 });

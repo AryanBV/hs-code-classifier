@@ -868,7 +868,17 @@ export function evaluateDivergenceAsk(
  * the divergence flow keys off `question_id`).
  */
 export function toClarifyingQuestion(q: DivergenceQuestion): ClarifyingQuestion {
-  const options: TriageFallbackOption[] = q.options.map((o) => ({ id: o.id, label: o.label }));
+  // Each divergence option is leaf-grounded — carry its surviving 8-digit leaf
+  // code(s) as `target_codes` so the eval answer-simulator can derive the gold
+  // answer DETERMINISTICALLY (option whose target leaf == gold) instead of fuzzy
+  // text-matching the (LLM-phrasable) label. The escape ('other') appended below
+  // is NOT leaf-grounded (it applies no filter) and therefore carries no
+  // target_codes — preserving the simulator's never-pick-an-escape honesty.
+  const options: TriageFallbackOption[] = q.options.map((o) => ({
+    id: o.id,
+    label: o.label,
+    target_codes: [...o.codes],
+  }));
   if (q.residual_escape !== null) {
     // WITHIN-SUB: honest real-leaf residual escape.
     options.push({

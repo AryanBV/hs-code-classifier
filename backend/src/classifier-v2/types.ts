@@ -134,6 +134,17 @@ export interface TriageFallbackOption {
   /** Stable snake_case token; becomes the previousAnswers key on next round. */
   id:    string;
   label: string;
+  /**
+   * OPTIONAL — the real 8-digit leaf code(s) ("NNNN.NN.NN") that answering with
+   * this option would select. Populated ONLY by the DIVERGENCE engine (whose
+   * options are leaf-grounded by construction); every OTHER asker (triage / QGS /
+   * sibling / cross-subheading escape) leaves this `undefined`. It lets the eval
+   * answer-simulator derive the gold answer DETERMINISTICALLY (pick the option
+   * whose target leaf == the gold code) instead of fuzzy text-matching the
+   * LLM-phrased label. Never rendered by the wizard. The escape ('other') option
+   * carries NO target_codes (it applies no leaf filter).
+   */
+  target_codes?: string[];
 }
 
 export interface TriageClarifyingQuestion {

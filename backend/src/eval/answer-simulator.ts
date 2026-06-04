@@ -184,6 +184,47 @@ export interface DerivedAnswer {
 }
 
 /**
+ * DIVERGENCE-AWARE derivation (runs BEFORE text-matching).
+ *
+ * A DIVERGENCE-ask's options are LEAF-GROUNDED: each carries `target_codes` — the
+ * real 8-digit leaf code(s) that answering with that option would select. For such
+ * a question the gold answer is DETERMINISTIC: pick the option whose `target_codes`
+ * includes the gold code (compared via {@link normalizeHSCode}). This bypasses the
+ * value-mismatch false-negative where an LLM-phrased option label ("Whole carcass /
+ * whole animal", id "whole") does not text-match the gold code's stored
+ * tariff_line_attributes value ("carcass, whole-bird") — yet a real user picking
+ * that option provably reaches the gold leaf.
+ *
+ * HONESTY INVARIANT (must hold): we ONLY return an option whose target leaf is
+ * EXACTLY the gold code. If NO option's `target_codes` contains the gold (or no
+ * option carries `target_codes` at all — i.e. a triage/sibling/QGS ask), we return
+ * `answer_found: false` so the caller FALLS THROUGH to the existing text-matching
+ * path. The escape ('other') option never carries `target_codes`, so it can never
+ * be picked here. A null/empty gold code is non-derivable.
+ *
+ * Returns `{ answer_found: false, derived_answer_id: null }` when no leaf-grounded
+ * option maps EXACTLY to the gold — never a fabricated/approximate recovery.
+ */
+export function deriveDivergenceAnswerId(
+  question: { options: { id: string; label: string; target_codes?: string[] }[] },
+  goldCode: string,
+): DerivedAnswer {
+  const goldNorm = normalizeHSCode(goldCode);
+  if (goldNorm.length === 0) return { derived_answer_id: null, answer_found: false };
+
+  for (const opt of question.options) {
+    // Escape / non-leaf-grounded options carry no target_codes — never derivable here.
+    if (opt.target_codes === undefined || opt.target_codes.length === 0) continue;
+    for (const code of opt.target_codes) {
+      if (normalizeHSCode(code) === goldNorm) {
+        return { derived_answer_id: opt.id, answer_found: true };
+      }
+    }
+  }
+  return { derived_answer_id: null, answer_found: false };
+}
+
+/**
  * Map gold-true attribute values onto a clarifying question's options.
  *
  * Matching is done on a CANONICAL form ({@link canonicalize}: lowercase, collapse
@@ -322,7 +363,12 @@ export async function simulateAnswerRecovery(
 
     for (const q of roundQuestions) {
       const goldValues = await lookup(goldCode, q.discriminating_attribute);
-      const derived = deriveAnswerId(q, goldValues);
+      // DIVERGENCE-AWARE first: if this question's options are leaf-grounded
+      // (carry target_codes), derive deterministically by gold-code equality.
+      // This is a no-op for triage/sibling/QGS asks (no target_codes) → those
+      // FALL THROUGH to the existing gold-attribute text-match, BYTE-IDENTICAL.
+      const divergence = deriveDivergenceAnswerId(q, goldCode);
+      const derived = divergence.answer_found ? divergence : deriveAnswerId(q, goldValues);
       derivations.push({
         question: q,
         goldValues,
