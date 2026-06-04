@@ -107,6 +107,14 @@ export interface ApiQuestionResponse {
   options:                 ApiQuestionOption[];
   questionId:              string;
   discriminatingAttribute: string;
+  /**
+   * OPTIONAL: which lever raised this question (`'triage'` | `'sibling'` |
+   * `'cross_subheading'` | `'divergence'`). Surfaced so the wizard can render the
+   * honest residual escape (the last option, `id:'other'`) appropriately and so a
+   * divergence ASK is distinguishable. Absent when the underlying question carries
+   * no trigger (legacy triage/QGS fallback). ADDITIVE — never removes a field.
+   */
+  trigger?:                'triage' | 'sibling' | 'cross_subheading' | 'divergence';
   /** Server-side wall-clock, attached by the route (NOT the mapper). OPTIONAL (B5). */
   processingTimeMs?:       number;
 }
@@ -310,13 +318,20 @@ export async function mapV2Result(
 
   if (result.decision === 'ASK' && result.question) {
     const q = result.question;
-    return {
+    // `q.options` already carries the honest residual escape as its LAST option
+    // (`id:'other'`, a REAL leaf description) for a divergence question — it was
+    // appended by the engine's `toClarifyingQuestion`. We pass the options through
+    // verbatim (MECE real options + the escape), so no special-casing is needed.
+    const response: ApiQuestionResponse = {
       responseType:            'question',
       question:                q.question_text,
       options:                 q.options.map((o) => ({ id: o.id, label: o.label })),
       questionId:              q.question_id,
       discriminatingAttribute: q.discriminating_attribute,
     };
+    // Surface the lever (incl. 'divergence') so the wizard can distinguish it.
+    if (q.trigger !== undefined) response.trigger = q.trigger;
+    return response;
   }
 
   // REFUSE (and any other decision shape) → refusal. A genuine model REFUSE

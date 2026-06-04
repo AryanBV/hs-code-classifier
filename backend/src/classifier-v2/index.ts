@@ -34,11 +34,19 @@ import {
   evaluateCrossSubheadingAsk,
   buildCrossSubheadingQuestion,
   computeCrossSubheadingConcentration,
+  computeCrossSubheadingMargin,
+  computeAbstentionScore,
   headingOfCandidate,
   subheadingOfCandidate,
   isResidualLeafDescription,
 } from './lib/cross-subheading-ask';
 import { getTariffLineParentChains } from './lib/supabase-client';
+import { repopulateSiblings } from './lib/sibling-repopulation';
+import {
+  evaluateDivergenceAsk,
+  toClarifyingQuestion,
+  type DivergenceEngineInput,
+} from './lib/divergence-engine';
 import { selectToClassifyResult, buildDiagnostics } from './select-to-result';
 import {
   BaselineEscalation,
@@ -350,8 +358,14 @@ async function handleTriageAsk(
  *     ask-rate ≤15% / recoverability ≥75% operating point.
  * --------------------------------------------------------------------------- */
 
-/** True only when the lever is explicitly enabled for this process. */
+/**
+ * True only when the post-L4 sibling-ASK lever is explicitly enabled for this
+ * process AND the DIVERGENCE engine is NOT on. The divergence engine (Stage 3a)
+ * SUPERSEDES this lever, so when `DIVERGENCE_ASK_ENABLED` is on we never also run
+ * the old sibling lever (the caller would otherwise double-ask).
+ */
 function siblingAskEnabled(): boolean {
+  if (divergenceAskEnabled()) return false;
   return process.env.SIBLING_ASK_ENABLED === 'true';
 }
 
@@ -591,6 +605,9 @@ function toPublicAttribute(dbField: string): string {
 
 /** True only when the lever is explicitly enabled for this process. */
 function crossSubheadingAskEnabled(): boolean {
+  // The DIVERGENCE engine (Stage 3a) SUPERSEDES the cross-subheading lever — when
+  // it is on we never also run the old cross-sub lever (would double-ask).
+  if (divergenceAskEnabled()) return false;
   return process.env.CROSS_SUBHEADING_ASK_ENABLED === 'true';
 }
 
@@ -742,6 +759,258 @@ async function maybeCrossSubheadingAskPostL3(params: {
   } catch {
     // The lever must NEVER throw — a DB/compute hiccup degrades gracefully:
     // return null ⇒ the orchestrator proceeds to L4 unchanged.
+    return null;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * DIVERGENCE ASK lever (POST-L3; RDC-X Stage 3a; env-gated; default OFF →
+ * byte-identical).
+ *
+ * The pure per-round divergence brain (`lib/divergence-engine.ts`) SUPERSEDES the
+ * three older dark levers: it composes the cross-sub fork (O8) AND the within-sub
+ * axes (O7) through ONE eligibility gate over the SIBLING-REPOPULATED survivor
+ * family (`repopulateSiblings`, Stage S1, run FIRST so the engine reasons over the
+ * TRUE leaf population rather than the rerank-truncated top-8). It emits ONE MECE
+ * forced-choice question per round, chains naturally across rounds (each answered
+ * axis is consumed and cannot re-fire), and returns through the EXISTING ASK return
+ * path (the same `ClassifyResult` shape `maybeCrossSubheadingAskPostL3` returned).
+ *
+ * GATE: behind `DIVERGENCE_ASK_ENABLED === 'true'`. Unset/anything-else → returns
+ * null BEFORE any repopulation/DB/compute work, so the committed pipeline is
+ * byte-for-byte unchanged. When ON, this REPLACES the cross-sub / sibling /
+ * calibrated levers (the caller does NOT run both — see classify()).
+ *
+ * FAIL-SAFE: never throws — any repopulation/engine/DB hiccup → null (proceed to
+ * L4 unchanged). The engine itself is total (returns null on any malformed input).
+ *
+ * Tunability (env, all safe defaults):
+ *   - DIVERGENCE_ASK_ENABLED        'true' → on; anything else → off (default).
+ *   - DIVERGENCE_ABSTENTION_FLOOR   float, default 0.50 (calibrated-abstention floor).
+ *   - DIVERGENCE_Q_BUDGET           int,   default 3    (max clarifying rounds).
+ *   - DIVERGENCE_OUTCOME_EQUIV      'true' → on; default off (only ever REDUCES asks).
+ *   - DIVERGENCE_LLM_PHRASING       'true' → on; default off (NO hot-path LLM call in v1).
+ * --------------------------------------------------------------------------- */
+
+/** True only when the divergence engine is explicitly enabled for this process. */
+function divergenceAskEnabled(): boolean {
+  return process.env.DIVERGENCE_ASK_ENABLED === 'true';
+}
+
+/** Read + parse the (sweepable) calibrated-abstention floor (default 0.50). */
+function divergenceAbstentionFloor(): number {
+  const raw = process.env.DIVERGENCE_ABSTENTION_FLOOR;
+  if (raw === undefined) return 0.5;
+  const parsed = Number.parseFloat(raw);
+  return Number.isFinite(parsed) ? parsed : 0.5;
+}
+
+/** Read + parse the (sweepable) divergence round budget (default 3). */
+function divergenceQBudget(): number {
+  const raw = process.env.DIVERGENCE_Q_BUDGET;
+  if (raw === undefined) return 3;
+  const parsed = Number.parseInt(raw, 10);
+  return Number.isInteger(parsed) && parsed >= 0 ? parsed : 3;
+}
+
+/** True only when the outcome-equivalence suppressor is enabled (default off). */
+function divergenceOutcomeEquivEnabled(): boolean {
+  return process.env.DIVERGENCE_OUTCOME_EQUIV === 'true';
+}
+
+/** True only when the (default-off) LLM phrasing pass is enabled. */
+function divergenceLlmPhrasingEnabled(): boolean {
+  return process.env.DIVERGENCE_LLM_PHRASING === 'true';
+}
+
+/**
+ * Compute the CALIBRATED abstention score over the (repopulated) survivors, with
+ * ZERO extra LLM calls. Reuses the committed, tested cross-subheading machinery:
+ *   - When the dominant heading is a forced-choice-axis (O8) heading, score from
+ *     the cross-subheading concentration + cross-subheading rerank margin.
+ *   - Otherwise (within-sub only) score from the within-subheading rerank margin
+ *     in the dominant subheading + the count of distinct surviving subheadings.
+ * In BOTH cases the score is `computeAbstentionScore` (HIGHER = more uncertain).
+ * Repopulated siblings carry `rerank_score:null` (sentinel) so they widen the
+ * POPULATION without polluting the decisiveness margin. Pure; never throws.
+ */
+function computeDivergenceAbstention(survivors: RetrievalCandidate[]): number {
+  // (1) Distinct surviving 6-digit subheadings (drives the spread term either way).
+  const subSet = new Set<string>();
+  for (const c of survivors) {
+    const sub = subheadingOfCandidate(c);
+    if (/^\d{4}\.\d{2}$/.test(sub)) subSet.add(sub);
+  }
+  const competingSubheadings = subSet.size;
+
+  // (2) Cross-sub path: a forced-choice-axis dominant heading → use the cross-sub
+  // concentration + cross-sub margin (mirrors maybeCrossSubheadingAskPostL3).
+  const heading = dominantHeading(survivors);
+  if (heading.length > 0) {
+    const entry = getAxisEntryForHeading(heading);
+    if (entry !== null) {
+      const concentration = computeCrossSubheadingConcentration(survivors, entry);
+      if (concentration.isCrossSubheadingSplit) {
+        const { margin } = computeCrossSubheadingMargin(survivors, entry);
+        return computeAbstentionScore({
+          margin,
+          competingSubheadings: Math.max(2, concentration.subheadings.length),
+          residualLeafWinner: false,
+        });
+      }
+    }
+  }
+
+  // (3) Within-sub path: score from the dominant subheading's within-sub margin.
+  // The dominant subheading = the one carrying the most surviving leaves.
+  const counts = new Map<string, number>();
+  for (const c of survivors) {
+    const sub = subheadingOfCandidate(c);
+    if (/^\d{4}\.\d{2}$/.test(sub)) counts.set(sub, (counts.get(sub) ?? 0) + 1);
+  }
+  let domSub = '';
+  let domN = 0;
+  for (const [sub, n] of counts) {
+    if (n > domN || (n === domN && (domSub === '' || sub < domSub))) {
+      domSub = sub;
+      domN = n;
+    }
+  }
+  const { margin } = domSub.length > 0
+    ? computeSiblingRerankMargin(survivors, domSub)
+    : { margin: null as number | null };
+  return computeAbstentionScore({
+    margin,
+    competingSubheadings: Math.max(2, competingSubheadings),
+    residualLeafWinner: false,
+  });
+}
+
+/**
+ * OPTIONAL LLM-phrasing hook (behind `DIVERGENCE_LLM_PHRASING`, default OFF).
+ *
+ * v1 STUB / NO-OP: when the flag is OFF (default) we return the engine's structured
+ * label-table text VERBATIM — NO extra LLM call on the hot path. When the flag is
+ * ON this is the single seam where a future pass would rewrite `question_text` +
+ * option labels via the existing Gemini facade; until that pass is built it still
+ * returns the input unchanged (so turning the flag on is currently a safe no-op,
+ * never an unintended hot-path LLM call). Pure + total.
+ */
+function applyDivergencePhrasing(q: ClarifyingQuestion): ClarifyingQuestion {
+  if (!divergenceLlmPhrasingEnabled()) return q;
+  // v1: phrasing rewrite is NOT built yet — return the structured text unchanged.
+  // (Wiring a Gemini rewrite here is the documented extension point; doing so MUST
+  //  preserve option ids + the residual escape so the answer-continuation contract
+  //  is unaffected.)
+  return q;
+}
+
+/**
+ * Count the clarifying ROUNDS the divergence engine has already spent, derived
+ * from `previousAnswers`: each prior divergence round folded EXACTLY ONE answer
+ * keyed by a divergence-minted question_id (`div_cross_*` / `div_within_*`). This
+ * is the engine's own keyspace, so foreign answer keys (legacy triage/QGS asks)
+ * are ignored. Used to set the engine's `roundsSpent` so its round-budget stop and
+ * consumed-axis chaining are correct after a `continueWithAnswers` re-entry. Pure.
+ */
+function countDivergenceRounds(previousAnswers: Record<string, string>): number {
+  let n = 0;
+  for (const qid of Object.keys(previousAnswers)) {
+    if (qid.startsWith('div_cross_') || qid.startsWith('div_within_')) n++;
+  }
+  return n;
+}
+
+/**
+ * POST-L3 DIVERGENCE ASK gate. Called AFTER L3 produced survivors but BEFORE L4,
+ * exactly where `maybeCrossSubheadingAskPostL3` is — and SUPERSEDING it when the
+ * flag is on. Returns a `ClassifyResult` (decision:'ASK', `question.trigger=
+ * 'divergence'`) when the engine fires, else `null` (⇒ proceed to L4 unchanged).
+ *
+ * GATE env-OFF (default) returns null with ZERO repopulation/DB/compute work, so
+ * the committed pipeline is byte-for-byte identical. NEVER throws.
+ *
+ * @param qBudgetRemaining clarifying rounds still available (engine round budget
+ *   is min(DIVERGENCE_Q_BUDGET, qBudgetRemaining) so it never out-asks the v2 cap).
+ * @param roundsSpent clarifying rounds already spent (threaded for chaining).
+ */
+async function maybeDivergenceAskPostL3(params: {
+  candidates:          RetrievalCandidate[];
+  extractedAttributes: TriageExtractedAttributes;
+  rawTokens:           string[];
+  previousAnswers:     Record<string, string>;
+  qBudgetRemaining:    number;
+  roundsSpent:         number;
+  state:               PipelineRunState;
+}): Promise<ClassifyResult | null> {
+  // GATE — default OFF. Return BEFORE any work so the default pipeline is unchanged.
+  if (!divergenceAskEnabled()) return null;
+
+  try {
+    const {
+      candidates, extractedAttributes, rawTokens, previousAnswers,
+      qBudgetRemaining, roundsSpent, state,
+    } = params;
+
+    // Cheap preconditions (no I/O): need budget + ≥2 candidates to have a split.
+    if (qBudgetRemaining <= 0) return null;
+    if (candidates.length < 2) return null;
+
+    // Stage S1 — sibling-repopulate FIRST so the engine reasons over the TRUE leaf
+    // family (fail-safe: returns the emit set unchanged on any DB error).
+    const survivors = await repopulateSiblings(candidates);
+
+    // Calibrated abstention score over the repopulated family (zero extra LLM).
+    const abstentionScore = computeDivergenceAbstention(survivors);
+
+    // The engine round budget never exceeds the live v2 Q-budget remaining.
+    const roundBudget = Math.min(divergenceQBudget(), roundsSpent + qBudgetRemaining);
+
+    const engineInput: DivergenceEngineInput = {
+      survivors,
+      extractedAttributes,
+      rawTokens,
+      previousAnswers,
+      abstentionScore,
+      roundsSpent,
+      options: {
+        abstentionFloor: divergenceAbstentionFloor(),
+        roundBudget,
+        outcomeEquivEnabled: divergenceOutcomeEquivEnabled(),
+      },
+    };
+
+    const result = evaluateDivergenceAsk(engineInput);
+    if (result === null) return null;
+
+    // Map the engine's structured question → the wizard ClarifyingQuestion shape
+    // (residual escape appended as the honest last option), then apply the
+    // (default-OFF) phrasing hook (no-op when the flag is off — no hot-path LLM).
+    const question = applyDivergencePhrasing(toClarifyingQuestion(result.question));
+
+    const batch: ClarifyingQuestionBatch = {
+      questions: [question],
+      total_ig_potential: question.info_gain_score ?? 0,
+    };
+
+    recordLayer(state, 'DIVERGENCE-ASK', 'ask', {
+      axis: result.axis,
+      level: result.level,
+      gain_ratio: result.gainRatio,
+      abstention_score: abstentionScore,
+      consumed_axes: result.state.consumedAxes,
+      question_id: question.question_id,
+    });
+
+    return {
+      decision: 'ASK',
+      question,
+      questions: batch,
+      diagnostics: buildDiagnostics(state),
+    };
+  } catch {
+    // The lever must NEVER throw — any repopulation/engine/DB hiccup degrades
+    // gracefully: return null ⇒ the orchestrator proceeds to L4 unchanged.
     return null;
   }
 }
@@ -969,6 +1238,9 @@ async function runSelectVerifyRepair(
 
 /** True only when the lever is explicitly enabled for this process. */
 function calibratedClassifyEnabled(): boolean {
+  // The DIVERGENCE engine (Stage 3a) SUPERSEDES the calibrated-classify lever —
+  // when it is on we never also run the old lever (single source of ASK).
+  if (divergenceAskEnabled()) return false;
   return process.env.CALIBRATED_CLASSIFY_ENABLED === 'true';
 }
 
@@ -1456,10 +1728,35 @@ async function classifyInner(
     return finalize(BaselineEscalation.onZeroCandidates(state), state, captureTrace);
   }
 
+  // --- POST-L3 DIVERGENCE ASK gate (env-gated; default OFF) ----------------
+  // RDC-X Stage 3a: the pure per-round divergence engine SUPERSEDES the cross-sub
+  // / sibling / calibrated levers (their gates defer to it). Sibling-repopulates
+  // the survivors FIRST, then composes the O8 cross-sub fork + O7 within-sub axes
+  // through ONE eligibility gate, emitting ONE MECE question per round. Off by
+  // default → returns null with ZERO work → byte-identical legacy path. When ON it
+  // runs INSTEAD OF the cross-sub lever below (which then no-ops via its gate).
+  // `roundsSpent` = clarifying rounds already completed = the number of divergence
+  // answers already folded into previousAnswers (one answer per prior round). This
+  // makes the engine's consumed-axis chaining + round-budget stop correct on
+  // re-entry (continueWithAnswers re-runs classify() from L0).
+  const divergenceRoundsSpent = countDivergenceRounds(previousAnswers);
+  const divergenceAsk = await maybeDivergenceAskPostL3({
+    candidates:          activeRulesOut.filtered_candidates,
+    extractedAttributes: activeTriageOut.extracted_attributes,
+    rawTokens:           normalized.raw_tokens,
+    previousAnswers,
+    qBudgetRemaining:    q_budget_remaining,
+    roundsSpent:         divergenceRoundsSpent,
+    state,
+  });
+  if (divergenceAsk !== null) return finalize(divergenceAsk, state, captureTrace);
+
   // --- POST-L3 CROSS-SUBHEADING ASK gate (env-gated; default OFF) ----------
   // Fires BEFORE L4 when the survivors concentrate into 2+ subheadings of an O6
   // forced-choice-axis heading the query is silent on (the "frozen chicken" bug).
   // Off by default → returns null with zero work → byte-identical legacy path.
+  // SUPERSEDED by the divergence engine: when DIVERGENCE_ASK_ENABLED is on this
+  // gate's `crossSubheadingAskEnabled()` returns false, so it does ZERO work.
   const crossSubAsk = await maybeCrossSubheadingAskPostL3({
     candidates:          activeRulesOut.filtered_candidates,
     extractedAttributes: activeTriageOut.extracted_attributes,

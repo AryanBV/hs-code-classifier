@@ -401,6 +401,64 @@ describe('mapV2Result — ASK', () => {
       { id: 'knitted', label: 'Knitted' },
       { id: 'woven', label: 'Woven' },
     ]);
+    // A legacy question with no trigger → the DTO omits the trigger field.
+    expect(out.trigger).toBeUndefined();
+  });
+
+  it('passes through trigger=cross_subheading when present', async () => {
+    const r = {
+      ...base,
+      decision: 'ASK',
+      question: {
+        question_id: 'ask_cross_form',
+        question_text: 'Whole bird or cuts?',
+        discriminating_attribute: 'form',
+        options: [{ id: 'whole', label: 'Whole' }, { id: 'cut', label: 'Cuts' }],
+        trigger: 'cross_subheading',
+      },
+    } as unknown as ClassifyResult;
+    const out = await mapV2Result(r);
+    if (out.responseType !== 'question') throw new Error('unreachable');
+    expect(out.trigger).toBe('cross_subheading');
+  });
+
+  it('maps a DIVERGENCE question — trigger=divergence + MECE options + residual escape last', async () => {
+    // Mirrors the engine's toClarifyingQuestion output: real MECE options FIRST,
+    // then the honest residual escape appended as the LAST option (id:'other',
+    // carrying a REAL leaf description — never a blank "Other / None").
+    const r = {
+      ...base,
+      decision: 'ASK',
+      question: {
+        question_id: 'div_within_090111_coffee_form',
+        question_text: 'What kind of coffee bean is it?',
+        discriminating_attribute: 'form',
+        options: [
+          { id: 'cherry', label: 'Cherry (dry/natural-processed)' },
+          { id: 'plantation', label: 'Arabica Plantation (washed Arabica)' },
+          { id: 'other', label: 'Other coffee, not elsewhere specified' }, // residual escape
+        ],
+        qgs_used: false,
+        trigger: 'divergence',
+      },
+    } as unknown as ClassifyResult;
+
+    const out = await mapV2Result(r);
+
+    expect(out.responseType).toBe('question');
+    if (out.responseType !== 'question') throw new Error('unreachable');
+    expect(out.trigger).toBe('divergence');
+    expect(out.questionId).toBe('div_within_090111_coffee_form');
+    expect(out.question).toBe('What kind of coffee bean is it?');
+    // MECE real options preserved IN ORDER, with the residual escape LAST.
+    expect(out.options).toEqual([
+      { id: 'cherry', label: 'Cherry (dry/natural-processed)' },
+      { id: 'plantation', label: 'Arabica Plantation (washed Arabica)' },
+      { id: 'other', label: 'Other coffee, not elsewhere specified' },
+    ]);
+    const last = out.options[out.options.length - 1]!;
+    expect(last.id).toBe('other');
+    expect(last.label).toMatch(/not elsewhere specified/i); // honest real leaf, not blank
   });
 });
 

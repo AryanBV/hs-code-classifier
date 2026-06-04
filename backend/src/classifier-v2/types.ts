@@ -548,7 +548,7 @@ export type { Predicate, PredicateRef, PredicateEvalResult } from './db/predicat
 
 /** Trace event captured at each layer for audit + eval. */
 export interface PipelineTraceEvent {
-  layer:    'L0' | 'L1' | 'L2' | 'L3' | 'L4' | 'L5' | 'L6' | 'L7' | 'L8' | 'QGS' | 'SIBLING-ASK' | 'CALIBRATED-CLASSIFY' | 'CROSS-SUBHEADING-ASK';
+  layer:    'L0' | 'L1' | 'L2' | 'L3' | 'L4' | 'L5' | 'L6' | 'L7' | 'L8' | 'QGS' | 'SIBLING-ASK' | 'CALIBRATED-CLASSIFY' | 'CROSS-SUBHEADING-ASK' | 'DIVERGENCE-ASK';
   /** Wall-clock ms from pipeline start to this event. */
   t_ms:     number;
   /** Stage label / sub-event id. */
@@ -617,9 +617,16 @@ export interface ClarifyingQuestion {
    *     vs 0207.14 cuts) that differ on one forced-choice axis the query is silent
    *     on, with no residual default to absorb the product. A targeted one-axis
    *     question is asked instead of guessing the subheading.
+   *   - `'divergence'` — the DIVERGENCE engine (RDC-X Stage S2) fired AFTER L3:
+   *     the pure per-round divergence brain composes the cross-sub fork (O8) AND
+   *     the within-sub axes (O7) through ONE eligibility gate over the
+   *     sibling-repopulated survivor family, emitting ONE MECE forced-choice
+   *     question per round (with an honest residual escape as the last option when
+   *     a real residual leaf survives). SUPERSEDES the cross_subheading / sibling /
+   *     calibrated levers when `DIVERGENCE_ASK_ENABLED` is on.
    * Absent on questions produced before this field existed (treated as triage).
    */
-  trigger?:                 'triage' | 'sibling' | 'cross_subheading';
+  trigger?:                 'triage' | 'sibling' | 'cross_subheading' | 'divergence';
 }
 
 /**

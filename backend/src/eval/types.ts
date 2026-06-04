@@ -466,7 +466,7 @@ export interface EvalDetail {
    * `triage` slice by convention). This is a SUPERSET surface of the
    * `ask_recovery_attempt.ask_trigger` (which exists only on simulated cases).
    */
-  ask_trigger?: 'triage' | 'sibling' | 'cross_subheading';
+  ask_trigger?: 'triage' | 'sibling' | 'cross_subheading' | 'divergence';
 
   /**
    * STAGED gold-case label (S0; OPTIONAL, additive): SEPARATE, human-judged
@@ -575,7 +575,7 @@ export interface EvalDetail {
      * trigger is unknown (treated as triage). Lets the report split recoverability
      * by lever (sibling_ask_*, cross_subheading_ask_*).
      */
-    ask_trigger?: 'triage' | 'sibling' | 'cross_subheading';
+    ask_trigger?: 'triage' | 'sibling' | 'cross_subheading' | 'divergence';
     rounds_attempted: number;
     final_decision: 'CLASSIFY' | 'ASK' | 'REFUSE' | 'UNANSWERABLE';
     final_code_if_classify?: string;

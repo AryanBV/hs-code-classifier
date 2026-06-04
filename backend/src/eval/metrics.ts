@@ -313,7 +313,7 @@ function stripCode(code: string): string {
  * ============================================================================ */
 
 /** Lever vocabulary for the trigger slice (mirrors ClarifyingQuestion.trigger). */
-export type AskTrigger = 'triage' | 'sibling' | 'cross_subheading';
+export type AskTrigger = 'triage' | 'sibling' | 'cross_subheading' | 'divergence';
 
 /** Default trigger bucket for an ASK with no explicit lever (the live L1 ask). */
 export const DEFAULT_ASK_TRIGGER: AskTrigger = 'triage';
@@ -417,7 +417,7 @@ export function routingSplitMetrics(cases: RoutingSplitCase[]): RoutingSplitResu
   for (const c of recoveryCases) triggers.add(c.askTrigger ?? DEFAULT_ASK_TRIGGER);
 
   // Deterministic slice order.
-  const TRIGGER_ORDER: AskTrigger[] = ['triage', 'sibling', 'cross_subheading'];
+  const TRIGGER_ORDER: AskTrigger[] = ['triage', 'sibling', 'cross_subheading', 'divergence'];
   const by_trigger = TRIGGER_ORDER.filter((t) => triggers.has(t)).map((t) => {
     // OVER-ASK slice: over-asked cases whose FIRED lever is t, over GT-classify
     // cases (same denominator — the over-ask population is shared, the numerator

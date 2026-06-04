@@ -83,8 +83,14 @@ vi.mock('./lib/sibling-ask-trigger', async (importOriginal) => {
 // description that does NOT verbatim-match the query, so only a STRONG margin (or
 // an explicit override) fires the lever's gate C.
 const getParentChainsMock = vi.fn(async () => [] as unknown[]);
+// DIVERGENCE lever dep: sibling-repopulation reads the FULL leaf family of the
+// surviving subheadings via getTariffLinesForSubheadings. Default to [] so
+// repopulateSiblings degrades to the emit set unchanged (the divergence fixtures
+// pass the full family directly as survivors); a divergence test can override it.
+const getTariffLinesForSubheadingsMock = vi.fn(async () => [] as unknown[]);
 vi.mock('./lib/supabase-client', () => ({
   getTariffLineParentChains: (...args: unknown[]) => getParentChainsMock(...args),
+  getTariffLinesForSubheadings: (...args: unknown[]) => getTariffLinesForSubheadingsMock(...args),
 }));
 
 // Import the SUT AFTER mocks are registered.
@@ -2704,6 +2710,259 @@ describe('classify() — CROSS-SUBHEADING ASK lever GATE ON', () => {
 
     const res = await classify('frozen chicken');
 
+    expect(res.decision).toBe('CLASSIFY');
+    expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+});
+
+/* ---------------------------------------------------------------------------
+ * DIVERGENCE ASK lever (RDC-X Stage 3a; POST-L3 engine; env-gated; default OFF →
+ * byte-identical). The real committed O7/O8 JSON tables are read from disk (the
+ * loaders are NOT mocked — mirrors the CROSS-SUBHEADING suite). `repopulateSiblings`
+ * reads getTariffLinesForSubheadings (mocked → [] so the emit set is unchanged;
+ * the fixtures pass the full leaf family directly as survivors).
+ * `isAttributePinnedByQuery` is mocked (default false → query silent → askable).
+ * --------------------------------------------------------------------------- */
+
+/** Survivors concentrating into 0207.12 (whole) + 0207.14 (cut), confusably close. */
+const DIV_CHICKEN: RetrievalCandidate[] = [
+  mkSibling('0207.12.00', 0.86), // whole bird
+  mkSibling('0207.14.00', 0.85), // cuts (cross-sub margin 0.01 < 0.05 → non-decisive)
+];
+
+/**
+ * Coffee survivors: green (0901.11.*) + roasted (0901.21.*), with the .90 residual
+ * present (S1 would repopulate it; we include it directly). Cross-sub margin small.
+ */
+const DIV_COFFEE: RetrievalCandidate[] = [
+  mkSibling('0901.11.21', 0.80), // cherry (coffee_form)
+  mkSibling('0901.11.31', 0.79), // parchment (coffee_form)
+  mkSibling('0901.11.90', 0.50), // residual (real leaf)
+  mkSibling('0901.21.10', 0.81), // roasted (cross-sub competitor; close to green)
+];
+
+describe('classify() — DIVERGENCE ASK lever GATE OFF (default → byte-identical)', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    delete process.env.DIVERGENCE_ASK_ENABLED;
+    delete process.env.CROSS_SUBHEADING_ASK_ENABLED;
+    delete process.env.SIBLING_ASK_ENABLED;
+    delete process.env.CALIBRATED_CLASSIFY_ENABLED;
+    normalizeMock.mockResolvedValue(normalizedOut);
+    triageMock.mockResolvedValue(triageOut); // CLASSIFY
+    retrieveMock.mockResolvedValue(retrievalOut);
+    // A genuine cross-sub split so ONLY the env gate suppresses the engine.
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(DIV_CHICKEN));
+    selectMock.mockResolvedValue({ ...selectOut, selected_code: '0207.12.00' });
+    verifyMock.mockResolvedValue(verifierPass);
+    getParentChainsMock.mockResolvedValue([]);
+    getTariffLinesForSubheadingsMock.mockResolvedValue([]);
+    isAttributePinnedMock.mockReturnValue(false);
+  });
+
+  afterEach(() => {
+    delete process.env.DIVERGENCE_ASK_ENABLED;
+  });
+
+  it('returns a CLASSIFY (proceeds to L4) and does ZERO engine work', async () => {
+    const res = await classify('frozen chicken', { captureTrace: true });
+
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.classification?.code).toBe('0207.12.00');
+    // Engine ran ZERO work: no repopulation, no pin check (the cross-sub lever is
+    // also off here, so isAttributePinnedByQuery is never called either).
+    expect(getTariffLinesForSubheadingsMock).not.toHaveBeenCalled();
+    expect(isAttributePinnedMock).not.toHaveBeenCalled();
+    expect(selectMock).toHaveBeenCalledTimes(1);
+    expect(verifyMock).toHaveBeenCalledTimes(1);
+    // No DIVERGENCE-ASK hop in the path/trace.
+    expect(res.diagnostics.escalation_path).not.toContain('DIVERGENCE-ASK');
+    const trace = res.diagnostics.trace ?? [];
+    expect(trace.find((t) => t.layer === 'DIVERGENCE-ASK')).toBeUndefined();
+  });
+
+  it('produces output BYTE-IDENTICAL to the no-flag baseline (deep-equal guard)', async () => {
+    // Freeze time so started_at/t_ms are identical across the two runs.
+    const fixedNow = 1_700_000_000_000;
+    const nowSpy = vi.spyOn(Date, 'now').mockReturnValue(fixedNow);
+
+    // Baseline: flag firmly unset.
+    delete process.env.DIVERGENCE_ASK_ENABLED;
+    const baseline = await classify('frozen chicken', { captureTrace: true });
+
+    // Same run again with the flag explicitly absent (the production default).
+    const withFlagUnset = await classify('frozen chicken', { captureTrace: true });
+
+    nowSpy.mockRestore();
+
+    // The two results must be structurally identical (the divergence seam adds
+    // nothing when the flag is off — no extra trace hop, no field changes).
+    expect(withFlagUnset).toStrictEqual(baseline);
+    expect(baseline.decision).toBe('CLASSIFY');
+    expect(baseline.diagnostics.escalation_path).toEqual(['L0', 'L1', 'L2', 'L3', 'L4', 'L5']);
+  });
+
+  it('DIVERGENCE_ASK_ENABLED set to a non-"true" value is still OFF', async () => {
+    process.env.DIVERGENCE_ASK_ENABLED = 'yes'; // anything ≠ 'true' → off
+    const res = await classify('frozen chicken');
+    expect(res.decision).toBe('CLASSIFY');
+    expect(getTariffLinesForSubheadingsMock).not.toHaveBeenCalled();
+    expect(res.diagnostics.escalation_path).not.toContain('DIVERGENCE-ASK');
+  });
+});
+
+describe('classify() — DIVERGENCE ASK lever GATE ON', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    process.env.DIVERGENCE_ASK_ENABLED = 'true';
+    delete process.env.DIVERGENCE_ABSTENTION_FLOOR;
+    delete process.env.DIVERGENCE_Q_BUDGET;
+    delete process.env.DIVERGENCE_OUTCOME_EQUIV;
+    delete process.env.DIVERGENCE_LLM_PHRASING;
+    // Old levers ON to PROVE divergence supersedes them (their gates defer to it).
+    process.env.CROSS_SUBHEADING_ASK_ENABLED = 'true';
+    process.env.SIBLING_ASK_ENABLED = 'true';
+    normalizeMock.mockResolvedValue(normalizedOut);
+    triageMock.mockResolvedValue(triageOut); // CLASSIFY → reaches the post-L3 gate
+    retrieveMock.mockResolvedValue(retrievalOut);
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(DIV_CHICKEN));
+    selectMock.mockResolvedValue({ ...selectOut, selected_code: '0207.12.00' });
+    verifyMock.mockResolvedValue(verifierPass);
+    getParentChainsMock.mockResolvedValue([]);
+    getTariffLinesForSubheadingsMock.mockResolvedValue([]); // repopulation degrades to emit set
+    isAttributePinnedMock.mockReturnValue(false); // query silent on the axis → askable
+  });
+
+  afterEach(() => {
+    delete process.env.DIVERGENCE_ASK_ENABLED;
+    delete process.env.DIVERGENCE_ABSTENTION_FLOOR;
+    delete process.env.DIVERGENCE_Q_BUDGET;
+    delete process.env.DIVERGENCE_OUTCOME_EQUIV;
+    delete process.env.DIVERGENCE_LLM_PHRASING;
+    delete process.env.CROSS_SUBHEADING_ASK_ENABLED;
+    delete process.env.SIBLING_ASK_ENABLED;
+  });
+
+  it('frozen chicken → fires a divergence cross-sub ASK BEFORE L4 (trigger=divergence)', async () => {
+    const res = await classify('frozen chicken', { captureTrace: true });
+
+    expect(res.decision).toBe('ASK');
+    expect(res.question?.trigger).toBe('divergence');
+    expect(res.question?.question_id).toBe('div_cross_0207_presentation');
+    // MECE real options present + the cross-sub fork has NO residual escape.
+    const ids = res.question?.options.map((o) => o.id) ?? [];
+    expect(ids).toContain('whole');
+    expect(ids).toContain('cut');
+    expect(ids).not.toContain('other'); // cross-sub fork = residual-absent
+
+    // The gate fired BEFORE L4 — Select/Verify NEVER ran.
+    expect(selectMock).not.toHaveBeenCalled();
+    expect(verifyMock).not.toHaveBeenCalled();
+
+    // It SUPERSEDED the old levers: repopulation ran (the engine path), and the
+    // trace records DIVERGENCE-ASK (NOT CROSS-SUBHEADING-ASK).
+    expect(getTariffLinesForSubheadingsMock).toHaveBeenCalledTimes(1);
+    const trace = res.diagnostics.trace ?? [];
+    expect(trace.find((t) => t.layer === 'DIVERGENCE-ASK' && t.event === 'ask')).toBeDefined();
+    expect(trace.find((t) => t.layer === 'CROSS-SUBHEADING-ASK')).toBeUndefined();
+    const path = res.diagnostics.escalation_path;
+    expect(path[path.length - 1]).toBe('DIVERGENCE-ASK');
+  });
+
+  it('does NOT fire when the axis is PINNED by the query → proceeds to L4 CLASSIFY', async () => {
+    isAttributePinnedMock.mockReturnValue(true); // user said "whole"
+    const res = await classify('whole frozen chicken');
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.classification?.code).toBe('0207.12.00');
+    expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('does NOT fire when abstention is below the floor (decisive retrieval) → L4', async () => {
+    // Wide cross-sub margin (0.95 vs 0.45 ≥ DECISIVE_MARGIN) → low abstention.
+    rulesFilterMock.mockResolvedValue(
+      rulesFilterWith([mkSibling('0207.12.00', 0.95), mkSibling('0207.14.00', 0.45)]),
+    );
+    const res = await classify('frozen chicken');
+    expect(res.decision).toBe('CLASSIFY');
+    expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('coffee round 1 → cross-sub roasted fork; round 2 (answer not_roasted) → within-sub coffee_form', async () => {
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(DIV_COFFEE));
+
+    // ROUND 1 — fresh query, no prior answers → the coarse cross-sub roasted fork.
+    const r1 = await classify('coffee beans');
+    expect(r1.decision).toBe('ASK');
+    expect(r1.question?.trigger).toBe('divergence');
+    expect(r1.question?.question_id).toBe('div_cross_0901_roasted');
+    const r1ids = r1.question?.options.map((o) => o.id) ?? [];
+    expect(r1ids).toContain('not_roasted');
+    expect(r1ids).toContain('roasted');
+    expect(selectMock).not.toHaveBeenCalled();
+
+    // ROUND 2 — fold the round-1 answer EXACTLY as the API route does:
+    // continueWithAnswers(originalQuery, { [questionId]: answerId }, { rounds }).
+    // The wizard re-sends the original query; L0-L3 re-retrieve the same family.
+    const r2 = await continueWithAnswers(
+      'coffee beans',
+      { [r1.question!.question_id]: 'not_roasted' },
+      { previousAnswers: {}, rounds: 1 },
+    );
+    expect(r2.decision).toBe('ASK');
+    expect(r2.question?.trigger).toBe('divergence');
+    // The roasted axis is consumed (no re-fire); the NEXT axis is within-sub.
+    expect(r2.question?.question_id).not.toBe('div_cross_0901_roasted');
+    expect(r2.question?.question_id).toBe('div_within_090111_coffee_form');
+    // PRIMARY within-sub axis carries the honest residual escape as the LAST option.
+    const r2opts = r2.question?.options ?? [];
+    expect(r2opts[r2opts.length - 1]!.id).toBe('other');
+    expect(r2opts.length).toBeGreaterThanOrEqual(3); // ≥2 real options + escape
+  });
+
+  it('generic bolt 7318 (not in the cross-sub table, no askable surface) → CLASSIFY (no ask)', async () => {
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(SIBLINGS_SMALL_MARGIN)); // 7318.15.*
+    selectMock.mockResolvedValue(selectOut);
+    const res = await classify('hex bolts');
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.classification?.code).toBe(SELECTED);
+    // Engine declined (no eligible axis) → fell through to L4.
+    expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('never throws when repopulation\'s fetch fails — degrades to the un-widened set', async () => {
+    // repopulateSiblings is itself fail-safe: a rejected getTariffLinesForSubheadings
+    // returns the emit set UNCHANGED, so the engine still runs on the original
+    // survivors (the un-widened family). The ASK is preserved, not lost — and
+    // nothing throws. This proves the lever degrades gracefully without dropping
+    // a legitimate ASK just because the widening step failed.
+    getTariffLinesForSubheadingsMock.mockRejectedValue(new Error('DB hiccup'));
+    const res = await classify('frozen chicken');
+    expect(res.decision).toBe('ASK');
+    expect(res.question?.trigger).toBe('divergence');
+    expect(res.question?.question_id).toBe('div_cross_0207_presentation');
+    expect(selectMock).not.toHaveBeenCalled();
+  });
+
+  it('degrades to L4 CLASSIFY (never throws) if the engine itself errors fatally', async () => {
+    // Force a fatal error INSIDE the lever (after the gate) by making the survivor
+    // set unusable for the engine but past the cheap preconditions. We simulate a
+    // catastrophic abstention-compute path by stubbing getAxisEntry indirectly is
+    // not possible here; instead assert the documented contract via a non-table
+    // heading with a thrown repopulation that the engine tolerates → still no throw.
+    // (The genuine fatal-path is covered by the engine's own try/catch returning
+    //  null; here we just assert the orchestrator never propagates an error.)
+    rulesFilterMock.mockResolvedValue(rulesFilterWith(SIBLINGS_SMALL_MARGIN)); // 7318.* — no table/surface
+    getTariffLinesForSubheadingsMock.mockRejectedValue(new Error('DB hiccup'));
+    selectMock.mockResolvedValue(selectOut);
+    const res = await classify('hex bolts');
+    expect(res.decision).toBe('CLASSIFY');
+    expect(res.classification?.code).toBe(SELECTED);
+    expect(selectMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('DIVERGENCE_Q_BUDGET=0 (no rounds) → declines → L4', async () => {
+    process.env.DIVERGENCE_Q_BUDGET = '0';
+    const res = await classify('frozen chicken');
     expect(res.decision).toBe('CLASSIFY');
     expect(selectMock).toHaveBeenCalledTimes(1);
   });

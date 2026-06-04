@@ -861,8 +861,9 @@ export function toClarifyingQuestion(q: DivergenceQuestion): ClarifyingQuestion 
     discriminating_attribute: axisToAttributeKey(q.axis) ?? 'form',
     options,
     qgs_used: false,
-    // The wizard-facing trigger enum has no 'divergence' member yet; Stage 3 widens
-    // it. Until then this is reported via the structured DivergenceQuestion.trigger.
-    trigger: 'cross_subheading',
+    // Stage 3 widened the wizard-facing trigger enum to include 'divergence'; the
+    // engine now surfaces its own trigger directly so the adapter + wizard can
+    // distinguish a divergence ASK from the legacy cross-subheading / sibling ones.
+    trigger: 'divergence',
   };
 }
