@@ -42,6 +42,16 @@
       },
       "question_text": "Is this a whole bird (not cut in pieces), or cuts/offal?",
       "notes": "Poultry meat (the canonical bug: 'frozen chicken' pins processing_state=frozen but is silent on form, so 0207.12 whole-bird and 0207.14 cuts both survive). No residual 'Other' leaf on the form axis within a species. Corpus-verified: whole_subs=8, cut_subs=10, has_bare_residual=false."
+    },
+    {
+      "heading": "0901",
+      "attribute": "processing_state",
+      "classes": {
+        "green": { "values": ["not-roasted", "raw", "green"], "subheadings": ["0901.11", "0901.12"], "example_code": "0901.11.11", "label": "Not roasted (green / raw beans)" },
+        "roasted": { "values": ["roasted"], "subheadings": ["0901.21", "0901.22"], "example_code": "0901.21.10", "label": "Roasted" }
+      },
+      "question_text": "Is the coffee roasted, or still green (not roasted)?",
+      "notes": "Coffee, heading 0901. The FIRST fork for a bare 'coffee beans' query: green (0901.11 not-decaf + 0901.12 decaf) vs roasted (0901.21 not-decaf + 0901.22 decaf). A query silent on roast cannot pick a subheading, and there is NO bare-residual COFFEE-BEAN leaf at the heading level to default into (0901.90 is husks/skins/substitutes, a distinct named product, deliberately EXCLUDED from both classes to keep the split precise). Within-subheading residuals (.90 'Other') exist but are leaf-level grade/variety residuals, not roast-level. Decaffeinated vs regular is a SECOND axis nested under each roast branch (0901.11 vs 0901.12; 0901.21 vs 0901.22) and is asked after roast if still unresolved. Corpus-verified: green_subs=2, roasted_subs=2, no roast-level bare-residual coffee-bean leaf."
     }
   ]
 }

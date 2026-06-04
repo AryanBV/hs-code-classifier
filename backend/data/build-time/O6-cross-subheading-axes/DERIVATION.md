@@ -77,6 +77,21 @@ hold on top of a table membership does it ask. Extending the table to other axes
 (`processing_state` fresh/frozen/preserved, `intended_use`) is future work, gated on
 the same eval the prod-flip is gated on (`backend/docs/CALIBRATED-ASK-EVAL-PLAN.md`).
 
+## S3 addition (2026-06-04) — coffee `0901` roasted-vs-green
+
+Stage S3 added one ADDITIVE entry (the four meat entries are untouched): heading
+`0901`, axis `processing_state`, classes `green` (not-roasted subs `0901.11`
+regular + `0901.12` decaf) vs `roasted` (`0901.21` regular + `0901.22` decaf),
+question "Is the coffee roasted, or still green (not roasted)?". `0901.90`
+(husks/skins/substitutes) is deliberately excluded from both classes — it is a
+distinct named product, not a coffee-bean "Other", so a silent coffee-bean query
+has no bare-residual coffee-bean leaf at the heading level and the split is forced.
+This is the FIRST question for a bare "coffee beans" query; the within-subheading
+variety/grade/process surface (`0901.11`) is owned by the S3 askable-surface
+(`O7-askable-surface/`), and decaffeinated-vs-regular is a nested second axis under
+each roast branch (see that entry's `notes`). Rationale + the expansion backlog of
+other candidate cross-sub forks are in `O7-askable-surface/README.md`.
+
 ## Re-running
 
 ```

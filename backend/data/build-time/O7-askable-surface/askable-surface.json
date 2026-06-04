@@ -1,0 +1,3627 @@
+{
+  "schema_version": 1,
+  "description": "Stage S3 askable surface. Bounded, human-facing per-subheading enrichment for the S4 divergence engine: plain-trade questions, MECE exporter-language options mapping to real leaves, honest residual escapes, branch order, answerability flags. Two enrichment kinds: no_residual (cannot default -> ask) and primary_residual_override (refined ASK rule -> ask a PRIMARY axis even over a residual; coffee 0901.11). Derived build-time from atomic-axes.json + axis-primacy.json + corpus leaf descriptions; no Gemini. Loaded read-only by lib/askable-surface-table.ts. DARK until S4 wires it.",
+  "derived_at": "2026-06-04",
+  "stats": {
+    "total_enriched": 80,
+    "no_residual_askable": 77,
+    "primary_residual_overrides": 3,
+    "fallback_only_subs": 25,
+    "answerability_hard_flags": 16,
+    "dropped_no_clean_axis": 27
+  },
+  "subheadings": [
+    {
+      "subheading": "0308.30",
+      "heading": "0308",
+      "chapter": "03",
+      "leaf_count": 3,
+      "enrichment_kind": "primary_residual_override",
+      "has_residual": true,
+      "residual_leaf_code": "0308.30.90",
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "thermal",
+          "is_primary": true,
+          "question": "How is it shipped: fresh/chilled, frozen, or live?",
+          "options": [
+            {
+              "id": "fresh_or_chilled_or_live",
+              "label": "Fresh or chilled (not frozen) or Live",
+              "codes": [
+                "0308.30.10"
+              ]
+            },
+            {
+              "id": "frozen",
+              "label": "Frozen",
+              "codes": [
+                "0308.30.20"
+              ]
+            }
+          ],
+          "residual_escape": {
+            "code": "0308.30.90",
+            "label": "Other (none of the above) [0308.30.90]"
+          },
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "0309.10",
+      "heading": "0309",
+      "chapter": "03",
+      "leaf_count": 4,
+      "enrichment_kind": "primary_residual_override",
+      "has_residual": true,
+      "residual_leaf_code": "0309.10.90",
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "thermal",
+          "is_primary": true,
+          "question": "How is it shipped: fresh/chilled, frozen, or live?",
+          "options": [
+            {
+              "id": "fresh_or_chilled",
+              "label": "Fresh or chilled (not frozen)",
+              "codes": [
+                "0309.10.10"
+              ]
+            },
+            {
+              "id": "frozen",
+              "label": "Frozen",
+              "codes": [
+                "0309.10.20"
+              ]
+            }
+          ],
+          "residual_escape": {
+            "code": "0309.10.90",
+            "label": "Other (none of the above) [0309.10.90]"
+          },
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "0901.11",
+      "heading": "0901",
+      "chapter": "09",
+      "leaf_count": 20,
+      "enrichment_kind": "primary_residual_override",
+      "has_residual": true,
+      "residual_leaf_code": "0901.11.90",
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "coffee_form",
+          "is_primary": true,
+          "question": "What kind of coffee bean is it?",
+          "options": [
+            {
+              "id": "cherry",
+              "label": "Cherry (dry/natural-processed; Arabica or Robusta)",
+              "codes": [
+                "0901.11.21",
+                "0901.11.22",
+                "0901.11.23",
+                "0901.11.24",
+                "0901.11.29",
+                "0901.11.41",
+                "0901.11.43",
+                "0901.11.44",
+                "0901.11.45",
+                "0901.11.49"
+              ]
+            },
+            {
+              "id": "parchment",
+              "label": "Robusta Parchment (washed Robusta)",
+              "codes": [
+                "0901.11.31",
+                "0901.11.32",
+                "0901.11.33",
+                "0901.11.39"
+              ]
+            },
+            {
+              "id": "plantation",
+              "label": "Arabica Plantation (washed Arabica)",
+              "codes": [
+                "0901.11.11",
+                "0901.11.12",
+                "0901.11.13",
+                "0901.11.19"
+              ]
+            }
+          ],
+          "residual_escape": {
+            "code": "0901.11.90",
+            "label": "Other (none of the above) [0901.11.90]"
+          },
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        },
+        {
+          "axis": "grade",
+          "is_primary": true,
+          "question": "What is the sale grade of the coffee?",
+          "options": [
+            {
+              "id": "grade_c",
+              "label": "C Grade",
+              "codes": [
+                "0901.11.13",
+                "0901.11.23",
+                "0901.11.33",
+                "0901.11.43"
+              ]
+            },
+            {
+              "id": "grade_ab",
+              "label": "AB Grade",
+              "codes": [
+                "0901.11.21",
+                "0901.11.31",
+                "0901.11.41"
+              ]
+            },
+            {
+              "id": "grade_bbb",
+              "label": "B/B/B Grade",
+              "codes": [
+                "0901.11.24",
+                "0901.11.44"
+              ]
+            },
+            {
+              "id": "grade_pb",
+              "label": "PB (Peaberry) Grade",
+              "codes": [
+                "0901.11.22",
+                "0901.11.32"
+              ]
+            },
+            {
+              "id": "bulk",
+              "label": "Bulk (ungraded)",
+              "codes": [
+                "0901.11.45"
+              ]
+            },
+            {
+              "id": "grade_a",
+              "label": "A Grade",
+              "codes": [
+                "0901.11.11"
+              ]
+            },
+            {
+              "id": "grade_b",
+              "label": "B Grade",
+              "codes": [
+                "0901.11.12"
+              ]
+            }
+          ],
+          "residual_escape": {
+            "code": "0901.11.90",
+            "label": "Other (none of the above) [0901.11.90]"
+          },
+          "branch_order": 2,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        },
+        {
+          "axis": "process_method",
+          "is_primary": true,
+          "question": "How was the coffee processed?",
+          "options": [
+            {
+              "id": "dry_processed",
+              "label": "Dry / natural processed (cherry)",
+              "codes": [
+                "0901.11.21",
+                "0901.11.22",
+                "0901.11.23",
+                "0901.11.24",
+                "0901.11.29",
+                "0901.11.41",
+                "0901.11.43",
+                "0901.11.44",
+                "0901.11.45",
+                "0901.11.49"
+              ]
+            },
+            {
+              "id": "wet_processed",
+              "label": "Wet / washed processed (parchment)",
+              "codes": [
+                "0901.11.31",
+                "0901.11.32",
+                "0901.11.33",
+                "0901.11.39"
+              ]
+            }
+          ],
+          "residual_escape": {
+            "code": "0901.11.90",
+            "label": "Other (none of the above) [0901.11.90]"
+          },
+          "branch_order": 3,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "2208.50",
+      "heading": "2208",
+      "chapter": "22",
+      "leaf_count": 4,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "container_size",
+          "is_primary": false,
+          "question": "What is the container size?",
+          "options": [
+            {
+              "id": "container_2l_or_less",
+              "label": "2 L or less",
+              "codes": [
+                "2208.50.11",
+                "2208.50.12"
+              ]
+            },
+            {
+              "id": "container_over_2l",
+              "label": "Over 2 L",
+              "codes": [
+                "2208.50.91",
+                "2208.50.92"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "moderate",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "2208.70",
+      "heading": "2208",
+      "chapter": "22",
+      "leaf_count": 4,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "container_size",
+          "is_primary": false,
+          "question": "What is the container size?",
+          "options": [
+            {
+              "id": "container_2l_or_less",
+              "label": "2 L or less",
+              "codes": [
+                "2208.70.11",
+                "2208.70.12"
+              ]
+            },
+            {
+              "id": "container_over_2l",
+              "label": "Over 2 L",
+              "codes": [
+                "2208.70.91",
+                "2208.70.92"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "moderate",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "2506.10",
+      "heading": "2506",
+      "chapter": "25",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "physical_form",
+          "is_primary": true,
+          "question": "What physical form is it in?",
+          "options": [
+            {
+              "id": "powder",
+              "label": "Powder",
+              "codes": [
+                "2506.10.20"
+              ]
+            },
+            {
+              "id": "solid",
+              "label": "Solid",
+              "codes": [
+                "2506.10.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "2508.10",
+      "heading": "2508",
+      "chapter": "25",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "physical_form",
+          "is_primary": true,
+          "question": "What physical form is it in?",
+          "options": [
+            {
+              "id": "powder",
+              "label": "Powder",
+              "codes": [
+                "2508.10.90"
+              ]
+            },
+            {
+              "id": "solid",
+              "label": "Solid",
+              "codes": [
+                "2508.10.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "2529.10",
+      "heading": "2529",
+      "chapter": "25",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "physical_form",
+          "is_primary": true,
+          "question": "What physical form is it in?",
+          "options": [
+            {
+              "id": "powder",
+              "label": "Powder",
+              "codes": [
+                "2529.10.20"
+              ]
+            },
+            {
+              "id": "solid",
+              "label": "Solid",
+              "codes": [
+                "2529.10.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "2801.30",
+      "heading": "2801",
+      "chapter": "28",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "physical_form",
+          "is_primary": true,
+          "question": "What physical form is it in?",
+          "options": [
+            {
+              "id": "gas",
+              "label": "Gas",
+              "codes": [
+                "2801.30.10"
+              ]
+            },
+            {
+              "id": "liquid",
+              "label": "Liquid",
+              "codes": [
+                "2801.30.20"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "2903.91",
+      "heading": "2903",
+      "chapter": "29",
+      "leaf_count": 3,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "physical_form",
+          "is_primary": true,
+          "question": "What physical form is it in?",
+          "options": [
+            {
+              "id": "liquid",
+              "label": "Liquid",
+              "codes": [
+                "2903.91.10",
+                "2903.91.20"
+              ]
+            },
+            {
+              "id": "solid",
+              "label": "Solid",
+              "codes": [
+                "2903.91.30"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "2915.40",
+      "heading": "2915",
+      "chapter": "29",
+      "leaf_count": 3,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "physical_form",
+          "is_primary": true,
+          "question": "What physical form is it in?",
+          "options": [
+            {
+              "id": "solid",
+              "label": "Solid",
+              "codes": [
+                "2915.40.10",
+                "2915.40.30"
+              ]
+            },
+            {
+              "id": "liquid",
+              "label": "Liquid",
+              "codes": [
+                "2915.40.20"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "2916.13",
+      "heading": "2916",
+      "chapter": "29",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "physical_form",
+          "is_primary": true,
+          "question": "What physical form is it in?",
+          "options": [
+            {
+              "id": "liquid",
+              "label": "Liquid",
+              "codes": [
+                "2916.13.10"
+              ]
+            },
+            {
+              "id": "powder_or_solid",
+              "label": "Powder or Solid",
+              "codes": [
+                "2916.13.20"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "2930.30",
+      "heading": "2930",
+      "chapter": "29",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "physical_form",
+          "is_primary": true,
+          "question": "What physical form is it in?",
+          "options": [
+            {
+              "id": "liquid",
+              "label": "Liquid",
+              "codes": [
+                "2930.30.21"
+              ]
+            },
+            {
+              "id": "powder_or_solid",
+              "label": "Powder or Solid",
+              "codes": [
+                "2930.30.00"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "4412.92",
+      "heading": "4412",
+      "chapter": "44",
+      "leaf_count": 4,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "end_use",
+          "is_primary": false,
+          "question": "What is the intended end use?",
+          "options": [
+            {
+              "id": "industrial",
+              "label": "Industrial use",
+              "codes": [
+                "4412.92.40"
+              ]
+            },
+            {
+              "id": "packaging",
+              "label": "Packaging",
+              "codes": [
+                "4412.92.20"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "moderate",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5205.28",
+      "heading": "5205",
+      "chapter": "52",
+      "leaf_count": 3,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5205.28.20"
+              ]
+            },
+            {
+              "id": "dyed",
+              "label": "Dyed (one solid colour)",
+              "codes": [
+                "5205.28.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5309.11",
+      "heading": "5309",
+      "chapter": "53",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5309.11.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5309.11.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5309.21",
+      "heading": "5309",
+      "chapter": "53",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5309.21.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5309.21.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5407.71",
+      "heading": "5407",
+      "chapter": "54",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5407.71.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5407.71.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5407.91",
+      "heading": "5407",
+      "chapter": "54",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5407.91.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5407.91.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5408.21",
+      "heading": "5408",
+      "chapter": "54",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5408.21.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5408.21.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5408.31",
+      "heading": "5408",
+      "chapter": "54",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5408.31.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5408.31.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5512.11",
+      "heading": "5512",
+      "chapter": "55",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5512.11.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5512.11.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5512.21",
+      "heading": "5512",
+      "chapter": "55",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5512.21.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5512.21.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5512.91",
+      "heading": "5512",
+      "chapter": "55",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5512.91.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5512.91.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5513.11",
+      "heading": "5513",
+      "chapter": "55",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5513.11.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5513.11.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5513.12",
+      "heading": "5513",
+      "chapter": "55",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5513.12.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5513.12.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5513.13",
+      "heading": "5513",
+      "chapter": "55",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5513.13.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5513.13.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5513.19",
+      "heading": "5513",
+      "chapter": "55",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5513.19.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5513.19.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5514.11",
+      "heading": "5514",
+      "chapter": "55",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5514.11.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5514.11.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5514.12",
+      "heading": "5514",
+      "chapter": "55",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5514.12.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5514.12.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5514.19",
+      "heading": "5514",
+      "chapter": "55",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5514.19.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5514.19.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5514.30",
+      "heading": "5514",
+      "chapter": "55",
+      "leaf_count": 4,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "weave",
+          "is_primary": true,
+          "question": "What is the weave of the fabric?",
+          "options": [
+            {
+              "id": "plain_weave",
+              "label": "Plain weave",
+              "codes": [
+                "5514.30.11"
+              ]
+            },
+            {
+              "id": "twill",
+              "label": "Twill weave",
+              "codes": [
+                "5514.30.12"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "moderate",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5516.11",
+      "heading": "5516",
+      "chapter": "55",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5516.11.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5516.11.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5516.21",
+      "heading": "5516",
+      "chapter": "55",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5516.21.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5516.21.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5516.31",
+      "heading": "5516",
+      "chapter": "55",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5516.31.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5516.31.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5516.41",
+      "heading": "5516",
+      "chapter": "55",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5516.41.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5516.41.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "5516.91",
+      "heading": "5516",
+      "chapter": "55",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "textile_finish",
+          "is_primary": true,
+          "question": "What is the fabric finish?",
+          "options": [
+            {
+              "id": "bleached",
+              "label": "Bleached",
+              "codes": [
+                "5516.91.20"
+              ]
+            },
+            {
+              "id": "unbleached",
+              "label": "Unbleached (grey / loom-state)",
+              "codes": [
+                "5516.91.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "6101.30",
+      "heading": "6101",
+      "chapter": "61",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "fiber_type",
+          "is_primary": true,
+          "question": "What is the main fibre / material?",
+          "options": [
+            {
+              "id": "artificial_fibre",
+              "label": "Artificial fibre (e.g. viscose / rayon)",
+              "codes": [
+                "6101.30.20"
+              ]
+            },
+            {
+              "id": "synthetic_fibre",
+              "label": "Synthetic fibre (e.g. polyester, nylon, acrylic)",
+              "codes": [
+                "6101.30.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "6102.30",
+      "heading": "6102",
+      "chapter": "61",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "fiber_type",
+          "is_primary": true,
+          "question": "What is the main fibre / material?",
+          "options": [
+            {
+              "id": "artificial_fibre",
+              "label": "Artificial fibre (e.g. viscose / rayon)",
+              "codes": [
+                "6102.30.20"
+              ]
+            },
+            {
+              "id": "synthetic_fibre",
+              "label": "Synthetic fibre (e.g. polyester, nylon, acrylic)",
+              "codes": [
+                "6102.30.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "6103.10",
+      "heading": "6103",
+      "chapter": "61",
+      "leaf_count": 4,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "fiber_type",
+          "is_primary": true,
+          "question": "What is the main fibre / material?",
+          "options": [
+            {
+              "id": "artificial_fibre",
+              "label": "Artificial fibre (e.g. viscose / rayon)",
+              "codes": [
+                "6103.10.30"
+              ]
+            },
+            {
+              "id": "cotton",
+              "label": "Cotton",
+              "codes": [
+                "6103.10.20"
+              ]
+            },
+            {
+              "id": "silk",
+              "label": "Silk",
+              "codes": [
+                "6103.10.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "6104.59",
+      "heading": "6104",
+      "chapter": "61",
+      "leaf_count": 3,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "fiber_type",
+          "is_primary": true,
+          "question": "What is the main fibre / material?",
+          "options": [
+            {
+              "id": "artificial_fibre",
+              "label": "Artificial fibre (e.g. viscose / rayon)",
+              "codes": [
+                "6104.59.20"
+              ]
+            },
+            {
+              "id": "silk",
+              "label": "Silk",
+              "codes": [
+                "6104.59.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "6105.20",
+      "heading": "6105",
+      "chapter": "61",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "fiber_type",
+          "is_primary": true,
+          "question": "What is the main fibre / material?",
+          "options": [
+            {
+              "id": "artificial_fibre",
+              "label": "Artificial fibre (e.g. viscose / rayon)",
+              "codes": [
+                "6105.20.20"
+              ]
+            },
+            {
+              "id": "synthetic_fibre",
+              "label": "Synthetic fibre (e.g. polyester, nylon, acrylic)",
+              "codes": [
+                "6105.20.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "6106.20",
+      "heading": "6106",
+      "chapter": "61",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "fiber_type",
+          "is_primary": true,
+          "question": "What is the main fibre / material?",
+          "options": [
+            {
+              "id": "artificial_fibre",
+              "label": "Artificial fibre (e.g. viscose / rayon)",
+              "codes": [
+                "6106.20.20"
+              ]
+            },
+            {
+              "id": "synthetic_fibre",
+              "label": "Synthetic fibre (e.g. polyester, nylon, acrylic)",
+              "codes": [
+                "6106.20.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "6107.12",
+      "heading": "6107",
+      "chapter": "61",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "fiber_type",
+          "is_primary": true,
+          "question": "What is the main fibre / material?",
+          "options": [
+            {
+              "id": "artificial_fibre",
+              "label": "Artificial fibre (e.g. viscose / rayon)",
+              "codes": [
+                "6107.12.20"
+              ]
+            },
+            {
+              "id": "synthetic_fibre",
+              "label": "Synthetic fibre (e.g. polyester, nylon, acrylic)",
+              "codes": [
+                "6107.12.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "6107.22",
+      "heading": "6107",
+      "chapter": "61",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "fiber_type",
+          "is_primary": true,
+          "question": "What is the main fibre / material?",
+          "options": [
+            {
+              "id": "artificial_fibre",
+              "label": "Artificial fibre (e.g. viscose / rayon)",
+              "codes": [
+                "6107.22.20"
+              ]
+            },
+            {
+              "id": "synthetic_fibre",
+              "label": "Synthetic fibre (e.g. polyester, nylon, acrylic)",
+              "codes": [
+                "6107.22.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "6108.11",
+      "heading": "6108",
+      "chapter": "61",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "fiber_type",
+          "is_primary": true,
+          "question": "What is the main fibre / material?",
+          "options": [
+            {
+              "id": "artificial_fibre",
+              "label": "Artificial fibre (e.g. viscose / rayon)",
+              "codes": [
+                "6108.11.20"
+              ]
+            },
+            {
+              "id": "synthetic_fibre",
+              "label": "Synthetic fibre (e.g. polyester, nylon, acrylic)",
+              "codes": [
+                "6108.11.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "6108.22",
+      "heading": "6108",
+      "chapter": "61",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "fiber_type",
+          "is_primary": true,
+          "question": "What is the main fibre / material?",
+          "options": [
+            {
+              "id": "artificial_fibre",
+              "label": "Artificial fibre (e.g. viscose / rayon)",
+              "codes": [
+                "6108.22.20"
+              ]
+            },
+            {
+              "id": "synthetic_fibre",
+              "label": "Synthetic fibre (e.g. polyester, nylon, acrylic)",
+              "codes": [
+                "6108.22.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "6108.32",
+      "heading": "6108",
+      "chapter": "61",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "fiber_type",
+          "is_primary": true,
+          "question": "What is the main fibre / material?",
+          "options": [
+            {
+              "id": "artificial_fibre",
+              "label": "Artificial fibre (e.g. viscose / rayon)",
+              "codes": [
+                "6108.32.20"
+              ]
+            },
+            {
+              "id": "synthetic_fibre",
+              "label": "Synthetic fibre (e.g. polyester, nylon, acrylic)",
+              "codes": [
+                "6108.32.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "6108.92",
+      "heading": "6108",
+      "chapter": "61",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "fiber_type",
+          "is_primary": true,
+          "question": "What is the main fibre / material?",
+          "options": [
+            {
+              "id": "artificial_fibre",
+              "label": "Artificial fibre (e.g. viscose / rayon)",
+              "codes": [
+                "6108.92.20"
+              ]
+            },
+            {
+              "id": "synthetic_fibre",
+              "label": "Synthetic fibre (e.g. polyester, nylon, acrylic)",
+              "codes": [
+                "6108.92.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "6108.99",
+      "heading": "6108",
+      "chapter": "61",
+      "leaf_count": 3,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "fiber_type",
+          "is_primary": true,
+          "question": "What is the main fibre / material?",
+          "options": [
+            {
+              "id": "silk",
+              "label": "Silk",
+              "codes": [
+                "6108.99.10"
+              ]
+            },
+            {
+              "id": "wool",
+              "label": "Wool",
+              "codes": [
+                "6108.99.20"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "6110.30",
+      "heading": "6110",
+      "chapter": "61",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "fiber_type",
+          "is_primary": true,
+          "question": "What is the main fibre / material?",
+          "options": [
+            {
+              "id": "artificial_fibre",
+              "label": "Artificial fibre (e.g. viscose / rayon)",
+              "codes": [
+                "6110.30.20"
+              ]
+            },
+            {
+              "id": "synthetic_fibre",
+              "label": "Synthetic fibre (e.g. polyester, nylon, acrylic)",
+              "codes": [
+                "6110.30.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "6114.30",
+      "heading": "6114",
+      "chapter": "61",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "fiber_type",
+          "is_primary": true,
+          "question": "What is the main fibre / material?",
+          "options": [
+            {
+              "id": "artificial_fibre",
+              "label": "Artificial fibre (e.g. viscose / rayon)",
+              "codes": [
+                "6114.30.20"
+              ]
+            },
+            {
+              "id": "synthetic_fibre",
+              "label": "Synthetic fibre (e.g. polyester, nylon, acrylic)",
+              "codes": [
+                "6114.30.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "7101.10",
+      "heading": "7101",
+      "chapter": "71",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "worked_state",
+          "is_primary": true,
+          "question": "Is it worked / processed, or unworked / raw?",
+          "options": [
+            {
+              "id": "unworked",
+              "label": "Unworked / raw",
+              "codes": [
+                "7101.10.10"
+              ]
+            },
+            {
+              "id": "worked",
+              "label": "Worked / processed",
+              "codes": [
+                "7101.10.20"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "moderate",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "7104.21",
+      "heading": "7104",
+      "chapter": "71",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "gem_quality",
+          "is_primary": false,
+          "question": "Is it industrial quality or jewellery / gem quality?",
+          "options": [
+            {
+              "id": "industrial",
+              "label": "Industrial quality",
+              "codes": [
+                "7104.21.10"
+              ]
+            },
+            {
+              "id": "non_industrial",
+              "label": "Jewellery / gem quality (non-industrial)",
+              "codes": [
+                "7104.21.20"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "hard",
+          "answerability_flag": true
+        }
+      ]
+    },
+    {
+      "subheading": "7104.91",
+      "heading": "7104",
+      "chapter": "71",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "gem_quality",
+          "is_primary": false,
+          "question": "Is it industrial quality or jewellery / gem quality?",
+          "options": [
+            {
+              "id": "industrial",
+              "label": "Industrial quality",
+              "codes": [
+                "7104.91.10"
+              ]
+            },
+            {
+              "id": "non_industrial",
+              "label": "Jewellery / gem quality (non-industrial)",
+              "codes": [
+                "7104.91.20"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "hard",
+          "answerability_flag": true
+        }
+      ]
+    },
+    {
+      "subheading": "7105.10",
+      "heading": "7105",
+      "chapter": "71",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "origin_nature",
+          "is_primary": true,
+          "question": "Is it natural, synthetic, or reconstructed?",
+          "options": [
+            {
+              "id": "natural",
+              "label": "Natural",
+              "codes": [
+                "7105.10.10"
+              ]
+            },
+            {
+              "id": "synthetic",
+              "label": "Synthetic / artificial",
+              "codes": [
+                "7105.10.20"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "7114.11",
+      "heading": "7114",
+      "chapter": "71",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "end_use",
+          "is_primary": false,
+          "question": "What is the intended end use?",
+          "options": [
+            {
+              "id": "household",
+              "label": "Household / home use",
+              "codes": [
+                "7114.11.10"
+              ]
+            },
+            {
+              "id": "industrial",
+              "label": "Industrial use",
+              "codes": [
+                "7114.11.20"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "moderate",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "7114.19",
+      "heading": "7114",
+      "chapter": "71",
+      "leaf_count": 3,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "end_use",
+          "is_primary": false,
+          "question": "What is the intended end use?",
+          "options": [
+            {
+              "id": "household",
+              "label": "Household / home use",
+              "codes": [
+                "7114.19.10",
+                "7114.19.20"
+              ]
+            },
+            {
+              "id": "industrial",
+              "label": "Industrial use",
+              "codes": [
+                "7114.19.30"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "moderate",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "7114.20",
+      "heading": "7114",
+      "chapter": "71",
+      "leaf_count": 3,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "end_use",
+          "is_primary": false,
+          "question": "What is the intended end use?",
+          "options": [
+            {
+              "id": "household",
+              "label": "Household / home use",
+              "codes": [
+                "7114.20.10",
+                "7114.20.20"
+              ]
+            },
+            {
+              "id": "industrial",
+              "label": "Industrial use",
+              "codes": [
+                "7114.20.30"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "moderate",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "7209.18",
+      "heading": "7209",
+      "chapter": "72",
+      "leaf_count": 4,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "coil_state",
+          "is_primary": false,
+          "question": "Is it supplied in coils or not in coils?",
+          "options": [
+            {
+              "id": "in_coils",
+              "label": "In coils",
+              "codes": [
+                "7209.18.10",
+                "7209.18.20",
+                "7209.18.30"
+              ]
+            },
+            {
+              "id": "not_in_coils",
+              "label": "Not in coils (flat / cut lengths)",
+              "codes": [
+                "7209.18.90"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "moderate",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "7304.51",
+      "heading": "7304",
+      "chapter": "73",
+      "leaf_count": 3,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "diameter_band",
+          "is_primary": false,
+          "question": "What is the outer diameter?",
+          "options": [
+            {
+              "id": "outer_diameter_114_3mm_to_219_1mm",
+              "label": "114.3 mm to 219.1 mm",
+              "codes": [
+                "7304.51.20"
+              ]
+            },
+            {
+              "id": "outer_diameter_above_219_1mm",
+              "label": "Above 219.1 mm",
+              "codes": [
+                "7304.51.30"
+              ]
+            },
+            {
+              "id": "outer_diameter_up_to_114_3mm",
+              "label": "Up to 114.3 mm",
+              "codes": [
+                "7304.51.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "hard",
+          "answerability_flag": true
+        }
+      ]
+    },
+    {
+      "subheading": "7304.59",
+      "heading": "7304",
+      "chapter": "73",
+      "leaf_count": 3,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "diameter_band",
+          "is_primary": false,
+          "question": "What is the outer diameter?",
+          "options": [
+            {
+              "id": "outer_diameter_114_3mm_to_219_1mm",
+              "label": "114.3 mm to 219.1 mm",
+              "codes": [
+                "7304.59.20"
+              ]
+            },
+            {
+              "id": "outer_diameter_above_219_1mm",
+              "label": "Above 219.1 mm",
+              "codes": [
+                "7304.59.30"
+              ]
+            },
+            {
+              "id": "outer_diameter_up_to_114_3mm",
+              "label": "Up to 114.3 mm",
+              "codes": [
+                "7304.59.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "hard",
+          "answerability_flag": true
+        }
+      ]
+    },
+    {
+      "subheading": "8410.12",
+      "heading": "8410",
+      "chapter": "84",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "power_rating",
+          "is_primary": false,
+          "question": "What is the power / output rating (kW)?",
+          "options": [
+            {
+              "id": "power_1000kw_to_5000kw",
+              "label": "1000 kW to 5000 kW",
+              "codes": [
+                "8410.12.10"
+              ]
+            },
+            {
+              "id": "power_5000kw_to_10000kw",
+              "label": "5000 kW to 10000 kW",
+              "codes": [
+                "8410.12.20"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "hard",
+          "answerability_flag": true
+        }
+      ]
+    },
+    {
+      "subheading": "8410.13",
+      "heading": "8410",
+      "chapter": "84",
+      "leaf_count": 3,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "power_rating",
+          "is_primary": false,
+          "question": "What is the power / output rating (kW)?",
+          "options": [
+            {
+              "id": "power_10000kw_to_30000kw",
+              "label": "10000 kW to 30000 kW",
+              "codes": [
+                "8410.13.10"
+              ]
+            },
+            {
+              "id": "power_30000kw_to_80000kw",
+              "label": "30000 kW to 80000 kW",
+              "codes": [
+                "8410.13.20"
+              ]
+            },
+            {
+              "id": "power_over_80000kw",
+              "label": "Over 80000 kW",
+              "codes": [
+                "8410.13.90"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "hard",
+          "answerability_flag": true
+        }
+      ]
+    },
+    {
+      "subheading": "8411.82",
+      "heading": "8411",
+      "chapter": "84",
+      "leaf_count": 6,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "power_rating",
+          "is_primary": false,
+          "question": "What is the power / output rating (kW)?",
+          "options": [
+            {
+              "id": "power_15000kw_to_30000kw",
+              "label": "15000 kW to 30000 kW",
+              "codes": [
+                "8411.82.20"
+              ]
+            },
+            {
+              "id": "power_30000kw_to_60000kw",
+              "label": "30000 kW to 60000 kW",
+              "codes": [
+                "8411.82.30"
+              ]
+            },
+            {
+              "id": "power_5000kw_to_15000kw",
+              "label": "5000 kW to 15000 kW",
+              "codes": [
+                "8411.82.10"
+              ]
+            },
+            {
+              "id": "power_60000kw_to_90000kw",
+              "label": "60000 kW to 90000 kW",
+              "codes": [
+                "8411.82.40"
+              ]
+            },
+            {
+              "id": "power_90000kw_to_115000kw",
+              "label": "90000 kW to 115000 kW",
+              "codes": [
+                "8411.82.50"
+              ]
+            },
+            {
+              "id": "power_over_115000kw",
+              "label": "Over 115000 kW",
+              "codes": [
+                "8411.82.60"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "hard",
+          "answerability_flag": true
+        }
+      ]
+    },
+    {
+      "subheading": "8423.90",
+      "heading": "8423",
+      "chapter": "84",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "machine_part",
+          "is_primary": true,
+          "question": "Is it the complete machine, a part, or an accessory?",
+          "options": [
+            {
+              "id": "accessory",
+              "label": "Accessory",
+              "codes": [
+                "8423.90.10"
+              ]
+            },
+            {
+              "id": "part",
+              "label": "Part / component",
+              "codes": [
+                "8423.90.20"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "8501.32",
+      "heading": "8501",
+      "chapter": "85",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "electric_machine",
+          "is_primary": true,
+          "question": "Is it a motor or a generator?",
+          "options": [
+            {
+              "id": "generator",
+              "label": "Generator",
+              "codes": [
+                "8501.32.20"
+              ]
+            },
+            {
+              "id": "motor",
+              "label": "Motor",
+              "codes": [
+                "8501.32.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "8501.33",
+      "heading": "8501",
+      "chapter": "85",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "electric_machine",
+          "is_primary": true,
+          "question": "Is it a motor or a generator?",
+          "options": [
+            {
+              "id": "generator",
+              "label": "Generator",
+              "codes": [
+                "8501.33.20"
+              ]
+            },
+            {
+              "id": "motor",
+              "label": "Motor",
+              "codes": [
+                "8501.33.10"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "8501.34",
+      "heading": "8501",
+      "chapter": "85",
+      "leaf_count": 5,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "power_rating",
+          "is_primary": false,
+          "question": "What is the power / output rating (kW)?",
+          "options": [
+            {
+              "id": "v_1000kw_to_2000kw",
+              "label": "1000 kW to 2000 kW",
+              "codes": [
+                "8501.34.20"
+              ]
+            },
+            {
+              "id": "v_2000kw_to_5000kw",
+              "label": "2000 kW to 5000 kW",
+              "codes": [
+                "8501.34.30"
+              ]
+            },
+            {
+              "id": "v_375kw_to_1000kw",
+              "label": "375 kW to 1000 kW",
+              "codes": [
+                "8501.34.10"
+              ]
+            },
+            {
+              "id": "v_5000kw_to_10000kw",
+              "label": "5000 kW to 10000 kW",
+              "codes": [
+                "8501.34.40"
+              ]
+            },
+            {
+              "id": "over_10000kw",
+              "label": "Over 10000 kW",
+              "codes": [
+                "8501.34.50"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "hard",
+          "answerability_flag": true
+        }
+      ]
+    },
+    {
+      "subheading": "8501.53",
+      "heading": "8501",
+      "chapter": "85",
+      "leaf_count": 4,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "end_use",
+          "is_primary": false,
+          "question": "What is the intended end use?",
+          "options": [
+            {
+              "id": "industrial",
+              "label": "Industrial use",
+              "codes": [
+                "8501.53.10",
+                "8501.53.20",
+                "8501.53.90"
+              ]
+            },
+            {
+              "id": "automotive",
+              "label": "Automotive use",
+              "codes": [
+                "8501.53.30"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "moderate",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "8501.64",
+      "heading": "8501",
+      "chapter": "85",
+      "leaf_count": 8,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "capacity_rating",
+          "is_primary": false,
+          "question": "What is the capacity rating (kVA)?",
+          "options": [
+            {
+              "id": "v_137500kva_to_312500kva",
+              "label": "137500 kVA to 312500 kVA",
+              "codes": [
+                "8501.64.70"
+              ]
+            },
+            {
+              "id": "v_15000kva_to_37500kva",
+              "label": "15000 kVA to 37500 kVA",
+              "codes": [
+                "8501.64.40"
+              ]
+            },
+            {
+              "id": "v_2000kva_to_5000kva",
+              "label": "2000 kVA to 5000 kVA",
+              "codes": [
+                "8501.64.20"
+              ]
+            },
+            {
+              "id": "v_37500kva_to_75000kva",
+              "label": "37500 kVA to 75000 kVA",
+              "codes": [
+                "8501.64.50"
+              ]
+            },
+            {
+              "id": "v_5000kva_to_15000kva",
+              "label": "5000 kVA to 15000 kVA",
+              "codes": [
+                "8501.64.30"
+              ]
+            },
+            {
+              "id": "v_75000kva_to_137500kva",
+              "label": "75000 kVA to 137500 kVA",
+              "codes": [
+                "8501.64.60"
+              ]
+            },
+            {
+              "id": "v_750kva_to_2000kva",
+              "label": "750 kVA to 2000 kVA",
+              "codes": [
+                "8501.64.10"
+              ]
+            },
+            {
+              "id": "over_312500kva",
+              "label": "Over 312500 kVA",
+              "codes": [
+                "8501.64.80"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "hard",
+          "answerability_flag": true
+        }
+      ]
+    },
+    {
+      "subheading": "8502.13",
+      "heading": "8502",
+      "chapter": "85",
+      "leaf_count": 6,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "capacity_rating",
+          "is_primary": false,
+          "question": "What is the capacity rating (kVA)?",
+          "options": [
+            {
+              "id": "v_1000kva_to_1500kva",
+              "label": "1000 kVA to 1500 kVA",
+              "codes": [
+                "8502.13.20"
+              ]
+            },
+            {
+              "id": "v_1500kva_to_2000kva",
+              "label": "1500 kVA to 2000 kVA",
+              "codes": [
+                "8502.13.30"
+              ]
+            },
+            {
+              "id": "v_2000kva_to_5000kva",
+              "label": "2000 kVA to 5000 kVA",
+              "codes": [
+                "8502.13.40"
+              ]
+            },
+            {
+              "id": "v_375kva_to_1000kva",
+              "label": "375 kVA to 1000 kVA",
+              "codes": [
+                "8502.13.10"
+              ]
+            },
+            {
+              "id": "v_5000kva_to_10000kva",
+              "label": "5000 kVA to 10000 kVA",
+              "codes": [
+                "8502.13.50"
+              ]
+            },
+            {
+              "id": "over_10000kva",
+              "label": "Over 10000 kVA",
+              "codes": [
+                "8502.13.60"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "hard",
+          "answerability_flag": true
+        }
+      ]
+    },
+    {
+      "subheading": "8504.23",
+      "heading": "8504",
+      "chapter": "85",
+      "leaf_count": 4,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "capacity_rating",
+          "is_primary": false,
+          "question": "What is the capacity rating (kVA)?",
+          "options": [
+            {
+              "id": "v_100000kva_to_250000kva",
+              "label": "100000 kVA to 250000 kVA",
+              "codes": [
+                "8504.23.30"
+              ]
+            },
+            {
+              "id": "v_10000kva_to_50000kva",
+              "label": "10000 kVA to 50000 kVA",
+              "codes": [
+                "8504.23.10"
+              ]
+            },
+            {
+              "id": "v_50000kva_to_100000kva",
+              "label": "50000 kVA to 100000 kVA",
+              "codes": [
+                "8504.23.20"
+              ]
+            },
+            {
+              "id": "over_250000kva",
+              "label": "Over 250000 kVA",
+              "codes": [
+                "8504.23.40"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "hard",
+          "answerability_flag": true
+        }
+      ]
+    },
+    {
+      "subheading": "8536.69",
+      "heading": "8536",
+      "chapter": "85",
+      "leaf_count": 2,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "end_use",
+          "is_primary": false,
+          "question": "What is the intended end use?",
+          "options": [
+            {
+              "id": "household",
+              "label": "Household / home use",
+              "codes": [
+                "8536.69.10"
+              ]
+            },
+            {
+              "id": "industrial",
+              "label": "Industrial use",
+              "codes": [
+                "8536.69.90"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "moderate",
+          "answerability_flag": false
+        }
+      ]
+    },
+    {
+      "subheading": "8702.10",
+      "heading": "8702",
+      "chapter": "87",
+      "leaf_count": 8,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "air_conditioning",
+          "is_primary": false,
+          "question": "Is it fitted with air-conditioning?",
+          "options": [
+            {
+              "id": "air_conditioned",
+              "label": "Air-conditioned",
+              "codes": [
+                "8702.10.11",
+                "8702.10.18",
+                "8702.10.21",
+                "8702.10.28"
+              ]
+            },
+            {
+              "id": "non_air_conditioned",
+              "label": "Not air-conditioned",
+              "codes": [
+                "8702.10.12",
+                "8702.10.19",
+                "8702.10.22",
+                "8702.10.29"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        },
+        {
+          "axis": "seat_capacity",
+          "is_primary": false,
+          "question": "How many persons does it seat (including the driver)?",
+          "options": [
+            {
+              "id": "over_13_seats",
+              "label": "Over 13 seats",
+              "codes": [
+                "8702.10.11",
+                "8702.10.12",
+                "8702.10.18",
+                "8702.10.19"
+              ]
+            },
+            {
+              "id": "up_to_13_seats",
+              "label": "Up to 13 seats",
+              "codes": [
+                "8702.10.21",
+                "8702.10.22",
+                "8702.10.28",
+                "8702.10.29"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 2,
+          "option_answerability": "moderate",
+          "answerability_flag": false
+        },
+        {
+          "axis": "body_construction",
+          "is_primary": false,
+          "question": "What is the body construction?",
+          "options": [
+            {
+              "id": "body_on_chassis",
+              "label": "Body on chassis",
+              "codes": [
+                "8702.10.18",
+                "8702.10.19",
+                "8702.10.28",
+                "8702.10.29"
+              ]
+            },
+            {
+              "id": "monocoque",
+              "label": "Monocoque (integral / unibody)",
+              "codes": [
+                "8702.10.11",
+                "8702.10.12",
+                "8702.10.21",
+                "8702.10.22"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 3,
+          "option_answerability": "hard",
+          "answerability_flag": true
+        }
+      ]
+    },
+    {
+      "subheading": "8702.20",
+      "heading": "8702",
+      "chapter": "87",
+      "leaf_count": 8,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "air_conditioning",
+          "is_primary": false,
+          "question": "Is it fitted with air-conditioning?",
+          "options": [
+            {
+              "id": "non_air_conditioned",
+              "label": "Not air-conditioned",
+              "codes": [
+                "8702.20.12",
+                "8702.20.19",
+                "8702.20.22",
+                "8702.20.29"
+              ]
+            },
+            {
+              "id": "air_conditioned",
+              "label": "Air-conditioned",
+              "codes": [
+                "8702.20.18",
+                "8702.20.21",
+                "8702.20.28"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        },
+        {
+          "axis": "seat_capacity",
+          "is_primary": false,
+          "question": "How many persons does it seat (including the driver)?",
+          "options": [
+            {
+              "id": "over_13_seats",
+              "label": "Over 13 seats",
+              "codes": [
+                "8702.20.21",
+                "8702.20.22",
+                "8702.20.28",
+                "8702.20.29"
+              ]
+            },
+            {
+              "id": "up_to_13_seats",
+              "label": "Up to 13 seats",
+              "codes": [
+                "8702.20.12",
+                "8702.20.18",
+                "8702.20.19"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 2,
+          "option_answerability": "moderate",
+          "answerability_flag": false
+        },
+        {
+          "axis": "body_construction",
+          "is_primary": false,
+          "question": "What is the body construction?",
+          "options": [
+            {
+              "id": "body_on_chassis",
+              "label": "Body on chassis",
+              "codes": [
+                "8702.20.18",
+                "8702.20.19",
+                "8702.20.28",
+                "8702.20.29"
+              ]
+            },
+            {
+              "id": "monocoque",
+              "label": "Monocoque (integral / unibody)",
+              "codes": [
+                "8702.20.12",
+                "8702.20.21",
+                "8702.20.22"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 3,
+          "option_answerability": "hard",
+          "answerability_flag": true
+        }
+      ]
+    },
+    {
+      "subheading": "8702.30",
+      "heading": "8702",
+      "chapter": "87",
+      "leaf_count": 8,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "air_conditioning",
+          "is_primary": false,
+          "question": "Is it fitted with air-conditioning?",
+          "options": [
+            {
+              "id": "air_conditioned",
+              "label": "Air-conditioned",
+              "codes": [
+                "8702.30.11",
+                "8702.30.18",
+                "8702.30.21",
+                "8702.30.28"
+              ]
+            },
+            {
+              "id": "non_air_conditioned",
+              "label": "Not air-conditioned",
+              "codes": [
+                "8702.30.12",
+                "8702.30.19",
+                "8702.30.22",
+                "8702.30.29"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        },
+        {
+          "axis": "seat_capacity",
+          "is_primary": false,
+          "question": "How many persons does it seat (including the driver)?",
+          "options": [
+            {
+              "id": "over_13_seats",
+              "label": "Over 13 seats",
+              "codes": [
+                "8702.30.21",
+                "8702.30.22",
+                "8702.30.28",
+                "8702.30.29"
+              ]
+            },
+            {
+              "id": "up_to_13_seats",
+              "label": "Up to 13 seats",
+              "codes": [
+                "8702.30.11",
+                "8702.30.12",
+                "8702.30.18",
+                "8702.30.19"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 2,
+          "option_answerability": "moderate",
+          "answerability_flag": false
+        },
+        {
+          "axis": "body_construction",
+          "is_primary": false,
+          "question": "What is the body construction?",
+          "options": [
+            {
+              "id": "body_on_chassis",
+              "label": "Body on chassis",
+              "codes": [
+                "8702.30.18",
+                "8702.30.19",
+                "8702.30.28",
+                "8702.30.29"
+              ]
+            },
+            {
+              "id": "monocoque",
+              "label": "Monocoque (integral / unibody)",
+              "codes": [
+                "8702.30.11",
+                "8702.30.12",
+                "8702.30.21",
+                "8702.30.22"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 3,
+          "option_answerability": "hard",
+          "answerability_flag": true
+        }
+      ]
+    },
+    {
+      "subheading": "8702.40",
+      "heading": "8702",
+      "chapter": "87",
+      "leaf_count": 8,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "air_conditioning",
+          "is_primary": false,
+          "question": "Is it fitted with air-conditioning?",
+          "options": [
+            {
+              "id": "air_conditioned",
+              "label": "Air-conditioned",
+              "codes": [
+                "8702.40.11",
+                "8702.40.18",
+                "8702.40.21",
+                "8702.40.28"
+              ]
+            },
+            {
+              "id": "non_air_conditioned",
+              "label": "Not air-conditioned",
+              "codes": [
+                "8702.40.12",
+                "8702.40.19",
+                "8702.40.22",
+                "8702.40.29"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        },
+        {
+          "axis": "seat_capacity",
+          "is_primary": false,
+          "question": "How many persons does it seat (including the driver)?",
+          "options": [
+            {
+              "id": "over_13_seats",
+              "label": "Over 13 seats",
+              "codes": [
+                "8702.40.21",
+                "8702.40.22",
+                "8702.40.28",
+                "8702.40.29"
+              ]
+            },
+            {
+              "id": "up_to_13_seats",
+              "label": "Up to 13 seats",
+              "codes": [
+                "8702.40.11",
+                "8702.40.12",
+                "8702.40.18",
+                "8702.40.19"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 2,
+          "option_answerability": "moderate",
+          "answerability_flag": false
+        },
+        {
+          "axis": "body_construction",
+          "is_primary": false,
+          "question": "What is the body construction?",
+          "options": [
+            {
+              "id": "body_on_chassis",
+              "label": "Body on chassis",
+              "codes": [
+                "8702.40.18",
+                "8702.40.19",
+                "8702.40.28",
+                "8702.40.29"
+              ]
+            },
+            {
+              "id": "monocoque",
+              "label": "Monocoque (integral / unibody)",
+              "codes": [
+                "8702.40.11",
+                "8702.40.12",
+                "8702.40.21",
+                "8702.40.22"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 3,
+          "option_answerability": "hard",
+          "answerability_flag": true
+        }
+      ]
+    },
+    {
+      "subheading": "8702.90",
+      "heading": "8702",
+      "chapter": "87",
+      "leaf_count": 8,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "fallback_only",
+      "axes": [
+        {
+          "axis": "air_conditioning",
+          "is_primary": false,
+          "question": "Is it fitted with air-conditioning?",
+          "options": [
+            {
+              "id": "air_conditioned",
+              "label": "Air-conditioned",
+              "codes": [
+                "8702.90.11",
+                "8702.90.18",
+                "8702.90.21",
+                "8702.90.28"
+              ]
+            },
+            {
+              "id": "non_air_conditioned",
+              "label": "Not air-conditioned",
+              "codes": [
+                "8702.90.12",
+                "8702.90.19",
+                "8702.90.22",
+                "8702.90.29"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        },
+        {
+          "axis": "seat_capacity",
+          "is_primary": false,
+          "question": "How many persons does it seat (including the driver)?",
+          "options": [
+            {
+              "id": "over_13_seats",
+              "label": "Over 13 seats",
+              "codes": [
+                "8702.90.21",
+                "8702.90.22",
+                "8702.90.28",
+                "8702.90.29"
+              ]
+            },
+            {
+              "id": "up_to_13_seats",
+              "label": "Up to 13 seats",
+              "codes": [
+                "8702.90.11",
+                "8702.90.12",
+                "8702.90.18",
+                "8702.90.19"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 2,
+          "option_answerability": "moderate",
+          "answerability_flag": false
+        },
+        {
+          "axis": "body_construction",
+          "is_primary": false,
+          "question": "What is the body construction?",
+          "options": [
+            {
+              "id": "body_on_chassis",
+              "label": "Body on chassis",
+              "codes": [
+                "8702.90.18",
+                "8702.90.19",
+                "8702.90.28",
+                "8702.90.29"
+              ]
+            },
+            {
+              "id": "monocoque",
+              "label": "Monocoque (integral / unibody)",
+              "codes": [
+                "8702.90.11",
+                "8702.90.12",
+                "8702.90.21",
+                "8702.90.22"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 3,
+          "option_answerability": "hard",
+          "answerability_flag": true
+        }
+      ]
+    },
+    {
+      "subheading": "9016.00",
+      "heading": "9016",
+      "chapter": "90",
+      "leaf_count": 3,
+      "enrichment_kind": "no_residual",
+      "has_residual": false,
+      "residual_leaf_code": null,
+      "ask_recommendation": "ask",
+      "axes": [
+        {
+          "axis": "machine_part",
+          "is_primary": true,
+          "question": "Is it the complete machine, a part, or an accessory?",
+          "options": [
+            {
+              "id": "complete",
+              "label": "Complete machine / equipment",
+              "codes": [
+                "9016.00.10",
+                "9016.00.20"
+              ]
+            },
+            {
+              "id": "accessory_or_part",
+              "label": "Accessory or Part / component",
+              "codes": [
+                "9016.00.90"
+              ]
+            }
+          ],
+          "residual_escape": null,
+          "branch_order": 1,
+          "option_answerability": "easy",
+          "answerability_flag": false
+        }
+      ]
+    }
+  ]
+}
