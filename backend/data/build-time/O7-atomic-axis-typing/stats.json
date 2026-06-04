@@ -1,0 +1,1548 @@
+{
+  "derived_at": "2026-06-04",
+  "multi_leaf_subheadings": 2241,
+  "classification_counts": {
+    "residual_default": 1991,
+    "askable_no_residual": 50,
+    "single_axis_resolved": 54,
+    "untypable": 146
+  },
+  "askable_no_residual_plus_single_axis": 104,
+  "askable_no_residual_only": 50,
+  "single_axis_resolved_only": 54,
+  "residual_default_count": 1991,
+  "residual_detection_coverage_pct": 88.8,
+  "fully_typed_count": 118,
+  "fully_typed_pct": 5.3,
+  "axis_usage": {
+    "end_use": 300,
+    "physical_form": 291,
+    "textile_finish": 79,
+    "fiber_type": 51,
+    "chem_structure": 28,
+    "embellishment": 28,
+    "machine_part": 28,
+    "cellularity": 20,
+    "vehicle_type": 17,
+    "polymer": 9,
+    "metal_working": 9,
+    "thermal": 8,
+    "weave": 7,
+    "container_size": 6,
+    "seat_capacity": 6,
+    "air_conditioning": 5,
+    "body_construction": 5,
+    "diameter_band": 4,
+    "power_rating": 4,
+    "electric_machine": 4,
+    "weaving_method": 3,
+    "metal_coating": 3,
+    "capacity_rating": 3,
+    "origin_nature": 2,
+    "worked_state": 2,
+    "gem_quality": 2,
+    "coil_state": 2,
+    "coffee_form": 1,
+    "process_method": 1,
+    "grade": 1,
+    "retail_packing": 1,
+    "pipe_construction": 1
+  },
+  "untypable_count": 146,
+  "partial_coverage_count": 48,
+  "hand_verify_families": {
+    "3923": {
+      "multi_leaf_subheadings": 5,
+      "detail": [
+        {
+          "subheading": "3923.10",
+          "leaves": 5,
+          "classification": "residual_default",
+          "residual_leaf_code": "3923.10.90",
+          "axes": [],
+          "unclassified_varying": [
+            "form::box",
+            "form::case",
+            "form::cassette-case",
+            "form::crate",
+            "form::holder",
+            "form::insulated-container",
+            "form::jewellery-box",
+            "form::packing",
+            "form::tray",
+            "form::watch-box",
+            "intended_use::cold-chain",
+            "intended_use::conveyance",
+            "intended_use::electronics-component-conveyance",
+            "intended_use::food-conveyance",
+            "intended_use::media-protection",
+            "intended_use::retail-display",
+            "intended_use::storage",
+            "processing_state::insulated"
+          ]
+        },
+        {
+          "subheading": "3923.29",
+          "leaves": 2,
+          "classification": "residual_default",
+          "residual_leaf_code": "3923.29.90",
+          "axes": [],
+          "unclassified_varying": [
+            "form::bag",
+            "form::pouch",
+            "form::sack",
+            "intended_use::conveyance",
+            "processing_state::manufactured-article"
+          ]
+        },
+        {
+          "subheading": "3923.30",
+          "leaves": 2,
+          "classification": "residual_default",
+          "residual_leaf_code": "3923.30.90",
+          "axes": [],
+          "unclassified_varying": [
+            "form::insulated-container",
+            "form::jar",
+            "intended_use::cold-chain",
+            "processing_state::insulated"
+          ]
+        },
+        {
+          "subheading": "3923.50",
+          "leaves": 2,
+          "classification": "residual_default",
+          "residual_leaf_code": "3923.50.90",
+          "axes": [],
+          "unclassified_varying": [
+            "intended_use::bottle-closure",
+            "intended_use::container-closure"
+          ]
+        },
+        {
+          "subheading": "3923.90",
+          "leaves": 3,
+          "classification": "residual_default",
+          "residual_leaf_code": "3923.90.90",
+          "axes": [],
+          "unclassified_varying": [
+            "form::article",
+            "form::aseptic-bag",
+            "form::bag",
+            "form::container",
+            "form::insulated-container",
+            "form::pouch",
+            "intended_use::aseptic-filling",
+            "intended_use::beverage",
+            "intended_use::cold-chain",
+            "intended_use::conveyance",
+            "intended_use::food",
+            "processing_state::insulated",
+            "processing_state::sterile"
+          ]
+        }
+      ]
+    },
+    "5208": {
+      "multi_leaf_subheadings": 19,
+      "detail": [
+        {
+          "subheading": "5208.11",
+          "leaves": 5,
+          "classification": "residual_default",
+          "residual_leaf_code": "5208.11.90",
+          "axes": [
+            "end_use{apparel,household}"
+          ],
+          "unclassified_varying": [
+            "form::casement",
+            "form::dhoti",
+            "form::saree",
+            "form::shirting",
+            "intended_use::general-textile",
+            "intended_use::light-coating-apparel"
+          ]
+        },
+        {
+          "subheading": "5208.12",
+          "leaves": 7,
+          "classification": "residual_default",
+          "residual_leaf_code": "5208.12.90",
+          "axes": [
+            "end_use{apparel,household}"
+          ],
+          "unclassified_varying": [
+            "form::casement",
+            "form::dhoti",
+            "form::saree",
+            "form::sheeting",
+            "form::shirting",
+            "form::voile",
+            "intended_use::general-textile",
+            "intended_use::light-blouse",
+            "intended_use::light-coating-apparel",
+            "processing_state::sheer"
+          ]
+        },
+        {
+          "subheading": "5208.13",
+          "leaves": 3,
+          "classification": "residual_default",
+          "residual_leaf_code": "5208.13.90",
+          "axes": [
+            "weave{dobby,twill}"
+          ],
+          "unclassified_varying": [
+            "form::dobby",
+            "form::shirting",
+            "intended_use::decorative-textile",
+            "intended_use::general-textile"
+          ]
+        },
+        {
+          "subheading": "5208.19",
+          "leaves": 2,
+          "classification": "residual_default",
+          "residual_leaf_code": "5208.19.90",
+          "axes": [],
+          "unclassified_varying": [
+            "form::dedsuti-dosuti",
+            "intended_use::general-textile",
+            "intended_use::traditional-textile",
+            "processing_state::heavy-construction"
+          ]
+        },
+        {
+          "subheading": "5208.21",
+          "leaves": 9,
+          "classification": "residual_default",
+          "residual_leaf_code": "5208.21.90",
+          "axes": [
+            "end_use{apparel,household}"
+          ],
+          "unclassified_varying": [
+            "form::cambric",
+            "form::casement",
+            "form::dhoti",
+            "form::mull",
+            "form::muslin",
+            "form::saree",
+            "form::shirting",
+            "form::voile",
+            "intended_use::fine-linens",
+            "intended_use::general-textile",
+            "intended_use::handkerchief",
+            "intended_use::light-blouse",
+            "intended_use::light-coating",
+            "intended_use::linens",
+            "intended_use::traditional-textile",
+            "processing_state::closely-woven",
+            "processing_state::fine-sheer",
+            "processing_state::sheer",
+            "processing_state::soft-thin"
+          ]
+        },
+        {
+          "subheading": "5208.22",
+          "leaves": 9,
+          "classification": "residual_default",
+          "residual_leaf_code": "5208.22.90",
+          "axes": [
+            "end_use{apparel,household}"
+          ],
+          "unclassified_varying": [
+            "form::calico",
+            "form::cambric",
+            "form::casement",
+            "form::dhoti",
+            "form::long-cloth",
+            "form::saree",
+            "form::sheeting",
+            "form::shirting",
+            "form::voile",
+            "intended_use::calico-printing-base",
+            "intended_use::general-textile",
+            "intended_use::light-coating",
+            "intended_use::linens",
+            "processing_state::closely-woven",
+            "processing_state::sheer"
+          ]
+        },
+        {
+          "subheading": "5208.23",
+          "leaves": 4,
+          "classification": "residual_default",
+          "residual_leaf_code": "5208.23.90",
+          "axes": [],
+          "unclassified_varying": [
+            "form::parmatta",
+            "form::shirting",
+            "intended_use::general-textile",
+            "intended_use::lining",
+            "intended_use::pocketing",
+            "processing_state::closely-woven"
+          ]
+        },
+        {
+          "subheading": "5208.29",
+          "leaves": 3,
+          "classification": "residual_default",
+          "residual_leaf_code": "5208.29.90",
+          "axes": [],
+          "unclassified_varying": [
+            "form::ceretonne",
+            "form::dedsuti-dosuti",
+            "form::dhoti",
+            "form::osamburge",
+            "form::saree",
+            "form::zari-bordered",
+            "intended_use::ceremonial-textile",
+            "intended_use::general-textile",
+            "intended_use::heavy-apparel",
+            "intended_use::traditional-textile",
+            "processing_state::heavy-construction"
+          ]
+        },
+        {
+          "subheading": "5208.31",
+          "leaves": 10,
+          "classification": "residual_default",
+          "residual_leaf_code": "5208.31.90",
+          "axes": [
+            "weaving_method{handloom,mill}",
+            "end_use{apparel,household}"
+          ],
+          "unclassified_varying": [
+            "form::cambric",
+            "form::casement",
+            "form::lungi",
+            "form::mull",
+            "form::muslin",
+            "form::saree",
+            "form::shirting",
+            "form::voile",
+            "intended_use::artisan-textile",
+            "intended_use::fine-linens",
+            "intended_use::general-textile",
+            "intended_use::light-coating",
+            "intended_use::linens",
+            "intended_use::south-india-wrap",
+            "processing_state::closely-woven",
+            "processing_state::fine-sheer",
+            "processing_state::from-carded-or-combed-yarn",
+            "processing_state::sheer",
+            "processing_state::soft-thin"
+          ]
+        },
+        {
+          "subheading": "5208.32",
+          "leaves": 9,
+          "classification": "residual_default",
+          "residual_leaf_code": "5208.32.90",
+          "axes": [
+            "end_use{apparel,household}"
+          ],
+          "unclassified_varying": [
+            "form::bedticking",
+            "form::cambric",
+            "form::casement",
+            "form::coating",
+            "form::furnishing-fabric",
+            "form::long-cloth",
+            "form::lungi",
+            "form::saree",
+            "form::shirting",
+            "form::suiting",
+            "form::voile",
+            "intended_use::general-textile",
+            "intended_use::light-coating",
+            "intended_use::linens",
+            "processing_state::heavy-weight"
+          ]
+        },
+        {
+          "subheading": "5208.33",
+          "leaves": 4,
+          "classification": "residual_default",
+          "residual_leaf_code": "5208.33.90",
+          "axes": [],
+          "unclassified_varying": [
+            "form::coating",
+            "form::mazri",
+            "form::shirting",
+            "form::suiting",
+            "intended_use::general-textile"
+          ]
+        },
+        {
+          "subheading": "5208.39",
+          "leaves": 2,
+          "classification": "residual_default",
+          "residual_leaf_code": "5208.39.90",
+          "axes": [],
+          "unclassified_varying": [
+            "form::saree",
+            "form::zari-bordered",
+            "intended_use::ceremonial-textile",
+            "intended_use::general-textile"
+          ]
+        },
+        {
+          "subheading": "5208.41",
+          "leaves": 7,
+          "classification": "residual_default",
+          "residual_leaf_code": "5208.41.90",
+          "axes": [
+            "weaving_method{handloom,mill}",
+            "end_use{apparel,household}"
+          ],
+          "unclassified_varying": [
+            "form::bedticking",
+            "form::bleeding-madras",
+            "form::furnishing-fabric",
+            "form::saree",
+            "form::shirting",
+            "intended_use::artisan-textile",
+            "intended_use::general-textile",
+            "intended_use::madras-plaid",
+            "intended_use::summer-shirt",
+            "processing_state::colour-bleeding-traditional",
+            "processing_state::striped"
+          ]
+        },
+        {
+          "subheading": "5208.42",
+          "leaves": 7,
+          "classification": "residual_default",
+          "residual_leaf_code": "5208.42.90",
+          "axes": [
+            "end_use{apparel,household}"
+          ],
+          "unclassified_varying": [
+            "form::bedticking",
+            "form::bleeding-madras",
+            "form::casement",
+            "form::furnishing-fabric",
+            "form::saree",
+            "form::shirting",
+            "intended_use::general-textile",
+            "intended_use::light-coating",
+            "intended_use::summer-shirt",
+            "processing_state::colour-bleeding-traditional",
+            "processing_state::striped"
+          ]
+        },
+        {
+          "subheading": "5208.43",
+          "leaves": 5,
+          "classification": "residual_default",
+          "residual_leaf_code": "5208.43.90",
+          "axes": [
+            "weave{damask,twill}",
+            "end_use{apparel,household}"
+          ],
+          "unclassified_varying": [
+            "form::bedticking",
+            "form::bleeding-madras",
+            "form::damask",
+            "form::flannelette",
+            "form::shirting",
+            "intended_use::general-textile",
+            "intended_use::summer-shirt",
+            "processing_state::brushed-napped",
+            "processing_state::colour-bleeding-traditional"
+          ]
+        },
+        {
+          "subheading": "5208.49",
+          "leaves": 4,
+          "classification": "residual_default",
+          "residual_leaf_code": "5208.49.90",
+          "axes": [
+            "weave{other_weave,plain_weave}",
+            "weaving_method{handloom,mill}"
+          ],
+          "unclassified_varying": [
+            "form::fabric",
+            "form::handkerchief",
+            "form::made-up-article",
+            "form::real-madras",
+            "form::saree",
+            "form::woven",
+            "form::zari-bordered",
+            "intended_use::ceremonial-textile",
+            "intended_use::general-textile",
+            "intended_use::handkerchief",
+            "intended_use::heritage-craft",
+            "intended_use::personal-accessory",
+            "processing_state::finished-hemmed"
+          ]
+        },
+        {
+          "subheading": "5208.51",
+          "leaves": 9,
+          "classification": "residual_default",
+          "residual_leaf_code": "5208.51.90",
+          "axes": [
+            "end_use{apparel,household}"
+          ],
+          "unclassified_varying": [
+            "form::cambric",
+            "form::casement",
+            "form::lungi",
+            "form::mull",
+            "form::muslin",
+            "form::saree",
+            "form::shirting",
+            "form::voile",
+            "intended_use::fine-linens",
+            "intended_use::general-textile",
+            "intended_use::light-coating",
+            "intended_use::linens",
+            "processing_state::closely-woven",
+            "processing_state::fine-sheer",
+            "processing_state::from-carded-or-combed-yarn",
+            "processing_state::sheer",
+            "processing_state::soft-thin"
+          ]
+        },
+        {
+          "subheading": "5208.52",
+          "leaves": 9,
+          "classification": "residual_default",
+          "residual_leaf_code": "5208.52.90",
+          "axes": [
+            "end_use{apparel,household}"
+          ],
+          "unclassified_varying": [
+            "form::cambric",
+            "form::casement",
+            "form::lungi",
+            "form::mull",
+            "form::muslin",
+            "form::saree",
+            "form::shirting",
+            "form::voile",
+            "intended_use::fine-linens",
+            "intended_use::general-textile",
+            "intended_use::light-coating",
+            "intended_use::linens",
+            "processing_state::closely-woven",
+            "processing_state::fine-sheer",
+            "processing_state::from-carded-or-combed-yarn",
+            "processing_state::sheer",
+            "processing_state::soft-thin"
+          ]
+        },
+        {
+          "subheading": "5208.59",
+          "leaves": 3,
+          "classification": "residual_default",
+          "residual_leaf_code": "5208.59.90",
+          "axes": [],
+          "unclassified_varying": [
+            "form::saree",
+            "form::zari-bordered",
+            "intended_use::artisan-textile",
+            "intended_use::ceremonial-textile",
+            "intended_use::general-textile"
+          ]
+        }
+      ]
+    },
+    "0207": {
+      "multi_leaf_subheadings": 0,
+      "detail": []
+    },
+    "0201": {
+      "multi_leaf_subheadings": 0,
+      "detail": []
+    },
+    "0202": {
+      "multi_leaf_subheadings": 0,
+      "detail": []
+    },
+    "0204": {
+      "multi_leaf_subheadings": 0,
+      "detail": []
+    },
+    "0901": {
+      "multi_leaf_subheadings": 4,
+      "detail": [
+        {
+          "subheading": "0901.11",
+          "leaves": 20,
+          "classification": "residual_default",
+          "residual_leaf_code": "0901.11.90",
+          "axes": [
+            "coffee_form{cherry,parchment,plantation}",
+            "process_method{dry_processed,wet_processed}",
+            "grade{bulk,grade_a,grade_ab,grade_b,grade_bbb,grade_c,grade_pb}"
+          ],
+          "unclassified_varying": [
+            "form::bean",
+            "intended_use::human-consumption",
+            "intended_use::roasting",
+            "processing_state::raw"
+          ]
+        },
+        {
+          "subheading": "0901.21",
+          "leaves": 2,
+          "classification": "residual_default",
+          "residual_leaf_code": "0901.21.90",
+          "axes": [],
+          "unclassified_varying": []
+        },
+        {
+          "subheading": "0901.22",
+          "leaves": 2,
+          "classification": "residual_default",
+          "residual_leaf_code": "0901.22.90",
+          "axes": [],
+          "unclassified_varying": []
+        },
+        {
+          "subheading": "0901.90",
+          "leaves": 3,
+          "classification": "residual_default",
+          "residual_leaf_code": "0901.90.90",
+          "axes": [],
+          "unclassified_varying": [
+            "form::husk",
+            "form::skin",
+            "intended_use::animal-feed",
+            "intended_use::beverage",
+            "intended_use::human-consumption",
+            "processing_state::containing-coffee",
+            "processing_state::dried",
+            "processing_state::raw"
+          ]
+        }
+      ]
+    }
+  },
+  "notable_untypable_sample": [
+    {
+      "subheading": "0102.21",
+      "leaves": 2,
+      "unclassified_varying": [
+        "form::bull",
+        "form::cow",
+        "intended_use::dairy"
+      ]
+    },
+    {
+      "subheading": "0102.29",
+      "leaves": 2,
+      "unclassified_varying": [
+        "form::bull",
+        "form::calf",
+        "intended_use::dairy",
+        "intended_use::draft",
+        "intended_use::general"
+      ]
+    },
+    {
+      "subheading": "0302.91",
+      "leaves": 2,
+      "unclassified_varying": []
+    },
+    {
+      "subheading": "0302.92",
+      "leaves": 2,
+      "unclassified_varying": []
+    },
+    {
+      "subheading": "0302.99",
+      "leaves": 2,
+      "unclassified_varying": [
+        "intended_use::traditional-cuisine"
+      ]
+    },
+    {
+      "subheading": "0303.81",
+      "leaves": 2,
+      "unclassified_varying": []
+    },
+    {
+      "subheading": "0303.99",
+      "leaves": 2,
+      "unclassified_varying": []
+    },
+    {
+      "subheading": "0304.88",
+      "leaves": 3,
+      "unclassified_varying": [
+        "form::wings"
+      ]
+    },
+    {
+      "subheading": "0402.29",
+      "leaves": 3,
+      "unclassified_varying": [
+        "intended_use::dairy",
+        "intended_use::infant-nutrition"
+      ]
+    },
+    {
+      "subheading": "0501.00",
+      "leaves": 2,
+      "unclassified_varying": [
+        "form::raw-fibre",
+        "form::waste",
+        "intended_use::amino-acid-extraction",
+        "intended_use::hair-extension",
+        "intended_use::wig-making",
+        "processing_state::washed-or-scoured",
+        "processing_state::waste"
+      ]
+    },
+    {
+      "subheading": "0502.10",
+      "leaves": 2,
+      "unclassified_varying": [
+        "form::bristle",
+        "form::raw-fibre",
+        "form::waste",
+        "intended_use::brush-making",
+        "processing_state::waste"
+      ]
+    },
+    {
+      "subheading": "0507.10",
+      "leaves": 2,
+      "unclassified_varying": [
+        "form::raw",
+        "form::waste",
+        "intended_use::carving",
+        "intended_use::handicraft",
+        "processing_state::powder",
+        "processing_state::unworked-or-simply-prepared",
+        "processing_state::waste"
+      ]
+    },
+    {
+      "subheading": "0713.31",
+      "leaves": 2,
+      "unclassified_varying": []
+    },
+    {
+      "subheading": "0813.50",
+      "leaves": 2,
+      "unclassified_varying": []
+    },
+    {
+      "subheading": "0904.21",
+      "leaves": 2,
+      "unclassified_varying": []
+    },
+    {
+      "subheading": "0908.11",
+      "leaves": 2,
+      "unclassified_varying": [
+        "form::in-shell",
+        "form::shelled",
+        "processing_state::in-shell",
+        "processing_state::shelled"
+      ]
+    },
+    {
+      "subheading": "0909.62",
+      "leaves": 4,
+      "unclassified_varying": []
+    },
+    {
+      "subheading": "1001.99",
+      "leaves": 2,
+      "unclassified_varying": [
+        "processing_state::mixed"
+      ]
+    },
+    {
+      "subheading": "1008.10",
+      "leaves": 2,
+      "unclassified_varying": [
+        "form::seed",
+        "intended_use::cultivation",
+        "intended_use::food",
+        "intended_use::milling",
+        "processing_state::seed-for-sowing",
+        "processing_state::unmilled"
+      ]
+    },
+    {
+      "subheading": "1103.11",
+      "leaves": 2,
+      "unclassified_varying": [
+        "form::groats",
+        "processing_state::coarse-ground"
+      ]
+    },
+    {
+      "subheading": "1106.20",
+      "leaves": 3,
+      "unclassified_varying": []
+    },
+    {
+      "subheading": "1207.10",
+      "leaves": 2,
+      "unclassified_varying": [
+        "form::kernel",
+        "form::nut",
+        "processing_state::kernel",
+        "processing_state::whole"
+      ]
+    },
+    {
+      "subheading": "1212.21",
+      "leaves": 2,
+      "unclassified_varying": []
+    },
+    {
+      "subheading": "1212.29",
+      "leaves": 2,
+      "unclassified_varying": []
+    },
+    {
+      "subheading": "1512.11",
+      "leaves": 2,
+      "unclassified_varying": []
+    },
+    {
+      "subheading": "1514.91",
+      "leaves": 3,
+      "unclassified_varying": [
+        "intended_use::cooking"
+      ]
+    },
+    {
+      "subheading": "2201.10",
+      "leaves": 2,
+      "unclassified_varying": [
+        "processing_state::aerated",
+        "processing_state::natural-or-artificial-mineral"
+      ]
+    },
+    {
+      "subheading": "2301.10",
+      "leaves": 2,
+      "unclassified_varying": [
+        "form::residue"
+      ]
+    },
+    {
+      "subheading": "2402.10",
+      "leaves": 2,
+      "unclassified_varying": []
+    },
+    {
+      "subheading": "2530.10",
+      "leaves": 3,
+      "unclassified_varying": [
+        "intended_use::filtration",
+        "intended_use::horticulture",
+        "processing_state::powdered"
+      ]
+    },
+    {
+      "subheading": "2606.00",
+      "leaves": 3,
+      "unclassified_varying": [
+        "form::concentrate",
+        "processing_state::calcined",
+        "processing_state::not-calcined"
+      ]
+    },
+    {
+      "subheading": "2615.90",
+      "leaves": 2,
+      "unclassified_varying": [
+        "intended_use::ferro-alloy-manufacturing",
+        "intended_use::niobium-extraction",
+        "intended_use::tantalum-extraction",
+        "intended_use::vanadium-extraction"
+      ]
+    },
+    {
+      "subheading": "2807.00",
+      "leaves": 2,
+      "unclassified_varying": [
+        "composition::h",
+        "composition::o",
+        "composition::s",
+        "intended_use::detergent",
+        "intended_use::explosive-manufacture",
+        "intended_use::petrochemical",
+        "intended_use::sulphonation",
+        "processing_state::chemically-defined",
+        "processing_state::contains-dissolved-so3"
+      ]
+    },
+    {
+      "subheading": "2808.00",
+      "leaves": 2,
+      "unclassified_varying": [
+        "composition::s",
+        "intended_use::fertiliser-manufacture",
+        "intended_use::metal-etching",
+        "intended_use::nitration",
+        "processing_state::binary-acid-mixture",
+        "processing_state::may-be-concentrated-or-fuming"
+      ]
+    },
+    {
+      "subheading": "2809.20",
+      "leaves": 2,
+      "unclassified_varying": [
+        "intended_use::cyclisation-catalyst",
+        "intended_use::detergent",
+        "intended_use::fertiliser-manufacture",
+        "intended_use::food-acidulant",
+        "intended_use::metal-treatment",
+        "intended_use::specialty-chemical",
+        "processing_state::condensed-phosphoric-acid",
+        "processing_state::may-be-concentrated"
+      ]
+    },
+    {
+      "subheading": "2829.90",
+      "leaves": 3,
+      "unclassified_varying": [
+        "composition::cl",
+        "composition::i",
+        "composition::o",
+        "intended_use::analytical-reagent",
+        "intended_use::pyrotechnic",
+        "intended_use::salt-iodisation",
+        "intended_use::solid-rocket-propellant-ammonium-perchlorate",
+        "intended_use::specialty-chemical",
+        "processing_state::chemically-defined",
+        "processing_state::cl-vii-oxoanion"
+      ]
+    },
+    {
+      "subheading": "2922.17",
+      "leaves": 2,
+      "unclassified_varying": [
+        "composition::ethyldiethanolamine",
+        "composition::methyldiethanolamine",
+        "intended_use::acid-gas-removal",
+        "intended_use::co2-absorbent",
+        "intended_use::corrosion-inhibitor",
+        "intended_use::surfactant-precursor"
+      ]
+    },
+    {
+      "subheading": "2931.10",
+      "leaves": 2,
+      "unclassified_varying": [
+        "composition::tetraethyl-lead",
+        "composition::tetramethyl-lead"
+      ]
+    },
+    {
+      "subheading": "2933.33",
+      "leaves": 21,
+      "unclassified_varying": [
+        "composition::alfentanil",
+        "composition::anileridine",
+        "composition::bezitramide",
+        "composition::bromazepam",
+        "composition::carfentanil",
+        "composition::difenoxin",
+        "composition::diphenoxylate",
+        "composition::dipipanone",
+        "composition::fentanyl",
+        "composition::ketobemidone",
+        "composition::methylphenidate",
+        "composition::pentazocine",
+        "composition::pethidine",
+        "composition::pethidine-intermediate-a",
+        "composition::phencyclidine",
+        "composition::phenoperidine",
+        "composition::pipradrol",
+        "composition::piritramide",
+        "composition::propiram",
+        "composition::remifentanil",
+        "composition::trimeperidine",
+        "intended_use::chemical-synthesis",
+        "intended_use::veterinary-use"
+      ]
+    },
+    {
+      "subheading": "3002.10",
+      "leaves": 2,
+      "unclassified_varying": []
+    }
+  ],
+  "notable_partial_coverage_sample": [
+    {
+      "subheading": "2506.10",
+      "leaves": 2,
+      "axes": [
+        "physical_form"
+      ],
+      "unclassified_varying": [
+        "form::crude",
+        "form::crushed",
+        "intended_use::ceramics",
+        "intended_use::silicon-feedstock",
+        "processing_state::crude",
+        "processing_state::crushed-or-broken",
+        "processing_state::powdered"
+      ]
+    },
+    {
+      "subheading": "2508.10",
+      "leaves": 2,
+      "axes": [
+        "physical_form"
+      ],
+      "unclassified_varying": [
+        "form::crude",
+        "form::ground",
+        "form::processed",
+        "intended_use::cat-litter",
+        "processing_state::activated",
+        "processing_state::crude",
+        "processing_state::powdered",
+        "processing_state::processed"
+      ]
+    },
+    {
+      "subheading": "2529.10",
+      "leaves": 2,
+      "axes": [
+        "physical_form"
+      ],
+      "unclassified_varying": [
+        "processing_state::crude",
+        "processing_state::powdered"
+      ]
+    },
+    {
+      "subheading": "2801.30",
+      "leaves": 2,
+      "axes": [
+        "physical_form",
+        "end_use"
+      ],
+      "unclassified_varying": [
+        "composition::br",
+        "composition::f",
+        "intended_use::flame-retardant-synthesis",
+        "intended_use::fluorochemical-synthesis",
+        "intended_use::photographic",
+        "intended_use::uranium-enrichment"
+      ]
+    },
+    {
+      "subheading": "2802.00",
+      "leaves": 3,
+      "axes": [
+        "physical_form",
+        "end_use"
+      ],
+      "unclassified_varying": [
+        "form::colloidal",
+        "form::dispersion",
+        "intended_use::cosmetic",
+        "intended_use::rubber-vulcanisation",
+        "processing_state::colloidal",
+        "processing_state::precipitated",
+        "processing_state::sublimed"
+      ]
+    },
+    {
+      "subheading": "2804.50",
+      "leaves": 2,
+      "axes": [
+        "physical_form"
+      ],
+      "unclassified_varying": [
+        "composition::b",
+        "composition::te",
+        "intended_use::nuclear-control-rod",
+        "intended_use::photovoltaic-cdte",
+        "intended_use::semiconductor",
+        "intended_use::semiconductor-doping"
+      ]
+    },
+    {
+      "subheading": "2804.70",
+      "leaves": 3,
+      "axes": [
+        "physical_form"
+      ],
+      "unclassified_varying": [
+        "form::amorphous",
+        "intended_use::flame-retardant",
+        "intended_use::military",
+        "intended_use::pesticide-synthesis",
+        "intended_use::phosphoric-acid-feedstock",
+        "intended_use::pyrotechnic",
+        "intended_use::safety-match-striking-surface",
+        "intended_use::semiconductor"
+      ]
+    },
+    {
+      "subheading": "2810.00",
+      "leaves": 2,
+      "axes": [
+        "physical_form",
+        "end_use"
+      ],
+      "unclassified_varying": [
+        "composition::h",
+        "form::glassy",
+        "intended_use::borosilicate-glass",
+        "intended_use::ceramic-flux",
+        "intended_use::cosmetic",
+        "intended_use::metallurgy",
+        "intended_use::wood-preservative",
+        "processing_state::anhydrous"
+      ]
+    },
+    {
+      "subheading": "2817.00",
+      "leaves": 2,
+      "axes": [
+        "physical_form"
+      ],
+      "unclassified_varying": [
+        "intended_use::ceramic",
+        "intended_use::cosmetic",
+        "intended_use::cosmetic-sunscreen",
+        "intended_use::rubber-vulcanisation-activator",
+        "intended_use::specialty-chemical"
+      ]
+    },
+    {
+      "subheading": "2821.10",
+      "leaves": 2,
+      "axes": [
+        "physical_form"
+      ],
+      "unclassified_varying": [
+        "composition::h",
+        "form::slurry",
+        "intended_use::arsenic-removal",
+        "intended_use::catalyst",
+        "intended_use::construction-colourant",
+        "intended_use::jewellery-polish",
+        "intended_use::pigment-red-yellow-brown",
+        "intended_use::pigment-yellow-ochre"
+      ]
+    },
+    {
+      "subheading": "2822.00",
+      "leaves": 3,
+      "axes": [
+        "physical_form"
+      ],
+      "unclassified_varying": [
+        "composition::h",
+        "intended_use::battery-cathode-precursor",
+        "intended_use::catalyst",
+        "intended_use::catalyst-precursor",
+        "intended_use::glass-colourant",
+        "intended_use::paint-drier",
+        "intended_use::pigment-blue",
+        "processing_state::chemically-defined"
+      ]
+    },
+    {
+      "subheading": "2824.10",
+      "leaves": 2,
+      "axes": [
+        "physical_form"
+      ],
+      "unclassified_varying": [
+        "intended_use::ceramic-glaze",
+        "intended_use::glass-additive",
+        "intended_use::glass-leaded",
+        "intended_use::lead-acid-battery-paste",
+        "intended_use::pigment",
+        "intended_use::pigment-yellow",
+        "intended_use::specialty-chemical",
+        "processing_state::red-or-yellow-form"
+      ]
+    },
+    {
+      "subheading": "2825.60",
+      "leaves": 2,
+      "axes": [
+        "physical_form"
+      ],
+      "unclassified_varying": [
+        "composition::ge",
+        "composition::zr",
+        "intended_use::dental-ceramic",
+        "intended_use::fuel-cell-electrolyte",
+        "intended_use::optical-fibre",
+        "intended_use::pet-polymerisation-catalyst",
+        "intended_use::refractory",
+        "intended_use::semiconductor"
+      ]
+    },
+    {
+      "subheading": "2827.51",
+      "leaves": 2,
+      "axes": [
+        "end_use"
+      ],
+      "unclassified_varying": [
+        "composition::k",
+        "composition::na",
+        "intended_use::ir-spectroscopy-pellets",
+        "intended_use::laboratory",
+        "intended_use::oil-drilling-brine",
+        "intended_use::veterinary-anticonvulsant"
+      ]
+    },
+    {
+      "subheading": "2830.90",
+      "leaves": 2,
+      "axes": [
+        "physical_form"
+      ],
+      "unclassified_varying": [
+        "intended_use::pigment",
+        "intended_use::sealant-elastomer-thiokol"
+      ]
+    },
+    {
+      "subheading": "2831.10",
+      "leaves": 2,
+      "axes": [
+        "physical_form"
+      ],
+      "unclassified_varying": [
+        "composition::c",
+        "composition::h",
+        "intended_use::emulsion-polymerisation-initiator-component",
+        "intended_use::food-preservative",
+        "intended_use::paper-pulp-bleaching",
+        "intended_use::specialty-chemical",
+        "intended_use::textile-dye-stripping",
+        "intended_use::textile-vat-dye-reduction"
+      ]
+    },
+    {
+      "subheading": "2903.11",
+      "leaves": 2,
+      "axes": [
+        "physical_form",
+        "chem_structure"
+      ],
+      "unclassified_varying": [
+        "composition::chloroethane",
+        "composition::chloromethane",
+        "intended_use::ethylating-reagent",
+        "intended_use::refrigeration",
+        "intended_use::silicone-synthesis",
+        "intended_use::topical-anesthetic"
+      ]
+    },
+    {
+      "subheading": "2903.91",
+      "leaves": 3,
+      "axes": [
+        "physical_form",
+        "chem_structure"
+      ],
+      "unclassified_varying": [
+        "composition::chlorobenzene",
+        "composition::o-dichlorobenzene",
+        "composition::p-dichlorobenzene",
+        "intended_use::fumigant",
+        "intended_use::moth-repellent",
+        "intended_use::pesticide-synthesis",
+        "intended_use::solvent",
+        "intended_use::toilet-deodorant"
+      ]
+    },
+    {
+      "subheading": "2905.12",
+      "leaves": 2,
+      "axes": [
+        "end_use"
+      ],
+      "unclassified_varying": [
+        "composition::isopropanol",
+        "composition::n-propanol",
+        "intended_use::sanitizer"
+      ]
+    },
+    {
+      "subheading": "2915.40",
+      "leaves": 3,
+      "axes": [
+        "physical_form",
+        "end_use"
+      ],
+      "unclassified_varying": [
+        "composition::dichloroacetic-acid",
+        "composition::monochloroacetic-acid",
+        "composition::trichloroacetic-acid",
+        "intended_use::cmc-synthesis",
+        "intended_use::dermatology",
+        "intended_use::glyphosate-synthesis",
+        "intended_use::ibuprofen-intermediate",
+        "intended_use::laboratory-reagent"
+      ]
+    },
+    {
+      "subheading": "2915.60",
+      "leaves": 2,
+      "axes": [
+        "physical_form"
+      ],
+      "unclassified_varying": [
+        "composition::butyric-acid",
+        "composition::pentanoic-acid",
+        "intended_use::cellulose-butyrate-synthesis",
+        "intended_use::ester-synthesis",
+        "intended_use::food-flavour",
+        "intended_use::fragrance-intermediate"
+      ]
+    },
+    {
+      "subheading": "2916.13",
+      "leaves": 2,
+      "axes": [
+        "physical_form"
+      ],
+      "unclassified_varying": [
+        "composition::methacrylic-acid",
+        "intended_use::methacrylate-polymerization",
+        "intended_use::polymer-additive"
+      ]
+    },
+    {
+      "subheading": "2930.30",
+      "leaves": 2,
+      "axes": [
+        "physical_form"
+      ],
+      "unclassified_varying": [
+        "composition::o,o-diethyl-s-[2-(diethylamino)ethyl]phosphorothioate",
+        "intended_use::chemical-synthesis",
+        "intended_use::rubber-industry"
+      ]
+    },
+    {
+      "subheading": "3207.20",
+      "leaves": 2,
+      "axes": [
+        "physical_form"
+      ],
+      "unclassified_varying": [
+        "composition::alkali-oxide",
+        "composition::borate",
+        "composition::clay",
+        "composition::feldspar",
+        "form::frit",
+        "intended_use::ceramic-decoration",
+        "intended_use::ceramic-glazing",
+        "intended_use::metal-enamelling"
+      ]
+    },
+    {
+      "subheading": "3807.00",
+      "leaves": 3,
+      "axes": [
+        "physical_form"
+      ],
+      "unclassified_varying": [
+        "composition::methanol",
+        "composition::rosin",
+        "composition::vegetable-pitch",
+        "composition::wood-creosote",
+        "composition::wood-tar",
+        "intended_use::chemical-manufacture",
+        "intended_use::coatings",
+        "intended_use::cooperage"
+      ]
+    },
+    {
+      "subheading": "3908.10",
+      "leaves": 14,
+      "axes": [
+        "end_use"
+      ],
+      "unclassified_varying": [
+        "composition::adipic-acid",
+        "composition::aminoundecanoic-acid",
+        "composition::azelaic-acid",
+        "composition::caprolactam",
+        "composition::dodecanedioic-acid",
+        "composition::hexamethylenediamine",
+        "composition::laurolactam",
+        "composition::sebacic-acid"
+      ]
+    },
+    {
+      "subheading": "3912.39",
+      "leaves": 6,
+      "axes": [
+        "end_use"
+      ],
+      "unclassified_varying": [
+        "composition::ethyl",
+        "composition::methyl",
+        "intended_use::coating",
+        "intended_use::construction-additive",
+        "intended_use::food-additive",
+        "processing_state::non-plasticised",
+        "processing_state::plasticised"
+      ]
+    },
+    {
+      "subheading": "4412.92",
+      "leaves": 4,
+      "axes": [
+        "end_use"
+      ],
+      "unclassified_varying": [
+        "form::aircraft-plywood",
+        "form::cutting",
+        "form::decorative-plywood",
+        "form::marine-plywood",
+        "form::tea-chest-panel",
+        "form::trimming",
+        "intended_use::aircraft-manufacture",
+        "intended_use::bwp-grade"
+      ]
+    },
+    {
+      "subheading": "4808.40",
+      "leaves": 2,
+      "axes": [
+        "end_use"
+      ],
+      "unclassified_varying": [
+        "intended_use::sack-manufacture"
+      ]
+    },
+    {
+      "subheading": "5205.28",
+      "leaves": 3,
+      "axes": [
+        "textile_finish"
+      ],
+      "unclassified_varying": [
+        "intended_use::ultra-fine-apparel"
+      ]
+    },
+    {
+      "subheading": "5407.91",
+      "leaves": 2,
+      "axes": [
+        "textile_finish"
+      ],
+      "unclassified_varying": [
+        "intended_use::industrial-end-use"
+      ]
+    },
+    {
+      "subheading": "5512.11",
+      "leaves": 2,
+      "axes": [
+        "textile_finish"
+      ],
+      "unclassified_varying": [
+        "intended_use::lining-fabric"
+      ]
+    },
+    {
+      "subheading": "5512.21",
+      "leaves": 2,
+      "axes": [
+        "textile_finish"
+      ],
+      "unclassified_varying": [
+        "intended_use::upholstery-fabric"
+      ]
+    },
+    {
+      "subheading": "5512.91",
+      "leaves": 2,
+      "axes": [
+        "textile_finish"
+      ],
+      "unclassified_varying": [
+        "intended_use::industrial-textile"
+      ]
+    },
+    {
+      "subheading": "5514.11",
+      "leaves": 2,
+      "axes": [
+        "textile_finish"
+      ],
+      "unclassified_varying": [
+        "intended_use::industrial-textile"
+      ]
+    },
+    {
+      "subheading": "5514.30",
+      "leaves": 4,
+      "axes": [
+        "weave"
+      ],
+      "unclassified_varying": [
+        "composition::other-synthetic-staple-under-85pct-mixed-with-cotton",
+        "composition::polyester-staple-under-85pct-mixed-with-cotton",
+        "intended_use::uniform-fabric",
+        "processing_state::other-weave-of-polyester-staple"
+      ]
+    },
+    {
+      "subheading": "6101.30",
+      "leaves": 2,
+      "axes": [
+        "fiber_type"
+      ],
+      "unclassified_varying": [
+        "form::wind-jacket"
+      ]
+    },
+    {
+      "subheading": "6103.10",
+      "leaves": 4,
+      "axes": [
+        "fiber_type"
+      ],
+      "unclassified_varying": [
+        "form::ensemble",
+        "form::suit"
+      ]
+    },
+    {
+      "subheading": "7114.11",
+      "leaves": 2,
+      "axes": [
+        "end_use"
+      ],
+      "unclassified_varying": [
+        "intended_use::decorative",
+        "intended_use::gift",
+        "processing_state::part"
+      ]
+    },
+    {
+      "subheading": "7114.19",
+      "leaves": 3,
+      "axes": [
+        "end_use"
+      ],
+      "unclassified_varying": [
+        "intended_use::decorative",
+        "intended_use::gift",
+        "processing_state::part"
+      ]
+    }
+  ]
+}
