@@ -19,11 +19,13 @@ let clientPromise: Promise<AuthClient> | null = null;
 
 function getAuth(): GoogleAuth {
   if (!authSingleton) {
-    if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) {
-      throw new Error(
-        'classifier-v2/auth: GOOGLE_APPLICATION_CREDENTIALS not set. Add to backend/.env: GOOGLE_APPLICATION_CREDENTIALS=./.gcp/vertex-sa.json',
-      );
-    }
+    // Credentials resolve via google-auth-library's Application Default
+    // Credentials chain: a service-account JSON if GOOGLE_APPLICATION_CREDENTIALS
+    // is set, OTHERWISE the local user ADC from `gcloud auth application-default
+    // login`. Either works for the Vertex path; ADC (gcloud) is preferred for a
+    // local eval run (no secret key file to manage). getClient() throws a clear
+    // ADC error downstream if NEITHER source is available. (Production runs
+    // LLM_PROVIDER=developer and never reaches this Vertex auth path.)
     authSingleton = new GoogleAuth({
       scopes: ['https://www.googleapis.com/auth/cloud-platform'],
     });
