@@ -306,14 +306,12 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "kern" 1;
-    /* Atmosphere only: a soft warm light pool. Grain now lives on SURFACES
-       (see .doc-sheet / .surface-grain), NOT on the scrolling viewport, so
-       there is no background-attachment:fixed (scroll-jank + iOS bugs gone). */
-    background-image: radial-gradient(
-      120% 120% at 50% -10%,
-      color-mix(in oklab, var(--surface) 38%, transparent) 0%,
-      transparent 100%
-    );
+    /* No background gradient on the viewport. A vertical light pool here is
+       anchored to the document, so on a long page the part you have scrolled to
+       reads DARKER than the part above it — a scroll-dependent "colour grading".
+       Depth comes from the elevated sheet's shadow, not a desk gradient; the
+       desk is a flat, even colour + paper grain, identical at every scroll
+       position. (Surface grain still lives on .doc-sheet / .surface-grain.) */
   }
 
   /* Display type uses Fraunces' real optical-size + character axes.
@@ -490,36 +488,25 @@
      column stays fixed (legibility cap); a wide desktop is filled by turning
      the surrounding FULL-BLEED space into a deliberate desk surface so the
      centered record reads as a sheet of paper laid on a real desk, NOT a web
-     page floating in an empty void. The desk carries: a soft top-lit warm
-     light pool (depth), the same low-opacity paper grain the sheet uses (a
-     real surface, not flat fill), and — only where there is margin to frame
-     (>=lg) — a faint pair of vertical "edge of the working area" rules bracketing
-     the 1180px column so the margins read as INTENTIONAL workspace. Calm and
-     on-theme (reuses --bg / --surface / --rule); stays well below the band's one
-     chromatic event. Mobile/tablet get the warm pool + grain but no framing
-     rules (there is no surplus margin to frame), so nothing is wasted.
+     page floating in an empty void. The desk is a FLAT, even colour carrying
+     only the same paper grain the sheet uses (a real textured surface, not a
+     flat fill) — NO vertical light pool and NO framing rules, because both are
+     anchored to the document and produce a scroll-dependent colour grading
+     (the part you scroll to ends up darker than the part above). Depth comes
+     entirely from the elevated sheet's own shadow. Calm and on-theme (reuses
+     --bg / --surface); identical at every scroll position and every width.
   ---------------------------------------------------------------------- */
   .workspace-surface {
     position: relative;
     isolation: isolate;
   }
-  .workspace-surface::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    /* a top-lit warm pool so the desk has depth, brightest where the sheet
-       sits — light falls from above, the same idiom as the sheet's toplight */
-    background-image: radial-gradient(
-      135% 100% at 50% -15%,
-      color-mix(in oklab, var(--surface) 32%, transparent) 0%,
-      transparent 100%
-    );
-  }
-  /* The desk's paper grain + the framing rules. The grain is the SAME fractal
-     speckle the sheet uses, at a whisper opacity, so the whole desk reads as a
-     real surface the sheet sits on. The framing rules are layered on top (>=lg). */
+  /* (No ::before light pool. A radial here is anchored to the desk element, so a
+     tall record reads darker toward the bottom than the top — a scroll-dependent
+     colour grading. Depth now comes from the elevated sheet's own shadow; the
+     desk stays one even colour + grain at every scroll position.) */
+  /* The desk's paper grain — the SAME fractal speckle the sheet uses — at a low,
+     EVEN opacity so the whole desk reads as one real textured surface at every
+     scroll position. No gradient, no framing rules: a flat lit desk with grain. */
   .workspace-surface::after {
     content: "";
     position: absolute;
@@ -527,12 +514,12 @@
     z-index: -1;
     pointer-events: none;
     mix-blend-mode: multiply;
-    opacity: 0.05;
+    opacity: 0.08;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.42' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
   }
   .dark .workspace-surface::after {
     mix-blend-mode: screen;
-    opacity: 0.04;
+    opacity: 0.07;
   }
   /* (Framing rules removed 2026-06-04. They lived on the SAME pseudo-element as
      the grain, so making the rules visible at >=lg required bumping the shared
