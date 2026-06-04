@@ -632,6 +632,146 @@
     .skeleton-calm {
       animation: ledger-skeleton 3.2s var(--ease-ledger) infinite;
     }
+
+    /* ------------------------------------------------------------------
+       "THE LEDGER KEEPS TIME" — the monotonic ink-trail (the honest wait).
+
+       This encodes ONLY real elapsed wall-clock time: a thin ledger
+       underscore that GROWS from a fixed left origin and NEVER rewinds,
+       loops, or restarts. It is UNBOUNDED in feel: a single long LINEAR
+       run with the late portion eased to a crawl (cubic-bezier flattens
+       near the end) so it keeps inching and never visibly parks at a
+       "100% / done" end-stop. It maps to NO pipeline stage, NO candidate
+       count, NO fraction, NO ETA. Because growth is monotonic, a genuinely
+       stuck render FREEZES the trail (legibly broken) — the opposite of a
+       loop that animates smoothly over a corpse.
+
+       Compositor-only: transform: scaleX from a left transform-origin.
+       NO animation-iteration-count (defaults to 1 — runs ONCE, never loops).
+       Long ~46s duration > the typical ~40s wait; on overrun it holds at the
+       crawled-near-1 frame and the promoted 25s/55s copy carries the honesty.
+
+       HONESTY HARD-GUARD (enforced at the call site, noted here): this trail
+       must live ONLY on the code-slot baseline, must NOT traverse/align with
+       the method list, and must NOT fill/scan ACROSS the code slot as if
+       inscribing a value. It is a lengthening underscore beneath a redacted
+       slot, not a value being written in.
+
+       REDUCED MOTION: the global kill-switch (below) clamps this to a single
+       0.001ms iteration and lands on the 100% frame — a fully-grown asymmetric
+       trail that would dishonestly read as "done". So the element ALSO carries
+       `motion-reduce:hidden` at the call site; reduced-motion users get the
+       honest static frame (no trail) + the promoted elapsed copy + role=status.
+    ------------------------------------------------------------------ */
+    .ledger-accrue {
+      transform-origin: left center;
+      transform: scaleX(0);
+      animation: ledger-accrue 46s cubic-bezier(0.12, 0.85, 0.32, 1) forwards;
+    }
+
+    /* gloss / micro-lesson rotation done as a PURE-CSS staggered cross-fade —
+       NO JS timer. Each line in the stack fades up for its window then fades
+       back, on a shared long loop, offset by per-item animation-delay. The
+       lines are absolutely stacked; only the active one is visibly opaque.
+       Screen-reader parity is preserved by `aria-hidden` on the whole stack
+       (the single role=status the parent owns is the only announced summary),
+       so the deck is never leaked one-line-or-all to assistive tech. */
+    .gloss-rotate {
+      animation: gloss-cycle var(--gloss-cycle-duration, 21s) linear infinite;
+    }
+
+    /* ------------------------------------------------------------------
+       SKELETON SHIMMER — the universally-recognized "this content is
+       loading" sheen. A bright highlight band sweeps left-to-right ACROSS a
+       redacted placeholder and LOOPS continuously. It is honest by
+       construction: it is the canonical loading-placeholder motion and
+       claims NOTHING — no value, no glyph, no fraction, no completion. It
+       rides on the SAME redacted slot that stays a placeholder until the
+       real result lands (the sweep is light moving over an empty form, not
+       a value being written in).
+
+       Implemented as a moving translucent gradient on a child overlay so
+       the underlying skeleton colour is untouched and only a sheen moves
+       (compositor-friendly: animates background-position, the cheapest
+       paint for a repeating sheen; the band itself is fixed-size). Loops
+       forever — purely ambient. Reduced motion: disabled (the global
+       kill-switch clamps iteration to 1; we also stop the sweep and drop
+       the overlay to nothing via the explicit motion-reduce rule at the
+       call site, so a reduce user sees only the calm static skeleton). */
+    .shimmer-sweep {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .shimmer-sweep::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      /* a clearly-visible moving highlight band (not a faint pulse): a wide
+         translucent sheen that travels across the slot. Tuned brighter in
+         dark mode below. */
+      background: linear-gradient(
+        100deg,
+        transparent 30%,
+        color-mix(in oklab, white 78%, transparent) 50%,
+        transparent 70%
+      );
+      background-size: 220% 100%;
+      background-repeat: no-repeat;
+      animation: shimmer-slide 1.8s var(--ease-ledger) infinite;
+      mix-blend-mode: screen;
+    }
+    /* on dark paper a white screen-blend reads weak; use a warm light catch
+       and a softer blend so the sheen is clearly visible on the dark slot. */
+    .dark .shimmer-sweep::after {
+      background: linear-gradient(
+        100deg,
+        transparent 30%,
+        color-mix(in oklab, white 30%, transparent) 50%,
+        transparent 70%
+      );
+      mix-blend-mode: plus-lighter;
+    }
+
+    /* ------------------------------------------------------------------
+       METHOD READING-SCAN — a soft highlight that travels DOWN the method
+       list (line 01 -> line 06) and LOOPS back to the top, so the
+       instrument is visibly "reading the schedule in order". It is a single
+       absolutely-positioned highlight bar (a tinted row wash + a left accent
+       edge) that slides down the list container and restarts.
+
+       HONESTY: because it LOOPS continuously and never stops on a row, it
+       makes NO claim that a stage is "done" or that a given row is the true
+       current position — it is an ambient "reading in order" pass, the eye
+       running down the page. There is NO checkmark, NO done/active/pending
+       state, NO per-stage completion; the list TEXT is untouched and every
+       row stays the same single state. The travel distance is the list's own
+       height (set via --scan-travel at the call site from the row count), so
+       the bar tracks the rows without ever resting on one.
+
+       Reduced motion: the global kill-switch settles it (iteration 1) and we
+       additionally hide the bar at the call site, leaving the honest static
+       ordered list. */
+    .method-scan {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: var(--scan-band, 2.6rem);
+      pointer-events: none;
+      border-radius: var(--radius-sm);
+      /* the row wash + a brighter left reading-edge */
+      background: linear-gradient(
+        to right,
+        color-mix(in oklab, var(--accent) 16%, transparent) 0%,
+        color-mix(in oklab, var(--accent) 7%, transparent) 42%,
+        transparent 100%
+      );
+      box-shadow: inset 3px 0 0 0 color-mix(in oklab, var(--accent) 70%, transparent);
+      animation: method-scan-down var(--scan-duration, 4s) var(--ease-ledger) infinite;
+    }
   }
 
   @keyframes ledger-rise {
@@ -676,6 +816,84 @@
     50% {
       opacity: 1;
       transform: scale(1.06);
+    }
+  }
+
+  /* The monotonic ink-trail: scaleX 0 -> ~1 over one long LINEAR-feeling run.
+     The cubic-bezier above flattens the tail so late growth crawls (never a
+     parked end-stop), and it runs ONCE (no iteration-count). Compositor-only. */
+  @keyframes ledger-accrue {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  /* One shared cross-fade cycle for a stacked rotation deck. The line is
+     visibly opaque for ~1/6 of the cycle with a short fade at each edge, then
+     stays hidden. Per-item negative animation-delay (set inline) offsets each
+     line by 1/n of the cycle so exactly one shows at a time. The visible
+     window (1/6) is >= 1/n for every deck up to 6 items (exact tiling) and for
+     7-8 item decks just yields a slightly longer cross-fade overlap — never a
+     blank gap. Pure CSS — no JS timer, no setState on a tick. */
+  @keyframes gloss-cycle {
+    0% {
+      opacity: 0;
+    }
+    2% {
+      opacity: 1;
+    }
+    14.66% {
+      opacity: 1;
+    }
+    16.66% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  /* SKELETON SHIMMER — the loading sheen sweeps the band across the slot and
+     LOOPS. background-position moves the fixed-size highlight from off the left
+     edge to off the right edge; a tail pause keeps the cadence calm rather than
+     a frantic strobe. Claims nothing — it is light over an empty placeholder. */
+  @keyframes shimmer-slide {
+    0% {
+      background-position: 160% 0;
+    }
+    60% {
+      background-position: -60% 0;
+    }
+    100% {
+      background-position: -60% 0;
+    }
+  }
+
+  /* METHOD READING-SCAN — the highlight bar travels from the first row to the
+     last (translateY across --scan-travel, the list's own row span) then LOOPS
+     back to the top. A short hold at top + bottom keeps it from snapping. It
+     NEVER stops on a row and never marks one done — an ambient reading pass. */
+  @keyframes method-scan-down {
+    0% {
+      transform: translateY(0);
+      opacity: 0;
+    }
+    6% {
+      opacity: 1;
+    }
+    88% {
+      opacity: 1;
+    }
+    94% {
+      transform: translateY(var(--scan-travel, 0px));
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(var(--scan-travel, 0px));
+      opacity: 0;
     }
   }
 

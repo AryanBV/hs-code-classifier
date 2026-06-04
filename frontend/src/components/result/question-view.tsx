@@ -4,6 +4,7 @@ import * as React from "react";
 import { ArrowRight, CircleHelp, HelpCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { WhatYouToldUs, type ToldUsItem } from "@/components/result/what-you-told-us";
 import { QUERY_ECHO_LABEL } from "@/lib/content";
 import type { QuestionOption, UiQuestion } from "@/lib/types";
 
@@ -42,6 +43,12 @@ export interface QuestionViewProps {
   onSubmit?: (optionId: string) => void;
   /** Disables Continue + the controls while the submitted run is in flight. */
   submitting?: boolean;
+  /**
+   * Multi-round: the user's OWN prior submitted answers (oldest first), shown as
+   * the "WHAT YOU TOLD US" strip so a 2nd+ question reads as part of one
+   * continuous record. Honest input only; empty on the first question.
+   */
+  toldUs?: ToldUsItem[];
 }
 
 /**
@@ -59,6 +66,7 @@ function QuestionView({
   onSelect,
   onSubmit,
   submitting = false,
+  toldUs = [],
 }: QuestionViewProps) {
   const allOptions = Array.isArray(question.options) ? question.options : [];
 
@@ -132,6 +140,14 @@ function QuestionView({
           <span className="font-mono text-body leading-snug text-ink">{query}</span>
         ) : null}
       </div>
+
+      {/* WHAT YOU TOLD US — prior submitted answers ride into a 2nd+ question so
+          the clarifying flow reads as one continuous record. Empty on round 1. */}
+      {toldUs.length > 0 ? (
+        <div className="mb-block">
+          <WhatYouToldUs items={toldUs} />
+        </div>
+      ) : null}
 
       {/* honest framing */}
       <p className="mb-4 flex items-center gap-3 font-sans text-eyebrow font-semibold uppercase tracking-[0.18em] text-accent-ink motion-safe:reveal-ink">

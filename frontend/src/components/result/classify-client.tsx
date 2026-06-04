@@ -17,6 +17,11 @@ import { ResultView } from "@/components/result/result-view";
 import { QuestionView } from "@/components/result/question-view";
 import { RefusedView } from "@/components/result/refused-view";
 import { ErrorView, type ErrorKind } from "@/components/result/error-view";
+import {
+  resolveToldUsLabel,
+  type ToldUsItem,
+} from "@/components/result/what-you-told-us";
+import { markSkipEntrance } from "@/lib/reveal-handoff";
 
 export interface ClassifyClientProps {
   query: string;
@@ -101,6 +106,14 @@ function ClassifyClient({ query }: ClassifyClientProps) {
     optionId: string;
   } | null>(null);
 
+  // REACTIVE MIRROR (engineering C): a render-visible copy of the user's OWN
+  // submitted answers, so the "WHAT YOU TOLD US" strip repaints across rounds.
+  // It is written ALONGSIDE the imperative previousAnswers/roundsRef refs in
+  // submitAnswer (never replacing them), so the carefully-guarded single-fire /
+  // double-submit / round-count logic on those refs is untouched. Reset to []
+  // whenever a fresh classification starts (same lifecycle as the refs).
+  const [toldUs, setToldUs] = React.useState<ToldUsItem[]>([]);
+
   // Region focus target — moved into on each async transition.
   const regionRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -151,6 +164,7 @@ function ClassifyClient({ query }: ClassifyClientProps) {
     activeQuestionId.current = null;
     savedKey.current = null;
     submitGuard.current = false;
+    setToldUs([]);
     classifyMutation.mutate(originalQuery);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [originalQuery]);
@@ -208,6 +222,15 @@ function ClassifyClient({ query }: ClassifyClientProps) {
     savedKey.current = key;
     const saved = saveHistory(originalQuery, result, Date.now());
 
+    // Engineering A (double-reveal fix): the in-page ResultView is ALREADY
+    // playing the signature inscription reveal right now. We are about to
+    // router.replace('/r/{id}') to the durable record URL, where a FRESH
+    // ResultView would otherwise re-play the same reveal. Mark this record id so
+    // that next mount skips its entrance and settles instantly (read-once on the
+    // /r/ mount). A direct/cold/refreshed /r/{id} visit is unmarked and animates
+    // normally. Set BEFORE either navigation path fires.
+    markSkipEntrance(saved.id);
+
     // Additive, best-effort cloud sync. The local save above is the source of
     // truth; the cloud insert is strictly additive and never throws. Earlier the
     // insert was fire-and-forget and `router.replace` ran on the SAME tick, so
@@ -253,10 +276,31 @@ function ClassifyClient({ query }: ClassifyClientProps) {
       ? "error"
       : (result?.responseType ?? "loading");
 
-  // Move focus into the new view on each transition. The individual views
-  // self-focus their own <h1>; this is the fallback so SR/keyboard users always
-  // land inside the freshly-swapped region (e.g. the result, owned elsewhere).
+  // ----------------------------------------------------------------------
+  // SPA-nav loading "hang": this is a DEV-ONLY artifact, NOT a production bug.
+  // VERIFIED empirically against a `next build` production server: the landing
+  // click-through (landing -> "coffee beans" -> "Find the code" -> /classify via
+  // router.push) ADVANCES correctly to the question/result in production; it only
+  // freezes on the loading view under `next dev`.
+  //
+  // Cause: `next dev` runs React StrictMode, which double-invokes the mount
+  // (mount -> unmount -> remount) while App Router navigation runs inside a React
+  // Transition. That dev-only double-mount entangles this component's classify
+  // mutation with the still-pending navigation Transition so React Query's
+  // resolution commit (isPending:false + data) is starved and the view never
+  // advances. Production has no StrictMode double-mount, so the resolution commits
+  // normally — consistent with the app classifying live before this work. NOTE:
+  // removing the loading view's old 500ms setInterval did NOT change the dev
+  // symptom, so the interval was never the cause; it was removed anyway because
+  // the new loader is CSS-driven and timer-light (see loading-view.tsx).
+  //
+  // HARDENING kept regardless: the rAF focus-mover below runs ONLY for terminal
+  // views (result/question/error/refused), never while isPending/"loading" — no
+  // needless focus churn into a transient region during the pending Transition.
+  // ----------------------------------------------------------------------
   React.useEffect(() => {
+    // Only move focus once a TERMINAL view has settled; never during loading.
+    if (viewKey === "loading") return;
     const node = regionRef.current;
     if (!node) return;
     // Defer so the new subtree (and its own focus calls) have mounted.
@@ -275,21 +319,35 @@ function ClassifyClient({ query }: ClassifyClientProps) {
       // Double-submit guard: ignore re-entrant submits while one is in flight.
       if (submitGuard.current || isPending) return;
       submitGuard.current = true;
+      // Resolve the human label of the chosen option from the question CURRENTLY
+      // on screen, BEFORE the next mutation swaps the result. This is the user's
+      // own answer, captured for the "WHAT YOU TOLD US" strip.
+      const onScreenQuestion =
+        result?.responseType === "question" ? (result as UiQuestion) : null;
+      const chosenLabel = resolveToldUsLabel(onScreenQuestion, optionId);
       // Snapshot the PRIOR state for this request, then fold this round into
       // the accumulators so the NEXT round sees it as prior.
       const priorAnswers = { ...previousAnswers.current };
       const priorRounds = roundsRef.current;
       previousAnswers.current = { ...previousAnswers.current, [questionId]: optionId };
       roundsRef.current += 1;
+      // Reactive mirror, written ALONGSIDE the refs (engineering C): append this
+      // round's answer so the chip strip repaints. Never touches the guards above.
+      setToldUs((prev) => [...prev, { questionId, label: chosenLabel }]);
       answerMutation.mutate({ questionId, answerId: optionId, priorAnswers, priorRounds });
     },
-    [answerMutation, isPending],
+    [answerMutation, isPending, result],
   );
 
   const handleRetry = React.useCallback(() => {
     answerMutation.reset();
     classifyMutation.reset();
     submitGuard.current = false;
+    // A retry restarts the session from the original query, so the prior
+    // answers' refs are reset on the next initial-classify; clear the mirror too.
+    previousAnswers.current = {};
+    roundsRef.current = 0;
+    setToldUs([]);
     classifyMutation.mutate(originalQuery);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [originalQuery]);
@@ -306,7 +364,19 @@ function ClassifyClient({ query }: ClassifyClientProps) {
   let body: React.ReactNode;
 
   if (isPending) {
-    body = <LoadingView query={originalQuery} onCancel={goHomePrefilled} />;
+    body = (
+      <LoadingView
+        query={originalQuery}
+        onCancel={goHomePrefilled}
+        toldUs={toldUs}
+        // An answer-continuation wait (vs the initial classify): the lead line
+        // then honestly names the user's own added detail.
+        isAnswerPath={answerMutation.isPending}
+        // Advance the gloss/lesson decks per round instead of restarting them, so
+        // a 2nd/3rd round's wait reads materially different.
+        deckOffset={toldUs.length}
+      />
+    );
   } else if (error) {
     body = (
       <ErrorView
@@ -317,7 +387,7 @@ function ClassifyClient({ query }: ClassifyClientProps) {
     );
   } else if (result?.responseType === "classification") {
     const record = { query: originalQuery, result: result as UiClassification };
-    body = <ResultView record={record} />;
+    body = <ResultView record={record} toldUs={toldUs} />;
   } else if (result?.responseType === "question") {
     body = (
       <QuestionView
@@ -327,6 +397,8 @@ function ClassifyClient({ query }: ClassifyClientProps) {
         submitting={isPending}
         onSelect={selectOption}
         onSubmit={submitAnswer}
+        // Prior submitted answers ride into a 2nd+ question (continuous record).
+        toldUs={toldUs}
         // Required by the preserved prop signature; unused while decoupled
         // (onSelect + onSubmit drive the flow). Kept compatible as a fallback.
         onAnswer={submitAnswer}

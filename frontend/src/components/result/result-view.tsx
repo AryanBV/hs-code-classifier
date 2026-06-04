@@ -7,6 +7,8 @@ import { ArrowRight, Pencil, Plus } from "lucide-react";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 
 import { Surface } from "@/components/ui/surface";
+import { consumeSkipEntrance } from "@/lib/reveal-handoff";
+import { WhatYouToldUs, type ToldUsItem } from "@/components/result/what-you-told-us";
 import { MonoCode } from "@/components/ui/mono-code";
 import { ConfidenceBand } from "@/components/ui/confidence-band";
 import { RuleLine } from "@/components/ui/rule-line";
@@ -50,6 +52,13 @@ export interface ResultViewRecord {
 
 export interface ResultViewProps {
   record: ResultViewRecord;
+  /**
+   * Multi-round: the user's OWN submitted answers (oldest first). When present
+   * they ride into the result as the "WHAT YOU TOLD US" strip, so the record
+   * reads as the continuous outcome of the session (the question interlude and
+   * the wait carried the same strip). Honest input, never engine-confirmed facts.
+   */
+  toldUs?: ToldUsItem[];
 }
 
 // ----------------------------------------------------------------------------
@@ -108,8 +117,16 @@ function evidenceIsThin(result: UiClassification): boolean {
 
 const REVEAL_EASE = [0.2, 0.6, 0.2, 1] as const;
 
-function useReveal() {
-  const reduced = useReducedMotion();
+/**
+ * The signature reveal variants. `settled` collapses every variant to its
+ * instant ("shown") form WITHOUT animation — used both for prefers-reduced-motion
+ * AND for the classify -> record handoff (so the second mount on /r/{id} does not
+ * re-play a reveal the user just watched in-page). One flag drives both, so the
+ * reduced-motion authority and the skip-entrance authority are a SINGLE source.
+ */
+function useReveal(skipEntrance = false) {
+  const reducedPref = useReducedMotion();
+  const reduced = reducedPref || skipEntrance;
 
   const sheet: Variants = {
     hidden: { opacity: reduced ? 1 : 0, y: reduced ? 0 : 10 },
@@ -618,10 +635,20 @@ function MarginPane({
  * presses once) runs entrance-only via `motion`; prefers-reduced-motion settles
  * everything instantly.
  */
-function ResultView({ record }: ResultViewProps) {
+function ResultView({ record, toldUs = [] }: ResultViewProps) {
   const result = record.result;
-  const reveal = useReveal();
   const router = useRouter();
+
+  // Engineering A (double-reveal fix): if THIS record was just inscribed in-page
+  // by the classify flow (which then router.replace'd here), skip the entrance so
+  // the user does not watch the same reveal twice. Read-once-then-clear, keyed to
+  // the record id; defaults to a full reveal for any direct/cold/refreshed visit.
+  // Computed once on mount (client-only) so SSR is unaffected and the read is not
+  // repeated across renders.
+  const [skipEntrance] = React.useState<boolean>(() =>
+    record.id ? consumeSkipEntrance(record.id) : false,
+  );
+  const reveal = useReveal(skipEntrance);
 
   // H8: "Edit and run again" carries the original query back to the input so an
   // almost-right run becomes a one-detail edit, not a full retype. It routes to
@@ -648,6 +675,15 @@ function ResultView({ record }: ResultViewProps) {
         </span>
         <span className="font-mono text-[0.95rem] text-ink">{record.query}</span>
       </div>
+
+      {/* WHAT YOU TOLD US — the session's own submitted detail, carried in from
+          the question interlude / wait so the record reads continuous. Honest
+          input only; renders nothing when there were no clarifying rounds. */}
+      {toldUs.length > 0 ? (
+        <div className="mb-[clamp(16px,2.4vw,26px)]">
+          <WhatYouToldUs items={toldUs} />
+        </div>
+      ) : null}
 
       <DocumentMargin
         document={<DocumentPane result={result} reveal={reveal} />}

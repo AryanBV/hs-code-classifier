@@ -147,6 +147,72 @@ export const WAIT_LESSONS = [
 ] as const;
 
 // ----------------------------------------------------------------------------
+// "The Record Being Prepared" — the honest wait.
+//
+// The six REAL pipeline stages (L0..L5), shown as a STATIC ordered method list
+// titled below. This is the way Prevyl reads the schedule, in order — NOT a
+// timer-driven progress bar. There is ONE indeterminate "working" state over
+// the whole method; no per-stage Done/active/pending, no percentage, no ETA.
+// ----------------------------------------------------------------------------
+
+export const METHOD_TITLE = "How Prevyl reads the schedule";
+
+/** The six real stages, named in the order the pipeline runs them. Honest. */
+export const METHOD_STAGES = [
+  "Read your words",
+  "Find the chapter",
+  "Retrieve candidate headings",
+  "Apply the Section and Chapter rules",
+  "Choose the tariff line",
+  "Check against the legal notes",
+] as const;
+
+/** Eyebrow over the whole wait. The single honest "in flight" word. */
+export const READING_EYEBROW = "Reading the schedule";
+
+/**
+ * Method GLOSSES — one TRUE thing about HS classification, rotated INDEPENDENTLY
+ * of any "active stage" (so no sentence ever claims a stage is happening now).
+ * Each teaches HOW classification works; none is keyed to the method-list rows.
+ * Distinct from WAIT_LESSONS (the marginal micro-lesson deck) so the two streams
+ * never repeat one another within a round.
+ */
+export const METHOD_GLOSSES = [
+  "Classification starts from what a thing IS, not what it is called. A trade name is a clue, not the rule.",
+  "A chapter note can pull a product in or push it out, even when the words seem to fit a heading.",
+  "Headings are read against each other. The one with the most specific description usually wins.",
+  "Section and Chapter notes are law, not commentary. They override a heading's plain reading where they apply.",
+  "When two lines could fit, the General Interpretive Rules decide which one governs, in a fixed order.",
+  "The last two digits are India's own breakdown of a world subheading. They split a line by finer detail.",
+  "An unflagged product usually lands on the residual line, not the special variant nobody mentioned.",
+] as const;
+
+/** The honest expectation line shown for the whole wait. No deadline. */
+export const WAIT_EXPECTATION =
+  "This usually takes up to a minute. Prevyl is reading the schedule, not guessing.";
+
+// ----------------------------------------------------------------------------
+// Redacted-slot captions (the honesty contract: placeholders must LOOK like
+// placeholders, never plausible-but-fake content).
+// ----------------------------------------------------------------------------
+
+/** Under the empty 4-2-2 code slot during the wait. */
+export const SLOT_CODE_CAPTION = "Your tariff line will appear here, with its description.";
+/** In the margin, over the redacted band strip. No band colour until the real result. */
+export const SLOT_BAND_CAPTION = "The band appears once the reading settles.";
+/** Over the redacted citation region. */
+export const SLOT_CITATION_CAPTION = "The cited basis in the schedule will be quoted here.";
+
+// ----------------------------------------------------------------------------
+// Multi-round — "WHAT YOU TOLD US". The user's OWN submitted answers ride
+// across rounds. NEVER engine-confirmed facts, never "Chapter fixed".
+// ----------------------------------------------------------------------------
+
+export const WHAT_YOU_TOLD_US_LABEL = "What you told us";
+/** Lead line on the answer path. Honest: re-reading WITH the user's own detail. */
+export const REREADING_LEAD = "Re-reading with the detail you added";
+
+// ----------------------------------------------------------------------------
 // Operating-loop labels (literal, not costume)
 // ----------------------------------------------------------------------------
 
