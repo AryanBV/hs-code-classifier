@@ -19,16 +19,27 @@ let clientPromise: Promise<AuthClient> | null = null;
 
 function getAuth(): GoogleAuth {
   if (!authSingleton) {
-    // Credentials resolve via google-auth-library's Application Default
-    // Credentials chain: a service-account JSON if GOOGLE_APPLICATION_CREDENTIALS
-    // is set, OTHERWISE the local user ADC from `gcloud auth application-default
-    // login`. Either works for the Vertex path; ADC (gcloud) is preferred for a
-    // local eval run (no secret key file to manage). getClient() throws a clear
-    // ADC error downstream if NEITHER source is available. (Production runs
-    // LLM_PROVIDER=developer and never reaches this Vertex auth path.)
-    authSingleton = new GoogleAuth({
-      scopes: ['https://www.googleapis.com/auth/cloud-platform'],
-    });
+    const scopes = ['https://www.googleapis.com/auth/cloud-platform'];
+    // Credential resolution, in order:
+    //  1. GOOGLE_APPLICATION_CREDENTIALS_JSON — the service-account key JSON
+    //     supplied INLINE as an env var (no file on disk). This is how PRODUCTION
+    //     (Railway) authenticates to Vertex: the SA key lives only in the platform
+    //     env, never on disk or in git.
+    //  2. else google-auth-library's ADC chain: a SA JSON file at
+    //     GOOGLE_APPLICATION_CREDENTIALS if set, OTHERWISE the local user ADC from
+    //     `gcloud auth application-default login` (the local-eval path).
+    //     getClient() throws a clear ADC error downstream if none exist.
+    // Only reached when LLM/EMBEDDING_PROVIDER=vertex; the developer-API path
+    // never calls this.
+    const inlineJson = process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON;
+    if (inlineJson && inlineJson.trim() !== '') {
+      authSingleton = new GoogleAuth({
+        credentials: JSON.parse(inlineJson) as Record<string, unknown>,
+        scopes,
+      });
+    } else {
+      authSingleton = new GoogleAuth({ scopes });
+    }
   }
   return authSingleton;
 }
