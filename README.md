@@ -1,246 +1,131 @@
-> SUPERSEDED 2026-06-01 — earlier-phase document, kept for history. CURRENT STATE: see plans/ROADMAP-2026-06-01.md (authoritative), backend/docs/AUTONOMOUS-CONTINUATION-2026-05-29.md (START HERE block), and CLAUDE.md Current Status. v2 brain ~77% OUTRIGHT / ~86% top-3. Runtime is now the **Gemini Developer API free tier** (Vertex AI DISABLED after the billing crisis was resolved; Cohere still decommissioned). Sequencing = Phase A cost-efficiency FIRST → Phase B ship (cutover → latency → streaming/jobs → calibration → DTO freeze) → Phase C frontend. CORRECTNESS > SPEED (latency is secondary; never trade accuracy for it). Older "Vertex-only / ship-arc latency-first" framing is SUPERSEDED.
+# Prevyl — Indian ITC-HS Code Classifier
 
-# HS Code Classifier - AI-Powered Export Documentation Assistant
+> **The right export code, with its legal basis.**
+> Describe a product and get its 8-digit Indian ITC-HS export code — with the chapter, heading, and tariff note it rests on cited, so you can verify the answer before you file.
 
-> **Reducing HS code classification from 30 minutes to 2 minutes using hybrid AI**
-
----
-
-## The Problem
-
-Indian exporters face **₹50,000-5,00,000 penalties** for incorrect HS code classification. Manual classification takes **30+ minutes per product** and requires expensive customs consultants (₹2,000-10,000 per classification). Current solutions are slow, expensive, and error-prone.
-
-**Our solution:** AI-powered HS code classifier that achieves **85%+ accuracy** in under 2 minutes, with transparent reasoning and country-specific code mapping.
+**Live (free):** [hscode.prevyl.com](https://hscode.prevyl.com)
 
 ---
 
-## Tech Stack
+## The problem
 
-![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=flat&logo=node.js&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=flat&logo=typescript&logoColor=white)
-![Next.js](https://img.shields.io/badge/Next.js-14-000000?style=flat&logo=next.js&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?style=flat&logo=postgresql&logoColor=white)
-![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?style=flat&logo=prisma&logoColor=white)
-![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o--mini-412991?style=flat&logo=openai&logoColor=white)
+Every Indian exporter must put an 8-digit ITC-HS code on every shipment. The taxonomy is unforgiving — 21 sections, 97 chapters, and **12,460 tariff lines** whose distinctions turn on legal notes and the General Interpretive Rules (GIRs) rather than common sense. Getting it wrong risks ₹50,000–5,00,000 in customs penalties, so small exporters either spend 30+ minutes per product hunting the catalogue or pay a consultant ₹2,000–10,000 per lookup.
 
-### Frontend
-- **Next.js 14** with React 18
-- **TypeScript** for type safety
-- **Tailwind CSS** for styling
-- **Shadcn/ui** for UI components
+A language model can guess a code in seconds — but a confidently wrong code is worse than none, and a black-box guess nobody can check is unfileable. **The hard problem isn't speed; it's producing a code an exporter can audit against the actual tariff text before staking a shipment on it.**
 
-### Backend
-- **Node.js 18+** with Express.js
-- **TypeScript** for consistency
-- **Prisma ORM** for type-safe database access
+## The approach
 
-### Database
-- **PostgreSQL 15** on Supabase
-- Full-text search for keyword matching
-- JSONB for decision trees
+Prevyl runs a **six-stage classification pipeline (L0–L5)** instead of a single prompt. Each stage has one job, and the last stage mechanically checks the model's work:
 
-### AI/ML
-- **OpenAI GPT-4o-mini** for edge case classification
-- Hybrid approach: Keyword matching (30%) + Decision trees (40%) + AI reasoning (30%)
+| Stage | What it does | LLM? |
+|-------|--------------|------|
+| **L0 — Normalization** | Alias substitution, tokenization, multi-material (composite) flagging that gates GIR-3(b). | Deterministic |
+| **L1 — Triage** | Decides **classify / ask / refuse**, extracts attributes, picks candidate chapters. | Gemini 3.5 Flash |
+| **L2 — Retrieval** | Hybrid recall over the whole catalogue: pgvector HNSW semantic search on 1536-dim embeddings + Postgres full-text search, then a reranker. | Embedding + reranker |
+| **L3 — Rules filter** | Applies 1,505 deterministic chapter-exclusion rules, collapses to a handful of candidates, emits a backtrack signal when too few survive. | Deterministic |
+| **L4 — Select** | Picks **one** code and must cite the heading/note and the GIR it relied on, with a reasoning chain. | Gemini 3.5 Flash |
+| **L5 — Verifier** | Pure SQL + TypeScript, **no LLM**: ten mechanical checks (incl. verbatim-citation containment and an embedding cosine floor). Drives a repair loop. | Deterministic |
 
----
+When a description is too thin to separate two sibling codes, the system **asks one targeted clarifying question** instead of guessing (multi-turn, with a 3-round budget). When L5 rejects a selection, it feeds structured failures back to L4 and repairs — up to two rounds.
 
-## Project Structure
+## Accuracy — measured, not marketed
+
+Accuracy is a **measured number from an evaluation harness**, not a marketing target. A 385-case master suite runs over a frozen gold denominator (N = 339), scored with real calibration (Brier, ECE with bootstrap CIs, Wilson intervals) and **McNemar significance gating**, so one principled change is judged per round and a regression can't ship hidden behind a cherry-picked example.
+
+Latest validated run (classifier v2):
+
+| Metric | Result |
+|--------|--------|
+| Outright 8-digit code | **75.2%** |
+| Effective (with clarifying-question recovery) | **77.9%** |
+| Top-3 code | **84.4%** |
+| Chapter accuracy | **87.3%** |
+| Heading accuracy | **84.1%** |
+| Routing accuracy | **93.4%** |
+| Median latency | ~26 s |
+
+A separate 60-case "messy real-world input" suite (misspellings, Hinglish, brand names) holds the honest figure at **67.8%** outright.
+
+## Tech stack
+
+**Backend** (`backend/`) — Express 4 + TypeScript, deployed on **Railway**
+- Google **Gemini 3.5 Flash** (`@google/genai`) for triage, selection, and reranking; **`gemini-embedding-001`** (1536-dim) for embeddings — served through Google Vertex AI in production with the Gemini Developer API as a drop-in fallback
+- **Prisma 5** over **Supabase Postgres** (+ **pgvector**), region ap-northeast-1 (Tokyo)
+- Custom in-process rate limiting and a daily cost ceiling
+
+**Frontend** (`frontend/`) — **Next.js 16** (App Router) + React 19 + Tailwind v4, deployed on **Vercel**
+- shadcn-style components on Radix primitives, `motion` for animation, TanStack Query
+- Supabase Auth (Google OAuth + email magic-link), client-side PDF "Classification Record" export (`@react-pdf/renderer`)
+- Theme: *Living Certificate / Customs Ledger* — Fraunces + Hanken Grotesk + Commit Mono
+
+**Data** — the full Indian ITC-HS taxonomy as first-class, constrained data: 21 sections → 97 chapters → 1,232 headings → 5,613 subheadings → 12,460 tariff lines, with FK and regex CHECK constraints, chapter notes, GIRs, 35 deterministic chapter-routing rules, 1,505 exclusion rules, and per-tariff-line attributes.
+
+## Repository structure
 
 ```
 hs-code-classifier/
-├── README.md                  # This file
-├── docs/                      # Documentation
-│   ├── PROJECT_SPEC.md       # Complete project specification
-│   ├── ARCHITECTURE.md       # System architecture & tech stack details
-│   └── PHASE_TRACKER.md      # 4-week development progress tracker
-├── backend/                   # Node.js + Express backend (Coming in Phase 1)
+├── backend/          # Express + TypeScript API (the classifier)
 │   ├── src/
-│   │   ├── routes/           # API routes
-│   │   ├── services/         # Classification logic
-│   │   ├── utils/            # Helper functions
-│   │   └── index.ts          # Entry point
-│   ├── prisma/
-│   │   └── schema.prisma     # Database schema
-│   ├── package.json
-│   └── tsconfig.json
-├── frontend/                  # Next.js frontend (Coming in Phase 2)
-│   ├── src/
-│   │   ├── app/              # Next.js app directory
-│   │   ├── components/       # React components
-│   │   └── lib/              # Utilities
-│   ├── package.json
-│   └── tsconfig.json
-└── data/                      # Data collection scripts (Phase 0)
-    ├── scraper.py            # ICEGATE scraper
-    ├── test_dataset.csv      # Manual classification dataset
-    └── hs_codes_raw.json     # Scraped HS codes
+│   │   ├── api/              # /api/classify routes + v2 adapter
+│   │   ├── classifier-v2/    # the live 6-layer brain (L0–L5 + QGS)
+│   │   │   ├── layers/       # L0-normalization … L5-verifier
+│   │   │   └── lib/          # provider seam, retrieval, reranker, verifier libs
+│   │   ├── data/             # GIRs, confusing-pairs, chapter triggers
+│   │   ├── rules/            # deterministic chapter-routing rules
+│   │   └── eval/             # evaluation harness (suites, metrics, runner)
+│   ├── prisma/              # schema + migrations
+│   └── docs/                # architecture & evaluation design
+├── frontend/         # Next.js 16 product (wizard, result, history, PDF)
+│   └── src/
+│       ├── app/             # App Router pages + BFF API routes
+│       ├── components/      # result/, auth/, ui/ (shadcn-style)
+│       └── lib/             # api client, pdf, supabase, history
+└── data/             # raw ITC-HS source data
 ```
 
----
+## Local development
 
-## How It Works
+**Prerequisites:** Node.js 18+, a Supabase Postgres database with pgvector, and a Gemini API key.
 
+```bash
+# Backend
+cd backend
+npm install
+cp .env.example .env          # fill in DATABASE_URL, GEMINI_API_KEY, etc.
+npm run prisma:generate
+npm run dev                   # http://localhost:3000
+
+# Frontend
+cd frontend
+npm install
+cp .env.example .env.local    # set NEXT_PUBLIC_API_URL / BACKEND_API_URL
+npm run dev
 ```
-User Input → Category Detection (AI) → Smart Questionnaire → Classification Engine
-    ↓
-3 Parallel Methods:
-    • Keyword Matching (PostgreSQL FTS)
-    • Decision Tree Rules
-    • AI Reasoning (GPT-4o-mini)
-    ↓
-Confidence Aggregation → Country Mapping → Final Result with Reasoning
-```
 
-**Classification Time:** < 30 seconds
-**Target Accuracy:** 85%+ for automotive parts
-**Supported Categories:** Starting with automotive parts (Chapter 87), expanding to machinery, electronics
+**Useful backend scripts:** `npm run build` (tsc), `npm start` (production), `npm run test:integration`, and the eval runner under `src/eval/`.
+**Useful frontend scripts:** `npm run build`, `npm run lint`, `npm run type-check`.
 
----
+Configuration is entirely via environment variables (model provider, rate limits, daily ceiling, feature flags) — see each service's `.env.example`. No secrets are committed.
 
-## Current Status
+## Design principles
 
-**Phase 0: Manual Classification & Validation (Week 1)** - IN PROGRESS
+- **Show the legal basis, not just the answer.** Every result carries a verbatim citation (chapter/heading/note text) and the GIR applied, kept visually distinct from the model's generated reasoning.
+- **Honest confidence.** Confidence is shown as a **High / Medium / Low band** — the underlying number is stripped at the type, client, and server layers so the UI can never imply false precision.
+- **Verify, don't trust.** The L5 mechanical verifier checks the model's cited source against the real database text before a code is returned.
+- **Ask when unsure.** Ambiguous inputs get one targeted question instead of a confident guess.
 
-We're following a methodical 4-week MVP development process:
+## Status
 
-1. **Week 1 (Phase 0):** Manual classification, decision tree creation, database setup
-2. **Week 2 (Phase 1):** Backend API development
-3. **Week 3 (Phase 2):** Frontend development
-4. **Week 4 (Phase 3):** Exporter validation & feedback
-
-See [docs/PHASE_TRACKER.md](docs/PHASE_TRACKER.md) for detailed progress.
-
----
-
-## Setup Instructions
-
-### Prerequisites
-- Node.js 18+
-- Python 3.9+ (for data scraping)
-- PostgreSQL 15
-- OpenAI API key
-
-### Installation
-
-**Coming in Phase 1** (Week 2)
-
-Full setup instructions will be added once backend and frontend are initialized.
-
-For now, refer to [docs/PROJECT_SPEC.md](docs/PROJECT_SPEC.md) for the complete development plan.
-
----
-
-## Database Schema
-
-The system uses 4 main tables:
-
-1. **hs_codes** - Master HS code database with keywords
-2. **decision_trees** - Category-specific decision logic
-3. **user_classifications** - Classification history & feedback
-4. **country_mappings** - India → Destination country code mappings
-
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for detailed schema.
-
----
-
-## API Endpoints (Coming in Phase 1)
-
-- `POST /api/classify` - Classify product and get HS code
-- `POST /api/feedback` - Submit user feedback
-- `GET /api/categories` - Get available product categories
-- `GET /api/history` - Get classification history
-
----
-
-## Target Market
-
-- **Primary:** SME exporters in automotive parts sector
-- **Secondary:** Exporters in machinery, electronics, textiles
-- **Market Size:** 1.4 lakh DPIIT-recognized exporters, 50,000+ SME exporters in India
-
----
-
-## Business Model (Post-MVP)
-
-- **Freemium:** Basic classification free (limited queries)
-- **Premium:** ₹500-999/month for unlimited classifications
-- **Enterprise:** Custom pricing for bulk/API access
-- **Manual Review:** ₹500/product for uncertain cases
-
----
-
-## Roadmap
-
-### Phase 0 (Week 1) - IN PROGRESS
-- [x] Project specification complete
-- [x] Architecture documentation
-- [ ] Manual classification of 20 products
-- [ ] Decision tree creation
-- [ ] Database setup with 200-300 HS codes
-
-### Phase 1 (Week 2)
-- [ ] Backend API development
-- [ ] Classification algorithm implementation
-- [ ] OpenAI integration
-
-### Phase 2 (Week 3)
-- [ ] Frontend development
-- [ ] Dynamic questionnaire
-- [ ] Results display with reasoning
-
-### Phase 3 (Week 4)
-- [ ] Exporter validation (4-5 exporters)
-- [ ] Feedback collection
-- [ ] MVP refinement
-
-### Post-MVP
-- [ ] Company incorporation
-- [ ] DPIIT recognition application
-- [ ] SISFS seed funding application
-
----
-
-## Contributing
-
-This is currently a solo founder project building towards DPIIT recognition and Startup India Seed Fund Scheme (SISFS) application.
-
-Once the MVP is validated, contributions will be welcome.
-
----
-
-## Building Towards
-
-**DPIIT Recognition** - Demonstrating innovation in export compliance
-**SISFS Seed Funding** - ₹20 lakhs grant for 8-month development through recognized incubators
-
-This MVP will be validated with 4-5 real exporters before formal company incorporation.
-
----
-
-## Documentation
-
-- **[PROJECT_SPEC.md](docs/PROJECT_SPEC.md)** - Complete project specification, problem validation, and implementation plan
-- **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** - System architecture, tech stack rationale, database design, API design
-- **[PHASE_TRACKER.md](docs/PHASE_TRACKER.md)** - Week-by-week progress tracking and milestone checklist
-
----
+Live, free MVP at [hscode.prevyl.com](https://hscode.prevyl.com). Solo-founder project. Post-launch work focuses on confidence calibration, brand-name handling, and trade-intelligence enrichment (duty rates and export policy on every result).
 
 ## License
 
-MIT License - See LICENSE file for details
-
----
+MIT — see [LICENSE](LICENSE).
 
 ## Contact
 
-**Developer:** Aryan
-**Location:** Bengaluru, Karnataka
-**Family Business:** Amar Jyothi Spare Parts, Madikeri
+**Aryan B V** · Bengaluru, Karnataka · [github.com/AryanBV](https://github.com/AryanBV)
 
 ---
 
-**Status:** Pre-MVP (Week 1 of 4)
-**Last Updated:** November 21, 2024
-
-*Building the future of export documentation, one classification at a time.*
+*Indicative, AI-generated, and not official customs or legal advice. Always verify against the official ITC-HS schedule before filing.*

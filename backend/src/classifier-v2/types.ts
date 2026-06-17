@@ -12,7 +12,7 @@ import type { TokenUsageTotals } from './lib/token-meter';
  *   - Select response schema:                    backend/prompts/select-v2.md (RESPONSE JSON SCHEMA)
  *
  * This file contains types only — no runtime logic. Layer implementations
- * (L0..L8) live in `backend/src/classifier-v2/layers/`.
+ * (L0-L5; L6-L8 reserved, not built) live in `backend/src/classifier-v2/layers/`.
  */
 
 /* ============================================================================
@@ -174,11 +174,11 @@ export interface RetrievalCandidate {
   /** The code at the hierarchy level this candidate represents. */
   code:           string;
   level:          HierarchyLevel;
-  /** Cosine similarity from Cohere embed-v4 (0..1). */
+  /** Cosine similarity from the default embedder (gemini-embedding-001) (0..1). */
   cosine_score:   number;
   /** Postgres FTS rank score; null when FTS did not contribute. */
   fts_rank:       number | null;
-  /** Cohere Rerank 4 Pro relevance score; null before rerank. */
+  /** Reranker relevance score (default gemini-3.5-flash; Cohere off-path); null before rerank. */
   rerank_score:   number | null;
   /** Hierarchy chain {chapter, heading, subheading, code} where defined. */
   parent_chain: {
@@ -228,9 +228,10 @@ export interface RetrievalOutput {
   exclusion_pre_filter:   ExclusionPreFilterHit[];
   retrieval_strategy:     RetrievalStrategy;
   /**
-   * Cohere embed-v4 query vector (inputType 'search_query'), computed once by L2
-   * for the cosine cascade. Reused by L5 Rule-4 cosine floor — avoids a
-   * redundant re-embed in the orchestrator (the one cash-billed dependency).
+   * Query vector from the default embedder (gemini-embedding-001 @1536-dim,
+   * taskType RETRIEVAL_QUERY), computed once by L2 for the cosine cascade. Reused
+   * by L5 Rule-4 cosine floor — avoids a redundant re-embed in the orchestrator
+   * (the one cash-billed dependency).
    * Always a real, non-empty vector for both retrieval strategies.
    */
   query_embedding:        number[];
@@ -513,7 +514,7 @@ export interface L5Input {
   candidate_code:       string;
   /** Chapter of selected_code; derived from code prefix. */
   candidate_chapter:    ChapterCode;
-  /** Cohere embed-v4 query embedding from L2 — Rule 4 cosine floor. */
+  /** Query embedding from L2 (default gemini-embedding-001) — Rule 4 cosine floor. */
   query_embedding:      number[];
   /** From L3 — the candidate set L4 chose from. */
   filtered_candidates:  RetrievalCandidate[];
@@ -554,7 +555,7 @@ export type L5Output = VerifierOutput;
 export type { Predicate, PredicateRef, PredicateEvalResult } from './db/predicate-dsl';
 
 /* ============================================================================
- * Pipeline run state (carried through L0..L8)
+ * Pipeline run state (carried through L0-L5; L6-L8 reserved, not built)
  * ============================================================================ */
 
 /** Trace event captured at each layer for audit + eval. */
@@ -576,12 +577,12 @@ export interface PipelineRunState {
   q_budget_remaining:    number;
   /** Single-shot enforcement flag (sub-spec 02 §B.5). */
   backtrack_attempted:   boolean;
-  /** Layer ids the query has passed through ('L0','L1',...,'L7'). */
+  /** Layer ids the query has passed through ('L0','L1',...,'L5'; L6-L8 reserved). */
   escalation_path:       string[];
   trace:                 PipelineTraceEvent[];
   /** Epoch ms when the pipeline started; orchestrator sets it. Used for diagnostics.latency_ms. */
   started_at?:           number;
-  /** Running count of LLM calls (L1/L4/L6/L7); orchestrator increments. Used for diagnostics.llm_calls. */
+  /** Running count of LLM calls (L1/L4; would-be L6/L7 reserved); orchestrator increments. Used for diagnostics.llm_calls. */
   llm_calls?:            number;
 }
 
@@ -707,7 +708,7 @@ export interface ClassifyResult {
   diagnostics: {
     escalation_path: string[];
     latency_ms:      number;
-    /** Sum across L1, L4, L6, L7 calls. */
+    /** Sum across L1, L4 calls (would-be L6, L7 reserved, not built). */
     llm_calls:       number;
     /**
      * REAL per-call Gemini token sums for this classify() invocation (Phase A3).

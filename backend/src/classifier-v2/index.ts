@@ -7,7 +7,8 @@
  * the `types.ts` contract; the canonical PASS → CLASSIFY mapping is delegated to
  * `selectToClassifyResult`.
  *
- * Architecture: backend/docs/ARCHITECTURE.md §2 (8-layer pipeline overview),
+ * Architecture: backend/docs/ARCHITECTURE.md §2 (6-layer pipeline overview;
+ * L0-L5 live — L6-L8 are reserved design slots, not built),
  * §3 (per-layer I/O contract). Phase 4.2a plan: this is Task 6 (CLASSIFY happy
  * path). The repair loop (Task 7), single-shot backtrack (Task 8), ASK (Task 9),
  * REFUSE + error handling (Task 10) and continueWithAnswer multi-turn (Task 11)
@@ -1059,8 +1060,9 @@ async function runSelectVerifyRepair(
       select_output: currentSelectOut,
       candidate_code: code,
       candidate_chapter: chapterOf(code),
-      // Reuse L2's query vector — the single Cohere embed lives in L2 (avoids
-      // the redundant orchestrator re-embed that doubled cash-billed embed spend).
+      // Reuse L2's query vector — the single embed (default gemini-embedding-001)
+      // lives in L2 (avoids the redundant orchestrator re-embed that doubled
+      // cash-billed embed spend).
       // After backtrack, this is the re-retrieve's vector (correct for re-triage scope).
       query_embedding: activeRetrievalOut.query_embedding,
       filtered_candidates: activeRulesOut.filtered_candidates,

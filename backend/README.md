@@ -1,405 +1,151 @@
-> SUPERSEDED 2026-06-01 — earlier-phase document, kept for history. CURRENT STATE: see plans/ROADMAP-2026-06-01.md (authoritative) plus CLAUDE.md Current Status. v2 brain ~77% OUTRIGHT / ~86% top-3. Runtime = Gemini Developer API free tier (free-tier GEMINI_API_KEY; same gemini-3.5-flash / gemini-3.1-pro-preview / gemini-embedding-001 models, for free); **Vertex AI is DISABLED** (billing resolved) and Cohere stays decommissioned. Sequencing = Phase A cost-efficiency FIRST, THEN Phase B ship (cutover→latency→streaming/jobs→calibration→DTO freeze), THEN Phase C frontend. CORRECTNESS > SPEED — latency is secondary, never trade accuracy for speed; no paid API calls without explicit cost-aware user OK. The older "Vertex-only / ship-arc latency-first" framing below is SUPERSEDED.
+# Prevyl — Backend API
 
-# HS Code Classifier - Backend API
+Express + TypeScript service that hosts the **v2 ITC-HS classification brain** — a six-stage (L0–L5) pipeline over a Supabase Postgres + pgvector catalogue, with Google Gemini 3.5 Flash for triage, selection, and reranking. Part of the [hs-code-classifier](../README.md) monorepo; deployed on **Railway**.
 
-Node.js + Express backend with Prisma ORM for HS code classification.
+> The live classifier is `src/classifier-v2/` (enabled by `USE_V2_CLASSIFIER`). The older `src/classifier/` (an OpenAI keyword/decision-tree pipeline) is retained only as an instant rollback and is **not** the production path.
 
 ---
 
-## Tech Stack
+## Tech stack
 
 - **Runtime:** Node.js 18+
-- **Framework:** Express.js
-- **Language:** TypeScript (strict mode)
-- **ORM:** Prisma
-- **Database:** PostgreSQL 15 (Supabase)
-- **AI:** OpenAI GPT-4o-mini
+- **Framework:** Express 4 + TypeScript (strict)
+- **ORM:** Prisma 5
+- **Database:** PostgreSQL on Supabase, with **pgvector** (1536-dim embeddings)
+- **AI:** Google **Gemini 3.5 Flash** (`@google/genai`) for triage / select / rerank; **`gemini-embedding-001`** for embeddings — via the Gemini Developer API by default, or Google Vertex AI (`LLM_PROVIDER=vertex`) as a rollback seam
 
 ---
 
-## Prerequisites
+## The classification pipeline (`src/classifier-v2/`)
 
-- Node.js 18+ and npm 9+
-- PostgreSQL database (Supabase recommended)
-- OpenAI API key
+Orchestrated by `src/classifier-v2/index.ts`:
+
+| Layer | File | Role |
+|-------|------|------|
+| L0 Normalization | `layers/L0-normalization.ts` | aliases, tokenization, composite-material flag |
+| L1 Triage | `layers/L1-triage.ts` | classify / ask / refuse + attribute extraction (Gemini) |
+| L2 Retrieval | `layers/L2-retrieval.ts` | pgvector HNSW + Postgres full-text + rerank |
+| L3 Rules filter | `layers/L3-rules-filter.ts` | chapter-exclusion rules, candidate collapse, backtrack |
+| L4 Select | `layers/L4-select.ts` | pick one code with citation + GIR (Gemini) |
+| L5 Verifier | `layers/L5-verifier.ts` | 10 mechanical checks (no LLM), drives the repair loop |
+
+Ambiguous inputs return a clarifying question instead of a guess; verifier failures trigger a bounded repair loop back into L4.
 
 ---
 
-## Setup Instructions
+## API endpoints (`src/api/classify.ts`)
 
-### 1. Install Dependencies
+| Method & path | Body | Returns |
+|---------------|------|---------|
+| `POST /api/classify` | `{ query: string, previousAnswers?: Record<string,string> }` | `responseType: 'classification' \| 'question' \| 'refused'` |
+| `POST /api/classify/answer` | `{ originalQuery, answerId, answerLabel }` | continues a clarifying-question round |
+| `GET  /api/classify/health` | — | health check |
+
+A classification response carries the 8-digit code, leaf description, up to 3 alternatives, a confidence **band**, the cited source (heading/note + GIR), and reasoning.
+
+---
+
+## Setup
+
+### 1. Install
 
 ```bash
 cd backend
 npm install
 ```
 
-### 2. Configure Environment Variables
-
-Copy the example environment file:
+### 2. Configure environment
 
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env` and add your credentials:
+Key variables (see `.env.example` for the full list — never commit real values):
 
-```env
-# Supabase PostgreSQL connection string
-DATABASE_URL="postgresql://postgres:[PASSWORD]@db.[PROJECT-REF].supabase.co:5432/postgres"
+| Variable | Description |
+|----------|-------------|
+| `DATABASE_URL` | Supabase Postgres connection (pooled) |
+| `DIRECT_URL` | Direct Postgres connection (for Prisma migrations) |
+| `GEMINI_API_KEY` | Gemini Developer API key (default runtime provider) |
+| `LLM_PROVIDER` / `EMBEDDING_PROVIDER` | `developer` (default) or `vertex` (rollback) |
+| `USE_V2_CLASSIFIER` | `true` to run the v2 brain (legacy path otherwise) |
+| `PORT` / `NODE_ENV` / `FRONTEND_URL` | server + CORS config |
+| `RATE_LIMIT_WINDOW_MS` / `RATE_LIMIT_MAX_REQUESTS` | per-IP rate limit |
+| `MAX_CLASSIFICATIONS_PER_DAY` | daily cost ceiling |
 
-# OpenAI API key
-OPENAI_API_KEY="sk-proj-your-api-key-here"
-
-# Server config
-PORT=3001
-NODE_ENV="development"
-FRONTEND_URL="http://localhost:3000"
-```
-
-**Getting your Supabase DATABASE_URL:**
-1. Go to [https://supabase.com](https://supabase.com)
-2. Create a new project (free tier)
-3. Go to Project Settings > Database
-4. Copy the "Connection string" under "Connection pooling"
-5. Replace `[YOUR-PASSWORD]` with your database password
-
-### 3. Generate Prisma Client
+### 3. Generate the Prisma client
 
 ```bash
 npm run prisma:generate
 ```
 
-This creates the TypeScript types from your schema.
-
-### 4. Run Database Migrations
-
-**Option A: Using Prisma Migrate (Recommended for production)**
+### 4. Run
 
 ```bash
-npm run prisma:migrate
-```
-
-This will:
-- Create migration files in `prisma/migrations/`
-- Apply migrations to your database
-- Generate Prisma Client
-
-**Option B: Using Prisma DB Push (Quick for development)**
-
-```bash
-npm run prisma:push
-```
-
-This directly pushes schema changes to the database without creating migration files.
-
-### 5. Add GIN Index for Keywords (Manual Step)
-
-Prisma doesn't support GIN indexes declaratively, so run this SQL manually:
-
-```sql
--- Connect to your Supabase SQL Editor and run:
-CREATE INDEX idx_keywords ON hs_codes USING GIN (keywords);
-```
-
-**Why GIN index?**
-- Enables fast full-text search on the `keywords` array
-- Critical for the keyword matching algorithm (30% of classification confidence)
-
-### 6. Open Prisma Studio (Optional)
-
-View and edit your database through a GUI:
-
-```bash
-npm run prisma:studio
-```
-
-This opens [http://localhost:5555](http://localhost:5555)
-
----
-
-## Database Schema
-
-### Tables Overview
-
-1. **hs_codes** - Master HS code database (200-300 codes for automotive parts)
-2. **decision_trees** - Category-specific decision logic (JSON)
-3. **user_classifications** - Classification history and user feedback
-4. **country_mappings** - India → Destination country code mappings
-
-### Relationships
-
-```
-hs_codes (1) ──┐
-               ├──> country_mappings (N)
-               └──> user_classifications (N) [via suggested_hs_code]
-
-decision_trees (1) ───> user_classifications (N) [via category_detected]
+npm run dev      # ts-node-dev, hot reload
+# or
+npm run build && npm start
 ```
 
 ---
 
-## Running the Server
+## Data model (`prisma/schema.prisma`)
 
-### Development Mode (with hot reload)
+The full Indian ITC-HS taxonomy, normalized with FK + regex CHECK constraints:
 
-```bash
-npm run dev
+```
+Section (21) → Chapter (97) → Heading (1,232) → Subheading (5,613) → TariffLine (12,460)
 ```
 
-Server runs at [http://localhost:3001](http://localhost:3001)
+- `Chapter` carries 7 JSONB note columns (chapter notes, supplementary notes, export-licensing notes, definitions, …); notes also exist at section/heading/subheading level.
+- `TariffLine.embedding` is a `vector(1536)` pgvector column for semantic retrieval.
+- Supporting data: General Interpretive Rules, 35 deterministic chapter-routing rules, 1,505 chapter-exclusion rules, per-tariff-line attributes (a raw-SQL migration table).
 
-### Production Build
+Prisma commands: `prisma:generate`, `prisma:push`, `prisma:migrate`, `prisma:studio`, `prisma:seed`.
+
+---
+
+## Evaluation harness (`src/eval/`)
+
+The brain is graded by an evaluation harness rather than spot checks:
+
+- **385-case master suite** over a frozen gold denominator (N = 339) + a **60-case messy-real-world** suite.
+- Metrics in `src/eval/metrics.ts`: outright vs effective (ask-recovered) accuracy, top-3, per-level routing, confident-wrong rate, calibration (Brier, ECE with bootstrap CIs), Wilson intervals, and **McNemar** significance gating.
+- Design contract: `docs/EVAL_DESIGN.md`.
+
+Latest validated run: **75.2% outright / 77.9% effective / 84.4% top-3 / 87.3% chapter / 84.1% heading / 93.4% routing**; median latency ~26 s.
 
 ```bash
-npm run build
-npm start
+# tests
+npm run test:integration
+# eval runner (see src/eval/ for suites + flags)
+npx tsx --require dotenv/config src/eval/runner.ts --suite master
 ```
 
 ---
 
-## Project Structure
+## Project structure
 
 ```
 backend/
 ├── src/
-│   ├── routes/              # API route handlers
-│   │   ├── classify.ts      # POST /api/classify
-│   │   ├── feedback.ts      # POST /api/feedback
-│   │   └── history.ts       # GET /api/history
-│   ├── services/            # Business logic
-│   │   ├── keywordMatcher.ts    # Keyword matching algorithm
-│   │   ├── decisionTree.ts      # Decision tree engine
-│   │   ├── aiReasoning.ts       # OpenAI integration
-│   │   └── classifier.ts        # Main classification orchestrator
-│   ├── utils/               # Helper functions
-│   │   ├── extractKeywords.ts
-│   │   ├── confidenceScore.ts
-│   │   └── logger.ts
-│   ├── middleware/          # Express middleware
-│   │   ├── errorHandler.ts
-│   │   ├── rateLimiter.ts
-│   │   └── cors.ts
-│   ├── config/              # Configuration
-│   │   └── database.ts
-│   └── index.ts             # Entry point
-├── prisma/
-│   ├── schema.prisma        # Database schema
-│   ├── migrations/          # Migration history
-│   └── seed.ts              # Seed data script
-├── dist/                    # Compiled JavaScript (after build)
-├── package.json
-├── tsconfig.json
-├── .env
-└── README.md
+│   ├── api/              # /api/classify routes + v2 adapter
+│   ├── classifier-v2/    # the live 6-layer brain
+│   │   ├── layers/       # L0 … L5 + QGS
+│   │   └── lib/          # provider seam, retrieval, reranker, verifier
+│   ├── classifier/       # legacy v1 (rollback only)
+│   ├── data/             # GIRs, confusing-pairs, chapter triggers
+│   ├── rules/            # deterministic chapter-routing rules
+│   ├── middleware/       # rate limiter, error handler, CORS
+│   ├── eval/             # evaluation harness
+│   └── index.ts          # Express entry point
+├── prisma/               # schema + migrations
+├── docs/                 # ARCHITECTURE.md, EVAL_DESIGN.md
+└── railway.json          # Railway (Nixpacks) deploy config
 ```
 
 ---
 
-## Prisma Commands Reference
+## Deployment
 
-### Generate Prisma Client
-```bash
-npm run prisma:generate
-```
-
-### Create and apply migrations
-```bash
-npm run prisma:migrate
-```
-
-### Push schema changes (no migration files)
-```bash
-npm run prisma:push
-```
-
-### Open Prisma Studio GUI
-```bash
-npm run prisma:studio
-```
-
-### Seed the database
-```bash
-npm run prisma:seed
-```
-
-### Reset database (CAUTION: deletes all data)
-```bash
-npx prisma migrate reset
-```
-
----
-
-## Environment Variables
-
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `DATABASE_URL` | PostgreSQL connection string | `postgresql://user:pass@host:5432/db` |
-| `OPENAI_API_KEY` | OpenAI API key | `sk-proj-...` |
-| `PORT` | Server port | `3001` |
-| `NODE_ENV` | Environment | `development` or `production` |
-| `FRONTEND_URL` | Frontend URL for CORS | `http://localhost:3000` |
-| `RATE_LIMIT_WINDOW_MS` | Rate limit window (ms) | `900000` (15 min) |
-| `RATE_LIMIT_MAX_REQUESTS` | Max requests per window | `100` |
-| `SESSION_SECRET` | Session secret key | Random string |
-
----
-
-## Database Seeding (Phase 0 - Week 1)
-
-Create `prisma/seed.ts` to populate initial data:
-
-```typescript
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
-
-async function main() {
-  // Seed HS codes (automotive parts)
-  await prisma.hsCode.createMany({
-    data: [
-      {
-        code: '8708.30.10',
-        chapter: '87',
-        heading: '8708',
-        subheading: '8708.30',
-        countryCode: 'IN',
-        description: 'Brakes and servo-brakes; parts thereof - Mounted brake linings',
-        keywords: ['brake', 'pad', 'lining', 'mounted', 'vehicle', 'automotive'],
-        commonProducts: ['brake pads', 'brake linings', 'disc brake pads'],
-        parentCode: '8708.30'
-      },
-      // Add more codes...
-    ]
-  });
-
-  // Seed decision tree for automotive parts
-  await prisma.decisionTree.create({
-    data: {
-      categoryName: 'Automotive Parts',
-      decisionFlow: {
-        questions: [
-          {
-            id: 'q1',
-            text: 'Is this a finished product or raw material?',
-            type: 'single_choice',
-            options: ['Finished Product', 'Raw Material', 'Component'],
-          }
-        ],
-        rules: [
-          {
-            conditions: {
-              q1: 'Finished Product',
-              keywords: ['brake', 'pad']
-            },
-            suggested_codes: ['8708.30.10'],
-            confidence_boost: 15
-          }
-        ]
-      }
-    }
-  });
-
-  console.log('Database seeded successfully!');
-}
-
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
-```
-
-Run seed:
-```bash
-npm run prisma:seed
-```
-
----
-
-## Testing Database Connection
-
-Create a quick test script `test-db.ts`:
-
-```typescript
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
-
-async function main() {
-  const count = await prisma.hsCode.count();
-  console.log(`✅ Database connected! HS codes count: ${count}`);
-}
-
-main()
-  .catch(console.error)
-  .finally(() => prisma.$disconnect());
-```
-
-Run:
-```bash
-npx ts-node test-db.ts
-```
-
----
-
-## Migration Workflow
-
-1. **Modify schema**: Edit `prisma/schema.prisma`
-2. **Create migration**: `npm run prisma:migrate`
-3. **Name your migration**: e.g., "add_hs_codes_table"
-4. **Prisma generates**:
-   - SQL migration file in `prisma/migrations/`
-   - Updated Prisma Client types
-5. **Migration auto-applies** to your database
-
----
-
-## Common Issues & Solutions
-
-### Issue: "Environment variable not found: DATABASE_URL"
-**Solution:** Make sure `.env` file exists in `backend/` directory and contains `DATABASE_URL`
-
-### Issue: "Cannot connect to database"
-**Solution:**
-- Check your Supabase project is running
-- Verify DATABASE_URL format
-- Check firewall/network settings
-
-### Issue: "Error: P1001 - Can't reach database server"
-**Solution:**
-- Verify your Supabase password is correct
-- Check if you're using connection pooling URL (port 5432, not 6543)
-
-### Issue: GIN index not working for keywords
-**Solution:** Run the manual SQL command in Supabase SQL Editor:
-```sql
-CREATE INDEX idx_keywords ON hs_codes USING GIN (keywords);
-```
-
----
-
-## Next Steps (Phase 1 - Week 2)
-
-1. ✅ Database schema created
-2. ✅ Prisma ORM configured
-3. ⏳ Build Express server (`src/index.ts`)
-4. ⏳ Implement classification logic (`src/services/`)
-5. ⏳ Create API routes (`src/routes/`)
-6. ⏳ Test with 20 products from Phase 0
-
----
-
-## Useful Links
-
-- [Prisma Docs](https://www.prisma.io/docs)
-- [Express.js Docs](https://expressjs.com/)
-- [Supabase Docs](https://supabase.com/docs)
-- [OpenAI API Docs](https://platform.openai.com/docs)
-
----
-
-**Last Updated:** November 21, 2024
+Deployed on **Railway** (Nixpacks; `railway.json`) as a single replica — the in-process rate-limiter/token-bucket assumes one instance, so do not autoscale. The frontend (Vercel) calls this service via `NEXT_PUBLIC_API_URL` / `BACKEND_API_URL`.

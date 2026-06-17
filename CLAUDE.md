@@ -18,7 +18,7 @@ API router: `backend/src/api/classify.ts` — 3 endpoints:
 
 ### Classification Pipeline
 
-**Note:** This describes the LEGACY classifier in `backend/src/classifier/`, retained behind the `USE_V2_CLASSIFIER` flag as instant rollback. The Phase 4 **v2 8-layer architecture** (`backend/src/classifier-v2/`) is BUILT, validated, and **LIVE in production** (`USE_V2_CLASSIFIER` ON in Railway); design at `backend/docs/ARCHITECTURE.md`. See "Current Status" for v2 state.
+**Note:** This describes the LEGACY classifier in `backend/src/classifier/`, retained behind the `USE_V2_CLASSIFIER` flag as instant rollback. The Phase 4 **v2 6-layer architecture (L0–L5)** (`backend/src/classifier-v2/`) is BUILT, validated, and **LIVE in production** (`USE_V2_CLASSIFIER` ON in Railway); design at `backend/docs/ARCHITECTURE.md`. See "Current Status" for v2 state.
 
 5-stage pipeline orchestrated by `backend/src/classifier/index.ts` (exports `classify()`, `continueWithAnswer()`):
 
@@ -41,16 +41,16 @@ API router: `backend/src/api/classify.ts` — 3 endpoints:
 
 Types: `backend/src/classifier/types.ts` — all interfaces (ExtractedAttributes, ClassificationResult, ChapterRoutingResult, HeadingSearchResult, CodeSelectionResult, ChapterRule, QuestionResponse).
 
-### Frontend: `frontend/` — Next.js 14 + TypeScript + Tailwind
+### Frontend: `frontend/` — Next.js 16 + React 19 + Tailwind v4 + TypeScript
 
 Pages (App Router):
 - `/` (`frontend/src/app/page.tsx`) — Landing with hero, stats, value props
-- `/classify` (`frontend/src/app/classify/page.tsx`) — Wizard-based classification
-- `/history` (`frontend/src/app/history/page.tsx`) — Past classifications
+- `/classify` (`frontend/src/app/classify/page.tsx`) — classification flow
+- `/r/[id]` (`frontend/src/app/r/[id]/page.tsx`) — durable per-record result URL
+- `/history` (`frontend/src/app/history/page.tsx`) — Past classifications (local + cloud)
 
-Wizard flow (`frontend/src/components/wizard/`): `wizard-container.tsx` orchestrates via `use-wizard.ts` hook.
-Screens: `input-screen` → `loading-screen` → `question-screen` (if needed) → `result-screen` | `error-screen`.
-API client: `frontend/src/lib/api-client.ts` — Axios client pointing to `NEXT_PUBLIC_API_URL`.
+Flow orchestration: `frontend/src/components/result/classify-client.tsx` branches on `responseType` across `loading-view` → `question-view` (if needed) → `result-view` | `refused-view` | `error-view`. Multi-turn answers accumulate in `previousAnswers` (3-round budget).
+API client: `frontend/src/lib/api.ts` (fetch; no axios); data fetching via TanStack Query.
 
 ### Database: Supabase (PostgreSQL + pgvector)
 **Project:** `waowoznsvaosgcgiivzo` (region ap-northeast-1, Postgres 17)
@@ -179,7 +179,7 @@ Test case format:
 > **AUTHORITATIVE DIRECTION:** product is FREE (Prevyl bundle later). The launch arc (Phase A cost-efficiency, Phase B inline-sync ship, frontend rebuild + experience, paid live-validation, public flip) is DONE. Remaining work is post-launch polish: rotate a leaked SA key, recalibrate the divergence asker, spot-check the real-world gold, and improve brand-name handling + confidence calibration.
 
 ### Runtime — PROD on Vertex/prevyl ($300 free-trial credit); free key is the instant fallback
-- v2 8-layer classifier (L0-L5) is the live brain. Models: `gemini-embedding-001`@1536 embeddings + Gemini-Flash rerank + Gemini-Flash L1 triage / L4 select. `gemini-3.1-pro-preview` remains an unused stub (no capability lost).
+- v2 6-layer classifier (L0-L5) is the live brain. Models: `gemini-embedding-001`@1536 embeddings + Gemini-Flash rerank + Gemini-Flash L1 triage / L4 select. `gemini-3.1-pro-preview` remains an unused stub (no capability lost).
 - **PROD provider = Vertex** (`LLM_PROVIDER=vertex`, `EMBEDDING_PROVIDER=vertex`), GCP project **`prevyl`** (id `prevyl`, num 49530374899) under org `prevyl.com`, billed against the **$300 free-trial credit** (~$250 left after eval; trial ends ~2026-09-04). Auth via a service-account key supplied as `GOOGLE_APPLICATION_CREDENTIALS_JSON` (inline JSON; the SA has `roles/aiplatform.user`). Card is SAFE while on the trial — do NOT "Activate full account".
 - **INSTANT FALLBACK = the free-tier personal `GEMINI_API_KEY`** (kept in Railway): flip `LLM_PROVIDER`/`EMBEDDING_PROVIDER` back to `developer`. Free-tier hard limits ~5 RPM (daily cap higher than the old 20/day note — ~250 RPD Flash → ~50 classifications/day; verify live). Per-day app guard `MAX_CLASSIFICATIONS_PER_DAY` + per-IP rate-limit are live.
 - **HARD RULE still applies: revert prod to the free key (or a small capped key) BEFORE the trial credit runs dry (~Sept 4).** NO paid API calls without explicit cost-aware go-ahead; build/analyze on the Claude subscription.
@@ -291,7 +291,7 @@ The prod SA key file (`prevyl-8f5296770d3e.json`) leaked into a chat transcript 
 - DONE Phase 2: Data foundation (normalized schema + canonical data + 7-audit verified)
 - DONE Phase 3: Architecture spike — 30 paper-traces, 29/30 CORRECT, verdict PROCEED_TO_PHASE_4
 - DONE Phase 3.5 (May 2026): Data completion + architecture lock-in — chapter_exclusions +352 rules, fts_search_text + text[] + sections.notes, A9 empirical proof 10/10 CORRECT, D1 model stack LOCKED. 8 carryforwards in ARCHITECTURE.md §12.
-- DONE Phase 4: Brain rebuild — v2 (8-layer) BUILT and LIVE. Phase 4.0 DONE (O1-O5; O2 12,406 ingested). Phase 4.2a DONE (orchestrator L0-L5 + repair/backtrack + ASK/REFUSE + continueWithAnswer). Trust-spine + gold-freeze rounds DONE. **Brain validated on Vertex/prevyl: OUTRIGHT 8-digit 75.2% / EFFECTIVE 77.9% / TOP-3 84.4% / chapter 87.3% / heading 84.1% / routing 93.4%** (McNemar p=0.4807 vs r19 → unchanged). Phase A (cost-efficiency) DONE; Phase B ship-arc DONE (INLINE-SYNC launch, `USE_V2_CLASSIFIER` ON; async job-queue/SSE ships DORMANT behind `CLASSIFY_ASYNC=off`); Step 3 paid live-validation DONE → flag flipped ON in Railway. Eval canonical = `backend/src/eval/` master suite, 385 cases + 60-case real-world staged suite (168-stub DEPRECATED).
+- DONE Phase 4: Brain rebuild — v2 (6-layer, L0–L5) BUILT and LIVE. Phase 4.0 DONE (O1-O5; O2 12,406 ingested). Phase 4.2a DONE (orchestrator L0-L5 + repair/backtrack + ASK/REFUSE + continueWithAnswer). Trust-spine + gold-freeze rounds DONE. **Brain validated on Vertex/prevyl: OUTRIGHT 8-digit 75.2% / EFFECTIVE 77.9% / TOP-3 84.4% / chapter 87.3% / heading 84.1% / routing 93.4%** (McNemar p=0.4807 vs r19 → unchanged). Phase A (cost-efficiency) DONE; Phase B ship-arc DONE (INLINE-SYNC launch, `USE_V2_CLASSIFIER` ON; async job-queue/SSE ships DORMANT behind `CLASSIFY_ASYNC=off`); Step 3 paid live-validation DONE → flag flipped ON in Railway. Eval canonical = `backend/src/eval/` master suite, 385 cases + 60-case real-world staged suite (168-stub DEPRECATED).
 - DONE Frontend rebuild: CLEAN REBUILD on Next 16 / Tailwind v4 / React 19 / latest shadcn; all 12 decisions realized; theme = Living-Certificate / Customs-Ledger; experience rebuilt within the theme; auth + cloud history + permalinks live.
 - DONE M5: Shipped `hscode.prevyl.com` — a FREE web product (top-3 ITC-HS codes + cited rationale record + calibrated confidence band). Hosts: backend Railway + frontend Vercel + Supabase Tokyo (Mumbai migration cancelled — Tokyo is permanent). PDF reports, opt-in permalinks, feedback live. Monetize later via a Prevyl bundle.
 - IN PROGRESS M4: Trade intelligence — duty rates, export policy on every result. Plan at `backend/docs/TRADE-INTELLIGENCE-PLAN.md` (awaiting founder approval of §7); the beef/restricted-goods `legal_sensitivity` TradeFlag is a first installment.

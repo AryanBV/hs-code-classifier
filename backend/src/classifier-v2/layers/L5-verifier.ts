@@ -1,13 +1,14 @@
 /**
  * Layer 5 — Mechanical Verifier (Phase 4 v2)
  *
- * Pure SQL + TypeScript. NO LLM. Runs after every L4 Select emission (and L6
- * Tiebreak emission) to mechanically check that the emission is consistent
- * with the underlying legal text, retrieval scores, and DB state.
+ * Pure SQL + TypeScript. NO LLM. Runs after every L4 Select emission to
+ * mechanically check that the emission is consistent with the underlying legal
+ * text, retrieval scores, and DB state. (L6 Tiebreak is a reserved design slot,
+ * not built.)
  *
  * The verifier emits structured `failed_rules` that the orchestrator routes
- * back to L4 as a repair-loop input — up to 3 attempts before escalating to
- * L6 Tiebreak (per ARCHITECTURE.md §6).
+ * back to L4 as a repair-loop input — up to 2 attempts (L6 Tiebreak escalation
+ * is reserved, not built; per ARCHITECTURE.md §6).
  *
  * The 10 rules (ARCHITECTURE.md §6, sub-spec 01):
  *   MV-01 Code existence
@@ -891,7 +892,8 @@ function formatRepairFeedback(failures: VerifierRuleFailure[]): string {
  * --------------------------------------------------------------------------- */
 
 /**
- * Run the 10 mechanical verifier rules against an L4 (or L6) SelectOutput.
+ * Run the 10 mechanical verifier rules against an L4 SelectOutput (L6 is a
+ * reserved design slot, not built).
  * Returns aggregate PASS/FAIL with structured per-rule traces + repair feedback.
  */
 export async function verify(input: L5Input): Promise<L5Output> {

@@ -1,21 +1,24 @@
 /**
  * Layer 2 — Hybrid Retrieval (Phase 4 v2)
  *
- * Deterministic, NO LLM. Combines four signals:
- *   1. Cohere embed-v4 query embedding (1536-dim).
+ * Deterministic, NO LLM (the rerank stage is the one Gemini-Flash call). Combines
+ * four signals:
+ *   1. Default-embedder query embedding (gemini-embedding-001, 1536-dim).
  *   2. Multi-level HNSW cosine search through chapters → headings → subheadings →
  *      tariff_lines via pgvector `<=>`.
  *   3. PostgreSQL GIN-FTS on `tariff_lines.fts_search_text` from
  *      `head_nouns_for_fts | raw_tokens` (OR-joined per ARCHITECTURE.md §4.7).
- *   4. Cohere Rerank Pro on the union of cosine + FTS candidates.
+ *   4. Default reranker (Gemini-Flash) on the union of cosine + FTS candidates
+ *      (Cohere is an off-path A/B fallback).
  *
  * SHORTCUT (~60% of queries per recon): when all top subheadings have exactly
  * one tariff_line child, skip the rerank and emit direct-leaf codes — flag the
  * strategy as `direct_leaf_lookup`.
  *
  * Provider abstraction (M2): the query embedding comes from the pluggable
- * `EmbeddingProvider` (default Vertex `gemini-embedding-001`, 1536-dim) and the
- * rerank from the pluggable `Reranker` (default Gemini-Flash). L2 no longer
+ * `EmbeddingProvider` (default `gemini-embedding-001`, 1536-dim, via the Gemini
+ * Developer API @google/genai; Vertex AI is the rollback) and the rerank from the
+ * pluggable `Reranker` (default Gemini-Flash; Cohere off-path). L2 no longer
  * imports the Cohere client directly; the degrade-path catches the neutral
  * `RetrievalProviderError` instead of `CohereError`.
  *
@@ -212,8 +215,8 @@ export function escapeTsQueryToken(token: string): string {
  * on the document side (re-deriving per-column weights), which is out of scope and
  * risky. Modifier-drop is the clean, safe lever.
  */
-// Conservative generic-filler list; NEEDS empirical tuning (Phase 4.x) once
-// Cohere quota is restored — terms like 'powder'/'bulk'/'API' can be
+// Conservative generic-filler list; NEEDS empirical tuning (Phase 4.x) —
+// terms like 'powder'/'bulk'/'API' can be
 // discriminating (e.g. "powder" distinguishes milk powder from liquid milk;
 // "bulk"/"api" distinguish bulk active ingredient from formulation) and were
 // intentionally NOT dropped here. Only clearly-non-discriminating filler stays.
@@ -349,9 +352,10 @@ export async function retrieve(input: L2Input): Promise<L2Output> {
   const t0 = now();
 
   /* ---------- Step 1: provider query embed ----------------------------- */
-  // Sourced from the pluggable EmbeddingProvider (default Vertex
-  // gemini-embedding-001). taskType RETRIEVAL_QUERY (vs RETRIEVAL_DOCUMENT for
-  // the corpus). The resulting vector is L2-normalized and reused by L5.
+  // Sourced from the pluggable EmbeddingProvider (default gemini-embedding-001 via
+  // the Gemini Developer API; Vertex AI is the rollback). taskType RETRIEVAL_QUERY
+  // (vs RETRIEVAL_DOCUMENT for the corpus). The resulting vector is L2-normalized
+  // and reused by L5.
   const tEmbedStart = now();
   const embedRes = await getActiveEmbeddingProvider().embed(input.normalized_query, {
     taskType: 'RETRIEVAL_QUERY',

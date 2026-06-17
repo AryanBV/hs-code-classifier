@@ -1,5 +1,7 @@
 # Production Quick Reference Card
 
+> ⚠️ **SUPERSEDED / HISTORICAL (pre-`classifier-v2`).** This card documents the retired `/api/vector-search` OpenAI-embedding service. The live backend exposes only `/api/classify` (the Gemini-based `classifier-v2` pipeline) — see [`API-DOCUMENTATION.md`](./API-DOCUMENTATION.md) and [`README.md`](./README.md). Kept for history; do not follow for the current system.
+
 ## Production API URLs
 
 **Development (Local)**:

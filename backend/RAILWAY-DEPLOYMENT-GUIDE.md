@@ -1,5 +1,7 @@
 # Railway Deployment Execution Guide
 
+> ⚠️ **SUPERSEDED / HISTORICAL (Phase 5.1, pre-`classifier-v2`).** This runbook targets the retired `/api/vector-search` OpenAI-embedding service. The live backend is the Gemini-based `classifier-v2` (`/api/classify`) on Railway — see [`README.md`](./README.md) and [`API-DOCUMENTATION.md`](./API-DOCUMENTATION.md). Kept for history; do not follow for the current deployment.
+
 This guide walks you through the actual steps to deploy the HS Code Classifier backend to Railway production.
 
 ---

@@ -2,24 +2,25 @@
 
 ## Overview
 
-The HS Code Classifier API provides semantic search capabilities for Harmonized System (HS) product codes using vector embeddings and AI-powered natural language processing.
+Prevyl's HS Code Classifier API classifies a natural-language product description to an Indian ITC-HS code. It runs the **classifier-v2** pipeline — a six-stage flow (L0 Normalization → L1 Triage → L2 Retrieval → L3 Rules filter → L4 Select → L5 Verifier) built on Gemini models plus pgvector retrieval over the Indian tariff catalogue. The endpoint returns one of three outcomes: a classification, a clarifying question, or a refusal.
 
 **API Base URL**: `http://localhost:3001` (development) or your Railway URL (production)
 
-**API Prefix**: `/api/vector-search`
+**API Prefix**: `/api/classify`
 
 ---
 
 ## Authentication
 
-Currently, the API is **publicly accessible** without authentication. Rate limiting is applied per IP address to prevent abuse.
+The classify endpoints (`POST /api/classify`, `POST /api/classify/answer`) are intended to be reached only via the frontend BFF, which forwards an `x-internal-token` header. When `INTERNAL_API_TOKEN` is set the API requires an exact match, otherwise it responds `403 Forbidden`. In production a missing token causes the endpoint to fail closed (`503 Service not configured`). The health and job-poll endpoints are unauthenticated. Rate limiting is applied per IP address to prevent abuse.
 
 ---
 
 ## Rate Limiting
 
 All requests are rate-limited to prevent abuse:
-- **Default limit**: 100 requests per 15 minutes per IP address
+- **Global limit**: 100 requests per 15 minutes per IP address
+- **Classify limit** (`/api/classify`, `/api/classify/answer`): a tighter per-IP cap (default 5 per minute) plus a global all-IPs ceiling (default 20 requests per minute). Exceeding the per-IP cap returns `429`; exceeding the global ceiling returns `503` (retryable).
 - **Response headers**:
   - `X-RateLimit-Limit`: Maximum requests in window
   - `X-RateLimit-Remaining`: Remaining requests in window
@@ -48,321 +49,184 @@ Check if the API is running.
 ```json
 {
   "status": "ok",
-  "message": "HS Code Classifier API is running",
   "timestamp": "2025-11-26T05:28:28.860Z"
 }
 ```
 
+> A richer body (service name, environment shape, daily cost counter) is returned only when a valid `x-internal-token` header is presented. The classify router also exposes its own probe at `GET /api/classify/health`.
+
 ---
 
-### 2. Semantic Search
-Find HS codes based on semantic similarity to a natural language query.
+### 2. Classify
+Classify a natural-language product description to an Indian ITC-HS code. Runs the classifier-v2 pipeline and returns one of three outcomes: a classification, a clarifying question, or a refusal.
 
-**Endpoint**: `POST /api/vector-search/search`
+**Endpoint**: `POST /api/classify`
 
 **Request Body**:
 ```json
 {
-  "query": "fresh vegetables",
-  "limit": 5,
-  "threshold": 0.3
+  "query": "ceramic brake pads for trucks",
+  "previousAnswers": {}
 }
 ```
 
 **Parameters**:
-- `query` (string, **required**): Natural language description of the product
-- `limit` (integer, optional): Maximum number of results to return (default: 10, max: 50)
-- `threshold` (number, optional): Minimum similarity score (0-1, default: 0.5)
+- `query` (string, **required**): Natural-language product description (3–1000 characters).
+- `previousAnswers` (object, optional): Map of `questionId → answerId` carried forward across a multi-turn classification (the wizard threads these).
 
-**Response** (HTTP 200):
+**Headers**:
+- `x-internal-token` (**required** when `INTERNAL_API_TOKEN` is configured): forwarded by the frontend BFF.
+
+**Response** (HTTP 200) — the body is a flat DTO discriminated by `responseType`.
+
+`responseType: "classification"`:
 ```json
 {
-  "success": true,
-  "query": "fresh vegetables",
-  "resultCount": 5,
-  "results": [
-    {
-      "id": 596,
-      "code": "0810.40.00",
-      "description": "and other fruits of the Free",
-      "descriptionClean": "and other fruits of the Free",
-      "chapter": "08",
-      "heading": "0810.40",
-      "subheading": "0810.40.00",
-      "country_code": "IN",
-      "similarity": "0.488"
-    }
-    // ... more results
-  ]
-}
-```
-
-**Error** (HTTP 400 - Empty Query):
-```json
-{
-  "error": "Query is required and must not be empty"
-}
-```
-
-**Example**:
-```bash
-curl -X POST http://localhost:3001/api/vector-search/search \
-  -H "Content-Type: application/json" \
-  -d '{"query": "cotton textiles", "limit": 5}'
-```
-
----
-
-### 3. Hybrid Search
-Combine semantic search with keyword filtering.
-
-**Endpoint**: `POST /api/vector-search/hybrid-search`
-
-**Request Body**:
-```json
-{
-  "query": "agricultural products",
-  "keywords": ["fruit", "grain"],
-  "limit": 5,
-  "threshold": 0.3
-}
-```
-
-**Parameters**:
-- `query` (string, **required**): Natural language description
-- `keywords` (array of strings, optional): Keywords to filter results
-- `limit` (integer, optional): Maximum number of results (default: 10)
-- `threshold` (number, optional): Minimum similarity score (default: 0.5)
-
-**Response** (HTTP 200):
-```json
-{
-  "success": true,
-  "query": "agricultural products",
-  "keywordsApplied": 2,
-  "resultCount": 5,
-  "results": [
-    // ... filtered results containing keywords
-  ]
-}
-```
-
-**Example**:
-```bash
-curl -X POST http://localhost:3001/api/vector-search/hybrid-search \
-  -H "Content-Type: application/json" \
-  -d '{
-    "query": "textile products",
-    "keywords": ["cotton", "synthetic"],
-    "limit": 10
-  }'
-```
-
----
-
-### 4. Find Similar Codes
-Find HS codes similar to a given HS code.
-
-**Endpoint**: `GET /api/vector-search/similar/:hsCode`
-
-**URL Parameters**:
-- `hsCode` (string, **required**): HS code to find similarities for (e.g., "0804.50.10")
-
-**Query Parameters**:
-- `limit` (integer, optional): Maximum results (default: 10)
-- `threshold` (number, optional): Minimum similarity score (default: 0.5)
-
-**Response** (HTTP 200):
-```json
-{
-  "success": true,
-  "hsCode": "0804.50.10",
-  "resultCount": 3,
-  "results": [
-    {
-      "id": 560,
-      "code": "0804.40.00",
-      "description": "Avocados Free",
-      "descriptionClean": "Avocados Free",
-      "chapter": "08",
-      "heading": "0804.40",
-      "subheading": "0804.40.00",
-      "country_code": "IN",
-      "similarity": "0.763"
-    }
-    // ... more results
-  ]
-}
-```
-
-**Error** (HTTP 500 - Code Not Found):
-```json
-{
-  "error": "Finding similar codes failed",
-  "message": "Finding similar codes failed: HS Code not found: 9999.99.99"
-}
-```
-
-**Example**:
-```bash
-curl "http://localhost:3001/api/vector-search/similar/0804.50.10?limit=5&threshold=0.6"
-```
-
----
-
-### 5. Batch Search
-Search for multiple queries in a single request.
-
-**Endpoint**: `POST /api/vector-search/batch-search`
-
-**Request Body**:
-```json
-{
-  "queries": ["wheat grains", "coffee beans", "plastic materials"],
-  "limit": 3,
-  "threshold": 0.3
-}
-```
-
-**Parameters**:
-- `queries` (array of strings, **required**): Array of search queries
-- `limit` (integer, optional): Maximum results per query (default: 10)
-- `threshold` (number, optional): Minimum similarity score (default: 0.5)
-
-**Response** (HTTP 200):
-```json
-{
-  "success": true,
-  "queryCount": 2,
-  "results": {
-    "wheat grains": {
-      "resultCount": 3,
-      "matches": [
-        {
-          "id": 757,
-          "code": "1001.11.00",
-          "description": "Durum wheat : -- Seed Free",
-          "descriptionClean": "Durum wheat : -- Seed Free",
-          "chapter": "10",
-          "heading": "1001.11",
-          "subheading": "1001.11.00",
-          "country_code": "IN",
-          "similarity": "0.5459"
-        }
-        // ... more results for this query
-      ]
-    },
-    "coffee beans": {
-      "resultCount": 3,
-      "matches": [
-        // ... results for coffee beans
-      ]
-    }
-  }
-}
-```
-
-**Error** (HTTP 400 - Empty Array):
-```json
-{
-  "error": "Queries array is required and must not be empty"
-}
-```
-
-**Example**:
-```bash
-curl -X POST http://localhost:3001/api/vector-search/batch-search \
-  -H "Content-Type: application/json" \
-  -d '{
-    "queries": ["iron ore", "copper wire", "aluminum sheets"],
-    "limit": 5
-  }'
-```
-
----
-
-### 6. Generate Embedding
-Generate an embedding for a given text (useful for testing).
-
-**Endpoint**: `POST /api/vector-search/embedding`
-
-**Request Body**:
-```json
-{
-  "text": "test commodity"
-}
-```
-
-**Parameters**:
-- `text` (string, **required**): Text to generate embedding for
-
-**Response** (HTTP 200):
-```json
-{
-  "success": true,
-  "text": "test commodity",
-  "embeddingDimensions": 1536,
-  "embedding": [
-    -0.021840647,
-    0.0056652563,
-    // ... first 10 dimensions only (full embedding has 1536 values)
+  "responseType": "classification",
+  "hsCode": "6813.20.00",
+  "description": "Containing asbestos",
+  "confidence": 90,
+  "confidenceBand": "high",
+  "reasoning": "...reasoning chain joined with newlines...",
+  "alternatives": [
+    { "code": "8708.30.00", "description": "Brakes and servo-brakes; parts thereof" }
   ],
-  "fullEmbeddingLength": 1536
+  "isSixDigit": false,
+  "exportPolicy": "Free",
+  "policyCondition": null,
+  "indiaSpecific": true,
+  "selfConfidence": "HIGH",
+  "citation": { },
+  "components": null,
+  "processingTimeMs": 26000
 }
 ```
 
-**Error** (HTTP 400 - Empty Text):
+`responseType: "question"` (the pipeline needs a clarifying answer):
 ```json
 {
-  "error": "Text is required and must not be empty"
+  "responseType": "question",
+  "question": "What is the primary material?",
+  "options": [
+    { "id": "ceramic", "label": "Ceramic" },
+    { "id": "metal", "label": "Metal / sintered" },
+    { "id": "other", "label": "Something else" }
+  ],
+  "questionId": "material",
+  "discriminatingAttribute": "material",
+  "trigger": "sibling",
+  "processingTimeMs": 24000
 }
 ```
+
+`responseType: "refused"` (out of scope / not classifiable):
+```json
+{
+  "responseType": "refused",
+  "message": "This product is out of scope for ITC-HS classification.",
+  "reason": "out_of_scope",
+  "processingTimeMs": 8000
+}
+```
+
+**Error** (HTTP 400 - Missing/Invalid Query):
+```json
+{
+  "error": "Missing or invalid query parameter",
+  "example": { "query": "ceramic brake pads for trucks" }
+}
+```
+
+**Other responses**:
+- `403` — `x-internal-token` missing or wrong.
+- `503` (retryable) — classifier busy (concurrency/RPM gate), temporarily unavailable, timed out, or the daily free-classification limit was reached.
 
 **Example**:
 ```bash
-curl -X POST http://localhost:3001/api/vector-search/embedding \
+curl -X POST http://localhost:3001/api/classify \
   -H "Content-Type: application/json" \
-  -d '{"text": "organic cotton fabric"}'
+  -H "x-internal-token: $INTERNAL_API_TOKEN" \
+  -d '{"query": "cotton woven shirts for men"}'
 ```
 
 ---
 
-### 7. System Statistics
-Get overall system statistics.
+### 3. Answer (continue classification)
+Continue a classification after the user answers a clarifying question. The answered question is folded back into `previousAnswers` and the pipeline is re-entered.
 
-**Endpoint**: `GET /api/vector-search/stats`
+**Endpoint**: `POST /api/classify/answer`
 
-**Response** (HTTP 200):
+**Request Body**:
 ```json
 {
-  "success": true,
-  "stats": {
-    "totalCodes": 10468,
-    "codesWithEmbeddings": 10468,
-    "completeness": 100
-  }
+  "originalQuery": "ceramic brake pads for trucks",
+  "questionId": "material",
+  "answerId": "ceramic",
+  "previousAnswers": {},
+  "rounds": 1
+}
+```
+
+**Parameters**:
+- `originalQuery` (string, **required**): The original product description.
+- `questionId` (string, **required**): The id of the question being answered.
+- `answerId` (string, **required**): The selected option id.
+- `previousAnswers` (object, optional): Answers accumulated so far.
+- `rounds` (integer, optional): Multi-turn round counter threaded by the wizard.
+
+**Headers**:
+- `x-internal-token` (**required** when `INTERNAL_API_TOKEN` is configured).
+
+**Response** (HTTP 200): same flat `responseType` DTO as `POST /api/classify` — a follow-up `question`, a final `classification`, or a `refused`.
+
+**Error** (HTTP 400 - Missing Parameters):
+```json
+{
+  "error": "Missing required parameters",
+  "required": ["originalQuery", "questionId", "answerId"]
 }
 ```
 
 **Example**:
 ```bash
-curl http://localhost:3001/api/vector-search/stats
+curl -X POST http://localhost:3001/api/classify/answer \
+  -H "Content-Type: application/json" \
+  -H "x-internal-token: $INTERNAL_API_TOKEN" \
+  -d '{
+    "originalQuery": "ceramic brake pads for trucks",
+    "questionId": "material",
+    "answerId": "ceramic"
+  }'
+```
+
+---
+
+### 4. Classify Health
+Health check for the classification router.
+
+**Endpoint**: `GET /api/classify/health`
+
+**Response** (HTTP 200):
+```json
+{
+  "status": "ok",
+  "service": "hs-code-classifier",
+  "timestamp": "2025-11-26T05:28:28.860Z"
+}
+```
+
+**Example**:
+```bash
+curl http://localhost:3001/api/classify/health
 ```
 
 ---
 
 ## Response Format
 
-All successful responses follow this format:
+A successful classification response is a flat DTO discriminated by `responseType` (`"classification" | "question" | "refused"`) — see the **Classify** endpoint above for each shape.
 
-```json
-{
-  "success": true,
-  "data": {}
-}
-```
-
-All error responses follow this format:
+Error responses follow this format:
 
 ```json
 {
@@ -370,6 +234,8 @@ All error responses follow this format:
   "message": "Detailed error message"
 }
 ```
+
+Some errors add a `retryable` boolean (e.g. the `503` busy/timeout/limit cases) so clients know whether to retry.
 
 ---
 
@@ -379,24 +245,17 @@ All error responses follow this format:
 |------|---------|
 | 200  | Success |
 | 400  | Bad Request (invalid parameters) |
+| 403  | Forbidden (`x-internal-token` missing or wrong) |
 | 404  | Not Found (route not found) |
-| 429  | Too Many Requests (rate limited) |
+| 429  | Too Many Requests (per-IP rate limit) |
 | 500  | Internal Server Error |
+| 503  | Service Unavailable (busy / RPM ceiling / timeout / daily limit / not configured) — usually `retryable` |
 
 ---
 
-## Similarity Scores
+## Retrieval Internals
 
-Similarity scores are calculated using **cosine similarity** on vector embeddings:
-- **Range**: 0 to 1
-- **1.0**: Identical (same meaning)
-- **0.5**: Moderate similarity
-- **0.0**: No similarity
-
-### Recommended Thresholds:
-- **High precision** (find exact matches): threshold = 0.7+
-- **Balanced**: threshold = 0.5 (default)
-- **High recall** (find all related items): threshold = 0.3-0.4
+The L2 retrieval stage combines pgvector HNSW similarity (`gemini-embedding-001` @1536-dim) with Postgres full-text search, then re-ranks the candidates with a Gemini-Flash rerank. Vector similarity uses **cosine similarity** (0 = unrelated, 1 = identical). These are internal pipeline knobs — they are not exposed as request parameters on the public classify API.
 
 ---
 
@@ -404,47 +263,51 @@ Similarity scores are calculated using **cosine similarity** on vector embedding
 
 ### Python
 ```python
+import os
 import requests
 
-api_url = "http://localhost:3001/api/vector-search/search"
-payload = {
-    "query": "plastic bottles",
-    "limit": 5,
-    "threshold": 0.5
-}
+api_url = "http://localhost:3001/api/classify"
+headers = {"x-internal-token": os.environ["INTERNAL_API_TOKEN"]}
+payload = {"query": "plastic bottles for packaging"}
 
-response = requests.post(api_url, json=payload)
-results = response.json()
+response = requests.post(api_url, json=payload, headers=headers)
+result = response.json()
 
-for result in results['results']:
-    print(f"{result['code']}: {result['description']} (similarity: {result['similarity']})")
+if result["responseType"] == "classification":
+    print(f"{result['hsCode']}: {result['description']} (confidence: {result['confidence']})")
+elif result["responseType"] == "question":
+    print(f"Need more info: {result['question']}")
+else:
+    print(f"Refused: {result['message']}")
 ```
 
 ### JavaScript/Node.js
 ```javascript
 const axios = require('axios');
 
-const apiUrl = 'http://localhost:3001/api/vector-search/search';
-const payload = {
-  query: 'plastic bottles',
-  limit: 5,
-  threshold: 0.5
-};
+const apiUrl = 'http://localhost:3001/api/classify';
+const headers = { 'x-internal-token': process.env.INTERNAL_API_TOKEN };
+const payload = { query: 'plastic bottles for packaging' };
 
-axios.post(apiUrl, payload)
-  .then(response => {
-    response.data.results.forEach(result => {
-      console.log(`${result.code}: ${result.description} (similarity: ${result.similarity})`);
-    });
+axios.post(apiUrl, payload, { headers })
+  .then(({ data }) => {
+    if (data.responseType === 'classification') {
+      console.log(`${data.hsCode}: ${data.description} (confidence: ${data.confidence})`);
+    } else if (data.responseType === 'question') {
+      console.log(`Need more info: ${data.question}`);
+    } else {
+      console.log(`Refused: ${data.message}`);
+    }
   })
   .catch(error => console.error(error));
 ```
 
 ### cURL
 ```bash
-curl -X POST http://localhost:3001/api/vector-search/search \
+curl -X POST http://localhost:3001/api/classify \
   -H "Content-Type: application/json" \
-  -d '{"query":"plastic bottles","limit":5}'
+  -H "x-internal-token: $INTERNAL_API_TOKEN" \
+  -d '{"query":"plastic bottles for packaging"}'
 ```
 
 ---
@@ -455,17 +318,15 @@ curl -X POST http://localhost:3001/api/vector-search/search \
    - ✅ Good: "waterproof cotton fabric suitable for outdoor use"
    - ❌ Poor: "fabric"
 
-2. **Adjust threshold based on use case**:
-   - Use lower thresholds for exploratory searches
-   - Use higher thresholds for precise matching
+2. **Handle all three `responseType`s**: Be ready to render a `classification`, ask the user a follow-up `question`, or surface a `refused` message — the pipeline returns whichever fits.
 
-3. **Use batch search for efficiency**: When searching for multiple items, use batch-search endpoint instead of multiple individual requests
+3. **Continue questions via `/answer`**: When you receive a `question`, post the chosen `answerId` (with its `questionId` and the original query) to `POST /api/classify/answer` to advance the classification.
 
-4. **Limit result sets**: Use the `limit` parameter to reduce response size and improve performance
+4. **Expect latency**: The pipeline runs several model calls; median latency is roughly 26s. Use generous client timeouts and show progress.
 
-5. **Handle rate limits gracefully**: Implement exponential backoff when receiving 429 responses
+5. **Handle rate limits gracefully**: Implement exponential backoff when receiving `429` or retryable `503` responses.
 
-6. **Cache results**: Store frequently searched queries to reduce API calls
+6. **Forward the internal token**: Send `x-internal-token` from your server-side BFF — do not expose it to the browser.
 
 ---
 
@@ -480,8 +341,8 @@ For issues or questions, refer to:
 
 ## Version History
 
-- **v1.0** (2025-11-26): Initial release
-  - Semantic search with vector embeddings
-  - 10,468 HS codes indexed
-  - 6 core endpoints
-  - Rate limiting enabled
+- **v2** (current): classifier-v2 pipeline
+  - Six-stage flow (L0 Normalization → L1 Triage → L2 Retrieval → L3 Rules filter → L4 Select → L5 Verifier) on Gemini models
+  - 12,460 eight-digit ITC-HS tariff lines in the catalogue
+  - Endpoints: `POST /api/classify`, `POST /api/classify/answer`, `GET /api/classify/health`, plus top-level `GET /health`
+  - Internal-token gate + rate limiting enabled
